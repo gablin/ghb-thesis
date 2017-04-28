@@ -1,0 +1,12 @@
+*.aux
+*.bbl
+*.blg
+*.cut
+*.fdb_latexmk
+*.fls
+*.log
+*.bak
+*.out
+*.pdf
+*.c
+model.mzn
