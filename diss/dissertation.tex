@@ -2,41 +2,76 @@
 
 \begin{document}
 
+\tableofcontents
+
 \chapter{Introduction}
 
 \chapter{Background}
 
 \chapter{Universal Representations}
 
-\chapter{Copy Extension}
-
 \chapter{Pattern Matching}
+\section{VF2}
 \section{Handling Data Types}
 
-\chapter{Alternative Values}
+\chapter{Global Instruction Selection}
+\section{Problem}
+\section{Modeling}
+
+\chapter{Global Code Motion}
+\section{Problem}
+\section{Modeling}
+
+\chapter{Copy Extension}
+\section{Problem}
+\section{Modeling}
+
+\chapter{Block Ordering}
+\section{Problem}
+\section{Modeling}
 
 \chapter{Handling Fallthrough}
+\section{Problem}
 \section{Branch Extension}
+\section{Modeling}
 \section{Dual-target Branch Patterns}
+\section{Modeling}
+\section{Discussion}
 
-\chapter{Constraint Model For Universal Instruction Selection}
-\section{Global Instruction Selection}
-\section{Global Code Motion}
-\section{Inactive Data}
-\section{Data Copying}
-\section{Block Ordering}
-\section{Fallthrough}
-\section{Objective Function}
-\section{Presolving and Strengthening Propagation}
-\subsection{Removing dominated matches}
-\subsection{Removing illegal matches}
-\subsection{Removing redundant kill instructions}
-\subsection{Removing redundant null-copy instructions}
-\section{Cost Bounding}
-\subsection{Lower bound}
-\subsection{Upper bound}
-\section{Search Strategies}
-\section{Limitations}
+\chapter{Value Reuse}
+\section{Problem}
+\section{Alternative Values}
+\section{Modeling}
+\section{Match Duplication}
+\section{Modeling}
+\section{Discussion}
+
+\chapter{Objective Function}
+\section{Problem}
+\section{Naive function}
+\section{Modeling}
+\section{Refined function}
+\section{Modeling}
+\section{Discussion}
+
+\chapter{Cost Bounding}
+\section{Problem}
+\section{Lower Bound}
+\section{Modeling}
+\section{Upper Bound}
+\section{Modeling}
+
+\chapter{Presolving and Strengthening Propagation}
+\section{Removing dominated matches}
+\section{Removing illegal matches}
+\section{Removing redundant kill instructions}
+\section{Removing redundant null-copy instructions}
+
+\chapter{Search Strategies}
+
+\chapter{Limitations}
+\section{Recomputation}
+\section{Common Subexpression Elimintation}
 
 \chapter{Experimental Evaluation}
 

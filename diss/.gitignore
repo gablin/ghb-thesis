@@ -9,4 +9,4 @@
 *.out
 *.pdf
 *.c
-model.mzn
+*.toc
