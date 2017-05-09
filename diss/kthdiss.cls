@@ -68,7 +68,7 @@
     \markboth{#2}{#2}%
     \endgroup%
     \@mkboth{#2}{#2}%
-    \addcontentsline{#3}{#4}{#2}%
+    \addcontentsline{toc}{#4}{#2}%
     \@starttoc{#3}%
   }%
 }
