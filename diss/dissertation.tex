@@ -1,11 +1,24 @@
-\documentclass{kthdiss}
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+
+\documentclass[twoside]{kthdiss}
+
+\input{tex/packages}
 
 \begin{document}
 
-\chapter{Abstract}
-\chapter{Acknowledgements}
-
+\frontmatter
+\input{frontmatter/abstract}
+\input{frontmatter/sammanfattning}
+\input{frontmatter/acknowledgements}
 \tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
 
 \chapter{Introduction}
 
@@ -83,6 +96,8 @@
 \chapter{Integrating Instruction Scheduling}
 
 \chapter{Conclusions}
+
+\backmatter
 
 \chapter{Bibliography}
 

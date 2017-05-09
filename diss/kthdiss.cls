@@ -1,35 +1,78 @@
 % Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
-% All rights reserved.
 %
-% Redistribution and use in source and binary forms, with or without
-% modification, are permitted provided that the following conditions are met:
-%     * Redistributions of source code must retain the above copyright
-%       notice, this list of conditions and the following disclaimer.
-%     * Redistributions in binary form must reproduce the above copyright
-%       notice, this list of conditions and the following disclaimer in the
-%       documentation and/or other materials provided with the distribution.
-%
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-% DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY DIRECT,
-% INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-% BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-% DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-% OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-% NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-% EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
 
-\ProvidesClass{kthdiss}[2017/05/09 v0.1 KTH dissertation]
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
+\NeedsTeXFormat{LaTeX2e}[2001/01/01]
+\ProvidesClass{kthdiss}[2017/05/09 v0.1 Document class for KTH dissertations]
+
+% Pass on undeclared options to memoir class
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{memoir}%
+}
 \ProcessOptions\relax
 
+\LoadClass{memoir}
 
-\LoadClass[% the default options
-]{memoir}
+
 
 %===============
 % LOAD PACKAGES
 %===============
 
-\endinput
+\RequirePackage{microtype}
+\RequirePackage{xparse}
+
+
+
+%========
+% MACROS
+%========
+
+\makepagestyle{frontMatterChapPage}
+\makeevenhead{frontMatterChapPage}{\thepage}{}{}
+\makeoddhead{frontMatterChapPage}{}{}{\thepage}
+\NewDocumentEnvironment{frontMatterChap}{m}{%
+  \clearpage%
+  \markboth{#1}{#1}%
+  \thispagestyle{frontMatterChapPage}%
+  \begin{center}%
+    \large\textbf{#1}%
+  \end{center}%
+}{}
+
+\RenewDocumentEnvironment{abstract}{}{%
+  \begin{frontMatterChap}{Abstract}%
+}{
+  \end{frontMatterChap}
+}
+
+\NewDocumentEnvironment{sammanfattning}{}{%
+  \begin{frontMatterChap}{Sammanfattning}%
+}{
+  \end{frontMatterChap}
+}
+
+\NewDocumentEnvironment{acknowledgements}{}{%
+  \begin{frontMatterChap}{Acknowledgements}%
+}{
+  \end{frontMatterChap}
+}
+
+\NewDocumentCommand{\makeListOfCommand}{mmmm}{%
+  \DeclareDocumentCommand{#1}{}{%
+    \begingroup%
+    \renewcommand{\cleardoublepage}{\clearpage}%
+    \chapter*{#2}%
+    \markboth{#2}{#2}%
+    \endgroup%
+    \@mkboth{#2}{#2}%
+    \addcontentsline{#3}{#4}{#2}%
+    \@starttoc{#3}%
+  }%
+}
+
+\makeListOfCommand{\tableofcontents}{\contentsname}{toc}{chapter}
+\makeListOfCommand{\listoffigures}{\listfigurename}{lof}{chapter}
+\makeListOfCommand{\listoftables}{\listtablename}{lot}{chapter}

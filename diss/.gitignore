@@ -1,12 +1,14 @@
 *.aux
+*.bak
 *.bbl
 *.blg
+*.c
 *.cut
 *.fdb_latexmk
 *.fls
+*.lof
 *.log
-*.bak
+*.lot
 *.out
 *.pdf
-*.c
 *.toc
