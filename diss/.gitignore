@@ -1,6 +1,7 @@
 *.aux
 *.bak
 *.bbl
+*.bcf
 *.blg
 *.c
 *.cut
@@ -11,4 +12,5 @@
 *.lot
 *.out
 *.pdf
+*.run.xml
 *.toc
