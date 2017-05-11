@@ -21,14 +21,13 @@
 % LOAD PACKAGES
 %===============
 
-\RequirePackage{microtype}
 \RequirePackage{xparse}
 
 
 
-%========
-% MACROS
-%========
+%===========================
+% DOCUMENT STRUCTURE MACROS
+%===========================
 
 \makepagestyle{frontMatterChapPage}
 \makeevenhead{frontMatterChapPage}{\thepage}{}{}
