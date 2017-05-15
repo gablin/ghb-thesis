@@ -14,8 +14,8 @@
 }
 \let\glsshort\glsuseri
 \let\glsplshort\glsuserii
-\NewDocumentCommand{\makeacronym}{mmmO{}}{%
-  \newacronym[sort={#3},#4]{#1}{#2}{#3}%
+\NewDocumentCommand{\makeacronym}{mmO{}}{%
+  \newacronym[sort={#2},#3]{#1}{#1}{#2}%
 }
 
 \newterm{instruction selection}[instruction selection][user1={instruction}]
