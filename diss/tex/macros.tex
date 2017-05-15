@@ -1,0 +1,189 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+
+
+
+%======
+% TEXT
+%======
+
+\newcommand{\labelFigure}[1]{\label{fig:#1}}
+\newcommand{\refFigure}[1]{\mbox{Fig.\thinspace\ref{fig:#1}}}
+\newcommand{\labelSection}[1]{\label{sec:#1}}
+\newcommand{\refSection}[1]{\mbox{Sect.\thinspace\ref{sec:#1}}}
+\newcommand{\labelEquation}[1]{\label{eq:#1}}
+\NewDocumentCommand{\refEquation}{sm}{%
+  \IfBooleanTF{#1}{%
+    \ref{eq:#2}%
+  }{%
+    \mbox{Eq.\thinspace\ref{eq:#2}}%
+  }%
+}
+\NewDocumentCommand{\citeEquation}{sm}{%
+  \IfBooleanTF{#1}{%
+    #2%
+  }{%
+    \mbox{Eq.\thinspace#2}%
+  }%
+}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\todo}[1]{\textcolor{black!25!red}{[#1]}}
+
+% Enable bold version of the monotype font
+% See http://www.macfreek.nl/memory/LaTeX_Bold_Typewriter_Font
+\DeclareFontShape{OT1}{cmtt}{bx}{n}%
+  {<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
+
+
+
+%======
+% MATH
+%======
+
+% General commands
+\newcommand{\overbar}[1]{
+  \mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu
+}
+\NewDocumentCommand{\mPowerset}{m}{
+  2^{#1}
+}\newcommand{\mNatNumSet}{\mathbb{N}}
+\newcommand{\mPhi}{\varphi}
+\newcommand{\mSet}[1]{\left\{ #1 \right\}}
+\newcommand{\mCard}[1]{\left| #1 \right|}
+\newcommand{\mEmptySet}{\varnothing}
+\newcommand{\mFunFont}[1]{\textit{#1}}
+\newcommand{\mTuple}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\mUnDirEdge}[2]{\mTuple{#1}{#2}}
+\newcommand{\mAnd}{\wedge}
+\newcommand{\mOr}{\vee}
+\newcommand{\mImp}{\Rightarrow}
+\newcommand{\mEq}{\Leftrightarrow}
+\newcommand{\mQuantSep}{\quad}
+
+% Constraint model-related commands
+\newcommand{\mBrPattern}{g_{\mathrm{br}}}
+\newcommand{\mKill}{\times}
+\newcommand{\mNull}{\bot}
+\newcommand{\mUPGraph}{G}
+\newcommand{\mPatternSet}{S}
+\newcommand{\mExtPatternSet}{\mPatternSet_\mathrm{ext}}
+\newcommand{\mOpSet}{O}
+\newcommand{\mOperandSet}{P}
+\newcommand{\mForbiddenCombSet}{F}
+\newcommand{\mCostMatrix}{\mathbf{C}}
+\NewDocumentCommand{\mDataSet}{o}{
+  \IfValueTF{#1}{D_{#1}}{D}
+}
+\newcommand{\mBlockSet}{B}
+\newcommand{\mDefEdgeSet}{E}
+\NewDocumentCommand{\mMatchSet}{o}{
+  \IfValueTF{#1}{M_{#1}}{M}
+}
+\NewDocumentCommand{\mMatchCompSet}{m}{
+  M_{\overbar{#1}}
+}
+\newcommand{\mLocationSet}{L}
+\newcommand{\mFallThroughSet}{J}
+\newcommand{\mNullLocation}{l_\mathrm{null}}
+\NewDocumentCommand{\mVar}{mo}{
+  \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
+}
+\newcommand{\mLlvmCost}{C_{\mathrm{LLVM}}}
+\newcommand{\mRelaxedCost}{C_{\mathrm{relaxed}}}
+\DeclareMathOperator{\mCircuit}{\mFunFont{circuit}}
+\DeclareMathOperator{\mConsumes}{\mFunFont{consumes}}
+\DeclareMathOperator{\mCost}{\mFunFont{cost}}
+\DeclareMathOperator{\mCovers}{\mFunFont{covers}}
+\DeclareMathOperator{\mDefines}{\mFunFont{defines}}
+\DeclareMathOperator{\mDom}{\mFunFont{dom}}
+\DeclareMathOperator{\mEmptyBlock}{\mFunFont{empty}}
+\DeclareMathOperator{\mEntry}{\mFunFont{entry}}
+\DeclareMathOperator{\mFreq}{\mFunFont{freq}}
+\DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
+\DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
+\DeclareMathOperator{\mSpans}{\mFunFont{spans}}
+\DeclareMathOperator{\mStores}{\mFunFont{stores}}
+\DeclareMathOperator{\mTable}{\mFunFont{table}}
+\DeclareMathOperator{\mUses}{\mFunFont{uses}}
+
+
+
+%============
+% REFERENCES
+%============
+
+\addbibresource{references.bib}
+
+% Command alias.
+\NewDocumentCommand{\printreferences}{}{%
+  \printbibliography%
+}
+
+% Bibliography options:
+%    - Write first and middle names as initials in the bibliography
+%    - Sort references by label (when citing)
+%    - Set 2 names as max before invoking "et al." when citing
+%    - Print all names in bibliography
+\ExecuteBibliographyOptions{%
+  firstinits=true,
+  sortcites=true,
+  maxcitenames=2,
+  maxbibnames=100,
+  hyperref=true,
+  urldate=iso8601,
+}
+
+% Set author names (but only authors) in small caps (but only in the
+% bibliography, not in the citations)
+% http://tex.stackexchange.com/a/29862
+% http://tex.stackexchange.com/a/30910
+\AtBeginBibliography{%
+  \renewcommand*{\mkbibnamelast}[1]{%
+    \ifmknamesc{\textsc{#1}}{#1}%
+  }%
+}
+\renewcommand*{\mkbibnameprefix}[1]{%
+  \ifboolexpr{test {\ifmknamesc} and test {\ifuseprefix}}{%
+    \textsc{#1}%
+  }{%
+    #1%
+  }%
+}
+\def\ifmknamesc{%
+  \ifboolexpr{%
+    test {\ifcurrentname{labelname}}
+    or test {\ifcurrentname{author}}
+    or (test {\ifnameundef{author}} and test {\ifcurrentname{editor}})
+  }%
+}
+
+% Customize appearance of chapter heading
+\newcommand{\refname}{References}
+\defbibheading{bibliography}[\refname]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{\refname}%
+  \markboth{#1}{#1}%
+}
+
+% Set URLs in smaller font in bibliography
+\DeclareFieldFormat{url}{URL:~\small\url{#1}}
+
+% Set ISBN, ISSN, and DOI fields in normal font
+\DeclareFieldFormat{isbn}{ISBN:~#1}
+\DeclareFieldFormat{issn}{ISSN:~#1}
+\DeclareFieldFormat{doi}{DOI:~#1}
+
+% Use "Doctoral thesis" instead of "PhD thesis"
+\DefineBibliographyStrings{english}{%
+  phdthesis={doctoral thesis},
+}
+
+% Prevent pagebreaks within entries
+% http://tex.stackexchange.com/a/43275/2634
+\patchcmd{\bibsetup}{\interlinepenalty=5000}{\interlinepenalty=10000}{}{}
+
+% Remove terminating period from every bib entry
+\renewcommand{\finentrypunct}{}
