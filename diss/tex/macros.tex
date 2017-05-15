@@ -37,6 +37,27 @@
 \DeclareFontShape{OT1}{cmtt}{bx}{n}%
   {<5><6><7><8><9><10><10.95><12><14.4><17.28><20.74><24.88>cmttb10}{}
 
+% For highlighting text.
+% The strut macro was taken from https://tex.stackexchange.com/a/74469/2634
+\newcommand{\hlDiffColor}{black!25}
+\newcommand{\hlStrut}{%
+  \vrule width 0pt height .9\ht\strutbox depth .9\dp\strutbox\relax%
+}
+\NewDocumentCommand{\hlDiff}{mo}{%
+  \begingroup%
+  \setlength{\fboxsep}{0pt}%
+  \ifmmode%
+    \IfValueT{#2}{\hspace{#2}}%
+    \colorbox{\hlDiffColor}{\hlStrut$#1$}%
+    \IfValueT{#2}{\hspace{#2}}%
+  \else%
+    \IfValueT{#2}{\hspace{#2}}%
+    \colorbox{\hlDiffColor}{\hlStrut#1}%
+    \IfValueT{#2}{\hspace{#2}}%
+  \fi%
+  \endgroup%
+}
+
 
 
 %======

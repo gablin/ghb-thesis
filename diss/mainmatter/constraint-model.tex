@@ -54,9 +54,9 @@
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[\mVar{alt}[p]] \in \mDom(\mVar{oplace}[o]) \\
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
     \forall m \in \mMatchCompSet{\mPhi},
-    \forall p \in \mUses(m),
+    \forall d \in \mUses(m),
     \forall o \in \mCovers(m)
   \end{array}
   \labelEquation{dom}
@@ -73,9 +73,9 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[\mVar{alt}[p]] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
     \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m),
+    \forall d \in \mDefines(m),
     \forall o \in \mCovers(m)
   \end{array}
   \labelEquation{spanning}
@@ -103,9 +103,9 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\mVar{alt}[p]] \in \mStores(m, p) \\
+    \mVar{loc}[d] \in \mStores(m, p) \\
     \forall m \in \mMatchSet,
-    \forall p \in \mOperandSet \;\text{s.t.} \mStores(m, p) \neq \mEmptySet
+    \forall d \in \mDataSet \;\text{s.t.} \mStores(m, d) \neq \mEmptySet
   \end{array}
   \labelEquation{valid-locations}
 \end{equation}
@@ -114,9 +114,9 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\mVar{alt}[p]] = \mNullLocation \\
+    \mVar{loc}[d] = \mNullLocation \\
     \forall m \in \mMatchSet,
-    \forall p \in \mIntValues(m)
+    \forall d \in \mIntValues(m)
   \end{array}
   \labelEquation{locs-of-intermediate-values}
 \end{equation}
@@ -132,9 +132,9 @@
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[\mVar{alt}[p]] \in \mDom(\mVar{oplace}[o]) \\
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]) \\
     \forall m \in \mMatchCompSet{\mPhi},
-    \forall p \in \mUses(m),
+    \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m)
   \end{array}
   \labelEquation{dom}
@@ -144,9 +144,10 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[\mVar{alt}[p]] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in
+      \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
     \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m),
+    \forall \hlDiff{p} \in \mDefines(m),
     \forall o \in \mCovers(m)
   \end{array}
   \labelEquation{spanning}
@@ -156,9 +157,11 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\mVar{alt}[p]] \in \mStores(m, p) \\
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p) \\
     \forall m \in \mMatchSet,
-    \forall p \in \mOperandSet \;\text{s.t.} \mStores(m, p) \neq \mEmptySet
+    \forall \hlDiff{p} \in
+      \hlDiff{\mOperandSet} \;\text{s.t.}
+      \mStores(m, \hlDiff{p}) \neq \mEmptySet
   \end{array}
   \labelEquation{valid-locations}
 \end{equation}
@@ -167,9 +170,9 @@
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\mVar{alt}[p]] = \mNullLocation \\
+    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation \\
     \forall m \in \mMatchSet,
-    \forall p \in \mIntValues(m)
+    \forall \hlDiff{p} \in \mIntValues(m)
   \end{array}
   \labelEquation{locs-of-intermediate-values}
 \end{equation}
