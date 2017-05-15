@@ -206,3 +206,72 @@
 
 % Remove terminating period from every bib entry
 \renewcommand{\finentrypunct}{}
+
+
+
+%============
+% GLOSSARIES
+%============
+
+% Add "glossary" to table of content
+\glstoctrue
+
+% Disable hyperlinks from terms to index
+\glsdisablehyper
+
+% Customize glossary style
+\newglossarystyle{myglossary}{%
+  \setglossarystyle{mcolindex}
+  \setlength{\columnsep}{8mm}
+  \renewcommand*{\glstreenamefmt}[1]{##1}
+  \renewcommand*{\glsgroupheading}[1]{%
+    \textbf{\large\glsgetgrouptitle{##1}}%
+    \nopagebreak%
+    \par \vskip 3pt plus 1pt minus 1pt \relax%
+    \nopagebreak%
+  }
+  \renewcommand*{\glossentry}[2]{%
+     \item\glsentryitem{##1}%
+       \glstreenamefmt{\glstarget{##1}{\glsentryfirst{##1}}}%
+       \space\hfill\space##2%
+  }
+  \renewcommand{\subglossentry}[3]{%
+    \ifcase##1\relax
+      % level 0
+      \item
+    \or
+      % level 1
+      \subitem
+      \glssubentryitem{##2}%
+    \else
+      % all other levels
+      \subsubitem
+    \fi
+    \glstreenamefmt{\glstarget{##2}{\glossentryname{##2}}}%
+    \space\hfill\space##3%
+  }%
+}
+\setglossarystyle{myglossary}
+
+% Typesets a new term when it is defined.
+\NewDocumentCommand{\typesetNewTerm}{m}{%
+  % Cannot use \textit{} here as that will cause bad kerning
+  {\itshape#1}%
+}
+
+% Typeset first-occurrence terms and their page numbers in index
+\defglsentryfmt{%
+  \ifglsused{\glslabel}{%
+    \glsgenentryfmt%
+  }{%
+    % Typeset first use
+    \typesetNewTerm{\glsgenentryfmt}%
+  }%
+}
+
+% Force 'see also' to appear on a new line in the index
+\renewcommand\glsseeformat[3][\seename]{\\*\mbox{}\hfill\emph{#1} \glsseelist{#2}}
+
+% Rename certain items
+\renewcommand{\seename}{see also}
+\renewcommand{\glossaryname}{Index}

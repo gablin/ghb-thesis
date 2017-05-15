@@ -1,0 +1,21 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file for full legal text).
+
+\makeglossaries
+\NewDocumentCommand{\newterm}{moO{}}{%
+  \IfNoValueTF{#2}{%
+    \newglossaryentry{#1}{name={#1}, description=\nopostdesc, #3}%
+  }{%
+    \newglossaryentry{#1}{name={#2}, description=\nopostdesc, #3}%
+  }%
+}
+\let\glsshort\glsuseri
+\let\glsplshort\glsuserii
+\NewDocumentCommand{\makeacronym}{mmmO{}}{%
+  \newacronym[sort={#3},#4]{#1}{#2}{#3}%
+}
+
+\newterm{instruction selection}[instruction selection][user1={instruction}]
+\newterm{global instr-sel}[global][parent={instruction selection}]
