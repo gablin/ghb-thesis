@@ -10,20 +10,192 @@
 \subsection{Problem}
 \subsection{Modeling}
 
+\begin{equation}
+  \mVar{omatch}[o] = m \mEq \mVar{sel}[m]
+  \mQuantSep
+  \forall o \in \mOpSet,
+  \forall m \in \mMatchSet[o]
+  \labelEquation{operation-coverage}
+\end{equation}
+
+\begin{equation}
+  \mVar{dmatch}[d] = m \mEq \mVar{sel}[m]
+  \mQuantSep
+  \forall d \in \mDataSet,
+  \forall m \in \mMatchSet[d]
+  \labelEquation{data-definitions}
+\end{equation}
+
+
+
 \section{Global Code Motion}
 \subsection{Problem}
 \subsection{Modeling}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
+    \forall m \in \mMatchSet,
+    \forall o_1 \in \mCovers(m),
+    \forall o_2 \in \mCovers(m)
+  \end{array}
+  \labelEquation{operation-placement}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
+    \forall m \in \mMatchSet,
+    \forall o \in \mCovers(m),
+    \forall b \in \mEntry(m)
+  \end{array}
+  \labelEquation{jump-placements}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[\mVar{alt}[p]] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall p \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom}
+\end{equation}
+
+\begin{equation}
+  \mVar{dplace}[d] = b
+  \mQuantSep
+  \forall \mUnDirEdge{d}{b} \in \mDefEdgeSet,
+  \labelEquation{def-edges}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\mVar{alt}[p]] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{oplace}[o] \neq b \\
+    \forall o \in \mOpSet,
+    \forall m \in \mMatchSet,
+    \forall b \in \mConsumes(m)
+  \end{array}
+  \labelEquation{consumption}
+\end{equation}
+
+
 
 \section{Data Copying}
 \subsection{Problem}
 \subsection{Modeling}
 
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\mVar{alt}[p]] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mOperandSet \;\text{s.t.} \mStores(m, p) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\mVar{alt}[p]] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values}
+\end{equation}
+
+
+
 \section{Value Reuse}
 \subsection{Problem}
-\subsection{Alternative Values}
-\subsection{Modeling}
 \subsection{Match Duplication}
-\subsection{Modeling}
+\subsubsection{Modeling}
+\subsection{Alternative Values}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[\mVar{alt}[p]] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall p \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\mVar{alt}[p]] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\mVar{alt}[p]] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mOperandSet \;\text{s.t.} \mStores(m, p) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\mVar{alt}[p]] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mEq
+    \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchSet[\mKill],
+    \forall p \in \mDefines(m)
+  \end{array}
+  \labelEquation{inactivity-when-killed}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \neg \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchCompSet{\mKill},
+    \forall p \in \mUses(m)
+  \end{array}
+  \labelEquation{inactivity-when-used}
+\end{equation}
+
 \subsection{Discussion}
 
 \section{Block Ordering}
@@ -33,37 +205,154 @@
 \section{Branch Fallthroughs}
 \subsection{Problem}
 \subsection{Branch Extension}
-\subsection{Modeling}
+\subsubsection{Modeling}
 \subsection{Dual-target Branch Patterns}
-\subsection{Modeling}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \mCircuit\left(
+    \cup_{b \in \mBlockSet} \{\mVar{succ}[b]\}
+  \right)
+  \labelEquation{block-order}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[\mEntry(m)] = b \mOr \mbox{} \\
+    \big(
+      \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
+      \mAnd
+      \mEmptyBlock(\mVar{succ}[\mEntry(m)])
+    \big) \\
+    \forall \mTuple{m}{b} \in \mFallThroughSet,
+  \end{array}
+  \labelEquation{fall-through}
+\end{equation}
+%
+where
+%
+\begin{equation*}
+  \mEmptyBlock(b) =
+  \mVar{oplace}[o] \neq b
+  \mOr
+  \mVar{omatch}[o] \in \mMatchSet[\mNull]
+  \mQuantSep
+  \forall o \in \mOpSet
+\end{equation*}
+
 \subsection{Discussion}
+
+\section{Cyclic Data Dependencies}
+
+\begin{equation}
+  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
+  \mQuantSep
+  \forall f \in \mForbiddenCombSet
+  \labelEquation{cyclic-data-deps}
+\end{equation}
 
 \section{Objective Function}
 \subsection{Problem}
 \subsection{Naive function}
-\subsection{Modeling}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \sum_{b \in \mBlockSet}
+  \Big(
+    \mFreq(b) \times
+    \hspace{-4.5mm}
+    \sum_{
+      \substack{
+        m \in \mMatchSet \:\text{s.t.} \\
+        \mVar{place}[m] = b
+      }
+    }
+     \hspace{-4.5mm}
+    \mCost(m)
+  \Big)
+  \labelEquation{naive-objective-function}
+\end{equation}
+
 \subsection{Refined function}
-\subsection{Modeling}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mCostMatrix =
+  \begin{bmatrix}
+    \begin{array}{@{\:}c|c@{\:}}
+        o, m, b, \big( \mFreq(b) \times \mOpCost(m, o) \big)
+      & \begin{array}{@{}c@{}}
+          m \in \mMatchSet, \\
+          o \in \mCovers(m), \\
+          b \in \mBlockSet \\
+        \end{array}
+    \end{array}
+  \end{bmatrix}
+  \labelEquation{cost-matrix}
+\end{equation}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mTable\left(
+    \langle
+      o,
+      \mVar{omatch}[o],
+      \mVar{oplace}[o],
+      \mVar{ocost}[o]
+    \rangle,
+    \mCostMatrix
+  \right)
+  \mQuantSep
+  \forall o \in \mOpSet
+  \labelEquation{omatch-oplace-ocost-connection}
+\end{equation}
+
+\begin{equation}
+  \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[m]
+  \labelEquation{total-cost}
+\end{equation}
+
 \subsection{Discussion}
 
-\section{Solving Improvement Techniques}
+\section{Search Strategies}
 
-\subsection{Search Strategies}
-
-\subsection{Cost Bounding}
-\subsubsection{Problem}
-\subsubsection{Lower Bound}
-\subsubsection{Modeling}
-\subsubsection{Upper Bound}
+\section{Cost Bounding}
+\subsection{Problem}
+\subsection{Lower Bound}
 \subsubsection{Modeling}
 
-\subsection{Presolving}
-\subsubsection{Dominated matches}
-\subsubsection{Illegal matches}
-\subsubsection{Redundant kill instructions}
-\subsubsection{Redundant null-copy instructions}
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mTable\left(
+    \langle
+      o,
+      \mVar{omatch}[o],
+      \mVar{oplace}[o],
+      \mVar{ocost}[o]
+    \rangle,
+    \mCostMatrix
+  \right)
+  \mQuantSep
+  \forall o \in \mOpSet.
+  \labelEquation{omatch-oplace-ocost-connection}
+\end{equation}
 
-\subsection{Implied and Dominance Breaking Constraints}
+\begin{equation}
+  \mRelaxedCost \leq \mVar{cost} < \mLlvmCost
+  \labelEquation{bounds}
+\end{equation}
+
+\subsection{Upper Bound}
+\subsubsection{Modeling}
+
+\section{Presolving}
+\subsection{Dominated matches}
+\subsection{Illegal matches}
+\subsection{Redundant kill instructions}
+\subsection{Redundant null-copy instructions}
+
+\section{Implied and Dominance Breaking Constraints}
 
 \section{Limitations}
 \subsection{Recomputation}
