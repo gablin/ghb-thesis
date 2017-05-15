@@ -137,7 +137,7 @@
     \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m)
   \end{array}
-  \labelEquation{dom}
+  \labelEquation{dom-alt}
 \end{equation}
 
 \begin{equation}
@@ -150,7 +150,7 @@
     \forall \hlDiff{p} \in \mDefines(m),
     \forall o \in \mCovers(m)
   \end{array}
-  \labelEquation{spanning}
+  \labelEquation{spanning-alt}
 \end{equation}
 
 \begin{equation}
@@ -163,7 +163,7 @@
       \hlDiff{\mOperandSet} \;\text{s.t.}
       \mStores(m, \hlDiff{p}) \neq \mEmptySet
   \end{array}
-  \labelEquation{valid-locations}
+  \labelEquation{valid-locations-alt}
 \end{equation}
 
 \begin{equation}
@@ -174,7 +174,7 @@
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mIntValues(m)
   \end{array}
-  \labelEquation{locs-of-intermediate-values}
+  \labelEquation{locs-of-intermediate-values-alt}
 \end{equation}
 
 \begin{equation}
@@ -324,22 +324,6 @@ where
 \subsection{Problem}
 \subsection{Lower Bound}
 \subsubsection{Modeling}
-
-\begin{equation}
-  \hspace*{-2mm} % Make it fit on one line
-  \mTable\left(
-    \langle
-      o,
-      \mVar{omatch}[o],
-      \mVar{oplace}[o],
-      \mVar{ocost}[o]
-    \rangle,
-    \mCostMatrix
-  \right)
-  \mQuantSep
-  \forall o \in \mOpSet.
-  \labelEquation{omatch-oplace-ocost-connection}
-\end{equation}
 
 \begin{equation}
   \mRelaxedCost \leq \mVar{cost} < \mLlvmCost
