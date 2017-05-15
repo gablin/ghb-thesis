@@ -44,18 +44,16 @@
   \vrule width 0pt height .9\ht\strutbox depth .9\dp\strutbox\relax%
 }
 \NewDocumentCommand{\hlDiff}{mo}{%
+  \IfValueT{#2}{\hspace{#2}}%
   \begingroup%
   \setlength{\fboxsep}{0pt}%
   \ifmmode%
-    \IfValueT{#2}{\hspace{#2}}%
     \colorbox{\hlDiffColor}{\hlStrut$#1$\/}%
-    \IfValueT{#2}{\hspace{#2}}%
   \else%
-    \IfValueT{#2}{\hspace{#2}}%
     \colorbox{\hlDiffColor}{\hlStrut#1\/}%
-    \IfValueT{#2}{\hspace{#2}}%
   \fi%
   \endgroup%
+  \IfValueT{#2}{\hspace{#2}}%
 }
 
 
