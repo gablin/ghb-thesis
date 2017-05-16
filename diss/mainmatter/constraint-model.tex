@@ -6,6 +6,8 @@
 
 \chapter{Constraint Model}
 
+TODO: define $\mUFGraph$
+
 \section{Global Instruction Selection}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
@@ -48,10 +50,19 @@ For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
 performs both an addition and a subtraction, a \gls{solution} to either problem
 requires an add instruction to compute the sum.
 
-
-
-\subsection{Problem}
 \subsection{Modeling}
+
+For sake of tractability, the constraint model introduced in this chapter
+assumes the former problem of \gls{global.is}[ \gls{instruction selection}].
+%
+The set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0, 1}$} models
+whether \gls{match}~\mbox{$m \in \mMatchSet$} is selected, where $\mMatchSet$
+denotes the match set found for $\mUFGraph$.
+%
+The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
+which selected match covers operation~\mbox{$o \in \mOpSet$}, where $\mOpSet$
+denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
+  \mMatchSet$} denotes the set of \glspl{match} that can cover~$o$.
 
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m]
