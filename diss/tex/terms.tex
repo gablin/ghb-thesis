@@ -5,9 +5,9 @@
 % of the license).
 
 \makeglossaries
-\NewDocumentCommand{\newterm}{moO{}}{%
-  \IfNoValueTF{#2}{%
-    \newglossaryentry{#1}{name={#1}, description=\nopostdesc, #3}%
+\NewDocumentCommand{\newterm}{omO{}}{%
+  \IfNoValueTF{#1}{%
+    \newglossaryentry{#2}{name={#2}, description=\nopostdesc, #3}%
   }{%
     \newglossaryentry{#1}{name={#2}, description=\nopostdesc, #3}%
   }%
@@ -18,5 +18,5 @@
   \newacronym[sort={#2},#3]{#1}{#1}{#2}%
 }
 
-\newterm{instruction selection}[instruction selection][user1={instruction}]
-\newterm{global instr-sel}[global][parent={instruction selection}]
+\newterm{instruction selection}[user1={instruction}]
+\newterm[global.is]{global}[parent={instruction selection}]
