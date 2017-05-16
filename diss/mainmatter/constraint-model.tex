@@ -7,6 +7,49 @@
 \chapter{Constraint Model}
 
 \section{Global Instruction Selection}
+
+In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
+selected such that every \gls{operation} in a given \gls{UF graph} is
+\gls{cover}[ed].
+%
+There are two variants of this problem:
+%
+\begin{enumerateinline}
+  \item each \gls{operation} must appear in \emph{exactly} one selected
+    \gls{match}; and
+%
+  \item each \gls{operation} must appear in \emph{at least} one selected
+    \gls{match}, hence allowing matches to \gls{overlap}.
+\end{enumerateinline}
+%
+The former problem is more common as it results in simpler models, with smaller
+\glspl{solution space}, and allows use of \glspl{constraint} that enable strong
+\gls{propagation}, which are essential for curbing solving time and increasing
+scalability.
+
+Depending on the \gls{instruction set}, the latter problem permits
+\glspl{solution} with potentially higher code quality.
+%
+For example, assume a \gls{UF graph} where a sum is used as address in two
+memory operations and a \gls{target machine} where the address can be computed
+as part of the memory instructions.
+%
+A \gls{solution} to the latter problem would therefore only need two
+instructions, whereas the former problem would require three instructions -- one
+to compute the sum and two to perform the memory operations -- since the
+addition is not allowed to be covered by both memory instructions.
+%
+In certain conditions, however, an add instruction may still be required.
+%
+For example, assume a \gls{UF graph} where the sum is also used in a
+subtraction.
+%
+For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
+performs both an addition and a subtraction, a \gls{solution} to either problem
+requires an add instruction to compute the sum.
+
+
+
 \subsection{Problem}
 \subsection{Modeling}
 
