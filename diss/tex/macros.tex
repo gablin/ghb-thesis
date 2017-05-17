@@ -54,6 +54,17 @@
   \IfValueT{#2}{\hspace{#2}}%
 }
 
+\NewDocumentEnvironment{statement}{}{%
+  \par%
+  \vspace{\baselineskip}%
+  \mbox{}\hfill\begin{minipage}{\textwidth-2\parindent}%
+    \itshape\raggedright%
+}{%
+  \end{minipage}
+  \par%
+  \vspace{\baselineskip}%
+}
+
 
 
 %=======
