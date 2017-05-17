@@ -1,0 +1,201 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+
+\chapter{Advanced Constraint Model}
+
+\section{Data Copying}
+\subsection{Problem}
+\subsection{Modeling}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[d] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mDataSet \;\text{s.t.} \mStores(m, d) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[d] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values}
+\end{equation}
+
+
+
+\section{Value Reuse}
+\subsection{Problem}
+\subsection{Match Duplication}
+\subsubsection{Modeling}
+\subsection{Alternative Values}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall \hlDiff{p} \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in
+      \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in
+      \hlDiff{\mOperandSet} \;\text{s.t.}
+      \mStores(m, \hlDiff{p}) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mEq
+    \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchSet[\mKill],
+    \forall p \in \mDefines(m)
+  \end{array}
+  \labelEquation{inactivity-when-killed}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \neg \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchCompSet{\mKill},
+    \forall p \in \mUses(m)
+  \end{array}
+  \labelEquation{inactivity-when-used}
+\end{equation}
+
+\subsection{Discussion}
+
+
+
+\section{Branch Fallthroughs}
+\subsection{Problem}
+\subsection{Branch Extension}
+\subsubsection{Modeling}
+\subsection{Dual-target Branch Patterns}
+\subsubsection{Modeling}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[\mEntry(m)] = b \mOr \mbox{} \\
+    \big(
+      \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
+      \mAnd
+      \mEmptyBlock(\mVar{succ}[\mEntry(m)])
+    \big) \\
+    \forall \mTuple{m}{b} \in \mFallThroughSet,
+  \end{array}
+  \labelEquation{fall-through}
+\end{equation}
+%
+where
+%
+\begin{equation*}
+  \mEmptyBlock(b) =
+  \mVar{oplace}[o] \neq b
+  \mOr
+  \mVar{omatch}[o] \in \mMatchSet[\mNull]
+  \mQuantSep
+  \forall o \in \mOpSet
+\end{equation*}
+
+\subsection{Discussion}
+
+
+
+\section{Cyclic Data Dependencies}
+
+\begin{equation}
+  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
+  \mQuantSep
+  \forall f \in \mForbiddenCombSet
+  \labelEquation{cyclic-data-deps}
+\end{equation}
+
+
+
+\section{Refined Objective Function}
+\subsection{Modeling}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mCostMatrix =
+  \begin{bmatrix}
+    \begin{array}{@{\:}c|c@{\:}}
+        o, m, b, \big( \mFreq(b) \times \mOpCost(m, o) \big)
+      & \begin{array}{@{}c@{}}
+          m \in \mMatchSet, \\
+          o \in \mCovers(m), \\
+          b \in \mBlockSet \\
+        \end{array}
+    \end{array}
+  \end{bmatrix}
+  \labelEquation{cost-matrix}
+\end{equation}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mTable\left(
+    \langle
+      o,
+      \mVar{omatch}[o],
+      \mVar{oplace}[o],
+      \mVar{ocost}[o]
+    \rangle,
+    \mCostMatrix
+  \right)
+  \mQuantSep
+  \forall o \in \mOpSet
+  \labelEquation{omatch-oplace-ocost-connection}
+\end{equation}
+
+\begin{equation}
+  \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[m]
+  \labelEquation{total-cost}
+\end{equation}
