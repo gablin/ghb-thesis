@@ -319,3 +319,24 @@
 
 % Set titles in ragged right mode
 \setrmarg{2.55em plus 1fil}
+
+
+
+%==================
+% CHAPTER HEADINGS
+%==================
+
+\setlength{\midchapskip}{50pt}
+\renewcommand*{\chapterheadstart}{%
+  % Remove all space above chapter heading
+}
+\renewcommand*{\chapnumfont}{%
+  \normalfont\fontsize{80}{100}\selectfont\flushright%
+}
+%\renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
+\renewcommand*{\printchaptername}{%
+  % Do not print "Chapter"
+}
+\renewcommand*{\printchaptertitle}[1]{%
+  \flushleft\chaptitlefont#1%
+}
