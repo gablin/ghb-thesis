@@ -60,14 +60,16 @@
 }
 
 \NewDocumentCommand{\makeListOfCommand}{mmmm}{%
-  \DeclareDocumentCommand{#1}{}{%
+  \DeclareDocumentCommand{#1}{s}{%
     \begingroup%
     \renewcommand{\cleardoublepage}{\clearpage}%
     \chapter*{#2}%
     \markboth{#2}{#2}%
     \endgroup%
     \@mkboth{#2}{#2}%
-    \addcontentsline{toc}{#4}{#2}%
+    \IfBooleanF{##1}{%
+      \addcontentsline{toc}{#4}{#2}%
+    }%
     \@starttoc{#3}%
   }%
 }
