@@ -4,11 +4,7 @@
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
 
-\chapter{Basic Constraint Model}
-
-TODO: define $\mUFGraph$
-
-\section{Global Instruction Selection}
+\chapter{Modeling Global Instruction Selection}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
 selected such that every \gls{operation} in a given \gls{UF graph} is
@@ -50,7 +46,9 @@ For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
 performs both an addition and a subtraction, a \gls{solution} to either problem
 requires an add instruction to compute the sum.
 
-\subsection{Modeling}
+\paragraph{Variables}
+
+TODO: define $\mUFGraph$
 
 For sake of tractability, the constraint model introduced in this chapter
 assumes the former problem of \gls{global.is}[ \gls{instruction selection}].
@@ -63,6 +61,8 @@ The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
 which selected match covers operation~\mbox{$o \in \mOpSet$}, where $\mOpSet$
 denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
   \mMatchSet$} denotes the set of \glspl{match} that can cover~$o$.
+
+\paragraph{Constraints}
 
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m]
@@ -82,103 +82,13 @@ denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
 
 
 
-\section{Global Code Motion}
-\subsection{Problem}
-\subsection{Modeling}
+\section{Forbidding Cyclic Data Dependencies}
+
+\paragraph{Constraints}
 
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
-    \forall m \in \mMatchSet,
-    \forall o_1 \in \mCovers(m),
-    \forall o_2 \in \mCovers(m)
-  \end{array}
-  \labelEquation{operation-placement}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
-    \forall m \in \mMatchSet,
-    \forall o \in \mCovers(m),
-    \forall b \in \mEntry(m)
-  \end{array}
-  \labelEquation{jump-placements}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
-    \forall m \in \mMatchCompSet{\mPhi},
-    \forall d \in \mUses(m),
-    \forall o \in \mCovers(m)
-  \end{array}
-  \labelEquation{dom}
-\end{equation}
-
-\begin{equation}
-  \mVar{dplace}[d] = b
+  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
   \mQuantSep
-  \forall \mUnDirEdge{d}{b} \in \mDefEdgeSet,
-  \labelEquation{def-edges}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
-    \forall m \in \mMatchSet,
-    \forall d \in \mDefines(m),
-    \forall o \in \mCovers(m)
-  \end{array}
-  \labelEquation{spanning}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{oplace}[o] \neq b \\
-    \forall o \in \mOpSet,
-    \forall m \in \mMatchSet,
-    \forall b \in \mConsumes(m)
-  \end{array}
-  \labelEquation{consumption}
-\end{equation}
-
-
-
-\section{Block Ordering}
-\subsection{Problem}
-\subsection{Modeling}
-
-\begin{equation}
-  \mCircuit\left(
-    \cup_{b \in \mBlockSet} \{\mVar{succ}[b]\}
-  \right)
-  \labelEquation{block-order}
-\end{equation}
-
-
-
-\section{Objective Function}
-\subsection{Problem}
-\subsection{Modeling}
-
-\begin{equation}
-  \sum_{b \in \mBlockSet}
-  \Big(
-    \mFreq(b) \times
-    \hspace{-4.5mm}
-    \sum_{
-      \substack{
-        m \in \mMatchSet \:\text{s.t.} \\
-        \mVar{place}[m] = b
-      }
-    }
-     \hspace{-4.5mm}
-    \mCost(m)
-  \Big)
-  \labelEquation{naive-objective-function}
+  \forall f \in \mForbiddenCombSet
+  \labelEquation{cyclic-data-deps}
 \end{equation}

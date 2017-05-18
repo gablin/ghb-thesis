@@ -1,0 +1,72 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+
+\chapter{Modeling Global Code Motion}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
+    \forall m \in \mMatchSet,
+    \forall o_1 \in \mCovers(m),
+    \forall o_2 \in \mCovers(m)
+  \end{array}
+  \labelEquation{operation-placement}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
+    \forall m \in \mMatchSet,
+    \forall o \in \mCovers(m),
+    \forall b \in \mEntry(m)
+  \end{array}
+  \labelEquation{jump-placements}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall d \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom}
+\end{equation}
+
+\begin{equation}
+  \mVar{dplace}[d] = b
+  \mQuantSep
+  \forall \mUnDirEdge{d}{b} \in \mDefEdgeSet,
+  \labelEquation{def-edges}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{oplace}[o] \neq b \\
+    \forall o \in \mOpSet,
+    \forall m \in \mMatchSet,
+    \forall b \in \mConsumes(m)
+  \end{array}
+  \labelEquation{consumption}
+\end{equation}

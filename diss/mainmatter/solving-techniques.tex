@@ -8,6 +8,46 @@
 
 \section{Search Strategies}
 
+\section{Refined Objective Function}
+\subsection{Modeling}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mCostMatrix =
+  \begin{bmatrix}
+    \begin{array}{@{\:}c|c@{\:}}
+        o, m, b, \big( \mFreq(b) \times \mOpCost(m, o) \big)
+      & \begin{array}{@{}c@{}}
+          m \in \mMatchSet, \\
+          o \in \mCovers(m), \\
+          b \in \mBlockSet \\
+        \end{array}
+    \end{array}
+  \end{bmatrix}
+  \labelEquation{cost-matrix}
+\end{equation}
+
+\begin{equation}
+  \hspace*{-2mm} % Make it fit on one line
+  \mTable\left(
+    \langle
+      o,
+      \mVar{omatch}[o],
+      \mVar{oplace}[o],
+      \mVar{ocost}[o]
+    \rangle,
+    \mCostMatrix
+  \right)
+  \mQuantSep
+  \forall o \in \mOpSet
+  \labelEquation{omatch-oplace-ocost-connection}
+\end{equation}
+
+\begin{equation}
+  \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[m]
+  \labelEquation{total-cost}
+\end{equation}
+
 \section{Cost Bounding}
 \subsection{Problem}
 \subsection{Lower Bound}

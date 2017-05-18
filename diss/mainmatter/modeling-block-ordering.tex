@@ -1,0 +1,61 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+
+\chapter{Modeling Block Ordering}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \mCircuit\left(
+    \cup_{b \in \mBlockSet} \{\mVar{succ}[b]\}
+  \right)
+  \labelEquation{block-order}
+\end{equation}
+
+
+
+
+\section{Handling Branch Fallthroughs}
+
+\subsection{Branch Extension}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\subsection{Dual-target Branch Patterns}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[\mEntry(m)] = b \mOr \mbox{} \\
+    \big(
+      \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
+      \mAnd
+      \mEmptyBlock(\mVar{succ}[\mEntry(m)])
+    \big) \\
+    \forall \mTuple{m}{b} \in \mFallThroughSet,
+  \end{array}
+  \labelEquation{fall-through}
+\end{equation}
+%
+where
+%
+\begin{equation*}
+  \mEmptyBlock(b) =
+  \mVar{oplace}[o] \neq b
+  \mOr
+  \mVar{omatch}[o] \in \mMatchSet[\mNull]
+  \mQuantSep
+  \forall o \in \mOpSet
+\end{equation*}
+
+\subsection{Discussion}
