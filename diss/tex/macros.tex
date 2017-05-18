@@ -295,3 +295,17 @@
 % Rename certain items
 \renewcommand{\seename}{see also}
 \renewcommand{\glossaryname}{Index}
+
+
+
+%===================
+% TABLE OF CONTENTS
+%===================
+
+% Increase width for chapter numbers
+\addtolength{\cftchapternumwidth}{4pt}
+\addtolength{\cftsectionindent}{4pt}
+
+% Right-align chapter numbers
+\renewcommand{\cftchapterpresnum}{\hfill}
+\renewcommand{\cftchapteraftersnum}{\hspace*{8pt}}
