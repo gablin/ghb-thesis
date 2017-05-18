@@ -305,7 +305,11 @@
 % Increase width for chapter numbers
 \addtolength{\cftchapternumwidth}{4pt}
 \addtolength{\cftsectionindent}{4pt}
+\addtolength{\cftsectionnumwidth}{3pt}
 
 % Right-align chapter numbers
 \renewcommand{\cftchapterpresnum}{\hfill}
 \renewcommand{\cftchapteraftersnum}{\hspace*{8pt}}
+
+% Reduce space between leading dots
+\renewcommand{\cftsectiondotsep}{4}
