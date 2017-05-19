@@ -330,11 +330,8 @@
 \renewcommand*{\chapterheadstart}{%
   % Remove all space above chapter heading
 }
-\renewcommand*{\chapnamefont}{%
-  \LARGE\bfseries%
-}
 \renewcommand*{\chapnumfont}{%
-  \normalfont\fontsize{80}{100}\selectfont%
+  \normalfont\fontsize{60}{80}\selectfont%
 }
 \renewcommand*{\printchaptername}{%
   % Do not print "Chapter"
@@ -350,16 +347,7 @@
 \newlength{\chapnumkerning}
 \setlength{\chapnumkerning}{-6pt}
 \renewcommand*{\printchapternum}{%
-  \flushright%
-  \chapnamefont Chapter\hspace{\chapnumboxwx}%
-  % Fix kerning when chapter starts with a 1
-  \ifnum\value{chapter}=1%
-    \hspace{\chapnumkerning}%
-  \fi%
-  \ifnum\value{chapter}>9%
-    \hspace{\chapnumkerning}%
-  \fi%
-  \chapnumfont%
+  \flushright\chapnumfont%
   \savebox{\chapnumbox}{\thechapter}%
   \settoheight{\chapnumboxh}{\usebox{\chapnumbox}}%
   \usebox{\chapnumbox}%
