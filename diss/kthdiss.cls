@@ -15,26 +15,26 @@
 \newif\if@kthdiff@electronic \@kthdiff@electronicfalse
 \DeclareOption{electronic}{\@kthdiff@electronictrue}
 \DeclareOption{g5paper}{\def\kthdiff@trimmedsize{gfive}}
-\DeclareOption{a3paper}{\PackageError{kthdiff}{'a3paper' format not supported}}
+\DeclareOption{a3paper}{\ClassError{kthdiff}{'a3paper' format not supported}}
 \DeclareOption{a4paper}{\def\kthdiff@trimmedsize{afour}}
-\DeclareOption{a5paper}{\PackageError{kthdiff}{'a5paper' format not supported}}
-\DeclareOption{a6paper}{\PackageError{kthdiff}{'a6paper' format not supported}}
-\DeclareOption{b3paper}{\PackageError{kthdiff}{'b3paper' format not supported}}
-\DeclareOption{b4paper}{\PackageError{kthdiff}{'b4paper' format not supported}}
-\DeclareOption{b5paper}{\PackageError{kthdiff}{'b5paper' format not supported}}
-\DeclareOption{b6paper}{\PackageError{kthdiff}{'b6paper' format not supported}}
+\DeclareOption{a5paper}{\ClassError{kthdiff}{'a5paper' format not supported}}
+\DeclareOption{a6paper}{\ClassError{kthdiff}{'a6paper' format not supported}}
+\DeclareOption{b3paper}{\ClassError{kthdiff}{'b3paper' format not supported}}
+\DeclareOption{b4paper}{\ClassError{kthdiff}{'b4paper' format not supported}}
+\DeclareOption{b5paper}{\ClassError{kthdiff}{'b5paper' format not supported}}
+\DeclareOption{b6paper}{\ClassError{kthdiff}{'b6paper' format not supported}}
 \DeclareOption{letterpaper}{%
-  \PackageError{kthdiff}{'letterpaper' format not supported}%
+  \ClassError{kthdiff}{'letterpaper' format not supported}%
 }
 \DeclareOption{legalpaper}{%
-  \PackageError{kthdiff}{'legalpaper' format not supported}%
+  \ClassError{kthdiff}{'legalpaper' format not supported}%
 }
 \DeclareOption{executivepaper}{%
-  \PackageError{kthdiff}{'executivepaper' format not supported}%
+  \ClassError{kthdiff}{'executivepaper' format not supported}%
 }
-\DeclareOption{ebook}{\PackageError{kthdiff}{'ebook' format not supported}}
+\DeclareOption{ebook}{\ClassError{kthdiff}{'ebook' format not supported}}
 \DeclareOption{landscape}{%
-  \PackageError{kthdiff}{'landscape' format not supported}%
+  \ClassError{kthdiff}{'landscape' format not supported}%
 }
 
 % Pass on undeclared options to memoir class
