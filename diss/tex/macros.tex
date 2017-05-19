@@ -359,3 +359,21 @@
 \renewcommand*{\printchaptertitle}[1]{%
   \flushright\chaptitlefont#1%
 }
+
+% Customize typesetting of page headers
+\newcommand{\headerpsep}{%
+  \hspace{30pt}% 2x \parindent
+}
+\nouppercaseheads
+\makeevenhead{headings}{\thepage\headerpsep\leftmark}{}{}
+\makeoddhead{headings}{}{}{\rightmark\headerpsep\thepage}
+\pagestyle{headings}
+
+% Remove 'Chapter' from page headers
+\makeatletter
+\patchcmd{\chaptermark}{\@chapapp\ }{}{}{}
+\makeatother
+
+% Remove number dot from page headers
+\patchcmd{\chaptermark}{. \ }{ \ }{}{}
+\patchcmd{\sectionmark}{. \ }{ \ }{}{}
