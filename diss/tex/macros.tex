@@ -330,13 +330,44 @@
 \renewcommand*{\chapterheadstart}{%
   % Remove all space above chapter heading
 }
-\renewcommand*{\chapnumfont}{%
-  \normalfont\fontsize{80}{100}\selectfont\flushright%
+\renewcommand*{\chapnamefont}{%
+  \LARGE\bfseries%
 }
-%\renewcommand*{\chaptitlefont}{\normalfont\HUGE\scshape}
+\renewcommand*{\chapnumfont}{%
+  \normalfont\fontsize{80}{100}\selectfont%
+}
 \renewcommand*{\printchaptername}{%
   % Do not print "Chapter"
 }
+\newsavebox{\chapnumbox}
+\newlength{\chapnumboxw}
+\setlength{\chapnumboxw}{\stockwidth-1in-\hoffset-\oddsidemargin-\textwidth}
+\newlength{\chapnumboxh}
+\newlength{\chapnumboxd}
+\setlength{\chapnumboxd}{12pt}
+\newlength{\chapnumboxwx}
+\setlength{\chapnumboxwx}{20pt}
+\newlength{\chapnumkerning}
+\setlength{\chapnumkerning}{-6pt}
+\renewcommand*{\printchapternum}{%
+  \flushright%
+  \chapnamefont Chapter\hspace{\chapnumboxwx}%
+  % Fix kerning when chapter starts with a 1
+  \ifnum\value{chapter}=1%
+    \hspace{\chapnumkerning}%
+  \fi%
+  \ifnum\value{chapter}>9%
+    \hspace{\chapnumkerning}%
+  \fi%
+  \chapnumfont%
+  \savebox{\chapnumbox}{\thechapter}%
+  \settoheight{\chapnumboxh}{\usebox{\chapnumbox}}%
+  \usebox{\chapnumbox}%
+  \rlap{%
+    \hspace*{\chapnumboxwx}%
+    \vrule width \chapnumboxw height \chapnumboxh%
+  }%
+}
 \renewcommand*{\printchaptertitle}[1]{%
-  \flushleft\chaptitlefont#1%
+  \flushright\chaptitlefont#1%
 }
