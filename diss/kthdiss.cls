@@ -56,10 +56,13 @@
 \def\@kthdiff@setpapersize@gfive{%
   \if@kthdiff@electronic
     \setstocksize{239mm}{169mm}
-    \settrimmedsize{239mm}{169mm}{*}
   \else
+    % Set stock size to A4 format
     \setstocksize{297mm}{210mm}
-    \settrimmedsize{239mm}{169mm}{*}
+  \fi
+  \settrimmedsize{239mm}{169mm}{*}
+  \if@kthdiff@electronic
+  \else
     \setlength{\trimtop}{\stockheight}
     \addtolength{\trimtop}{-\paperheight}
     \setlength{\trimtop}{0.5\trimtop}
