@@ -57,10 +57,6 @@
   \if@kthdiff@electronic
     \setstocksize{239mm}{169mm}
     \settrimmedsize{239mm}{169mm}{*}
-    \ifpdf
-    \else
-      \special{papersize=169mm,239mm}
-    \fi
   \else
     \setstocksize{297mm}{210mm}
     \settrimmedsize{239mm}{169mm}{*}
@@ -69,12 +65,6 @@
     \setlength{\trimtop}{0.5\trimtop}
     \setlength{\trimedge}{\stockwidth}
     \addtolength{\trimedge}{-\paperwidth}
-    \ifpdf
-      \AtBeginDocument{%
-        \setlength{\pdfpagewidth}{\stockwidth}%
-        \setlength{\pdfpageheight}{\stockheight}%
-      }
-    \fi
   \fi
   \settypeblocksize{43pc}{30pc}{*}
 }
