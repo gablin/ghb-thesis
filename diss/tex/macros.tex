@@ -377,3 +377,15 @@
 % Remove number dot from page headers
 \patchcmd{\chaptermark}{. \ }{ \ }{}{}
 \patchcmd{\sectionmark}{. \ }{ \ }{}{}
+
+
+
+%============
+% PARAGRAPHS
+%============
+
+% Add period after heading in paragraphs
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{%
+  \oldparagraph{#1.}%
+}
