@@ -96,6 +96,18 @@
   \ref{cont:#1}%
 }
 
+\newlist{publications}{enumerate}{1}
+\setlist[publications]{%
+  label=P\arabic*,
+}
+
+\NewDocumentCommand{\labelPublication}{m}{%
+  \label{cont:#1}%
+}
+\NewDocumentCommand{\refPublication}{m}{%
+  \ref{cont:#1}%
+}
+
 
 
 %======
@@ -222,6 +234,13 @@
 
 % Remove terminating period from every bib entry
 \renewcommand{\finentrypunct}{}
+
+% Modify \fullcite to include all authors.
+\let\oldfullcite\fullcite
+\renewcommand{\fullcite}[1]{%
+  \AtNextCite{\AtEachCitekey{\defcounter{maxnames}{100}}}%
+  \oldfullcite{#1}%
+}
 
 
 
