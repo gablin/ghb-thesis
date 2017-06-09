@@ -80,6 +80,18 @@
   label=(\arabic*),
 }
 
+\newlist{contributions}{enumerate}{1}
+\setlist[contributions]{%
+  label=C\arabic*,
+}
+
+\NewDocumentCommand{\labelContribution}{m}{%
+  \label{cont:#1}%
+}
+\NewDocumentCommand{\refContribution}{m}{%
+  \ref{cont:#1}%
+}
+
 
 
 %======
