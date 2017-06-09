@@ -30,17 +30,38 @@
 \todo{Define ``practical''}
 \todo{Define ``competitive''}
 
+\section{Approach}
+
+\todo{Overview figure}
+
 \section{Contributions}
 
-This dissertation makes ? contributions to the areas of code generation and
+This dissertation makes five contributions to the areas of code generation and
 constraint programming:
 
 \begin{contributions}
-  \item \todo{survey}
-  \item \todo{representations}
-  \item \todo{constraint model}
-  \item \todo{experiments}
+  \item a comprehensive and structured survey that covers over four decades of
+    research in instruction selection;
+  \item program and instruction representations that enable
+    \begin{enumerate}[label=\alph*)]
+      \item uniform treatment of data- and control-flow operations, and
+      \item global instruction selection and global code motion to be combined
+        and modeled as a constraint model;
+    \end{enumerate}
+  \item transformations on the representations that perform
+    \begin{enumerate}[label=\alph*)]
+      \item copy extension (to perform and account for the cost of data
+        copying), and
+      \item alternative value extension (to enable value reuse);
+    \end{enumerate}
+  \item a constraint model that -- for the first time -- integrates global
+    instruction selection with global code motion, as well as data copying,
+    value reuse, and block ordering;
+  \item thorough experiments demonstrating that the approach scales to
+    medium-sized programs and yields better code than traditional approaches.
 \end{contributions}
+
+\todo{Where are these discussed further?}
 
 \section{Outline}
 
