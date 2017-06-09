@@ -28,7 +28,11 @@
   }%
 }
 \newcommand{\wrt}{w.r.t.}
-\newcommand{\todo}[1]{\textcolor{black!25!red}{[#1]}}
+\newcommand{\todo}[1]{%
+  \par\noindent%
+  \textcolor{black!25!red}{\raisebox{1pt}{\rule{4pt}{4pt}}~#1}%
+  \par%
+}
 
 % Enable bold version of the monotype font
 % See http://www.macfreek.nl/memory/LaTeX_Bold_Typewriter_Font
