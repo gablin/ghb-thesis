@@ -376,23 +376,8 @@
 \renewcommand*{\printchaptername}{%
   % Do not print "Chapter"
 }
-\newsavebox{\chapnumbox}
-\newlength{\chapnumboxw}
-\setlength{\chapnumboxw}{\stockwidth-1in-\hoffset-\oddsidemargin-\textwidth}
-\newlength{\chapnumboxh}
-\newlength{\chapnumboxd}
-\setlength{\chapnumboxd}{12pt}
-\newlength{\chapnumboxwx}
-\setlength{\chapnumboxwx}{20pt}
 \renewcommand*{\printchapternum}{%
-  \flushright\chapnumfont%
-  \savebox{\chapnumbox}{\thechapter}%
-  \settoheight{\chapnumboxh}{\usebox{\chapnumbox}}%
-  \usebox{\chapnumbox}%
-%  \rlap{%
-%    \hspace*{\chapnumboxwx}%
-%    \vrule width \chapnumboxw height \chapnumboxh%
-%  }%
+  \flushright\chapnumfont\thechapter%
 }
 \renewcommand*{\printchaptertitle}[1]{%
   \flushleft\chaptitlefont#1%
