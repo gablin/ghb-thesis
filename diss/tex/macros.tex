@@ -8,10 +8,19 @@
 % TEXT
 %======
 
-\newcommand{\labelFigure}[1]{\label{fig:#1}}
-\newcommand{\refFigure}[1]{\mbox{Fig.\thinspace\ref{fig:#1}}}
+\newcommand{\labelChapter}[1]{\label{chap:#1}}
+\NewDocumentCommand{\refChapter}{sm}{%
+  \mbox{%
+    \IfBooleanF{#1}{Chap.\thinspace}%
+    \ref{chap:#2}%
+  }%
+}
 \newcommand{\labelSection}[1]{\label{sec:#1}}
 \newcommand{\refSection}[1]{\mbox{Sect.\thinspace\ref{sec:#1}}}
+\newcommand{\labelFigure}[1]{\label{fig:#1}}
+\newcommand{\refFigure}[1]{\mbox{Fig.\thinspace\ref{fig:#1}}}
+\newcommand{\labelTable}[1]{\label{tab:#1}}
+\newcommand{\refTable}[1]{\mbox{Tab.\thinspace\ref{tag:#1}}}
 \newcommand{\labelEquation}[1]{\label{eq:#1}}
 \NewDocumentCommand{\refEquation}{sm}{%
   \IfBooleanTF{#1}{%
