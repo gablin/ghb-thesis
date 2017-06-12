@@ -36,7 +36,7 @@
 
 \section{Contributions}
 
-This dissertation makes six contributions to the areas of code generation and
+This dissertation makes five contributions to the areas of code generation and
 constraint programming:
 
 \begin{contributions}
@@ -44,30 +44,27 @@ constraint programming:
     a comprehensive and structured survey that covers over four decades of
     research in instruction selection;
   \item \labelContribution{representations}
-    program and instruction representations that enable
+    a program and instruction representation that enables
     \begin{contributions}
-      \item uniform treatment of data- and control-flow operations, and
-      \item global instruction selection and global code motion to be combined
-        and modeled as a constraint model;
-    \end{contributions}
-  \item \labelContribution{transformations}
-    transformations on the representations that include
-    \begin{contributions}
-      \item \labelContribution{copy-extension}
-        copy extension (to perform and account for the cost of data copying),
-        and
-      \item \labelContribution{alt-values}
-        alternative value extension (to enable value reuse);
+      \item \labelContribution{rep-uniformity}
+        uniform treatment of data- and control-flow operations, and
+      \item \labelContribution{rep-complex-instructions}
+        modeling and pattern matching of complex processor instructions as
+        patterns, and
+      \item \labelContribution{rep-combining-problems}
+        modeling of global instruction selection and global code motion as a
+        constraint model;
     \end{contributions}
   \item \labelContribution{constraint-model}
-    a constraint model that -- for the first time -- integrates
+    a constraint model and related transformations that, for the first time,
+    integrates
     \begin{contributions}
       \item \labelContribution{cp-global-instruction-selection}
         global instruction selection with
       \item \labelContribution{cp-global-code-motion}
         global code motion,
     \end{contributions}
-    as well as
+    and also integrates
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
         data copying,
@@ -91,6 +88,133 @@ constraint programming:
 \todo{Describe chapters}
 \todo{Connect contributions with chapters}
 
+\begin{table}
+  \centering%
+  \begin{tabular}{c@{\qquad}*{11}{c}}
+    \toprule
+      Chapter
+    & \refContribution{survey}
+    & \multicolumn{3}{c}{\refContribution{representations}}
+    & \multicolumn{5}{c}{\refContribution{constraint-model}}
+    & \refContribution{solving-techniques}
+    & \refContribution{experiments} \\
+    \cmidrule(lr){3-5}%
+    \cmidrule(lr){6-10}%
+    &
+    & \refContribution{rep-uniformity}
+    & \refContribution{rep-complex-instructions}
+    & \refContribution{rep-combining-problems}
+    & \refContribution{cp-global-instruction-selection}
+    & \refContribution{cp-global-code-motion}
+    & \refContribution{cp-data-copying}
+    & \refContribution{cp-block-ordering}
+    & \refContribution{cp-value-reuse}
+    &
+    & \\
+    \midrule
+    \refChapter*{universal-representations}
+    & \supportNo
+    & \supportYes
+    & \supportYes
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{pattern-matching}
+    & \supportNo
+    & \supportYes
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{modeling-global-instruction-selection}
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportYes
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{modeling-global-code-motion}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{modeling-data-copying}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{modeling-block-ordering}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{modeling-value-reuse}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo
+    & \supportNo \\
+    \refChapter*{solving-techniques}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo \\
+    \bottomrule
+  \end{tabular}
+
+  \caption{TODO}
+  \labelTable{TODO}
+\end{table}
+
 \section{Publications}
 
 This dissertation is based on material presented in the following publications:
@@ -107,26 +231,29 @@ This dissertation is based on material presented in the following publications:
 \todo{Describe the contribution of each publication}
 \todo{Connect contributions with publications}
 
-
-
 \begin{table}
   \centering%
-  \begin{tabular}{lcccccccccccc}
+  \begin{tabular}{c@{\qquad}*{9}{c}}
+    \toprule
+      Publication
     & \refContribution{survey}
     & \refContribution{representations}
-    & \refContribution{copy-extension}
-    & \refContribution{alt-values}
+    & \multicolumn{5}{c}{\refContribution{constraint-model}}
+    & \refContribution{solving-techniques}
+    & \refContribution{experiments} \\
+    \cmidrule(lr){4-8}%
+    &
+    &
     & \refContribution{cp-global-instruction-selection}
     & \refContribution{cp-global-code-motion}
     & \refContribution{cp-data-copying}
     & \refContribution{cp-block-ordering}
     & \refContribution{cp-value-reuse}
-    & \refContribution{solving-techniques}
-    & \refContribution{experiments} \\
+    &
+    & \\
+    \midrule
     \refPublication{survey}
     & \supportYes
-    & \supportNo
-    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -139,27 +266,27 @@ This dissertation is based on material presented in the following publications:
     & \supportNo
     & \supportYes
     & \supportYes
-    & \supportNo
-    & \supportYes
     & \supportYes
     & \supportYes
     & \supportYes
     & \supportNo
-    & \supportYes
+    & \supportNo
     & \supportYes \\
     \refPublication{cases-paper}
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportYes
-    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportYes
     & \supportYes
-    & \supportYes
+    & \supportYes \\
+    \bottomrule
   \end{tabular}
+
+  \caption{TODO}
+  \labelTable{TODO}
 \end{table}
 
 The author also participated in the following publications, which are out of
