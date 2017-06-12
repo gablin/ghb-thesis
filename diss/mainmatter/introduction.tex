@@ -282,7 +282,7 @@ is manifested.
 This dissertation is based on material presented in the following publications:
 
 \begin{publications}
-  \item \labelPublication{survey}
+  \item \labelPublication{survey-book}
     \fullcite{HjortBlindell:2016:Survey}.
   \item \labelPublication{cp-paper}
     \fullcite{HjortBlindellEtAl:2015:CP}.
@@ -316,7 +316,7 @@ contribution is manifested.
     &
     & \\
     \midrule
-    \refPublication{survey}
+    \refPublication{survey-book}
     & \supportYes
     & \supportNo
     & \supportNo
@@ -357,11 +357,19 @@ The author also participated in the following publications, which are out of
 scope for the dissertation:
 
 \begin{publications}[resume]
-  \item \fullcite{HjortBlindell:2013:Survey}.
-  \item \fullcite{HjortBlindellEtAl:2014:FDL}.
-  \item \fullcite{HjortBlindellEtAl:2016:FDL}.
-  \item \fullcite{CastanedaLozanoEtAl:2014:LCTES}.
-  \item \fullcite{CastanedaLozanoEtAl:2016:CC}.
+  \item \labelPublication{survey-report}
+    \fullcite{HjortBlindell:2013:Survey}.
+  \item \labelPublication{lctes}
+    \fullcite{CastanedaLozanoEtAl:2014:LCTES}.
+  \item \labelPublication{cc}
+    \fullcite{CastanedaLozanoEtAl:2016:CC}.
+  \item \labelPublication{fdl-2016}
+    \fullcite{HjortBlindellEtAl:2016:FDL}.
 \end{publications}
 
-\todo{Describe briefly each publication and why they are excluded}
+\refPublication{survey-report} is excluded as it is subsumed and extended by
+\refPublication{survey-book}. \refPublication{lctes} and \refPublication{cc} are
+excluded as they are only partially related to the dissertation (they apply
+constraint programming to solve register allocation and instruction scheduling).
+\refPublication{fdl-2016} is excluded as it belongs to a different topic
+entirely (high-level code generation for graphics processors).
