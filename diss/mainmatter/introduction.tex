@@ -53,14 +53,29 @@ constraint programming:
   \item \labelContribution{transformations}
     transformations on the representations that include
     \begin{contributions}
-      \item copy extension (to perform and account for the cost of data
-        copying), and
-      \item alternative value extension (to enable value reuse);
+      \item \labelContribution{copy-extension}
+        copy extension (to perform and account for the cost of data copying),
+        and
+      \item \labelContribution{alt-values}
+        alternative value extension (to enable value reuse);
     \end{contributions}
   \item \labelContribution{constraint-model}
-    a constraint model that integrates -- for the first time -- global
-    instruction selection together with global code motion, including data
-    copying, block ordering, and value reuse;
+    a constraint model that -- for the first time -- integrates
+    \begin{contributions}
+      \item \labelContribution{cp-global-instruction-selection}
+        global instruction selection with
+      \item \labelContribution{cp-global-code-motion}
+        global code motion,
+    \end{contributions}
+    as well as
+    \begin{contributions}[resume]
+      \item \labelContribution{cp-data-copying}
+        data copying,
+      \item \labelContribution{cp-block-ordering}
+        block ordering, and
+      \item \labelContribution{cp-value-reuse}
+        value reuse;
+    \end{contributions}
   \item \labelContribution{solving-techniques}
     solving techniques that enables practical solving of the constraint model;
     and
@@ -96,15 +111,25 @@ This dissertation is based on material presented in the following publications:
 
 \begin{table}
   \centering%
-  \begin{tabular}{lcccccccc}
+  \begin{tabular}{lcccccccccccc}
     & \refContribution{survey}
     & \refContribution{representations}
-    & \refContribution{transformations}
-    & \refContribution{constraint-model}
+    & \refContribution{copy-extension}
+    & \refContribution{alt-values}
+    & \refContribution{cp-global-instruction-selection}
+    & \refContribution{cp-global-code-motion}
+    & \refContribution{cp-data-copying}
+    & \refContribution{cp-block-ordering}
+    & \refContribution{cp-value-reuse}
     & \refContribution{solving-techniques}
     & \refContribution{experiments} \\
     \refPublication{survey}
     & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -114,13 +139,23 @@ This dissertation is based on material presented in the following publications:
     & \supportNo
     & \supportYes
     & \supportYes
+    & \supportNo
     & \supportYes
+    & \supportYes
+    & \supportYes
+    & \supportYes
+    & \supportNo
     & \supportYes
     & \supportYes \\
     \refPublication{cases-paper}
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportYes
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
     & \supportYes
     & \supportYes
     & \supportYes
