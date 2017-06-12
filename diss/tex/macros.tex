@@ -84,9 +84,14 @@
   label=(\arabic*),
 }
 
-\newlist{contributions}{enumerate}{1}
-\setlist[contributions]{%
+\newlist{contributions}{enumerate}{2}
+\setlist[contributions,1]{%
   label=C\arabic*,
+}
+\setlist[contributions,2]{%
+  label=\alph*),
+  ref=\thecontributionsi\alph*,
+  topsep=0pt,
 }
 
 \NewDocumentCommand{\labelContribution}{m}{%
@@ -96,16 +101,17 @@
   \ref{cont:#1}%
 }
 
+
 \newlist{publications}{enumerate}{1}
 \setlist[publications]{%
   label=P\arabic*,
 }
 
 \NewDocumentCommand{\labelPublication}{m}{%
-  \label{cont:#1}%
+  \label{pub:#1}%
 }
 \NewDocumentCommand{\refPublication}{m}{%
-  \ref{cont:#1}%
+  \ref{pub:#1}%
 }
 
 
@@ -403,4 +409,20 @@
 \let\oldparagraph\paragraph
 \renewcommand{\paragraph}[1]{%
   \oldparagraph{#1.}%
+}
+
+
+
+%======
+% MISC
+%======
+
+\newcommand{\supportNo}{%
+  $\cdot$%
+}
+
+\newcommand{\supportYes}{%
+  \begin{tikzpicture}
+    \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
+  \end{tikzpicture}%
 }
