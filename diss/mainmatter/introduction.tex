@@ -22,8 +22,8 @@
 \section{Thesis Statement}
 
 \begin{statement}
-  Constraint programming is a flexible, practical, and competitive approach to
-  instruction selection.
+  \Glstext{constraint programming} is a flexible, practical, and competitive
+  approach to \glstext{instruction selection}.
 \end{statement}
 
 \todo{Define ``flexible''}
@@ -42,40 +42,40 @@ constraint programming:
 \begin{contributions}
 \item \labelContribution{survey}
     a comprehensive and structured survey that covers over four decades of
-    research in instruction selection;
+    research in \gls{instruction selection};
   \item \labelContribution{representations}
     a program and instruction representation that enables
     \begin{contributions}
       \item \labelContribution{rep-uniformity}
         uniform treatment of data- and control-flow operations, and
       \item \labelContribution{rep-complex-instructions}
-        modeling and pattern matching of complex processor instructions as
-        patterns, and
+        modeling and pattern matching of complex \glspl{processor instruction}
+        as \glspl{pattern}, and
       \item \labelContribution{rep-combining-problems}
-        modeling of global instruction selection and global code motion as a
-        constraint model;
+        modeling of \gls{global.is}[ \gls{instruction selection}] and
+        \gls{global code motion} as a \gls{constraint model};
     \end{contributions}
   \item \labelContribution{constraint-model}
-    a constraint model and related transformations that, for the first time,
-    integrates
+    a \gls{constraint model} and related transformations that, for the first
+    time, integrates
     \begin{contributions}
       \item \labelContribution{cp-global-instruction-selection}
-        global instruction selection with
+        \gls{global.is}[ \gls{instruction selection}] with
       \item \labelContribution{cp-global-code-motion}
-        global code motion,
+        \gls{global code motion},
     \end{contributions}
     and also integrates
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
-        data copying,
+        \gls{data copying},
       \item \labelContribution{cp-block-ordering}
-        block ordering, and
+        \gls{block ordering}, and
       \item \labelContribution{cp-value-reuse}
-        value reuse;
+        \gls{value reuse};
     \end{contributions}
   \item \labelContribution{solving-techniques}
-    solving techniques that enables practical solving of the constraint model;
-    and
+    solving techniques that enables practical solving of the \gls{constraint
+      model}; and
   \item \labelContribution{experiments}
     thorough experiments demonstrating that the approach scales to medium-sized
     programs and yields better code than traditional approaches.
@@ -367,6 +367,7 @@ scope for the dissertation:
 \refPublication{survey-report} is excluded as it is subsumed and extended by
 \refPublication{survey-book}. \refPublication{lctes} and \refPublication{cc} are
 excluded as they are only partially related to the dissertation (they apply
-constraint programming to solve register allocation and instruction scheduling).
-\refPublication{fdl-2016} is excluded as it belongs to a different topic
-entirely (high-level code generation for graphics processors).
+\gls{constraint programming} to solve \gls{register allocation} and
+\gls{instruction scheduling}). \refPublication{fdl-2016} is excluded as it
+belongs to a different topic entirely (high-level code generation for graphics
+processors).
