@@ -10,8 +10,28 @@
 
 \section{Background and Motivation}
 
-\todo{Explain code generation}
+\begin{figure}
+  \centering%
+  \input{figures/introduction/compiler-overview}
+
+  \caption{TODO}
+  \labelFigure{compiler-overview}
+\end{figure}
+
+A \gls{compiler} is a tool that takes a \gls{program}, written in some
+programming language, as input and produces a machine-specific equivalent as
+output. This entails many tasks, as shown in \refFigure{compiler-overview}, such
+as syntactic and semantic analysis, a wide range of target-independent
+optimizations, and \gls{code generation}. The last task in turn consists of many
+subtasks, the most important of which are \gls{instruction selection},
+\gls{register allocation}, and \gls{instruction scheduling}.
+
+\paragraph{Instruction Selection}
+
+An \gls{instruction selector} takes a program
+
 \todo{Explain instruction selection (what, why)}
+
 \todo{Explain global code motion (what, why)}
 \todo{Explain block ordering (what, why)}
 \todo{Traditional approaches (how)}
