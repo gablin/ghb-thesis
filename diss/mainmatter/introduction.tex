@@ -38,7 +38,7 @@
 
 \section{Contributions}
 
-This dissertation makes five contributions to the areas of code generation and
+This dissertation makes six contributions to the areas of code generation and
 constraint programming:
 %
 \begin{contributions}
@@ -77,10 +77,14 @@ constraint programming:
     \end{contributions}
   \item \labelContribution{solving-techniques}
     solving techniques that enable practical solving of the \gls{constraint
-      model}; and
+      model};
   \item \labelContribution{experiments}
     thorough experiments demonstrating that the approach scales to medium-sized
-    programs and yields better code than traditional approaches.
+    programs and yields better code than traditional approaches; and
+  \item \labelContribution{integration}
+    an initial design showing how the \gls{constraint model} can be extended to
+    integrate other code generation tasks, such as \gls{instruction scheduling}
+    and \gls{register allocation}.
 \end{contributions}
 %
 \refTable{contributions-per-chapter} shows in which chapters each contribution
@@ -88,14 +92,15 @@ is manifested and discussed further.
 
 \begin{table}
   \centering%
-  \begin{tabular}{c@{\qquad}*{11}{c}}
+  \begin{tabular}{c@{\qquad}*{12}{c}}
     \toprule
       \tabhead Chapter
     & \tabhead\refContribution{survey}
     & \multicolumn{3}{c}{\tabhead\refContribution{representations}}
     & \multicolumn{5}{c}{\tabhead\refContribution{constraint-model}}
     & \tabhead\refContribution{solving-techniques}
-    & \tabhead\refContribution{experiments} \\
+    & \tabhead\refContribution{experiments}
+    & \tabhead\refContribution{integration} \\
     \cmidrule(lr){3-5}%
     \cmidrule(lr){6-10}%
     &
@@ -108,10 +113,12 @@ is manifested and discussed further.
     & \tabhead\refContribution{cp-block-ordering}
     & \tabhead\refContribution{cp-value-reuse}
     &
+    &
     & \\
     \midrule
     \refChapter*{current-instruction-selection-techniques}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -133,11 +140,13 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{pattern-matching}
     & \supportNo
     & \supportYes
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -157,6 +166,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{modeling-global-code-motion}
     & \supportNo
@@ -165,6 +175,7 @@ is manifested and discussed further.
     & \supportYes
     & \supportNo
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -181,6 +192,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{modeling-block-ordering}
     & \supportNo
@@ -191,6 +203,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo \\
@@ -205,6 +218,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportYes
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{solving-techniques}
     & \supportNo
@@ -217,9 +231,37 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportYes
+    & \supportNo
     & \supportNo \\
+    \refChapter*{comparison-against-the-state-of-the-art}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes
+    & \supportNo \\
+    \refChapter*{integrating-other-code-generation-tasks}
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportNo
+    & \supportYes \\
     \refChapter*{macro-expansion}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -241,6 +283,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{dag-covering}
     & \supportYes
@@ -253,9 +296,11 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{graph-covering}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -291,14 +336,15 @@ contributions and the publications above.
 %
 \begin{table}
   \centering%
-  \begin{tabular}{c@{\qquad}*{9}{c}}
+  \begin{tabular}{c@{\qquad}*{10}{c}}
     \toprule
       \tabhead Publication
     & \tabhead\refContribution{survey}
     & \tabhead\refContribution{representations}
     & \multicolumn{5}{c}{\tabhead\refContribution{constraint-model}}
     & \tabhead\refContribution{solving-techniques}
-    & \tabhead\refContribution{experiments} \\
+    & \tabhead\refContribution{experiments}
+    & \tabhead\refContribution{integration} \\
     \cmidrule(lr){4-8}%
     &
     &
@@ -308,10 +354,12 @@ contributions and the publications above.
     & \tabhead\refContribution{cp-block-ordering}
     & \tabhead\refContribution{cp-value-reuse}
     &
+    &
     & \\
     \midrule
     \refPublication{survey-book}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -329,7 +377,8 @@ contributions and the publications above.
     & \supportYes
     & \supportNo
     & \supportNo
-    & \supportYes \\
+    & \supportYes
+    & \supportNo \\
     \refPublication{cases-paper}
     & \supportNo
     & \supportNo
@@ -339,7 +388,8 @@ contributions and the publications above.
     & \supportNo
     & \supportYes
     & \supportYes
-    & \supportYes \\
+    & \supportYes
+    & \supportNo \\
     \bottomrule
   \end{tabular}
 
