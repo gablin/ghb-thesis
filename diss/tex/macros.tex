@@ -313,24 +313,20 @@
 }
 \setglossarystyle{myglossary}
 
-% Typesets a new term when it is defined.
-\NewDocumentCommand{\typesetNewTerm}{m}{%
-  % Cannot use \textit{} here as that will cause bad kerning
-  {\itshape#1}%
+% Adds a modifier to all \gls-like commands for emphasizing the term
+\GlsXtrSetAltModifier{!}{format=hyperit}
+\makeatletter
+\renewcommand*{\glslinkpostsetkeys}{%
+  \ifdefstring\@glsnumberformat{hyperit}%
+                               {\let\glstextformat\emph}%
+                               {\let\glstextformat\@firstofone}%
 }
-
-% Typeset first-occurrence terms and their page numbers in index
-\defglsentryfmt{%
-  \ifglsused{\glslabel}{%
-    \glsgenentryfmt%
-  }{%
-    % Typeset first use
-    \typesetNewTerm{\glsgenentryfmt}%
-  }%
-}
+\makeatother
 
 % Force 'see also' to appear on a new line in the index
-\renewcommand\glsseeformat[3][\seename]{\\*\mbox{}\hfill\emph{#1} \glsseelist{#2}}
+\renewcommand\glsseeformat[3][\seename]{%
+  \\*\mbox{}\hfill\emph{#1} \glsseelist{#2}%
+}
 
 % Rename certain items
 \renewcommand{\seename}{see also}
