@@ -24,20 +24,29 @@ output. As shown in \refFigure{compiler-overview}, a compiler typically consists
 of three parts:%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item a \gls!{frontend}, which performs syntactic and semantic analysis
-  \item an \gls!{optimizer}, which performs target-independent optimizations and
-    is sometimes called the \gls!{middle-end}
+  \item an \gls!{optimizer} (sometimes called \gls!{middle-end}), which performs
+    target-independent optimizations such as \gls!{global code motion}, where
+    \glspl{operation} are moved across \gls{block} boundaries into \glspl{basic
+      block} with lower execution frequency
   \item a \gls!{backend}, which performs \gls{code generation}
 \end{inlinelist}.
-Depending on the target machine, \gls{code generation} in turn typically
-consists of three tasks:%
+\Gls{code generation} in turn consists of several tasks, four which of are of
+interest in this dissertation:%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item \gls!{instruction selection}, where \glspl{instruction} implementing the
     given \gls{program} are selected
   \item \gls!{register allocation}, where \gls{virtual.temp} \glspl{temporary}
     are assigned to \glspl{register}
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
-    in order to increase instruction-level parallelism
+    to increase instruction-level parallelism
+  \item \gls!{block ordering}, where the sequence of \glspl{basic block} is
+    rearranged to reduce the number of branch \glspl{instruction}.
 \end{inlinelist}.
+Each of these problems is also an optimization problem, meaning there often
+exist more than one solution for a given \gls{program}, which may result in code
+where quality differs significantly.
+
+
 
 \todo{Explain instruction selection in more detail}
 \todo{Explain global code motion (what, why)}

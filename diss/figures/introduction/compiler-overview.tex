@@ -6,19 +6,26 @@
 %
 \begingroup%
 \figureFont%
-\newdimen\stageWidth%
-\stageWidth=1.5cm%
-\newdimen\stageHeight%
-\stageHeight=8mm%
-\newdimen\stageDist%
-\stageDist=0.6\stageWidth%
+\def\compStageWidth{1.5cm}%
+\def\compStageHeight{8mm}%
+\def\compStageDist{0.6*\compStageWidth}%
+\def\compWrapperInnerSep{0.5*\compStageDist}%
+\def\optStageWidth{\compStageWidth}%
+\def\optStageHeight{\compStageHeight}%
+\def\optStageDist{0.5*\compStageDist}%
+\def\optWrapperInnerSep{3mm}%
+\def\backStageWidth{\compStageWidth}%
+\def\backStageHeight{\compStageHeight}%
+\def\backStageDist{0.5*\compStageDist}%
+\def\backWrapperInnerSep{3mm}%
+\def\wrapperOuterSep{1.75*\compStageHeight}%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[%
     input/.style={%
       inner sep=0,
       outer sep=2pt,
-      node distance=\stageDist,
+      node distance=\compStageDist,
       font=\strut,
     },
     output/.style={%
@@ -34,30 +41,46 @@
       box,
       inner sep=0,
       outer sep=0,
-      minimum width=\stageWidth,
-      minimum height=\stageHeight,
-      node distance=\stageDist,
+      minimum width=\compStageWidth,
+      minimum height=\compStageHeight,
+      node distance=\compStageDist,
       fill=shade0,
     },
     compiler wrapper/.style={%
       box,
-      inner xsep=0.5\stageDist,
-      inner ysep=0.5\stageHeight,
+      inner sep=\compWrapperInnerSep,
       rounded corners=6pt,
       fill=shade2,
     },
     backend stage/.style={%
       compiler stage,
-      minimum width=\stageWidth,
-      minimum height=\stageHeight,
-      node distance=0.5\stageDist,
+      minimum width=\backStageWidth,
+      minimum height=\backStageHeight,
+      node distance=\backStageDist,
     },
     backend wrapper/.style={%
       box,
-      inner xsep=0.33\stageDist,
-      inner ysep=0.33\stageHeight,
+      inner sep=\backWrapperInnerSep,
       rounded corners=3pt,
       fill=shade1,
+    },
+    optimizer stage/.style={%
+      backend stage,
+      minimum width=\optStageWidth,
+      minimum height=\optStageHeight,
+      node distance=\optStageDist,
+    },
+    optimizer intermediate stage/.style={%
+      optimizer stage,
+      minimum width=0,
+      outer xsep=3pt,
+      draw=none,
+      fill=none,
+    },
+    optimizer wrapper/.style={%
+      backend wrapper,
+      inner xsep=\optWrapperInnerSep,
+      inner ysep=\optWrapperInnerSep,
     },
     flow/.style={%
       ->,
@@ -70,7 +93,7 @@
     },
     wrapper label/.style={%
       label,
-      outer sep=1pt,
+      outer sep=0,
       font=\strut\bfseries,
     },
   ]
@@ -99,36 +122,74 @@
 
   \footnotesize
 
-  % Backend stages
-  \node [backend stage, below=1.5\stageDist of backend] (regalloc) {%
+  % Optimizer stages
+  \node [optimizer stage, below=\wrapperOuterSep of optimizer] (gcmotion) {%
     \begin{tabular}{c}
-      register\\
-      allocator
+      global\\
+      code motion
     \end{tabular}
   };
-  \node [backend stage, left=of regalloc] (isel) {%
+  \node [optimizer intermediate stage, left=of gcmotion] (pre-gcmotion)
+        {$\ldots$};
+  \node [optimizer intermediate stage, right=of gcmotion] (post-gcmotion)
+        {$\ldots$};
+  \begin{pgfonlayer}{background}
+    \node [optimizer wrapper, fit=(pre-gcmotion) (gcmotion) (post-gcmotion)]
+          (optimizer-wrapper) {};
+  \end{pgfonlayer}
+  \node [wrapper label, above=of optimizer-wrapper] {optimizer};
+
+  % Optimizer execution flow
+  \begin{scope}[flow]
+    \draw ([xshift=-\optStageDist] optimizer-wrapper.west)
+          --
+          (pre-gcmotion);
+    \draw (pre-gcmotion) -- (gcmotion);
+    \draw (gcmotion) -- (post-gcmotion);
+    \draw (post-gcmotion)
+          --
+          ([xshift=\optStageDist] optimizer-wrapper.east);
+  \end{scope}
+
+  % Backend stages
+  \node [backend stage, below left=\wrapperOuterSep and 36pt of gcmotion]
+        (isel)
+  {%
     \begin{tabular}{c}
       instruction\\
-      selector
+      selection
+    \end{tabular}
+  };
+  \node [backend stage, right=of isel] (regalloc) {%
+    \begin{tabular}{c}
+      register\\
+      allocation
     \end{tabular}
   };
   \node [backend stage, right=of regalloc] (isched) {%
     \begin{tabular}{c}
       instruction\\
-      scheduler
+      scheduling
+    \end{tabular}
+  };
+  \node [backend stage, right=of isched] (ordering) {%
+    \begin{tabular}{c}
+      block\\
+      ordering
     \end{tabular}
   };
   \begin{pgfonlayer}{background}
-    \node [backend wrapper, fit=(isel) (regalloc) (isched)]
+    \node [backend wrapper, fit=(isel) (regalloc) (isched) (ordering)]
           (backend-wrapper) {};
   \end{pgfonlayer}
 
-  % Backstage execution flow
+  % Backend execution flow
   \begin{scope}[flow]
-    \draw ([xshift=-0.3\stageWidth] backend-wrapper.west) -- (isel);
+    \draw ([xshift=-\backStageDist] backend-wrapper.west) -- (isel);
     \draw (isel) -- (regalloc);
     \draw (regalloc) -- (isched);
-    \draw (isched) -- ([xshift=0.3\stageWidth] backend-wrapper.east);
+    \draw (isched) -- (ordering);
+    \draw (ordering) -- ([xshift=\backStageDist] backend-wrapper.east);
   \end{scope}
   \node [wrapper label, above=of backend-wrapper] {backend};
 \end{tikzpicture}%
