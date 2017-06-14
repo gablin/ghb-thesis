@@ -6,12 +6,130 @@
 %
 \begingroup%
 \figureFont%
-\begin{tikzpicture}
-  \node {%
+\newdimen\stageWidth%
+\stageWidth=1.5cm%
+\newdimen\stageHeight%
+\stageHeight=8mm%
+\newdimen\stageDist%
+\stageDist=0.6\stageWidth%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[%
+    input/.style={%
+      inner sep=0,
+      outer sep=2pt,
+      node distance=\stageDist,
+      font=\strut,
+    },
+    output/.style={%
+      input,
+    },
+    box/.style={%
+      draw,
+    },
+    box/.append style={%
+      thick,
+    },
+    compiler stage/.style={%
+      box,
+      inner sep=0,
+      outer sep=0,
+      minimum width=\stageWidth,
+      minimum height=\stageHeight,
+      node distance=\stageDist,
+      fill=shade0,
+    },
+    compiler wrapper/.style={%
+      box,
+      inner xsep=0.5\stageDist,
+      inner ysep=0.5\stageHeight,
+      rounded corners=6pt,
+      fill=shade2,
+    },
+    backend stage/.style={%
+      compiler stage,
+      minimum width=\stageWidth,
+      minimum height=\stageHeight,
+      node distance=0.5\stageDist,
+    },
+    backend wrapper/.style={%
+      box,
+      inner xsep=0.33\stageDist,
+      inner ysep=0.33\stageHeight,
+      rounded corners=3pt,
+      fill=shade1,
+    },
+    flow/.style={%
+      ->,
+      thick,
+    },
+    label/.style={%
+      inner sep=0,
+      outer sep=3pt,
+      node distance=0,
+    },
+    wrapper label/.style={%
+      label,
+      outer sep=1pt,
+      font=\strut\bfseries,
+    },
+  ]
+
+  \small
+
+  % Compiler stages
+  \node [input] (input) {program};
+  \node [compiler stage, right=of input] (frontend) {frontend};
+  \node [compiler stage, right=of frontend] (optimizer) {optimizer};
+  \node [compiler stage, right=of optimizer] (backend) {backend};
+  \node [output, right=of backend] (output) {assembly code};
+  \begin{pgfonlayer}{background}
+    \node [compiler wrapper, fit=(frontend) (optimizer) (backend)]
+          (compiler-wrapper) {};
+  \end{pgfonlayer}
+  \node [wrapper label, above=of compiler-wrapper] {compiler};
+
+  % Compiler execution flow
+  \begin{scope}[flow]
+    \draw (input) -- (frontend);
+    \draw (frontend) -- node [label, above] {IR} (optimizer);
+    \draw (optimizer) -- node [label, above] {IR} (backend);
+    \draw (backend) -- (output);
+  \end{scope}
+
+  \footnotesize
+
+  % Backend stages
+  \node [backend stage, below=1.5\stageDist of backend] (regalloc) {%
     \begin{tabular}{c}
-      syntactic \&\\
-      semantic analysis
-    \end{tabular}%
+      register\\
+      allocator
+    \end{tabular}
   };
+  \node [backend stage, left=of regalloc] (isel) {%
+    \begin{tabular}{c}
+      instruction\\
+      selector
+    \end{tabular}
+  };
+  \node [backend stage, right=of regalloc] (isched) {%
+    \begin{tabular}{c}
+      instruction\\
+      scheduler
+    \end{tabular}
+  };
+  \begin{pgfonlayer}{background}
+    \node [backend wrapper, fit=(isel) (regalloc) (isched)]
+          (backend-wrapper) {};
+  \end{pgfonlayer}
+
+  % Backstage execution flow
+  \begin{scope}[flow]
+    \draw ([xshift=-0.3\stageWidth] backend-wrapper.west) -- (isel);
+    \draw (isel) -- (regalloc);
+    \draw (regalloc) -- (isched);
+    \draw (isched) -- ([xshift=0.3\stageWidth] backend-wrapper.east);
+  \end{scope}
+  \node [wrapper label, above=of backend-wrapper] {backend};
 \end{tikzpicture}%
 \endgroup%
