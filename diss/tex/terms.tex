@@ -19,12 +19,17 @@
 }
 
 \newterm{compiler}
+\newterm{frontend}
+\newterm{backend}
+\newterm{middle-end}[see={optimizer}]
+\newterm{optimizer}[see={middle-end}]
 \newterm{code generation}
-\newterm{program}
+\newterm{instruction selector}
+\newterm{register allocator}
+\newterm{instruction scheduler}
 
 \newterm{instruction selection}[user1={instruction}]
 \newterm[global.is]{global}[parent={instruction selection}]
-\newterm{instruction selector}
 \newterm{global code motion}
 \newterm{data copying}
 \newterm{block ordering}
@@ -32,9 +37,12 @@
 \newterm{register allocation}
 \newterm{instruction scheduling}
 
-\newterm{instruction}[see={processor instruction}]
-\newterm{processor instruction}[see={instruction}]
+\newterm{program}
+\newterm{instruction}
 \newterm{instruction set}
+\newterm{register}
+\newterm{temporary}[plural={temporaries}]
+\newterm[virtual.temp]{virtual}[parent={temporary}]
 \newterm{target machine}
 
 \newterm{constraint}

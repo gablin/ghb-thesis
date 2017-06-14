@@ -18,20 +18,28 @@
   \labelFigure{compiler-overview}
 \end{figure}
 
-A \gls{compiler} is a tool that takes a \gls{program}, written in some
+A \gls!{compiler} is a tool that takes a \gls{program}, written in some
 programming language, as input and produces a machine-specific equivalent as
-output. This entails many tasks, as shown in \refFigure{compiler-overview}, such
-as syntactic and semantic analysis, a wide range of target-independent
-optimizations, and \gls{code generation}. The last task in turn consists of many
-subtasks, the most important of which are \gls{instruction selection},
-\gls{register allocation}, and \gls{instruction scheduling}.
+output. As shown in \refFigure{compiler-overview}, a compiler typically consists
+of three parts:%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item a \gls!{frontend}, which performs syntactic and semantic analysis
+  \item an \gls!{optimizer}, which performs target-independent optimizations and
+    is sometimes called the \gls!{middle-end}
+  \item a \gls!{backend}, which performs \gls{code generation}
+\end{inlinelist}.
+Depending on the target machine, \gls{code generation} in turn typically
+consists of three tasks:%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item \gls!{instruction selection}, where \glspl{instruction} implementing the
+    given \gls{program} are selected
+  \item \gls!{register allocation}, where \gls{virtual.temp} \glspl{temporary}
+    are assigned to \glspl{register}
+  \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
+    in order to increase instruction-level parallelism
+\end{inlinelist}.
 
-\paragraph{Instruction Selection}
-
-An \gls{instruction selector} takes a program
-
-\todo{Explain instruction selection (what, why)}
-
+\todo{Explain instruction selection in more detail}
 \todo{Explain global code motion (what, why)}
 \todo{Explain block ordering (what, why)}
 \todo{Traditional approaches (how)}
@@ -69,20 +77,20 @@ constraint programming:
     a program and instruction representation that enables
     \begin{contributions}
       \item \labelContribution{rep-uniformity}
-        uniform treatment of data- and control-flow operations, and
+        uniform treatment of data- and control-flow \glspl{operation}, and
       \item \labelContribution{rep-complex-instructions}
-        modeling and pattern matching of complex \glspl{processor instruction}
-        as \glspl{pattern}, and
+        modeling and pattern matching of complex \glspl{instruction} as
+        \glspl{pattern}, and
       \item \labelContribution{rep-combining-problems}
-        modeling of \gls{global.is}[ \gls{instruction selection}] and
-        \gls{global code motion} as a \gls{constraint model};
+        modeling of \gls{global.is} \gls{instruction selection} and \gls{global
+          code motion} as a \gls{constraint model};
     \end{contributions}
   \item \labelContribution{constraint-model}
     a \gls{constraint model} and related transformations that, for the first
     time, integrates
     \begin{contributions}
       \item \labelContribution{cp-global-instruction-selection}
-        \gls{global.is}[ \gls{instruction selection}] with
+        \gls{global.is} \gls{instruction selection} with
       \item \labelContribution{cp-global-code-motion}
         \gls{global code motion},
     \end{contributions}
