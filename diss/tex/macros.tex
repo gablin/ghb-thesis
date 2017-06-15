@@ -381,9 +381,9 @@
 
 
 
-%==================
-% CHAPTER HEADINGS
-%==================
+%==============================
+% CHAPTER AND SECTION HEADINGS
+%==============================
 
 \setlength{\midchapskip}{50pt}
 \renewcommand*{\chapterheadstart}{%
@@ -401,6 +401,13 @@
 \renewcommand*{\printchaptertitle}[1]{%
   \flushleft\chaptitlefont#1%
 }
+\renewcommand*{\chaptitlefont}{%
+  \sffamily\Huge\bfseries%
+}
+\setsecheadstyle{\sffamily\Large\bfseries}
+\setsubsecheadstyle{\sffamily\large\bfseries}
+\setsubsubsecheadstyle{\sffamily\bfseries}
+\setparaheadstyle{\sffamily\bfseries}
 
 % Customize typesetting of page headers
 \newcommand{\headerpsep}{%
