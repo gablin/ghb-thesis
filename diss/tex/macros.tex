@@ -314,7 +314,24 @@
 }
 \setglossarystyle{myglossary}
 
-% Adds a modifier to all \gls-like commands for emphasizing the term
+% Commands for introducing terms and acronyms
+\NewDocumentCommand{\newterm}{omO{}}{%
+  \IfNoValueTF{#1}{%
+    \newglossaryentry{#2}{name={#2}, description=\nopostdesc, #3}%
+  }{%
+    \newglossaryentry{#1}{name={#2}, description=\nopostdesc, #3}%
+  }%
+}
+\let\oldnewacronym\newacronym
+\RenewDocumentCommand{\newacronym}{mmO{}}{%
+  \oldnewacronym[sort={#2},#3]{#1}{#1}{#2}%
+}
+
+% Commands for referring to a short version of a term or acronym
+\let\glsshort\glsuseri
+\let\glsplshort\glsuserii
+
+% Adds a modifier to all \gls-like commands for emphasizing the term or acronym
 \GlsXtrSetAltModifier{!}{format=hyperit}
 \makeatletter
 \renewcommand*{\glslinkpostsetkeys}{%

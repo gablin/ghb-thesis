@@ -5,19 +5,6 @@
 % of the license).
 
 \makeglossaries
-\NewDocumentCommand{\newterm}{omO{}}{%
-  \IfNoValueTF{#1}{%
-    \newglossaryentry{#2}{name={#2}, description=\nopostdesc, #3}%
-  }{%
-    \newglossaryentry{#1}{name={#2}, description=\nopostdesc, #3}%
-  }%
-}
-\let\glsshort\glsuseri
-\let\glsplshort\glsuserii
-\let\oldnewacronym\newacronym
-\RenewDocumentCommand{\newacronym}{mmO{}}{%
-  \oldnewacronym[sort={#2},#3]{#1}{#1}{#2}%
-}
 
 \newterm{compiler}
 \newterm{frontend}
