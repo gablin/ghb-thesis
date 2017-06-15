@@ -14,8 +14,9 @@
 }
 \let\glsshort\glsuseri
 \let\glsplshort\glsuserii
-\NewDocumentCommand{\makeacronym}{mmO{}}{%
-  \newacronym[sort={#2},#3]{#1}{#1}{#2}%
+\let\oldnewacronym\newacronym
+\RenewDocumentCommand{\newacronym}{mmO{}}{%
+  \oldnewacronym[sort={#2},#3]{#1}{#1}{#2}%
 }
 
 \newterm{compiler}
@@ -62,3 +63,5 @@
 \newterm{operation}
 \newterm{pattern}
 \newterm{UF graph}[first={universal function (UF) graph}]
+
+\newacronym{IR}{intermediate representation}
