@@ -419,9 +419,20 @@
 \newcommand{\supportNo}{%
   $\cdot$%
 }
-
 \newcommand{\supportYes}{%
   \begin{tikzpicture}
     \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
   \end{tikzpicture}%
+}
+
+\newcommand{\codeFont}{\ttfamily}
+\lstset{basicstyle=\codeFont\footnotesize}
+\newcommand{\cCode}[1]{\mbox{\texttt{#1}}}
+\newcommand{\cVar}[1]{\cCode{#1}}
+\newcommand{\irCode}[1]{\mbox{\textsf{#1}}}
+\NewDocumentCommand{\irVar}{mo}{%
+  \irCode{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+}
+\NewDocumentCommand{\irTemp}{m}{%
+  \irCode{t$_{\text{#1}}$}%
 }

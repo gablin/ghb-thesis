@@ -1,0 +1,90 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\footnotesize%
+\def\nodeDist{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    every node/.style={
+      draw,
+      fill=white,
+      very thick,
+      minimum size=0,
+      inner xsep=4pt,
+      inner ysep=2.5pt,
+      node distance=\nodeDist,
+      font=\ttfamily,
+    },
+    flow/.style={
+      ->,
+      very thick,
+      shorten <=-2pt,
+    },
+    tf label/.style={
+      draw=none,
+      fill=none,
+      minimum size=0,
+      inner xsep=4pt,
+      node distance=0,
+      font=\sffamily,
+      auto,
+    },
+    block label/.style={
+      tf label,
+      inner xsep=0,
+      inner ysep=1pt,
+      font=\sffamily\bfseries,
+    },
+  ]
+
+  \node (b1) {i $=$ 0};
+  \node [below=of b1, inner xsep=1em] (b2) {if i $<$ N};
+  \node [below=of b2] (b3)
+        {%
+          \begin{tabular}{@{}l@{}}
+            \irTemp{1} = i $*$ 4\\
+            \irTemp{2} = A + \irTemp{1}; \irTemp{3} = B + \irTemp{1}\\
+            a = load \irTemp{2}; b = load \irTemp{3}\\
+            c = a $+$ b\\
+            if MAX $<$ c
+          \end{tabular}%
+        };
+  \node [below right=1.25*\nodeDist and 0 of b3.south west] (b4) {c $=$ MAX};
+  \node [below left= 1.25*\nodeDist and 0 of b3.south east] (b5)
+        {%
+          \begin{tabular}{@{}l@{}}
+            \irTemp{4} = C $+$ \irTemp{1}\\
+            store \irTemp{4}, c\\
+            i = i $+$ 1
+          \end{tabular}%
+        };
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[flow]
+      \draw (b1) -- (b2);
+      \draw (b2) -- node [tf label] {T} (b3);
+      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.025] {T} (b4);
+      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.025, swap] {F} (b5);
+      \draw (b4) -- (b4 -| b5.west);
+      \draw [rounded corners=10pt]
+            ([yshift=10pt] b5.south west)
+            -|
+            ([xshift=-10pt] b3.west)
+            |-
+            (b2);
+      \draw (b2) -- node [tf label] {F} ([xshift=2*\nodeDist] b2.east);
+    \end{scope}
+  \end{pgfonlayer}
+
+  \node [block label, left=of b1, inner xsep=2pt] {b1\hspace*{-1pt}};
+  \foreach \i in {2, 3, 4} {
+    \node [block label, above right=0 and 0 of b\i.north west] {b\i};
+  }
+  \node [block label, above left=0 and 0 of b5.north east] {b5};
+\end{tikzpicture}%
+\endgroup%

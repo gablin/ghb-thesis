@@ -42,15 +42,48 @@ interest in this dissertation:%
   \item \gls!{block ordering}, where the sequence of \glspl{basic block} is
     rearranged to reduce the number of branch \glspl{instruction}.
 \end{inlinelist}.
-Each of these problems is also an optimization problem, meaning there often
-exist more than one solution for a given \gls{program}, which may result in code
-where quality differs significantly.
+Each of the problems above is also an optimization problem, meaning there often
+exist more than one solution for a given \gls{program} which may result in code
+where quality differs significantly. For example, depending on the hardware the
+efficiency of one set of selected instructions compared to another may differ by
+as much as two orders of magnitude~\cite{ZivojnovicEtAl:1994}.
 
+\paragraph{Motivating Example}
 
+\begin{filecontents*}{isel-gcmotion-example.c}
+int i = 0;
+while (i < N) {
+  int c = A[i] + B[i];
+  if (MAX < c)
+    c = MAX;
+  C[i] = c;
+  i++;
+}
+\end{filecontents*}
 
-\todo{Explain instruction selection in more detail}
-\todo{Explain global code motion (what, why)}
-\todo{Explain block ordering (what, why)}
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{isel-gcmotion-example-c}}%
+                {\lstinputlisting[language=c]{isel-gcmotion-example.c}}%
+  \hspace{5mm}%
+  \subcaptionbox{Corresponding IR and control-flow graph%
+                 \labelFigure{example-program-ir}}%
+                [64mm]%
+                {\input{figures/introduction/isel-gcmotion-example-ir}}%
+  \caption{A program that computes the saturated sums of two arrays,
+    where \cVar{A}, \cVar{B}, and \cVar{C} are integer arrays of equal lengths
+    stored in memory, and \cVar{N} and \cVar{MAX} are integer constants
+    representing the array length and the upper limit, respectively. An
+    \cVar{int} value is assumed to be 4~bytes}%
+  \labelFigure{isel-gcmotion-example}%
+\end{figure}
+
+\todo{Give example showing the interaction between instruction selection and
+  global code motion}
+
+\todo{Give another example showing the interaction between instruction selection
+  and block ordering}
+
 \todo{Traditional approaches (how)}
 \todo{Limitations (why)}
 \todo{Combinatorial optimization (what)}
