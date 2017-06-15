@@ -8,34 +8,33 @@
 % TEXT
 %======
 
-\newcommand{\labelChapter}[1]{\label{chap:#1}}
-\NewDocumentCommand{\refChapter}{sm}{%
-  \mbox{%
-    \IfBooleanF{#1}{Chap.\thinspace}%
-    \ref{chap:#2}%
+% Builds \labelX, \refX, and \RefX commands:
+%    #1: the identifier (X)
+%    #2: Short term to appear in reference (without ending dot)
+\NewDocumentCommand{\buildLabelRefCommands}{mm}{%
+  \expandafter\newcommand\csname label#1\endcsname[1]{\label{#1:##1}}%
+  \expandafter\NewDocumentCommand\csname ref#1\endcsname{sm}{%
+    \mbox{%
+      \IfBooleanF{##1}{#2.\thinspace}%
+      \ref{#1:##2}%
+    }%
+  }%
+  \expandafter\NewDocumentCommand\csname Ref#1\endcsname{sm}{%
+    \mbox{%
+      \IfBooleanF{##1}{#1~}%
+      \ref{#1:##2}%
+    }%
   }%
 }
-\newcommand{\labelSection}[1]{\label{sec:#1}}
-\newcommand{\refSection}[1]{\mbox{Sect.\thinspace\ref{sec:#1}}}
-\newcommand{\labelFigure}[1]{\label{fig:#1}}
-\newcommand{\refFigure}[1]{\mbox{Fig.\thinspace\ref{fig:#1}}}
-\newcommand{\labelTable}[1]{\label{tab:#1}}
-\newcommand{\refTable}[1]{\mbox{Tab.\thinspace\ref{tab:#1}}}
-\newcommand{\labelEquation}[1]{\label{eq:#1}}
-\NewDocumentCommand{\refEquation}{sm}{%
-  \IfBooleanTF{#1}{%
-    \ref{eq:#2}%
-  }{%
-    \mbox{Eq.\thinspace\ref{eq:#2}}%
-  }%
-}
-\NewDocumentCommand{\citeEquation}{sm}{%
-  \IfBooleanTF{#1}{%
-    #2%
-  }{%
-    \mbox{Eq.\thinspace#2}%
-  }%
-}
+
+% Build labeling and reference commands
+\buildLabelRefCommands{Chapter}{Chap}
+\buildLabelRefCommands{Section}{Sect}
+\buildLabelRefCommands{Figure}{Fig}
+\buildLabelRefCommands{Table}{Tab}
+\buildLabelRefCommands{Equation}{Eq}
+
+% Other text commands
 \newcommand{\wrt}{w.r.t.}
 \newcommand{\todo}[1]{%
   \par\noindent%
