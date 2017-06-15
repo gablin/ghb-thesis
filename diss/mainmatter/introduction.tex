@@ -51,7 +51,29 @@ efficiency of two sets of selected instructions may differ by as much as two
 orders of magnitude~\cite{ZivojnovicEtAl:1994}. In addition, these problems
 interact with one another.
 
-\paragraph{Motivating Example}
+\paragraph{Global Code Motion}
+
+\todo{Explain the problem, give example}
+
+\paragraph{Instruction Selection}
+
+\todo{Explain the problem, give example}
+
+\paragraph{Register Allocation}
+
+\todo{Explain the problem, give example}
+
+\paragraph{Instruction Scheduling}
+
+\todo{Explain the problem, give example}
+
+\paragraph{Block Ordering}
+
+\todo{Explain the problem, give example}
+
+\subsection{A Motivating Example}
+
+\subsubsection{A Motivating Example}
 
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
@@ -69,17 +91,28 @@ while (i < N) {
   \subcaptionbox{C code\labelFigure{isel-gcmotion-example-c}}%
                 {\lstinputlisting[language=c]{isel-gcmotion-example.c}}%
   \hspace{5mm}%
-  \subcaptionbox{Corresponding IR and control-flow graph%
+  \subcaptionbox{Corresponding \gls{IR} and control-flow graph%
                  \labelFigure{example-program-ir}}%
                 [64mm]%
                 {\input{figures/introduction/isel-gcmotion-example-ir}}%
-  \caption{A program that computes the saturated sums of two arrays,
+  \caption{A program computing the saturated sums of two arrays,
     where \cVar{A}, \cVar{B}, and \cVar{C} are integer arrays of equal lengths
     stored in memory, and \cVar{N} and \cVar{MAX} are integer constants
     representing the array length and the upper limit, respectively. An
     \cVar{int} value is assumed to be 4~bytes}%
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
+
+\RefFigure{isel-gcmotion-example} shows a program that computes the saturated
+sums of two integer arrays. In saturation arithmetic, the result of an
+arithmetic operation will always stay within a range fixed by a minimum and
+maximum value. If the operation would produce a value outside of this range,
+then the value is set (``clamped'') to the closest limit, thus becoming
+``saturated''.
+
+Let us now perform \gls{instruction selection} on this program for a machine
+which has an instruction capable of performing multiple add operations (a
+so-called \gls!{SIMD} \gls{instruction}).
 
 \todo{Give example showing the interaction between instruction selection and
   global code motion}
