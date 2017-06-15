@@ -18,7 +18,7 @@
 \def\backStageHeight{\compStageHeight}%
 \def\backStageDist{0.5*\compStageDist}%
 \def\backWrapperInnerSep{3mm}%
-\def\wrapperOuterSep{1.75*\compStageHeight}%
+\def\wrapperOuterSep{9mm}%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[%
@@ -123,7 +123,8 @@
   \footnotesize
 
   % Optimizer stages
-  \node [optimizer stage, below=\wrapperOuterSep of optimizer] (gcmotion) {%
+  \node [optimizer stage, below=\wrapperOuterSep of compiler-wrapper]
+        (gcmotion) {%
     \begin{tabular}{c}
       global\\
       code motion
@@ -152,7 +153,8 @@
   \end{scope}
 
   % Backend stages
-  \node [backend stage, below left=\wrapperOuterSep and 36pt of gcmotion]
+  \node [backend stage,
+         below left=\wrapperOuterSep and 0pt of optimizer-wrapper]
         (isel)
   {%
     \begin{tabular}{c}
