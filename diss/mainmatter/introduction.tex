@@ -23,7 +23,8 @@ programming language, as input and produces a machine-specific equivalent as
 output. As shown in \refFigure{compiler-overview}, a compiler typically consists
 of three parts:%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item a \gls!{frontend}, which performs syntactic and semantic analysis
+  \item a \gls!{frontend}, which performs syntactic and semantic analysis and
+    transforms the program into an \gls!{IR}
   \item an \gls!{optimizer} (sometimes called \gls!{middle-end}), which performs
     target-independent optimizations such as \gls!{global code motion}, where
     \glspl{operation} are moved across \gls{block} boundaries into \glspl{basic
