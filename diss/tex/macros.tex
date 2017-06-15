@@ -319,7 +319,10 @@
 \makeatletter
 \renewcommand*{\glslinkpostsetkeys}{%
   \ifdefstring\@glsnumberformat{hyperit}%
-                               {\let\glstextformat\emph}%
+                               {%
+                                 \glsreset{\glslabel}%
+                                 \let\glstextformat\emph%
+                               }%
                                {\let\glstextformat\@firstofone}%
 }
 \makeatother
