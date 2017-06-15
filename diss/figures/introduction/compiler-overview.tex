@@ -22,15 +22,6 @@
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[%
-    input/.style={%
-      inner sep=0,
-      outer sep=2pt,
-      node distance=\compStageDist,
-      font=\strut,
-    },
-    output/.style={%
-      input,
-    },
     box/.style={%
       draw,
     },
@@ -52,6 +43,15 @@
       rounded corners=6pt,
       fill=shade2,
     },
+    compiler input/.style={%
+      inner sep=0,
+      outer sep=2pt,
+      node distance=\compStageDist,
+      font=\strut,
+    },
+    compiler output/.style={%
+      compiler input,
+    },
     backend stage/.style={%
       compiler stage,
       minimum width=\backStageWidth,
@@ -63,6 +63,14 @@
       inner sep=\backWrapperInnerSep,
       rounded corners=3pt,
       fill=shade1,
+    },
+    backend input/.style={%
+      compiler input,
+      node distance=\backStageDist,
+      font=\rule[-.25\baselineskip]{0pt}{\baselineskip},
+    },
+    backend output/.style={%
+      backend input,
     },
     optimizer stage/.style={%
       backend stage,
@@ -81,6 +89,14 @@
       backend wrapper,
       inner xsep=\optWrapperInnerSep,
       inner ysep=\optWrapperInnerSep,
+    },
+    optimizer input/.style={%
+      compiler input,
+      node distance=\optStageDist,
+      font=\rule[-.25\baselineskip]{0pt}{\baselineskip},
+    },
+    optimizer output/.style={%
+      optimizer input,
     },
     flow/.style={%
       ->,
@@ -101,11 +117,11 @@
   \small
 
   % Compiler stages
-  \node [input] (input) {program};
-  \node [compiler stage, right=of input] (frontend) {frontend};
+  \node [compiler input] (compiler-input) {program};
+  \node [compiler stage, right=of compiler-input] (frontend) {frontend};
   \node [compiler stage, right=of frontend] (optimizer) {optimizer};
   \node [compiler stage, right=of optimizer] (backend) {backend};
-  \node [output, right=of backend] (output) {assembly code};
+  \node [compiler output, right=of backend] (compiler-output) {assembly code};
   \begin{pgfonlayer}{background}
     \node [compiler wrapper, fit=(frontend) (optimizer) (backend)]
           (compiler-wrapper) {};
@@ -114,10 +130,10 @@
 
   % Compiler execution flow
   \begin{scope}[flow]
-    \draw (input) -- (frontend);
+    \draw (compiler-input) -- (frontend);
     \draw (frontend) -- node [label, above] {IR} (optimizer);
     \draw (optimizer) -- node [label, above] {IR} (backend);
-    \draw (backend) -- (output);
+    \draw (backend) -- (compiler-output);
   \end{scope}
 
   \footnotesize
@@ -138,18 +154,16 @@
     \node [optimizer wrapper, fit=(pre-gcmotion) (gcmotion) (post-gcmotion)]
           (optimizer-wrapper) {};
   \end{pgfonlayer}
+  \node [optimizer input, left=of optimizer-wrapper.west] (opt-input) {IR};
+  \node [optimizer output, right=of optimizer-wrapper.east] (opt-output) {IR};
   \node [wrapper label, above=of optimizer-wrapper] {optimizer};
 
   % Optimizer execution flow
   \begin{scope}[flow]
-    \draw ([xshift=-\optStageDist] optimizer-wrapper.west)
-          --
-          (pre-gcmotion);
+    \draw (opt-input) -- (pre-gcmotion);
     \draw (pre-gcmotion) -- (gcmotion);
     \draw (gcmotion) -- (post-gcmotion);
-    \draw (post-gcmotion)
-          --
-          ([xshift=\optStageDist] optimizer-wrapper.east);
+    \draw (post-gcmotion) -- (opt-output);
   \end{scope}
 
   % Backend stages
@@ -184,6 +198,10 @@
     \node [backend wrapper, fit=(isel) (regalloc) (isched) (ordering)]
           (backend-wrapper) {};
   \end{pgfonlayer}
+  \node [backend input, left=of backend-wrapper.west] (back-input) {IR};
+  \node [backend output, right=of backend-wrapper.east] (back-output)
+        {assembly code};
+  \node [wrapper label, above=of backend-wrapper] {backend};
 
   % Backend execution flow
   \begin{scope}[flow]
@@ -193,6 +211,5 @@
     \draw (isched) -- (ordering);
     \draw (ordering) -- ([xshift=\backStageDist] backend-wrapper.east);
   \end{scope}
-  \node [wrapper label, above=of backend-wrapper] {backend};
 \end{tikzpicture}%
 \endgroup%
