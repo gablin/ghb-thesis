@@ -10,10 +10,6 @@
 \def\compStageHeight{8mm}%
 \def\compStageDist{0.6*\compStageWidth}%
 \def\compWrapperInnerSep{0.5*\compStageDist}%
-\def\optStageWidth{\compStageWidth}%
-\def\optStageHeight{\compStageHeight}%
-\def\optStageDist{0.5*\compStageDist}%
-\def\optWrapperInnerSep{3mm}%
 \def\backStageWidth{\compStageWidth}%
 \def\backStageHeight{\compStageHeight}%
 \def\backStageDist{0.5*\compStageDist}%
@@ -72,32 +68,6 @@
     backend output/.style={%
       backend input,
     },
-    optimizer stage/.style={%
-      backend stage,
-      minimum width=\optStageWidth,
-      minimum height=\optStageHeight,
-      node distance=\optStageDist,
-    },
-    optimizer intermediate stage/.style={%
-      optimizer stage,
-      minimum width=0,
-      outer xsep=3pt,
-      draw=none,
-      fill=none,
-    },
-    optimizer wrapper/.style={%
-      backend wrapper,
-      inner xsep=\optWrapperInnerSep,
-      inner ysep=\optWrapperInnerSep,
-    },
-    optimizer input/.style={%
-      compiler input,
-      node distance=\optStageDist,
-      font=\rule[-.25\baselineskip]{0pt}{\baselineskip},
-    },
-    optimizer output/.style={%
-      optimizer input,
-    },
     flow/.style={%
       ->,
       thick,
@@ -138,37 +108,9 @@
 
   \footnotesize
 
-  % Optimizer stages
-  \node [optimizer stage, below=\wrapperOuterSep of compiler-wrapper]
-        (gcmotion) {%
-    \begin{tabular}{c}
-      global\\
-      code motion
-    \end{tabular}
-  };
-  \node [optimizer intermediate stage, left=of gcmotion] (pre-gcmotion)
-        {$\ldots$};
-  \node [optimizer intermediate stage, right=of gcmotion] (post-gcmotion)
-        {$\ldots$};
-  \begin{pgfonlayer}{background}
-    \node [optimizer wrapper, fit=(pre-gcmotion) (gcmotion) (post-gcmotion)]
-          (optimizer-wrapper) {};
-  \end{pgfonlayer}
-  \node [optimizer input, left=of optimizer-wrapper.west] (opt-input) {IR};
-  \node [optimizer output, right=of optimizer-wrapper.east] (opt-output) {IR};
-  \node [wrapper label, above=of optimizer-wrapper] {optimizer};
-
-  % Optimizer execution flow
-  \begin{scope}[flow]
-    \draw (opt-input) -- (pre-gcmotion);
-    \draw (pre-gcmotion) -- (gcmotion);
-    \draw (gcmotion) -- (post-gcmotion);
-    \draw (post-gcmotion) -- (opt-output);
-  \end{scope}
-
   % Backend stages
   \node [backend stage,
-         below left=\wrapperOuterSep and 0pt of optimizer-wrapper]
+         below right=\wrapperOuterSep and 20pt of compiler-wrapper.south west]
         (isel)
   {%
     \begin{tabular}{c}
@@ -188,14 +130,8 @@
       scheduling
     \end{tabular}
   };
-  \node [backend stage, right=of isched] (ordering) {%
-    \begin{tabular}{c}
-      block\\
-      ordering
-    \end{tabular}
-  };
   \begin{pgfonlayer}{background}
-    \node [backend wrapper, fit=(isel) (regalloc) (isched) (ordering)]
+    \node [backend wrapper, fit=(isel) (regalloc) (isched)]
           (backend-wrapper) {};
   \end{pgfonlayer}
   \node [backend input, left=of backend-wrapper.west] (back-input) {IR};
@@ -208,8 +144,7 @@
     \draw ([xshift=-\backStageDist] backend-wrapper.west) -- (isel);
     \draw (isel) -- (regalloc);
     \draw (regalloc) -- (isched);
-    \draw (isched) -- (ordering);
-    \draw (ordering) -- ([xshift=\backStageDist] backend-wrapper.east);
+    \draw (isched) -- ([xshift=\backStageDist] backend-wrapper.east);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%

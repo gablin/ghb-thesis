@@ -12,7 +12,6 @@
 
 \begin{figure}
   \centering%
-  \hspace*{20pt}% Make figure appear more centered
   \input{figures/introduction/compiler-overview}
 
   \caption{Overview of a typical compiler}
@@ -27,13 +26,11 @@ of three parts:%
   \item a \gls!{frontend}, which performs syntactic and semantic analysis and
     transforms the program into an \gls!{IR}
   \item an \gls!{optimizer} (sometimes called \gls!{middle-end}), which performs
-    target-independent optimizations such as \gls!{global code motion}, where
-    \glspl{operation} are moved across \gls{block} boundaries into \glspl{basic
-      block} with lower execution frequency
+    target-independent optimizations
   \item a \gls!{backend}, which performs \gls{code generation}
 \end{inlinelist}.
-\Gls{code generation} in turn consists of several tasks, four which of are of
-interest in this dissertation:%
+\Gls{code generation} in turn consists of several tasks, of which three
+typically are most promiment:%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item \gls!{instruction selection}, where \glspl{instruction} implementing the
     given \gls{program} are selected
@@ -41,15 +38,7 @@ interest in this dissertation:%
     are assigned to \glspl{register}
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
     to increase instruction-level parallelism
-  \item \gls!{block ordering}, where the sequence of \glspl{basic block} is
-    rearranged to reduce the number of branch \glspl{instruction}
 \end{inlinelist}.
-Each of the problems above is also an optimization problem, meaning there often
-exist more than one solution for a given \gls{program} which may result in code
-where quality differs significantly. For example, depending on the hardware the
-efficiency of two sets of selected instructions may differ by as much as two
-orders of magnitude~\cite{ZivojnovicEtAl:1994}. In addition, these problems
-interact with one another.
 
 \paragraph{Global Code Motion}
 
@@ -72,8 +61,6 @@ interact with one another.
 \todo{Explain the problem, give example}
 
 \subsection{A Motivating Example}
-
-\subsubsection{A Motivating Example}
 
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
@@ -102,6 +89,13 @@ while (i < N) {
     \cVar{int} value is assumed to be 4~bytes}%
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
+
+Each of the problems above is also an optimization problem, meaning there often
+exist more than one solution for a given \gls{program} which may result in code
+where quality differs significantly. For example, depending on the hardware the
+efficiency of two sets of selected instructions may differ by as much as two
+orders of magnitude~\cite{ZivojnovicEtAl:1994}. In addition, these problems
+interact with one another.
 
 \RefFigure{isel-gcmotion-example} shows a program that computes the saturated
 sums of two integer arrays. In saturation arithmetic, the result of an
