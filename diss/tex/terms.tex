@@ -16,7 +16,7 @@
 \newterm{register allocator}
 \newterm{instruction scheduler}
 
-\newterm{instruction selection}[user1={instruction}]
+\newterm{instruction selection}
 \newterm[global.is]{global}[parent={instruction selection}]
 \newterm{global code motion}
 \newterm{data copying}
@@ -26,6 +26,7 @@
 \newterm{instruction scheduling}
 
 \newterm{program}
+\newterm{function}
 \newterm{basic block}[see={block}]
 \newterm{block}[see={basic block}]
 \newterm{instruction}
@@ -33,7 +34,7 @@
 \newterm{register}
 \newterm{temporary}[plural={temporaries}]
 \newterm[virtual.temp]{virtual}[parent={temporary}]
-\newterm{target machine}
+\newterm{target machine}[user1={target}]
 
 \newterm{constraint}
 \newterm{constraint programming}
@@ -45,10 +46,16 @@
 \newterm{variable}
 
 \newterm{cover}
+\newterm{data-flow graph}
+\newterm{block graph}[user1={block}]
+\newterm{function graph}[user1={function}]
+\newterm{pattern}[see={pattern graph}]
+\newterm{pattern graph}[see={pattern}]
+\newterm{pattern set}
 \newterm{match}[plural=matches]
+\newterm{match set}
 \newterm{overlap}
 \newterm{operation}
-\newterm{pattern}
 \newterm{UF graph}[first={universal function (UF) graph}]
 
 \newacronym{IR}{intermediate representation}

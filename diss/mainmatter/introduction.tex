@@ -18,10 +18,13 @@
   \labelFigure{compiler-overview}
 \end{figure}
 
-A \gls!{compiler} is a tool that takes a \gls{program}, written in some
-programming language, as input and produces a machine-specific equivalent as
-output. As shown in \refFigure{compiler-overview}, a compiler typically consists
-of three parts:%
+A \gls!{compiler} is a tool that takes a \gls!{program}, written in some
+programming language, as input and produces equivalent assembly code for a
+specific \gls!{target machine} as output.
+%
+As shown in \refFigure{compiler-overview}, a compiler typically consists of
+three parts:%
+%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item a \gls!{frontend}, which performs syntactic and semantic analysis and
     transforms the program into an \gls!{IR}
@@ -29,8 +32,10 @@ of three parts:%
     target-independent optimizations
   \item a \gls!{backend}, which performs \gls{code generation}
 \end{inlinelist}.
+%
 \Gls{code generation} in turn consists of several tasks, of which three
 typically are most promiment:%
+%
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item \gls!{instruction selection}, where \glspl{instruction} implementing the
     given \gls{program} are selected
@@ -39,26 +44,79 @@ typically are most promiment:%
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
     to increase instruction-level parallelism
 \end{inlinelist}.
-
-\paragraph{Global Code Motion}
-
-\todo{Explain the problem, give example}
+%
+This dissertation focuses primarily on the first problem by introducing a
+combinatorial optimization model for \gls{instruction selection} which is
+simpler, more flexible, and produces better code than traditional approaches and
+captures more features than existing combinatorial optimization models.
+%
+The dissertation also touches upon the other two \gls{code generation} problems
+by proposing ideas on how to extend the model to integrate \gls{instruction
+  scheduling} and \gls{register allocation}.
 
 \paragraph{Instruction Selection}
 
-\todo{Explain the problem, give example}
+The problem can be reduced into two subproblems:%
+%
+\begin{enumerate}
+  \item Finding all instances of instructions that can implement one or more
+    \glspl{operation} in the \gls{program}.
+  \item Selecting a subset of these instances such that all \glspl{operation}
+    are implemented.
+\end{enumerate}
+%
+Without loss of generality, we assume the input to the \gls{instruction
+  selector} to consist of a single \gls{function}, which in turn consists of
+many \glspl{basic block} (henceforth referred to as simply \glspl!{block}).
 
-\paragraph{Register Allocation}
+Most \glspl{compiler} solve the two problems above using graph-based methods.
+%
+First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
+nodes represent \glspl{operation} in the function and edges represent data
+dependencies between the \glspl{operation}.
+%
+\Glspl{data-flow graph} limited to \glspl{block} are called \glspl!{block
+  graph}, and \glspl{data-flow graph} capturing data flow of whole functions are
+called \glspl!{function graph}.
+%
+Corresponding \glspl{data-flow graph}, called \glspl!{pattern graph} (or simply
+\glspl!{pattern}), are also built to represent the \gls{instruction} provided by
+the \gls{target machine}.
+%
+The set of \glspl{pattern graph} for a particular \gls{target machine}
+constitute a \gls!{pattern set}.
 
-\todo{Explain the problem, give example}
+The first subproblem can be reduced to finding all instances where a
+\gls{pattern} from the \gls{pattern set} is subgraph isomorphic to the
+\glsshort{block graph} or \gls{function graph}. Each such instance is called a
+\gls!{match}, and the set of all \glspl{match} constitute a \gls!{match set}.
+%
+The second subproblem can then be reduced to finding a subset~$S$ of the
+\gls{match set} such that every \gls{operation} appears in at least one
+\gls{match} from $S$.
+%
+We say that $S$ \gls!{cover}[s] ...
 
-\paragraph{Instruction Scheduling}
 
-\todo{Explain the problem, give example}
+Selecting \glspl{instruction} for a given \gls{program} and \gls{target machine}
+is an optimization problem, meaning there often exist more than one solution for
+a given \gls{program} which may result in code where quality differs
+significantly.
+%
+For example, depending on the hardware the efficiency of two sets of selected
+instructions may differ by as much as two orders of
+magnitude~\cite{ZivojnovicEtAl:1994}.
+%
+Finding the optimal solution, however, is an NP-complete
+problem~\mbox{\cite{BrunoSethi:1976,KoesGoldstein:2008}}, and the problems also
+interact with one another.
+%
+Consequently, most compilers solve each problem separately using greedy
+heuristics.
 
-\paragraph{Block Ordering}
+Several optimal approaches exist, 
 
-\todo{Explain the problem, give example}
+\todo{optimal approach exist, but they have limitations}
 
 \subsection{A Motivating Example}
 
@@ -89,13 +147,6 @@ while (i < N) {
     \cVar{int} value is assumed to be 4~bytes}%
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
-
-Each of the problems above is also an optimization problem, meaning there often
-exist more than one solution for a given \gls{program} which may result in code
-where quality differs significantly. For example, depending on the hardware the
-efficiency of two sets of selected instructions may differ by as much as two
-orders of magnitude~\cite{ZivojnovicEtAl:1994}. In addition, these problems
-interact with one another.
 
 \RefFigure{isel-gcmotion-example} shows a program that computes the saturated
 sums of two integer arrays. In saturation arithmetic, the result of an
