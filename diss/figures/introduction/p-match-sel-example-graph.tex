@@ -1,0 +1,176 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont%
+\pgfdeclarelayer{background1}%
+\pgfdeclarelayer{background2}%
+\pgfdeclarelayer{background3}%
+\pgfdeclarelayer{background4}%
+\pgfsetlayers{background4,background3,background2,background1,main}%
+\begin{tikzpicture}[%
+    data node/.style={%
+      op node,
+    },
+    match node/.style={%
+      match line,
+      draw,
+      circle,
+      inner sep=.5pt,
+      outer sep=0,
+    },
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+    match label/.style={%
+      minimum size=0,
+      inner sep=0,
+      outer sep=1pt,
+      node distance=10pt,
+      font=\footnotesize,
+    },
+  ]
+
+  % Graph
+  \node [op node] (add1) {\opAdd};
+  \node [data node, position=135 degrees from add1] (i) {\opVar{i}};
+  \node [data node, position= 45 degrees from add1] (c1) {\opVar{1}};
+  \node [op node, position=-45 degrees from add1] (mul) {\opMul};
+  \node [data node, position= 45 degrees from mul] (c4) {\opVar{4}};
+  \node [op node, position=-45 degrees from mul] (add2) {\opAdd};
+  \node [data node, position= 45 degrees from add2] (A) {\opVar{A}};
+  \node [op node, below=of add2] (load) {\opLoad};
+  \begin{scope}[data flow]
+    \draw (i) -- (add1);
+    \draw (c1) -- (add1);
+    \draw (add1) -- (mul);
+    \draw (c4) -- (mul);
+    \draw (mul) -- (add2);
+    \draw (A) -- (add2);
+    \draw (add2) -- (load);
+  \end{scope}
+
+  \begin{pgfonlayer}{background1}
+    % Matches
+    \node [match node, fill=shade2, fit=(add1)] (m1) {};
+    \node [match node, fill=shade2, fit=(add2)] (m2) {};
+    \node [match node, fill=shade2, fit=(mul)] (m3) {};
+    % m4
+    \begin{pgfonlayer}{background2}
+      \node [outer match node, inner sep=-1pt, fit=(m3)] (m4a) {};
+      \node [outer match node, inner sep=-1pt, fit=(m2)] (m4b) {};
+      \draw [match line, bend left=45, fill=shade1]
+            (m4a.south west)
+            to
+            (m4a.north west)
+            to
+            (m4a.north east)
+            --
+            (m4b.north east)
+            to
+            (m4b.south east)
+            to
+            (m4b.south west)
+            -- coordinate (m4)
+            cycle;
+    \end{pgfonlayer}
+    \node [match node, fill=shade1, fit=(load)] (m5) {};
+    % m6
+    \begin{pgfonlayer}{background4}
+      \node [outer match node, inner sep=1pt, fit=(m3)] (m6a) {};
+      \node [outer match node, inner sep=1pt, fit=(m2)] (m6b) {};
+      \node [outer match node, inner sep=1pt, fit=(m5)] (m6c) {};
+    \end{pgfonlayer}
+    % The named paths must be declared outside of pgfonlayer, or else they will
+    % disappear when the environment ends
+    \path [name path=m6a-to-m6b-north]
+          (m6a.north east)
+          --
+          (m6b.north east)
+          --
+          +(-45:5mm);
+    \path [name path=m6a-to-m6b-south]
+          (m6a.south west)
+          --
+          (m6b.south west)
+          --
+          +(-45:5mm);
+    \path [name path=m6c-to-m6b-east]
+          (m6c.east)
+          --
+          (m6c.east |- m6b.north);
+    \path [name path=m6c-to-m6b-west]
+          (m6c.west)
+          --
+          (m6c.west |- m6b.west);
+    \begin{pgfonlayer}{background4}
+      \draw [match line, bend left=45, fill=shade3,
+             name intersections={of=m6a-to-m6b-north and m6c-to-m6b-east,
+                                 by=x-east},
+             name intersections={of=m6a-to-m6b-south and m6c-to-m6b-west,
+                                 by=x-west},
+             rounded corners=4pt,
+            ]
+            (m6a.south west)
+            to
+            (m6a.north west)
+            to
+            (m6a.north east)
+            --
+            (x-east)
+            --
+            (m6c.east)
+            to
+            (m6c.south)
+            to
+            (m6c.west)
+            -- coordinate [pos=.25] (m6)
+            (x-west)
+            --
+            cycle;
+    \end{pgfonlayer}
+
+    % Fill overdrawn edges of m6
+    \draw [match line, bend left=45, fill=none,
+           name intersections={of=m6a-to-m6b-north and m6c-to-m6b-east,
+                               by=x-east},
+           name intersections={of=m6a-to-m6b-south and m6c-to-m6b-west,
+                               by=x-west},
+           rounded corners=4pt,
+          ]
+          (m6a.south west)
+          to
+          (m6a.north west)
+          to
+          (m6a.north east)
+          --
+          (x-east)
+          --
+          (m6c.east)
+          to
+          (m6c.south)
+          to
+          (m6c.west)
+          --
+          (x-west)
+          --
+          cycle;
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, left=of m1] (m1l) {$\strut m_1$};
+  \node [match label, right=of m2] (m2l) {$\strut m_2$};
+  \node [match label, left=of m3] (m3l) {$\strut m_3$};
+  \node [match label, position=-135 degrees from m4] (m4l) {$m_4$};
+  \node [match label, right=of m5] (m5l) {$\strut m_5$};
+  \node [match label, left=of m6] (m6l) {$\strut m_6$};
+  \foreach \i in {1, ..., 6} {
+    \draw [thick] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%

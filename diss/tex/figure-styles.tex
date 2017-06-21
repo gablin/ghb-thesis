@@ -4,16 +4,50 @@
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
 
+\usetikzlibrary{%
+  calc,%
+  fit,%
+  intersections,%
+  positioning,%
+  shapes,%
+}
+
 \newcommand{\figureFont}{%
   \sffamily%
 }
 
 \colorlet{shade0}{black!0!white}
-\colorlet{shade1}{black!10!white}
-\colorlet{shade2}{black!30!white}
-\colorlet{shade3}{black!50!white}
+\colorlet{shade1}{black!20!white}
+\colorlet{shade2}{black!40!white}
+\colorlet{shade3}{black!60!white}
+\colorlet{shade4}{black!80!white}
 \tikzset{%
   every picture/.style={%
     >=stealth,
   },
+  op node/.style={%
+    draw,
+    fill=shade0,
+    circle,
+    minimum size=14pt,
+    inner sep=0,
+    outer sep=0,
+    node distance=16pt,
+    line width=0.6pt,
+  },
+  data flow/.style={%
+    ->,
+    line width=0.6pt,
+  },
+  match line/.style={%
+    dash pattern=on 2.5pt off 3pt,
+    line width=0.6pt,
+  },
 }
+\makeatletter
+\tikzset{
+  position/.style args={#1 degrees from #2}{%
+    at=(#2.#1), anchor=#1+180, shift=(#1:\tikz@node@distance),
+  },
+}
+\makeatother
