@@ -7,3 +7,117 @@
 \chapter[Current Instruction Selection Techniques]%
         {Current Instruction\\ Selection Techniques}
 \labelChapter{current-instruction-selection-techniques}
+
+\Gls{instruction selection} can be reduced into two subproblems:%
+%
+\begin{enumerate}
+  \item Finding all instances of instructions that can implement one or more
+    \glspl{operation} in the \gls{program}.
+  \item Selecting a subset of these instances such that all \glspl{operation}
+    are implemented.
+\end{enumerate}
+%
+Without loss of generality, we assume the input to the \gls{instruction
+  selector} to consist of a single \gls{function}, which in turn consists of
+many \glspl{basic block} (henceforth referred to as simply \glspl!{block}).
+
+Most \glspl{compiler} solve the two problems above using graph-based methods.
+%
+First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
+nodes represent \glspl{operation} in the function and edges represent data
+dependencies between the \glspl{operation}.
+%
+\Glspl{data-flow graph} limited to \glspl{block} are called \glspl!{block
+  graph}, and \glspl{data-flow graph} capturing data flow of whole functions are
+called \glspl!{function graph}.
+%
+Corresponding \glspl{data-flow graph}, called \glspl!{pattern graph} (or simply
+\glspl!{pattern}), are also built to represent the \gls{instruction} provided by
+the \gls{target machine}.
+%
+The set of \glspl{pattern graph} for a particular \gls{target machine}
+constitute a \gls!{pattern set}.
+
+\begin{filecontents*}{p-match-sel-example.c}
+x = A[i + 1];
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{p-match-sel-example-c}}%
+                {\lstinputlisting[language=c]{p-match-sel-example.c}}%
+  \hspace{5mm}%
+  \subcaptionbox{%
+                  Instructions. The $*s$ notion means ``get value at address $s$
+                  in memory''%
+                  \labelFigure{p-match-sel-example-instrs}%
+                }%
+                [50mm]%
+                {%
+                  \small
+                  \begin{tabular}{>{\ttfamily}r@{\hspace{4pt}}%
+                                  >{$}r<{$}@{ $\leftarrow$ }%
+                                  >{$}l<{$}}
+                    add  & r & s + t\\
+                    mul  & r & s \times t\\
+                    mad  & r & s \times t + u\\
+                    load & r & *s\\
+                    load & r & *(s \times t + u)
+                  \end{tabular}%
+                }%
+  \hspace{5mm}%
+  \subcaptionbox{%
+                   Corresponding \gls{block graph} and \glspl{match}%
+                   \labelFigure{p-match-sel-example-graph}%
+                }{%
+                  \small%
+                  \input{figures/introduction/p-match-sel-example-graph}%
+                }
+
+  \caption[An example of the pattern matching and selection problem]%
+          {%
+            An example demonstrating the pattern matching and selection
+            problem for a program that loads a value from integer array
+            \irVar{A} at offset \irVar{i} $+$ \irVar{1} (it is assumed that
+            \irVar{A} is stored in memory and that an integer is 4~bytes).
+            Valid covers are \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
+            \mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}%
+          }
+  \labelFigure{p-match-sel-example}
+\end{figure}
+
+The first subproblem can be reduced to finding all instances where a
+\gls{pattern} from the \gls{pattern set} is subgraph isomorphic to~$G$, where
+$G$ denotes either a \gls{block graph} or a \gls{function graph}.
+%
+Each such instance is called a \gls!{match}, and the set of all \glspl{match}
+constitute a \gls!{match set}, which is denoted by~$M$.
+%
+Hence we refer to this subproblem as the \gls!{pattern matching}[ problem].
+%
+\Gls{pattern matching} can be done in linear time if both $G$ and all
+\glspl{pattern} are tree-shaped, otherwise it is an NP-complete
+problem~\cite{GareyJohnson:1979,HoffmannODonnell:1982}.
+%
+Having found $M$, the second subproblem -- which we refer to as the
+\gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
+\glspl{match} that \gls{cover}[s]~$G$.
+%
+We say that a subset~\mbox{$S \subseteq M$}, where $M$ is the \gls{match set},
+\gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
+from~$S$.
+%
+An example is shown in \refFigure{p-match-sel-example}.
+
+For a given \gls{program} and \gls{target machine}, there often exists many
+valid combinations of \glspl{instruction} -- in terms of $G$ and $M$, this means
+there exist many \glspl{cover} of~$G$ -- which may result in code where quality
+differs significantly.
+%
+For example, depending on the hardware the efficiency of two sets of selected
+instructions may differ by as much as two orders of
+magnitude~\cite{ZivojnovicEtAl:1994}.
+%
+Consequently, we augment the \gls{pattern selection} problem -- originally
+defined to accept any \gls{cover} -- into an optimization problem, where only
+\glspl{cover} with least cost are accepted.
