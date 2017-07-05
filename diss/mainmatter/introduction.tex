@@ -8,7 +8,7 @@
 
 \todo{write chapter outline}
 
-\section{Background and Motivation}
+\section{Overview}
 
 \begin{figure}
   \centering%
@@ -84,34 +84,7 @@ approaches.
 
 
 
-\paragraph{Instruction Selection}
-
-
-
-
-
-
-Selecting \glspl{instruction} for a given \gls{program} and \gls{target machine}
-is an optimization problem, meaning there often exist more than one
-\gls{solution} for a given \gls{program} which may result in code where quality
-differs significantly.
-%
-For example, depending on the hardware the efficiency of two sets of selected
-instructions may differ by as much as two orders of
-magnitude~\cite{ZivojnovicEtAl:1994}.
-%
-Finding the optimal solution, however, is an NP-complete
-problem~\mbox{\cite{BrunoSethi:1976,KoesGoldstein:2008}}, and the problems also
-interact with one another.
-%
-Consequently, most compilers solve each problem separately using greedy
-heuristics.
-
-Several optimal approaches exist, 
-
-\todo{optimal approach exist, but they have limitations}
-
-\subsection{A Motivating Example}
+\section{Motivation}
 
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
