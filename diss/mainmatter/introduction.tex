@@ -128,6 +128,8 @@ while (i < N) {
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
 
+\paragraph{For global instruction selection}
+
 \RefFigure{isel-gcmotion-example} shows a program that computes the saturated
 sums of two integer arrays. In saturation arithmetic, the result of an
 arithmetic operation will always stay within a range fixed by a minimum and
@@ -135,15 +137,20 @@ maximum value. If the operation would produce a value outside of this range,
 then the value is set (``clamped'') to the closest limit, thus becoming
 ``saturated''.
 
-Let us now perform \gls{instruction selection} on this program for a machine
-which has an instruction capable of performing multiple add operations (a
-so-called \gls!{SIMD} \gls{instruction}).
+Assume a \gls{target machine} which has an instruction capable of performing
+multiple add operations (a so-called \gls!{SIMD.instr}[ \gls{instruction}]).
 
-\todo{Give example showing the interaction between instruction selection and
-  global code motion}
+\paragraph{For integrating instruction selection and global code motion}
 
-\todo{Give another example showing the interaction between instruction selection
-  and block ordering}
+Assume that the \gls{target machine} also has an instruction capable of
+performing multiple add operations (a so-called \gls!{SIMD.instr}[
+  \gls{instruction}]).
+
+\todo{use previous example}
+
+\paragraph{For integrating instruction selection and block ordering}
+
+\todo{Give another example}
 
 \todo{Traditional approaches (how)}
 \todo{Limitations (why)}
@@ -170,7 +177,7 @@ so-called \gls!{SIMD} \gls{instruction}).
 
 \section{Contributions}
 
-This dissertation makes six contributions to the areas of code generation and
+The dissertation makes six contributions to the areas of code generation and
 constraint programming:
 %
 \begin{contributions}
