@@ -7,6 +7,7 @@
 \begingroup%
 \footnotesize%
 \def\nodeDist{16pt}%
+\def\jumpOffset{8pt}%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[
@@ -42,27 +43,51 @@
     },
   ]
 
-  \node (b1) {i = 0};
-  \node [below=of b1, inner xsep=1em] (b2) {\irIf{} i \irLE{} N};
+  \node (b1) {%
+               \begin{tabular}{@{}l@{}}
+                 i = 0\\
+                 \irJump{} \irBlock{b2}
+               \end{tabular}%
+             };
+  \node [below=of b1] (b2)
+        {%
+          \begin{tabular}{@{}l@{}}
+            \irIf{} i \irLE{} N \irJump{} \irBlock{b3}\\
+            \irElse{} \irJump{} end
+          \end{tabular}%
+        };
   \node [below=of b2] (b3)
         {%
           \begin{tabular}{@{}ll@{}}
-            \irTemp{1} \irAssign{} i \irMul{} 4 &\\
-            \irTemp{2} \irAssign{} A \irAdd{} \irTemp{1};
+            \multicolumn{2}{@{}l@{}}{\irTemp{1} \irAssign{} i \irMul{} 4}\\
+            \irTemp{2} \irAssign{} A \irAdd{} \irTemp{1}
               & \irTemp{3} \irAssign{} B \irAdd{} \irTemp{1}\\
-            a \irAssign{} load \irTemp{2};
-              & b \irAssign{} load \irTemp{3}\\
-            c \irAssign{} a \irAdd{} b &\\
-            \irIf{} MAX \irLE{} c &
+            a \irAssign{} \irLoad{} \irTemp{2}
+              & b \irAssign{} \irLoad{} \irTemp{3}\\
+            \multicolumn{2}{@{}l@{}}{%
+              c \irAssign{} a \irAdd{} b%
+            }\\
+            \multicolumn{2}{@{}l@{}}{%
+              \irIf{} MAX \irLE{} c \irJump{} \irBlock{b4}%
+            }\\
+            \multicolumn{2}{@{}l@{}}{\irElse{} \irJump{} \irBlock{b5}}
           \end{tabular}%
         };
-  \node [below right=\nodeDist and 0 of b3.south west] (b4) {c \irAssign{} MAX};
-  \node [below left= \nodeDist and 0 of b3.south east] (b5)
+  \node [below right=\nodeDist and 0 of b3.south west] (b4)
+        {%
+          \begin{tabular}{@{}l@{}}
+            c \irAssign{} MAX\\
+            \irJump{} \irBlock{b5}
+          \end{tabular}%
+        };
+  \coordinate (from-b4) at ([yshift=\jumpOffset] b4.south east);
+  \node [below left=-\jumpOffset and 0 of b3.south east |- from-b4] (b5)
         {%
           \begin{tabular}{@{}l@{}}
             \irTemp{4} \irAssign{} C + \irTemp{1}\\
-            store \irTemp{4}, c\\
-            i \irAssign{} i \irAdd{} 1
+            \irStore{} \irTemp{4}, c\\
+            i \irAssign{} i \irAdd{} 1\\
+            \irJump{} \irBlock{b2}
           \end{tabular}%
         };
 
@@ -72,13 +97,13 @@
       \draw (b2) -- node [tf label] {T} (b3);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1, swap] {F} (b5);
-      \draw (b4) -- (b4 -| b5.west);
+      \draw (from-b4) -- (from-b4 -| b5.west);
       \draw [rounded corners=10pt]
-            ([yshift=10pt] b5.south west)
+            ([yshift=\jumpOffset] b5.south west)
             -|
             ([xshift=-10pt] b3.west)
             |-
-            (b2);
+            ([yshift=-\jumpOffset] b2.north west);
       \draw (b2) -- node [tf label] {F} ([xshift=2*\nodeDist] b2.east);
     \end{scope}
   \end{pgfonlayer}
