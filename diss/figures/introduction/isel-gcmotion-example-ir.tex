@@ -6,7 +6,7 @@
 %
 \begingroup%
 \footnotesize%
-\def\nodeDist{12pt}%
+\def\nodeDist{16pt}%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[
@@ -18,7 +18,7 @@
       inner xsep=4pt,
       inner ysep=2.5pt,
       node distance=\nodeDist,
-      font=\ttfamily,
+      font=\irFont,
     },
     flow/.style={
       ->,
@@ -38,29 +38,31 @@
       tf label,
       inner xsep=0,
       inner ysep=1pt,
-      font=\sffamily\bfseries,
+      font=\irFont\bfseries,
     },
   ]
 
-  \node (b1) {i $=$ 0};
-  \node [below=of b1, inner xsep=1em] (b2) {if i $<$ N};
+  \node (b1) {i = 0};
+  \node [below=of b1, inner xsep=1em] (b2) {\irIf{} i \irLE{} N};
   \node [below=of b2] (b3)
         {%
-          \begin{tabular}{@{}l@{}}
-            \irTemp{1} = i $*$ 4\\
-            \irTemp{2} = A + \irTemp{1}; \irTemp{3} = B + \irTemp{1}\\
-            a = load \irTemp{2}; b = load \irTemp{3}\\
-            c = a $+$ b\\
-            if MAX $<$ c
+          \begin{tabular}{@{}ll@{}}
+            \irTemp{1} \irAssign{} i \irMul{} 4 &\\
+            \irTemp{2} \irAssign{} A \irAdd{} \irTemp{1};
+              & \irTemp{3} \irAssign{} B \irAdd{} \irTemp{1}\\
+            a \irAssign{} load \irTemp{2};
+              & b \irAssign{} load \irTemp{3}\\
+            c \irAssign{} a \irAdd{} b &\\
+            \irIf{} MAX \irLE{} c &
           \end{tabular}%
         };
-  \node [below right=1.25*\nodeDist and 0 of b3.south west] (b4) {c $=$ MAX};
-  \node [below left= 1.25*\nodeDist and 0 of b3.south east] (b5)
+  \node [below right=\nodeDist and 0 of b3.south west] (b4) {c \irAssign{} MAX};
+  \node [below left= \nodeDist and 0 of b3.south east] (b5)
         {%
           \begin{tabular}{@{}l@{}}
-            \irTemp{4} = C $+$ \irTemp{1}\\
+            \irTemp{4} \irAssign{} C + \irTemp{1}\\
             store \irTemp{4}, c\\
-            i = i $+$ 1
+            i \irAssign{} i \irAdd{} 1
           \end{tabular}%
         };
 
@@ -68,8 +70,8 @@
     \begin{scope}[flow]
       \draw (b1) -- (b2);
       \draw (b2) -- node [tf label] {T} (b3);
-      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.025] {T} (b4);
-      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.025, swap] {F} (b5);
+      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);
+      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1, swap] {F} (b5);
       \draw (b4) -- (b4 -| b5.west);
       \draw [rounded corners=10pt]
             ([yshift=10pt] b5.south west)

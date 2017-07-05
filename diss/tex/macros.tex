@@ -455,13 +455,20 @@
 \lstset{basicstyle=\codeFont\footnotesize}
 \newcommand{\cCode}[1]{\mbox{\texttt{#1}}}
 \newcommand{\cVar}[1]{\cCode{#1}}
-\newcommand{\irCode}[1]{\mbox{\textsf{#1}}}
+\newcommand{\irFont}{\ttfamily}
+\newcommand{\irCode}[1]{\mbox{\irFont#1}}
 \NewDocumentCommand{\irVar}{mo}{%
   \irCode{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
 }
 \NewDocumentCommand{\irTemp}{m}{%
   \irCode{t$_{\text{#1}}$}%
 }
+\newcommand{\irAssign}{$\leftarrow$}
+\newcommand{\irAdd}{$+$}
+\newcommand{\irMul}{$\times$}
+\newcommand{\irLE}{$<$}
+\newcommand{\irBlock}[1]{\irCode{#1}}
+\newcommand{\irIf}{{\irFont\bfseries if}}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%
