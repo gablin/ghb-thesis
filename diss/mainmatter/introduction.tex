@@ -40,11 +40,6 @@ consisting of many tasks such as \gls{constant folding}, \gls{dead code
 Another such optimization is \gls!{global code motion}, where operations are
 moved from one \gls{basic block} to another, which is done mainly to move
 expensive operations into \glspl{block} with lower execution frequency.
-%
-Although often considered a target-independent optimization, this dissertation
-shows that \gls{global code motion} also impacts \gls{instruction selection}.
-Consequently, these two tasks should be solved in unison as part of \gls{code
-  generation}.
 
 The \gls{backend} also consists of several tasks, of which three
 typically are most promiment:%
@@ -58,29 +53,45 @@ typically are most promiment:%
     to increase instruction-level parallelism
 \end{inlinelist}.
 %
-This dissertation focuses primarily on the first problem by introducing a
-combinatorial optimization model for \gls{instruction selection} which is
-simpler and more flexible compared to traditional approaches, and captures more
-features compared to existing combinatorial optimization models.
-%
-Not only does the model select \glspl{instruction} globally for entire
-\glspl{function}, it also integrates \gls{global code motion}, which results in
-better code compared to traditional approaches.
-%
-The dissertation also touches upon the other two \gls{code generation} problems
-by proposing ideas on how to extend the model to integrate \gls{instruction
-  scheduling} and \gls{register allocation}.
-
-Another code generation task is \gls!{block ordering}, where the \glspl{basic
-  block} are rearranged in order to minimize the number of jump
+Another code generation task of interest is \gls!{block ordering}, where the
+\glspl{basic block} are rearranged in order to minimize the number of jump
 \glspl{instruction}.
+
+This dissertation focuses primarily on the first \gls{code generation} problem
+by introducing a combinatorial optimization model for \gls{instruction
+  selection}, which is simpler and more flexible compared to traditional
+approaches, and captures more features compared to existing combinatorial
+optimization models.
 %
-Although traditionally solved in isolation, this dissertation shows that
-\gls{block ordering} impacts \gls{instruction selection} (and vice versa).
+The model select \glspl{instruction} globally for entire
+\glspl{function} and enables selection of complex \glspl{instruction} not
+supported by existing approaches.
 %
-Consequently, the model for \gls{instruction selection} also integrates
-\gls{block ordering}, which results in better code compared to traditional
-approaches.
+In addition, it integrates \gls{global code motion} as it is shown that moving
+operations across \glspl{basic block} can alleviate \gls{instruction selection}.
+%
+To this end, the dissertation also introduces a new, graph-based representation
+that unifies data flow and control flow for an entire \gls{function} into a
+single graph, which enables complex \glspl{instruction} to be modeled as
+\glspl{pattern}.
+%
+Moreover, the representation is crucial for modeling \gls{global.is}
+\gls{instruction selection} and \gls{global code motion} as a combinatorial
+optimization model.
+
+It is also shown in this disseration that \gls{block ordering} impacts
+\gls{instruction selection} (and vice versa).
+%
+Consequently, the model also integrates \gls{block ordering}, which results in
+better code compared to traditional approaches.
+
+Lastly, the dissertation touches upon the other two \gls{code generation}
+problems by proposing ideas on how to extend the model to integrate
+\gls{instruction scheduling} and \gls{register allocation}.
+
+
+
+
 
 
 
