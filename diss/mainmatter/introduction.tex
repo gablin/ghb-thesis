@@ -32,8 +32,21 @@ three parts:%
     target-independent optimizations
   \item a \gls!{backend}, which performs \gls{code generation}
 \end{inlinelist}.
+
+The \gls{optimizer} is arguably the largest component of any \gls{compiler},
+consisting of many tasks such as \gls{constant folding}, \gls{dead code
+  elimination}, and \gls{loop unrolling}.
 %
-\Gls{code generation} in turn consists of several tasks, of which three
+Another such optimization is \gls!{global code motion}, where operations are
+moved from one \gls{basic block} to another, which is done mainly to move
+expensive operations into \glspl{block} with lower execution frequency.
+%
+Although often considered a target-independent optimization, this dissertation
+shows that \gls{global code motion} also impacts \gls{instruction selection}.
+Consequently, these two tasks should be solved in unison as part of \gls{code
+  generation}.
+
+The \gls{backend} also consists of several tasks, of which three
 typically are most promiment:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
@@ -47,12 +60,29 @@ typically are most promiment:%
 %
 This dissertation focuses primarily on the first problem by introducing a
 combinatorial optimization model for \gls{instruction selection} which is
-simpler, more flexible, and produces better code than traditional approaches and
-captures more features than existing combinatorial optimization models.
+simpler and more flexible compared to traditional approaches, and captures more
+features compared to existing combinatorial optimization models.
+%
+Not only does the model select \glspl{instruction} globally for entire
+\glspl{function}, it also integrates \gls{global code motion}, which results in
+better code compared to traditional approaches.
 %
 The dissertation also touches upon the other two \gls{code generation} problems
 by proposing ideas on how to extend the model to integrate \gls{instruction
   scheduling} and \gls{register allocation}.
+
+Another code generation task is \gls!{block ordering}, where the \glspl{basic
+  block} are rearranged in order to minimize the number of jump
+\glspl{instruction}.
+%
+Although traditionally solved in isolation, this dissertation shows that
+\gls{block ordering} impacts \gls{instruction selection} (and vice versa).
+%
+Consequently, the model for \gls{instruction selection} also integrates
+\gls{block ordering}, which results in better code compared to traditional
+approaches.
+
+
 
 \paragraph{Instruction Selection}
 
