@@ -133,8 +133,14 @@ maximum value. If the operation would produce a value outside of this range,
 then the value is set (``clamped'') to the closest limit, thus becoming
 ``saturated''.
 
-Assume a \gls{target machine} which has an instruction capable of performing
-multiple add operations (a so-called \gls!{SIMD.instr}[ \gls{instruction}]).
+Assume a \gls{target machine} that has an instruction capable of implementing
+the saturated add operation used in the program shown in
+\refFigure{isel-gcmotion-example}. If selected, such an \gls{instruction} would
+implement both the \mbox{\irVar{MAX} \irLE{} \irVar{c}} check given in
+block~\irBlock{b3} and the assignment \mbox{\irVar{c} \irAssign{} \irVar{MAX}}
+given in block~\irBlock{b4}.
+
+\todo{finish text}
 
 \paragraph{For integrating instruction selection and global code motion}
 
