@@ -143,7 +143,7 @@
         (gcmotion) {%
     \begin{tabular}{c}
       global\\
-      code motion
+      code mover
     \end{tabular}
   };
   \node [optimizer intermediate stage, left=of gcmotion] (pre-gcmotion)
@@ -173,25 +173,25 @@
   {%
     \begin{tabular}{c}
       instruction\\
-      selection
+      selector
     \end{tabular}
   };
   \node [backend stage, right=of isel] (regalloc) {%
     \begin{tabular}{c}
       register\\
-      allocation
+      allocator
     \end{tabular}
   };
   \node [backend stage, right=of regalloc] (isched) {%
     \begin{tabular}{c}
       instruction\\
-      scheduling
+      scheduler
     \end{tabular}
   };
   \node [backend stage, right=of isched] (ordering) {%
     \begin{tabular}{c}
       block\\
-      ordering
+      orderer
     \end{tabular}
   };
   \begin{pgfonlayer}{background}
