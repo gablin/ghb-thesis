@@ -104,7 +104,7 @@
     \end{scope}
   \end{pgfonlayer}
 
-  \node [block label, left=of b1, inner xsep=2pt] {b1\hspace*{-1pt}};
+  \node [block label, below left=0 and 0 of b1.north west, inner xsep=1pt] {b1};
   \foreach \i in {2, 3, 4} {
     \node [block label, above right=0 and 0 of b\i.north west] {b\i};
   }
