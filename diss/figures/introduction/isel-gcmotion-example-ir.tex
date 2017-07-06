@@ -19,7 +19,6 @@
       inner xsep=4pt,
       inner ysep=2.5pt,
       node distance=\nodeDist,
-      font=\irFont,
     },
     flow/.style={
       ->,
@@ -45,51 +44,45 @@
 
   \node (b1) {%
                \begin{tabular}{@{}l@{}}
-                 i \irAssign{} 0\\
-                 \irJump{} \irBlock{b2}
+                 \irAssign{\irVar{i}}{\irVar{0}}\\
+                 \irJump{b2}
                \end{tabular}%
              };
   \node [below=of b1] (b2)
         {%
           \begin{tabular}{@{}l@{}}
-            \irTemp{1} \irAssign{} i \irLE{} N\\
-            \irJump{} \irTemp{1}, b3, end
+            \irAssign{\irTemp{1}}{\irLE{\irVar{i}}{\irVar{N}}}\\
+            \irCondJump{\irTemp{1}}{b3}{end}
           \end{tabular}%
         };
   \node [below=of b2] (b3)
         {%
-          \begin{tabular}{@{}ll@{}}
-            \multicolumn{2}{@{}l@{}}{\irTemp{2} \irAssign{} i \irMul{} 4}\\
-            \irTemp{3} \irAssign{} A \irAdd{} \irTemp{2}
-              & \irTemp{4} \irAssign{} B \irAdd{} \irTemp{2}\\
-            a \irAssign{} \irLoad{} \irTemp{3}
-              & b \irAssign{} \irLoad{} \irTemp{4}\\
-            \multicolumn{2}{@{}l@{}}{%
-              c \irAssign{} a \irAdd{} b%
-            }\\
-            \multicolumn{2}{@{}l@{}}{%
-              \irTemp{5} \irAssign{} MAX \irLE{} c%
-            }\\
-            \multicolumn{2}{@{}l@{}}{%
-              \irJump{} \irTemp{5}, \irBlock{b4}, \irBlock{b5}%
-            }
+          \begin{tabular}{@{}l@{}}
+            \irAssign{\irTemp{2}}{\irMul{\irVar{i}}{\irVar{4}}}\\
+            \irAssign{\irTemp{3}}{\irAdd{\irVar{A}}{\irTemp{2}}}\\
+            \irAssign{\irVar{a}}{\irLoad{\irTemp{3}}}\\
+            \irAssign{\irTemp{4}}{\irAdd{\irVar{B}}{\irTemp{2}}}\\
+            \irAssign{\irVar{b}}{\irLoad{\irTemp{4}}}\\
+            \irAssign{\irVar{c}}{\irAdd{\irVar{a}}{\irVar{b}}}\\
+            \irAssign{\irTemp{5}}{\irLE{\irVar{MAX}}{\irVar{c}}}\\
+            \irCondJump{\irTemp{5}}{b4}{b5}
           \end{tabular}%
         };
   \node [below right=\nodeDist and 0 of b3.south west] (b4)
         {%
           \begin{tabular}{@{}l@{}}
-            c \irAssign{} MAX\\
-            \irJump{} \irBlock{b5}
+            \irAssign{\irVar{c}}{\irVar{MAX}}\\
+            \irJump{b5}
           \end{tabular}%
         };
   \coordinate (from-b4) at ([yshift=\jumpOffset] b4.south east);
-  \node [below left=-\jumpOffset and 0 of b3.south east |- from-b4] (b5)
+  \node [below right=-\jumpOffset and \nodeDist of from-b4] (b5)
         {%
           \begin{tabular}{@{}l@{}}
-            \irTemp{6} \irAssign{} C + \irTemp{2}\\
-            \irStore{} \irTemp{6}, c\\
-            i \irAssign{} i \irAdd{} 1\\
-            \irJump{} \irBlock{b2}
+            \irAssign{\irTemp{6}}{\irAdd{\irVar{C}}{\irTemp{2}}}\\
+            \irStore{\irTemp{6}}{\irVar{c}}\\
+            \irAssign{\irVar{i}}{\irAdd{\irVar{i}}{\irVar{1}}}\\
+            \irJump{b2}
           \end{tabular}%
         };
 
@@ -98,15 +91,16 @@
       \draw (b1) -- (b2);
       \draw (b2) -- node [tf label] {T} (b3);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);
-      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1, swap] {F} (b5);
+      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.06, swap] {F} (b5);
       \draw (from-b4) -- (from-b4 -| b5.west);
       \draw [rounded corners=10pt]
             ([yshift=\jumpOffset] b5.south west)
             -|
-            ([xshift=-10pt] b3.west)
+            ([xshift=-\nodeDist] b3.west)
             |-
             ([yshift=-\jumpOffset] b2.north west);
-      \draw (b2) -- node [tf label] {F} ([xshift=2*\nodeDist] b2.east);
+      \coordinate (from-b2) at ([yshift=\jumpOffset] b2.south east);
+      \draw (from-b2) -- node [tf label] {F} ([xshift=2*\nodeDist] from-b2);
     \end{scope}
   \end{pgfonlayer}
 

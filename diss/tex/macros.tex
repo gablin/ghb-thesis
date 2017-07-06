@@ -463,16 +463,17 @@
 \NewDocumentCommand{\irTemp}{m}{%
   \irCode{t$_{\text{#1}}$}%
 }
-\newcommand{\irAssign}{$\leftarrow$}
-\newcommand{\irAdd}{$+$}
+\newcommand{\irAssign}[2]{#1 $\leftarrow$ #2}
+\newcommand{\irAdd}[2]{#1 $+$ #2}
 \newcommand{\irBlock}[1]{\irCode{#1}}
-\newcommand{\irIf}{{\irFont\bfseries if}}
-\newcommand{\irElse}{{\irFont\bfseries else}}
-\newcommand{\irJump}{{\irFont\bfseries jump}}
-\newcommand{\irLE}{$<$}
-\newcommand{\irMul}{$\times$}
-\newcommand{\irLoad}{{\irFont\bfseries load}}
-\newcommand{\irStore}{{\irFont\bfseries store}}
+\newcommand{\irCondJump}[3]{%
+  {\irFont\bfseries jump} #1, \irBlock{#2}, \irBlock{#3}%
+}
+\newcommand{\irJump}[1]{{\irFont\bfseries jump} \irBlock{#1}}
+\newcommand{\irLE}[2]{#1 $<$ #2}
+\newcommand{\irMul}[2]{#1 $\times$ #2}
+\newcommand{\irLoad}[1]{{\irFont\bfseries load} #1}
+\newcommand{\irStore}[2]{{\irFont\bfseries store} #1, #2}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%
