@@ -96,7 +96,9 @@ problems by proposing ideas on how to extend the model to integrate
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
 while (i < N) {
-  int c = A[i] + B[i];
+  int a = A[i];
+  int b = B[i];
+  int c = a + b;
   if (MAX < c) c = MAX;
   C[i] = c;
   i++;
