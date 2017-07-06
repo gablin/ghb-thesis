@@ -45,32 +45,34 @@
 
   \node (b1) {%
                \begin{tabular}{@{}l@{}}
-                 i = 0\\
+                 i \irAssign{} 0\\
                  \irJump{} \irBlock{b2}
                \end{tabular}%
              };
   \node [below=of b1] (b2)
         {%
           \begin{tabular}{@{}l@{}}
-            \irIf{} i \irLE{} N \irJump{} \irBlock{b3}\\
-            \irElse{} \irJump{} end
+            \irTemp{1} \irAssign{} i \irLE{} N\\
+            \irJump{} \irTemp{1}, b3, end
           \end{tabular}%
         };
   \node [below=of b2] (b3)
         {%
           \begin{tabular}{@{}ll@{}}
-            \multicolumn{2}{@{}l@{}}{\irTemp{1} \irAssign{} i \irMul{} 4}\\
-            \irTemp{2} \irAssign{} A \irAdd{} \irTemp{1}
-              & \irTemp{3} \irAssign{} B \irAdd{} \irTemp{1}\\
-            a \irAssign{} \irLoad{} \irTemp{2}
-              & b \irAssign{} \irLoad{} \irTemp{3}\\
+            \multicolumn{2}{@{}l@{}}{\irTemp{2} \irAssign{} i \irMul{} 4}\\
+            \irTemp{3} \irAssign{} A \irAdd{} \irTemp{2}
+              & \irTemp{4} \irAssign{} B \irAdd{} \irTemp{2}\\
+            a \irAssign{} \irLoad{} \irTemp{3}
+              & b \irAssign{} \irLoad{} \irTemp{4}\\
             \multicolumn{2}{@{}l@{}}{%
               c \irAssign{} a \irAdd{} b%
             }\\
             \multicolumn{2}{@{}l@{}}{%
-              \irIf{} MAX \irLE{} c \irJump{} \irBlock{b4}%
+              \irTemp{5} \irAssign{} MAX \irLE{} c%
             }\\
-            \multicolumn{2}{@{}l@{}}{\irElse{} \irJump{} \irBlock{b5}}
+            \multicolumn{2}{@{}l@{}}{%
+              \irJump{} \irTemp{5}, \irBlock{b4}, \irBlock{b5}%
+            }
           \end{tabular}%
         };
   \node [below right=\nodeDist and 0 of b3.south west] (b4)
@@ -84,8 +86,8 @@
   \node [below left=-\jumpOffset and 0 of b3.south east |- from-b4] (b5)
         {%
           \begin{tabular}{@{}l@{}}
-            \irTemp{4} \irAssign{} C + \irTemp{1}\\
-            \irStore{} \irTemp{4}, c\\
+            \irTemp{6} \irAssign{} C + \irTemp{2}\\
+            \irStore{} \irTemp{6}, c\\
             i \irAssign{} i \irAdd{} 1\\
             \irJump{} \irBlock{b2}
           \end{tabular}%
