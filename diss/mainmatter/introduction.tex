@@ -145,7 +145,7 @@ Hence the \gls{instruction} would implement the following operations:
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
   \item the \mbox{\irVar{MAX} \irLE{} \irVar{c}} comparison
-  \item the conditional jumps to blocks~\irBlock{b4} and~\irBlock{b5}
+  \item the conditional jump to either of blocks~\irBlock{b4} and~\irBlock{b5}
   \item the \mbox{\irVar{c} \irAssign{} \irVar{MAX}} assignment
   \item the unconditional jump to~\irBlock{b5}
 \end{inlinelist}.
@@ -153,17 +153,22 @@ Hence the \gls{instruction} would implement the following operations:
 Selecting this \gls{instruction} can have tremendous impact on performance.
 %
 Assume, for example, that each \gls{operation} can be implemented using an
-\gls{instruction} that takes one cycle to execute. Assume also that the
+\gls{instruction} that takes one cycle to execute. Hence executing one iteration
+of the loop takes \num{16}~cycles, and selecting the saturated-add
+\gls{instruction} reduces the execution time by almost \SI{19}{\percent}.
 
-As the \glspl{operation} above reside in separate \glspl{block} (\irBlock{b3}
+Unfortunately, existing \gls{instruction selection} techniques and
+representations do not support selection of such \glspl{instruction}.
+%
+Since the \glspl{operation} above reside in separate \glspl{block} (\irBlock{b3}
 and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
 \gls{instruction selector} that is capable of processing multiple \glspl{basic
   block} simultaneously.
 %
 In comparison, traditional \gls{instruction selection} techniques only consider
 one \gls{basic block} at a time.
-
-Most approaches represent the \glspl{instruction} as graphs.
+%
+Morever, most approaches represent the \glspl{instruction} as graphs.
 %
 As the saturated-add \gls{instruction} contains \glspl{operation} for both data
 and control flow, modeling it as a graph requires a representation that captures
@@ -172,8 +177,6 @@ both data and control flow.
 In comparison, existing representations only capture data flow.
 
 
-
-\todo{finish text}
 
 \paragraph{For integrating instruction selection and global code motion}
 
