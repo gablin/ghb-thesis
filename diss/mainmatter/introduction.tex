@@ -37,9 +37,9 @@ The \gls{optimizer} is arguably the largest component of any \gls{compiler},
 consisting of many tasks such as \gls{constant folding}, \gls{dead code
   elimination}, and \gls{loop unrolling}.
 %
-Another such optimization is \gls!{global code motion}, where operations are
-moved from one \gls{basic block} to another, which is done mainly to move
-expensive operations into \glspl{block} with lower execution frequency.
+Another such optimization is \gls!{global code motion}, where \glspl{operation}
+are moved from one \gls{basic block} to another, which is done mainly to move
+expensive \glspl{operation} into \glspl{block} with lower execution frequency.
 
 The \gls{backend} also consists of several tasks, of which three
 typically are most promiment:%
@@ -68,12 +68,12 @@ The model select \glspl{instruction} globally for entire
 supported by existing approaches.
 %
 In addition, it integrates \gls{global code motion} as it is shown that moving
-operations across \glspl{basic block} can alleviate \gls{instruction selection}.
+\glspl{operation} across \glspl{basic block} can alleviate \gls{instruction
+  selection}.
 %
 To this end, the dissertation also introduces a new, graph-based representation
-that unifies data flow and control flow for an entire \gls{function} into a
-single graph, which enables complex \glspl{instruction} to be modeled as
-\glspl{pattern}.
+that unifies data flow and control flow for entire \glspl{function}, which
+enables complex \glspl{instruction} to be modeled as graphs.
 %
 Moreover, the representation is crucial for modeling \gls{global.is}
 \gls{instruction selection} and \gls{global code motion} as a combinatorial
@@ -127,25 +127,56 @@ while (i < N) {
 \paragraph{For global instruction selection}
 
 \RefFigure{isel-gcmotion-example} shows a program that computes the saturated
-sums of two integer arrays. In saturation arithmetic, the result of an
-arithmetic operation will always stay within a range fixed by a minimum and
-maximum value. If the operation would produce a value outside of this range,
-then the value is set (``clamped'') to the closest limit, thus becoming
-``saturated''.
+sums of two integer arrays.
+%
+In saturation arithmetic, the result of an arithmetic \gls{operation} will
+always stay within a range fixed by a minimum and maximum value.
+%
+If the \gls{operation} would produce a value outside of this range, then the
+value is set (``clamped'') to the closest limit, thus becoming ``saturated''.
 
 Assume a \gls{target machine} that has an instruction capable of implementing
-the saturated add operation used in the program shown in
-\refFigure{isel-gcmotion-example}. If selected, such an \gls{instruction} would
-implement both the \mbox{\irVar{MAX} \irLE{} \irVar{c}} check given in
-block~\irBlock{b3} and the assignment \mbox{\irVar{c} \irAssign{} \irVar{MAX}}
-given in block~\irBlock{b4}.
+the saturated-add \gls{operation} used in the \gls{program} shown in
+\refFigure{isel-gcmotion-example}.
+%
+Hence the \gls{instruction} would implement the following operations:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item the \mbox{\irVar{MAX} \irLE{} \irVar{c}} comparison
+  \item the conditional jumps to blocks~\irBlock{b4} and~\irBlock{b5}
+  \item the \mbox{\irVar{c} \irAssign{} \irVar{MAX}} assignment
+  \item the unconditional jump to~\irBlock{b5}
+\end{inlinelist}.
+%
+Selecting this \gls{instruction} can have tremendous impact on performance.
+%
+Assume, for example, that each \gls{operation} can be implemented using an
+\gls{instruction} that takes one cycle to execute. Assume also that the
+
+As the \glspl{operation} above reside in separate \glspl{block} (\irBlock{b3}
+and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
+\gls{instruction selector} that is capable of processing multiple \glspl{basic
+  block} simultaneously.
+%
+In comparison, traditional \gls{instruction selection} techniques only consider
+one \gls{basic block} at a time.
+
+Most approaches represent the \glspl{instruction} as graphs.
+%
+As the saturated-add \gls{instruction} contains \glspl{operation} for both data
+and control flow, modeling it as a graph requires a representation that captures
+both data and control flow.
+%
+In comparison, existing representations only capture data flow.
+
+
 
 \todo{finish text}
 
 \paragraph{For integrating instruction selection and global code motion}
 
 Assume that the \gls{target machine} also has an instruction capable of
-performing multiple add operations (a so-called \gls!{SIMD.instr}[
+performing multiple add \glspl{operation} (a so-called \gls!{SIMD.instr}[
   \gls{instruction}]).
 
 \todo{use previous example}
@@ -179,15 +210,15 @@ performing multiple add operations (a so-called \gls!{SIMD.instr}[
 
 \section{Contributions}
 
-The dissertation makes six contributions to the areas of code generation and
-constraint programming:
+The dissertation makes six contributions to the areas of \gls{code generation}
+and \gls{constraint programming}:
 %
 \begin{contributions}
   \item \labelContribution{survey}
     a comprehensive and structured survey that covers over four decades of
     research in \gls{instruction selection};
   \item \labelContribution{representations}
-    a program and instruction representation that enables
+    a \gls{program} and \gls{instruction} representation that enables
     \begin{contributions}
       \item \labelContribution{rep-uniformity}
         uniform treatment of data- and control-flow \glspl{operation}, and
@@ -221,11 +252,11 @@ constraint programming:
       model};
   \item \labelContribution{experiments}
     thorough experiments demonstrating that the approach scales to medium-sized
-    programs and yields better code than traditional approaches; and
+    \glspl{program} and yields better code than traditional approaches; and
   \item \labelContribution{integration}
     an initial design showing how the \gls{constraint model} can be extended to
-    integrate other code generation tasks, such as \gls{instruction scheduling}
-    and \gls{register allocation}.
+    integrate other \gls{code generation} tasks, such as \gls{instruction
+      scheduling} and \gls{register allocation}.
 \end{contributions}
 %
 \refTable{contributions-per-chapter} shows in which chapters each contribution
