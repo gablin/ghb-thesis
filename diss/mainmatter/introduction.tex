@@ -60,8 +60,8 @@ Another code generation task of interest is \gls!{block ordering}, where the
 This dissertation focuses primarily on the first \gls{code generation} problem
 by introducing a combinatorial optimization model for \gls{instruction
   selection}, which is simpler and more flexible compared to traditional
-approaches, and captures more features compared to existing combinatorial
-optimization models.
+approaches, and captures crucial features -- like \gls{data copying} -- which
+are ignored by existing combinatorial optimization models.
 %
 The model select \glspl{instruction} globally for entire
 \glspl{function} and enables selection of complex \glspl{instruction} not
@@ -126,7 +126,7 @@ while (i < N) {
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
 
-\paragraph{For global instruction selection}
+\paragraph{For global instruction selection and new representations}
 
 \RefFigure{isel-gcmotion-example} shows a program that computes the saturated
 sums of two integer arrays.
@@ -158,8 +158,8 @@ Assume, for example, that each \gls{operation} can be implemented using an
 of the loop takes \num{16}~cycles, and selecting the saturated-add
 \gls{instruction} reduces the execution time by \SI{25}{\percent}.
 
-Unfortunately, existing \gls{instruction selection} techniques and
-representations do not support selection of such \glspl{instruction}.
+Existing \gls{instruction selection} techniques and representations, however, do
+not support selection of such \glspl{instruction}.
 %
 Since the \glspl{operation} above reside in separate \glspl{block} (\irBlock{b3}
 and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
@@ -179,15 +179,56 @@ In comparison, existing representations only capture data flow.
 
 
 
-\paragraph{For integrating instruction selection and global code motion}
+\paragraph{For combining instruction selection and global code motion}
 
 Assume that the \gls{target machine} also has an instruction capable of
-performing multiple add \glspl{operation} (a so-called \gls!{SIMD.instr}[
-  \gls{instruction}]).
+performing multiple add \glspl{operation} (these are called \gls!{SIMD.instr}[
+  \glspl{instruction}]).
+%
+Revisiting the example shown in \refFigure{isel-gcmotion-example}, there are
+four additions in the \gls{program} (\irAdd{\irVar{A}}{\irTemp{2}},
+\irAdd{\irVar{B}}{\irTemp{2}}, \irAdd{\irVar{C}}{\irTemp{2}}, and
+\irAdd{\irVar{i}}{\irVar{1}}) which are independent from one another and can
+therefore be executed in parallel.
+%
+Assuming against that all \glspl{instruction} takes one cycle to execute,
+implementing these four additions using a single \gls{SIMD.instr}
+\gls{instruction} would improve performance by almost \SI{19}{\percent}.
 
-\todo{use previous example}
+This requires that the two additions in block~\irBlock{b5} be moved to
+block~\irBlock{b4}, which is the task of \gls{global code motion}.
+%
+However, as \gls{global code motion} is commonly considered to be a
+target-independent optimization, it is often done before \gls{code generation}.
+%
+Consequently, the \gls{global code mover} may take decisions which are
+detrimental for the \gls{instruction selector}.
 
-\paragraph{For integrating instruction selection and block ordering}
+
+
+\paragraph{For taking the cost of data copying into account}
+
+Although selecting \gls{SIMD.instr} \glspl{instruction} may significantly
+improve code quality -- like in the previous example -- doing so carelessly may
+also have the opposite effect.
+%
+Assume, for example, that the \gls{SIMD.instr} \gls{instruction} uses a limited
+set of registers.
+%
+If the other selected \glspl{instruction} cannot directly write to and read from
+these registers, then additional \glspl{instruction} must be emitted to copy the
+values between the general registers and the \gls{SIMD.instr} registers.
+%
+In the case of the program shown in \refFigure{isel-gcmotion-example}, eight
+such \glspl{instruction} would be needed, leading to a slowdown of over
+\SI{31}{\percent}.
+%
+These restrictions must be known by the \gls{instruction selector} to make
+effective use of \gls{SIMD.instr} \glspl{instruction}.
+
+
+
+\paragraph{For combining instruction selection and block ordering}
 
 \todo{Give another example}
 
