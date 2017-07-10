@@ -1,0 +1,77 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\footnotesize%
+\def\nodeDist{16pt}%
+\def\jumpOffset{8pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    every node/.style={
+      draw,
+      fill=white,
+      very thick,
+      minimum size=0,
+      inner xsep=4pt,
+      inner ysep=2.5pt,
+      node distance=\nodeDist,
+    },
+    flow/.style={
+      ->,
+      very thick,
+      shorten <=-2pt,
+    },
+    tf label/.style={
+      draw=none,
+      fill=none,
+      minimum size=0,
+      inner xsep=4pt,
+      node distance=0,
+      font=\sffamily,
+      auto,
+    },
+    block label/.style={
+      tf label,
+      inner xsep=0,
+      inner ysep=1pt,
+      font=\irFont\bfseries,
+    },
+  ]
+
+  \node (b1) {%
+               \begin{tabular}{@{}l@{}}
+                 \irAssign{\irVar{a}}{\irCall{g}}\\
+                 \irAssign{\irTemp{1}}{\irGE{\irVar{a}}{\irVar{K}}}\\
+                 \irCondJump{\irTemp{1}}{b1}{b2}
+               \end{tabular}%
+             };
+  \node [below left=\nodeDist and 0 of b1.south east] (b2)
+        {%
+          \begin{tabular}{@{}l@{}}
+            \irRet{\irVar{a}}
+          \end{tabular}%
+        };
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[flow]
+      \draw (b2 |- b1.south) -- node [tf label, pos=0.4] {F} (b2);
+      \draw [rounded corners=8pt]
+            ($(b1.south west) !.75! (b1.south)$)
+            |- node [tf label, pos=0.2, swap] {T}
+            ([xshift=-\nodeDist, yshift=-\nodeDist] b1.south west)
+            |-
+            ([yshift=-\jumpOffset] b1.north west);
+    \end{scope}
+  \end{pgfonlayer}
+
+%  \node [block label, below left=0 and 0 of b1.north west, inner xsep=1pt] {b1};
+%  \foreach \i in {2, 3, 4} {
+%    \node [block label, above right=0 and 0 of b\i.north west] {b\i};
+%  }
+%  \node [block label, above left=0 and 0 of b5.north east] {b5};
+\end{tikzpicture}%
+\endgroup%

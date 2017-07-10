@@ -238,6 +238,39 @@ effective use of \gls{SIMD.instr} \glspl{instruction}.
 
 \paragraph{For combining instruction selection and block ordering}
 
+\begin{filecontents*}{isel-blorder-example.c}
+int f(int K) {
+  int a;
+  do {
+    a = g();
+  } while (a > K);
+  return a;
+}
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{isel-blorder-example-c}}%
+                {\lstinputlisting[language=c]{isel-blorder-example.c}}%
+  \hspace{5mm}%
+  \subcaptionbox{Corresponding \gls{IR} and control-flow graph%
+                 \labelFigure{isel-blorder-example-ir}}%
+                [64mm]%
+                {\input{figures/introduction/isel-blorder-example-ir}}%
+
+  \caption[%
+            Example illustrating the interaction between instruction selection
+            and block ordering%
+          ]{%
+            An example to illustrate the interaction between instruction
+            selection and block ordering.
+            %
+            The function \irCode{f} calls another function \irCode{g} until it
+            returns a value that is less than the function argument~\irVar{K}%
+          }
+  \labelFigure{isel-blorder-example}%
+\end{figure}
+
 \todo{Give another example}
 
 \todo{Traditional approaches (how)}
