@@ -271,7 +271,29 @@ int f(int K) {
   \labelFigure{isel-blorder-example}%
 \end{figure}
 
-\todo{Give another example}
+\RefFigure{isel-blorder-example} shows a \gls{function} that loops until a
+certain condition (\irGE{\irVar{a}}{\irVar{K}}) is met.
+%
+Assume that the \gls{target machine} has three \glspl{instruction} for handling
+control flow:
+%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item a \mbox{{\instrFont\bfseries jmp} $p$, $b$} \gls{instruction}, which
+    branches to block~$b$ if the value in register~$p$ corresponds the Boolean
+    value~$\mathit{true}$
+  \item a \mbox{{\instrFont\bfseries jmp} $r < s$, $b$} \gls{instruction}, which
+    branches to block~$b$ if the condition \mbox{$r < s$} holds, where $r$ and
+    $s$ are registers
+  \item a \mbox{{\instrFont\bfseries jmp} $b$} \gls{instruction}, which
+    unconditionally branches to block~$b$
+\end{inlinelist}.
+%
+Assume also that these branch \glspl{instruction} are three times more expensive
+compared to the other \glspl{instruction} in the \gls{target machine}.
+
+\todo{finish section}
+
+
 
 \todo{Traditional approaches (how)}
 \todo{Limitations (why)}
