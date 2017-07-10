@@ -46,7 +46,7 @@
                \begin{tabular}{@{}l@{}}
                  \irAssign{\irVar{a}}{\irCall{g}}\\
                  \irAssign{\irTemp{1}}{\irGE{\irVar{a}}{\irVar{K}}}\\
-                 \irCondJump{\irTemp{1}}{b1}{b2}
+                 \irCondBr{\irTemp{1}}{b1}{b2}
                \end{tabular}%
              };
   \node [below left=\nodeDist and 0 of b1.south east] (b2)
@@ -68,10 +68,8 @@
     \end{scope}
   \end{pgfonlayer}
 
-%  \node [block label, below left=0 and 0 of b1.north west, inner xsep=1pt] {b1};
-%  \foreach \i in {2, 3, 4} {
-%    \node [block label, above right=0 and 0 of b\i.north west] {b\i};
-%  }
-%  \node [block label, above left=0 and 0 of b5.north east] {b5};
+
+  \node [block label, above right=0 and 0 of b1.north west] {b1};
+  \node [block label, left=of b2, inner xsep=1pt] {b2};
 \end{tikzpicture}%
 \endgroup%
