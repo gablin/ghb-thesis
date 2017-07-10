@@ -111,17 +111,25 @@ while (i < N) {
                 {\lstinputlisting[language=c]{isel-gcmotion-example.c}}%
   \hspace{5mm}%
   \subcaptionbox{Corresponding \gls{IR} and control-flow graph%
-                 \labelFigure{example-program-ir}}%
+                 \labelFigure{isel-gmotion-example-ir}}%
                 [64mm]%
                 {\input{figures/introduction/isel-gcmotion-example-ir}}%
 
-  \caption[A program computing saturated sums]%
-          {%
-            A program computing the saturated sums of two arrays, where
-            \irVar{A}, \irVar{B}, and \irVar{C} are integer arrays of equal
-            lengths stored in memory, and \irVar{N} and \irVar{MAX} are
-            constants representing the array length and the upper limit,
-            respectively. An integer is assumed to be 4~bytes%
+  \caption[%
+            Example illustrating the interaction between instruction selection
+            and global code motion%
+          ]{%
+            An example to illustrate the interaction between instruction
+            selection and global code motion.
+            %
+            The program computes the saturated sums of two arrays \irVar{A} and
+            \irVar{B} as a new array~\irVar{C}, all of which are assumed to be
+            of equal lengths and stored in memory.
+            %
+            The variables \irVar{N} and \irVar{MAX} are constants representing
+            the array length and the upper limit, respectively.
+            %
+            An integer is assumed to be 4~bytes%
           }
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
