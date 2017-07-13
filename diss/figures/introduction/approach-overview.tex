@@ -1,0 +1,188 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\footnotesize%
+\def\nodeDist{14.5mm}%
+\def\rowSep{2.5pt}%
+\begin{tikzpicture}[
+    input/.style={
+      nothing,
+      node distance=\nodeDist,
+    },
+    output/.style={
+      input,
+    },
+    tool/.style={
+      draw,
+      thick,
+      minimum height=5mm,
+      inner xsep=3pt,
+      inner ysep=1.5pt,
+      node distance=\nodeDist,
+      fill=shade1,
+      font=\strut,
+    },
+    flow/.style={
+      ->,
+      thick,
+    },
+    item/.style={
+      nothing,
+      node distance=1pt,
+    },
+  ]
+
+  \node [input] (p-input) {};
+  \node [tool, right=0.5*\nodeDist of p-input] (uf-graph-builder)
+        {\begin{tabular}{@{}c@{}}
+          UF graph\\
+          builder
+         \end{tabular}%
+        };
+  \node [input, above=0.9*\nodeDist of p-input] (i-input) {};
+  \node [tool] at (i-input -| uf-graph-builder) (pattern-set-builder)
+        {\begin{tabular}{@{}c@{}}
+          pattern set\\
+          builder
+         \end{tabular}%
+        };
+  \node [tool, right=1.2*\nodeDist of pattern-set-builder] (ps-transformations)
+        {transformations};
+  \node [tool] at (ps-transformations |- uf-graph-builder) (uf-transformations)
+        {transformations};
+  \node [tool, right=0.5*\nodeDist of
+                     $(ps-transformations.east) !.5! (uf-transformations.east)$]
+        (matcher) {matcher};
+  \node [tool, right=of matcher] (modeler) {modeler};
+  \node [tool, below left=\nodeDist and 0.3*\nodeDist of modeler] (solver)
+        {solver};
+  \node [tool, left=of solver] (code-emitter)
+        {\begin{tabular}{@{}c@{}}
+          code\\
+          emitter
+         \end{tabular}%
+        };
+  \node [output, left=0.5*\nodeDist of code-emitter] (output) {};
+
+  \begin{scope}[flow]
+    \draw (p-input)
+          -- coordinate (between-p-input-and-uf-graph-builder)
+          (uf-graph-builder);
+    \draw (i-input)
+          -- coordinate (between-i-input-and-pattern-set-builder)
+          (pattern-set-builder);
+    \draw (uf-graph-builder)
+          -- coordinate (between-uf-graph-builder-and-uf-transformations)
+          (uf-transformations);
+    \draw (uf-transformations -| matcher)
+          coordinate (between-uf-transformations-and-modeler)
+          --
+          (matcher);
+    \draw [rounded corners=4pt]
+          (uf-transformations)
+          -|
+          (modeler);
+    \draw (pattern-set-builder)
+          -- coordinate (between-pattern-set-builder-and-ps-transformations)
+          (ps-transformations);
+    \draw (ps-transformations -| matcher)
+          coordinate (between-ps-transformations-and-modeler)
+          --
+          (matcher);
+    \draw [rounded corners=4pt]
+          (ps-transformations)
+          -|
+          ($(modeler.north west) !.33! (modeler.north east)$);
+    \draw [rounded corners=4pt]
+          (between-i-input-and-pattern-set-builder)
+          |-
+          ([yshift=0.2*\nodeDist] pattern-set-builder.north)
+          [rounded corners=10pt]
+          -|
+          ($(modeler.north west) !.66! (modeler.north east)$);
+    \draw (matcher)
+          -- coordinate (between-matcher-and-modeler)
+          (modeler);
+    \draw [rounded corners=5pt]
+          (modeler)
+          --
+          ([xshift=0.25*\nodeDist] modeler.east)
+          [rounded corners=10pt]
+          |- coordinate [pos=0.75] (between-modeler-and-solver)
+          (solver);
+    \draw (solver)
+          -- coordinate (between-solver-and-code-emitter)
+          (code-emitter);
+    \draw (code-emitter)
+          -- coordinate (between-code-emitter-and-output)
+          (output);
+  \end{scope}
+
+  \node [item, node distance=2pt, left=of p-input]
+        {%
+          \begin{tabular}{@{}c@{}}
+            function
+          \end{tabular}%
+        };
+  \node [item, left=2pt of i-input]
+        {%
+          \begin{tabular}{@{}c@{}}
+            machine\\
+            description
+          \end{tabular}%
+        };
+  \node [item, above=of between-uf-graph-builder-and-uf-transformations]
+        {%
+          \begin{tabular}{@{}c@{}}
+            UF graph
+          \end{tabular}%
+        };
+  \node [item, below=of between-uf-transformations-and-modeler]
+        {%
+          \begin{tabular}{@{}c@{}}
+            UF graph
+          \end{tabular}%
+        };
+  \node [item, above=of between-pattern-set-builder-and-ps-transformations]
+        {%
+          \begin{tabular}{@{}c@{}}
+            pattern set
+          \end{tabular}%
+        };
+  \node [item, above=of between-ps-transformations-and-modeler]
+        {%
+          \begin{tabular}{@{}c@{}}
+            pattern set
+          \end{tabular}%
+        };
+  \node [item, above=of between-matcher-and-modeler]
+        {%
+          \begin{tabular}{@{}c@{}}
+            matches
+          \end{tabular}%
+        };
+  \node [item] at (between-modeler-and-solver)
+        {%
+          \begin{tabular}{@{}c@{}}
+            constraint\\[\rowSep]
+            model
+          \end{tabular}%
+        };
+  \node [item, above=of between-solver-and-code-emitter]
+        {%
+          \begin{tabular}{@{}c@{}}
+            solution
+          \end{tabular}%
+        };
+  \node [item, left=2pt of output]
+        {%
+          \begin{tabular}{@{}c@{}}
+            code
+          \end{tabular}%
+        };
+\end{tikzpicture}%
+\endgroup%
