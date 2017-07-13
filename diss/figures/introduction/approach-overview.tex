@@ -37,14 +37,14 @@
   ]
 
   \node [input] (p-input) {};
-  \node [tool, right=0.5*\nodeDist of p-input] (uf-graph-builder)
+  \node [tool, right=0.5*\nodeDist of p-input] (graph-builder)
         {\begin{tabular}{@{}c@{}}
-          UF graph\\
+          graph\\
           builder
          \end{tabular}%
         };
   \node [input, above=0.9*\nodeDist of p-input] (i-input) {};
-  \node [tool] at (i-input -| uf-graph-builder) (pattern-set-builder)
+  \node [tool] at (i-input -| graph-builder) (pattern-set-builder)
         {\begin{tabular}{@{}c@{}}
           pattern set\\
           builder
@@ -52,10 +52,10 @@
         };
   \node [tool, right=1.2*\nodeDist of pattern-set-builder] (ps-transformations)
         {transformations};
-  \node [tool] at (ps-transformations |- uf-graph-builder) (uf-transformations)
+  \node [tool] at (ps-transformations |- graph-builder) (transformations)
         {transformations};
   \node [tool, right=0.5*\nodeDist of
-                     $(ps-transformations.east) !.5! (uf-transformations.east)$]
+                     $(ps-transformations.east) !.5! (transformations.east)$]
         (matcher) {matcher};
   \node [tool, right=of matcher] (modeler) {modeler};
   \node [tool, below left=\nodeDist and 0.3*\nodeDist of modeler] (solver)
@@ -70,20 +70,20 @@
 
   \begin{scope}[flow]
     \draw (p-input)
-          -- coordinate (between-p-input-and-uf-graph-builder)
-          (uf-graph-builder);
+          -- coordinate (between-p-input-and-graph-builder)
+          (graph-builder);
     \draw (i-input)
           -- coordinate (between-i-input-and-pattern-set-builder)
           (pattern-set-builder);
-    \draw (uf-graph-builder)
-          -- coordinate (between-uf-graph-builder-and-uf-transformations)
-          (uf-transformations);
-    \draw (uf-transformations -| matcher)
-          coordinate (between-uf-transformations-and-modeler)
+    \draw (graph-builder)
+          -- coordinate (between-graph-builder-and-transformations)
+          (transformations);
+    \draw (transformations -| matcher)
+          coordinate (between-transformations-and-modeler)
           --
           (matcher);
     \draw [rounded corners=4pt]
-          (uf-transformations)
+          (transformations)
           -|
           (modeler);
     \draw (pattern-set-builder)
@@ -125,7 +125,7 @@
   \node [item, node distance=2pt, left=of p-input]
         {%
           \begin{tabular}{@{}c@{}}
-            function
+            program
           \end{tabular}%
         };
   \node [item, left=2pt of i-input]
@@ -135,16 +135,16 @@
             description
           \end{tabular}%
         };
-  \node [item, above=of between-uf-graph-builder-and-uf-transformations]
+  \node [item, above=of between-graph-builder-and-transformations]
         {%
           \begin{tabular}{@{}c@{}}
-            UF graph
+            graph
           \end{tabular}%
         };
-  \node [item, below=of between-uf-transformations-and-modeler]
+  \node [item, below=of between-transformations-and-modeler]
         {%
           \begin{tabular}{@{}c@{}}
-            UF graph
+            graph
           \end{tabular}%
         };
   \node [item, above=of between-pattern-set-builder-and-ps-transformations]
