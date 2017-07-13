@@ -45,7 +45,7 @@
   \node (b1) {%
                \begin{tabular}{@{}l@{}}
                  \irAssign{\irVar{a}}{\irCall{g}}\\
-                 \irAssign{\irTemp{1}}{\irGE{\irVar{a}}{\irVar{K}}}\\
+                 \irAssign{\irTemp{1}}{\irEQ{\irVar{a}}{\irVar{0}}}\\
                  \irCondBr{\irTemp{1}}{b1}{b2}
                \end{tabular}%
              };

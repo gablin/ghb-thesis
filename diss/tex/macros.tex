@@ -470,6 +470,8 @@
 \newcommand{\irCondBr}[3]{%
   \mbox{\irFont\bfseries c.br} #1, \irBlock{#2}, \irBlock{#3}%
 }
+\newcommand{\irEQ}[2]{\mbox{#1 $=$ #2}}
+\newcommand{\irNE}[2]{\mbox{#1 $\neq$ #2}}
 \newcommand{\irGE}[2]{\mbox{#1 $>$ #2}}
 \newcommand{\irLE}[2]{\mbox{#1 $<$ #2}}
 \newcommand{\irMul}[2]{\mbox{#1 $\times$ #2}}
@@ -505,4 +507,11 @@
 \newcommand{\opBlock}[1]{\irCode{#1}}
 
 % Commands used for assembly instructions
-\newcommand{\instrFont}{\ttfamily}
+\let\instrFont\irFont
+\let\instrBlock\irBlock
+\let\instrEQ\irEQ
+\let\instrNE\irNE
+\let\instrGE\irGE
+\let\instrLE\irLE
+\let\instrTemp\irTemp
+\let\instrVar\irVar

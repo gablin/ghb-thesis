@@ -202,7 +202,7 @@ therefore be executed in parallel.
 Assuming against that all \glspl{instruction} takes one cycle to execute,
 implementing these four additions using a single \gls{SIMD.instr}
 \gls{instruction} would improve performance by almost \SI{19}{\percent}.
-
+%
 This requires that the two additions in block~\irBlock{b5} be moved to
 block~\irBlock{b4}, which is the task of \gls{global code motion}.
 %
@@ -239,11 +239,11 @@ effective use of \gls{SIMD.instr} \glspl{instruction}.
 \paragraph{For combining instruction selection and block ordering}
 
 \begin{filecontents*}{isel-blorder-example.c}
-int f(int K) {
+int f() {
   int a;
   do {
     a = g();
-  } while (a > K);
+  } while (a == 0);
   return a;
 }
 \end{filecontents*}
@@ -258,6 +258,74 @@ int f(int K) {
                 [64mm]%
                 {\input{figures/introduction/isel-blorder-example-ir}}%
 
+  \vspace{\baselineskip}
+
+  \subcaptionbox{%
+                  Selecting basic jump instruction, after block ordering.
+                  %
+                  Cycle count: 6%
+                  \labelFigure{isel-blorder-example-code-1}%
+                }%
+                [34mm]%
+                {%
+                  \small
+                  \begin{tabular}{%
+                                   @{}>{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{}%
+                                 }
+                    b1: & call & a $\leftarrow$ g()\\
+                        & cmp  & \instrTemp{1} $\leftarrow$
+                                 \instrEQ{\instrVar{a}}{\instrVar{0}}\\
+                        & jmp  & \instrTemp{1}, \instrBlock{b1}\\
+                    b2: & ret  & \instrVar{a}
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Selecting complex jump instruction, before block ordering.
+                  %
+                  Cycle count: 5%
+                  \labelFigure{isel-blorder-example-code-2}%
+                }%
+                [39mm]%
+                {%
+                  \small
+                  \begin{tabular}{%
+                                   @{}>{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{}%
+                                 }
+                    b1: & call & a $\leftarrow$ g()\\
+                        & jmp  & \instrNE{\instrVar{a}}{\instrVar{0}},
+                                 \instrBlock{b2}\\
+                    \\
+                    b2: & ret  & \instrVar{a}
+                  \end{tabular}%
+                }
+  \hfill%
+  \subcaptionbox{%
+                  Selecting complex jump instruction, after block ordering.
+                  %
+                  Cycle count: 8%
+                  \labelFigure{isel-blorder-example-code-3}%
+                }%
+                [40mm]%
+                {%
+                  \small
+                  \begin{tabular}{%
+                                   @{}>{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{\hspace{4pt}}%
+                                   >{\instrFont}l@{}%
+                                 }
+                    b1: & call & a $\leftarrow$ g()\\
+                        & jmp  & \instrNE{\instrVar{a}}{\instrVar{0}},
+                                 \instrBlock{b2}\\
+                        & jmp  & \instrBlock{b1}\\
+                    b2: & ret  & \instrVar{a}
+                  \end{tabular}%
+                }
+
   \caption[%
             Example illustrating the interaction between instruction selection
             and block ordering%
@@ -266,32 +334,53 @@ int f(int K) {
             selection and block ordering.
             %
             The function \irCode{f} calls another function \irCode{g} until it
-            returns a value that is less than the function argument~\irVar{K}%
+            returns a non-zero value, and then returns that value%
           }
   \labelFigure{isel-blorder-example}%
 \end{figure}
 
-\RefFigure{isel-blorder-example} shows a \gls{function} that loops until a
-certain condition (\irGE{\irVar{a}}{\irVar{K}}) is met.
+\RefFigure{isel-blorder-example} shows a \gls{function} that keeps calling
+another \gls{function} (with side effects) until it returns a non-zero value.
 %
 Assume that the \gls{target machine} has three \glspl{instruction} for handling
 control flow:
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item a \mbox{{\instrFont\bfseries jmp} $p$, $b$} \gls{instruction}, which
+  \item a \mbox{{\instrFont jmp} $p$, $b$} \gls{instruction}, which
     branches to block~$b$ if the value in register~$p$ corresponds the Boolean
     value~$\mathit{true}$
-  \item a \mbox{{\instrFont\bfseries jmp} $r < s$, $b$} \gls{instruction}, which
-    branches to block~$b$ if the condition \mbox{$r < s$} holds, where $r$ and
-    $s$ are registers
-  \item a \mbox{{\instrFont\bfseries jmp} $b$} \gls{instruction}, which
+  \item a \mbox{{\instrFont jmp} $r \neq 0$, $b$} \gls{instruction}, which
+    branches to block~$b$ if the condition \mbox{$r \neq 0$} holds, where $r$
+    is a register
+  \item a \mbox{{\instrFont jmp} $b$} \gls{instruction}, which
     unconditionally branches to block~$b$
 \end{inlinelist}.
 %
-Assume also that these branch \glspl{instruction} are three times more expensive
-compared to the other \glspl{instruction} in the \gls{target machine}.
+Assume also that these branch \glspl{instruction} take three cycles compared to
+the other \glspl{instruction} in the \gls{target machine}, which take one cycle.
 
-\todo{finish section}
+At first glance it appears that only the first jump \gls{instruction} is
+selectable for implementing the conditional branch (see
+\refFigure{isel-blorder-example-code-1}), leading to a total of six cycles for
+the entire \gls{function}.
+%
+But by flipping the condition and swapping block labels (conditionally jumping
+to \irBlock{b2} instead of \irBlock{b1}), the more complex jump
+\gls{instruction} becomes selectable (see
+\refFigure{isel-blorder-example-code-2}), bringing the cycle count to five
+cycles and thus reducing the execution time by almost \SI{17}{\percent}.
+%
+However, although this decision may appear better at the point of
+\gls{instruction selection}, it necessitates an additional jump
+\gls{instruction} when ordering the \glspl{block} (because block~\irBlock{b1}
+cannot fall-through to the top of itself; see
+\refFigure{isel-blorder-example-code-3}).
+%
+This code takes eight cycles to execute, thus leading to a slowdown of
+\SI{33}{\percent}.
+%
+The \gls{instruction selector} must therefore be aware of additional jump
+\glspl{instruction} that may be required when making such decisions.
 
 
 
