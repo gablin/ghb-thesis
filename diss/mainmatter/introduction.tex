@@ -422,7 +422,20 @@ related tasks of \gls{code generation}.
   \labelFigure{approach-overview}
 \end{figure}
 
-\todo{write}
+The approach, outlined in \refFigure{approach-overview}, is as follows.
+%
+The \gls{IR} code of the \gls{program} under compilation is fed to a tool which
+builds a graph-based representation of the \gls{program}.
+%
+The graph is subjected to a series of transformations, which are described later
+in this dissertation, and then fed to a matcher together with the \gls{pattern
+  set} of the specified \gls{target machine}.
+%
+The \gls{pattern set} is built from a \gls{machine description} and contains a
+graph-based pattern for each \gls{instruction}, which have also been subjected
+to similar transformations.
+
+\todo{finish section}
 
 
 
