@@ -67,14 +67,10 @@
 }
 
 \NewDocumentEnvironment{statement}{}{%
-  \par%
-  \vspace{\baselineskip}%
-  \mbox{}\hfill\begin{minipage}{\textwidth-2\parindent}%
-    \itshape\raggedright%
+  \begin{list}{}{}
+    \item\itshape%
 }{%
-  \end{minipage}
-  \par%
-  \vspace{\baselineskip}%
+  \end{list}%
 }
 
 
