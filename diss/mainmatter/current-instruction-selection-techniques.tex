@@ -55,9 +55,11 @@ x = A[i + 1];
                 [50mm]%
                 {%
                   \small
-                  \begin{tabular}{>{\instrFont}r@{\hspace{4pt}}%
-                                  >{$}r<{$}@{ $\leftarrow$ }%
-                                  >{$}l<{$}}
+                  \begin{tabular}{%
+                                   >{\instrFont}r@{\hspace{4pt}}%
+                                   >{$}l<{$}@{ $\leftarrow$ }%
+                                   >{$}l<{$}%
+                                 }
                     add  & r & s + t\\
                     mul  & r & s \times t\\
                     mad  & r & s \times t + u\\
