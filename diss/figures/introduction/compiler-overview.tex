@@ -5,7 +5,7 @@
 % of the license).
 %
 \begingroup%
-\figureFont%
+\figureFont\footnotesize%
 \def\compStageWidth{1.5cm}%
 \def\compStageHeight{8mm}%
 \def\compStageDist{0.6*\compStageWidth}%
@@ -114,8 +114,6 @@
     },
   ]
 
-  \small
-
   % Compiler stages
   \node [compiler input] (compiler-input) {program};
   \node [compiler stage, right=of compiler-input] (frontend) {frontend};
@@ -135,8 +133,6 @@
     \draw (optimizer) -- node [label, above] {IR} (backend);
     \draw (backend) -- (compiler-output);
   \end{scope}
-
-  \footnotesize
 
   % Optimizer stages
   \node [optimizer stage, below=\wrapperOuterSep of compiler-wrapper]
