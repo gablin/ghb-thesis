@@ -6,11 +6,12 @@
 %
 \begingroup%
 \figureFont\footnotesize%
-\def\nodeDist{14.5mm}%
+\def\nodeDist{14mm}%
 \def\rowSep{2.5pt}%
 \begin{tikzpicture}[
     input/.style={
       nothing,
+      inner sep=2pt,
       node distance=\nodeDist,
     },
     output/.style={
@@ -34,129 +35,115 @@
       nothing,
       node distance=1pt,
     },
+    sep line/.style={
+      dotted,
+    },
+    sep label/.style={
+      nothing,
+    },
   ]
 
-  \node [input] (p-input) {};
-  \node [tool, right=0.5*\nodeDist of p-input] (graph-builder)
+  \node [input] (ir)
+        {%
+          \begin{tabular}{@{}c@{}}
+            IR
+          \end{tabular}%
+        };
+  \node [tool, right=0.5*\nodeDist of ir] (graph-builder)
         {\begin{tabular}{@{}c@{}}
           graph\\
           builder
          \end{tabular}%
         };
-  \node [input, above=0.9*\nodeDist of p-input] (i-input) {};
-  \node [tool] at (i-input -| graph-builder) (pattern-set-builder)
-        {\begin{tabular}{@{}c@{}}
-          pattern set\\
-          builder
-         \end{tabular}%
-        };
-  \node [tool, right=1.2*\nodeDist of pattern-set-builder] (ps-transformations)
+  \node [tool, below=0.5*\nodeDist of graph-builder] (g-transformations)
         {transformations};
-  \node [tool] at (ps-transformations |- graph-builder) (transformations)
-        {transformations};
-  \node [tool, right=0.5*\nodeDist of
-                     $(ps-transformations.east) !.5! (transformations.east)$]
-        (matcher) {matcher};
-  \node [tool, right=of matcher] (modeler) {modeler};
-  \node [tool, below left=\nodeDist and 0.3*\nodeDist of modeler] (solver)
-        {solver};
-  \node [tool, left=of solver] (code-emitter)
+  \node [tool, right=0.8*\nodeDist of g-transformations] (matcher) {matcher};
+  \node [tool, right=\nodeDist of matcher] (modeler) {modeler};
+  \node [tool, right=1.1*\nodeDist of modeler] (solver) {solver};
+  \node [tool, right=\nodeDist of solver] (code-emitter)
         {\begin{tabular}{@{}c@{}}
           code\\
           emitter
          \end{tabular}%
         };
-  \node [output, left=0.5*\nodeDist of code-emitter] (output) {};
-
-  \begin{scope}[flow]
-    \draw (p-input)
-          -- coordinate (between-p-input-and-graph-builder)
-          (graph-builder);
-    \draw (i-input)
-          -- coordinate (between-i-input-and-pattern-set-builder)
-          (pattern-set-builder);
-    \draw (graph-builder)
-          -- coordinate (between-graph-builder-and-transformations)
-          (transformations);
-    \draw (transformations -| matcher)
-          coordinate (between-transformations-and-modeler)
-          --
-          (matcher);
-    \draw [rounded corners=4pt]
-          (transformations)
-          -|
-          (modeler);
-    \draw (pattern-set-builder)
-          -- coordinate (between-pattern-set-builder-and-ps-transformations)
-          (ps-transformations);
-    \draw (ps-transformations -| matcher)
-          coordinate (between-ps-transformations-and-modeler)
-          --
-          (matcher);
-    \draw [rounded corners=4pt]
-          (ps-transformations)
-          -|
-          ($(modeler.north west) !.33! (modeler.north east)$);
-    \draw [rounded corners=4pt]
-          (between-i-input-and-pattern-set-builder)
-          |-
-          ([yshift=0.2*\nodeDist] pattern-set-builder.north)
-          [rounded corners=10pt]
-          -|
-          ($(modeler.north west) !.66! (modeler.north east)$);
-    \draw (matcher)
-          -- coordinate (between-matcher-and-modeler)
-          (modeler);
-    \draw [rounded corners=5pt]
-          (modeler)
-          --
-          ([xshift=0.25*\nodeDist] modeler.east)
-          [rounded corners=10pt]
-          |- coordinate [pos=0.75] (between-modeler-and-solver)
-          (solver);
-    \draw (solver)
-          -- coordinate (between-solver-and-code-emitter)
-          (code-emitter);
-    \draw (code-emitter)
-          -- coordinate (between-code-emitter-and-output)
-          (output);
-  \end{scope}
-
-  \node [item, node distance=2pt, left=of p-input]
+  \node [output, inner sep=0, below=0.25*\nodeDist of code-emitter] (code)
         {%
           \begin{tabular}{@{}c@{}}
-            program
+            code
           \end{tabular}%
         };
-  \node [item, left=2pt of i-input]
+
+  \node [input, above right=2.25*\nodeDist and 0 of ir.west]
+        (machine-description)
         {%
           \begin{tabular}{@{}c@{}}
             machine\\
             description
           \end{tabular}%
         };
-  \node [item, above=of between-graph-builder-and-transformations]
+  \node [tool] at (machine-description -| matcher) (pattern-set-builder)
+        {\begin{tabular}{@{}c@{}}
+          pattern set\\
+          builder
+         \end{tabular}%
+        };
+  \node [tool, below=0.5*\nodeDist of pattern-set-builder] (ps-transformations)
+        {transformations};
+
+  \begin{scope}[flow]
+    \foreach \i [remember=\i as \previ (initially ir)]
+    in {%
+         graph-builder, g-transformations, matcher, modeler, solver,
+         code-emitter, code%
+       }
+    {%
+      \draw (\previ)
+            -- coordinate (between-\previ-and-\i)
+            (\i);
+    }
+    \draw [rounded corners=4pt]
+          (between-g-transformations-and-matcher)
+          |-
+          ([yshift=-0.2*\nodeDist] matcher.south)
+          -|
+          (modeler);
+
+    \foreach \i [remember=\i as \previ (initially machine-description)]
+    in {pattern-set-builder, ps-transformations}
+    {%
+      \draw (\previ)
+            -- coordinate (between-\previ-and-\i)
+            (\i);
+    }
+    \draw (ps-transformations)
+          --
+          (matcher);
+    \coordinate (below-ps-transformations)
+                at ([yshift=-0.5*\nodeDist] ps-transformations.south);
+    \draw [rounded corners=4pt]
+          (below-ps-transformations)
+          -|
+          ($(modeler.north west) !.33! (modeler.north east)$);
+
+    \draw [rounded corners=4pt]
+          (between-machine-description-and-pattern-set-builder)
+          |-
+          ([yshift=0.2*\nodeDist] pattern-set-builder.north)
+          [rounded corners=8pt]
+          -|
+          ($(modeler.north west) !.66! (modeler.north east)$);
+  \end{scope}
+
+  \node [item, right=2pt of between-graph-builder-and-g-transformations]
         {%
           \begin{tabular}{@{}c@{}}
             graph
           \end{tabular}%
         };
-  \node [item, below=of between-transformations-and-modeler]
+  \node [item, above=of between-g-transformations-and-matcher]
         {%
           \begin{tabular}{@{}c@{}}
             graph
-          \end{tabular}%
-        };
-  \node [item, above=of between-pattern-set-builder-and-ps-transformations]
-        {%
-          \begin{tabular}{@{}c@{}}
-            pattern set
-          \end{tabular}%
-        };
-  \node [item, above=of between-ps-transformations-and-modeler]
-        {%
-          \begin{tabular}{@{}c@{}}
-            pattern set
           \end{tabular}%
         };
   \node [item, above=of between-matcher-and-modeler]
@@ -178,11 +165,35 @@
             solution
           \end{tabular}%
         };
-  \node [item, left=2pt of output]
+  \node [item, right=2pt of between-pattern-set-builder-and-ps-transformations]
         {%
           \begin{tabular}{@{}c@{}}
-            code
+            pattern set
           \end{tabular}%
         };
+  \node [%
+          item,
+          right=2pt of
+                $(ps-transformations.south) !.5! (below-ps-transformations)$,
+        ]%
+        {%
+          \begin{tabular}{@{}c@{}}
+            pattern set
+          \end{tabular}%
+        };
+
+  \coordinate (between-md-and-ir)
+              at ($(below-ps-transformations)
+                   !.5!
+                   (graph-builder.north -| below-ps-transformations)$);
+  \coordinate (sep-line-east) at (code-emitter.east |- between-md-and-ir);
+  \draw [sep line]
+        (ir.west |- between-md-and-ir)
+        --
+        (sep-line-east);
+  \node [sep label, above left=2pt and 0 of sep-line-east]
+        {at compiler build time};
+  \node [sep label, below left=2pt and 0 of sep-line-east]
+        {at program compile time};
 \end{tikzpicture}%
 \endgroup%
