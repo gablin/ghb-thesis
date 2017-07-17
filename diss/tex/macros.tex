@@ -335,7 +335,7 @@
 
 % Force 'see also' to appear on a new line in the index
 \renewcommand\glsseeformat[3][\seename]{%
-  \\*\mbox{}\hfill\emph{#1} \glsseelist{#2}%
+  \\*\raggedleft\emph{#1} \glsseelist{#2}%
 }
 
 % Rename certain items
