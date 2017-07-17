@@ -22,7 +22,7 @@
     are implemented.
 \end{enumerate}
 %
-Without loss of generality, we assume the input to the \gls{instruction
+Without loss of generality, assume that the input to the \gls{instruction
   selector} to consist of a single \gls{function}, which in turn consists of
 many \glspl{basic block} (henceforth referred to as simply \glspl!{block}).
 
@@ -100,17 +100,17 @@ $G$ denotes either a \gls{block graph} or a \gls{function graph}.
 Each such instance is called a \gls!{match}, and the set of all \glspl{match}
 constitute a \gls!{match set}, which is denoted by~$M$.
 %
-Hence we refer to this subproblem as the \gls!{pattern matching}[ problem].
+Hence this subproblem is referred to as the \gls!{pattern matching}[ problem].
 %
 \Gls{pattern matching} can be done in linear time if both $G$ and all
 \glspl{pattern} are tree-shaped, otherwise it is an NP-complete
 problem~\cite{GareyJohnson:1979,HoffmannODonnell:1982}.
 %
-Having found $M$, the second subproblem -- which we refer to as the
+Having found $M$, the second subproblem -- which is referred to as the
 \gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
 \glspl{match} that \gls{cover}[s]~$G$.
 %
-We say that a subset~\mbox{$S \subseteq M$}, where $M$ is the \gls{match set},
+A subset~\mbox{$S \subseteq M$}, where $M$ is the \gls{match set},
 \gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
 from~$S$.
 %
@@ -125,6 +125,7 @@ For example, depending on the hardware the efficiency of two sets of selected
 instructions may differ by as much as two orders of
 magnitude~\cite{ZivojnovicEtAl:1994}.
 %
-Consequently, we augment the \gls{pattern selection} problem -- originally
-defined to accept any \gls{cover} -- into an optimization problem, where only
-\glspl{cover} with least cost are accepted.
+Consequently, the \gls{pattern selection} problem -- originally defined to
+accept any valid \gls{cover} -- is augmented into an optimization problem called
+\gls!{optimal.ps} \gls{pattern selection}, where only \glspl{cover} with least
+cost are accepted.
