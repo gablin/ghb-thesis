@@ -58,9 +58,9 @@
   \node [tool, below=0.5*\nodeDist of graph-builder] (g-transformations)
         {transformations};
   \node [tool, right=0.8*\nodeDist of g-transformations] (matcher) {matcher};
-  \node [tool, right=\nodeDist of matcher] (modeler) {modeler};
+  \node [tool, right=1.1*\nodeDist of matcher] (modeler) {modeler};
   \node [tool, right=1.1*\nodeDist of modeler] (solver) {solver};
-  \node [tool, right=\nodeDist of solver] (code-emitter)
+  \node [tool, right=0.9*\nodeDist of solver] (code-emitter)
         {\begin{tabular}{@{}c@{}}
           code\\
           emitter
@@ -149,7 +149,7 @@
   \node [item, above=of between-matcher-and-modeler]
         {%
           \begin{tabular}{@{}c@{}}
-            matches
+            match set
           \end{tabular}%
         };
   \node [item] at (between-modeler-and-solver)
