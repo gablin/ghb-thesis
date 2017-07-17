@@ -110,22 +110,46 @@ Having found $M$, the second subproblem -- which is referred to as the
 \gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
 \glspl{match} that \gls{cover}[s]~$G$.
 %
-A subset~\mbox{$S \subseteq M$}, where $M$ is the \gls{match set},
+A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
 \gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
-from~$S$.
+from~$C$.
 %
-An example is shown in \refFigure{p-match-sel-example}.
+Such a subset is called a \gls!{cover}.
+%
+See \refFigure{p-match-sel-example} for an example.
 
 For a given \gls{program} and \gls{target machine}, there often exists many
 valid combinations of \glspl{instruction} -- in terms of $G$ and $M$, this means
 there exist many \glspl{cover} of~$G$ -- which may result in code where quality
 differs significantly.
 %
-For example, depending on the hardware the efficiency of two sets of selected
-instructions may differ by as much as two orders of
-magnitude~\cite{ZivojnovicEtAl:1994}.
+In certain cases, the performance of two sets of selected instructions may
+differ by as much as two orders of magnitude~\cite{ZivojnovicEtAl:1994}.
 %
 Consequently, the \gls{pattern selection} problem -- originally defined to
 accept any valid \gls{cover} -- is augmented into an optimization problem called
 \gls!{optimal.ps} \gls{pattern selection}, where only \glspl{cover} with least
 cost are accepted.
+%
+The cost of a \gls{cover}~$C$ is the sum of the costs for the \glspl{match}
+appearing in~$C$, where the cost of a \gls{match} has been assigned to reflect a
+desired characteristic in the produced code.
+%
+For example, assume that the \instrCode{add}, \instrCode{mul}, and
+\instrCode{mad} \glspl{instruction} in \refFigure{p-match-sel-example} take one
+cycle to execute whereas the \instrCode{load} \glspl{instruction} take five
+cycles to execute.
+%
+Assume further that the \gls{compiler} should maximize performance.
+%
+The corresponding matches \mbox{$m_1, m_2, m_3, m_4, m_5, m_6$} are therefore
+assigned costs \mbox{$1, 1, 1, 1, 5, 5$}, respectively.
+%
+Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
+\mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}, only the last
+\gls{cover} is considered \gls{optimal.ps} as it has a total cost of~6 whereas
+the other two \glspl{cover} have costs~8 and~7, respectively.
+%
+There is typically a strong correlation between the size of a \gls{cover} and
+its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
+-- but this depends heavily on the properties of the \gls{target machine}.
