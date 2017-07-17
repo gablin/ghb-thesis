@@ -280,12 +280,6 @@
   \setglossarystyle{mcolindex}
   \setlength{\columnsep}{8mm}
   \renewcommand*{\glstreenamefmt}[1]{##1}
-  \renewcommand*{\glsgroupheading}[1]{%
-    \textbf{\large\glsgetgrouptitle{##1}}%
-    \nopagebreak%
-    \par \vskip 3pt plus 1pt minus 1pt \relax%
-    \nopagebreak%
-  }
   \renewcommand*{\glossentry}[2]{%
      \item\glsentryitem{##1}%
        \glstreenamefmt{\glstarget{##1}{\glsentryfirst{##1}}}%
