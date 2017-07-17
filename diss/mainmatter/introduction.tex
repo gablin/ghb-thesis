@@ -427,15 +427,24 @@ The approach, outlined in \refFigure{approach-overview}, is as follows.
 The \gls{IR} code of the \gls{program} under compilation is fed to a tool which
 builds a graph-based representation of the \gls{program}.
 %
-The graph is subjected to a series of transformations, which are described later
-in this dissertation, and then fed to a matcher together with the \gls{pattern
-  set} of the specified \gls{target machine}.
+The graph is subjected to a series of transformations and then fed to a matcher
+together with the \gls{pattern set} of the specified \gls{target machine}.
 %
 The \gls{pattern set} is built from a \gls{machine description} and contains a
 graph-based pattern for each \gls{instruction}, which have also been subjected
 to similar transformations.
-
-\todo{finish section}
+%
+Taking the graph and \gls{pattern set} as input, the matcher produces a set of
+\glspl{match}.
+%
+This is fed to a modeler, which constructs a problem instance of the
+\gls{constraint model}.
+%
+The \glsshort{constraint model} is then solved by a generic off-the-shelf
+\gls{constraint solver}.
+%
+The \gls{solution} is then fed to a code emitter, which produces the code
+containing the selected \glspl{instruction}.
 
 
 
