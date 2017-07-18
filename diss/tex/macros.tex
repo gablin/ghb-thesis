@@ -33,6 +33,7 @@
 \buildLabelRefCommands{Figure}{Fig}
 \buildLabelRefCommands{Table}{Tab}
 \buildLabelRefCommands{Equation}{Eq}
+\buildLabelRefCommands{Algorithm}{Alg}
 
 % Other text commands
 \newcommand{\wrt}{w.r.t.}
@@ -144,6 +145,7 @@
 }\newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
 \newcommand{\mSet}[1]{\left\{ #1 \right\}}
+\newcommand{\mSetBuilder}[2]{\mSet{#1 \:|\: #2}}
 \newcommand{\mCard}[1]{\left| #1 \right|}
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
@@ -428,18 +430,10 @@
 
 
 
-%======
-% MISC
-%======
 
-\newcommand{\supportNo}{%
-  $\cdot$%
-}
-\newcommand{\supportYes}{%
-  \begin{tikzpicture}
-    \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
-  \end{tikzpicture}%
-}
+%=====================
+% CODE AND ALGORITHMS
+%=====================
 
 \newcommand{\codeFont}{\ttfamily}
 \lstset{basicstyle=\codeFont\footnotesize}
@@ -506,3 +500,49 @@
 \let\instrLE\irLE
 \let\instrTemp\irTemp
 \let\instrVar\irVar
+
+% Commands used for algorithms
+\newcommand{\Or}{\textbf{or}\ }
+
+\DontPrintSemicolon
+\SetNlSty{tiny}{}{}
+\SetAlFnt{\figureFont\small}
+\SetAlCapSkip{\baselineskip}
+\SetAlCapSty{}
+
+% Customize algorithm typesetting
+\newcommand{\algStyle}[1]{\textsf{#1}}
+\newcommand{\kwStyle}[1]{\algStyle{\textbf{#1}}}
+\SetKwSty{kwStyle}
+\SetArgSty{algStyle}
+\SetFuncArgSty{algStyle}
+\patchcmd{\SetProgSty}{ArgSty}{ProgSty}{}{}% There is a bug in \SetProgSty
+\SetProgSty{algStyle}
+
+% Command for removing algorithm line number for a single line
+\let\oldnl\nl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
+
+% Command for declaring a function in an algorithm
+\makeatletter
+\newcommand{\DeclFunction}[2]{%
+  \nonl\KwSty{function} #1\KwSty{:}
+  \algocf@block{#2}{}{}
+  \nonl\KwSty{end}\;
+}
+\makeatother
+
+
+
+%======
+% MISC
+%======
+
+\newcommand{\supportNo}{%
+  $\cdot$%
+}
+\newcommand{\supportYes}{%
+  \begin{tikzpicture}
+    \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
+  \end{tikzpicture}%
+}
