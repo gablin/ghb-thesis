@@ -193,21 +193,14 @@ The technique is based on dynamic programming and ...
     \BlankLine
     \DeclFunction{ComputeCostsRec (root node $n$)}{
       \ForEach{child $m$ of $n$}{
-        $C[m]$ \Assign ComputeCosts ($m$)
-        \cmt*{compute costs for all subtrees}
+        $C[m]$ \Assign ComputeCosts ($m$)\;
       }
       $R$ \Assign
       $\mSetBuilder{r}%
                    {\text{$r$ matches at $n$ in $M$ \Or $r$ is a chain rule in $G$}}
       $\;
       \ForEach{rule $r \in R$, in transitive reduction order}{%
-        $c$ \Assign cost of $r$\;
-        \For{$i \leftarrow 1$ \KwTo $|n|$}{%
-          $m$ \Assign $i$th child of $n$\;
-          $s$ \Assign $i$th right-hand nonterminal of $r$\;
-          $c$ \Assign $c$ $+$ $C[m][s]$.cost
-          \cmt*{accumulate cost of applying $r$ at $n$}
-        }
+        $c$ \Assign ComputeRuleCost ($n$, $r$)\;
         $l$ \Assign left-hand nonterminal of $r$\;
         \If{$c < C[n][l]$.cost}{%
           $C[n][l]$.cost \Assign $c$\;
@@ -215,10 +208,50 @@ The technique is based on dynamic programming and ...
         }
       }
     }
+
+    \BlankLine
+    \DeclFunction{ComputeRuleCost (root node $n$, rule $r$)}{%
+      $c$ \Assign cost of $r$\;
+      \eIf{$r$ is a chain rule}{%
+        $s$ \Assign right-hand nonterminal of $r$\;
+        $c$ \Assign $c$ $+$ $C[n][s]$.cost
+        \cmt*{chain rules are always applied on the root node}
+      }{%
+        \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+          $m$ \Assign $i$th child of $n$\;
+          $s$ \Assign $i$th right-hand nonterminal of $r$\;
+          $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
+        }
+      }
+      \Return{$c$}\;
+    }
   }
 
   \caption{TODO}
-  \labelAlgorithm{TODO}
+  \labelAlgorithm{aho-etal-cost-algorithm}
+\end{algorithm}
+
+\begin{algorithm}[t]
+  \DeclFunction{Select (expression tree $T$,
+                        goal nonterminal $g$,
+                        cost matrix $C$)}{%
+    $n$ \Assign root node of $T$\;
+    $r$ \Assign $C[n][g]$.rule\;
+    \eIf{$r$ is a chain rule}{%
+      $s$ \Assign right-hand nonterminal of $r$\;
+      Select ($T$, $s$)\;
+    }{%
+      \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+        $m$ \Assign $i$th child of $n$\;
+        $s$ \Assign $i$th right-hand nonterminal of $r$\;
+        Select (expression tree rooted at $m$, $s$)\;
+      }
+    }
+    execute actions associated with $r$\;
+  }
+
+  \caption{TODO}
+  \labelAlgorithm{aho-etal-select-algorithm}
 \end{algorithm}
 
 
