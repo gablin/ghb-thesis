@@ -513,11 +513,14 @@
 % Customize algorithm typesetting
 \newcommand{\algStyle}[1]{\textsf{#1}}
 \newcommand{\kwStyle}[1]{\algStyle{\textbf{#1}}}
+\newcommand{\commentStyle}[1]{\emph{#1}}
 \SetKwSty{kwStyle}
 \SetArgSty{algStyle}
 \SetFuncArgSty{algStyle}
 \patchcmd{\SetProgSty}{ArgSty}{ProgSty}{}{}% There is a bug in \SetProgSty
 \SetProgSty{algStyle}
+\SetCommentSty{commentStyle}
+\SetKwComment{cmt}{\righttriangle\:}{}
 
 % Command for removing algorithm line number for a single line
 \let\oldnl\nl
@@ -544,5 +547,10 @@
 \newcommand{\supportYes}{%
   \begin{tikzpicture}
     \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
+  \end{tikzpicture}%
+}
+\newcommand{\righttriangle}{%
+  \begin{tikzpicture}
+    \draw [line width=.65pt] (0,0) -- ++(-90:4pt) -- ++(30:4pt) -- cycle;
   \end{tikzpicture}%
 }

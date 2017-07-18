@@ -188,8 +188,8 @@ The technique is based on dynamic programming and ...
 
 \begin{algorithm}[t]
   \DeclFunction{ComputeCosts (expression tree rooted at node $n$)}{%
-    \ForEach{child $m$ of $n$}{%
-      ComputeCosts ($m$)\;
+    \ForEach{child $m$ of $n$}{
+      ComputeCosts ($m$) \cmt*{compute costs for all subtrees}
     }
     initialize array $\mCosts_n$ with $\infty$\;
     $ R \leftarrow
