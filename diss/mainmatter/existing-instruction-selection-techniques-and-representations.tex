@@ -161,12 +161,56 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 In the interest of producing decent code while maintaining short compilation
 times, most modern \glspl{compiler} either limit themselves to \glspl{block
   graph} or apply greedy, linear-time heuristics.
+%
+For \glspl{block graph} one can find \gls{least-cost.cover} \glspl{cover} in
+linear time, but at the price of precluding optimization decisions that only
+become possible when operating on \glspl{function graph}.
+
+
+
+\subsection{Machine Descriptions}
 
 \todo{write}
+
+
 
 \subsection{Operating on Block Graphs}
 
+The most common and well known technique that operate on \glspl{block graph} was
+introduced by \textcite{AhoEtAl:1989}.
+%
+The technique is based on dynamic programming and ...
+
 \todo{write}
+
+\NewDocumentCommand{\mCosts}{}{\mathit{costs}}
+\NewDocumentCommand{\mRules}{}{\mathit{rules}}
+
+\begin{algorithm}[t]
+  \DeclFunction{ComputeCosts (expression tree rooted at node $n$)}{%
+    \ForEach{child $m$ of $n$}{%
+      ComputeCosts ($m$)\;
+    }
+    initialize array $\mCosts_n$ with $\infty$\;
+    $ R \leftarrow
+        \mSetBuilder{\text{rule $r$}}%
+                    {\text{$r$ $\in$ match set of $n$ \Or $r$ is a chain rule}}
+    $\;
+    \ForEach{rule $r \in R$, in transitive reduction order}{%
+      $c \leftarrow \text{cost of applying $r$ at $n$}$\;
+      $l \leftarrow \text{left-hand nonterminal of $r$}$\;
+      \If{$c < \mCosts_n[l]$}{%
+        $\mCosts_n[l] \leftarrow c$\;
+        $\mRules_n[l] \leftarrow r$\;
+      }
+    }
+  }
+
+  \caption{TODO}
+  \labelAlgorithm{TODO}
+\end{algorithm}
+
+
 
 \subsection{Operating on Function Graphs}
 
