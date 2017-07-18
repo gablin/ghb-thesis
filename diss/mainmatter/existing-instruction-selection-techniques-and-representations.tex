@@ -183,25 +183,29 @@ The technique is based on dynamic programming and ...
 
 \todo{write}
 
-\NewDocumentCommand{\mCosts}{}{\mathit{costs}}
-\NewDocumentCommand{\mRules}{}{\mathit{rules}}
-
 \begin{algorithm}[t]
   \DeclFunction{ComputeCosts (expression tree rooted at node $n$)}{%
     \ForEach{child $m$ of $n$}{
-      ComputeCosts ($m$) \cmt*{compute costs for all subtrees}
+      $C_m$ $\leftarrow$ ComputeCosts ($m$)
+      \cmt*{compute costs for all subtrees}
     }
-    initialize array $\mCosts_n$ with $\infty$\;
+    initialize cost array $C_n$ with $\infty$\;
     $ R \leftarrow
         \mSetBuilder{\text{rule $r$}}%
                     {\text{$r$ $\in$ match set of $n$ \Or $r$ is a chain rule}}
     $\;
     \ForEach{rule $r \in R$, in transitive reduction order}{%
-      $c \leftarrow \text{cost of applying $r$ at $n$}$\;
-      $l \leftarrow \text{left-hand nonterminal of $r$}$\;
-      \If{$c < \mCosts_n[l]$}{%
-        $\mCosts_n[l] \leftarrow c$\;
-        $\mRules_n[l] \leftarrow r$\;
+      $c$ $\leftarrow$ cost of $r$\;
+      \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+        $m$ $\leftarrow$ $i$th child of $n$\;
+        $s$ $\leftarrow$ $i$th right-hand nonterminal of $r$\;
+        $c$ $\leftarrow$ $c$ $+$ $C_m[s]$.cost
+        \cmt*{accumulate cost of applying $r$ at $n$}
+      }
+      $l$ $\leftarrow$ left-hand nonterminal of $r$\;
+      \If{$c < C_n[l]$.cost}{%
+        $C_n[l]$.cost $\leftarrow$ $c$\;
+        $C_n[l]$.rule $\leftarrow$ $r$\;
       }
     }
   }
