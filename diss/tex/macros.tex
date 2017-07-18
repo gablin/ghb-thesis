@@ -503,6 +503,7 @@
 
 % Commands used for algorithms
 \newcommand{\Or}{\textbf{or}\ }
+\newcommand{\Assign}{$\leftarrow$}
 
 \DontPrintSemicolon
 \SetNlSty{tiny}{}{}
@@ -521,17 +522,25 @@
 \SetProgSty{algStyle}
 \SetCommentSty{commentStyle}
 \SetKwComment{cmt}{\righttriangle\:}{}
+\SetKw{Return}{return}
 
 % Command for removing algorithm line number for a single line
 \let\oldnl\nl
 \newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
 
 % Command for declaring a function in an algorithm
+\newbool{InsideDeclFunction}
+\boolfalse{InsideDeclFunction}
 \makeatletter
 \newcommand{\DeclFunction}[2]{%
-  \nonl\KwSty{function} #1\KwSty{:}
-  \algocf@block{#2}{}{}
-  \nonl\KwSty{end}\;
+  \ifbool{InsideDeclFunction}{}{\nonl}%
+  \KwSty{function} #1\KwSty{:}
+  \begingroup%
+    \booltrue{InsideDeclFunction}%
+    \algocf@block{#2}{}{}
+  \endgroup%
+  \ifbool{InsideDeclFunction}{}{\nonl}%
+  \KwSty{end}\;
 }
 \makeatother
 

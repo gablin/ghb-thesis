@@ -184,28 +184,35 @@ The technique is based on dynamic programming and ...
 \todo{write}
 
 \begin{algorithm}[t]
-  \DeclFunction{ComputeCosts (expression tree rooted at node $n$)}{%
-    \ForEach{child $m$ of $n$}{
-      $C_m$ $\leftarrow$ ComputeCosts ($m$)
-      \cmt*{compute costs for all subtrees}
-    }
-    initialize cost array $C_n$ with $\infty$\;
-    $ R \leftarrow
-        \mSetBuilder{\text{rule $r$}}%
-                    {\text{$r$ $\in$ match set of $n$ \Or $r$ is a chain rule}}
-    $\;
-    \ForEach{rule $r \in R$, in transitive reduction order}{%
-      $c$ $\leftarrow$ cost of $r$\;
-      \For{$i \leftarrow 1$ \KwTo $|n|$}{%
-        $m$ $\leftarrow$ $i$th child of $n$\;
-        $s$ $\leftarrow$ $i$th right-hand nonterminal of $r$\;
-        $c$ $\leftarrow$ $c$ $+$ $C_m[s]$.cost
-        \cmt*{accumulate cost of applying $r$ at $n$}
+  \DeclFunction{ComputeCosts (expression tree $T$, match set $M$, grammar $G$)}{
+    $S$ \Assign $\mSetBuilder{s}%
+                             {\text{$s$ is a nonterminal in $G$}}$\;
+    $C$ \Assign matrix of size $|T| \times |S|$, initialized with $\infty$\;
+    ComputeCostsRec (root node of $T$)\;
+    \Return{$C$}\;
+    \BlankLine
+    \DeclFunction{ComputeCostsRec (root node $n$)}{
+      \ForEach{child $m$ of $n$}{
+        $C[m]$ \Assign ComputeCosts ($m$)
+        \cmt*{compute costs for all subtrees}
       }
-      $l$ $\leftarrow$ left-hand nonterminal of $r$\;
-      \If{$c < C_n[l]$.cost}{%
-        $C_n[l]$.cost $\leftarrow$ $c$\;
-        $C_n[l]$.rule $\leftarrow$ $r$\;
+      $R$ \Assign
+      $\mSetBuilder{r}%
+                   {\text{$r$ matches at $n$ in $M$ \Or $r$ is a chain rule in $G$}}
+      $\;
+      \ForEach{rule $r \in R$, in transitive reduction order}{%
+        $c$ \Assign cost of $r$\;
+        \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+          $m$ \Assign $i$th child of $n$\;
+          $s$ \Assign $i$th right-hand nonterminal of $r$\;
+          $c$ \Assign $c$ $+$ $C[m][s]$.cost
+          \cmt*{accumulate cost of applying $r$ at $n$}
+        }
+        $l$ \Assign left-hand nonterminal of $r$\;
+        \If{$c < C[n][l]$.cost}{%
+          $C[n][l]$.cost \Assign $c$\;
+          $C[n][l]$.rule \Assign $r$\;
+        }
       }
     }
   }
