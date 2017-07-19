@@ -227,7 +227,14 @@ The technique is based on dynamic programming and ...
     }
   }
 
-  \caption{TODO}
+  \caption[%
+            Algorithm for computing optimal derivation costs for an expression
+            tree in linear time%
+          ]{%
+            Algorithm for computing optimal derivation costs for an expression
+            tree in linear time. It assumes the given grammar to be in linear
+            form%
+          }
   \labelAlgorithm{aho-etal-cost-algorithm}
 \end{algorithm}
 
@@ -250,7 +257,10 @@ The technique is based on dynamic programming and ...
     execute actions associated with $r$\;
   }
 
-  \caption{TODO}
+  \caption{%
+            Algorithm for selecting rules based on costs computed by
+            \refAlgorithm{aho-etal-cost-algorithm}%
+          }
   \labelAlgorithm{aho-etal-select-algorithm}
 \end{algorithm}
 
