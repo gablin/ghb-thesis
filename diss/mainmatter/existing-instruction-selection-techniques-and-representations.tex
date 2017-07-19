@@ -215,7 +215,7 @@ The technique is based on dynamic programming and ...
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign right-hand nonterminal of $r$\;
         $c$ \Assign $c$ $+$ $C[n][s]$.cost
-        \cmt*{chain rules are always applied on the root node}
+        \cmt*{cost of root node is taken here instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo $|n|$}{%
           $m$ \Assign $i$th child of $n$\;
