@@ -551,6 +551,15 @@
 \patchcmd{\algocf@captiontext}{\endgraf}{\unskip.\endgraf}{}{}
 \makeatother
 
+% Fix captions of algorithms so that they use the entire text width
+\makeatletter
+\pretocmd{\algocf@makecaption}{%
+  \addtolength{\hsize}{1.5\algomargin}%
+  \setlength{\algomargin}{0pt}%
+}{}{}
+\makeatother
+
+
 
 
 %======
