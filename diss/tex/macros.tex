@@ -421,16 +421,6 @@
 
 
 
-%=========
-% CAPTION
-%=========
-
-% Add period at end of every caption and subcaption
-\captionsetup{textformat=period}
-
-
-
-
 %=====================
 % CODE AND ALGORITHMS
 %=====================
@@ -546,6 +536,20 @@
 
 % Redefined \listofalgorithms for consistent appearance
 \makeListOfCommand{\listofalgorithms}{\listalgorithmcfname}{loa}{chapter}
+
+
+
+%=========
+% CAPTION
+%=========
+
+% Add period at end of every caption and subcaption
+\captionsetup{textformat=period}
+
+% algorithm2e does not obey the caption settings above and requires a patch
+\makeatletter
+\patchcmd{\algocf@captiontext}{\endgraf}{\unskip.\endgraf}{}{}
+\makeatother
 
 
 
