@@ -203,17 +203,19 @@ the \gls{least-cost.cover} \gls{cover} is shown in
   \DeclFunction{ComputeCosts (expression tree $T$, match set $M$, grammar $G$)}{
     $S$ \Assign $\mSetBuilder{s}%
                              {\text{$s$ is a nonterminal in $G$}}$\;
-    $C$ \Assign matrix of size $|T| \times |S|$, initialized with $\infty$\;
+    $C$ \Assign matrix of size $|T| \times |S|$, initialized with $\infty$
+      cost\;
     ComputeCostsRec (root node of $T$)\;
     \Return{$C$}\;
     \BlankLine
     \DeclFunction{ComputeCostsRec (root node $n$)}{
       \ForEach{child $m$ of $n$}{
-        $C[m]$ \Assign ComputeCosts ($m$)\;
+        ComputeCosts ($m$)\;
       }
       $R$ \Assign
       $\mSetBuilder{r}%
-                   {\text{$r$ matches at $n$ in $M$ \Or $r$ is a chain rule in $G$}}
+                   {\text{$r$ matches at $n$ in $M$ \Or
+                          $r$ is a chain rule in $G$}}
       $\;
       \ForEach{rule $r \in R$, in transitive reduction order}{%
         $c$ \Assign ComputeRuleCost ($n$, $r$)\;
