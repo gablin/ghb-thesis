@@ -170,17 +170,33 @@ become possible when operating on \glspl{function graph}.
 
 \subsection{Machine Descriptions}
 
-\todo{write}
+\todo{introduce grammars}
+\todo{introduce nonterminals}
+\todo{define lhs and rhs nonterminals}
+\todo{define chain rules}
+\todo{define linear-form grammars}
+\todo{relate rule derivations with covers}
 
 
 
 \subsection{Operating on Block Graphs}
 
-The most common and well known technique that operate on \glspl{block graph} was
-introduced by \textcite{AhoEtAl:1989}.
+The most common and well known technique that operates on \glspl{block graph}
+was introduced by \textcite{AhoEtAl:1989}.
 %
-The technique is based on dynamic programming and ...
+It is based on dynamic programming and relies on the following assumption: the
+cost of deriving nonterminal~$s$ at node~$n$ using rule~$r$ is the cost of~$r$
+plus the costs of deriving all right-hand-side nonterminals of~$r$ at the
+children of~$n$.
+%
+The algorithm for computing this cost for an entire \gls{expression tree} is
+shown in \refAlgorithm{aho-etal-cost-algorithm}, and the algorithm for selecting
+the \gls{least-cost.cover} \gls{cover} is shown in
+\refAlgorithm{aho-etal-select-algorithm}.
 
+
+
+\todo{define transitive reduction order}
 \todo{write}
 
 \begin{algorithm}[t]
