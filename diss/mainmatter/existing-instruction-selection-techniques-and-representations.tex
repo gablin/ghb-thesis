@@ -201,7 +201,7 @@ The technique is based on dynamic programming and ...
       $\;
       \ForEach{rule $r \in R$, in transitive reduction order}{%
         $c$ \Assign ComputeRuleCost ($n$, $r$)\;
-        $l$ \Assign left-hand nonterminal of $r$\;
+        $l$ \Assign left-hand-side nonterminal of $r$\;
         \If{$c < C[n][l]$.cost}{%
           $C[n][l]$.cost \Assign $c$\;
           $C[n][l]$.rule \Assign $r$\;
@@ -213,13 +213,13 @@ The technique is based on dynamic programming and ...
     \DeclFunction{ComputeRuleCost (root node $n$, rule $r$)}{%
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
-        $s$ \Assign right-hand nonterminal of $r$\;
+        $s$ \Assign right-hand-side nonterminal of $r$\;
         $c$ \Assign $c$ $+$ $C[n][s]$.cost
-        \cmt*{cost of root node is taken here instead of its children}
+        \cmt*{here cost of root node is taken instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo $|n|$}{%
           $m$ \Assign $i$th child of $n$\;
-          $s$ \Assign $i$th right-hand nonterminal of $r$\;
+          $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
           $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
         }
       }
@@ -238,12 +238,12 @@ The technique is based on dynamic programming and ...
     $n$ \Assign root node of $T$\;
     $r$ \Assign $C[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
-      $s$ \Assign right-hand nonterminal of $r$\;
+      $s$ \Assign right-hand-side nonterminal of $r$\;
       Select ($T$, $s$)\;
     }{%
       \For{$i \leftarrow 1$ \KwTo $|n|$}{%
         $m$ \Assign $i$th child of $n$\;
-        $s$ \Assign $i$th right-hand nonterminal of $r$\;
+        $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
         Select (expression tree rooted at $m$, $s$)\;
       }
     }
