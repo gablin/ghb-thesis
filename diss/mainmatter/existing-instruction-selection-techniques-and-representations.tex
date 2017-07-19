@@ -162,9 +162,9 @@ In the interest of producing decent code while maintaining short compilation
 times, most modern \glspl{compiler} either limit themselves to \glspl{block
   graph} or apply greedy, linear-time heuristics.
 %
-For \glspl{block graph} one can find \gls{least-cost.cover} \glspl{cover} in
-linear time, but at the price of precluding optimization decisions that only
-become possible when operating on \glspl{function graph}.
+For \glspl{block graph} one can find \gls{least-cost.c} \glspl{cover} in linear
+time, but at the price of precluding optimization decisions that only become
+possible when operating on \glspl{function graph}.
 
 
 
@@ -175,7 +175,7 @@ become possible when operating on \glspl{function graph}.
 \todo{define lhs and rhs nonterminals}
 \todo{define chain rules}
 \todo{define linear-form grammars}
-\todo{relate rule derivations with covers}
+\todo{relate rule reductions with covers}
 
 
 
@@ -184,61 +184,60 @@ become possible when operating on \glspl{function graph}.
 The most common and well known technique that operates on \glspl{block graph}
 was introduced by \textcite{AhoEtAl:1989}.
 %
-It is based on dynamic programming and relies on the following assumption: the
-cost of deriving nonterminal~$s$ at node~$n$ using rule~$r$ is the cost of~$r$
-plus the costs of deriving all right-hand-side nonterminals of~$r$ at the
-children of~$n$.
+The technique is centered around the following assumption: the cost of reducing
+node~$n$ in an \gls{expression tree} to \gls{nonterminal}~$s$ using
+\gls{rule}~$r$ is the cost of $r$ plus the costs of reducing all children of $n$
+to the appropriate \glspl{nonterminal} appearing on the right-hand side of~$r$.
 %
-The algorithm for computing this cost for an entire \gls{expression tree} is
-shown in \refAlgorithm{aho-etal-cost-algorithm}, and the algorithm for selecting
-the \gls{least-cost.cover} \gls{cover} is shown in
-\refAlgorithm{aho-etal-select-algorithm}.
-
-
-
-\todo{define transitive reduction order}
-\todo{write}
+If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
+$r$ plus the cost of reducing $n$ to the right-hand-side \gls{nonterminal}
+of~$r$.
+%
+The recursive nature of these costs can be exploited using dynamic programming,
+resulting in the algorithm shown in \refAlgorithm{aho-etal-cost-algorithm} which
+computes the least cost of reducing a given \gls{expression tree} to a
+particular \gls{nonterminal}.
 
 \begin{algorithm}[t]
-  \DeclFunction{ComputeCosts (expression tree $T$, match set $M$, grammar $G$)}{
+  \DeclFunction{ComputeCosts (expression tree $T$, grammar $G$)}{
     $S$ \Assign $\mSetBuilder{s}%
                              {\text{$s$ is a nonterminal in $G$}}$\;
     $C$ \Assign matrix of size $|T| \times |S|$, initialized with $\infty$
-      cost\;
+                cost\;
     ComputeCostsRec (root node of $T$)\;
     \Return{$C$}\;
     \BlankLine
-    \DeclFunction{ComputeCostsRec (root node $n$)}{
+    \DeclFunction{ComputeCostsRec (node $n$)}{
       \ForEach{child $m$ of $n$}{
         ComputeCosts ($m$)\;
       }
-      $R$ \Assign
-      $\mSetBuilder{r}%
-                   {\text{$r$ matches at $n$ in $M$ \Or
-                          $r$ is a chain rule in $G$}}
-      $\;
+      $R$ \Assign $\mSetBuilder{r}{\text{%
+                                          $r \in G$,
+                                          $r$ is a base rule that matches at $n$
+                                            \Or $r$ is a chain rule%
+                                        }}$\;
       \ForEach{rule $r \in R$, in transitive reduction order}{%
         $c$ \Assign ComputeRuleCost ($n$, $r$)\;
         $l$ \Assign left-hand-side nonterminal of $r$\;
-        \If{$c < C[n][l]$.cost}{%
-          $C[n][l]$.cost \Assign $c$\;
-          $C[n][l]$.rule \Assign $r$\;
+        \If{$c < c_{n,l}$.cost}{%
+          $c_{n,l}$.cost \Assign $c$\;
+          $c_{n,l}$.rule \Assign $r$\;
         }
       }
     }
 
     \BlankLine
-    \DeclFunction{ComputeRuleCost (root node $n$, rule $r$)}{%
+    \DeclFunction{ComputeRuleCost (node $n$, rule $r$)}{%
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign right-hand-side nonterminal of $r$\;
-        $c$ \Assign $c$ $+$ $C[n][s]$.cost
-        \cmt*{here cost of root node is taken instead of its children}
+        $c$ \Assign $c$ $+$ $c_{n,s}$.cost
+        \cmt*{here cost of node itself is taken instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo $|n|$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
-          $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
+          $c$ \Assign $c$ $+$ $c_{m,s}$.cost\;
         }
       }
       \Return{$c$}\;
@@ -246,15 +245,57 @@ the \gls{least-cost.cover} \gls{cover} is shown in
   }
 
   \caption[%
-            Algorithm for computing optimal derivation costs for an expression
-            tree in linear time%
+            Algorithm for computing the least cost of reducing a given
+            expression tree to a particular nonterminal%
           ]{%
-            Algorithm for computing optimal derivation costs for an expression
-            tree in linear time. It assumes the given grammar to be in linear
-            form%
+            Algorithm for computing the least cost of reducing a given
+            expression tree to a particular nonterminal. It runs in linear time
+            and assumed the given grammar to be in linear form%
           }
   \labelAlgorithm{aho-etal-cost-algorithm}
 \end{algorithm}
+
+The algorithm works as follows.
+%
+It first constructs a cost matrix~$C$, where each row represents a node in the
+\gls{expression tree} and each column represents a \gls{nonterminal} in the
+\gls{grammar}, which is assumed to be in \gls{linear form.g}.
+%
+The cost in each element~\mbox{$c_{i, j}$} is initialized to infinity,
+indicating that there exists no chain of \glspl{rule reduction} which reduces
+node~$i$ to \gls{nonterminal}~$j$.
+%
+It then computes the costs by traversing the \gls{expression tree} bottom up.
+%
+At each node~$n$ it constructs a \gls{rule} set~$R$, containing all matching
+\gls{base.r} \glspl{rule} -- that is, all \glspl{rule} with a \gls{terminal} on
+the right-hand side that matches the type of~$n$ -- as well as all \gls{chain.r}
+\glspl{rule}.
+%
+For each \gls{rule}~$r$ in~$R$, it computes the cost of applying $r$ at~$n$
+according to the scheme stated above.
+%
+Since \gls{chain.r} \glspl{rule} depend on other \glspl{rule} to become
+applicable, the ...
+
+Since the application of a \gls{chain.r} \gls{rule} may depend on other
+\glspl{rule}, the order in which the \glspl{rule} are processed matters.
+%
+
+
+
+
+it selects the \gls{rule} with least cost that reduces the node to a particular
+\gls{nonterminal}.
+%
+Moving one 
+Then it traverses one step up in the \gls{expression tree} and
+
+
+\todo{explain algorithm}
+\todo{define transitive reduction order}
+
+\todo{linear time}
 
 \begin{algorithm}[t]
   \DeclFunction{Select (expression tree $T$,
@@ -281,6 +322,13 @@ the \gls{least-cost.cover} \gls{cover} is shown in
           }
   \labelAlgorithm{aho-etal-select-algorithm}
 \end{algorithm}
+
+Having computed the costs, the optimal order of \glspl{rule reduction} -- which
+is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
+algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
+
+\todo{explain benefits?}
+\todo{explain drawbacks}
 
 
 
