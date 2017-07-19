@@ -518,6 +518,11 @@
 \let\oldnl\nl
 \newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
 
+% Hook for checking whether the 'vlined' option is used
+\newbool{VlinedOptionUsed}
+\boolfalse{VlinedOptionUsed}
+\apptocmd{\SetAlgoVlined}{\booltrue{VlinedOptionUsed}}{}{}
+
 % Command for declaring a function in an algorithm
 \newbool{InsideDeclFunction}
 \boolfalse{InsideDeclFunction}
@@ -529,8 +534,10 @@
     \booltrue{InsideDeclFunction}%
     \algocf@block{#2}{}{}
   \endgroup%
-  \ifbool{InsideDeclFunction}{}{\nonl}%
-  \KwSty{end}\;
+  \ifbool{VlinedOptionUsed}{}{%
+    \ifbool{InsideDeclFunction}{}{\nonl}%
+    \KwSty{end}\;%
+  }%
 }
 \makeatother
 
