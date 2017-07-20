@@ -1,0 +1,2 @@
+* BEFORE SUBMISSION
+** TODO In appendices, swap typesetting convention of terminals and nonterminals
