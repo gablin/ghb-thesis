@@ -203,6 +203,7 @@
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
+\DeclareMathOperator{\mRank}{\mFunFont{rank}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
 \DeclareMathOperator{\mTable}{\mFunFont{table}}
@@ -501,6 +502,11 @@
 \let\instrLE\irLE
 \let\instrTemp\irTemp
 \let\instrVar\irVar
+
+% Commands for grammars
+\NewDocumentCommand{\mNT}{mO{}}{%
+  \mathit{#1}_{#2}%
+}
 
 % Commands used for algorithms
 \newcommand{\Or}{\textbf{or}\ }

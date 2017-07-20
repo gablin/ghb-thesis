@@ -168,14 +168,110 @@ possible when operating on \glspl{function graph}.
 
 
 
-\subsection{Machine Descriptions}
+\subsection{Machine Grammars}
 
-\todo{introduce grammars}
-\todo{introduce nonterminals}
-\todo{define lhs and rhs nonterminals}
-\todo{define chain rules}
-\todo{define linear-form grammars}
-\todo{relate rule reductions with covers}
+The \gls{instruction set} of a \gls{target machine} is typically described in a
+machine-readable \gls{machine description}, which can take many forms.
+%
+A common form is to describe the \glspl{instruction} as a \gls!{machine grammar}
+(or simply called \gls!{grammar}).
+%
+\Glspl{machine grammar} are based on \glspl{context-free
+  grammar}~\cite{AhoEtAl:2006}, which are used for describing language syntax.
+%
+A \gls{grammar} consists of \glspl!{terminal}, \glspl!{nonterminal}, and
+\glspl!{rule}.
+%
+In this context, a \gls{terminal} is a symbol representing an \gls{operation}
+(e.g.\ \opAdd, \opLT, \opLoad), and a \gls{nonterminal} is a symbol representing
+an abstract result (e.g.\ $\mNT{Reg}$) produced by the \gls{instruction}.
+%
+To distinguish between the two, \glspl{terminal} are written entirely in lower
+case whereas \glspl{nonterminal} start with a capital letter and are set in
+italics.
+%
+A \gls{rule} describes the behavior of an \gls{instruction} and consists of a
+\gls!{production}, a cost, and an action.
+%
+\Glspl{production} describe how derive \glspl{nonterminal}, and are written as
+%
+\begin{displaymath}
+  A \rightarrow B C \ldots
+\end{displaymath}
+%
+where the left-hand side is consists a \gls{nonterminal} and the right-hand side
+consists of a series of \glspl{terminal} and \glspl{nonterminal}.
+%
+Each \gls{instruction} therefore gives rise to one or more \glspl{production},
+where the right-hand side of a \gls{production} captures a \gls{pattern} of the
+\gls{instruction} and the left-hand side denotes the result produced by the
+\gls{instruction}.
+%
+The \glspl{production} are typically written in Polish notation to avoid the
+need for parentheses (for example, \mbox{$1 + 2$} is written as \mbox{$+ \; 1 \;
+  2$}).
+%
+An example is shown in \refTable{grammar-rules-example}.
+
+\begin{table}[t]
+  \centering%
+  \begin{tabular}{r@{ $\rightarrow$ }lcl}
+    \toprule
+    \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
+    \midrule
+    $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{imm}$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$), \#imm}\\
+    $\mNT{Reg}[1]$ & $\opLoad + \irCode{imm} \; \mNT{Reg}[2]$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$), \#imm}\\
+    $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$), \#imm}\\
+    \bottomrule
+  \end{tabular}%
+
+  \caption[An example of machine grammar rules]%
+          {%
+            An example of machine grammar rules corresponding to a
+            \mbox{\instrFont load \$t, o(\$s)} \gls{instruction} that loads a
+            value from memory at the address given in register~\instrCode{s},
+            offset by an immediate value~\instrCode{o}, and stores the loaded
+            value in register~\instrCode{t}, in one cycle.
+            %
+            The subscripts are only needed for reference%
+          }
+  \labelTable{grammar-rules-example}
+\end{table}
+
+
+
+\paragraph{Linear-form Grammars}
+
+To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{machine
+  grammar} can be rewritten into \gls!{linear form.g}. A \gls{grammar} is in
+\gls{linear form.g} if every \gls{rule} in the \gls{grammar} is in one of the
+following forms:
+%
+\begin{enumerate}
+  \item \mbox{$\mNT{N} \rightarrow \irCode{op} \; \mNT{A}[1] \; \mNT{A}[2]
+    \ldots \mNT{A}[n]$}, where \irCode{op} is a \gls{terminal}, representing an
+    \gls{operation} that takes $n$ arguments, and all $\mNT{A}[i]$ are
+    \glspl{nonterminal}.
+    %
+    Such rules are called \gls!{base.r}[ \glspl{rule}].
+  \item \mbox{$\mNT{N} \rightarrow \irCode{t}$}, where \irCode{t} is a
+    \gls{terminal}.
+    %
+    These rules are also called \gls{base.r} \glspl{rule}.
+  \item \mbox{$\mNT{N} \rightarrow \mNT{A}$}, where $\mNT{A}$ is a
+    \gls{nonterminal}.
+    %
+    Such rules are called \gls!{chain.r}[ \glspl{rule}].
+\end{enumerate}
+
+\todo{give example}
+\todo{why is this better}
 
 
 
@@ -280,10 +376,10 @@ If done carelessly, the \glspl{rule} need to be processed until the costs for
 the current node reaches a fixpoint.
 %
 But if iterated in so-called \gls!{transitive reduction order} -- that is, all
-\gls{base.r} \glspl{rule} are processed before any \gls{chain.r} \gls{rule}, and
-if two \gls{chain.r} \glspl{rule}~$i$ and~$j$ are of the format \mbox{$A
-  \leftarrow B$} and \mbox{$B \leftarrow C$}, then $j$ is processed before $i$
--- then each \gls{rule} need to be processed only once per node.
+\gls{base.r} \glspl{rule} appear before any \gls{chain.r} \gls{rule}, and if two
+\gls{chain.r} \glspl{rule}~$i$ and~$j$ are of the form \mbox{$a \rightarrow b$}
+and \mbox{$b \rightarrow c$}, then $j$ appears before $i$ -- then each
+\gls{rule} need to be processed only once per node.
 %
 Since every node is also only processed once, the algorithm runs in linear time
 with respect to the size of the \gls{expression tree}.
