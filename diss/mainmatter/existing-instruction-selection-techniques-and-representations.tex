@@ -269,8 +269,9 @@ It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
 At each node~$n$ it constructs a \gls{rule} set~$R$, containing all matching
 \gls{base.r} \glspl{rule} -- that is, all \glspl{rule} with a \gls{terminal} on
-the right-hand side that matches the type of~$n$ -- as well as all \gls{chain.r}
-\glspl{rule}.
+the right-hand side that matches the type of~$n$ (this can be trivially found in
+linear time as the grammar is in \gls{linear form.g}) -- as well as all
+\gls{chain.r} \glspl{rule}.
 %
 For each \gls{rule}~$r$ in~$R$, it computes the cost of applying $r$ at~$n$
 according to the scheme stated above.
