@@ -209,7 +209,7 @@ particular \gls{nonterminal}.
     \BlankLine
     \DeclFunction{ComputeCostsRec (node $n$)}{
       \ForEach{child $m$ of $n$}{
-        ComputeCosts ($m$)\;
+        ComputeCostsRec ($m$)\;
       }
       $R$ \Assign $\mSetBuilder{r}{\text{%
                                           $r \in G$,
