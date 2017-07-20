@@ -275,27 +275,17 @@ the right-hand side that matches the type of~$n$ -- as well as all \gls{chain.r}
 For each \gls{rule}~$r$ in~$R$, it computes the cost of applying $r$ at~$n$
 according to the scheme stated above.
 %
-Since \gls{chain.r} \glspl{rule} depend on other \glspl{rule} to become
-applicable, the ...
-
-Since the application of a \gls{chain.r} \gls{rule} may depend on other
-\glspl{rule}, the order in which the \glspl{rule} are processed matters.
+If done carelessly, the \glspl{rule} need to be processed until the costs for
+the current node reaches a fixpoint.
 %
-
-
-
-
-it selects the \gls{rule} with least cost that reduces the node to a particular
-\gls{nonterminal}.
+But if iterated in so-called \gls!{transitive reduction order} -- that is, all
+\gls{base.r} \glspl{rule} are processed before any \gls{chain.r} \gls{rule}, and
+if two \gls{chain.r} \glspl{rule}~$i$ and~$j$ are of the format \mbox{$A
+  \leftarrow B$} and \mbox{$B \leftarrow C$}, then $j$ is processed before $i$
+-- then each \gls{rule} need to be processed only once per node.
 %
-Moving one 
-Then it traverses one step up in the \gls{expression tree} and
-
-
-\todo{explain algorithm}
-\todo{define transitive reduction order}
-
-\todo{linear time}
+Since every node is also only processed once, the algorithm runs in linear time
+with respect to the size of the \gls{expression tree}.
 
 \begin{algorithm}[t]
   \DeclFunction{Select (expression tree $T$,
