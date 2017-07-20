@@ -376,6 +376,12 @@
 % Set titles in ragged right mode
 \setrmarg{2.55em plus 1fil}
 
+% Force same indentation for entries in List of Algorithms as other List of Fig.
+% https://tex.stackexchange.com/a/381303/2634
+\makeatletter
+\renewcommand*\l@algocf{\l@figure}
+\makeatother
+
 
 
 %==============================
