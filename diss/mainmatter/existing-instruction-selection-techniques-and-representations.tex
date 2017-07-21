@@ -357,8 +357,12 @@ most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial
 (simply match the node type against the \gls{terminal} in all \gls{base.r}
 \glspl{rule}).
 %
+Otherwise another bottom-up traversal of the \gls{expression tree} would have to
+be made in order to find all \glspl{match}, which can be done in linear time for
+most reasonable \glspl{grammar}~\cite{HoffmannODonnell:1982}.
+%
 As we will see, this also simplifies \gls{pattern selection} as the
-\gls{pattern} on the right-hand side in all \glspl{production} have uniform
+\glspl{pattern} on the right-hand side in all \glspl{production} have uniform
 height.
 
 
