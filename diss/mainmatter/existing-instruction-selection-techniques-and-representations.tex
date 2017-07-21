@@ -385,7 +385,7 @@ computes the least cost of reducing a given \gls{expression tree} to a
 particular \gls{nonterminal}.
 
 \begin{algorithm}[t]
-  \DeclFunction{ComputeCosts (expression tree $T$, grammar $G$)}{
+  \DeclFunction{ComputeCosts}{expression tree $T$, grammar $G$}{
     $S$ \Assign $\mSetBuilder{s}%
                              {\text{$s$ is a nonterminal in $G$}}$\;
     $C$ \Assign matrix of size $|T| \times |S|$, initialized with $\infty$
@@ -393,9 +393,9 @@ particular \gls{nonterminal}.
     ComputeCostsRec (root node of $T$)\;
     \Return{$C$}\;
     \BlankLine
-    \DeclFunction{ComputeCostsRec (node $n$)}{
+    \DeclFunction{ComputeCostsRec}{node $n$}{
       \ForEach{child $m$ of $n$}{
-        ComputeCostsRec ($m$)\;
+        \Call{ComputeCostsRec}{$m$}\;
       }
       $R$ \Assign $\mSetBuilder{r}{\text{%
                                           $r \in G$,
@@ -403,7 +403,7 @@ particular \gls{nonterminal}.
                                             \Or $r$ is a chain rule%
                                         }}$\;
       \ForEach{rule $r \in R$, in transitive reduction order}{%
-        $c$ \Assign ComputeRuleCost ($n$, $r$)\;
+        $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
         $l$ \Assign left-hand-side nonterminal of $r$\;
         \If{$c < c_{n,l}$.cost}{%
           $c_{n,l}$.cost \Assign $c$\;
@@ -413,7 +413,7 @@ particular \gls{nonterminal}.
     }
 
     \BlankLine
-    \DeclFunction{ComputeRuleCost (node $n$, rule $r$)}{%
+    \DeclFunction{ComputeRuleCost}{node $n$, rule $r$}{%
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign right-hand-side nonterminal of $r$\;
@@ -480,9 +480,9 @@ is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
 algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 
 \begin{algorithm}[t]
-  \DeclFunction{Select (expression tree $T$,
+  \DeclFunction{Select}{expression tree $T$,
                         goal nonterminal $g$,
-                        cost matrix $C$)}{%
+                        cost matrix $C$}{%
     $n$ \Assign root node of $T$\;
     $r$ \Assign $c_{n,g}$.rule\;
     \eIf{$r$ is a chain rule}{%
@@ -492,7 +492,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
       \For{$i \leftarrow 1$ \KwTo $|n|$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
-        Select (expression tree rooted at $m$, $s$)\;
+        \Call{Select}{expression tree rooted at $m$, $s$}\;
       }
     }
     execute actions associated with $r$\;

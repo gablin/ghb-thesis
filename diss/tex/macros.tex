@@ -544,12 +544,12 @@
 \newbool{InsideDeclFunction}
 \boolfalse{InsideDeclFunction}
 \makeatletter
-\newcommand{\DeclFunction}[2]{%
+\newcommand{\DeclFunction}[3]{%
   \ifbool{InsideDeclFunction}{}{\nonl}%
-  \KwSty{function} #1\KwSty{:}
+  \KwSty{function} #1\,(#2)\KwSty{:}
   \begingroup%
     \booltrue{InsideDeclFunction}%
-    \algocf@block{#2}{}{}
+    \algocf@block{#3}{}{}
   \endgroup%
   \ifbool{VlinedOptionUsed}{}{%
     \ifbool{InsideDeclFunction}{}{\nonl}%
@@ -557,6 +557,11 @@
   }%
 }
 \makeatother
+
+% Command for calling a function in an algorithm
+\newcommand{\Call}[2]{%
+  #1\,(#2)%
+}
 
 % Redefined \listofalgorithms for consistent appearance
 \makeListOfCommand{\listofalgorithms}{\listalgorithmcfname}{loa}{chapter}
