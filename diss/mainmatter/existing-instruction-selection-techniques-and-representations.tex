@@ -52,7 +52,7 @@ x = A[i + 1];
   \centering%
   \subcaptionbox{C code\labelFigure{p-match-sel-example-c}}%
                 {\lstinputlisting[language=c]{p-match-sel-example.c}}%
-  \hspace{5mm}%
+  \hfill%
   \subcaptionbox{%
                   Instructions. The $*s$ notion means ``get value at address $s$
                   in memory''%
@@ -73,11 +73,13 @@ x = A[i + 1];
                     load & r & *(s \times t + u)
                   \end{tabular}%
                 }%
-  \hspace{5mm}%
+  \hfill%
   \subcaptionbox{%
-                   Corresponding \gls{block graph} and \glspl{match}%
+                   Corresponding \gls{expression tree} and \glspl{match}%
                    \labelFigure{p-match-sel-example-graph}%
-                }{%
+                }%
+                [40mm]%
+                {%
                   \small%
                   \input{figures/introduction/p-match-sel-example-graph}%
                 }
