@@ -221,13 +221,13 @@ An example is shown in \refTable{grammar-rules-example}.
     \midrule
     $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{imm}$
       & 1
-      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$), \#imm}\\
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$)}\\
     $\mNT{Reg}[1]$ & $\opLoad + \irCode{imm} \; \mNT{Reg}[2]$
       & 1
-      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$), \#imm}\\
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$)}\\
     $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
       & 1
-      & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$), \#imm}\\
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
     \bottomrule
   \end{tabular}%
 
