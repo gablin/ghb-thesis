@@ -160,18 +160,19 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 \section{Traditional Approaches}
 
 In the interest of producing decent code while maintaining short compilation
-times, most modern \glspl{compiler} either limit themselves to \glspl{block
-  graph} or apply greedy, linear-time heuristics.
+times, most modern \glspl{compiler} either limit themselves to \glspl{expression
+  tree} or apply greedy, linear-time heuristics.
 %
-For \glspl{block graph} one can find \gls{least-cost.c} \glspl{cover} in linear
-time, but at the price of precluding optimization decisions that only become
-possible when operating on \glspl{function graph}.
+For \glspl{expression tree} one can find \gls{least-cost.c} \glspl{cover} in
+linear time, but at the price of precluding optimization decisions that only
+become possible when operating on \glsshort{block graph} or \glspl{function
+  graph}.
 
 
 
-\subsection{Operating on Block Graphs}
+\subsection{Operating on Expression Trees}
 
-The most common and well known technique that operates on \glspl{block graph}
+The most common and well known technique that operates on \glspl{expression tree}
 was introduced by \textcite{AhoEtAl:1989}.
 %
 The approach assumes the \glspl{instruction} to be expressed in a particular
@@ -336,7 +337,7 @@ most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial.
 
 
 
-\subsubsection{TODO}
+\subsubsection{Optimal Pattern Selection on Expression Trees}
 
 The technique by \citeauthor{AhoEtAl:1989} is centered around the following
 assumption: the cost of reducing node~$n$ in an \gls{expression tree} to
@@ -477,6 +478,10 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 \todo{explain drawbacks}
 
 
+
+\subsection{Operating on Block Graphs}
+
+\todo{write}
 
 \subsection{Operating on Function Graphs}
 
