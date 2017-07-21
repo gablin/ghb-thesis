@@ -7,11 +7,20 @@
 \chapter{Existing Instruction Selection Techniques and Representations}
 \labelChapter{existing-isel-techniques-and-reps}
 
-\todo{write chapter overview}
+This chapter introduces terminology and relevant background.
+%
+\refSection{refining-instruction-selection-into-a-graph-problem} refines
+\gls{instruction selection} into a graph problem and provides many definitions
+that will be used throughout the dissertation.
+%
+\refSection{traditional-approaches} discusses existing traditional approaches to
+\gls{instruction selection}, and \refSection{combinatorial-approaches} discusses
+the combinatorial counterparts.
 
 
 
 \section{Refining Instruction Selection into a Graph Problem}
+\labelSection{refining-instruction-selection-into-a-graph-problem}
 
 \Gls{instruction selection} can be reduced into two subproblems:%
 %
@@ -160,6 +169,7 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 
 
 \section{Traditional Approaches}
+\labelSection{traditional-approaches}
 
 In the interest of producing decent code while maintaining short compilation
 times, most modern \glspl{compiler} either limit themselves to \glspl{expression
@@ -507,5 +517,6 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 
 
 \section{Combinatorial Approaches}
+\labelSection{combinatorial-approaches}
 
 \todo{write}
