@@ -174,8 +174,8 @@ become possible when operating on \glsshort{block graph} or \glspl{function
 
 \subsection{Using Expression Trees}
 
-The most common and well known technique that operates on \glspl{expression tree}
-was introduced by \textcite{AhoEtAl:1989}.
+The most common and well known technique that uses \glspl{expression tree} was
+introduced by \textcite{AhoEtAl:1989}.
 %
 The approach assumes the \glspl{instruction} to be expressed in a particular
 form, which will therefore be discussed first.
@@ -214,7 +214,7 @@ A \gls{rule} describes the behavior of an \gls{instruction} and consists of a
 \end{displaymath}
 %
 where the left-hand side is consists a \gls{nonterminal} and the right-hand side
-consists of a series of \glspl{terminal} and \glspl{nonterminal}.
+consists of a sequence of \glspl{terminal} and \glspl{nonterminal}.
 %
 Each \gls{instruction} therefore gives rise to one or more \glspl{production},
 where the right-hand side of a \gls{production} captures a \gls{pattern} of the
@@ -425,7 +425,7 @@ It first constructs a cost matrix~$C$, where each row represents a node in the
 \gls{grammar}, which is assumed to be in \gls{linear form.g}.
 %
 The cost in each element~\mbox{$c_{i, j}$} is initialized to infinity,
-indicating that there exists no chain of \glspl{rule reduction} which reduces
+indicating that there exists no sequence of \glspl{rule reduction} which reduces
 node~$i$ to \gls{nonterminal}~$j$.
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
