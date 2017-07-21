@@ -470,6 +470,10 @@ and \mbox{$b \rightarrow c$}, then $j$ appears before $i$ -- then each
 %
 Since every node is also only processed once, the algorithm runs in linear time
 with respect to the size of the \gls{expression tree}.
+%
+Having computed the costs, the optimal order of \glspl{rule reduction} -- which
+is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
+algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 
 \begin{algorithm}[t]
   \DeclFunction{Select (expression tree $T$,
@@ -497,12 +501,24 @@ with respect to the size of the \gls{expression tree}.
   \labelAlgorithm{aho-etal-select-algorithm}
 \end{algorithm}
 
-Having computed the costs, the optimal order of \glspl{rule reduction} -- which
-is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
-algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
+In many cases, this technique produces code of sufficient quality.
+%
+In fact, for architectures with simple \glspl{instruction set}, where the
+\glspl{pattern} can naturally be modeled as trees, it is often optimal or near
+optimal.
+%
+The MIPS \gls{instruction set}~\cite{Sweetman:2006}, for example, is one such
+architecture.
 
-\todo{explain benefits?}
+However, ...
+
 \todo{explain drawbacks}
+
+
+
+\paragraph{Precomputing Costs and Pattern Selection}
+
+\todo{write}
 
 
 
