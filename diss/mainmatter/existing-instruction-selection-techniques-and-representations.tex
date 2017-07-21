@@ -215,7 +215,7 @@ case whereas \glspl{nonterminal} start with a capital letter and are set in
 italics.
 %
 A \gls{rule} describes the behavior of an \gls{instruction} and consists of a
-\gls!{production}, a cost, and an action.
+\gls!{production}, a non-negative cost, and an action.
 %
 \Glspl{production} describe how derive \glspl{nonterminal}, and are written as
 %
@@ -397,17 +397,22 @@ particular \gls{nonterminal}.
       \ForEach{child $m$ of $n$}{
         \Call{ComputeCostsRec}{$m$}\;
       }
-      $R$ \Assign $\mSetBuilder{r}{\text{%
-                                          $r \in G$,
-                                          $r$ is a base rule that matches at $n$
-                                            \Or $r$ is a chain rule%
-                                        }}$\;
-      \ForEach{rule $r \in R$, in transitive reduction order}{%
+      \ForEach{base rule $r \in G$ that matches at $n$}{%
         $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
         $l$ \Assign left-hand-side nonterminal of $r$\;
         \If{$c < C[n][l]$.cost}{%
           $C[n][l]$.cost \Assign $c$\;
           $C[n][l]$.rule \Assign $r$\;
+        }
+      }
+      \Repeat{no change to $C$}{%
+        \ForEach{chain rule $r \in G$}{%
+          $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
+          $l$ \Assign left-hand-side nonterminal of $r$\;
+          \If{$c < C[n][l]$.cost}{%
+            $C[n][l]$.cost \Assign $c$\;
+            $C[n][l]$.rule \Assign $r$\;
+          }
         }
       }
     }
@@ -454,23 +459,16 @@ node~$i$ to \gls{nonterminal}~$j$.
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
-At each node~$n$ it constructs a \gls{rule} set~$R$, containing all matching
-\gls{base.r} \glspl{rule} -- that is, all \glspl{rule} with a \gls{terminal} on
-the right-hand side that matches the type of~$n$ (this can be trivially found in
-linear time as the grammar is in \gls{linear form.g}) -- as well as all
-\gls{chain.r} \glspl{rule}.
+At each node~$n$ and for each matching \gls{base.r} \gls{rule}~$r$, with~$s$ as
+left-hand-side \gls{nonterminal}, it computes the cost~$c$ of applying $r$
+at~$n$ according to the scheme stated above.
 %
-For each \gls{rule}~$r$ in~$R$, it computes the cost of applying $r$ at~$n$
-according to the scheme stated above.
+If $c$ is less than the currently recorded cost for reducing $n$ to $s$, then
+the cost and \gls{rule} information for $n$ is updated accordingly.
 %
-If done carelessly, the \glspl{rule} need to be processed until the costs for
-the current node reaches a fixpoint.
-%
-But if iterated in so-called \gls!{transitive reduction order} -- that is, all
-\gls{base.r} \glspl{rule} appear before any \gls{chain.r} \gls{rule}, and if two
-\gls{chain.r} \glspl{rule}~$i$ and~$j$ are of the form \mbox{$a \rightarrow b$}
-and \mbox{$b \rightarrow c$}, then $j$ appears before $i$ -- then each
-\gls{rule} need to be processed only once per node.
+The same is then done for all \gls{chain.r} \glspl{rule} until it reaches a
+fixpoint (which must eventually be reached as all \gls{rule} costs are
+non-negative and an update only occurs when the cost is strictly less).
 %
 Since every node is also only processed once, the algorithm runs in linear time
 with respect to the size of the \gls{expression tree}.
