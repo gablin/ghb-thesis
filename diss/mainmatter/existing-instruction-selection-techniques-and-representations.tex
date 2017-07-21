@@ -32,9 +32,10 @@ First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
 nodes represent \glspl{operation} in the function and edges represent data
 dependencies between the \glspl{operation}.
 %
-\Glspl{data-flow graph} limited to \glspl{block} are called \glspl!{block
-  graph}, and \glspl{data-flow graph} capturing data flow of whole functions are
-called \glspl!{function graph}.
+\Glspl{data-flow graph} are called \glspl!{expression tree} if they are limited
+to single, tree-shaped expressions, \glspl!{block graph} if they capture many
+expressions in a \gls{block} as a \gls{DAG}, and \glspl{data-flow graph} if they
+capture the data flow of entire functions.
 %
 Corresponding \glspl{data-flow graph}, called \glspl!{pattern graph} (or simply
 \glspl!{pattern}), are also built to represent the \gls{instruction} provided by
