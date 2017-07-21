@@ -405,9 +405,9 @@ particular \gls{nonterminal}.
       \ForEach{rule $r \in R$, in transitive reduction order}{%
         $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
         $l$ \Assign left-hand-side nonterminal of $r$\;
-        \If{$c < c_{n,l}$.cost}{%
-          $c_{n,l}$.cost \Assign $c$\;
-          $c_{n,l}$.rule \Assign $r$\;
+        \If{$c < C[n][l]$.cost}{%
+          $C[n][l]$.cost \Assign $c$\;
+          $C[n][l]$.rule \Assign $r$\;
         }
       }
     }
@@ -417,13 +417,13 @@ particular \gls{nonterminal}.
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign right-hand-side nonterminal of $r$\;
-        $c$ \Assign $c$ $+$ $c_{n,s}$.cost
+        $c$ \Assign $c$ $+$ $C[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo $|n|$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
-          $c$ \Assign $c$ $+$ $c_{m,s}$.cost\;
+          $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
         }
       }
       \Return{$c$}\;
@@ -448,7 +448,7 @@ It first constructs a cost matrix~$C$, where each row represents a node in the
 \gls{expression tree} and each column represents a \gls{nonterminal} in the
 \gls{grammar}, which is assumed to be in \gls{linear form.g}.
 %
-The cost in each element~\mbox{$c_{i, j}$} is initialized to infinity,
+The cost in each element~\mbox{$C[i][j]$} is initialized to infinity,
 indicating that there exists no sequence of \glspl{rule reduction} which reduces
 node~$i$ to \gls{nonterminal}~$j$.
 %
@@ -484,7 +484,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
                         goal nonterminal $g$,
                         cost matrix $C$}{%
     $n$ \Assign root node of $T$\;
-    $r$ \Assign $c_{n,g}$.rule\;
+    $r$ \Assign $C[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
       $s$ \Assign right-hand-side nonterminal of $r$\;
       Select ($T$, $s$)\;
