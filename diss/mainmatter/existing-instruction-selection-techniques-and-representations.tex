@@ -169,7 +169,17 @@ possible when operating on \glspl{function graph}.
 
 
 
-\subsection{Machine Grammars}
+\subsection{Operating on Block Graphs}
+
+The most common and well known technique that operates on \glspl{block graph}
+was introduced by \textcite{AhoEtAl:1989}.
+%
+The approach assumes the \glspl{instruction} to be expressed in a particular
+form, which will therefore be discussed first.
+
+
+
+\subsubsection{Machine Grammars}
 
 The \gls{instruction set} of a \gls{target machine} is typically described in a
 machine-readable \gls{machine description}, which can take many forms.
@@ -216,17 +226,17 @@ An example is shown in \refTable{grammar-rules-example}.
 
 \begin{table}[t]
   \centering%
-  \begin{tabular}{r@{ $\rightarrow$ }lcl}
+  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
-    \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
+    \# & \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
     \midrule
-    $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{imm}$
+    1 & $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{imm}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$)}\\
-    $\mNT{Reg}[1]$ & $\opLoad + \irCode{imm} \; \mNT{Reg}[2]$
+    2 & $\mNT{Reg}[1]$ & $\opLoad + \irCode{imm} \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, imm(\$$\mNT{Reg}[2]$)}\\
-    $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
+    3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
     \bottomrule
@@ -245,14 +255,16 @@ An example is shown in \refTable{grammar-rules-example}.
   \labelTable{grammar-rules-example}
 \end{table}
 
+\todo{explain rule reduction}
+
 
 
 \paragraph{Linear-form Grammars}
 
 To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{machine
   grammar} can be rewritten into \gls!{linear form.g}. A \gls{grammar} is in
-\gls{linear form.g} if every \gls{rule} in the \gls{grammar} is in one of the
-following forms:
+\gls{linear form.g} if every \gls{rule} in the \gls{grammar} has a
+\gls{production} in one of the following forms:
 %
 \begin{enumerate}
   \item \mbox{$\mNT{N} \rightarrow \irCode{op} \; \mNT{A}[1] \; \mNT{A}[2]
@@ -271,20 +283,66 @@ following forms:
     Such rules are called \gls!{chain.r}[ \glspl{rule}].
 \end{enumerate}
 
-\todo{give example}
+\begin{table}[t]
+  \centering%
+  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+    \toprule
+    \# & \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
+    \midrule
+    1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}$, $A.\text{imm}$(\$$A.\mNT{Reg}$)}\\
+    4 & $\mNT{A}$ & $+ \; \mNT{Reg} \; \irCode{imm}$
+      & 0
+      & \\
+    2 & $\mNT{Reg}$ & $\opLoad \; \mNT{B}$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}$, $B.\text{imm}$(\$$B.\mNT{Reg}$)}\\
+    5 & $\mNT{B}$ & $+ \; \irCode{imm} \; \mNT{Reg}$
+      & 0
+      & \\
+    3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
+    \bottomrule
+  \end{tabular}%
+
+  \caption[The grammar from \refTable{grammar-rules-example} in linear form]%
+          {%
+            The grammar from \refTable{grammar-rules-example} in linear form.
+            %
+            The nonterminals~$\mNT{A}$ and~$\mNT{B}$ are introduced in order to
+            connect rules~1 with~4 and~2 with~5, respectively%
+          }
+  \labelTable{linear-form-grammar-example}
+\end{table}
+
+A \gls{machine grammar} can be mechanically rewritten into \gls{linear form.g}
+by introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule}
+into multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{linear
+  form.g}.
+%
+For example, rewriting the \gls{grammar} shown in
+\refTable{grammar-rules-example} into \gls{linear form.g} results in the
+\gls{grammar} shown in \refTable{linear-form-grammar-example}.
+%
+Note that the new \glspl{rule} have zero cost and no action as these are only
+intermediary steps towards enabling reduction of the original \gls{rule}.
+
+Since all \glspl{production} in a \glsshort{linear form.g} \gls{grammar} have at
+most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial.
+
 \todo{why is this better}
 
 
 
-\subsection{Operating on Block Graphs}
+\subsubsection{TODO}
 
-The most common and well known technique that operates on \glspl{block graph}
-was introduced by \textcite{AhoEtAl:1989}.
-%
-The technique is centered around the following assumption: the cost of reducing
-node~$n$ in an \gls{expression tree} to \gls{nonterminal}~$s$ using
-\gls{rule}~$r$ is the cost of $r$ plus the costs of reducing all children of $n$
-to the appropriate \glspl{nonterminal} appearing on the right-hand side of~$r$.
+The technique by \citeauthor{AhoEtAl:1989} is centered around the following
+assumption: the cost of reducing node~$n$ in an \gls{expression tree} to
+\gls{nonterminal}~$s$ using \gls{rule}~$r$ is the cost of $r$ plus the costs of
+reducing all children of $n$ to the appropriate \glspl{nonterminal} appearing on
+the right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
 $r$ plus the cost of reducing $n$ to the right-hand-side \gls{nonterminal}
