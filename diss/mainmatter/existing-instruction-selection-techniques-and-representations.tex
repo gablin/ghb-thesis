@@ -343,9 +343,13 @@ Note that the new \glspl{rule} have zero cost and no action as these are only
 intermediary steps towards enabling reduction of the original \gls{rule}.
 
 Since all \glspl{production} in a \glsshort{linear form.g} \gls{grammar} have at
-most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial.
-
-\todo{why is this better}
+most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial
+(simply match the node type against the \gls{terminal} in all \gls{base.r}
+\glspl{rule}).
+%
+As we will see, this also simplifies \gls{pattern selection} as the
+\gls{pattern} on the right-hand side in all \glspl{production} have uniform
+height.
 
 
 
