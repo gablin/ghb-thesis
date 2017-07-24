@@ -244,9 +244,11 @@ Similarly, the \gls{expression tree} shown in
 
 \begin{table}[t]
   \centering%
+  \small%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
-    \# & \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
+    \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
+      & \multicolumn{1}{c}{\tabhead Action}\\
     \midrule
     1 & $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{imm}$
       & 1
@@ -308,9 +310,11 @@ To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{machine
 
 \begin{table}[t]
   \centering%
+  \small%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
-    \# & \multicolumn{2}{c}{Production} & Cost & \multicolumn{1}{c}{Action}\\
+    \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
+      & \multicolumn{1}{c}{\tabhead Action}\\
     \midrule
     1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
       & 1
