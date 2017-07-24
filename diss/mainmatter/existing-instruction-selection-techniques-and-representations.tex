@@ -75,16 +75,16 @@ x = A[i + 1];
                                    >{$}l<{$}@{ $\leftarrow$ }%
                                    >{$}l<{$}%
                                  }
-                    add  & r & s + t\\
-                    mul  & r & s \times t\\
-                    mad  & r & s \times t + u\\
-                    load & r & *s\\
-                    load & r & *(s \times t + u)
+                    add    & r & s + t\\
+                    mul    & r & s \times t\\
+                    muladd & r & s \times t + u\\
+                    load   & r & *s\\
+                    maload & r & *(s \times t + u)
                   \end{tabular}%
                 }%
   \hfill%
   \subcaptionbox{%
-                   Corresponding \gls{expression tree} and \glspl{match}%
+                   Corresponding \gls{expression tree}, with \glspl{match}%
                    \labelFigure{p-match-sel-example-tree}%
                 }%
                 [40mm]%
@@ -148,9 +148,9 @@ appearing in~$C$, where the cost of a \gls{match} has been assigned to reflect a
 desired characteristic in the produced code.
 %
 For example, assume that the \instrCode{add}, \instrCode{mul}, and
-\instrCode{mad} \glspl{instruction} in \refFigure{p-match-sel-example} take one
-cycle to execute whereas the \instrCode{load} \glspl{instruction} take five
-cycles to execute.
+\instrCode{muladd} \glspl{instruction} in \refFigure{p-match-sel-example} take
+one cycle to execute whereas the \instrCode{load} and \instrCode{amload}
+\glspl{instruction} take five cycles to execute.
 %
 Assume further that the \gls{compiler} should maximize performance.
 %
@@ -575,7 +575,7 @@ This process continues until the queue is empty, whereupon all necessary
 
 \paragraph{Limitations}
 
-\begin{filecontents*}{exp-trees-limit-example.c}x
+\begin{filecontents*}{exp-trees-limit-example.c}
 t = a + b;
 x = c * t;
 y = *t;
@@ -605,11 +605,11 @@ y = *t;
                     \toprule
                     \multicolumn{3}{c}{\tabhead Instruction} & \tabhead Cost\\
                     \midrule
-                    add  & r & s + t & 2\\
-                    mul  & r & s \times t & 3\\
-                    adm  & r & (s + t) \times u & 4\\
-                    load & r & *s & 5\\
-                    load & r & *(s + t) & 5\\
+                    add     & r & s + t & 2\\
+                    mul     & r & s \times t & 3\\
+                    addmul  & r & (s + t) \times u & 4\\
+                    load    & r & *s & 5\\
+                    addload & r & *(s + t) & 5\\
                     \bottomrule
                   \end{tabular}%
                 }%
@@ -621,20 +621,19 @@ y = *t;
   \mbox{}%
   \hfill%
   \subcaptionbox{%
-                   Corresponding \glspl{expression tree} and \glspl{match}%
-                   \labelFigure{exp-trees-limit-example-trees}%
-                }%
-                [35mm]%
-                {%
+                  Corresponding \glspl{expression tree}, where the common
+                  subexpression has been split%
+                  \labelFigure{exp-trees-limit-example-trees}%
+                }{%
                   \small%
                   \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-trees}%
                 }%
-  \hfill%
+  \hfill\hfill%
   \subcaptionbox{%
-                   Corresponding \gls{block graph} and \glspl{match}%
+                   Corresponding \gls{block graph}%
                    \labelFigure{exp-trees-limit-example-dag}%
                 }%
-                [35mm]%
+                [45mm]%
                 {%
                   \small%
                   \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-dag}%
@@ -642,20 +641,38 @@ y = *t;
   \hfill%
   \mbox{}%
 
-
   \caption[An example illustrating the limitation of expression trees]%
           {%
-            TODO%
+            An example illustrating that using block graphs would result in
+            better code compared to using expression trees%
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
 
-The main disadvantage of operating on \glspl{expression tree} is that decisions
-made for one tree may inhibit \gls{instruction selection} for subsequent
-\glspl{expression tree}.
+The main disadvantage of operating on \glspl{expression tree} is that common
+subexpressions have to be either split or duplicated when building the \gls{IR}.
 %
-For example, ...
-\todo{write}
+Depending on the \gls{instruction set}, these decisions can prevent selection of
+\glspl{instruction} that would lead to higher code quality.
+%
+An example illustrating this effect is shown in
+\refFigure{exp-trees-limit-example}.
+%
+If the \gls{IR} is represented as trees, where the common subexpression for
+computing \irVar{t} has its own \gls{expression tree} (see
+\refFigure{exp-trees-limit-example-trees}), then matches~$m_1$,~$m_2$, and~$m_3$
+must be selected, which results in a total cost of \mbox{$2 + 3 + 5 = 10$}.
+%
+If represented as a \gls{block graph} (see
+\refFigure{exp-trees-limit-example-dag}), it becomes possible of selecting
+matches matches~$m_4$ and~$m_5$, resulting in a total cost is \mbox{$4 + 5 =
+  9$}.
+%
+Duplicating the common subexpression would, in this case, yield the same
+\glspl{cover}, but would have resulted in suboptimal code in cases where the
+\instrCode{addmul} and \instrCode{addload} \glspl{instruction} are not
+available.
+
 
 
 

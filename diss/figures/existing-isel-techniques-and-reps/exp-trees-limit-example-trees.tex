@@ -1,0 +1,69 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont%
+\pgfdeclarelayer{background1}%
+\pgfdeclarelayer{background2}%
+\pgfsetlayers{background2,background1,main}%
+\begin{tikzpicture}[%
+    data node/.style={%
+      op node,
+    },
+    match node/.style={%
+      match line,
+      draw,
+      circle,
+      inner sep=.5pt,
+      outer sep=0,
+    },
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+    match label/.style={%
+      minimum size=0,
+      inner sep=0,
+      outer sep=1pt,
+      node distance=10pt,
+      font=\footnotesize,
+    },
+  ]
+
+  % Trees
+  \node [op node] (add) {\opAdd};
+  \node [data node, position=-135 degrees from add] (a) {\opVar{a}};
+  \node [data node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \begin{scope}[data flow]
+    \draw (a) -- (add);
+    \draw (b) -- (add);
+  \end{scope}
+
+  \node [data node, right=of b] (c) {\opVar{c}};
+  \node [op node, position=45 degrees from c] (mul) {\opAdd};
+  \node [data node, position=- 45 degrees from mul] (t1) {\opVar{t}};
+  \begin{scope}[data flow]
+    \draw (c) -- (mul);
+    \draw (t1) -- (mul);
+  \end{scope}
+
+  \node [data node, right=of t1] (t2) {\opVar{t}};
+  \node [op node, above=of t2] (load) {\opLoad};
+  \begin{scope}[data flow]
+    \draw (t2) -- (load);
+  \end{scope}
+
+  % Matches
+  \begin{pgfonlayer}{background1}
+    \foreach \i/\m/\p in {add/1/left, mul/2/left, load/4/right} {
+      \node [match node, fill=shade2, fit=(\i)] (m\m) {};
+      \node [match label, \p=of m\m] (m\m l) {$\strut m_{\m}$};
+      \draw [thick] (m\m) -- (m\m l);
+    }
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%
