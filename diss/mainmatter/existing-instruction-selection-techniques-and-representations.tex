@@ -42,7 +42,7 @@ nodes represent \glspl{operation} in the function and edges represent data
 dependencies between the \glspl{operation}.
 %
 \Glspl{data-flow graph} are called \glspl!{expression tree} if they are limited
-to single, tree-shaped expressions, \glspl!{block graph} if they capture many
+to single, tree-shaped expressions, \glspl!{block DAG} if they capture many
 expressions in a \gls{block} as a \gls{DAG}, and \glspl{data-flow graph} if they
 capture the data flow of entire functions.
 %
@@ -107,7 +107,7 @@ x = A[i + 1];
 
 The first subproblem can be reduced to finding all instances where a
 \gls{pattern} from the \gls{pattern set} is subgraph isomorphic to~$G$, where
-$G$ denotes either a \gls{block graph} or a \gls{function graph}.
+$G$ denotes either a \gls{block DAG} or a \gls{function graph}.
 %
 Each such instance is called a \gls!{match}, and the set of all \glspl{match}
 constitute a \gls!{match set}, which is denoted by~$M$.
@@ -177,7 +177,7 @@ times, most modern \glspl{compiler} either limit themselves to \glspl{expression
 %
 For \glspl{expression tree} one can find \gls{least-cost.c} \glspl{cover} in
 linear time, but at the price of precluding optimization decisions that only
-become possible when operating on \glsshort{block graph} or \glspl{function
+become possible when operating on \glsshort{block DAG} or \glspl{function
   graph}.
 
 
@@ -621,8 +621,8 @@ y = *t;
   \mbox{}%
   \hfill%
   \subcaptionbox{%
-                  Corresponding \glspl{expression tree}, where the common
-                  subexpression has been split%
+                  Corresponding expression trees, where the common subexpression
+                  has been split%
                   \labelFigure{exp-trees-limit-example-trees}%
                 }{%
                   \small%
@@ -630,7 +630,7 @@ y = *t;
                 }%
   \hfill\hfill%
   \subcaptionbox{%
-                   Corresponding \gls{block graph}%
+                   Corresponding block DAGs%
                    \labelFigure{exp-trees-limit-example-dag}%
                 }%
                 [45mm]%
@@ -643,7 +643,7 @@ y = *t;
 
   \caption[An example illustrating the limitation of expression trees]%
           {%
-            An example illustrating that using block graphs would result in
+            An example illustrating that using block DAGs would result in
             better code compared to using expression trees%
           }
   \labelFigure{exp-trees-limit-example}
@@ -663,7 +663,7 @@ computing \irVar{t} has its own \gls{expression tree} (see
 \refFigure{exp-trees-limit-example-trees}), then matches~$m_1$,~$m_2$, and~$m_3$
 must be selected, which results in a total cost of \mbox{$2 + 3 + 5 = 10$}.
 %
-If represented as a \gls{block graph} (see
+If represented as a \gls{block DAG} (see
 \refFigure{exp-trees-limit-example-dag}), it becomes possible of selecting
 matches matches~$m_4$ and~$m_5$, resulting in a total cost is \mbox{$4 + 5 =
   9$}.
@@ -676,7 +676,7 @@ available.
 
 
 
-\subsection{Using Block Graphs}
+\subsection{Using Block DAGs}
 
 \todo{write}
 
