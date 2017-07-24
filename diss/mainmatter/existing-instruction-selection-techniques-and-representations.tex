@@ -581,6 +581,59 @@ made for one tree may inhibit \gls{instruction selection} for subsequent
 %
 For example, ...
 
+\begin{filecontents*}{p-sel-example.c}x
+t = a + b;
+c = c * t;
+x = *t;
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{p-sel-example}}%
+                {\lstinputlisting[language=c]{p-sel-example.c}}%
+  \hfill%
+  \subcaptionbox{%
+                  Instructions. The $*s$ notion means ``get value at address $s$
+                  in memory''%
+                  \labelFigure{p-sel-example-instrs}%
+                }%
+                [50mm]%
+                {%
+                  \small
+                  \begin{tabular}{%
+                                   >{\instrFont}r@{\hspace{4pt}}%
+                                   >{$}l<{$}@{ $\leftarrow$ }%
+                                   >{$}l<{$}%
+                                   c%
+                                 }
+                    \toprule
+                    \multicolumn{3}{c}{\tabhead Instruction} & \tabhead Cost\\
+                    \midrule
+                    add  & r & s + t & 2\\
+                    mul  & r & s \times t & 3\\
+                    adm  & r & (s + t) \times u & 4\\
+                    load & r & *s & 5\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                   Corresponding \gls{block graph} and \glspl{match}%
+                   \labelFigure{p-sel-example-dag}%
+                }%
+                [35mm]%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/p-sel-example-dag}%
+                }
+
+  \caption[An example illustrating the limitation of expression trees]%
+          {%
+            TODO%
+          }
+  \labelFigure{TODO}
+\end{figure}
+
 \todo{give example}
 
 

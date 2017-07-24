@@ -1,0 +1,87 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont%
+\pgfdeclarelayer{background1}%
+\pgfdeclarelayer{background2}%
+\pgfsetlayers{background2,background1,main}%
+\begin{tikzpicture}[%
+    data node/.style={%
+      op node,
+    },
+    match node/.style={%
+      match line,
+      draw,
+      circle,
+      inner sep=.5pt,
+      outer sep=0,
+    },
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+    match label/.style={%
+      minimum size=0,
+      inner sep=0,
+      outer sep=1pt,
+      node distance=10pt,
+      font=\footnotesize,
+    },
+  ]
+
+  % Graph
+  \node [op node] (add1) {\opAdd};
+  \node [data node, position=-135 degrees from add1] (a) {\opVar{a}};
+  \node [data node, position=- 45 degrees from add1] (b) {\opVar{b}};
+  \node [op node, position=135 degrees from add1] (mul) {\opMul};
+  \node [data node, position=45 degrees from add1] (load) {\opLoad};
+  \node [data node, position=-135 degrees from mul] (c) {\opVar{c}};
+  \begin{scope}[data flow]
+    \draw (a) -- (add1);
+    \draw (b) -- (add1);
+    \draw (add1) -- (mul);
+    \draw (add1) -- (load);
+    \draw (c) -- (mul);
+  \end{scope}
+
+  \begin{pgfonlayer}{background1}
+    % Matches
+    \node [match node, fill=shade1, fit=(add1)] (m1) {};
+    \node [match node, fill=shade1, fit=(mul)] (m2) {};
+    \node [match node, fill=shade3, fit=(load)] (m4) {};
+    % m3
+    \begin{pgfonlayer}{background2}
+      \node [outer match node, inner sep=-1pt, fit=(m2)] (m3a) {};
+      \node [outer match node, inner sep=-1pt, fit=(m1)] (m3b) {};
+      \draw [match line, bend left=45, fill=shade3]
+            (m3a.south west)
+            to
+            (m3a.north west)
+            to
+            (m3a.north east)
+            -- coordinate [pos=.25] (m3)
+            (m3b.north east)
+            to
+            (m3b.south east)
+            to
+            (m3b.south west)
+            --
+            cycle;
+    \end{pgfonlayer}
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, right=of m1] (m1l) {$\strut m_1$};
+  \node [match label, left=of m2] (m2l) {$\strut m_2$};
+  \node [match label, right=of m4] (m4l) {$\strut m_4$};
+  \node [match label, position=45 degrees from m3] (m3l) {$m_3$};
+  \foreach \i in {1, ..., 4} {
+    \draw [thick] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%
