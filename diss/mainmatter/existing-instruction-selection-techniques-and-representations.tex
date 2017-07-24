@@ -485,7 +485,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
     $r$ \Assign $C[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
       $s$ \Assign right-hand-side nonterminal of $r$\;
-      Select ($T$, $s$)\;
+      \Call{Select}{$T$, $s$, $C$}\;
     }{%
       \For{$i \leftarrow 1$ \KwTo $|n|$}{%
         $m$ \Assign $i$th child of $n$\;
