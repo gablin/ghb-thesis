@@ -575,21 +575,23 @@ This process continues until the queue is empty, whereupon all necessary
 
 \paragraph{Limitations}
 
-\begin{filecontents*}{p-sel-example.c}x
+\begin{filecontents*}{exp-trees-limit-example.c}x
 t = a + b;
-c = c * t;
-x = *t;
+x = c * t;
+y = *t;
 \end{filecontents*}
 
 \begin{figure}
   \centering%
-  \subcaptionbox{C code\labelFigure{p-sel-example}}%
-                {\lstinputlisting[language=c]{p-sel-example.c}}%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{C code\labelFigure{exp-trees-limit-example}}%
+                {\lstinputlisting[language=c]{exp-trees-limit-example.c}}%
   \hfill%
   \subcaptionbox{%
                   Instructions. The $*s$ notion means ``get value at address $s$
                   in memory''%
-                  \labelFigure{p-sel-example-instrs}%
+                  \labelFigure{exp-trees-limit-example-instrs}%
                 }%
                 [50mm]%
                 {%
@@ -607,25 +609,45 @@ x = *t;
                     mul  & r & s \times t & 3\\
                     adm  & r & (s + t) \times u & 4\\
                     load & r & *s & 5\\
+                    load & r & *(s + t) & 5\\
                     \bottomrule
                   \end{tabular}%
                 }%
   \hfill%
+  \mbox{}%
+
+  \vspace{\betweensubfigures}
+
+  \mbox{}%
+  \hfill%
   \subcaptionbox{%
-                   Corresponding \gls{block graph} and \glspl{match}%
-                   \labelFigure{p-sel-example-dag}%
+                   Corresponding \glspl{expression tree} and \glspl{match}%
+                   \labelFigure{exp-trees-limit-example-trees}%
                 }%
                 [35mm]%
                 {%
                   \small%
-                  \input{figures/existing-isel-techniques-and-reps/p-sel-example-dag}%
-                }
+                  \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-trees}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                   Corresponding \gls{block graph} and \glspl{match}%
+                   \labelFigure{exp-trees-limit-example-dag}%
+                }%
+                [35mm]%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-dag}%
+                }%
+  \hfill%
+  \mbox{}%
+
 
   \caption[An example illustrating the limitation of expression trees]%
           {%
             TODO%
           }
-  \labelFigure{TODO}
+  \labelFigure{exp-trees-limit-example}
 \end{figure}
 
 The main disadvantage of operating on \glspl{expression tree} is that decisions
