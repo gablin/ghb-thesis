@@ -38,13 +38,13 @@
 
   % Graph
   \node [op node] (add1) {\opAdd};
-  \node [data node, position=135 degrees from add1] (i) {\opVar{i}};
-  \node [data node, position= 45 degrees from add1] (c1) {\opVar{1}};
-  \node [op node, position=-45 degrees from add1] (mul) {\opMul};
-  \node [data node, position= 45 degrees from mul] (c4) {\opVar{4}};
-  \node [op node, position=-45 degrees from mul] (add2) {\opAdd};
-  \node [data node, position= 45 degrees from add2] (A) {\opVar{A}};
-  \node [op node, below=of add2] (load) {\opLoad};
+  \node [data node, position=-135 degrees from add1] (i) {\opVar{i}};
+  \node [data node, position=- 45 degrees from add1] (c1) {\opVar{1}};
+  \node [op node, position=45 degrees from add1] (mul) {\opMul};
+  \node [data node, position=45 degrees from mul] (c4) {\opVar{4}};
+  \node [op node, position=45 degrees from mul] (add2) {\opAdd};
+  \node [data node, position=-45 degrees from add2] (A) {\opVar{A}};
+  \node [op node, above=of add2] (load) {\opLoad};
   \begin{scope}[data flow]
     \draw (i) -- (add1);
     \draw (c1) -- (add1);
@@ -65,18 +65,18 @@
       \node [outer match node, inner sep=-1pt, fit=(m3)] (m4a) {};
       \node [outer match node, inner sep=-1pt, fit=(m2)] (m4b) {};
       \draw [match line, bend left=45, fill=shade1]
+            (m4a.south east)
+            to
             (m4a.south west)
             to
             (m4a.north west)
+            -- coordinate (m4)
+            (m4b.north west)
             to
-            (m4a.north east)
-            --
             (m4b.north east)
             to
             (m4b.south east)
-            to
-            (m4b.south west)
-            -- coordinate (m4)
+            --
             cycle;
     \end{pgfonlayer}
     \node [match node, fill=shade1, fit=(load)] (m5) {};
@@ -88,76 +88,76 @@
     \end{pgfonlayer}
     % The named paths must be declared outside of pgfonlayer, or else they will
     % disappear when the environment ends
-    \path [name path=m6a-to-m6b-north]
-          (m6a.north east)
+    \path [name path=m6a-to-m6b-east]
+          (m6a.south east)
           --
-          (m6b.north east)
+          (m6b.south east)
           --
-          +(-45:5mm);
-    \path [name path=m6a-to-m6b-south]
-          (m6a.south west)
+          +(45:5mm);
+    \path [name path=m6a-to-m6b-west]
+          (m6a.north west)
           --
-          (m6b.south west)
+          (m6b.north west)
           --
-          +(-45:5mm);
+          +(45:5mm);
     \path [name path=m6c-to-m6b-east]
           (m6c.east)
           --
-          (m6c.east |- m6b.north);
+          (m6c.east |- m6b.south);
     \path [name path=m6c-to-m6b-west]
           (m6c.west)
           --
           (m6c.west |- m6b.west);
     \begin{pgfonlayer}{background4}
       \draw [match line, bend left=45, fill=shade3,
-             name intersections={of=m6a-to-m6b-north and m6c-to-m6b-east,
-                                 by=x-east},
-             name intersections={of=m6a-to-m6b-south and m6c-to-m6b-west,
+             name intersections={of=m6a-to-m6b-west and m6c-to-m6b-west,
                                  by=x-west},
+             name intersections={of=m6a-to-m6b-east and m6c-to-m6b-east,
+                                 by=x-east},
              rounded corners=4pt,
             ]
+            (m6a.south east)
+            to
             (m6a.south west)
             to
             (m6a.north west)
+            --
+            (x-west)
+            -- coordinate [pos=.75] (m6)
+            (m6c.west)
             to
-            (m6a.north east)
+            (m6c.north)
+            to
+            (m6c.east)
             --
             (x-east)
-            --
-            (m6c.east)
-            to
-            (m6c.south)
-            to
-            (m6c.west)
-            -- coordinate [pos=.25] (m6)
-            (x-west)
             --
             cycle;
     \end{pgfonlayer}
 
     % Fill overdrawn edges of m6
     \draw [match line, bend left=45, fill=none,
-           name intersections={of=m6a-to-m6b-north and m6c-to-m6b-east,
-                               by=x-east},
-           name intersections={of=m6a-to-m6b-south and m6c-to-m6b-west,
+           name intersections={of=m6a-to-m6b-west and m6c-to-m6b-west,
                                by=x-west},
+           name intersections={of=m6a-to-m6b-east and m6c-to-m6b-east,
+                               by=x-east},
            rounded corners=4pt,
           ]
+          (m6a.south east)
+          to
           (m6a.south west)
           to
           (m6a.north west)
-          to
-          (m6a.north east)
-          --
-          (x-east)
-          --
-          (m6c.east)
-          to
-          (m6c.south)
-          to
-          (m6c.west)
           --
           (x-west)
+          --
+          (m6c.west)
+          to
+          (m6c.north)
+          to
+          (m6c.east)
+          --
+          (x-east)
           --
           cycle;
   \end{pgfonlayer}
@@ -166,7 +166,7 @@
   \node [match label, left=of m1] (m1l) {$\strut m_1$};
   \node [match label, right=of m2] (m2l) {$\strut m_2$};
   \node [match label, left=of m3] (m3l) {$\strut m_3$};
-  \node [match label, position=-135 degrees from m4] (m4l) {$m_4$};
+  \node [match label, position=135 degrees from m4] (m4l) {$m_4$};
   \node [match label, right=of m5] (m5l) {$\strut m_5$};
   \node [match label, left=of m6] (m6l) {$\strut m_6$};
   \foreach \i in {1, ..., 6} {
