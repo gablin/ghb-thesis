@@ -9,8 +9,7 @@
 \pgfdeclarelayer{background1}%
 \pgfdeclarelayer{background2}%
 \pgfdeclarelayer{background3}%
-\pgfdeclarelayer{background4}%
-\pgfsetlayers{background4,background3,background2,background1,main}%
+\pgfsetlayers{background3,background2,background1,main}%
 \begin{tikzpicture}[%
     data node/.style={%
       op node,
@@ -81,7 +80,7 @@
     \end{pgfonlayer}
     \node [match node, fill=shade1, fit=(load)] (m5) {};
     % m6
-    \begin{pgfonlayer}{background4}
+    \begin{pgfonlayer}{background3}
       \node [outer match node, inner sep=1pt, fit=(m3)] (m6a) {};
       \node [outer match node, inner sep=1pt, fit=(m2)] (m6b) {};
       \node [outer match node, inner sep=1pt, fit=(m5)] (m6c) {};
@@ -108,7 +107,7 @@
           (m6c.west)
           --
           (m6c.west |- m6b.west);
-    \begin{pgfonlayer}{background4}
+    \begin{pgfonlayer}{background3}
       \draw [match line, bend left=45, fill=shade3,
              name intersections={of=m6a-to-m6b-west and m6c-to-m6b-west,
                                  by=x-west},
@@ -134,32 +133,6 @@
             --
             cycle;
     \end{pgfonlayer}
-
-    % Fill overdrawn edges of m6
-    \draw [match line, bend left=45, fill=none,
-           name intersections={of=m6a-to-m6b-west and m6c-to-m6b-west,
-                               by=x-west},
-           name intersections={of=m6a-to-m6b-east and m6c-to-m6b-east,
-                               by=x-east},
-           rounded corners=4pt,
-          ]
-          (m6a.south east)
-          to
-          (m6a.south west)
-          to
-          (m6a.north west)
-          --
-          (x-west)
-          --
-          (m6c.west)
-          to
-          (m6c.north)
-          to
-          (m6c.east)
-          --
-          (x-east)
-          --
-          cycle;
   \end{pgfonlayer}
 
   % Match labels
