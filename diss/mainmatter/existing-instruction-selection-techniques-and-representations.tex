@@ -575,12 +575,6 @@ This process continues until the queue is empty, whereupon all necessary
 
 \paragraph{Limitations}
 
-The main disadvantage of operating on \glspl{expression tree} is that decisions
-made for one tree may inhibit \gls{instruction selection} for subsequent
-\glspl{expression tree}.
-%
-For example, ...
-
 \begin{filecontents*}{p-sel-example.c}x
 t = a + b;
 c = c * t;
@@ -634,11 +628,12 @@ x = *t;
   \labelFigure{TODO}
 \end{figure}
 
-\todo{give example}
-
-
-
-
+The main disadvantage of operating on \glspl{expression tree} is that decisions
+made for one tree may inhibit \gls{instruction selection} for subsequent
+\glspl{expression tree}.
+%
+For example, ...
+\todo{write}
 
 
 
