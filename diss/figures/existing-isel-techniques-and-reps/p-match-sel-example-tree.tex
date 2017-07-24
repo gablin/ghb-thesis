@@ -83,7 +83,7 @@
     \begin{pgfonlayer}{background3}
       \node [outer match node, inner sep=1pt, fit=(m3)] (m6a) {};
       \node [outer match node, inner sep=1pt, fit=(m2)] (m6b) {};
-      \node [outer match node, inner sep=1pt, fit=(m5)] (m6c) {};
+      \node [outer match node, inner sep=-1pt, fit=(m5)] (m6c) {};
     \end{pgfonlayer}
     % The named paths must be declared outside of pgfonlayer, or else they will
     % disappear when the environment ends
@@ -93,16 +93,16 @@
           (m6b.south east)
           --
           +(45:5mm);
+    \path [name path=m6c-to-m6b-east]
+          (m6b.east)
+          --
+          (m6b.east |- m6b.south);
     \path [name path=m6a-to-m6b-west]
           (m6a.north west)
           --
           (m6b.north west)
           --
           +(45:5mm);
-    \path [name path=m6c-to-m6b-east]
-          (m6c.east)
-          --
-          (m6c.east |- m6b.south);
     \path [name path=m6c-to-m6b-west]
           (m6c.west)
           --
