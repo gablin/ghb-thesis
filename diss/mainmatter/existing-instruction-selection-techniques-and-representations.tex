@@ -528,52 +528,6 @@ Although pioneered by \textcite{HatcherChristopher:1986}, the idea was first
 successfully applied by \textcite{Pelegri-LlopartGraham:1988}, and later
 improved and simplified by \textcite{BalachandranEtAl:1990} and
 \textcite{Proebsting:1992:PLDI}.
-
-\begin{algorithm}[t]
-  \DeclFunction{ComputeStates}{grammar $G$}{%
-    $S$ \Assign $\emptyset$\;
-    $Q$ \Assign $\emptyset$\;
-    \Call{ComputeLeafStates}{}\;
-    \While{$Q \neq \emptyset$}{%
-      $s$ \Assign pop from $Q$\;
-      \ForEach{terminal $\mathit{op} \in G$}{%
-        \Call{ComputeTransitions}{$s$, $\mathit{op}$}\;
-      }
-    }
-    \Return{$S$}\;
-
-    \BlankLine
-    \DeclFunction{ComputeTransitions}{state $s$, terminal $t$}{%
-      ...\;
-    }
-
-    \BlankLine
-    \DeclFunction{NormalizeCosts}{state $s$}{%
-      $d$ \Assign $\min(\mSetBuilder{s[n].\text{cost}}%
-                                    {\text{nonterminal} \; n \in G})$\;
-      \ForEach{nonterminal $n \in G$}{%
-        $s[n]$.cost \Assign $s[n].\text{cost} - d$\;
-      }
-      \Return{$s$}\;
-    }
-
-    \BlankLine
-    \DeclFunction{ComputeClosure}{state $s$}{%
-      
-    }
-  }
-
-  \caption[%
-            Algorithm for constructing the states for a given machine grammar%
-          ]{%
-            Algorithm for constructing the states for a given machine grammar
-            %
-            The given grammar is assumed to be in linear form%
-          }
-  \labelAlgorithm{proebsting-state-algorithm}
-\end{algorithm}
-
-The idea work as follows.
 %
 The \gls{expression tree} is traversed bottom up and labeled with a
 \gls!{state}.
@@ -583,12 +537,35 @@ information needed to optimally reduce the \gls{expression tree} rooted at~$n$
 to any \gls{nonterminal}.
 %
 At first glance, it would seem that this requires an infinite number of
-\glspl{state} since \glspl{expression tree} can be of arbitrary size.
+\glspl{state} since \glspl{expression tree} can be of arbitrary size, but this
+only applies if the full cost of the entire \gls{expression tree} is taken into
+account.
 %
-Fortunately,
+Fortunately, it is sufficient to only consider the relative cost differences
+between \glspl{rule} for any given node in the \gls{expression tree}, leading to
+a finite number of \glspl{state}.
 
-
-\todo{write}
+The idea for computing the \glspl{state} -- which will only be described briefly
+-- works as follows.
+%
+First the states for all leaf nodes are built, considering only \gls{base.r}
+\glspl{rule} with a single \glspl{terminal} on the right-hand side in the
+\gls{production}.
+%
+The costs and \gls{rule} decisions are computed using the same logic as in
+\refAlgorithm{aho-etal-cost-algorithm}, lines~8--21.
+%
+The leaf \gls{state} are then pushed onto a queue.
+%
+Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
+\glspl{rule} with a non-leaf \glspl{terminal} in combination with all other
+existing \glspl{state}.
+%
+If any combination gives rise to a new set of costs and \gls{rule} decisions,
+then a new \gls{state} is created and pushed onto the queue.
+%
+This process continues until the queue is empty, whereupon all necessary
+\glspl{state} have been built.
 
 
 
