@@ -680,6 +680,35 @@ available.
 
 \todo{write}
 
+
+
+\paragraph{Maximum Munch}
+
+The most common approach for greedy \gls{pattern selection} on \glspl{block DAG}
+is called \gls!{maximum munch} (coined by \textcite{Cattell:1978}).
+%
+The idea is to traverse the \gls{block DAG} top down, select the largest
+\gls{pattern} that matches the current node, and repeat the process for
+remaining, uncovered parts of the \gls{block DAG}.
+%
+The approach -- which is used in, for example, LLVM~\cite{LattnerAdve:2004} --
+works well for architectures with a regular \gls{instruction set} and where
+there is a strong correlation between the effectiveness of the \gls{instruction}
+and the size of its \gls{pattern}.
+%
+Due to its limited scope, however, it suffers from the same limitation as
+\glspl{expression tree} regarding whether to split or duplicate common
+subexpressions.
+
+
+
+\paragraph{Balancing Splitting and Duplication}
+
+\todo{write}
+
+
+
+
 \subsection{Using Function Graphs}
 
 \todo{write}
