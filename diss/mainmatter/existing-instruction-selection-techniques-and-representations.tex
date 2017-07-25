@@ -707,13 +707,12 @@ that effectively split or duplicate the common subexpressions.
 
 Several approaches have been made in attempting to balance splitting and
 duplication. \textcite{FauthEtAl:1994} designed an heuristic algorithm that
-rewrites the \gls{block DAG} before \gls{instruction selection}. The algorithm
+rewrites the \gls{block DAG} into \glspl{expression tree} before
+\gls{instruction selection}. Using a rough estimate of cost, the algorithm
 favors \gls{node} duplication and resorts to \gls{edge} splitting when the
-former is deemed too costly.
+former becomes too costly. Once rewritten, the \glspl{expression tree} are
+covered using an improved variant of \refAlgorithm{aho-etal-cost-algorithm}.
 
-
-
-\todo{discuss \cite{FauthEtAl:1994}}
 \todo{discuss \cite{Ertl:1999}}
 \todo{discuss \cite{KoesGoldstein:2008}}
 
