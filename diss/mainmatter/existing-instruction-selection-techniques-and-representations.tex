@@ -622,8 +622,7 @@ y = *t;
   \mbox{}%
   \hfill%
   \subcaptionbox{%
-                  Corresponding expression trees, where the common subexpression
-                  has been split%
+                  Corresponding expression trees, after edge splitting%
                   \labelFigure{exp-trees-limit-example-trees}%
                 }{%
                   \small%
@@ -670,10 +669,10 @@ If represented as a \gls{block DAG} (see
 matches matches~$m_4$ and~$m_5$, resulting in a total cost is \mbox{$4 + 5 =
   9$}.
 %
-Duplicating the common subexpression would, in this case, yield the same
-\glspl{cover}, but would have resulted in suboptimal code in cases where the
-\instrCode{addmul} and \instrCode{addload} \glspl{instruction} are not
-available.
+Duplicating the \glspl{node} of the common subexpression would, in this case,
+yield the same \glspl{cover}, but would have resulted in suboptimal code in
+cases where the \instrCode{addmul} and \instrCode{addload} \glspl{instruction}
+are not available.
 
 
 
@@ -698,13 +697,21 @@ works well for architectures with a regular \gls{instruction set} and where
 there is a strong correlation between the effectiveness of the \gls{instruction}
 and the size of its \gls{pattern}.
 %
-Due to its limited scope, however, it suffers from the same limitation as
-\glspl{expression tree} regarding whether to split or duplicate common
-subexpressions.
+In addition to being non-optimal, however, it also suffers from the same
+drawback as \glspl{expression tree} regarding whether to select \glspl{cover}
+that effectively split or duplicate the common subexpressions.
 
 
 
 \paragraph{Balancing Splitting and Duplication}
+
+Several approaches have been made in attempting to balance splitting and
+duplication. \textcite{FauthEtAl:1994} designed an heuristic algorithm that
+rewrites the \gls{block DAG} before \gls{instruction selection}. The algorithm
+favors \gls{node} duplication and resorts to \gls{edge} splitting when the
+former is deemed too costly.
+
+
 
 \todo{discuss \cite{FauthEtAl:1994}}
 \todo{discuss \cite{Ertl:1999}}
