@@ -713,7 +713,13 @@ are not available.
 
 \subsection{Using Block DAGs}
 
-\todo{discuss NP-completeness}
+The cost of improving code quality by moving from \glspl{expression tree} to
+\glspl{block DAG} is that \gls{optimal.ps} \gls{pattern selection} becomes an
+NP-complete problem~\cite{KoesGoldstein:2008,Proebsting:1995:Proof} (the proof
+is available in \refSection{optimal-p-sel-np-completeness-proof}).
+%
+Consequently, traditional approaches sacrifice optimality in favor of retaining
+linear-time complexity.
 
 
 
