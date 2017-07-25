@@ -744,7 +744,17 @@ favors \gls{node} duplication and resorts to \gls{edge} splitting when the
 former becomes too costly. Once rewritten, the \glspl{expression tree} are
 covered using an improved variant of \refAlgorithm{aho-etal-cost-algorithm}.
 
-\todo{discuss \cite{Ertl:1999}}
+\textcite{Ertl:1999} showed that, for certain \glspl{grammar},
+\refAlgorithm{aho-etal-cost-algorithm} can be adapted to produce optimal
+\glspl{cover} for \glspl{block DAG}. The idea is to first compute the costs for
+each \gls{node} as if the \gls{block DAG} had been rewritten into
+\glspl{expression tree} using duplication. Then, if several \glspl{rule} reduce
+the same \gls{node} to the same \gls{nonterminal}~$n$, then $n$ can be shared
+between the \glspl{rule} whose \glsplshort{rule pattern} contain $n$.
+\citeauthor{Ertl:1999} also introduced an algorithm for checking whether
+\gls{optimal.ps} \gls{pattern selection} is guaranteed for a given
+\gls{grammar}.
+
 \todo{discuss \cite{KoesGoldstein:2008}}
 
 
