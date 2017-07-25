@@ -806,6 +806,23 @@ the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 \paragraph{Limitations}
 
+The main limitation of these approaches is that they are restricted to
+tree-shaped \glspl{pattern}, meaning they only support \glspl{instruction} that
+produce a single value.
+%
+Many \glspl{instruction set}, however, contain \glspl{instruction} that produce
+multiple values, such as memory \glspl{instruction} that load a value from
+memory while simultaneously incrementing the address.
+%
+Modeling such \glspl{instruction} require \gls{DAG}-shaped \glspl{pattern}, but
+this also turns the \gls{pattern matching} problem into an NP-complete
+problem~\cite{Cook:1971}.
+
+Moreover, in some cases the decisions made for one \gls{block} can inhibit
+subsequent decisions for other \glspl{block}.
+%
+For example, ...
+
 \todo{write}
 
 
