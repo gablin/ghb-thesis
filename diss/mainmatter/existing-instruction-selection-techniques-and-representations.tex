@@ -487,13 +487,11 @@ particular \gls{nonterminal}.
   }
 
   \caption[%
-            Algorithm for computing the least cost of reducing a given
-            expression tree to a particular nonterminal%
+            Algorithm for computing the optimal sequence of rules that reduces
+            the given expression tree to a particular nonterminal%
           ]{%
-            Algorithm for computing the least cost of reducing a given
-            expression tree to a particular nonterminal.
-            %
-            The given grammar is assumed to be in linear form%
+            Computes the optimal sequence of rules that reduces the given
+            expression tree to a particular nonterminal%
           }
   \labelAlgorithm{aho-etal-cost-algorithm}
 \end{algorithm}
@@ -553,9 +551,14 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
     execute actions associated with $r$\;
   }
 
-  \caption{%
-            Algorithm for selecting rules based on costs computed by
+  \caption[%
+            Algorithm for selecting the rules chosen by
             \refAlgorithm{aho-etal-cost-algorithm}%
+          ]%
+          {%
+            Selects optimal sequence of rules that reduces a given expression
+            tree to a given nonterminal, based on costs computed
+            by \refAlgorithm{aho-etal-cost-algorithm}%
           }
   \labelAlgorithm{aho-etal-select-algorithm}
 \end{algorithm}
