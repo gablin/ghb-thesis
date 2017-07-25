@@ -71,9 +71,10 @@ In addition, it integrates \gls{global code motion} as it is shown that moving
 \glspl{operation} across \glspl{basic block} can alleviate \gls{instruction
   selection}.
 %
-To this end, the dissertation also introduces a new, graph-based representation
-that unifies data flow and control flow for entire \glspl{function}, which
-enables complex \glspl{instruction} to be modeled as graphs.
+To this end, the dissertation also introduces a new, \gls{graph}-based
+representation that unifies data flow and control flow for entire
+\glspl{function}, which enables complex \glspl{instruction} to be modeled as
+\glspl{graph}.
 %
 Moreover, the representation is crucial for modeling \gls{global.is}
 \gls{instruction selection} and \gls{global code motion} as a combinatorial
@@ -177,11 +178,11 @@ and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
 In comparison, traditional \gls{instruction selection} techniques only consider
 one \gls{basic block} at a time.
 %
-Morever, most approaches represent the \glspl{instruction} as graphs.
+Morever, most approaches represent the \glspl{instruction} as \glspl{graph}.
 %
 As the saturated-add \gls{instruction} contains \glspl{operation} for both data
-and control flow, modeling it as a graph requires a representation that captures
-both data and control flow.
+and control flow, modeling it as a \gls{graph} requires a representation that
+captures both data and control flow.
 %
 In comparison, existing representations only capture data flow.
 
@@ -425,17 +426,18 @@ other, related tasks of \gls{code generation}.
 The approach, outlined in \refFigure{approach-overview}, is as follows.
 %
 The \gls{IR} code of the \gls{program} under compilation is fed to a tool which
-builds a graph-based representation of the \gls{program}.
+builds a \gls{graph}-based representation of the \gls{program}.
 %
-The graph is subjected to a series of transformations and then fed to a matcher
-together with the \gls{pattern set} of the specified \gls{target machine}.
+The \gls{graph} is subjected to a series of transformations and then fed to a
+matcher together with the \gls{pattern set} of the specified \gls{target
+  machine}.
 %
 The \gls{pattern set} is built from a \gls{machine description} and contains a
-graph-based pattern for each \gls{instruction}, which have also been subjected
-to similar transformations.
+\gls{graph}-based \gls{pattern} for each \gls{instruction}, which have also been
+subjected to similar transformations.
 %
-Taking the graph and \gls{pattern set} as input, the matcher produces a set of
-\glspl{match}.
+Taking the \gls{graph} and \gls{pattern set} as input, the matcher produces a
+set of \glspl{match}.
 %
 This is fed to a modeler, which constructs a problem instance of the
 \gls{constraint model}.

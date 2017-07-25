@@ -35,11 +35,12 @@ Without loss of generality, assume that the input to the \gls{instruction
   selector} to consist of a single \gls{function}, which in turn consists of
 many \glspl{basic block} (henceforth referred to as simply \glspl!{block}).
 
-Most \glspl{compiler} solve the two problems above using graph-based methods.
+Most \glspl{compiler} solve the two problems above using \gls{graph}-based
+methods.
 %
 First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
-nodes represent \glspl{operation} in the function and edges represent data
-dependencies between the \glspl{operation}.
+\glspl{node} represent \glspl{operation} in the function and \glspl{edge}
+represent data dependencies between the \glspl{operation}.
 %
 \Glspl{data-flow graph} are called \glspl!{expression tree} if they are limited
 to single, tree-shaped expressions, \glspl!{block DAG} if they capture many
@@ -106,8 +107,8 @@ x = A[i + 1];
 \end{figure}
 
 The first subproblem can be reduced to finding all instances where a
-\gls{pattern} from the \gls{pattern set} is subgraph isomorphic to~$G$, where
-$G$ denotes either a \gls{block DAG} or a \gls{function graph}.
+\gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to~$G$,
+where $G$ denotes either a \gls{block DAG} or a \gls{function graph}.
 %
 Each such instance is called a \gls!{match}, and the set of all \glspl{match}
 constitute a \gls!{match set}, which is denoted by~$M$.
@@ -358,7 +359,7 @@ intermediary steps towards enabling reduction of the original \gls{rule}.
 
 Since all \glspl{production} in a \glsshort{linear form.g} \gls{grammar} have at
 most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial
-(simply match the node type against the \gls{terminal} in all \gls{base.r}
+(simply match the \gls{node} type against the \gls{terminal} in all \gls{base.r}
 \glspl{rule}).
 %
 Otherwise another bottom-up traversal of the \gls{expression tree} would have to
@@ -374,7 +375,7 @@ height.
 \paragraph{Optimal Pattern Selection on Expression Trees}
 
 The technique by \citeauthor{AhoEtAl:1989} is centered around the following
-assumption: the cost of reducing node~$n$ in an \gls{expression tree} to
+assumption: the cost of reducing \gls{node}~$n$ in an \gls{expression tree} to
 \gls{nonterminal}~$s$ using \gls{rule}~$r$ is the cost of $r$ plus the costs of
 reducing all children of $n$ to the appropriate \glspl{nonterminal} appearing on
 the right-hand side of~$r$.
@@ -453,19 +454,19 @@ particular \gls{nonterminal}.
 
 The algorithm works as follows.
 %
-It first constructs a cost matrix~$C$, where each row represents a node in the
-\gls{expression tree} and each column represents a \gls{nonterminal} in the
+It first constructs a cost matrix~$C$, where each row represents a \gls{node} in
+the \gls{expression tree} and each column represents a \gls{nonterminal} in the
 \gls{grammar}, which is assumed to be in \gls{linear form.g}.
 %
-The cost in each element~\mbox{$C[i][j]$} is initialized to infinity,
-indicating that there exists no sequence of \glspl{rule reduction} which reduces
-node~$i$ to \gls{nonterminal}~$j$.
+The cost in each element~\mbox{$C[i][j]$} is initialized to infinity, indicating
+that there exists no sequence of \glspl{rule reduction} which reduces
+\gls{node}~$i$ to \gls{nonterminal}~$j$.
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
-At each node~$n$ and for each matching \gls{base.r} \gls{rule}~$r$, with~$s$ as
-left-hand-side \gls{nonterminal}, it computes the cost~$c$ of applying $r$
-at~$n$ according to the scheme stated above.
+At each \gls{node}~$n$ and for each matching \gls{base.r} \gls{rule}~$r$,
+with~$s$ as left-hand-side \gls{nonterminal}, it computes the cost~$c$ of
+applying $r$ at~$n$ according to the scheme stated above.
 %
 If $c$ is less than the currently recorded cost for reducing $n$ to $s$, then
 the cost and \gls{rule} information for $n$ is updated accordingly.
@@ -474,8 +475,8 @@ The same is then done for all \gls{chain.r} \glspl{rule} until it reaches a
 fixpoint (which must eventually be reached as all \gls{rule} costs are
 non-negative and an update only occurs when the cost is strictly less).
 %
-Since every node is also only processed once, the algorithm runs in linear time
-with respect to the size of the \gls{expression tree}.
+Since every \gls{node} is also only processed once, the algorithm runs in linear
+time with respect to the size of the \gls{expression tree}.
 %
 Having computed the costs, the optimal order of \glspl{rule reduction} -- which
 is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
@@ -536,7 +537,7 @@ improved and simplified by \textcite{BalachandranEtAl:1990} and
 The \gls{expression tree} is traversed bottom up and labeled with a
 \gls!{state}.
 %
-For a given labeled node~$n$, the \gls{state} essentially holds enough
+For a given labeled \gls{node}~$n$, the \gls{state} essentially holds enough
 information needed to optimally reduce the \gls{expression tree} rooted at~$n$
 to any \gls{nonterminal}.
 %
@@ -546,15 +547,15 @@ only applies if the full cost of the entire \gls{expression tree} is taken into
 account.
 %
 Fortunately, it is sufficient to only consider the relative cost differences
-between \glspl{rule} for any given node in the \gls{expression tree}, leading to
-a finite number of \glspl{state}.
+between \glspl{rule} for any given \gls{node} in the \gls{expression tree},
+leading to a finite number of \glspl{state}.
 
 The idea for computing the \glspl{state} -- which will only be described briefly
 -- works as follows.
 %
-First the states for all leaf nodes are built, considering only \gls{base.r}
-\glspl{rule} with a single \glspl{terminal} on the right-hand side in the
-\gls{production}.
+First the states for all leaf \glspl{node} are built, considering only
+\gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
+in the \gls{production}.
 %
 The costs and \gls{rule} decisions are computed using the same logic as in
 \refAlgorithm{aho-etal-cost-algorithm}, lines~8--21.
@@ -650,7 +651,8 @@ y = *t;
 \end{figure}
 
 The main disadvantage of operating on \glspl{expression tree} is that common
-subexpressions have to be either split or duplicated when building the \gls{IR}.
+subexpressions have to be either split along the \glspl{edge} or duplicated when
+building the \gls{IR}.
 %
 Depending on the \gls{instruction set}, these decisions can prevent selection of
 \glspl{instruction} that would lead to higher code quality.
@@ -688,7 +690,7 @@ The most common approach for greedy \gls{pattern selection} on \glspl{block DAG}
 is called \gls!{maximum munch} (coined by \textcite{Cattell:1978}).
 %
 The idea is to traverse the \gls{block DAG} top down, select the largest
-\gls{pattern} that matches the current node, and repeat the process for
+\gls{pattern} that matches the current \gls{node}, and repeat the process for
 remaining, uncovered parts of the \gls{block DAG}.
 %
 The approach -- which is used in, for example, LLVM~\cite{LattnerAdve:2004} --
