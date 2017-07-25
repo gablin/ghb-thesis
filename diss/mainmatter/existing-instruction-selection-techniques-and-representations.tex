@@ -737,25 +737,48 @@ that effectively split or duplicate the common subexpressions.
 \paragraph{Balancing Splitting and Duplication}
 
 Several approaches have been made in attempting to balance splitting and
-duplication. \textcite{FauthEtAl:1994} designed an heuristic algorithm that
-rewrites the \gls{block DAG} into \glspl{expression tree} before
-\gls{instruction selection}. Using a rough estimate of cost, the algorithm
-favors \gls{node} duplication and resorts to \gls{edge} splitting when the
-former becomes too costly. Once rewritten, the \glspl{expression tree} are
-covered using an improved variant of \refAlgorithm{aho-etal-cost-algorithm}.
+duplication.
+%
+\textcite{FauthEtAl:1994} designed an heuristic algorithm that rewrites the
+\gls{block DAG} into \glspl{expression tree} before \gls{instruction
+  selection}.
+%
+Using a rough estimate of cost, the algorithm favors \gls{node} duplication and
+resorts to \gls{edge} splitting when the former becomes too costly.
+%
+Once rewritten, the \glspl{expression tree} are covered using an improved
+variant of \refAlgorithm{aho-etal-cost-algorithm}.
 
 \textcite{Ertl:1999} showed that, for certain \glspl{grammar},
 \refAlgorithm{aho-etal-cost-algorithm} can be adapted to produce optimal
-\glspl{cover} for \glspl{block DAG}. The idea is to first compute the costs for
-each \gls{node} as if the \gls{block DAG} had been rewritten into
-\glspl{expression tree} using duplication. Then, if several \glspl{rule} reduce
-the same \gls{node} to the same \gls{nonterminal}~$n$, then $n$ can be shared
-between the \glspl{rule} whose \glsplshort{rule pattern} contain $n$.
+\glspl{cover} for \glspl{block DAG}.
+%
+The idea is to first compute the costs for
+each \gls{node} as if the \gls{block DAG} had been rewritten into a
+\gls{expression tree} using duplication.
+%
+Then, if several \glspl{rule} reduce the same \gls{node} to the same
+\gls{nonterminal}~$n$, then $n$ can be shared between the \glspl{rule} whose
+\glsplshort{rule pattern} contain $n$.
+%
 \citeauthor{Ertl:1999} also introduced an algorithm for checking whether
 \gls{optimal.ps} \gls{pattern selection} is guaranteed for a given
 \gls{grammar}.
 
-\todo{discuss \cite{KoesGoldstein:2008}}
+\textcite{KoesGoldstein:2008} combined the ideas by \citeauthor{FauthEtAl:1994}
+and \citeauthor{Ertl:1999} by introducing a design that first uses
+\refAlgorithm{aho-etal-cost-algorithm} to compute the costs for a duplicated
+\gls{expression tree}.
+%
+Then, at each \glspl{node}~$n$ where several \glspl{pattern} in the optimal
+\gls{cover} overlap in the \gls{block DAG}, two costs are estimated: the cost
+incurred by allowing overlap, and the cost incurred by splitting the edges.
+%
+If the latter cost is less then $n$ is marked as \gls!{fixed.n}, meaning it can
+only be covered by \glspl{pattern} where $n$ is the root \gls{node}.
+%
+Once all such nodes have been processed, another pass is performed to recompute
+the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 
 
