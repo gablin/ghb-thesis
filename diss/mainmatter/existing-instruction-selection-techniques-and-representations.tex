@@ -500,12 +500,11 @@ The algorithm works as follows.
 %
 It first constructs a cost matrix~$C$, where rows represent \glspl{node} in the
 \gls{expression tree} and columns represent \glspl{nonterminal} in the
-\gls{grammar}.
+\gls{grammar}, which is assumed to be in \gls{linear form.g}.%
 %
-For simplicity the algorithm assumes the \gls{grammar} to be in \gls{linear
-  form.g}, but it can be adapted to accept any \gls{grammar} by expanding the
-\algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost} functions to
-handle \glspl{rule} of arbitrary form.
+\!\footnote{The algorithm can be adapted to accept any \gls{grammar} by
+  expanding the \algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost}
+  functions to handle \glspl{rule} of arbitrary form.}
 %
 The cost in each element~\mbox{$C[i][j]$} is initialized to infinity, indicating
 that there exists no sequence of \glspl{rule reduction} which reduces
