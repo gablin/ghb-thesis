@@ -320,10 +320,10 @@ A method for finding the sequence with least cost is described shortly.
 
 
 
-\paragraph{Machine Grammars in Linear Form}
+\paragraph{Machine Grammars in Normal Form}
 
 To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
-can be rewritten into \gls!{linear form.g}. A \gls{grammar} is in \gls{linear
+can be rewritten into \gls!{normal form.g}. A \gls{grammar} is in \gls{normal
   form.g} if every \gls{rule} in the \gls{grammar} has a \gls{production} in one
 of the following forms:
 %
@@ -370,29 +370,29 @@ of the following forms:
     \bottomrule
   \end{tabular}%
 
-  \caption[The grammar from \refTable{grammar-rules-example} in linear form]%
+  \caption[The grammar from \refTable{grammar-rules-example} in normal form]%
           {%
-            The grammar from \refTable{grammar-rules-example} in linear form.
+            The grammar from \refTable{grammar-rules-example} in normal form.
             %
             The nonterminals~$\mNT{A}$ and~$\mNT{B}$ are introduced in order to
             connect rules~1 with~4 and~2 with~5, respectively%
           }
-  \labelTable{linear-form-grammar-example}
+  \labelTable{normal-form-grammar-example}
 \end{table}
 
-A \gls{grammar} can be mechanically rewritten into \gls{linear form.g} by
+A \gls{grammar} can be mechanically rewritten into \gls{normal form.g} by
 introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule} into
-multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{linear
+multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{normal
   form.g}.
 %
 For example, rewriting the \gls{grammar} shown in
-\refTable{grammar-rules-example} into \gls{linear form.g} results in the
-\gls{grammar} shown in \refTable{linear-form-grammar-example}.
+\refTable{grammar-rules-example} into \gls{normal form.g} results in the
+\gls{grammar} shown in \refTable{normal-form-grammar-example}.
 %
 Note that the new \glspl{rule} have zero cost and no action as these are only
 intermediary steps towards enabling reduction of the original \gls{rule}.
 
-Since all \glspl{production} in a \glsshort{linear form.g} \gls{grammar} have at
+Since all \glspl{production} in a \glsshort{normal form.g} \gls{grammar} have at
 most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial
 (simply match the \gls{node} type against the \gls{terminal} in all \gls{base.r}
 \glspl{rule}).
@@ -425,7 +425,7 @@ particular \gls{nonterminal}.
 
 \begin{algorithm}[p]
   \DeclFunction{ComputeCosts}%
-               {expression tree $T$, linear-form grammar $G$}%
+               {expression tree $T$, normal-form grammar $G$}%
   {%
     $S$ \Assign $\mSetBuilder{s}%
                              {\text{$s$ is a nonterminal in $G$}}$\;
@@ -500,7 +500,7 @@ The algorithm works as follows.
 %
 It first constructs a cost matrix~$C$, where rows represent \glspl{node} in the
 \gls{expression tree} and columns represent \glspl{nonterminal} in the
-\gls{grammar}, which is assumed to be in \gls{linear form.g}.%
+\gls{grammar}, which is assumed to be in \gls{normal form.g}.%
 %
 \!\footnote{The algorithm can be adapted to accept any \gls{grammar} by
   expanding the \algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost}

@@ -1,3 +1,4 @@
 * BEFORE SUBMISSION
 ** TODO Remove 'electronic' document class option
 ** TODO In appendices, swap typesetting convention of terminals and nonterminals
+** TODO In appendices, replace 'linear form' with 'normal form'
