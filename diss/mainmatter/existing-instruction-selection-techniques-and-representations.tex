@@ -437,8 +437,8 @@ particular \gls{nonterminal}.
       \ForEach{child $m$ of $n$}{%
         \Call{ComputeCostsRec}{$m$}\;
       }
-      \ForEach{base rule $r \in G$ that matches at $n$}{%
-        $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
+      \ForEach{base rule $r \in \text{\Call{FindMatchingRules}{$n$}}$}{%
+        $c$ \Assign \Call{ComputeReductionCost}{$n$, $r$}\;
         $l$ \Assign result of $r$\;
         \If{$c < C[n][l]$.cost}{%
           $C[n][l]$.cost \Assign $c$\;
@@ -447,7 +447,7 @@ particular \gls{nonterminal}.
       }
       \Repeat{no change to $C$}{%
         \ForEach{chain rule $r \in G$}{%
-          $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
+          $c$ \Assign \Call{ComputeReductionCost}{$n$, $r$}\;
           $l$ \Assign result of $r$\;
           \If{$c < C[n][l]$.cost}{%
             $C[n][l]$.cost \Assign $c$\;
@@ -458,7 +458,18 @@ particular \gls{nonterminal}.
     }
 
     \BlankLine
-    \DeclFunction{ComputeRuleCost}{node $n$, rule $r$}{%
+    \DeclFunction{FindMatchingRules}{node $n$}{%
+      $M$ \Assign $\emptyset$\;
+      \ForEach{base rule $r \in G$}{%
+        \If{$\text{terminal in pattern of $r$} = \text{node type of $n$}$}{%
+          $M$ \Assign $M \cup \mSet{r}$\;
+        }
+      }
+      \Return{$M$}\;
+    }
+
+    \BlankLine
+    \DeclFunction{ComputeReductionCost}{node $n$, rule $r$}{%
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign nonterminal in pattern of $r$\;
