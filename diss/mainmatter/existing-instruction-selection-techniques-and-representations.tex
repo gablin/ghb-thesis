@@ -531,7 +531,8 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 \begin{algorithm}[t]
   \DeclFunction{Select}{expression tree $T$,
                         goal nonterminal $g$,
-                        cost matrix $C$}{%
+                        cost matrix $C$}%
+  {%
     $n$ \Assign root node of $T$\;
     $r$ \Assign $C[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
