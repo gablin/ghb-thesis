@@ -232,11 +232,43 @@ where the right-hand side of a \gls{production} captures a \gls{pattern} of the
 \gls{instruction} and the left-hand side denotes the result produced by the
 \gls{instruction}.
 %
-The \glspl{production} are typically written in Polish notation to avoid the
-need for parentheses (for example, \mbox{$1 + 2$} is written as \mbox{$+ \; 1 \;
-  2$}).
+Hence the left-hand and right-hand sides of a \gls{rule} are referred to as the
+\gls{rule}'s \glsshort!{rule result} and \glsshort!{rule pattern}, respectively.
 %
-An example is shown in \refTable{grammar-rules-example}.
+The structure is also illustrated in \refFigure{machine-grammar-rule-anatomy},
+and an example of a few \glspl{rule} is given in
+\refTable{grammar-rules-example}.
+%
+\begin{figure}
+  \centering%
+  \figureFont\small%
+  \begin{displaymath}
+    \underbrace{
+      \overbrace{
+        \overbrace{\mNT{Reg}[1]}^{\text{result}}
+        \rightarrow \;
+        \overbrace{\opAdd{} \; \mNT{Reg}[2] \; \irCode{Imm}}^{\text{pattern}}%
+      }^{\text{production}}
+      \qquad
+      \overbrace{\text{4}}^{\text{cost}}
+      \qquad
+      \overbrace{
+        \text{emit:}~
+        \text{\instrFont add \$$\mNT{Reg}[1]$, \$$\mNT{Reg}[2]$, \#imm}%
+      }^{\text{action}}
+    }_{\text{rule}}
+  \end{displaymath}
+
+  % LAYOUT FIX: remove excess vertical whitespace
+  \vspace*{-\baselineskip}
+
+  \caption{The anatomy of a rule in a machine grammar}
+  \labelFigure{machine-grammar-rule-anatomy}
+\end{figure}
+%
+The \glspl{production} are typically written in Polish notation to avoid the
+need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as \mbox{$+
+  \; 1 + 2 \; 3$}).
 %
 Similarly, the \gls{expression tree} shown in
 \refFigure{p-match-sel-example-tree} can be expressed as \mbox{$\opLoad \;
@@ -381,8 +413,7 @@ reducing all children of $n$ to the appropriate \glspl{nonterminal} appearing on
 the right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
-$r$ plus the cost of reducing $n$ to the right-hand-side \gls{nonterminal}
-of~$r$.
+$r$ plus the cost of reducing $n$ to the \glsshort{rule result} of~$r$.
 %
 The recursive nature of these costs can be exploited using dynamic programming,
 resulting in the algorithm shown in \refAlgorithm{aho-etal-cost-algorithm} which
@@ -404,7 +435,7 @@ particular \gls{nonterminal}.
       }
       \ForEach{base rule $r \in G$ that matches at $n$}{%
         $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
-        $l$ \Assign left-hand-side nonterminal of $r$\;
+        $l$ \Assign result of $r$\;
         \If{$c < C[n][l]$.cost}{%
           $C[n][l]$.cost \Assign $c$\;
           $C[n][l]$.rule \Assign $r$\;
@@ -413,7 +444,7 @@ particular \gls{nonterminal}.
       \Repeat{no change to $C$}{%
         \ForEach{chain rule $r \in G$}{%
           $c$ \Assign \Call{ComputeRuleCost}{$n$, $r$}\;
-          $l$ \Assign left-hand-side nonterminal of $r$\;
+          $l$ \Assign result of $r$\;
           \If{$c < C[n][l]$.cost}{%
             $C[n][l]$.cost \Assign $c$\;
             $C[n][l]$.rule \Assign $r$\;
@@ -426,13 +457,13 @@ particular \gls{nonterminal}.
     \DeclFunction{ComputeRuleCost}{node $n$, rule $r$}{%
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
-        $s$ \Assign right-hand-side nonterminal of $r$\;
+        $s$ \Assign nonterminal in pattern of $r$\;
         $c$ \Assign $c$ $+$ $C[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo $|n|$}{%
           $m$ \Assign $i$th child of $n$\;
-          $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
+          $s$ \Assign $i$th nonterminal in pattern of $r$\;
           $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
         }
       }
@@ -464,9 +495,9 @@ that there exists no sequence of \glspl{rule reduction} which reduces
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
-At each \gls{node}~$n$ and for each matching \gls{base.r} \gls{rule}~$r$,
-with~$s$ as left-hand-side \gls{nonterminal}, it computes the cost~$c$ of
-applying $r$ at~$n$ according to the scheme stated above.
+At each \gls{node}~$n$ and for each matching \gls{base.r} \gls{rule}~$r$, with
+\gls{nonterminal}~$s$ as \glsshort{rule result}, it computes the cost~$c$ of
+applying $r$ at~$n$ to produce~$s$ according to the scheme stated above.
 %
 If $c$ is less than the currently recorded cost for reducing $n$ to $s$, then
 the cost and \gls{rule} information for $n$ is updated accordingly.
@@ -489,12 +520,12 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
     $n$ \Assign root node of $T$\;
     $r$ \Assign $C[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
-      $s$ \Assign right-hand-side nonterminal of $r$\;
+      $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $C$}\;
     }{%
       \For{$i \leftarrow 1$ \KwTo $|n|$}{%
         $m$ \Assign $i$th child of $n$\;
-        $s$ \Assign $i$th right-hand-side nonterminal of $r$\;
+        $s$ \Assign $i$th nonterminal in pattern of $r$\;
         \Call{Select}{expression tree rooted at $m$, $s$}\;
       }
     }
@@ -511,8 +542,8 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 In many cases, this technique produces code of sufficient quality.
 %
 In fact, for architectures with simple \glspl{instruction set}, where the
-\glspl{pattern} can naturally be modeled as trees, it is often optimal or near
-optimal.
+\glspl{rule pattern} can naturally be modeled as trees, it is often optimal or
+near optimal.
 %
 The MIPS \gls{instruction set}~\cite{Sweetman:2006}, for example, is one such
 architecture.
