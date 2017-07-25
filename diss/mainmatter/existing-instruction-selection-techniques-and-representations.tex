@@ -262,7 +262,7 @@ and an example of a few \glspl{rule} is given in
   % LAYOUT FIX: remove excess vertical whitespace
   \vspace*{-\baselineskip}
 
-  \caption{The anatomy of a rule in a machine grammar}
+  \caption{The anatomy of a grammar rule}
   \labelFigure{machine-grammar-rule-anatomy}
 \end{figure}
 %
@@ -295,9 +295,9 @@ Similarly, the \gls{expression tree} shown in
     \bottomrule
   \end{tabular}%
 
-  \caption[An example of machine grammar rules]%
+  \caption[An example of grammar rules]%
           {%
-            An example of machine grammar rules corresponding to a
+            An example of grammar rules corresponding to a
             \mbox{\instrFont load \$t, o(\$s)} \gls{instruction} that loads a
             value from memory at the address given in register~\instrCode{s},
             offset by an immediate value~\instrCode{o}, and stores the loaded
@@ -308,7 +308,7 @@ Similarly, the \gls{expression tree} shown in
   \labelTable{grammar-rules-example}
 \end{table}
 
-Consequently, with a \gls{machine grammar} the \gls{pattern selection} problem
+Consequently, with a \gls{grammar} the \gls{pattern selection} problem
 becomes equivalent to finding a sequence of \gls{rule} applications (called
 \glspl!{rule reduction}) that reduces the \gls{expression tree} to a given
 \gls{nonterminal}.
@@ -319,10 +319,10 @@ A method for finding the sequence with least cost is described shortly.
 
 \paragraph{Machine Grammars in Linear Form}
 
-To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{machine
-  grammar} can be rewritten into \gls!{linear form.g}. A \gls{grammar} is in
-\gls{linear form.g} if every \gls{rule} in the \gls{grammar} has a
-\gls{production} in one of the following forms:
+To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
+can be rewritten into \gls!{linear form.g}. A \gls{grammar} is in \gls{linear
+  form.g} if every \gls{rule} in the \gls{grammar} has a \gls{production} in one
+of the following forms:
 %
 \begin{enumerate}
   \item \mbox{$\mNT{N} \rightarrow \irCode{op} \; \mNT{A}[1] \; \mNT{A}[2]
@@ -377,9 +377,9 @@ To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{machine
   \labelTable{linear-form-grammar-example}
 \end{table}
 
-A \gls{machine grammar} can be mechanically rewritten into \gls{linear form.g}
-by introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule}
-into multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{linear
+A \gls{grammar} can be mechanically rewritten into \gls{linear form.g} by
+introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule} into
+multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{linear
   form.g}.
 %
 For example, rewriting the \gls{grammar} shown in
