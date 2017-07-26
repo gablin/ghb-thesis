@@ -37,7 +37,7 @@
   \end{scope}
 
   \node [data node, right=of b] (c) {\opVar{c}};
-  \node [op node, position=45 degrees from c] (mul) {\opAdd};
+  \node [op node, position=45 degrees from c] (mul) {\opMul};
   \node [data node, position=- 45 degrees from mul] (t1) {\opVar{t}};
   \begin{scope}[data flow]
     \draw (c) -- (mul);
