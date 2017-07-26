@@ -213,21 +213,23 @@ A common form is to describe the \glspl{instruction} as a \gls!{machine grammar}
 \Glspl{machine grammar} are based on \glspl{context-free
   grammar}~\cite{AhoEtAl:2006}, which are used for describing language syntax.
 %
-A \gls{grammar} consists of \glspl!{terminal}, \glspl!{nonterminal}, and
-\glspl!{rule}.
+A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
+\glspl{rule}.
 %
-In this context, a \gls{terminal} is a symbol representing an \gls{operation}
-(e.g.\ \opAdd, \opLT, \opLoad), and a \gls{nonterminal} is a symbol representing
-an abstract result (e.g.\ $\mNT{Reg}$) produced by the \gls{instruction}.
+In this context, a \gls!{terminal} is a symbol representing an \gls{operation}
+(e.g.\ \opAdd, \opLT, \opLoad), and a \gls!{nonterminal} is a symbol
+representing an abstract result (e.g.\ $\mNT{Reg}$) produced by the
+\gls{instruction}.
 %
 To distinguish between the two, \glspl{terminal} are written entirely in lower
 case whereas \glspl{nonterminal} start with a capital letter and are set in
 italics.
 %
-A \gls{rule} describes the behavior of an \gls{instruction} and consists of a
-\gls!{production}, a non-negative cost, and an action.
+A \gls!{rule} describes the behavior of an \gls{instruction} and consists of a
+\gls{production}, a non-negative cost, and an action.
 %
-\Glspl{production} describe how derive \glspl{nonterminal}, and are written as
+\Glspl!{production} describe how to derive \glspl{nonterminal}, and are written
+as
 %
 \begin{displaymath}
   a \rightarrow b c \ldots
@@ -244,9 +246,9 @@ where the right-hand side of a \gls{production} captures a \gls{pattern} of the
 Hence the left-hand and right-hand sides of a \gls{rule} are referred to as the
 \gls{rule}'s \glsshort!{rule result} and \glsshort!{rule pattern}, respectively.
 %
-The structure is also illustrated in \refFigure{machine-grammar-rule-anatomy},
-and an example of a few \glspl{rule} is given in
-\refTable{grammar-rules-example}.
+The \gls{rule} structure is also illustrated in
+\refFigure{machine-grammar-rule-anatomy}, and an example of a few \glspl{rule}
+is given in \refTable{grammar-rules-example}.
 %
 \begin{figure}
   \centering%
