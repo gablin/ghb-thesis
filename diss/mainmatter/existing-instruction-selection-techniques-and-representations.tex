@@ -86,7 +86,7 @@ Such a subset is called a \gls!{cover}, and an example is shown in
 \refFigure{p-match-sel-example}.
 
 \begin{filecontents*}{p-match-sel-example.c}
-A[i + 1];
+x = A[i + 1];
 \end{filecontents*}
 
 \begin{figure}
@@ -129,8 +129,13 @@ A[i + 1];
             problem for a program that loads a value from integer array
             \irVar{A} at offset \irVar{i} $+$ \irVar{1} (it is assumed that
             \irVar{A} is stored in memory and that an integer is 4~bytes).
+            %
             Valid covers are \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
-            \mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}%
+            \mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}.
+            %
+            Note that variable assignments are not explicitly represented as
+            nodes as this information can be propagated from the root node of
+            an expression tree after having found a cover%
           }
   \labelFigure{p-match-sel-example}
 \end{figure}
@@ -703,10 +708,7 @@ y = *((int*) t);
   \caption[An example illustrating the limitation of expression trees]%
           {%
             An example illustrating that using block DAGs results in
-            better code compared to using expression trees.
-            %
-            For simplicity, nodes representing assignment are not included in
-            the expression trees and block DAG%
+            better code compared to using expression trees%
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
