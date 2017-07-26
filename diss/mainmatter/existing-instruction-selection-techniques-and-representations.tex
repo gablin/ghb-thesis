@@ -823,30 +823,131 @@ the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 \paragraph{Limitations}
 
-The main limitation of these approaches is that they are restricted to
-tree-shaped \glspl{pattern}, meaning they only support \glspl{instruction} that
-produce a single value.
+Although using \glspl{block DAG} addresses the issue of whether to split or
+duplicate common subexpressions within a \gls{block}, the problem still remains
+for expressions that are spread across multiple \glspl{block}.
+%
+To fully address this problem, one must resort to \glspl{function graph}.
+
+\begin{filecontents*}{block-dags-limit-example.c}
+int f(int* A, int* B, int N) {
+  int s = 0;
+  for (int i = 0; i < N; i++) {
+    s = s + A[i] * B[i];
+  }
+  return s;
+}
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{block-dags-limit-example-c}}%
+                {\lstinputlisting[language=c]{block-dags-limit-example.c}}%
+  \hfill%
+  \subcaptionbox{%
+                  Block graphs involving variable~\opVar{s}.
+                  %
+                  For brevity, the subtrees concerning \irCode{A[i]}
+                  and \irCode{B[i]} are not included%
+                  \labelFigure{p-match-sel-example-tree}%
+                }%
+                [72mm]%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/block-dags-limit-example-dags}%
+                }
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox%
+    {%
+      Grammar.
+      %
+      For brevity, the actions are not included.
+      %
+      All rules are assumed to have equal cost%
+    }%
+    {%
+      \small%
+      \begin{tabular}{cr@{ $\rightarrow$ }l}
+        \toprule
+        \tabhead \# & \multicolumn{2}{c}{\tabhead Rule}\\
+        \midrule
+        1 & $\mNT{Reg}$  & \irCode{const}\\
+        2 & $\mNT{SReg}$ & \irCode{const}\\
+        3 & $\mNT{Reg}$  & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$\\
+        4 & $\mNT{SReg}$ & $\opAdd \; \mNT{SReg} \; \mNT{SReg}$\\
+        \bottomrule
+      \end{tabular}%
+      \newcolumntype{L}{@{}l@{}}%
+      \begin{tabular}{@{\hspace{3em}}cr@{ $\rightarrow$ }l>{\footnotesize}c}
+        \toprule
+        \tabhead \#
+          & \multicolumn{3}{c}{\tabhead Rule}\\
+        \midrule
+        5 & $\mNT{SReg}$
+          & \multicolumn{2}{L}{$\opMul \; \mNT{Reg} \; \mNT{Reg}$}\\
+        6 & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet \; \mNT{Reg}$}\\
+        7 & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
+        8 & $\mNT{SReg}$ & $\mNT{Reg}$  & $(r \gg 1)$\\
+        \bottomrule
+      \end{tabular}%
+    }
+
+  \caption[An example illustrating the need for global instruction selection]%
+          {%
+            An example illustrating the need for global instruction selection%
+          }
+  \labelFigure{block-dags-limit-example}
+\end{figure}
+
+This also applies to other situations where decisions made for one \gls{block}
+can inhibit subsequent decisions for other \glspl{block}, such as enforcing
+specific storage locations or value modes.
+%
+For example, \refFigure{block-dags-limit-example} shows a \gls{function} that
+multiplies the elements of two arrays and sums the results.
+%
+Assume that the arrays consist of fixed-point values.
+%
+For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
+of two fixed-point values return a value that is shifted one bit to the left.
+%
+For such \glspl{target machine}, both the value~\irCode{0} and the accumulator
+variable~\irVar{s} should be in shifted mode throughout the entire
+\gls{function}, and only restored into normal mode upon return.
+%
+Otherwise the accumulated value would be needlessly shifted back and forth
+within the loop.
+%
+Achieving this, however, is difficult when limited to covering only a single
+\gls{block DAG} at a time.
+%
+Assume for example that the function had no multiplication.
+%
+In that case, deciding to load value~\irCode{0} in shifted mode would instead
+lower code quality as the value would needlessly have to be shifted back before
+returning, which takes an extra \gls{instruction}.
+
+Lastly, these approaches are restricted to tree-shaped \glspl{pattern},
+meaning they only support \glspl{instruction} that produce a single value.
 %
 Many \glspl{instruction set}, however, contain \glspl{instruction} that produce
 multiple values, such as memory \glspl{instruction} that load a value from
 memory while simultaneously incrementing the address.
 %
-Modeling such \glspl{instruction} require \gls{DAG}-shaped \glspl{pattern}, but
-this also turns the \gls{pattern matching} problem into an NP-complete
-problem~\cite{Cook:1971}.
-
-Moreover, in some cases the decisions made for one \gls{block} can inhibit
-subsequent decisions for other \glspl{block}.
-%
-For example, ...
-
-\todo{write}
+Modeling such \glspl{instruction} require \gls{DAG}-shaped \glspl{pattern},
+which violates underlying assumptions made by the aforementioned approaches.
 
 
 
 \subsection{Using Function Graphs}
 
 \todo{write}
+
+\todo{DAG- and graph-shaped patterns turns the \gls{pattern matching} problem
+  into an NP-complete problem~\cite{Cook:1971}}
+
 
 
 
