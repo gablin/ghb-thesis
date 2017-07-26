@@ -50,6 +50,10 @@ to single, tree-shaped expressions, \glspl!{block DAG} if they capture many
 expressions in a \gls{block} as a \gls{DAG}, and \glspl{data-flow graph} if they
 capture the data flow of entire functions.
 %
+An \gls{instruction selector} is \gls!{local.is} if it selects
+\glspl{instruction} for \glspl{expression tree} or \glspl{block DAG}, and
+\gls!{global.is} if it does so for \glspl{function graph}.
+%
 Corresponding \glspl{data-flow graph}, called \glspl!{pattern graph} (or simply
 \glspl!{pattern}), are also built to represent the \gls{instruction} provided by
 the \gls{target machine}.
