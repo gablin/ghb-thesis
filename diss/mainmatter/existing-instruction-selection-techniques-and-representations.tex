@@ -61,6 +61,31 @@ the \gls{target machine}.
 The set of \glspl{pattern graph} for a particular \gls{target machine}
 constitute a \gls!{pattern set}.
 
+The first subproblem can be reduced to finding all instances where a
+\gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to~$G$,
+where $G$ denotes either a \gls{block DAG} or a \gls{function graph}.
+%
+Each such instance is called a \gls!{match}, and the set of all \glspl{match}
+constitute a \gls!{match set}, which is denoted by~$M$.
+%
+Hence this subproblem is referred to as the \gls!{pattern matching}[ problem].
+%
+\Gls{pattern matching} can be done in linear time if both $G$ and all
+\glspl{pattern} are tree-shaped, otherwise it is an NP-complete
+problem~\cite{GareyJohnson:1979,HoffmannODonnell:1982}.
+%
+Having found $M$, the second subproblem -- which is referred to as the
+\gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
+\glspl{match} that \gls{cover}[s]~$G$.
+%
+A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
+\gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
+from~$C$.
+%
+Such a subset is called a \gls!{cover}.
+%
+See \refFigure{p-match-sel-example} for an example.
+
 \begin{filecontents*}{p-match-sel-example.c}
 x = A[i + 1];
 \end{filecontents*}
@@ -112,31 +137,6 @@ x = A[i + 1];
           }
   \labelFigure{p-match-sel-example}
 \end{figure}
-
-The first subproblem can be reduced to finding all instances where a
-\gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to~$G$,
-where $G$ denotes either a \gls{block DAG} or a \gls{function graph}.
-%
-Each such instance is called a \gls!{match}, and the set of all \glspl{match}
-constitute a \gls!{match set}, which is denoted by~$M$.
-%
-Hence this subproblem is referred to as the \gls!{pattern matching}[ problem].
-%
-\Gls{pattern matching} can be done in linear time if both $G$ and all
-\glspl{pattern} are tree-shaped, otherwise it is an NP-complete
-problem~\cite{GareyJohnson:1979,HoffmannODonnell:1982}.
-%
-Having found $M$, the second subproblem -- which is referred to as the
-\gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
-\glspl{match} that \gls{cover}[s]~$G$.
-%
-A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
-\gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
-from~$C$.
-%
-Such a subset is called a \gls!{cover}.
-%
-See \refFigure{p-match-sel-example} for an example.
 
 For a given \gls{program} and \gls{target machine}, there often exists many
 valid combinations of \glspl{instruction} -- in terms of $G$ and $M$, this means
