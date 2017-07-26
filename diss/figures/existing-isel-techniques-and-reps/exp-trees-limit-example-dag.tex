@@ -32,8 +32,10 @@
   \node [op node] (add) {\opAdd};
   \node [data node, position=-135 degrees from add] (a) {\opVar{a}};
   \node [data node, position=- 45 degrees from add] (b) {\opVar{b}};
-  \node [op node, position=135 degrees from add] (mul) {\opMul};
-  \node [data node, position=45 degrees from add] (load) {\opLoad};
+  \node [op node, node distance=1.2\opNodeDist, position=135 degrees from add]
+        (mul) {\opMul};
+  \node [data node, node distance=1.2\opNodeDist, position=45 degrees from add]
+        (load) {\opLoad};
   \node [data node, position=-135 degrees from mul] (c) {\opVar{c}};
   \begin{scope}[data flow]
     \draw (a) -- (add);

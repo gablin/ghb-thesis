@@ -21,6 +21,8 @@
 \colorlet{shade2}{black!40!white}
 \colorlet{shade3}{black!60!white}
 \colorlet{shade4}{black!80!white}
+\newlength{\opNodeDist}
+\setlength{\opNodeDist}{16pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -37,7 +39,7 @@
     minimum size=14pt,
     inner sep=0,
     outer sep=0,
-    node distance=16pt,
+    node distance=\opNodeDist,
     line width=0.6pt,
   },
   data flow/.style={%
