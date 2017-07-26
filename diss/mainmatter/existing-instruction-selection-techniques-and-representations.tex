@@ -125,10 +125,10 @@ x = A[i + 1];
 
   \caption[An example of the pattern matching and selection problem]%
           {%
-            An example demonstrating the pattern matching and selection
-            problem for a program that loads a value from integer array
-            \irVar{A} at offset \irVar{i} $+$ \irVar{1} (it is assumed that
-            \irVar{A} is stored in memory and that an integer is 4~bytes).
+            An example demonstrating the pattern matching and selection problem
+            for a program that loads a value from integer array \irVar{A} at
+            offset \mbox{\irVar{i} $+$ \irVar{1}} (it is assumed that \irVar{A}
+            is stored in memory and that an integer is 4~bytes).
             %
             Valid covers are \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
             \mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}.
@@ -292,10 +292,10 @@ Similarly, the \gls{expression tree} shown in
     \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
       & \multicolumn{1}{c}{\tabhead Action}\\
     \midrule
-    1 & $\mNT{Reg}[1]$ & $\opLoad + \mNT{Reg}[2] \; \irCode{const}$
+    1 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \mNT{Reg}[2] \; \irCode{const}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
-    2 & $\mNT{Reg}[1]$ & $\opLoad + \irCode{const} \; \mNT{Reg}[2]$
+    2 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \irCode{const} \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
     3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
@@ -362,14 +362,14 @@ of the following forms:
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
                                $A.C.\text{const}$(\$$A.\mNT{Reg}$)}\\
-    4 & $\mNT{A}$ & $+ \; \mNT{Reg} \; \mNT{C}$
+    4 & $\mNT{A}$ & $\opAdd \; \mNT{Reg} \; \mNT{C}$
       & 0
       & \\
     2 & $\mNT{Reg}$ & $\opLoad \; \mNT{B}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
                                $B.C.\text{const}$(\$$B.\mNT{Reg}$)}\\
-    5 & $\mNT{B}$ & $+ \; \mNT{C} \; \mNT{Reg}$
+    5 & $\mNT{B}$ & $\opAdd \; \mNT{C} \; \mNT{Reg}$
       & 0
       & \\
     6 & $\mNT{C}$ & $\irCode{const}$
