@@ -356,15 +356,18 @@ of the following forms:
     1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
-                               $A.\text{const}$(\$$A.\mNT{Reg}$)}\\
-    4 & $\mNT{A}$ & $+ \; \mNT{Reg} \; \irCode{const}$
+                               $A.C.\text{const}$(\$$A.\mNT{Reg}$)}\\
+    4 & $\mNT{A}$ & $+ \; \mNT{Reg} \; \mNT{C}$
       & 0
       & \\
     2 & $\mNT{Reg}$ & $\opLoad \; \mNT{B}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
-                               $B.\text{const}$(\$$B.\mNT{Reg}$)}\\
-    5 & $\mNT{B}$ & $+ \; \irCode{const} \; \mNT{Reg}$
+                               $B.C.\text{const}$(\$$B.\mNT{Reg}$)}\\
+    5 & $\mNT{B}$ & $+ \; \mNT{C} \; \mNT{Reg}$
+      & 0
+      & \\
+    6 & $\mNT{C}$ & $\irCode{const}$
       & 0
       & \\
     3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
@@ -377,8 +380,9 @@ of the following forms:
           {%
             The grammar from \refTable{grammar-rules-example} in normal form.
             %
-            The nonterminals~$\mNT{A}$ and~$\mNT{B}$ are introduced in order to
-            connect rules~1 with~4 and~2 with~5, respectively%
+            Nonterminals~$\mNT{A}$,~$\mNT{B}$ and~$\mNT{C}$ and
+            rules~\mbox{4--6} are introduced in order to transform rules~1 and~2
+            into base rules%
           }
   \labelTable{normal-form-grammar-example}
 \end{table}
