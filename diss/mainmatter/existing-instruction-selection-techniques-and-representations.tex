@@ -863,7 +863,7 @@ int f(int* A, int* B, int N) {
 
   \subcaptionbox%
     {%
-      Grammar.
+      Rules.
       %
       For brevity, the actions are not included.
       %
@@ -875,27 +875,20 @@ int f(int* A, int* B, int N) {
     [\textwidth]%
     {%
       \small%
-      \begin{tabular}{cr@{ $\rightarrow$ }l}
-        \toprule
-        \tabhead \# & \multicolumn{2}{c}{\tabhead Rule}\\
-        \midrule
-        1 & $\mNT{Reg}$  & \irCode{const}\\
-        2 & $\mNT{SReg}$ & \irCode{const}\\
-        3 & $\mNT{Reg}$  & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$\\
-        4 & $\mNT{SReg}$ & $\opAdd \; \mNT{SReg} \; \mNT{SReg}$\\
-        \bottomrule
-      \end{tabular}%
       \newcolumntype{L}{@{}l@{}}%
-      \begin{tabular}{@{\hspace{3em}}cr@{ $\rightarrow$ }l>{\footnotesize}c}
+      \begin{tabular}{r@{ $\rightarrow$ }l@{\hspace{3em}}r@{ $\rightarrow$ }lc}
         \toprule
-        \tabhead \#
-          & \multicolumn{3}{c}{\tabhead Rule}\\
+        \multicolumn{5}{c}{\tabhead Rules}\\
         \midrule
-        5 & $\mNT{SReg}$
+        $\mNT{Reg}$ & \irCode{const}
+          & $\mNT{SReg}$
           & \multicolumn{2}{L}{$\opMul \; \mNT{Reg} \; \mNT{Reg}$}\\
-        6 & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet \; \mNT{Reg}$}\\
-        7 & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
-        8 & $\mNT{SReg}$ & $\mNT{Reg}$  & $(r \gg 1)$\\
+        $\mNT{SReg}$ & \irCode{const}
+          & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet \; \mNT{Reg}$}\\
+        $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$
+          & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
+        $\mNT{SReg}$ & $\opAdd \; \mNT{SReg} \; \mNT{SReg}$
+          & $\mNT{SReg}$ & $\mNT{Reg}$  & $(r \gg 1)$\\
         \bottomrule
       \end{tabular}%
     }
