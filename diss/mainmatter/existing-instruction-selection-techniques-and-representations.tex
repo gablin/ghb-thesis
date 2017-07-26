@@ -86,7 +86,7 @@ Such a subset is called a \gls!{cover}, and an example is shown in
 \refFigure{p-match-sel-example}.
 
 \begin{filecontents*}{p-match-sel-example.c}
-x = A[i + 1];
+A[i + 1];
 \end{filecontents*}
 
 \begin{figure}
@@ -636,7 +636,7 @@ This process continues until the queue is empty, whereupon all necessary
 \begin{filecontents*}{exp-trees-limit-example.c}
 t = a + b;
 x = c * t;
-y = *t;
+y = *((int*) t);
 \end{filecontents*}
 
 \begin{figure}
@@ -687,7 +687,7 @@ y = *t;
                 }%
   \hfill\hfill%
   \subcaptionbox{%
-                   Corresponding block DAGs%
+                   Corresponding block DAG%
                    \labelFigure{exp-trees-limit-example-dag}%
                 }%
                 [45mm]%
@@ -701,7 +701,10 @@ y = *t;
   \caption[An example illustrating the limitation of expression trees]%
           {%
             An example illustrating that using block DAGs results in
-            better code compared to using expression trees%
+            better code compared to using expression trees.
+            %
+            For simplicity, the nodes representing assignment have been removed
+            from the expression trees and block DAG%
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
