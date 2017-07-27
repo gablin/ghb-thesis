@@ -23,6 +23,8 @@
 \colorlet{shade4}{black!80!white}
 \newlength{\opNodeDist}
 \setlength{\opNodeDist}{16pt}
+\newlength{\opNodeSize}
+\setlength{\opNodeSize}{14pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -37,6 +39,16 @@
     fill=shade0,
     circle,
     minimum size=14pt,
+    inner sep=0,
+    outer sep=0,
+    node distance=\opNodeDist,
+    line width=0.6pt,
+  },
+  data node/.style={%
+    rectangle,
+    draw,
+    fill=shade0,
+    minimum size=0.8\opNodeSize,
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
