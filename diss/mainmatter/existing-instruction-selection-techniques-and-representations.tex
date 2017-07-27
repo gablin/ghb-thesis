@@ -878,7 +878,7 @@ int f(int* A, int* B, int N) {
       %
       For brevity, the actions are not included.
       %
-      $\mNT{Null}$ is a dummy nonterminal since \opRet{} does not return
+      $\mNT{Null}$ is a dummy nonterminal since \opRet*{} does not return
       anything, yet all productions must have a result.
       %
       All rules are assumed to have equal cost%
@@ -895,7 +895,7 @@ int f(int* A, int* B, int N) {
           & $\mNT{SReg}$
           & \multicolumn{2}{L}{$\opMul \; \mNT{Reg} \; \mNT{Reg}$}\\
         $\mNT{SReg}$ & \irCode{const}
-          & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet \; \mNT{Reg}$}\\
+          & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet* \; \mNT{Reg}$}\\
         $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$
           & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
         $\mNT{SReg}$ & $\opAdd \; \mNT{SReg} \; \mNT{SReg}$

@@ -502,7 +502,13 @@
 \newcommand{\opBr}{\irCode{br}}
 \newcommand{\opCondBr}{\irCode{c.br}}
 \newcommand{\opInBr}{\irCode{in.br}}
-\newcommand{\opRet}{\irCode{ret}}
+\NewDocumentCommand{\opRet}{s}{%
+  \IfBooleanTF{#1}{%
+    \irCode{ret}%
+  }{%
+    \irCode{r{\kern-.5pt}e{\kern-.7pt}t}%
+  }%
+}
 \newcommand{\opCopy}{\irCode{\noWidth{cp}}}
 \newcommand{\opPhi}{\irCode{\noWidth{$\mPhi$}[.5pt]}}
 \newcommand{\opMul}{\irCode{\noWidth{$\times$}}}
