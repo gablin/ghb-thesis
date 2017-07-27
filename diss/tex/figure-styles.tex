@@ -25,6 +25,8 @@
 \setlength{\opNodeDist}{16pt}
 \newlength{\opNodeSize}
 \setlength{\opNodeSize}{14pt}
+\newlength{\opDataFlowLineWidth}
+\setlength{\opDataFlowLineWidth}{.6pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -42,7 +44,7 @@
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
-    line width=0.6pt,
+    line width=\opDataFlowLineWidth,
   },
   data node/.style={%
     rectangle,
@@ -52,15 +54,15 @@
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
-    line width=0.6pt,
+    line width=\opDataFlowLineWidth,
   },
   data flow/.style={%
     ->,
-    line width=0.6pt,
+    line width=\opDataFlowLineWidth,
   },
   match line/.style={%
     dash pattern=on 2.5pt off 3pt,
-    line width=0.6pt,
+    line width=\opDataFlowLineWidth,
   },
   match node/.style={%
     match line,
