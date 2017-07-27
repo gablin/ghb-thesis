@@ -59,8 +59,8 @@ Another code generation task of interest is \gls!{block ordering}, where the
 
 This dissertation focuses primarily on the first \gls{code generation} problem
 by introducing a combinatorial optimization model for \gls{instruction
-  selection}, which is simpler and more flexible compared to traditional
-approaches, and captures crucial features -- like \gls{data copying} -- which
+  selection}, which is simpler and more flexible compared to \glspl{traditional
+  approach}, and captures crucial features -- like \gls{data copying} -- which
 are ignored by existing combinatorial optimization models.
 %
 The model select \glspl{instruction} globally for entire
@@ -84,7 +84,7 @@ It is also shown in this disseration that \gls{block ordering} impacts
 \gls{instruction selection} (and vice versa).
 %
 Consequently, the model also integrates \gls{block ordering}, which results in
-better code compared to traditional approaches.
+better code compared to \glspl{traditional approach}.
 
 Lastly, the dissertation touches upon the other two \gls{code generation}
 problems by proposing ideas on how to extend the model to integrate
@@ -175,8 +175,8 @@ and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
 \gls{instruction selector} that is capable of processing multiple \glspl{basic
   block} simultaneously.
 %
-In comparison, traditional \gls{instruction selection} techniques only consider
-one \gls{basic block} at a time.
+In comparison, \glsshort{traditional approach} \gls{instruction selection}
+techniques only consider one \gls{basic block} at a time.
 %
 Morever, most approaches represent the \glspl{instruction} as \glspl{graph}.
 %
@@ -498,7 +498,8 @@ and \gls{constraint programming}:
       model};
   \item \labelContribution{experiments}
     thorough experiments demonstrating that the approach scales to medium-sized
-    \glspl{program} and yields better code than traditional approaches; and
+    \glspl{program} and yields better code than \glspl{traditional approach};
+    and
   \item \labelContribution{integration}
     an initial design showing how the \gls{constraint model} can be extended to
     integrate other \gls{code generation} tasks, such as \gls{instruction
