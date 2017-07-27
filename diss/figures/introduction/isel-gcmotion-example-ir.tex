@@ -14,16 +14,11 @@
     every node/.style={
       draw,
       fill=white,
-      very thick,
+      line width=\opControlFlowLineWidth,
       minimum size=0,
       inner xsep=4pt,
       inner ysep=2.5pt,
       node distance=\nodeDist,
-    },
-    flow/.style={
-      ->,
-      very thick,
-      shorten <=-2pt,
     },
     tf label/.style={
       draw=none,
@@ -87,7 +82,7 @@
         };
 
   \begin{pgfonlayer}{background}
-    \begin{scope}[flow]
+    \begin{scope}[control flow]
       \draw (b1) -- (b2);
       \draw (b2) -- node [tf label] {T} (b3);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);

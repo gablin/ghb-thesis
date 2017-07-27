@@ -14,16 +14,11 @@
     every node/.style={
       draw,
       fill=white,
-      very thick,
+      line width=\opControlFlowLineWidth,
       minimum size=0,
       inner xsep=4pt,
       inner ysep=2.5pt,
       node distance=\nodeDist,
-    },
-    flow/.style={
-      ->,
-      very thick,
-      shorten <=-2pt,
     },
     tf label/.style={
       draw=none,
@@ -57,7 +52,7 @@
         };
 
   \begin{pgfonlayer}{background}
-    \begin{scope}[flow]
+    \begin{scope}[control flow]
       \draw (b2 |- b1.south) -- node [tf label, pos=0.4] {F} (b2);
       \draw [rounded corners=8pt]
             ($(b1.south west) !.75! (b1.south)$)

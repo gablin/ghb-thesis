@@ -27,6 +27,8 @@
 \setlength{\opNodeSize}{14pt}
 \newlength{\opDataFlowLineWidth}
 \setlength{\opDataFlowLineWidth}{.6pt}
+\newlength{\opControlFlowLineWidth}
+\setlength{\opControlFlowLineWidth}{1.2pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -59,6 +61,11 @@
   data flow/.style={%
     ->,
     line width=\opDataFlowLineWidth,
+  },
+  control flow/.style={%
+    ->,
+    line width=\opControlFlowLineWidth,
+    shorten <=-\opControlFlowLineWidth,
   },
   match line/.style={%
     dash pattern=on 2.5pt off 3pt,
