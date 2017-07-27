@@ -48,6 +48,11 @@
     node distance=\opNodeDist,
     line width=\opDataFlowLineWidth,
   },
+  control node/.style={%
+    op node,
+    diamond,
+    line width=\opControlFlowLineWidth,
+  },
   data node/.style={%
     rectangle,
     draw,
@@ -57,6 +62,11 @@
     outer sep=0,
     node distance=\opNodeDist,
     line width=\opDataFlowLineWidth,
+  },
+  block node/.style={%
+    data node,
+    inner xsep=4pt,
+    line width=\opControlFlowLineWidth,
   },
   data flow/.style={%
     ->,

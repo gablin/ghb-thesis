@@ -953,8 +953,77 @@ which violates underlying assumptions made by the aforementioned approaches.
 
 \subsection{Approaches Using Function Graphs}
 
+To the best of my knowledge, only \textcite{PalecznyEtAl:2001} have attempted to
+apply \glsshort{traditional approach} methods on \glspl{function graph}.
+%
+The approach represents \glspl{function} using a graph-based \gls{IR}, which
+will therefore be discussed first.
+
+\paragraph{Simple Graph-based IR}
+
+\begin{filecontents*}{fact.c}
+int fact(int n) {
+  int f = 1;
+  while (n > 1) {
+    f = f * n;
+    n--;
+  }
+  return f;
+}
+\end{filecontents*}
+
+\begin{filecontents*}{fact-ssa.c}
+int fact(int $\irVar{n}[1]$) {
+  entry:
+    int $\irVar{f}[1]$ = 1;
+  head:
+    int $\irVar{f}[2]$ = $\mPhi$($\irVar{f}[1]$:entry, $\irVar{f}[3]$:body);
+    int $\irVar{n}[2]$ = $\mPhi$($\irVar{n}[1]$:entry, $\irVar{n}[3]$:body);
+    if ($\irVar{n}[2]$ <= 1) goto end;
+  body:
+    int $\irVar{f}[3]$ = $\irVar{f}[2]$ * $\irVar{n}[2]$;
+    int $\irVar{n}[3]$ = $\irVar{n}[2]$ - 1;
+    goto head;
+  end:
+    return $\irVar{f}[2]$;
+}
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{C code\labelFigure{simple-graph-ir-example-c}}%
+                {\lstinputlisting[language=c]{fact.c}}%
+  \hfill%
+  \subcaptionbox{Code in SSA form\labelFigure{simple-graph-ir-example-ssa-c}}%
+                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+  \hfill%
+  \mbox{}
+
+  \vspace*{\betweensubfigures}
+
+  \subcaptionbox{%
+                  TODO%
+                  \labelFigure{simple-graph-ir-example-graph}%
+                }%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/simple-graph-ir-example-graph}%
+                }
+
+  \caption[TODO]%
+          {%
+            TODO%
+          }
+  \labelFigure{simple-graph-ir-example}
+\end{figure}
+
 \todo{write}
 
+
+
+\paragraph{Pattern Selection on a Sea of Nodes}
 
 \todo{write}
 
