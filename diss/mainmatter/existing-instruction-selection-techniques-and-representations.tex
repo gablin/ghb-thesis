@@ -965,12 +965,16 @@ will therefore be discussed first.
 
 \begin{filecontents*}{fact.c}
 int fact(int n) {
-  int f = 1;
-  while (n > 1) {
+  entry:
+    int f = 1;
+  head:
+    if (n <= 1) goto end;
+  body:
     f = f * n;
-    n--;
-  }
-  return f;
+    n = n - 1;
+    goto head;
+  end:
+    return f;
 }
 \end{filecontents*}
 
@@ -995,7 +999,11 @@ int fact(int $\irVar{n}[1]$) {
   \centering%
   \mbox{}%
   \hfill%
-  \subcaptionbox{C code\labelFigure{simple-graph-ir-example-c}}%
+  \subcaptionbox{%
+                  C implementation of factorial%
+                  \labelFigure{simple-graph-ir-example-c}%
+                }%
+                [50mm]%
                 {\lstinputlisting[language=c]{fact.c}}%
   \hfill%
   \subcaptionbox{Code in SSA form\labelFigure{simple-graph-ir-example-ssa-c}}%
