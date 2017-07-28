@@ -1042,18 +1042,42 @@ int fact(int $\irVar{n}[1]$) {
 \textcite{ClickPaleczny:1995} introduced a simple, graph-based IR for
 representing entire \glspl{function}.
 %
-The IR assumes the program to be in \gls!{SSA} form, in which a \gls{program}
-variable is defined exactly once.
+The \gls{IR} assumes the \gls{function} to be in \gls!{SSA} form, in which a
+\gls{variable} is defined exactly once.
 %
 For example, the \gls{function} shown in \refFigure{simple-graph-ir-example-c}
-is not in \gls{SSA} form as variables~\irCode{f} and~\irCode{n} are redefined
-within the loop.
+is not in \gls{SSA} form as \glspl{variable}~\irCode{f} and~\irCode{n} are
+redefined within the loop.
 %
-By introducing new variables and connecting these using \glspl!{phi-function}
-where the value depends on control flow, the \gls{function} can be rewritten
-into \gls{SSA} form, as shown in \refFigure{simple-graph-ir-example-ssa-c}.
+By introducing new \glspl{variable} and connecting these using
+\glspl!{phi-function} where the value depends on control flow, the
+\gls{function} can be rewritten into \gls{SSA} form, as shown in
+\refFigure{simple-graph-ir-example-ssa-c}.
+%
+The corresponding \gls{function graph} is shown in
+\refFigure{simple-graph-ir-example-graph}.
 
-\todo{finish text}
+Like in \glspl{data-flow graph}, each \gls{operation} in the SSA-based
+\gls{function} is represented as a \gls{node}.
+%
+In addition, \glspl{variable} are also represented as \glspl{node}, thereby
+explicitly representing the data produced and used by the \glspl{operation}.
+%
+These nodes are then connected using data-flow edges, ignoring the fact that the
+\glspl{operation} and \glspl{variable} may belong to different \glspl{block}.
+%
+The control flow is captured using \glspl{node} to represent the \glspl{block}
+in the \gls{function} and \glspl{edge} to represent jumps between \glspl{block}.
+%
+Conditional jumps flow through special \emph{if}~\glspl{node}, thereby allowing
+dependencies between data and control flow to be captured.
+
+Since \glspl{operation} are not pre-assigned to specific \glspl{block}, the same
+\gls{IR} can be used for performing \gls{global code motion}.
+%
+If an \gls{operation} should not be allowed to be moved to another \gls{block}
+-- like with \glspl{phi-function} and returns -- then an optional \gls{edge} can
+be used to connect the \gls{operation} with its original \gls{block} placement.
 
 
 
