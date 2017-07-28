@@ -501,7 +501,7 @@ particular \gls{nonterminal}.
         $c$ \Assign $c$ $+$ $C[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
-        \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+        \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th nonterminal in pattern of $r$\;
           $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
@@ -566,7 +566,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
       $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $C$}\;
     }{%
-      \For{$i \leftarrow 1$ \KwTo $|n|$}{%
+      \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
         \Call{Select}{expression tree rooted at $m$, $s$}\;
@@ -632,6 +632,12 @@ leading to a finite number of \glspl{state}.
 The idea for computing the \glspl{state} -- which will only be described briefly
 -- works as follows.
 %
+For each \gls{terminal} representing a $k$-argument \gls{operation}, an
+\mbox{$k$-dimensional} matrix is maintained.
+%
+This is called the \gls{terminal}'s \gls!{state table}, which indicates the
+state to assign such \glspl{node} given the labels of its children.
+%
 First the states for all leaf \glspl{node} are built, considering only
 \gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
 in the \gls{production}.
@@ -646,10 +652,40 @@ Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
 existing \glspl{state}.
 %
 If any combination gives rise to a new set of costs and \gls{rule} decisions,
-then a new \gls{state} is created and pushed onto the queue.
+then a new \gls{state} is created and pushed onto the queue after having updated
+the \glspl{state table}.
 %
 This process continues until the queue is empty, whereupon all necessary
 \glspl{state} have been built.
+
+\begin{algorithm}[t]
+  \DeclFunction{Label}%
+               {expression tree $T$, list $L$ of state tables}%
+  {%
+    $n$ \Assign root node of $T$\;
+    $k$ \Assign number of children for $n$\;
+    \For{$i \leftarrow 1$ \KwTo $k$}{%
+      $m_i$ \Assign $i$th child of $n$\;
+      \Call{Label}{expression tree rooted at $m_i$, $L$}\;
+    }
+    $S$ \Assign $L[\text{terminal corresponding to $n$}]$\;
+    $n$.label \Assign $S[m_1.\text{label}, \ldots, m_k.\text{label}]$\;
+  }
+
+  \caption[%
+            Algorithm for labeling an expression tree for optimal pattern
+            selection%
+          ]{%
+            Labels an expression tree for optimal pattern selection%
+          }
+  \labelAlgorithm{opt-pat-sel-labeling-algorithm}
+\end{algorithm}
+
+The algorithm for labeling an \gls{expression tree} is shown in
+\refAlgorithm{opt-pat-sel-labeling-algorithm}.
+%
+To derive the \gls{rule} selection algorithm, one only needs to adapt line~2 in
+\refAlgorithm{aho-etal-select-algorithm}.
 
 
 
