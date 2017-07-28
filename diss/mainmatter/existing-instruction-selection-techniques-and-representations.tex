@@ -959,6 +959,8 @@ apply \glsshort{traditional approach} methods on \glspl{function graph}.
 The approach represents \glspl{function} using a graph-based \gls{IR}, which
 will therefore be discussed first.
 
+
+
 \paragraph{Simple Graph-based IR}
 
 \begin{filecontents*}{fact.c}
@@ -1004,7 +1006,7 @@ int fact(int $\irVar{n}[1]$) {
   \vspace*{\betweensubfigures}
 
   \subcaptionbox{%
-                  TODO%
+                  Function graph in simple, graph-based, IR form%
                   \labelFigure{simple-graph-ir-example-graph}%
                 }%
                 {%
@@ -1012,9 +1014,22 @@ int fact(int $\irVar{n}[1]$) {
                   \input{figures/existing-isel-techniques-and-reps/simple-graph-ir-example-graph}%
                 }
 
-  \caption[TODO]%
+  \caption[%
+            Example of a function graph represented using the simple graph-based
+            IR%
+          ]%
           {%
-            TODO%
+            Example of a function graph represented using the simple graph-based
+            IR.
+            %
+            Thin-lined nodes and solid edges denote data operations and data
+            flow.
+            %
+            Thick-lined nodes and solid edges denote control operations and
+            control flow.
+            %
+            Dashed edges denote optional edges, indicating to which block an
+            operation belongs%
           }
   \labelFigure{simple-graph-ir-example}
 \end{figure}
