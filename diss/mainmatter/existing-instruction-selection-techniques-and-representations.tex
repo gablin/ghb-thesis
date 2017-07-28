@@ -1030,7 +1030,21 @@ int fact(int $\irVar{n}[1]$) {
   \labelFigure{simple-graph-ir-example}
 \end{figure}
 
-\todo{write}
+\textcite{ClickPaleczny:1995} introduced a simple, graph-based IR for
+representing entire \glspl{function}.
+%
+The IR assumes the program to be in \gls!{SSA} form, in which a \gls{program}
+variable is defined exactly once.
+%
+For example, the \gls{function} shown in \refFigure{simple-graph-ir-example-c}
+is not in \gls{SSA} form as variables~\irCode{f} and~\irCode{n} are redefined
+within the loop.
+%
+By introducing new variables and connecting these using \glspl!{phi-function}
+where the value depends on control flow, the \gls{function} can be rewritten
+into \gls{SSA} form, as shown in \refFigure{simple-graph-ir-example-ssa-c}.
+
+\todo{finish text}
 
 
 
