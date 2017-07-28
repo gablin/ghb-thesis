@@ -22,7 +22,7 @@ In this dissertation, \glsshort!{traditional approach} approaches include the
 techniques discussed in most \gls{compiler} textbooks, and derivations thereof.
 %
 \Glsshort!{combinatorial approach} approaches include techniques that solve
-\gls{instruction selection} using a model that consists of variables,
+\gls{instruction selection} using a model that consists of \glspl{variable},
 constraints, and an objective function.
 %
 The model is then solved using either complete methods or greedy heuristics.
@@ -824,13 +824,14 @@ and \citeauthor{Ertl:1999} by introducing a design that first uses
 %
 Then, at each \glspl{node}~$n$ where several \glspl{pattern} in the optimal
 \gls{cover} overlap in the \gls{block DAG}, two costs are estimated: the cost
-incurred by allowing overlap, and the cost incurred by splitting the edges.
+incurred by allowing overlap, and the cost incurred by splitting the
+\glspl{edge}.
 %
 If the latter cost is less then $n$ is marked as \gls!{fixed.n}, meaning it can
 only be covered by \glspl{pattern} where $n$ is the root \gls{node}.
 %
-Once all such nodes have been processed, another pass is performed to recompute
-the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
+Once all such \glspl{node} have been processed, another pass is performed to
+recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 
 
@@ -924,7 +925,7 @@ For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
 of two fixed-point values return a value that is shifted one bit to the left.
 %
 For such \glspl{target machine}, both the value~\irCode{0} and the accumulator
-variable~\irVar{s} should be in shifted mode throughout the entire
+\gls{variable}~\irVar{s} should be in shifted mode throughout the entire
 \gls{function}, and only restored into normal mode upon return.
 %
 Otherwise the accumulated value would be needlessly shifted back and forth
