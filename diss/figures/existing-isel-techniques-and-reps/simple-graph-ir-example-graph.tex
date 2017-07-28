@@ -15,9 +15,16 @@
     control node/.append style={
       circle,
     },
-    aux flow/.style={
+    optional flow/.style={
       data flow,
       dash pattern=on 2.5pt off 2.5pt,
+    },
+    tf label/.style={
+      nothing,
+      inner xsep=4pt,
+      node distance=0,
+      font=\sffamily,
+      auto,
     },
   ]
 
@@ -138,8 +145,8 @@
     \begin{scope}[control flow]
       \draw (entry) -- (head);
       \draw (head) -- (if);
-      \draw (if) -- (body);
-      \draw (if) -- (end);
+      \draw (if) -- node [tf label, swap] {F} (body);
+      \draw (if) -- node [tf label] {T} (end);
       \draw [rounded corners=4pt]
             (body.west)
             --
@@ -152,7 +159,7 @@
 
   \draw [data flow] (b) -- (if);
 
-  \begin{scope}[aux flow]
+  \begin{scope}[optional flow]
     \draw (head) -- (phi-n);
 
     \coordinate (c-below-phi-n) at ($(phi-n.south) !.5! (n-2.north)$);
