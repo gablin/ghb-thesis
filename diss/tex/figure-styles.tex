@@ -66,8 +66,14 @@
     line width=\opDataFlowLineWidth,
   },
   block node/.style={%
-    data node,
+    rectangle,
+    draw,
+    fill=shade0,
+    minimum size=0.8\opNodeSize,
     inner xsep=4pt,
+    inner ysep=0,
+    outer sep=0,
+    node distance=\opNodeDist,
     line width=\opControlFlowLineWidth,
   },
   data flow/.style={%

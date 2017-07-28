@@ -9,13 +9,17 @@
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[%
-    region node/.style={
-      block node,
+    data node/.append style={
+      circle,
+      minimum size=\opNodeSize,
     },
     control node/.append style={
       circle,
     },
-    optional flow/.style={
+    region node/.style={
+      block node,
+    },
+    placement flow/.style={
       data flow,
       dash pattern=on 2.5pt off 2.5pt,
     },
@@ -31,57 +35,48 @@
   % Data flow
   \node [data node] (n-1) {\opVar{n}[1]};
   \node [op node, position=-45 degrees from n-1] (phi-n) {\opPhi};
-  \node [data node, below=of phi-n] (n-2) {\opVar{n}[2]};
-  \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of n-2]
-        (sub) {\opSub};
-  \node [data node, position=45 degrees from sub] (1-sub) {\opVar{1}};
-  \node [data node, below=of sub] (n-3) {\opVar{n}[3]};
-  \node [op node, position=-135 degrees from n-2] (leq) {\opLE};
+  \node [op node, position=-135 degrees from phi-n] (leq) {\opLE};
   \node [data node, position=135 degrees from leq] (leq-1) {\opVar{1}};
-  \node [data node, below=of leq] (b) {};
+  \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of phi-n]
+        (sub) {\opSub};
+  \node [data node, position=45 degrees from sub] (sub-1) {\opVar{1}};
 
-  \node [data node, right=5\opNodeDist of n-1] (1-phi-f) {\opVar{1}};
+  \node [data node, right=5.5\opNodeDist of n-1] (1-phi-f) {\opVar{1}};
   \node [op node, position=-45 degrees from 1-phi-f] (phi-f) {\opPhi};
-  \node [data node, below=of phi-f] (f-2) {\opVar{f}[2]};
-  \node [op node, position=-135 degrees from f-2] (mul) {\opMul};
-  \node [data node, below=of mul] (f-3) {\opVar{f}[3]};
-  \node [op node, position=-45 degrees from f-2] (ret) {\opRet};
-
+  \node [op node, position=-135 degrees from phi-f] (mul) {\opMul};
+  \node [op node, position=-45 degrees from phi-f] (ret) {\opRet};
 
   \begin{scope}[data flow]
     \draw (n-1) -- (phi-n);
-    \draw (phi-n) -- (n-2);
-    \draw (1-sub) -- (sub);
-    \draw (sub) -- (n-3);
-    \draw (n-2) -- (leq);
+    \draw (phi-n) -- (leq);
     \draw (leq-1) -- (leq);
-    \draw (leq) -- (b);
+    \draw (sub-1) -- (sub);
 
-    \path [name path=below-n-2]
-          (n-2)
+    \path [name path=below-phi-n]
+          (phi-n)
           --
           +(-90:2\opNodeDist);
     \path [name path=left-of-sub]
           (sub)
           --
           +(135:2\opNodeDist);
-    \draw [name intersections={of=below-n-2 and left-of-sub},
+    \draw [name intersections={of=below-phi-n and left-of-sub},
            rounded corners=3pt,
           ]
-          (n-2)
+          (phi-n)
           --
           (intersection-1)
           --
           (sub);
 
     \coordinate (2-phi-n) at ([shift=(45:\opNodeDist)] phi-n.45);
-    \draw [-, rounded corners=8pt]
-          (n-3)
+    \draw [-, rounded corners=6pt]
+          (sub.south)
           --
-          ++(-90:\opNodeDist)
-          [rounded corners=12pt]
+          ++(-90:.5\opNodeDist)
+          [rounded corners=14pt]
           -|
-          ($(1-sub) !.5! (mul)$)
+          ([xshift=.75\opNodeDist] sub-1.east)
           [rounded corners=16pt]
           |- coordinate [pos=1] (tmp)
           ([xshift=.5\opNodeDist] 2-phi-n);
@@ -93,36 +88,36 @@
           (phi-n);
 
     \draw (1-phi-f) -- (phi-f);
-    \draw (phi-f) -- (f-2);
-    \draw (f-2) -- (ret);
-    \draw (f-2) -- (mul);
-    \draw (mul) -- (f-3);
-    \coordinate (2-phi-f) at ([shift=(45:\opNodeDist)] phi-f.45);
+    \draw (phi-f) -- (mul);
+    \draw (phi-f) -- (ret);
 
     \path [name path=left-of-mul]
           (mul)
           --
           +(135:3\opNodeDist);
-    \path [name path=right-of-n-2]
-          (n-2)
+    \path [name path=right-of-phi-n]
+          (phi-n)
           --
           +(0:5\opNodeDist);
-    \draw [name intersections={of=left-of-mul and right-of-n-2},
+    \draw [name intersections={of=left-of-mul and right-of-phi-n},
            rounded corners=3pt,
           ]
-          (n-2)
+          (phi-n)
           --
           (intersection-1)
           --
           (mul);
+
+    \coordinate (2-phi-f) at ([shift=(45:\opNodeDist)] phi-f.45);
     \draw [-, rounded corners=8pt]
-          (f-3)
+          (mul.south)
           --
-          ++(-90:\opNodeDist)
+          ++(-90:.75\opNodeDist)
           [rounded corners=16pt]
-          -|
-          ([xshift=.75\opNodeDist] ret.east)
-          [rounded corners=10pt]
+          -| coordinate [pos=1] (tmp)
+          ([xshift=.75\opNodeDist] ret.east);
+    \draw [-, rounded corners=12pt]
+          (tmp)
           |- coordinate [pos=1] (tmp)
           ([xshift=.5\opNodeDist] 2-phi-f);
     \draw [rounded corners=4pt]
@@ -136,7 +131,8 @@
   % Control flow
   \node [region node, left=5\opNodeDist of phi-n] (head) {\irBlock{head}};
   \node [region node, above=of head] (entry) {\irBlock{entry}};
-  \node [control node] (if) at (head |- b)
+  \coordinate (below-leq) at ([yshift=-.75\opNodeDist] leq.south);
+  \node [control node] (if) at (head |- below-leq)
         {\irCode{\noWidth{i{\kern-.5pt}f}}};
   \node [region node, position=-135 degrees from if] (body) {\irBlock{body}};
   \node [region node, position=-45 degrees from if] (end) {\irBlock{end}};
@@ -157,49 +153,39 @@
     \end{scope}
   \end{pgfonlayer}
 
-  \draw [data flow] (b) -- (if);
+  \draw [data flow, rounded corners=6pt]
+        (leq) |- (if);
 
-  \begin{scope}[optional flow]
-    \draw (head) -- (phi-n);
-
-    \coordinate (c-below-phi-n) at ($(phi-n.south) !.5! (n-2.north)$);
-    \path [name path=line-below-phi-n]
-          ([xshift=-2\opNodeDist] c-below-phi-n)
+  \begin{scope}[placement flow]
+    \coordinate (c-right-of-head) at ($(head.east) !.5! (leq-1.west)$);
+    \path [name path=line-left-of-n-1]
+          (c-right-of-head)
           --
-          ([xshift=2\opNodeDist] c-below-phi-n);
-    \coordinate (c-left-of-phi-n) at ([xshift=-1.5\opNodeDist] phi-n.west);
-    \path [name path=line-left-of-phi-n]
-          (c-left-of-phi-n)
+          +(45:3.5\opNodeDist);
+    \coordinate (c-above-n-1) at ([yshift=.5\opNodeDist] n-1.north);
+    \path [name path=line-above-n-1]
+          ([xshift=-2\opNodeDist] c-above-n-1)
           --
-          +(-45:2\opNodeDist);
-    \coordinate (c-right-of-phi-n) at ([xshift=1.5\opNodeDist] phi-n.east);
-    \path [name path=line-right-of-phi-n]
-          ([shift=(45:-2\opNodeDist)] c-right-of-phi-n)
+          (c-above-n-1);
+    \draw [name intersections={of=line-left-of-n-1 and line-above-n-1},
+           rounded corners=6pt,
+          ]
+          (head)
           --
-          (c-right-of-phi-n);
-    \draw [name intersections={of=line-left-of-phi-n and line-below-phi-n,
-                               by=left-intersection},
-           name intersections={of=line-right-of-phi-n and line-below-phi-n,
-                               by=right-intersection},
-           rounded corners=10pt]
-          (c-left-of-phi-n)
+          (c-right-of-head)
           --
-          (left-intersection)
-          --
-          (right-intersection)
-          [rounded corners=6pt]
-          --
-          (c-right-of-phi-n)
-          --
+          (intersection-1)
+          [rounded corners=10pt]
+          -|
           (phi-f);
 
-    \draw [rounded corners=8pt]
-          (end.south)
+    \draw [rounded corners=10pt]
+          (c-above-n-1 -| phi-n)
           --
-          +(-90:.5\opNodeDist)
-          [rounded corners=16pt]
-          -|
-          (ret);
+          (phi-n);
+
+    \draw [rounded corners=16pt]
+          (end) -| (ret);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%
