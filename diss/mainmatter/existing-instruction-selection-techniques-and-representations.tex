@@ -962,7 +962,7 @@ will therefore be discussed first.
 
 
 
-\paragraph{Simple Graph-based IR}
+\paragraph{Sea-of-nodes IR}
 
 \begin{filecontents*}{fact.c}
 int fact(int n) {
@@ -1039,8 +1039,8 @@ int fact(int $\irVar{n}[1]$) {
   \labelFigure{simple-graph-ir-example}
 \end{figure}
 
-\textcite{ClickPaleczny:1995} introduced a simple, graph-based IR for
-representing entire \glspl{function}.
+\textcite{ClickPaleczny:1995} introduced a graph-based IR for representing
+entire \glspl{function}, colloquially referred to as a \gls!{sea-of-nodes IR}.
 %
 The \gls{IR} assumes the \gls{function} to be in \gls!{SSA} form, in which a
 \gls{variable} is defined exactly once.
