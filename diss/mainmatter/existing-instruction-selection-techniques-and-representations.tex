@@ -1266,7 +1266,26 @@ An example is shown in \refFigure{mis-example}.
 
 \paragraph{Applications}
 
-\todo{discuss \cite{ScharwaechterEtAl:2007}}
+\textcite{ScharwaechterEtAl:2007} appears to have pioneered the modeling of
+\gls{instruction selection} as a \gls{MWIS} problem, although the main
+contribution of their paper is the extension of \glspl{machine grammar} to
+handle \glspl{instruction} that produce multiple results.
+%
+The idea is basically to let \gls!{complex.r}[ \glspl{rule}] consist of multiple
+\glspl{production}, called \gls!{split.p}[ \glspl{pattern}] -- one for each
+result -- which are matched individually.
+%
+After \gls{pattern matching}, the \glspl{match} derived from \gls{split.p}
+\glspl{pattern} are either combined -- indicating use of the \gls{complex.r}
+\gls{rule} -- or kept -- indicating use of \glspl{rule} that only produce a
+single result.
+%
+This is done according to a heuristic that estimates the cost saved by using the
+\gls{complex.r} \gls{rule} versus the cost incurred by having to duplicate
+\glspl{node} in common subexpressions.
+%
+Once these decisions have been taken, the \gls{interference graph} is built and
+the \gls{MWIS} found using a greedy heuristic~\cite{SakaiEtAl:2003}.
 
 \todo{discuss \cite{AhnEtAl:2009}}
 
