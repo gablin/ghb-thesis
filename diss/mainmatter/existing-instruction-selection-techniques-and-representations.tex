@@ -795,7 +795,7 @@ are not available.
 The cost of improving code quality by moving from \glspl{expression tree} to
 \glspl{block DAG} is that \gls{optimal.ps} \gls{pattern selection} becomes an
 NP-complete problem~\cite{KoesGoldstein:2008,Proebsting:1995:Proof} (the proof
-is also available in \refSection{optimal-p-sel-np-completeness-proof}).
+is also available in \refAppendix{dag-covering}).
 %
 Consequently, traditional approaches sacrifice optimality in favor of retaining
 linear-time complexity.
@@ -1182,7 +1182,14 @@ mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair*{n}{o} \in
 In this context, $\mGP$ denotes the \gls{pattern}, $\mGF$ denotes the \gls{block
   DAG} or \gls{function graph}, and $m$ denotes a \gls{match}.
 
-\todo{give example of algorithms}
+As \gls{subgraph isomorphism} appears in many other fields, much research has
+been devoted to this problem (see for example \cite{Ullmann:1976,
+  CordellaEtAl:2001, GuoEtAl:2003, KrissinelHenrick:2004, SorlinSolnon:2004,
+  Gallagher:2006, FanEtAl:2010, FanEtAl:2011, HinoEtAl:2012, McCreesh:2017}).
+%
+Due to its simplicity, most approaches apply the algorithm given in
+\cite{CordellaEtAl:2001}, of which a detailed description is given in
+\refChapter{pattern-matching}.
 
 
 
