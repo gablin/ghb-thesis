@@ -1163,10 +1163,26 @@ algorithms when \gls{pattern matching}.
 
 \paragraph{Pattern Matching as a Subgraph Isomorphism Problem}
 
-\todo{write}
+\def\mGP{G_{\textsc{p}}}
+\def\mGF{G_{\textsc{f}}}
+\def\mNP{N_{\textsc{p}}}
+\def\mNF{N_{\textsc{f}}}
+\def\mEP{E_{\textsc{p}}}
+\def\mEF{E_{\textsc{f}}}
 
-\todo{DAG- and graph-shaped patterns turns the \gls{pattern matching} problem
-  into an NP-complete problem~\cite{Cook:1971}}
+The \gls!{subgraph isomorphism} problem, which is known to be
+NP-complete~{\cite{Cook:1971}}, is to find instances where a
+\gls{graph}~\mbox{$\mGP = \mPair*{\mNP}{\mEP}$} is \glsshort{isomorphism} to a
+\gls{subgraph} in another \gls{graph}~\mbox{$\mGF = \mPair*{\mNF}{\mEF}$}.
+%
+$\mGP$ is \glsshort!{isomorphism} to $\mGF$ if and only if there exists a
+mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair*{n}{o} \in
+  \mEP$} implies \mbox{$\mPair*{f(n)}{f(o)} \in \mEF$}.
+%
+In this context, $\mGP$ denotes the \gls{pattern}, $\mGF$ denotes the \gls{block
+  DAG} or \gls{function graph}, and $m$ denotes a \gls{match}.
+
+\todo{give example of algorithms}
 
 
 
