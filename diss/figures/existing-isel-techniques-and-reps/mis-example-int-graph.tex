@@ -18,17 +18,17 @@
   ]
 
   \node (m1) {$m_1$};
-  \node [position= 145 degrees from m1] (m2) {$m_2$};
-  \node [position=-145 degrees from m1] (m3) {$m_3$};
-  \node [position=  35 degrees from m1] (m4) {$m_4$};
-  \node [position=- 35 degrees from m1] (m5) {$m_5$};
+  \node [position= 140 degrees from m1] (m2) {$m_2$};
+  \node [position=-140 degrees from m1] (m3) {$m_3$};
+  \node [position=  40 degrees from m1] (m4) {$m_4$};
+  \node [position=- 40 degrees from m1] (m5) {$m_5$};
 
   \begin{scope}[interference]
-    \foreach \i in {2, ..., 5} {
-      \draw (m1) -- (m\i);
-    }
-    \draw (m2) -- (m3);
-    \draw (m4) -- (m5);
+    \draw (m3) -- (m1);
+    \draw (m3) -- (m2);
+    \draw (m5) -- (m1);
+    \draw (m5) -- (m4);
+    \draw (m3) -- (m5);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%
