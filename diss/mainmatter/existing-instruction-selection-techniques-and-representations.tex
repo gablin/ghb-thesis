@@ -1146,15 +1146,18 @@ In doing so, they may choose between applying either complete solving methods --
 for optimality -- or greedy heuristics -- for tractability.
 
 Since there already exist methods for optimally covering \glspl{expression tree}
-in linear time, nearly all operate on \glspl{block DAG}, with one exception
-operating on \glspl{function graph}.
+in linear time, nearly all \glspl{combinatorial approach} operate on
+\glspl{block DAG}, with one exception operating on \glspl{function graph}.
 %
-Consequently, the approaches in this section are grouped according to the tools
-they apply for modeling \gls{instruction selection}.
+The approaches in this section are therefore grouped according to the tools they
+apply for modeling \gls{instruction selection}.
+
+Most approaches also natively support \gls{DAG}-shaped \glspl{pattern}, but
+finding \glspl{match} for such \glspl{pattern} can no longer be done in linear
+time.
 %
-Most approaches also natively support \gls{DAG}-shaped \glspl{pattern} and
-therefore apply generic \glshyphened{subgraph isomorphism} algorithms for
-performing \gls{pattern matching}.
+Consequently, they typically apply generic \glshyphened{subgraph isomorphism}
+algorithms when \gls{pattern matching}.
 
 
 
