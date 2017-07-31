@@ -1,0 +1,34 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont%
+\begin{tikzpicture}[%
+    every node/.style={%
+      op node,
+      inner sep=1pt,
+    },
+    interference/.style={%
+      -,
+      line width=\opDataFlowLineWidth,
+    },
+  ]
+
+  \node (m1) {$m_1$};
+  \node [position= 145 degrees from m1] (m2) {$m_2$};
+  \node [position=-145 degrees from m1] (m3) {$m_3$};
+  \node [position=  35 degrees from m1] (m4) {$m_4$};
+  \node [position=- 35 degrees from m1] (m5) {$m_5$};
+
+  \begin{scope}[interference]
+    \foreach \i in {2, ..., 5} {
+      \draw (m1) -- (m\i);
+    }
+    \draw (m2) -- (m3);
+    \draw (m4) -- (m5);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

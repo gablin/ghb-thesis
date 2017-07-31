@@ -239,6 +239,7 @@
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
 \DeclareMathOperator{\mTable}{\mFunFont{table}}
 \DeclareMathOperator{\mUses}{\mFunFont{uses}}
+\DeclareMathOperator{\mWeight}{\mFunFont{weight}}
 
 
 
@@ -364,13 +365,14 @@
 \let\Glshyphened\Glsuseriii
 
 % Adds a modifier to all \gls-like commands for emphasizing the term or acronym
+\newcommand{\glsEmph}[1]{\emph{#1}}
 \GlsXtrSetAltModifier{!}{format=hyperit}
 \makeatletter
 \renewcommand*{\glslinkpostsetkeys}{%
   \ifdefstring\@glsnumberformat{hyperit}%
                                {%
                                  \glsreset{\glslabel}%
-                                 \let\glstextformat\emph%
+                                 \let\glstextformat\glsEmph%
                                }%
                                {\let\glstextformat\@firstofone}%
 }

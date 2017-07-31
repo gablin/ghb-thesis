@@ -1193,9 +1193,68 @@ Due to its simplicity, most approaches apply the algorithm given in
 
 
 
-\subsection{M(W)IS-based Approaches}
+\subsection{MIS- and MWIS-based Approaches}
 
-\todo{write}
+One approach to modeling \gls{instruction selection} is to model it as a problem
+of finding \glspl{independent set}.
+%
+Given a \gls{graph}~\mbox{$G = \mPair{N}{E}$}, a set \mbox{$S \subseteq N$} is
+an \gls!{independent set} if no pairs of nodes~\mbox{$m, n \in S$} are adjacent
+in~$G$.
+%
+An \gls{independent set} is called a \gls!{MIS} if no more \glspl{node} can be
+added to make a larger \gls{independent set}.
+%
+If each \gls{node} in the graph has a weight, then a \gls!{MWIS} is a \gls{MIS}
+that maximizes/minimizes \mbox{$\sum_n \mWeight(n)$}.
+
+Modeling \gls{instruction selection} as either a \gls{MIS} or \gls{MWIS} problem
+is done as follows.
+%
+After \gls{pattern matching}, an \gls!{interference graph} is constructed where
+a \gls{node} represents a \gls{match} and an \gls{edge} represents overlapping
+between two \glspl{match}.
+%
+If all \glspl{operation} in the \gls{block DAG} or \gls{function graph} can be
+covered by at least one \gls{match}, then a \gls{MIS} of the \gls{interference
+  graph} corresponds to a \gls{cover}.
+%
+Likewise, a \gls{MWIS} corresponds to a \gls{least-cost.c} \gls{cover}.
+%
+An example is shown in \refFigure{mis-example}.
+
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Block DAG%
+                  \labelFigure{mis-example-dag}%
+                }{%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/mis-example-dag}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Interference graph%
+                  \labelFigure{mis-example-int-graph}%
+                }%
+                [32mm]%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/mis-example-int-graph}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[Example of modeling instruction selection as a MIS problem]%
+          {%
+            Example of modeling instruction selection as a MIS problem%
+          }
+  \labelFigure{mis-example}
+\end{figure}
+
+\todo{present applications}
 
 
 
