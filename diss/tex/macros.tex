@@ -439,29 +439,17 @@
 \renewcommand*{\chapnumfont}{%
   \normalfont\fontsize{80}{64}\selectfont%
 }
-\makeatletter
 \renewcommand*{\printchaptername}{%
-  \flushright\chapnamefont\MakeLowercase{\@chapapp}%
-  \par%
+  % Do not print 'Chapter' or 'Appendix'
 }
-\makeatother
 \makeatletter
 \renewcommand*{\printchapternum}{%
-  \chapnumfont\thechapter%
-  % Some letters need to be kerned to align with the heading
-  \IfInteger{\thechapter}{%
-    \ifnum\thechapter=4%
-      \kern 1pt%
-    \fi%
-    \ifnum\thechapter=7%
-      \kern 2pt%
-    \fi%
-    \ifnum\thechapter=14%
-      \kern 1pt%
-    \fi%
-  }{}%
+  \flushright%
+  \begin{tabular}{@{}c@{}}
+    \chapnamefont\MakeLowercase{\@chapapp}\\[.5ex]
+    \chapnumfont\thechapter%
+  \end{tabular}%
 }
-\makeatother
 \renewcommand*{\printchaptertitle}[1]{%
   \flushleft\chaptitlefont#1%
 }
