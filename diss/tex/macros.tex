@@ -433,15 +433,35 @@
 \renewcommand*{\chapterheadstart}{%
   % Remove all space above chapter heading
 }
+\renewcommand*{\chapnamefont}{%
+  \sffamily\large\scshape%
+}
 \renewcommand*{\chapnumfont}{%
-  \normalfont\fontsize{80}{100}\selectfont%
+  \normalfont\fontsize{80}{64}\selectfont%
 }
+\makeatletter
 \renewcommand*{\printchaptername}{%
-  % Do not print "Chapter"
+  \flushright\chapnamefont\MakeLowercase{\@chapapp}%
+  \par%
 }
+\makeatother
+\makeatletter
 \renewcommand*{\printchapternum}{%
-  \flushright\chapnumfont\thechapter%
+  \chapnumfont\thechapter%
+  % Some letters need to be kerned to align with the heading
+  \IfInteger{\thechapter}{%
+    \ifnum\thechapter=4%
+      \kern 1pt%
+    \fi%
+    \ifnum\thechapter=7%
+      \kern 2pt%
+    \fi%
+    \ifnum\thechapter=14%
+      \kern 1pt%
+    \fi%
+  }{}%
 }
+\makeatother
 \renewcommand*{\printchaptertitle}[1]{%
   \flushleft\chaptitlefont#1%
 }
