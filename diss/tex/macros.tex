@@ -203,7 +203,7 @@
 \newcommand{\mOpSet}{O}
 \newcommand{\mOperandSet}{P}
 \newcommand{\mForbiddenCombSet}{F}
-\newcommand{\mCostMatrix}{\mathbf{C}}
+\newcommand{\mCostMatrix}{C_{\textsc{m}}}
 \NewDocumentCommand{\mDataSet}{o}{
   \IfValueTF{#1}{D_{#1}}{D}
 }
@@ -221,8 +221,8 @@
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }
-\newcommand{\mLlvmCost}{C_{\mathrm{LLVM}}}
-\newcommand{\mRelaxedCost}{C_{\mathrm{relaxed}}}
+\newcommand{\mLlvmCost}{C_{\textsc{llvm}}}
+\newcommand{\mRelaxedCost}{C_{\textsc{rlx}}}
 \DeclareMathOperator{\mCircuit}{\mFunFont{circuit}}
 \DeclareMathOperator{\mConsumes}{\mFunFont{consumes}}
 \DeclareMathOperator{\mCost}{\mFunFont{cost}}
