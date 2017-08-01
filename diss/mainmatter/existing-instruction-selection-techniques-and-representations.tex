@@ -1287,9 +1287,15 @@ This is done according to a heuristic that estimates the cost saved by using the
 Once these decisions have been taken, the \gls{interference graph} is built and
 the \gls{MWIS} found using a greedy heuristic~\cite{SakaiEtAl:2003}.
 
-\todo{discuss \cite{AhnEtAl:2009}}
-
-\todo{discuss \cite{YounEtAl:2011}}
+The approach was later extended by \textcite{AhnEtAl:2009} to include scheduling
+dependency conflicts between \gls{complex.p} \glspl{pattern} in order to
+facilitate \gls{register allocation}.
+%
+Also, a shortcoming of both designs -- that \gls{complex.r} \glspl{rule} can
+only consist of disconnected \glspl{pattern}, hence forbidding sharing of values
+across the \gls{split.p} \glspl{pattern} -- was addressed by
+\textcite{YounEtAl:2011} by introducing the use of index subscripts for the
+\glspl{node} representing the input arguments.
 
 
 
