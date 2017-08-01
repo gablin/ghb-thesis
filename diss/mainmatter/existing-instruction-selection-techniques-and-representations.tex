@@ -1301,7 +1301,59 @@ across the \gls{split.p} \glspl{pattern} -- was addressed by
 
 \subsection{PBQP-based Approaches}
 
-\todo{describe idea}
+Another method of modeling \gls{instruction selection} is to model it as a
+\gls!{PBQP}.
+%
+First introduced by \textcite{ScholzEckstein:2002} to model and solve
+\gls{register allocation}, \gls{PBQP} is a variant of the \gls!{QAP}, which is a
+fundamental combinatorial optimization problem in the operations research field
+(see \cite{LoiolaEtAl:2007} for a survey).
+%
+Although both problems are NP-complete in general, a subclass of \gls{PBQP} can
+be solved in linear time which enabled \citeauthor{ScholzEckstein:2002} to
+develop a greedy, linear-time solver.
+
+\Gls{PBQP} is formally defined as
+%
+\begin{equation}
+  \begin{array}{rll}
+    \text{minimize}
+      & \multicolumn{2}{c}{%
+          \displaystyle\sum_{1 \leq i < j \leq n} \mVector{x}_i C_{ij} \mVector{x}_j^T
+          + \displaystyle\sum_{1 \leq i \leq n} c_i \mVector{x}_i^T\!,%
+        } \\
+    \text{such that}
+      & \mVector{x}_i \in \mSet{0, 1}^{|c_i|}\!
+      & \forall 1 \leq i \leq n, \\
+    \text{and}
+      & \mVector{x}_i \mVector{1}^T = 1
+      & \forall 1 \leq i \leq n. \\
+  \end{array}
+\end{equation}
+%
+Intuitively, one can interpret the definition as follows.
+%
+Assume a problem consists of $n$~decisions, where each has $k$~choices.
+%
+Then $\mVector{x}_i$ is a vector of length~$k$, where \mbox{$\mVector{x}_i[j] =
+  1$} means that choice~$j$ has been selected for decision~$i$.
+%
+\mbox{$\mVector{x}_i \mVector{1}^T = 1$} ensures that exactly one choice is
+selected for decision~$i$.
+%
+The cost of selecting a particular choice for decision~$i$ is represented
+through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
+represented through matrix~$C_{ij}$.
+
+\todo{describe how to model instruction selection using PBQP}
+
+\todo{describe SSA-graphs}
+
+\todo{discus \cite{EcksteinEtAl:2003}}
+
+\todo{discus \cite{EbnerEtAl:2008}}
+
+\todo{discus \cite{BuchwaldZwinkau:2010}}
 
 
 
