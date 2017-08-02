@@ -1352,17 +1352,162 @@ The cost of selecting a particular choice for decision~$i$ is represented
 through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
 represented through matrix~$C_{ij}$.
 
-\todo{discuss instruction selection as a PBQP}
+In this context, $\mVar{x}_i$ decides whether to select a particular \gls{match}
+to cover \gls{node}~$i$, $c_i$ contains the cost for each such \gls{match}, and
+$C_{ij}$ contains the cost of additional \glspl{instruction} that may need to be
+selected due to certain combinations of \glspl{match}.
+%
+For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
+%
+Assume further that the \glspl{instruction} are represented as a \gls{machine
+  grammar}, and that~$i$ and~$j$ can be covered using two \glspl{rule}, $r_i$
+and $r_j$, with \glspl{production} \mbox{$\mNT{A} \rightarrow
+  \irCode{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and \mbox{$\mNT{B}
+  \rightarrow \irCode{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$}, respectively.
+%
+Since the result of $r_i$ does not match the operands of $r_j$, this \gls{rule}
+combination requires a \gls{chain.r} \gls{rule} -- or a chain of these, if
+necessary -- that derives $\mNT{B}$ from $\mNT{A}$.
+%
+An example of a full \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
+
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox%
+    {%
+      Rules.
+      %
+      For brevity, the actions are not included%
+    }%
+    [68mm]%
+    {%
+      \figureFontSize%
+      \begin{tabular}{r@{ $\rightarrow$ }lc}
+        \toprule
+        \multicolumn{2}{c}{\tabhead Rules} & \tabhead Cost\\
+        \midrule
+        $\mNT{Reg}$ & \irCode{var} & 0\\
+        $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$ & 1\\
+        $\mNT{Reg}$ & $\opLoad \; \mNT{Addr}$ & 3\\
+        $\mNT{Reg}$ & $\opLoad \; \opAdd \; \mNT{Reg} \; \mNT{Reg}$ & 5\\
+        $\mNT{Addr}$ & $\mNT{Reg}$ & 2\\
+        \bottomrule
+      \end{tabular}%
+    }%
+  \hfill%
+  \subcaptionbox{%
+                  SSA graph%
+                  \labelFigure{pbqp-example-ssa-graph}%
+                }{%
+                  \input{figures/existing-isel-techniques-and-reps/pbqp-example-ssa-graph}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox{%
+                  PBQP instance%
+                  \labelFigure{pbqp-example-instance}%
+                }{%
+                  \figureFontSize%
+                  \apptocmd{\irFont}{\scriptsize}{}{}%
+                  \newcommand{\lskip}{0.1ex}%
+                  \newcommand{\newlineskip}{-1em}%
+                  \newcommand{\cindent}{\;\;\,}%
+                  \begin{minipage}{22mm}%
+                    \begin{displaymath}
+                      \begin{array}{r@{\;=\;}l}
+                        \mVar{x}_{\opVar{a}} & \mSet{0, 1} \\[2pt]
+                        \mVar{x}_{\opVar{b}} & \mSet{0, 1} \\[2pt]
+                        \mVar{x}_{\opAdd}   & \mSet{0, 1}^{2} \\[2pt]
+                        \mVar{x}_{\opLoad}  & \mSet{0, 1}^{2}
+                      \end{array}
+                    \end{displaymath}%
+                  \end{minipage}%
+                  \hspace{5mm}%
+                  \trimbox{0 8pt 0 0}{%
+                    \begin{minipage}{27mm}%
+                      \begin{displaymath}
+                        \begin{array}{r@{\;=\;}l}
+                          c_{\opVar{a}}
+                            & \begin{blockarray}{c}
+                                \scriptstyle m_1 \\[\lskip]
+                                \begin{block}{[c]}
+                                  0 \\
+                                \end{block}
+                              \end{blockarray} \\[\newlineskip]
+                          c_{\opVar{b}}
+                            & \begin{blockarray}{c}
+                                \scriptstyle m_2 \\[\lskip]
+                                \begin{block}{[c]}
+                                  0 \\
+                                \end{block}
+                              \end{blockarray} \\[\newlineskip]
+                          c_{\opAdd}
+                            & \begin{blockarray}{cc}
+                                \scriptstyle m_3 & \scriptstyle m_5 \\[\lskip]
+                                \begin{block}{[cc]}
+                                  1 & 5 \\
+                                \end{block}
+                              \end{blockarray} \\[\newlineskip]
+                          c_{\opLoad}
+                            & \begin{blockarray}{cc}
+                                \scriptstyle m_4 & \scriptstyle m_5 \\[\lskip]
+                                \begin{block}{[cc]}
+                                  3 & 5 \\
+                                \end{block}
+                              \end{blockarray}
+                        \end{array}
+                      \end{displaymath}%
+                    \end{minipage}%
+                  }%
+                  \hspace{5mm}%
+                  \begin{minipage}{33mm}%
+                    \begin{displaymath}
+                      \begin{array}{c@{\;=\;}c}
+                        C_{\opVar{a} \opAdd}
+                          & \begin{blockarray}{ccc}
+                              \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
+                              \begin{block}{[cc]@{\cindent}c}
+                                0 & 0 & \scriptstyle m_1 \\
+                              \end{block}
+                            \end{blockarray} \\[\newlineskip]
+                        C_{\opVar{b} \opAdd}
+                          & \begin{blockarray}{ccc}
+                              \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
+                              \begin{block}{[cc]@{\cindent}c}
+                                0 & 0 & \scriptstyle m_1 \\
+                              \end{block}
+                            \end{blockarray} \\[\newlineskip]
+                        C_{\opAdd\opLoad}
+                          & \begin{blockarray}{ccc}
+                              \scriptstyle m_4 & \scriptstyle m_5 & \\[\lskip]
+                              \begin{block}{[cc]@{\cindent}c}
+                                2      & \infty & \scriptstyle m_3 \\
+                                \infty & 0      & \scriptstyle m_5 \\
+                              \end{block}
+                            \end{blockarray}
+                      \end{array}
+                    \end{displaymath}%
+                  \end{minipage}%
+                }
+
+  \caption{Example of modeling instruction selection as a PBQP}
+  \labelFigure{pbqp-example}
+\end{figure}
 
 
 
 \paragraph{Applications}
 
-\todo{discus \cite{EcksteinEtAl:2003}}
+\todo{discuss \cite{EcksteinEtAl:2003}}
 
-\todo{discus \cite{EbnerEtAl:2008}}
+\todo{discuss \cite{EbnerEtAl:2008}}
 
-\todo{discus \cite{BuchwaldZwinkau:2010}}
+\todo{discuss \cite{BuchwaldZwinkau:2010}}
 
 
 

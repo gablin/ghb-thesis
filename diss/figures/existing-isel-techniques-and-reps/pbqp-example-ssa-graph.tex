@@ -1,0 +1,78 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background1}%
+\pgfdeclarelayer{background2}%
+\pgfsetlayers{background2,background1,main}%
+\begin{tikzpicture}[%
+    data node/.style={%
+      op node,
+    },
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+    match label/.style={%
+      minimum size=0,
+      inner sep=0,
+      outer sep=1pt,
+      node distance=10pt,
+      font=\footnotesize,
+    },
+  ]
+
+  % Graph
+  \node [op node] (add) {\opAdd};
+  \node [data node, position=-135 degrees from add] (a) {\opVar{a}};
+  \node [data node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \node [data node, above=of add] (load) {\opLoad};
+  \begin{scope}[data flow]
+    \draw (a) -- (add);
+    \draw (b) -- (add);
+    \draw (add) -- (load);
+  \end{scope}
+
+  % Matches
+  \begin{pgfonlayer}{background1}
+    \node [match node, fill=shade2, fit=(a)] (m1) {};
+    \node [match node, fill=shade2, fit=(b)] (m2) {};
+    \node [match node, fill=shade1, fit=(add)] (m3) {};
+    \node [match node, fill=shade1, fit=(load)] (m4) {};
+    % m5
+    \begin{pgfonlayer}{background2}
+      \node [outer match node, inner sep=-1pt, fit=(m3)] (m5a) {};
+      \node [outer match node, inner sep=-1pt, fit=(m4)] (m5b) {};
+      \draw [match line, bend left=45, fill=shade3]
+            (m5b.west)
+            to
+            (m5b.north)
+            to
+            (m5b.east)
+            -- coordinate (m5)
+            (m5a.east)
+            to
+            (m5a.south)
+            to
+            (m5a.west)
+            --
+            cycle;
+    \end{pgfonlayer}
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, left=of m1] (m1l) {$\strut m_1$};
+  \node [match label, right=of m2] (m2l) {$\strut m_2$};
+  \node [match label, left=of m3] (m3l) {$\strut m_3$};
+  \node [match label, left=of m4] (m4l) {$\strut m_4$};
+  \node [match label, right=of m5] (m5l) {$\strut m_5$};
+  \foreach \i in {1, ..., 5} {
+    \draw [thick] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%
