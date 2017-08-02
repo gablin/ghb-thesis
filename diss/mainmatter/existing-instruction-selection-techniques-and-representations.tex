@@ -1328,14 +1328,14 @@ develop a greedy, linear-time solver.
   \begin{array}{rll}
     \text{minimize}
       & \multicolumn{2}{c}{%
-          \displaystyle\sum_{1 \leq i < j \leq n} \mVector{x}_i C_{ij} \mVector{x}_j^T
-          + \displaystyle\sum_{1 \leq i \leq n} c_i \mVector{x}_i^T\!,%
+          \displaystyle\sum_{1 \leq i < j \leq n} \mVar{x}_i C_{ij} \mVar{x}_j^T +
+          \displaystyle\sum_{1 \leq i \leq n} c_i \mVar{x}_i^T\!,%
         } \\
     \text{such that}
-      & \mVector{x}_i \in \mSet{0, 1}^{|c_i|}\!
+      & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!
       & \forall 1 \leq i \leq n, \\
     \text{and}
-      & \mVector{x}_i \mVector{1}^T = 1
+      & \mVar{x}_i \mVar{1}^T = 1
       & \forall 1 \leq i \leq n. \\
   \end{array}
 \end{equation}
@@ -1344,11 +1344,9 @@ Intuitively, one can interpret the definition as follows.
 %
 Assume a problem consists of $n$~decisions, where each has $k$~choices.
 %
-Then $\mVector{x}_i$ is a vector of length~$k$, where \mbox{$\mVector{x}_i[j] =
-  1$} means that choice~$j$ has been selected for decision~$i$.
-%
-\mbox{$\mVector{x}_i \mVector{1}^T = 1$} ensures that exactly one choice is
-selected for decision~$i$.
+Then $\mVar{x}_i$ is a vector of length~$k$, where \mbox{$\mVar{x}_i[j] = 1$}
+means that choice~$j$ has been selected for decision~$i$, and \mbox{$\mVar{x}_i
+  \mVar{1}^T = 1$} ensures that exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
 through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
