@@ -998,7 +998,7 @@ will therefore be discussed first.
 
 
 
-\paragraph{Sea-of-nodes IR}
+\paragraph{Sea-of-nodes IRs}
 
 \begin{filecontents*}{fact.c}
 int fact(int n) {
@@ -1038,30 +1038,39 @@ int fact(int $\irVar{n}[1]$) {
   \hfill%
   \subcaptionbox{%
                   C implementation of factorial%
-                  \labelFigure{simple-graph-ir-example-c}%
+                  \labelFigure{sea-of-nodes-example-c}%
                 }%
                 [50mm]%
                 {\lstinputlisting[language=c]{fact.c}}%
   \hfill%
-  \subcaptionbox{Code in SSA form\labelFigure{simple-graph-ir-example-ssa-c}}%
+  \subcaptionbox{Code in SSA form\labelFigure{sea-of-nodes-example-ssa-c}}%
                 {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
   \hfill%
   \mbox{}
 
   \vspace*{\betweensubfigures}
 
-  \subcaptionbox{Function graph\labelFigure{simple-graph-ir-example-graph}}%
+  \subcaptionbox{SSA graph\labelFigure{sea-of-nodes-example-ssa-graph}}%
                 {%
                   \small%
-                  \input{figures/existing-isel-techniques-and-reps/simple-graph-ir-example-graph}%
+                  \input{figures/existing-isel-techniques-and-reps/sea-of-nodes-example-ssa-graph}%
+                }
+
+  \vspace*{\betweensubfigures}
+
+  \subcaptionbox{%
+                  Click-Paleczny graph%
+                  \labelFigure{sea-of-nodes-example-click-paleczny-graph}%
+                }{%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/sea-of-nodes-example-click-paleczny-graph}%
                 }
 
   \caption[%
-            Example of a function graph represented using a graph-based IR%
+            Example of an SSA graph and a Click-Paleczny graph%
           ]%
           {%
-            Example of a function graph represented using the IR introduced in
-            \cite{ClickPaleczny:1995}.
+            Example of an SSA graph and a Click-Paleczny graph.
             %
             Thin-lined nodes and edges denote data operations and data flow.
             %
@@ -1070,27 +1079,28 @@ int fact(int $\irVar{n}[1]$) {
             %
             Dashed edges indicate to which block an operation belongs%
           }
-  \labelFigure{simple-graph-ir-example}
+  \labelFigure{sea-of-nodes-example}
 \end{figure}
 
-\textcite{ClickPaleczny:1995} introduced a graph-based IR for representing
-entire \glspl{function}, colloquially referred to as a \gls!{sea of nodes}.
+Graph-based \glspl{IR} that represent entire \glspl{function} are colloquially
+referred to as \glspl!{sea-of-nodes IR}.
 %
-The \gls{IR} assumes the \gls{function} to be in \gls!{SSA}
+One such \gls{IR} was introduced by \textcite{ClickPaleczny:1995} which, for
+lack of better name, will be referred to as the \gls!{Click-Paleczny graph} in
+this dissertation.
+
+The \gls{Click-Paleczny graph} assumes the \gls{function} to be in \gls!{SSA}
 \glsEmph{form}~\cite{CytronEtAl:1991}, in which a \gls{variable} is defined
 exactly once.
 %
-For example, the \gls{function} shown in \refFigure{simple-graph-ir-example-c}
+For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c}
 is not in \gls{SSA}~form as \glspl{variable}~\irCode{f} and~\irCode{n} are
 redefined within the loop.
 %
 By introducing new \glspl{variable} and connecting these using
 \glspl!{phi-function} where the value depends on control flow, the
 \gls{function} can be rewritten into \gls{SSA}~form, as shown in
-\refFigure{simple-graph-ir-example-ssa-c}.
-%
-The corresponding \gls{function graph} is shown in
-\refFigure{simple-graph-ir-example-graph}.
+\refFigure{sea-of-nodes-example-ssa-c}.
 
 Like in \glspl{data-flow graph}, each \gls{operation} in the SSA-based
 \gls{function} is represented as a \gls{node}.
@@ -1098,11 +1108,17 @@ Like in \glspl{data-flow graph}, each \gls{operation} in the SSA-based
 These nodes are connected using data-flow \glspl{edge}, ignoring the fact that
 the \glspl{operation} may belong to different \glspl{block}.
 %
+This forms a \gls{data-flow graph} called the \gls!{SSA
+  graph}~\cite{GerlekEtAl:1995} (see
+\refFigure{sea-of-nodes-example-ssa-graph}).
+%
 The control flow is captured using \glspl{node} to represent the \glspl{block}
 in the \gls{function} and \glspl{edge} to represent jumps between \glspl{block}.
 %
 Conditional jumps flow through special \emph{if}~\glspl{node}, thereby allowing
 dependencies between data and control flow to be captured.
+%
+An example is shown in \refFigure{sea-of-nodes-example-click-paleczny-graph}.
 
 Since \glspl{operation} are not pre-assigned to specific \glspl{block}, the same
 \gls{IR} can be used for performing \gls{global code motion}.
@@ -1346,45 +1362,7 @@ The cost of selecting a particular choice for decision~$i$ is represented
 through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
 represented through matrix~$C_{ij}$.
 
-All \gls{PBQP}-based approaches operate on \glspl{function graph} assumed to be
-represented as \glspl{SSA graph}, which will therefore be described first.
-
-
-
-\paragraph{SSA Graphs}
-
-\begin{figure}
-  \centering%
-  \subcaptionbox{Code in SSA form\labelFigure{ssa-graph-example-ssa-c}}%
-                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
-  \hfill%
-  \subcaptionbox{SSA graph\labelFigure{ssa-example-graph}}%
-                {%
-                  \small%
-                  \input{figures/existing-isel-techniques-and-reps/ssa-graph-example-graph}%
-                }
-
-  \caption{Example of an SSA graph}
-  \labelFigure{ssa-graph-example}
-\end{figure}
-
-An \gls!{SSA graph} is a \gls{data-flow graph} that encompasses an entire
-\gls{function}.
-%
-The \glspl{operation} in the \gls{function} -- which is assumed to be in
-\gls{SSA}~form -- are represented as \glspl{node} and are connected using
-data-flow \glspl{edge}, ignoring the fact that the \glspl{operation} may belong
-to different \glspl{block}.
-%
-Hence the \gls{SSA graph} is identical to the \glshyphened{sea of nodes}~IR
-introduced by \citeauthor{ClickPaleczny:1995} minus the control flow, as shown
-in \refFigure{ssa-graph-example}.
-
-
-
-\paragraph{Instruction Selection as a PBQP}
-
-\todo{write}
+\todo{discuss instruction selection as a PBQP}
 
 
 
