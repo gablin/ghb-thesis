@@ -1081,12 +1081,12 @@ The \gls{IR} assumes the \gls{function} to be in \gls!{SSA}
 exactly once.
 %
 For example, the \gls{function} shown in \refFigure{simple-graph-ir-example-c}
-is not in \gls{SSA} form as \glspl{variable}~\irCode{f} and~\irCode{n} are
+is not in \gls{SSA}~form as \glspl{variable}~\irCode{f} and~\irCode{n} are
 redefined within the loop.
 %
 By introducing new \glspl{variable} and connecting these using
 \glspl!{phi-function} where the value depends on control flow, the
-\gls{function} can be rewritten into \gls{SSA} form, as shown in
+\gls{function} can be rewritten into \gls{SSA}~form, as shown in
 \refFigure{simple-graph-ir-example-ssa-c}.
 %
 The corresponding \gls{function graph} is shown in
@@ -1095,8 +1095,8 @@ The corresponding \gls{function graph} is shown in
 Like in \glspl{data-flow graph}, each \gls{operation} in the SSA-based
 \gls{function} is represented as a \gls{node}.
 %
-These nodes are connected using data-flow edges, ignoring the fact that the
-\glspl{operation} may belong to different \glspl{block}.
+These nodes are connected using data-flow \glspl{edge}, ignoring the fact that
+the \glspl{operation} may belong to different \glspl{block}.
 %
 The control flow is captured using \glspl{node} to represent the \glspl{block}
 in the \gls{function} and \glspl{edge} to represent jumps between \glspl{block}.
