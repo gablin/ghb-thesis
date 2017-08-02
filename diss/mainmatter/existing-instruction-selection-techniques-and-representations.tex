@@ -1346,22 +1346,55 @@ The cost of selecting a particular choice for decision~$i$ is represented
 through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
 represented through matrix~$C_{ij}$.
 
-\todo{describe how to model instruction selection using PBQP}
+All \gls{PBQP}-based approaches operate on \glspl{function graph} assumed to be
+represented as \glspl{SSA graph}, which will therefore be described first.
 
-\todo{describe SSA-graphs}
+
+
+\paragraph{SSA Graphs}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{Code in SSA form\labelFigure{ssa-graph-example-ssa-c}}%
+                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+  \hfill%
+  \subcaptionbox{SSA graph\labelFigure{ssa-example-graph}}%
+                {%
+                  \small%
+                  \input{figures/existing-isel-techniques-and-reps/ssa-graph-example-graph}%
+                }
+
+  \caption{Example of an SSA graph}
+  \labelFigure{ssa-graph-example}
+\end{figure}
+
+An \gls!{SSA graph} is a \gls{data-flow graph} that encompasses an entire
+\gls{function}.
+%
+The \glspl{operation} in the \gls{function} -- which is assumed to be in
+\gls{SSA}~form -- are represented as \glspl{node} and are connected using
+data-flow \glspl{edge}, ignoring the fact that the \glspl{operation} may belong
+to different \glspl{block}.
+%
+Hence the \gls{SSA graph} is identical to the \glshyphened{sea of nodes}~IR
+introduced by \citeauthor{ClickPaleczny:1995} minus the control flow, as shown
+in \refFigure{ssa-graph-example}.
+
+
+
+\paragraph{Instruction Selection as a PBQP}
+
+\todo{write}
+
+
+
+\paragraph{Applications}
 
 \todo{discus \cite{EcksteinEtAl:2003}}
 
 \todo{discus \cite{EbnerEtAl:2008}}
 
 \todo{discus \cite{BuchwaldZwinkau:2010}}
-
-
-
-\paragraph{Applications}
-
-\todo{write}
-
 
 
 
