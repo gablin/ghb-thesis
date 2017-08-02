@@ -112,7 +112,7 @@ x = A[i + 1];
                 }%
                 [50mm]%
                 {%
-                  \small
+                  \figureFontSize%
                   \begin{tabular}{%
                                    >{\instrFont}r@{\hspace{4pt}}%
                                    >{$}l<{$}@{ $\leftarrow$ }%
@@ -130,7 +130,6 @@ x = A[i + 1];
                   Expression tree and its matches%
                   \labelFigure{p-match-sel-example-tree}%
                 }{%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/p-match-sel-example-tree}%
                 }
 
@@ -263,7 +262,7 @@ is given in \refTable{grammar-rules-example}.
 %
 \begin{figure}
   \centering%
-  \figureFont\small%
+  \figureFont\figureFontSize%
   \begin{displaymath}
     \underbrace{
       \overbrace{
@@ -299,7 +298,7 @@ Similarly, the \gls{expression tree} shown in
 
 \begin{table}[t]
   \centering%
-  \small%
+  \figureFontSize%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
     \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
@@ -365,7 +364,7 @@ of the following forms:
 
 \begin{table}[t]
   \centering%
-  \small%
+  \figureFontSize%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
     \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
@@ -711,7 +710,7 @@ y = *((int*) t);
                 }%
                 [50mm]%
                 {%
-                  \small
+                  \figureFontSize
                   \begin{tabular}{%
                                    >{\instrFont}r@{\hspace{4pt}}%
                                    >{$}l<{$}@{ $\leftarrow$ }%
@@ -740,7 +739,6 @@ y = *((int*) t);
                   Expression trees after edge splitting%
                   \labelFigure{exp-trees-limit-example-trees}%
                 }{%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-trees}%
                 }%
   \hfill\hfill%
@@ -748,7 +746,6 @@ y = *((int*) t);
                   Block DAG%
                   \labelFigure{exp-trees-limit-example-dag}%
                 }{%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/exp-trees-limit-example-dag}%
                 }%
   \hfill%
@@ -903,7 +900,6 @@ int f(int* A, int* B, int N) {
                 }%
                 [72mm]%
                 {%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/block-dags-limit-example-dags}%
                 }
 
@@ -922,7 +918,7 @@ int f(int* A, int* B, int N) {
     }%
     [\textwidth]%
     {%
-      \small%
+      \figureFontSize%
       \newcolumntype{L}{@{}l@{}}%
       \begin{tabular}{r@{ $\rightarrow$ }l@{\hspace{3em}}r@{ $\rightarrow$ }lc}
         \toprule
@@ -1052,7 +1048,6 @@ int fact(int $\irVar{n}[1]$) {
 
   \subcaptionbox{SSA graph\labelFigure{sea-of-nodes-example-ssa-graph}}%
                 {%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/sea-of-nodes-example-ssa-graph}%
                 }
 
@@ -1062,7 +1057,6 @@ int fact(int $\irVar{n}[1]$) {
                   Click-Paleczny graph%
                   \labelFigure{sea-of-nodes-example-click-paleczny-graph}%
                 }{%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/sea-of-nodes-example-click-paleczny-graph}%
                 }
 
@@ -1251,7 +1245,6 @@ An example is shown in \refFigure{mis-example}.
                   Block DAG%
                   \labelFigure{mis-example-dag}%
                 }{%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/mis-example-dag}%
                 }%
   \hfill%
@@ -1261,7 +1254,6 @@ An example is shown in \refFigure{mis-example}.
                 }%
                 [32mm]%
                 {%
-                  \small%
                   \input{figures/existing-isel-techniques-and-reps/mis-example-int-graph}%
                 }%
   \hfill%
