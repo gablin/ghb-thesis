@@ -50,6 +50,10 @@
 \buildLabelRefCommands{Equation}{Eq}
 \buildLabelRefCommands{Algorithm}{Alg}
 
+% Macro for labeling and references pages
+\newcommand{\labelPage}[1]{\label{page:#1}}
+\newcommand{\refPage}[1]{p.\thinspace\pageref{page:#1}}
+
 % Other text commands
 \newcommand{\wrt}{w.r.t.}
 \newcommand{\todo}[1]{%

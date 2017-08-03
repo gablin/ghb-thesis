@@ -1284,6 +1284,8 @@ The idea is to model such \glspl{instruction} using \gls!{complex.r}[
   \glspl{rule}], which each consists of multiple \glspl{production} -- one for
 each result.
 %
+\labelPage{multi-output-grammars}
+%
 \Glspl{pattern} in a \gls{complex.r} \gls{rule} are called \gls!{split.p}[
   \glspl{pattern}] and are matched individually.
 %
@@ -1421,7 +1423,10 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   PBQP instance.
                   %
                   The rows and columns in the cost vectors and matrices are
-                  labeled with the matches they represent%
+                  labeled with the matches they represent.
+                  %
+                  Cost matrices for uninteresting combinations are assumed to
+                  consist of~0s%
                   \labelFigure{pbqp-example-instance}%
                 }{%
                   \figureFontSize%
@@ -1520,12 +1525,30 @@ The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
 %
 To handle \gls{DAG}-shaped \glspl{pattern}, the model must be extended.
 %
-First assume a \gls{grammar} that allows multi-output \glspl{instruction} to be
-described as \gls{complex.r} \glspl{rule}, where each result is described with a
-\gls{production}.
+First assume a \gls{grammar} similar to that of
+\textcite{ScharwaechterEtAl:2007} (see \refPage{multi-output-grammars}), where
+multi-output \glspl{instruction} are described using \gls{complex.r}
+\glspl{rule}.
+%
+In this context, \glspl{rule} with a single \gls{production} are called
+\gls!{simple.r}[ \glspl{rule}], and \glspl{production} of \gls{complex.r}
+\glspl{rule} are loosely called \gls!{proxy.r}[ \glspl{rule}].
 
+For each combination of \glspl{match} derived \gls{proxy.r} \glspl{rule} that
+can be combined into an instance of a \gls{complex.r} \gls{rule}, a
+\gls!{complex.m}[ \gls{match}] is created.
+%
+Each \gls{complex.m} \gls{match}~$i$ in turn introduces a decision
+variable~\raisebox{0pt}[\height-2pt]{$\mVar{x}_i \in \mSet{0, 1}^2$} to decide
+whether $i$ is selected.
+%
+Because of the \raisebox{0pt}[\height-2pt]{$\mVar{x}_i \mVector{1}^T = 1$}
+condition, every such variable has exactly two elements (one representing
+\emph{on} and the other \emph{off}).
 
-\todo{write}
+\todo{cost vectors and matrices for complex rules}
+
+\todo{selection of complex rule requires selection of all of its split rules}
 
 
 
