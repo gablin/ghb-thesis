@@ -1429,7 +1429,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \apptocmd{\irFont}{\scriptsize}{}{}%
                   \newcommand{\lskip}{0.1ex}%
                   \newcommand{\newlineskip}{-1em}%
-                  \newcommand{\cindent}{\;\;\,}%
+                  \BAnewcolumntype{C}{@{\;\;\,}c}%
                   \begin{minipage}{22mm}%
                     \begin{displaymath}
                       \begin{array}{r@{\;=\;}l}
@@ -1484,21 +1484,21 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                         C_{\opVar{a} \opAdd}
                           & \begin{blockarray}{ccc}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]@{\cindent}c}
+                              \begin{block}{[cc]C}
                                 0 & 0 & \scriptstyle m_1 \\
                               \end{block}
                             \end{blockarray} \\[\newlineskip]
                         C_{\opVar{b} \opAdd}
                           & \begin{blockarray}{ccc}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]@{\cindent}c}
+                              \begin{block}{[cc]C}
                                 0 & 0 & \scriptstyle m_1 \\
                               \end{block}
                             \end{blockarray} \\[\newlineskip]
                         C_{\opAdd\opLoad}
                           & \begin{blockarray}{ccc}
                               \scriptstyle m_4 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]@{\cindent}c}
+                              \begin{block}{[cc]C}
                                 2      & \infty & \scriptstyle m_3 \\
                                 \infty & 0      & \scriptstyle m_5 \\
                               \end{block}
