@@ -244,6 +244,19 @@
 \DeclareMathOperator{\mUses}{\mFunFont{uses}}
 \DeclareMathOperator{\mWeight}{\mFunFont{weight}}
 
+% blkarray-related commands
+\NewDocumentEnvironment{adjblockarray}{mm}{%
+  \begin{lrbox}{\adjblockarraybox}%
+    $\begin{blockarray}{#1}
+}{%
+    \end{blockarray}$%
+  \end{lrbox}%
+  \raisebox{-#2}[\dimexpr\height-#2][\dimexpr\depth-#2]{%
+    \usebox{\adjblockarraybox}%
+  }%
+}
+\newsavebox{\adjblockarraybox}
+
 
 
 %============

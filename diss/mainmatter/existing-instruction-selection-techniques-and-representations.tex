@@ -1429,13 +1429,16 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \apptocmd{\irFont}{\scriptsize}{}{}%
                   \newcommand{\lskip}{0.1ex}%
                   \newcommand{\newlineskip}{-1em}%
-                  \BAnewcolumntype{C}{@{\;\;\,}c}%
+                  \newcolumntype{R}{r@{\;=\;}}%
+                  \BAnewcolumntype{C}{>{\;}c<{\:}}%
+                  \BAnewcolumntype{X}{@{\;\;\,}c}%
+                  \newcommand{\mlabel}[1]{\raisebox{.2ex}{$\scriptstyle #1$}}%
                   \begin{minipage}{22mm}%
                     \begin{displaymath}
-                      \begin{array}{r@{\;=\;}l}
-                        \mVar{x}_{\opVar{a}} & \mSet{0, 1} \\[2pt]
-                        \mVar{x}_{\opVar{b}} & \mSet{0, 1} \\[2pt]
-                        \mVar{x}_{\opAdd}   & \mSet{0, 1}^{2} \\[2pt]
+                      \begin{array}{Rl}
+                        \mVar{x}_{\opVar{a}} & \mSet{0, 1} \\[.7ex]
+                        \mVar{x}_{\opVar{b}} & \mSet{0, 1} \\[.7ex]
+                        \mVar{x}_{\opAdd}   & \mSet{0, 1}^{2} \\[.7ex]
                         \mVar{x}_{\opLoad}  & \mSet{0, 1}^{2}
                       \end{array}
                     \end{displaymath}%
@@ -1444,35 +1447,33 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \trimbox{0 8pt 0 0}{%
                     \begin{minipage}{27mm}%
                       \begin{displaymath}
-                        \begin{array}{r@{\;=\;}l}
+                        \begin{array}{Rl}
                           \mVector{c}_{\opVar{a}}
-                            & \begin{blockarray}{c}
-                                \scriptstyle m_1 \\[\lskip]
-                                \begin{block}{[c]}
-                                  0 \\
+                            & \begin{adjblockarray}{cc}{1.3ex}
+                                \begin{block}{[C]X}
+                                  0 & \mlabel{m_1} \\
                                 \end{block}
-                              \end{blockarray} \\[\newlineskip]
+                              \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opVar{b}}
-                            & \begin{blockarray}{c}
-                                \scriptstyle m_2 \\[\lskip]
-                                \begin{block}{[c]}
-                                  0 \\
+                            & \begin{adjblockarray}{cc}{1.3ex}
+                                \begin{block}{[C]X}
+                                  0 & \mlabel{m_2} \\
                                 \end{block}
-                              \end{blockarray} \\[\newlineskip]
+                              \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opAdd}
-                            & \begin{blockarray}{cc}
-                                \scriptstyle m_3 & \scriptstyle m_5 \\[\lskip]
-                                \begin{block}{[cc]}
-                                  1 & 5 \\
+                            & \begin{adjblockarray}{cc}{1.3ex}
+                                \begin{block}{[C]X}
+                                  1 & \mlabel{m_3} \\
+                                  5 & \mlabel{m_5} \\
                                 \end{block}
-                              \end{blockarray} \\[\newlineskip]
+                              \end{adjblockarray} \\[3ex]
                           \mVector{c}_{\opLoad}
-                            & \begin{blockarray}{cc}
-                                \scriptstyle m_4 & \scriptstyle m_5 \\[\lskip]
-                                \begin{block}{[cc]}
-                                  3 & 5 \\
+                            & \begin{adjblockarray}{cc}{1.3ex}
+                                \begin{block}{[C]X}
+                                  3 & \mlabel{m_4} \\
+                                  5 & \mlabel{m_5} \\
                                 \end{block}
-                              \end{blockarray}
+                              \end{adjblockarray}
                         \end{array}
                       \end{displaymath}%
                     \end{minipage}%
@@ -1480,29 +1481,29 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \hspace{5mm}%
                   \begin{minipage}{33mm}%
                     \begin{displaymath}
-                      \begin{array}{c@{\;=\;}c}
+                      \begin{array}{Rc}
                         C_{\opVar{a} \opAdd}
-                          & \begin{blockarray}{ccc}
+                          & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]C}
-                                0 & 0 & \scriptstyle m_1 \\
+                              \begin{block}{[cc]X}
+                                0 & 0 & \mlabel{m_1} \\
                               \end{block}
-                            \end{blockarray} \\[\newlineskip]
+                            \end{adjblockarray} \\[-2.2ex]
                         C_{\opVar{b} \opAdd}
-                          & \begin{blockarray}{ccc}
+                          & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]C}
-                                0 & 0 & \scriptstyle m_1 \\
+                              \begin{block}{[cc]X}
+                                0 & 0 & \mlabel{m_1} \\
                               \end{block}
-                            \end{blockarray} \\[\newlineskip]
+                            \end{adjblockarray} \\[-2.2ex]
                         C_{\opAdd\opLoad}
-                          & \begin{blockarray}{ccc}
+                          & \begin{adjblockarray}{ccc}{0ex}
                               \scriptstyle m_4 & \scriptstyle m_5 & \\[\lskip]
-                              \begin{block}{[cc]C}
-                                2      & \infty & \scriptstyle m_3 \\
-                                \infty & 0      & \scriptstyle m_5 \\
+                              \begin{block}{[cc]X}
+                                2      & \infty & \mlabel{m_3} \\
+                                \infty & 0      & \mlabel{m_5} \\
                               \end{block}
-                            \end{blockarray}
+                            \end{adjblockarray}
                       \end{array}
                     \end{displaymath}%
                   \end{minipage}%
