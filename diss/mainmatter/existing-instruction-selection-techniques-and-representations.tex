@@ -1329,33 +1329,37 @@ developing a greedy, linear-time solver.
     \text{minimize}
       & \multicolumn{2}{c}{%
           \displaystyle\sum_{1 \leq i < j \leq n} \mVar{x}_i C_{ij} \mVar{x}_j^T +
-          \displaystyle\sum_{1 \leq i \leq n} c_i \mVar{x}_i^T\!,%
+          \displaystyle\sum_{1 \leq i \leq n} \mVector{c}_i \mVar{x}_i^T\!,%
         } \\
     \text{such that}
       & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!
       & \forall 1 \leq i \leq n, \\
     \text{and}
-      & \mVar{x}_i \mVar{1}^T = 1
+      & \mVar{x}_i \mVector{1}^T = 1
       & \forall 1 \leq i \leq n. \\
   \end{array}
 \end{equation}
 %
-Intuitively, one can interpret the definition as follows.
+Intuitively, one can interpret this definition as follows.
 %
-Assume a problem consists of $n$~decisions, where each has $k$~choices.
+Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVar{x}_i$ is a vector of length~$k$, where \mbox{$\mVar{x}_i[j] = 1$}
-means that choice~$j$ has been selected for decision~$i$, and \mbox{$\mVar{x}_i
-  \mVar{1}^T = 1$} ensures that exactly one choice is selected.
+Then $\mVar{x}_i$ is a decision vector with $k$~elements, where
+\mbox{$\mVar{x}_i[j] = 1$} means that choice~$j$ has been selected for
+decision~$i$.
+%
+For each decision vector, the condition \mbox{$\mVar{x}_i
+  \raisebox{0pt}[\height-2pt]{$\mVector{1}^T$} = 1$} ensures that exactly one
+choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
-through vector~$c_i$, and the cost of combining two decisions~$i$ and~$j$ are
-represented through matrix~$C_{ij}$.
+through a cost vector~$\mVector{c}_i$, and the cost of combining two
+decisions~$i$ and~$j$ are represented through a cost matrix~$C_{ij}$.
 
 In this context, $\mVar{x}_i$ decides whether to select a particular \gls{match}
-to cover \gls{node}~$i$, $c_i$ contains the cost for each such \gls{match}, and
-$C_{ij}$ contains the cost of additional \glspl{instruction} that may need to be
-selected due to certain combinations of \glspl{match}.
+to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
+\gls{match}, and $C_{ij}$ contains the cost of additional \glspl{instruction}
+that may need to be selected due to certain combinations of \glspl{match}.
 %
 For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
 %
@@ -1371,7 +1375,7 @@ necessary -- that derives $\mNT{B}$ from $\mNT{A}$.
 %
 Illegal combinations are prevented by assigning infinite cost.
 %
-An example of a full \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
+An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
 
 \begin{figure}
   \centering%
@@ -1437,28 +1441,28 @@ An example of a full \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                     \begin{minipage}{27mm}%
                       \begin{displaymath}
                         \begin{array}{r@{\;=\;}l}
-                          c_{\opVar{a}}
+                          \mVector{c}_{\opVar{a}}
                             & \begin{blockarray}{c}
                                 \scriptstyle m_1 \\[\lskip]
                                 \begin{block}{[c]}
                                   0 \\
                                 \end{block}
                               \end{blockarray} \\[\newlineskip]
-                          c_{\opVar{b}}
+                          \mVector{c}_{\opVar{b}}
                             & \begin{blockarray}{c}
                                 \scriptstyle m_2 \\[\lskip]
                                 \begin{block}{[c]}
                                   0 \\
                                 \end{block}
                               \end{blockarray} \\[\newlineskip]
-                          c_{\opAdd}
+                          \mVector{c}_{\opAdd}
                             & \begin{blockarray}{cc}
                                 \scriptstyle m_3 & \scriptstyle m_5 \\[\lskip]
                                 \begin{block}{[cc]}
                                   1 & 5 \\
                                 \end{block}
                               \end{blockarray} \\[\newlineskip]
-                          c_{\opLoad}
+                          \mVector{c}_{\opLoad}
                             & \begin{blockarray}{cc}
                                 \scriptstyle m_4 & \scriptstyle m_5 \\[\lskip]
                                 \begin{block}{[cc]}
@@ -1507,6 +1511,15 @@ An example of a full \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
 
 
 \paragraph{Handling DAG-shaped Patterns}
+
+The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
+%
+To handle \gls{DAG}-shaped \glspl{pattern}, the model must be extended.
+%
+First assume a \gls{grammar} that allows multi-output \glspl{instruction} to be
+described as \gls{complex.r} \glspl{rule}, where each result is described with a
+\gls{production}.
+
 
 \todo{write}
 
