@@ -1347,21 +1347,17 @@ Intuitively, one can interpret this definition as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVar{x}_i$ is a decision vector with $k$~elements, where
+Then $\mVar{x}_i$ is a decision variable with $k$~elements, where
 \mbox{$\mVar{x}_i[j] = 1$} means that choice~$j$ has been selected for
 decision~$i$.
 %
-For each decision vector, the condition \mbox{$\mVar{x}_i
+For each decision variable, the condition \mbox{$\mVar{x}_i
   \raisebox{0pt}[\height-2pt]{$\mVector{1}^T$} = 1$} ensures that exactly one
 choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
-decisions~$i$ and~$j$ are represented through a cost matrix~$C_{ij}$.%
-%
-\footnote{In this dissertation, vectors representing decisions are typeset in
-  bold face and vectors representing fixed values, such as costs, are typeset in
-  italics with an arrow on top.}
+decisions~$i$ and~$j$ are represented through a cost matrix~$C_{ij}$.
 
 In this context, $\mVar{x}_i$ decides whether to select a particular \gls{match}
 to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
