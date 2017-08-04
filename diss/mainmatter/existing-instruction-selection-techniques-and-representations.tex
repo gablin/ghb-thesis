@@ -1286,7 +1286,7 @@ The idea is to model such \glspl{instruction} using \gls!{complex.r}[
   \glspl{rule}], which each consists of multiple \glspl{production} -- one for
 every result.
 %
-\labelPage{multi-output-grammars}
+\labelPage{extended-machine-grammars}
 %
 In this dissertation, such \glspl{production} and their \glspl{pattern} are
 called \gls!{proxy.r}[ \glspl{rule}]%
@@ -1604,15 +1604,11 @@ The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
 %
 To handle \gls{DAG}-shaped \glspl{pattern}, the model must be extended.
 %
-First assume a \gls{grammar} similar to that of
-\textcite{ScharwaechterEtAl:2007} (see \refPage{multi-output-grammars}), where
-multi-output \glspl{instruction} are described using \gls{complex.r}
-\glspl{rule}.
+First assume an extended \gls{grammar} where multi-output \glspl{instruction}
+are described using \gls{complex.r} \glspl{rule} (described
+on \refPage{extended-machine-grammars}, see also
+\refFigure{extended-machine-grammar-rule-anatomy}).
 %
-In this context, \glspl{rule} with a single \gls{production} are called
-\gls!{simple.r}[ \glspl{rule}], and \glspl{production} of \gls{complex.r}
-\glspl{rule} are loosely called \gls!{proxy.r}[ \glspl{rule}].
-
 For each combination of \glspl{match} derived from \gls{proxy.r} \glspl{rule}
 that can be combined into an instance of a \gls{complex.r} \gls{rule}, a
 \gls!{complex.m}[ \gls{match}] is created.
