@@ -525,9 +525,11 @@ It first constructs a cost matrix~$C$, where rows represent \glspl{node} in the
 \gls{expression tree} and columns represent \glspl{nonterminal} in the
 \gls{grammar}, which is assumed to be in \gls{normal form.g}.%
 %
-\!\footnote{The algorithm can be adapted to accept any \gls{grammar} by
-  expanding the \algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost}
-  functions to handle \glspl{rule} of arbitrary form.}
+\!\footnote{%
+  The algorithm can be adapted to accept any \gls{grammar} by expanding the
+  \algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost} functions to
+  handle \glspl{rule} of arbitrary form.
+}
 %
 The cost in each element~\mbox{$C[i][j]$} is initialized to infinity, indicating
 that there exists no sequence of \glspl{rule reduction} which reduces
@@ -1281,14 +1283,91 @@ handle \glspl{instruction} that produce multiple results.
 %
 The idea is to model such \glspl{instruction} using \gls!{complex.r}[
   \glspl{rule}], which each consists of multiple \glspl{production} -- one for
-each result.
+every result.
 %
 \labelPage{multi-output-grammars}
 %
-\Glspl{pattern} in a \gls{complex.r} \gls{rule} are called \gls!{split.p}[
-  \glspl{pattern}] and are matched individually.
+In this dissertation, such \glspl{production} and their \glspl{pattern} are
+called \gls!{proxy.r}[ \glspl{rule}]%
 %
-After \gls{pattern matching}, \glspl{match} derived from \gls{split.p}
+\footnote{%
+  In the original paper, they are called \gls!{split.r}[ \glspl{rule}].
+  %
+  This is also is inconsistent with the terminology defined
+  on \refPage{machine-grammars}, but we forsake consistency here in favor of
+  simplicity.
+}
+%
+and \gls!{proxy.p}[ \glspl{pattern}], respectively, whereas \glspl{rule} with a
+single \gls{production} and their \glspl{pattern} are called \gls!{simple.r}[
+  \glspl{rule}] and \gls!{simple.p}[ \glspl{pattern}], respectively.
+%
+The \gls{rule} structure is also illustrated in
+\refFigure{extended-machine-grammar-rule-anatomy}.
+
+\begin{figure}
+  \centering%
+  \figureFont\figureFontSize%
+  \newcommand{\simplePatternText}{%
+    \trimbox{0 4pt 0 4pt}{%
+      \begin{tabular}{@{}c@{}}
+        simple\\[-1ex]
+        pattern
+      \end{tabular}%
+    }%
+  }
+  \newcommand{\proxyPatternText}{%
+    \trimbox{0 4pt 0 4pt}{%
+      \begin{tabular}{@{}c@{}}
+        proxy\\[-1ex]
+        pattern
+      \end{tabular}%
+    }%
+  }%
+  \begin{displaymath}
+    \underbrace{
+      \mNT{A}
+      \rightarrow
+      \overbrace{
+        \irCode{op} \ldots
+      }^{\text{\simplePatternText}}
+      \quad
+      \text{cost}
+      \quad
+      \text{action}
+    }_{\text{simple rule}}
+    \qquad
+    \underbrace{
+      \langle \mNT{A}, \mNT{B}, \ldots \rangle
+      \rightarrow
+      \overbrace{
+        \langle
+          \:
+          \overbrace{\irCode{op} \ldots}^{\text{\proxyPatternText}},
+          \:
+          \overbrace{\irCode{op} \ldots}^{\text{\proxyPatternText}},
+          \:
+          \ldots
+          \:
+        \rangle
+      }^{\text{complex pattern}}
+      \quad
+      \text{cost}
+      \quad
+      \text{action}
+    }_{\text{complex rule}}
+  \end{displaymath}
+
+  \vspace*{-\baselineskip}
+
+  \caption{Anatomy of simple and complex rules in an extended machine grammar}
+  \labelFigure{extended-machine-grammar-rule-anatomy}
+\end{figure}
+
+The \gls{proxy.p} \glspl{pattern} are matched individually together with the
+\gls{simple.p} \glspl{pattern}.
+%
+After \gls{pattern matching}, \glspl{match} derived from \gls{proxy.p}
 \glspl{pattern} are then either combined -- indicating use of the
 \gls{complex.r} \gls{rule} -- or kept -- indicating use of \glspl{rule} that
 only produce a single result.
@@ -1306,7 +1385,7 @@ facilitate \gls{register allocation}.
 %
 Also, a shortcoming of both designs -- that \gls{complex.r} \glspl{rule} can
 only consist of disconnected \glspl{pattern}, hence forbidding sharing of values
-across the \gls{split.p} \glspl{pattern} -- was addressed by
+across the \gls{proxy.p} \glspl{pattern} -- was addressed by
 \textcite{YounEtAl:2011} by introducing the use of index subscripts for the
 \glspl{node} representing the input arguments.
 
