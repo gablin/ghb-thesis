@@ -213,6 +213,7 @@ form, which will therefore be discussed first.
 
 
 \paragraph{Machine Grammars}
+\labelPage{machine-grammars}
 
 The \gls{instruction set} of a \gls{target machine} is typically described in a
 machine-readable \gls{machine description}, which can take many forms.
@@ -1623,10 +1624,38 @@ whether $i$ is selected.
 Because of the \raisebox{0pt}[\height-2pt]{$\mVar{x}_i \mVector{1}^T = 1$}
 condition, every such variable has exactly two elements (one representing
 \emph{on} and the other \emph{off}).
+%
+Like with the \gls{simple.r} \glspl{rule}, the costs of selecting a
+\gls{complex.m} \gls{rule} and interactions between these -- for example, two
+\gls{complex.m} \glspl{match} are not allowed to overlap or cause cyclic data
+dependencies -- are represented through the cost vectors and matrices.
 
-\todo{cost vectors and matrices for complex rules}
+In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
+\glspl{rule} must also be selected.
+%
+This is achieved by first extending, for each node~$i$, the domain of its
+decision variable~$\mVar{x}_i$ with \glspl{match} derived from \gls{proxy.r}
+\glspl{rule}.
+%
+Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
+and \gls{complex.m} \gls{match}~$j$, the costs are 0 if \mbox{$\mVar{x}_j =
+  \text{\emph{off}}$} or $\mVar{x}_i$ is set to a \gls{proxy.r} \gls{rule}
+associated with $j$.
+%
+Otherwise the costs are $\infty$.
+%
+The \gls{PBQP} model is then augmented with another sum
+%
+\begin{equation}
+  \sum_{i \in N, j \in M} \mVar{x}_i D_{ij} \mVar{x}_j^T
+\end{equation}
+%
+where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
+the set of \gls{complex.m} \glspl{match}.
+%
+Hence ...
 
-\todo{selection of complex rule requires selection of all of its split rules}
+\todo{finish paragraph}
 
 
 
