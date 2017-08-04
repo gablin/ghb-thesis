@@ -1680,6 +1680,25 @@ transformations~\cite{LoweEhrig:1991}.
 
 \subsection{IP-based Approaches}
 
+Several approaches model \gls{instruction selection} using \gls!{IP}, which is a
+method for solving combinatorial optimization problems.
+%
+An \gls{IP} problem is formally defined as follows:
+%
+\begin{equation}
+  \begin{array}{rl}
+    \text{maximize} & \mVector{c}^T \mVar{x} \\
+    \text{subject to} & A \mVar{x} \leq \mVector{b}, \\
+      & \mVar{x} \geq 0, \\
+    \text{and} & \mVar{x} \in \mathbb{Z}^n, \\
+  \end{array}
+\end{equation}
+%
+where $\mVector{c}$ and $\mVector{b}$ are integer vectors and $A$ is an integer
+matrix.
+%
+\Gls{IP} is often also referred to as \gls!{ILP}.
+
 \todo{describe idea}
 
 
