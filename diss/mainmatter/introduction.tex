@@ -6,9 +6,24 @@
 
 \chapter{Introduction}
 
-\todo{write chapter outline}
+This chapter provides an introduction to this dissertation.
+%
+\refSection{overview} describes the problems addressed by this work, and
+\refSection{motivation} gives a motivation for why these problems matter.
+%
+\refSection{thesis-statement} presents the thesis statement,
+\refSection{approach} discusses the proposed approach, and
+\refSection{research-methods} describes the methods applied in this research.
+%
+\refSection{contributions} summarizes the main contributions of the
+dissertation, and \refSection{publications} lists the underlying publications.
+%
+Lastly, \refSection{outline} outlines the structure of the dissertation.
+
+
 
 \section{Overview}
+\labelSection{overview}
 
 \begin{figure}
   \centering%
@@ -93,6 +108,7 @@ problems by proposing ideas on how to extend the model to integrate
 
 
 \section{Motivation}
+\labelSection{motivation}
 
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
@@ -384,6 +400,7 @@ The \gls{instruction selector} must therefore be aware of additional jump
 \glspl{instruction} that may be required when making such decisions.
 
 \section{Thesis Statement}
+\labelSection{thesis-statement}
 
 This dissertation proposes an approach where the tasks of \gls{instruction
   selection}, \gls{global code motion}, and \gls{block ordering} are combined
@@ -414,6 +431,7 @@ other, related tasks of \gls{code generation}.
 
 
 \section{Approach}
+\labelSection{approach}
 
 \begin{figure}
   \centering%
@@ -451,10 +469,12 @@ containing the selected \glspl{instruction}.
 
 
 \section{Research methods}
+\labelSection{research-methods}
 
 \todo{write}
 
 \section{Contributions}
+\labelSection{contributions}
 
 The dissertation makes six contributions to the areas of \gls{code generation}
 and \gls{constraint programming}:
@@ -738,6 +758,7 @@ is manifested and discussed further.
 \end{table}
 
 \section{Publications}
+\labelSection{publications}
 
 This dissertation is based on material presented in the following publications:
 %
@@ -839,6 +860,7 @@ belongs to a different topic entirely (high-level code generation for graphics
 processors).
 
 \section{Outline}
+\labelSection{outline}
 
 \todo{Describe chapters}
 \todo{Add figure illustrating how to read the dissertation}
