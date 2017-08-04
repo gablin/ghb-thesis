@@ -972,7 +972,7 @@ In that case, deciding to load value~\irCode{0} in shifted mode would instead
 lower code quality as the value would needlessly have to be shifted back before
 returning, which takes an extra \gls{instruction}.
 
-Lastly, these approaches are restricted to tree-shaped \glspl{pattern},
+Lastly, most of these approaches are restricted to tree-shaped \glspl{pattern},
 meaning they only support \glspl{instruction} that produce a single value.
 %
 Many \glspl{instruction set}, however, contain \glspl{instruction} that produce
@@ -980,7 +980,8 @@ multiple values, such as memory \glspl{instruction} that load a value from
 memory while simultaneously incrementing the address.
 %
 Modeling such \glspl{instruction} require \gls{DAG}-shaped \glspl{pattern},
-which violate underlying assumptions made by the aforementioned approaches.
+which violate underlying assumptions made by many of the aforementioned
+approaches.
 
 
 
