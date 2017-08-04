@@ -1653,6 +1653,17 @@ The \gls{PBQP} model is thus augmented with another sum
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
 the set of \gls{complex.m} \glspl{match}.
 
+This alone, however, allows \glspl{solution} where all \gls{proxy.r}
+\glspl{rule} but none of the \gls{complex.r} \glspl{rule} are selected.
+%
+This is resolved by assigning an artificially large cost~$K$ to the selection of
+\gls{proxy.r} \glspl{rule}, which is offset when selecting the corresponding
+\gls{complex.r} \gls{rule}.
+%
+For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
+\gls{proxy.r} \glspl{rule}, then the new cost of selecting $r$ is \mbox{$2 -
+  3K$}.
+
 
 
 \paragraph{Applications}
