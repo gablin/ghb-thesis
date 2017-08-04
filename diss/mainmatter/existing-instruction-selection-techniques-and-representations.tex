@@ -1680,9 +1680,10 @@ transformations~\cite{LoweEhrig:1991}.
 
 \subsection{IP-based Approaches}
 
-Several approaches model \gls{instruction selection} using \gls!{IP}, which is a
-method for solving combinatorial optimization problems (see \cite{Wolsey:1998}
-for an overview).
+Several approaches model \gls{instruction selection} using \gls!{IP} -- often
+also referred to as \gls!{integer linear programming} -- which is a method for
+solving combinatorial optimization problems (see \cite{Wolsey:1998} for an
+overview).
 %
 An \gls{IP} problem is defined as follows:
 %
@@ -1698,7 +1699,11 @@ An \gls{IP} problem is defined as follows:
 where $\mVector{c}$ and $\mVector{b}$ are integer vectors and $A$ is an integer
 matrix.
 %
-\Gls{IP} is often also referred to as \gls!{ILP}.
+Such problems are NP-complete in general, but extensive research in the field
+has made \gls{IP} a practical tool for solving problems containing tens of
+thousands of variables.
+
+
 
 \todo{discuss \cite{WilsonEtAl:1994}}
 
