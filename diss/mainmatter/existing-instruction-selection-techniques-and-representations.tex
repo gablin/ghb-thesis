@@ -1640,7 +1640,11 @@ associated with $j$.
 %
 Otherwise the costs are $\infty$.
 %
-The \gls{PBQP} model is then augmented with another sum
+Consequently, if a \gls{complex.m} \gls{match} covering some node~$n$ is
+selected, then the only choice for $\mVar{x}_n$ with non-infinite cost is an
+associated \gls{proxy.r} \gls{rule}.
+%
+The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
   \sum_{i \in N, j \in M} \mVar{x}_i D_{ij} \mVar{x}_j^T
@@ -1648,10 +1652,6 @@ The \gls{PBQP} model is then augmented with another sum
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
 the set of \gls{complex.m} \glspl{match}.
-%
-Hence ...
-
-\todo{finish paragraph}
 
 
 
