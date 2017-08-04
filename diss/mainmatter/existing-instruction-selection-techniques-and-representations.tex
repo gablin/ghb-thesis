@@ -1406,7 +1406,7 @@ Although both problems are NP-complete in general, a subclass of \gls{PBQP} can
 be solved in linear time which inspired \citeauthor{ScholzEckstein:2002} in
 developing a greedy, linear-time solver.
 
-A \gls{PBQP} is formally defined as follows:
+A \gls{PBQP} is defined as follows:
 %
 \begin{equation}
   \begin{array}{rll}
@@ -1415,7 +1415,7 @@ A \gls{PBQP} is formally defined as follows:
           \displaystyle\sum_{1 \leq i < j \leq n} \mVar{x}_i^T C_{ij} \mVar{x}_j +
           \displaystyle\sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i\!,%
         } \\
-    \text{such that}
+    \text{subject to}
       & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!
       & \forall 1 \leq i \leq n, \\
     \text{and}
@@ -1683,7 +1683,7 @@ transformations~\cite{LoweEhrig:1991}.
 Several approaches model \gls{instruction selection} using \gls!{IP}, which is a
 method for solving combinatorial optimization problems.
 %
-An \gls{IP} problem is formally defined as follows:
+An \gls{IP} problem is defined as follows:
 %
 \begin{equation}
   \begin{array}{rl}
