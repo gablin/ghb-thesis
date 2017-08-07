@@ -1703,24 +1703,56 @@ Such problems are NP-complete in general, but extensive research in the field
 has made \gls{IP} a practical tool for solving problems containing tens of
 thousands of variables.
 
+In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
+%
+\begin{equation}
+  \sum_{i \in \mCovers(n)} \mVar{x}_i = 1, \forall n \in N,
+\end{equation}
+%
+where $N$ denotes the set of nodes in a \gls{block DAG}, $\mCovers(n)$ denotes
+the set of \glspl{match} covering node~$n$, and $\mVar{x}_i$ is a Boolean
+decision variable indicating whether match~$i$ is selected.
 
 
-\todo{discuss \cite{WilsonEtAl:1994}}
+
+\paragraph{Applications}
+
+Although mostly known for their work in \gls!{integrated.cg}[ \gls{code
+    generation}] -- meaning \gls{instruction selection}, \gls{instruction
+  scheduling} and \gls{register allocation} is solved in unison --
+\textcite{WilsonEtAl:1994} also pioneered the use of \gls{IP} for modeling
+\gls{instruction selection}.
+%
+Their design performs \gls{global.is} \gls{instruction selection} on a
+\gls{function graph} that has been augmented with additional copy
+\glspl{operation} to represent potential \gls!{register spilling}.%
+%
+\footnote{If there are not enough \glspl{register} to allocate for all
+  \gls{program} variables, then one or more \glspl{register} must be freed.
+  %
+  This is done by spilling their values to memory, which must then be copied
+  back before use.%
+}
+%
+In most cases, not all copies are needed and therefore not all \glspl{operation}
+must be covered.
+%
+Consequently, \citeauthor{WilsonEtAl:1994} model \gls{pattern selection} as
+\mbox{$\sum_{i \in \mCovers(n)} \mVar{x}_i \leq 1$}.
+
+Another approach for \gls{integrated.cg} \gls{code generation} was made by
+\textcite{BednarskiKessler:2006}, whose work was later applied by
+\citeauthor{ErikssonEtAl:2008}~\cite{ErikssonEtAl:2008, ErikssonKessler:2012}.
+%
+\todo{discuss pattern matching}
+\todo{say something about the approach}
+
 
 \todo{discuss \cite{LeupersMarwedel:1995,LeupersMarwedel:1996}}
 
 \todo{discuss \cite{Leupers:2000}}
 
 \todo{discuss \cite{Gebotys:1997}}
-
-\todo{discuss
-  \cite{BednarskiKessler:2006,ErikssonEtAl:2008,ErikssonKessler:2012}}
-
-
-
-\paragraph{Applications}
-
-\todo{write}
 
 
 
@@ -1731,5 +1763,11 @@ thousands of variables.
 
 
 \paragraph{Applications}
+
+\todo{write}
+
+
+
+\subsection{Limitations of Existing Combinatorial Approaches}
 
 \todo{write}
