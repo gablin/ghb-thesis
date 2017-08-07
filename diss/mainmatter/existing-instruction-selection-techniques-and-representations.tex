@@ -1743,11 +1743,21 @@ Consequently, \citeauthor{WilsonEtAl:1994} model \gls{pattern selection} as
 \mbox{$\sum_{i \in \mCovers(n)} \mVar{x}_i \leq 1$}.
 
 Another approach for \gls{integrated.cg} \gls{code generation} was made by
-\textcite{BednarskiKessler:2006}, whose work was later applied by
+\textcite{BednarskiKessler:2006}, whose design was later reused by
 \citeauthor{ErikssonEtAl:2008}~\cite{ErikssonEtAl:2008, ErikssonKessler:2012}.
 %
-\todo{discuss pattern matching}
-\todo{say something about the approach}
+Unlike all other \gls{instruction selection} approaches,
+\citeauthor{BednarskiKessler:2006} combine \gls{pattern matching} and
+\gls{pattern selection}.
+%
+Consequently, in addition to the variables that decide which \glspl{match} are
+selected, their \gls{IP}~model also has decision \glspl{variable} that, for each
+\gls{match}, maps \glspl{node} and \glspl{edge} in the \gls{block DAG} to
+\glspl{node} and \glspl{edge} in a \gls{pattern}.
+%
+An upper bound on the number of \glspl{match} needed is computed using a
+heuristic.
+
 
 
 \todo{discuss \cite{LeupersMarwedel:1995,LeupersMarwedel:1996}}
