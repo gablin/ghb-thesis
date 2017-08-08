@@ -767,8 +767,10 @@ The main disadvantage of operating on \glspl{expression tree} is that common
 subexpressions have to be either split along the \glspl{edge} or duplicated when
 building the \gls{IR}.
 %
-Depending on the \gls{instruction set}, these decisions can prevent selection of
-\glspl{instruction} that would lead to higher code quality.
+These transformations are referred to as \gls!{edge splitting} and \gls!{node
+  duplication}, respectively, and depending on the \gls{instruction set}, these
+decisions can prevent selection of \glspl{instruction} that would lead to higher
+code quality.
 %
 An example illustrating this effect is shown in
 \refFigure{exp-trees-limit-example}.
@@ -783,10 +785,10 @@ If represented as a \gls{block DAG} (see
 matches matches~$m_4$ and~$m_5$, resulting in a total cost is \mbox{$4 + 5 =
   9$}.
 %
-Duplicating the \glspl{node} of the common subexpression would, in this case,
-yield the same \glspl{cover}, but would have resulted in suboptimal code in
-cases where the \instrCode{addmul} and \instrCode{addload} \glspl{instruction}
-are not available.
+\Glsshort{node duplication}[ing] the \glspl{node} of the common subexpression
+would, in this case, yield the same \glspl{cover}, but would have resulted in
+suboptimal code in cases where the \instrCode{addmul} and \instrCode{addload}
+\glspl{instruction} are not available.
 
 
 
@@ -819,21 +821,22 @@ and the size of its \gls{pattern}.
 %
 In addition to being non-optimal, however, it also suffers from the same
 drawback as \glspl{expression tree} regarding whether to select \glspl{cover}
-that effectively split or duplicate the common subexpressions.
+that effectively \glsshort{edge splitting} or \glsshort{node duplication}[e] the
+common subexpressions.
 
 
 
 \paragraph{Balancing Splitting and Duplication}
 
-Several approaches have been made in attempting to balance splitting and
-duplication.
+Several approaches have been made in attempting to balance \gls{edge splitting}
+and \gls{node duplication}.
 %
 \textcite{FauthEtAl:1994} designed an heuristic algorithm that rewrites the
 \gls{block DAG} into \glspl{expression tree} before \gls{instruction
   selection}.
 %
-Using a rough estimate of cost, the algorithm favors \gls{node} duplication and
-resorts to \gls{edge} splitting when the former becomes too costly.
+Using a rough estimate of cost, the algorithm favors \gls{node duplication} and
+resorts to \gls{edge splitting} when the former becomes too costly.
 %
 Once rewritten, the \glspl{expression tree} are covered using an improved
 variant of \refAlgorithm{aho-etal-cost-algorithm}.
@@ -842,9 +845,9 @@ variant of \refAlgorithm{aho-etal-cost-algorithm}.
 \refAlgorithm{aho-etal-cost-algorithm} can be adapted to produce optimal
 \glspl{cover} for \glspl{block DAG}.
 %
-The idea is to first compute the costs for
-each \gls{node} as if the \gls{block DAG} had been rewritten into a
-\gls{expression tree} using duplication.
+The idea is to first compute the costs for each \gls{node} as if the \gls{block
+  DAG} had been rewritten into a \gls{expression tree} using \gls{node
+  duplication}.
 %
 Then, if several \glspl{rule} reduce the same \gls{node} to the same
 \gls{nonterminal}~$n$, then $n$ can be shared between the \glspl{rule} whose
@@ -856,13 +859,13 @@ Then, if several \glspl{rule} reduce the same \gls{node} to the same
 
 \textcite{KoesGoldstein:2008} combined the ideas by \citeauthor{FauthEtAl:1994}
 and \citeauthor{Ertl:1999} by introducing a design that first uses
-\refAlgorithm{aho-etal-cost-algorithm} to compute the costs for a duplicated
-\gls{expression tree}.
+\refAlgorithm{aho-etal-cost-algorithm} to compute the costs for a \glsshort{node
+  duplication}[ed] \gls{expression tree}.
 %
 Then, at each \glspl{node}~$n$ where several \glspl{pattern} in the optimal
 \gls{cover} overlap in the \gls{block DAG}, two costs are estimated: the cost
-incurred by allowing overlap, and the cost incurred by splitting the
-\glspl{edge}.
+incurred by allowing overlap, and the cost incurred by \glsshort{edge
+  splitting}[ting] the \glspl{edge}.
 %
 If the latter cost is less then $n$ is marked as \gls!{fixed.n}, meaning it can
 only be covered by \glspl{pattern} where $n$ is the root \gls{node}.
@@ -874,9 +877,10 @@ recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 \paragraph{Limitations}
 
-Although using \glspl{block DAG} addresses the issue of whether to split or
-duplicate common subexpressions within a \gls{block}, the problem still remains
-for expressions that are spread across multiple \glspl{block}.
+Although using \glspl{block DAG} addresses the issue of whether to
+\glsshort{edge splitting} or \glsshort{node duplication}[e] common
+subexpressions within a \gls{block}, the problem still remains for expressions
+that are spread across multiple \glspl{block}.
 %
 To fully address this problem, one must resort to \glspl{function graph}.
 
@@ -1137,7 +1141,7 @@ tree roots.
 %
 Root candidates are \glspl{node} representing \glspl{operation} whose result are
 shared or \glspl{operation} with side effects and may therefore not be
-duplicated.
+\glsshort{node duplication}[ed].
 %
 The selection of roots is geared towards duplicating address computations and
 other expressions that can be subsumed into a single \gls{instruction}.
@@ -1376,8 +1380,8 @@ After \gls{pattern matching}, \glspl{match} derived from \gls{proxy.p}
 only produce a single result.
 %
 This is done according to a heuristic that estimates the cost saved by using the
-\gls{complex.r} \gls{rule} versus the cost incurred by having to duplicate
-\glspl{node} in common subexpressions.
+\gls{complex.r} \gls{rule} versus the cost incurred by having to \glsshort{node
+  duplication}[e] \glspl{node} in common subexpressions.
 %
 Once these decisions have been taken, the \gls{interference graph} is built and
 the \gls{MWIS} found using a greedy heuristic~\cite{SakaiEtAl:2003}.
@@ -1794,7 +1798,7 @@ selecting \gls{SIMD.instr} \glspl{instruction}.
 Again, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.instr}
 \gls{instruction} is decomposed into trees, but in this approach they are used
 for covering a \gls{block DAG} that has been transformed into \glspl{expression
-  tree} through \gls{edge} splitting.
+  tree} through \gls{edge splitting}.
 %
 Since the potential of using \gls{SIMD.instr} \glspl{instruction} can be
 increased by allowing them to cover \glspl{node} from multiple \glspl{expression
@@ -1902,7 +1906,32 @@ match covers either no \glspl{node} or all \glspl{node} in its \gls{pattern}.
 
 \paragraph{Applications}
 
-\todo{discuss \cite{BashfordLeupers:1999}}
+The use of \gls{CP}-based \gls{instruction selection} appears to have been
+pioneered by \textcite{BashfordLeupers:1999}.
+%
+To generate code for highly irregular \glspl{DSP},
+\citeauthor{BashfordLeupers:1999} used \gls{CP} to model the interactions
+between \gls{instruction selection} and the use of processor resources, such as
+functional units and \glspl{register}.
+%
+Consequently, the approach essentially combines \gls{instruction selection} with
+a form of \gls{register allocation}.
+%
+Glossing over the details, the approach works as follows.
+%
+For each \gls{operation}, a so-called \gls!{FRT} is built which encodes the
+resource requirements for the operands and result and the cost of every
+\gls{instruction} that may be used to implement such \glspl{operation}.
+%
+Taking a \gls{block DAG} as input, the problem is to cover all \glspl{node}
+using \glspl{FRT} such that all resource requirements are fulfilled.
+%
+Special resources are available for \glspl{instruction} that cover multiple
+\glspl{node}, allowing adjacent \glspl{node} to be covered by the same
+\gls{instruction}.
+%
+To solve this problem, \citeauthor{BashfordLeupers:1999} modeled it as a
+\gls{constraint model}.
 
 \todo{discuss \cite{Beg:2013}}
 
