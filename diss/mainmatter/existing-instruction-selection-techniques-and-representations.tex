@@ -1894,14 +1894,24 @@ which \gls{match} covers~$n$.
 Also, for each match~$m$, \glsshort{decision variable} \mbox{$\mVar{count}_m \in
   \mSet{0, |\mCovers(m)|}$} decides how many \glspl{node} are covered by $m$.
 %
-With these, \gls{pattern selection} can be modeled as
+Hence each match covers either no \glspl{node} or all \glspl{node} in its
+\gls{pattern}.
+%
+With these \glsplshort{decision variable}, \gls{pattern selection} can be
+modeled as
 %
 \begin{equation}
-  \mCount(m, \mVar{match}, =, \mVar{count}_m), \forall m \in M.
+  \mCount(
+    m,
+    \cup_{n \in \mCovers(m)} \, \mVar{match}_n,
+    =,
+    \mVar{count}_m
+  ),
+  \forall m \in M,
 \end{equation}
 %
-Because of the domain of the $\mVar{count}$~\glsplshort{decision variable}, each
-match covers either no \glspl{node} or all \glspl{node} in its \gls{pattern}.
+which is more restrictive than \refEquation{pattern-selection-in-ip} and thus
+reduces solving time~\cite{FlochEtAl:2010}.
 
 
 
