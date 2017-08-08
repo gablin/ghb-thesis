@@ -1933,11 +1933,23 @@ Special resources are available for \glspl{instruction} that cover multiple
 To solve this problem, \citeauthor{BashfordLeupers:1999} modeled it as a
 \gls{constraint model}.
 
-\todo{discuss \cite{Beg:2013}}
+\textcite{MartinEtAl:2009, MartinEtAl:2012} developed a \gls{constraint model}
+that integrates \gls{instruction selection} and \gls{instruction scheduling}.
+%
+Because they target \glspl{ASIP}, the \glspl{pattern} are not predefined but
+must be found prior to \gls{instruction selection}.
+%
+For this task \citeauthor{MartinEtAl:2009} applied a \gls{CP}-based
+\glshyphened{pattern matching} algorithm, described
+in~\cite{WolinskiKuchcinski:2007}, and then modeled \gls{pattern selection} as
+in \refEquation{pattern-selection-in-ip} in another \gls{constraint model}.
+%
+The rest of the \glsshort{constraint model}, however, is devoted to
+\gls{instruction scheduling}.
 
 \todo{discuss \cite{FlochEtAl:2010}}
 
-\todo{discuss \cite{MartinEtAl:2009, MartinEtAl:2012}}
+\todo{discuss \cite{Beg:2013}}
 
 \todo{discuss \cite{ArslanKuchcinski:2014}}
 
