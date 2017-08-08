@@ -1835,7 +1835,68 @@ where \glspl{Horn clause} are applied to model \gls{register allocation}
 
 \subsection{CP-based Approaches}
 
-\todo{describe idea}
+Another method for solving combinatorial optimization problems is \gls!{CP},
+which is discussed in detail in \refChapter{constraint-programming} (hence only
+a brief introduction will be given here).
+%
+Like \gls{IP}, a \gls{CP}~model consists of a set of \glspl{decision variable},
+a set of \glspl{constraint} over the \glspl{variable}, and typically also an
+objective function to either minimize or maximize.
+%
+A crucial difference, however, is that \glspl{constraint} are not limited to
+linear equations.
+%
+Instead, relations among multiple \glspl{variable} are modeled using
+\gls{global.c} \glspl{constraint}, which simplifies modeling and improves
+solving.
+
+
+
+\paragraph{Modeling Pattern Selection Using Global Constraints}
+
+\def\mBinaryRel{\Join}
+
+\Gls{pattern selection} can be modeled using a \gls{global.c} \gls{constraint}
+called the \gls!{global cardinality constraint}.
+%
+The \gls{constraint}, which is typically referred to as $\mCount$ or $\mGCC$, is
+defined as follows:
+%
+\begin{equation}
+  \mCount(v, \mVar{x}, \mBinaryRel, l)
+  \equiv
+  |\mSetBuilder*{\mVar{x}_i}{\mVar{x}_i = v}| \mBinaryRel l.
+\end{equation}
+%
+In other words, if $N$ is the number of \glspl{decision variable} in the
+set~$\mVar{x}$, then $\mCount$ enforces that \mbox{$N \mBinaryRel l$} holds,
+where $\mBinaryRel$ is a binary relation.
+%
+For example, the constraint \mbox{$\mCount(4, \langle \mVar{x}_1 = 4, \mVar{x}_2
+  = 5, \mVar{x}_3 = 6 \rangle, \leq, 1)$} holds since at most one
+\glsshort{decision variable} is assigned the value~4.
+
+To model \gls{pattern selection} using $\mCount$, two new sets of
+\glspl{decision variable} are needed.
+%
+Assume that $M$ denotes the \gls{match set} and $\mCovers(m)$ denotes the set of
+\glspl{node} covered by \gls{match}~$m$.
+%
+Then, for each node~$n$ to be covered, \glsshort{decision variable}
+\mbox{$\mVar{match}_n \in \mSetBuilder{m}{m \in M, i \in \mCovers(m)}$} decides
+which \gls{match} covers~$n$.
+%
+Also, for each match~$m$, \glsshort{decision variable} \mbox{$\mVar{count}_m \in
+  \mSet{0, |\mCovers(m)|}$} decides how many \glspl{node} are covered by $m$.
+%
+With these, \gls{pattern selection} can be modeled as
+%
+\begin{equation}
+  \mCount(m, \mVar{match}, =, \mVar{count}_m), \forall m \in M.
+\end{equation}
+%
+Because of the domain of the $\mVar{count}$~\glsplshort{decision variable}, each
+match covers either no \glspl{node} or all \glspl{node} in its \gls{pattern}.
 
 
 

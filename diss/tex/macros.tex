@@ -212,6 +212,7 @@
 
 
 % Constraint model-related commands
+\newcommand{\mConstraintFont}[1]{\textsc{#1}}
 \newcommand{\mBrPattern}{g_{\mathrm{br}}}
 \newcommand{\mKill}{\times}
 \newcommand{\mNull}{\bot}
@@ -241,8 +242,9 @@
 }
 \newcommand{\mLlvmCost}{C_{\textsc{llvm}}}
 \newcommand{\mRelaxedCost}{C_{\textsc{rlx}}}
-\DeclareMathOperator{\mCircuit}{\mFunFont{circuit}}
+\DeclareMathOperator{\mCircuit}{\mConstraintFont{Circuit}}
 \DeclareMathOperator{\mConsumes}{\mFunFont{consumes}}
+\DeclareMathOperator{\mCount}{\mConstraintFont{Count}}
 \DeclareMathOperator{\mCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mCovers}{\mFunFont{covers}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
@@ -250,6 +252,7 @@
 \DeclareMathOperator{\mEmptyBlock}{\mFunFont{empty}}
 \DeclareMathOperator{\mEntry}{\mFunFont{entry}}
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
+\DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
 \DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mRank}{\mFunFont{rank}}
