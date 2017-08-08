@@ -1870,6 +1870,7 @@ defined as follows:
   \mCount(v, \mVar{x}, \mBinaryRel, l)
   \equiv
   |\mSetBuilder*{\mVar{x}_i}{\mVar{x}_i = v}| \mBinaryRel l.
+  \labelEquation{pattern-selection-using-count}
 \end{equation}
 %
 In other words, if $N$ is the number of \glspl{decision variable} in the
@@ -1946,8 +1947,11 @@ in \refEquation{pattern-selection-in-ip} in another \gls{constraint model}.
 %
 The rest of the \glsshort{constraint model}, however, is devoted to
 \gls{instruction scheduling}.
+%
+\textcite{FlochEtAl:2010} later reused the \gls{constraint model} but replaced
+the modeling for \gls{pattern selection} with
+\refEquation{pattern-selection-using-count}.
 
-\todo{discuss \cite{FlochEtAl:2010}}
 
 \todo{discuss \cite{Beg:2013}}
 
