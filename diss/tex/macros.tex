@@ -172,8 +172,19 @@
   2^{#1}
 }\newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
-\newcommand{\mSet}[1]{\left\{ #1 \right\}}
-\newcommand{\mSetBuilder}[2]{\mSet{#1 \:|\: #2}}
+\NewDocumentCommand{\mSet}{sm}{%
+  \IfBooleanF{#1}{\left}\{%
+    #2%
+  \IfBooleanF{#1}{\right}\}%
+}
+\def\mSetSep{\mid}%
+\NewDocumentCommand{\mSetBuilder}{smm}{%
+  \IfBooleanTF{#1}{%
+    \mSet*{#2 \mSetSep #3}%
+  }{%
+    \mSet{#2 \mSetSep #3}%
+  }%
+}
 \newcommand{\mCard}[1]{\left| #1 \right|}
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
