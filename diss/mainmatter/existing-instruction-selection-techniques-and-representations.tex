@@ -1711,6 +1711,7 @@ In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 \begin{equation}
   \sum_{i \in \mCovers(n)} \mVar{x}_i = 1, \forall n \in N,
+  \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
 where $N$ denotes the set of nodes in a \gls{block DAG}, $\mCovers(n)$ denotes
@@ -1807,7 +1808,20 @@ to take the cost of data transfers into account by extending the \gls{block DAG}
 with additional copy \glspl{node}, which is needed for architectures with
 irregular \glspl{instruction set}.
 
-\todo{discuss \cite{Gebotys:1997}}
+The last \gls{IP}-based approach to be discussed is that of
+\textcite{Gebotys:1997}, who applied to the theory of \glspl{Horn clause} to
+\gls{code generation}.
+%
+A \gls!{Horn clause} is a disjunctive Boolean formula that contains at most one
+positive (unnegated) literal, and \gls{IP}~models built using \glspl{Horn
+  clause} can be solved in linear time~\cite{Hooker:1988}.
+%
+\citeauthor{Gebotys:1997} exploited this fact in developing an \gls{IP}~model
+where \glspl{Horn clause} are applied to model \gls{register allocation}
+\gls{instruction compaction}.
+%
+\Gls{pattern selection}, however, is modeled as in
+\refEquation{pattern-selection-in-ip}.
 
 
 
