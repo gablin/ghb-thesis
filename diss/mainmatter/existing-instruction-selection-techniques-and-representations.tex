@@ -23,7 +23,7 @@ techniques discussed in most \gls{compiler} textbooks, and derivations thereof.
 %
 \Glsshort!{combinatorial approach} approaches include techniques that solve
 \gls{instruction selection} using a model that consists of \glspl{variable},
-constraints, and an objective function.
+\glspl{constraint}, and an objective function.
 %
 The model is then solved using either complete methods or greedy heuristics.
 %
@@ -1430,11 +1430,11 @@ Intuitively, one can interpret this definition as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVar{x}_i$ is a decision variable with $k$~elements, where
+Then $\mVar{x}_i$ is a \gls!{decision variable} with $k$~elements, where
 \mbox{$\mVar{x}_i[j] = 1$} means that choice~$j$ has been selected for
 decision~$i$.
 %
-For each decision variable, the condition
+For each \gls{decision variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^T \mVar{x}_i = 1$} ensures that exactly
 one choice is selected.
 %
@@ -1615,12 +1615,12 @@ For each combination of \glspl{match} derived from \gls{proxy.r} \glspl{rule}
 that can be combined into an instance of a \gls{complex.r} \gls{rule}, a
 \gls!{complex.m}[ \gls{match}] is created.
 %
-Each \gls{complex.m} \gls{match}~$i$ in turn introduces a decision
-variable~\raisebox{0pt}[\height-2pt]{$\mVar{x}_i \in \mSet{0, 1}^2$} to decide
-whether $i$ is selected.
+Each \gls{complex.m} \gls{match}~$i$ in turn introduces a \gls{decision
+  variable}~\raisebox{0pt}[\height-2pt]{$\mVar{x}_i \in \mSet{0, 1}^2$} to
+decide whether $i$ is selected.
 %
 Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^T \mVar{x}_i = 1$}
-condition, every such variable has exactly two elements (one representing
+condition, every such \gls{variable} has exactly two elements (one representing
 \emph{on} and the other \emph{off}).
 %
 Like with the \gls{simple.r} \glspl{rule}, the costs of selecting a
@@ -1632,8 +1632,8 @@ In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
 \glspl{rule} must also be selected.
 %
 This is achieved by first extending, for each node~$i$, the domain of its
-decision variable~$\mVar{x}_i$ with \glspl{match} derived from \gls{proxy.r}
-\glspl{rule}.
+\gls{decision variable}~$\mVar{x}_i$ with \glspl{match} derived from
+\gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
 and \gls{complex.m} \gls{match}~$j$, the costs are 0 if \mbox{$\mVar{x}_j =
@@ -1701,11 +1701,11 @@ An \gls{IP} problem is defined as follows:
 \end{equation}
 %
 where $\mVector{c}$ and $\mVector{b}$ are integer vectors, $A$ is an integer
-matrix, and $\mVar{x}$ is a set of integer decision variables.
+matrix, and $\mVar{x}$ is a set of integer \glspl{decision variable}.
 %
 Such problems are NP-complete in general, but extensive research in the field
 has made \gls{IP} a practical tool for solving problems containing tens of
-thousands of variables.
+thousands of \glspl{variable}.
 
 In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
@@ -1733,7 +1733,8 @@ Their design performs \gls{global.is} \gls{instruction selection} on a
 \glspl{operation} to represent potential \gls!{register spilling}.%
 %
 \footnote{If there are not enough \glspl{register} to allocate for all
-  \gls{program} variables, then one or more \glspl{register} must be freed.
+  \gls{program} \glspl{variable}, then one or more \glspl{register} must be
+  freed.
   %
   This is done by spilling their values to memory, which must then be copied
   back before use.%
@@ -1753,10 +1754,10 @@ Unlike all other \gls{instruction selection} approaches,
 \citeauthor{BednarskiKessler:2006} combine \gls{pattern matching} and
 \gls{pattern selection}.
 %
-Consequently, in addition to the variables that decide which \glspl{match} are
-selected, their \gls{IP}~model also has decision \glspl{variable} that, for each
-\gls{match}, maps \glspl{node} and \glspl{edge} in the \gls{block DAG} to
-\glspl{node} and \glspl{edge} in a \gls{pattern}.
+Consequently, in addition to the \glspl{variable} that decide which
+\glspl{match} are selected, their \gls{IP}~model also has \glspl{decision
+  variable} that, for each \gls{match}, maps \glspl{node} and \glspl{edge} in
+the \gls{block DAG} to \glspl{node} and \glspl{edge} in a \gls{pattern}.
 %
 An upper bound on the number of \glspl{match} needed is computed using a
 heuristic.
