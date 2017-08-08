@@ -6,36 +6,37 @@
 
 \makeglossaries
 
-\newterm{compiler}
-\newterm{frontend}
 \newterm{backend}
-\newterm{middle-end}[see={optimizer}]
-\newterm{optimizer}[see={middle-end}]
+\newterm{block ordering}
 \newterm{code generation}
 \newterm[integrated.cg]{integrated}[parent={code generation}]
+\newterm{compiler}
 \newterm{constant folding}
+\newterm{data copying}
 \newterm{dead code elimination}
-\newterm{loop unrolling}
-\newterm{instruction selector}
-\newterm{register allocator}
-\newterm{instruction scheduler}
+\newterm{frontend}
+\newterm{global code motion}
 \newterm{global code mover}
-
 \newterm{instruction selection}
 \newterm[local.is]{local}[parent={instruction selection}]
 \newterm[global.is]{global}[parent={instruction selection}]
-\newterm{global code motion}
-\newterm{data copying}
-\newterm{block ordering}
-\newterm{value reuse}
-\newterm{register allocation}
-\newterm{register spilling}
+\newterm{instruction selector}
+\newterm{instruction scheduler}
 \newterm{instruction scheduling}
+\newterm{loop unrolling}
+\newterm{middle-end}[see={optimizer}]
+\newterm{optimizer}[see={middle-end}]
+\newterm{register allocation}
+\newterm{register allocator}
+\newterm{register spilling}
+\newterm{value reuse}
 
-\newterm{program}
-\newterm{function}
 \newterm{basic block}[see={block}]
 \newterm{block}[see={basic block}]
+\newterm{function}
+\newterm[phi-function]{\mbox{$\mPhi$-function}}[sort={$\mPhi$-function}]
+\newterm{program}
+
 \newterm{instruction}
 \newterm[SIMD.instr]%
         {SIMD}%
@@ -43,17 +44,15 @@
 \newterm{instruction set}
 \newterm{machine description}
 \newterm{register}
+\newterm{target machine}[user1={target}]
 \newterm{temporary}[plural={temporaries}]
 \newterm[virtual.temp]{virtual}[parent={temporary}]
-\newterm{target machine}[user1={target}]
-\newterm[phi-function]{\mbox{$\mPhi$-function}}[sort={$\mPhi$-function}]
 
 \newterm{context-free grammar}
-\newterm{machine grammar}[see={grammar}]
 \newterm{grammar}[see={machine grammar}]
-\newterm{terminal}
-\newterm{nonterminal}
 \newterm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
+\newterm{machine grammar}[see={grammar}]
+\newterm{nonterminal}
 \newterm{production}
 \newterm{rule}
 \newterm[base.r]{base}[parent={rule}]
@@ -67,13 +66,21 @@
 \newterm{rule result}[user1={result}]
 \newterm{state}
 \newterm{state table}
+\newterm{terminal}
 
+\newterm{block DAG}[user1={block}]
+\newterm{Click-Paleczny graph}
 \newterm{cover}
 \newterm[least-cost.c]{least-cost}[parent={cover}]
 \newterm{data-flow graph}
-\newterm{block DAG}[user1={block}]
 \newterm{expression tree}
 \newterm{function graph}[user1={function}]
+\newterm{interference graph}
+\newterm{match}[plural=matches]
+\newterm[complex.m]{complex}[parent={match}]
+\newterm{match set}
+\newterm{overlap}
+\newterm{operation}
 \newterm{pattern}[see={pattern graph}]
 \newterm[complex.p]{complex}[parent={pattern}]
 \newterm[proxy.p]{proxy}[parent={pattern}]
@@ -83,18 +90,11 @@
 \newterm{pattern selection}
 \newterm[optimal.ps]{optimal}[parent={pattern selection}]
 \newterm{pattern set}
-\newterm{match}[plural=matches]
-\newterm[complex.m]{complex}[parent={match}]
-\newterm{match set}
-\newterm{overlap}
-\newterm{operation}
 \newterm{sea-of-nodes IR}
 \newterm{SSA graph}
 \newterm{transitive closure}
 \newterm{transitive reduction order}
 \newterm{UF graph}[first={universal function (UF) graph}]
-\newterm{Click-Paleczny graph}
-\newterm{interference graph}
 
 \newacronym{CP}{constraint programming}
 \newterm{constraint}
@@ -109,21 +109,20 @@
 \newacronym{IP}{integer programming}
 \newterm{integer linear programming}
 
-\newterm{maximum munch}
 \newterm{combinatorial approach}%
         [user1={combinatorial}, plural={combinatorial approaches}]
+\newterm{maximum munch}
 \newterm{traditional approach}%
         [user1={traditional}, plural={traditional approaches}]
 
 \newterm{node}
+\newterm[fixed.n]{fixed}[parent={node}]
 \newterm{edge}
 \newterm{graph}
+\newterm{independent set}
+\newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
 \newterm{subgraph}
 \newterm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
-\newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
-\newterm{independent set}
-
-\newterm[fixed.n]{fixed}[parent={node}]
 \newterm{super node}
 
 \newacronym{BURS}{bottom-up rewriting system}
