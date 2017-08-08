@@ -402,10 +402,7 @@
 \makeatletter
 \renewcommand*{\glslinkpostsetkeys}{%
   \ifdefstring\@glsnumberformat{hyperit}%
-                               {%
-                                 \glsreset{\glslabel}%
-                                 \let\glstextformat\glsEmph%
-                               }%
+                               {\let\glstextformat\glsEmph}%
                                {\let\glstextformat\@firstofone}%
 }
 \makeatother
