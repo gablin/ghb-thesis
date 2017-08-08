@@ -1952,20 +1952,27 @@ must be found prior to \gls{instruction selection}.
 %
 For this task \citeauthor{MartinEtAl:2009} applied a \gls{CP}-based
 \glshyphened{pattern matching} algorithm, described
-in~\cite{WolinskiKuchcinski:2007}, and then modeled \gls{pattern selection} as
-in \refEquation{pattern-selection-in-ip} in another \gls{constraint model}.
+in~\cite{WolinskiKuchcinski:2007}.
 %
-The rest of the \glsshort{constraint model}, however, is devoted to
-\gls{instruction scheduling}.
+\Gls{pattern selection} is modeled as \refEquation{pattern-selection-in-ip} in
+another \gls{constraint model}, which was later improved by
+\textcite{FlochEtAl:2010} who replaced the \gls{pattern selection}
+\glspl{constraint} with \refEquation{pattern-selection-using-count}, and then
+extended by \textcite{ArslanKuchcinski:2014} for targeting \gls{VLIW}
+processors%
 %
-\textcite{FlochEtAl:2010} later reused the \gls{constraint model} but replaced
-the modeling for \gls{pattern selection} with
-\refEquation{pattern-selection-using-count}.
-
+\footnote{A \gls!{VLIW} \glsEmph{processor} is a processor that executes
+  multiple \glspl{instruction} in parallel, where the schedule has been computed
+  by the \gls{compiler} and is part of the assembly code.}
+%
+with \gls{SIMD.instr} \glspl{instruction}.
+%
+Selection of such \glspl{instruction} is done by first splitting the
+\glspl{pattern} into multiple tree-shaped \glspl{pattern}, which are matched
+individually, and then enforcing that two selected \glspl{match} belonging to
+the same \gls{instruction} must be scheduled in the same cycle.
 
 \todo{discuss \cite{Beg:2013}}
-
-\todo{discuss \cite{ArslanKuchcinski:2014}}
 
 
 
