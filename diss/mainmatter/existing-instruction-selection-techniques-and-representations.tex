@@ -1414,8 +1414,10 @@ A \gls{PBQP} is defined as follows:
   \begin{array}{rll}
     \text{minimize}
       & \multicolumn{2}{c}{
-          \displaystyle\sum_{1 \leq i < j \leq n} \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
-          \displaystyle\sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i,
+          \displaystyle
+          \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
+          \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
+          \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i,
         } \\
     \text{subject to}
       & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!,
@@ -1649,7 +1651,9 @@ associated \gls{proxy.r} \gls{rule}.
 The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
-  \sum_{i \in N, j \in M} \mVar{x}_i^T D_{ij} \, \mVar{x}_j
+  \sum_{i \in N, j \in M}
+  \hspace*{-.5em}
+  \mVar{x}_i^T D_{ij} \, \mVar{x}_j
 \end{equation}
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
@@ -1710,7 +1714,9 @@ thousands of \glspl{variable}.
 In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 \begin{equation}
-  \sum_{\substack{m \in M, \\ n \in \mCovers(m)}} \mVar{x}_m = 1, \forall n \in N,
+  \sum_{\substack{m \in M, \\ n \in \mCovers(m)}}
+  \hspace*{-1em}
+  \mVar{x}_m = 1, \forall n \in N,
   \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
