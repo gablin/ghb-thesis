@@ -1985,4 +1985,36 @@ in order to improve solving.
 \section{Limitations of Existing Approaches}
 \labelSection{limitations-of-existing-approaches}
 
-\todo{write}
+To solve the problems described in \refSection{motivation}, none of the
+approaches discussed in this chapter can be applied directly.
+%
+The \glspl{traditional approach} apply greedy heuristics that only concern
+\gls{pattern selection}, and it is not clear how to extend these to integrate
+other \gls{code generation} tasks.
+%
+The \glspl{combinatorial approach} show more promise in that regards as they
+apply generic solving techniques, but instead the models of these approaches are
+too limited.
+
+First, while many \glspl{combinatorial approach} combine \gls{instruction
+  selection} with \gls{instruction scheduling}, none combines \gls{instruction
+  selection} with \gls{global code motion}, and for most of these it is not
+clear how to extend the model to integrate this task.
+
+Second, all \gls{combinatorial approach} only handle tree- and \gls{DAG}-shaped
+\glspl{pattern}, which excludes support for complex \glspl{instruction} that
+extend over multiple \glspl{block} and must therefore be modeled as generic
+\glspl{graph} (one such example is given in
+\refChapter{introduction}, \refPage{saturated-arithmetic}).
+
+Third, with the exception of \textcite{TanakaEtAl:2003}, no \gls{combinatorial
+  approach} takes the cost of \gls{data copying} into account.
+%
+Failing to consider this cost could lead to greedy use of \gls{SIMD.instr}
+\glspl{instruction}, which in turn degrades code quality.
+
+Fourth and last, all \gls{combinatorial approach} only deal with data flow.
+%
+Problems concerning control flow, such as selection of branch
+\glspl{instruction} and \gls{block ordering}, must be handled separately, which
+could potentially result in suboptimal code.
