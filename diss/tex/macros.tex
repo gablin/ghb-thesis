@@ -325,9 +325,6 @@
 % http://tex.stackexchange.com/a/43275/2634
 \patchcmd{\bibsetup}{\interlinepenalty=5000}{\interlinepenalty=10000}{}{}
 
-% Remove terminating period from every bib entry
-\renewcommand{\finentrypunct}{}
-
 % Modify \fullcite to include all authors.
 \let\oldfullcite\fullcite
 \renewcommand{\fullcite}[1]{%
