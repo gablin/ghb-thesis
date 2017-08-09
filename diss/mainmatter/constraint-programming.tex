@@ -11,7 +11,8 @@ This chapter describes \glsdesc{CP}, which is the method used in this
 dissertation for modeling and solving the problems described in
 \refChapter{introduction}.
 %
-\refSection{cp-overview} gives a brief overview of \gls{CP}.
+\refSection{cp-overview} gives a brief overview (for a comprehensive overview of
+\gls{CP}, see \cite{RossiEtAl:2006}).
 %
 \refSection{cp-modeling} describes how to describe problems as a \gls{constraint
   model}, and \refSection{cp-solving} describes the techniques applied in
@@ -22,9 +23,22 @@ solving these \glsplshort{constraint model}.
 \section{Overview}
 \labelSection{cp-overview}
 
-\todo{write}
-
-%\cite{RossiEtAl:2006}
+As already mentioned, \glsdesc{CP} is a method for solving computationally hard
+problems.
+%
+These problems are typically optimization problems, but the method can also be
+applied to solve satisfaction problems.
+%
+In terms of modeling, \gls{CP} offers a higher level of abstraction than similar
+methods such as \gls{IP} and \gls{SAT}~\cite{BiereEtAl:2009}.
+%
+For example, \gls{CP} provides dedicated constraints for capturing many
+recurring problem structures that must be decomposed and reformulated in
+\gls{IP} and \gls{SAT}~models.
+%
+This also makes \gls{CP} particularly suited for solving problems that appear in
+\gls{instruction scheduling} and \gls{register allocation}, which is essential
+for these tasks to be integrated with \gls{instruction selection}.
 
 
 
