@@ -211,9 +211,13 @@ In comparison, existing representations only capture data flow.
 
 \paragraph{For combining instruction selection and global code motion}
 
-Assume that the \gls{target machine} also has an instruction capable of
-performing multiple add \glspl{operation} (these are called \gls!{SIMD.instr}[
-  \glspl{instruction}]).
+Assume that the \gls{target machine} also has a \gls{SIMD.instr}
+\gls{instruction} for addition.\!%
+%
+\footnote{%
+  A \gls!{SIMD.instr}[ \gls{instruction}] is an \gls{instruction} that executes
+  the same \gls{operation} over multiple sets of input data.%
+}
 %
 Revisiting the example shown in \refFigure{isel-gcmotion-example}, there are
 four additions in the \gls{program} (\irAdd{\irVar{A}}{\irTemp{2}},
