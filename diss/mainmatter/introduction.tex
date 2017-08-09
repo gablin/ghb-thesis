@@ -171,7 +171,7 @@ Assume a \gls{target machine} that has an instruction capable of implementing
 the saturated-add \gls{operation} used in the \gls{program} shown in
 \refFigure{isel-gcmotion-example}.
 %
-Hence the \gls{instruction} would implement the following five operations:
+Hence the \gls{instruction} would implement the following five operations:%
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
   \item the \irAdd{\irVar{a}}{\irVar{b}} addition
@@ -365,7 +365,7 @@ int f() {
 another \gls{function} (with side effects) until it returns a non-zero value.
 %
 Assume that the \gls{target machine} has three \glspl{instruction} for handling
-control flow:
+control flow:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item a \mbox{{\instrFont jmp} $p$, $b$} \gls{instruction}, which
