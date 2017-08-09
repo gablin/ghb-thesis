@@ -526,12 +526,12 @@ The algorithm works as follows.
 %
 It first constructs a cost matrix~$C$, where rows represent \glspl{node} in the
 \gls{expression tree} and columns represent \glspl{nonterminal} in the
-\gls{grammar}, which is assumed to be in \gls{normal form.g}.%
+\gls{grammar}, which is assumed to be in \gls{normal form.g}.\!%
 %
-\!\footnote{%
+\footnote{%
   The algorithm can be adapted to accept any \gls{grammar} by expanding the
   \algStyle{FindMatchingRules} and \algStyle{ComputeReductionCost} functions to
-  handle \glspl{rule} of arbitrary form.
+  handle \glspl{rule} of arbitrary form.%
 }
 %
 The cost in each element~\mbox{$C[i][j]$} is initialized to infinity, indicating
@@ -1302,7 +1302,7 @@ called \gls!{proxy.r}[ \glspl{rule}]%
   %
   This is also is inconsistent with the terminology defined
   on \refPage{machine-grammars}, but we forsake consistency here in favor of
-  simplicity.
+  simplicity.%
 }
 %
 and \gls!{proxy.p}[ \glspl{pattern}], respectively, whereas \glspl{rule} with a
@@ -1741,11 +1741,11 @@ Although mostly known for their work in \gls!{integrated.cg}[ \gls{code
 %
 Their design performs \gls{global.is} \gls{instruction selection} on a
 \gls{function graph} that has been augmented with additional copy
-\glspl{operation} to represent potential \gls!{register spilling}.%
+\glspl{operation} to represent potential \gls!{register spilling}.\!%
 %
-\footnote{If there are not enough \glspl{register} to allocate for all
-  \gls{program} \glspl{variable}, then one or more \glspl{register} must be
-  freed.
+\footnote{%
+  If there are not enough \glspl{register} to allocate for all \gls{program}
+  \glspl{variable}, then one or more \glspl{register} must be freed.
   %
   This is done by spilling their values to memory, which must then be copied
   back before use.%
@@ -1961,9 +1961,11 @@ another \gls{constraint model}, which was later improved by
 extended by \textcite{ArslanKuchcinski:2014} for targeting \gls{VLIW}
 processors%
 %
-\footnote{A \gls!{VLIW} \glsEmph{processor} is a processor that executes
-  multiple \glspl{instruction} in parallel, where the schedule has been computed
-  by the \gls{compiler} and is part of the assembly code.}
+\footnote{%
+  A \gls!{VLIW}[ processor] is a processor that executes multiple
+  \glspl{instruction} in parallel, where the schedule has been computed by the
+  \gls{compiler} and is part of the assembly code.%
+}
 %
 with \gls{SIMD.instr} \glspl{instruction}.
 %
