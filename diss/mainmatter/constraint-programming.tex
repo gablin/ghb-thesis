@@ -45,7 +45,103 @@ for these tasks to be integrated with \gls{instruction selection}.
 \section{Modeling}
 \labelSection{cp-modeling}
 
-\todo{write}
+To solve a problem using \gls{CP}, it must first be formulated as a
+\gls{constraint model}~\cite{Smith:2006}.
+%
+A \gls!{constraint model} consists of two elements:%
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item a set of \glspl{variable}
+  \item a set of \glspl{constraint}
+\end{inlinelist}.
+%
+\Glspl!{variable} represent problem decisions and take their values from a
+finite domain.
+%
+The domain is typically is a range of integers, but it can also consist of real
+numbers and complex structures such as string, sets, and
+\glspl{graph}~\cite{Gervet:2006}.
+%
+\Glspl!{constraint} express relations between \glspl{variable} and forbid
+\gls{variable} assignments that are illegal in the problem.
+%
+A \gls{variable} assignment that fulfills all \glspl{constraint} in the
+\gls{constraint model} constitute a \gls!{solution}.
+%
+An example is shown in \refFigure{cp-example}.
+
+\begin{figure}
+  \centering%
+  \figureFont\figureFontSize%
+  \mbox{}%
+  \hfill\hfill%
+  \subcaptionbox{Constraint model\labelFigure{cp-example-model}}%
+                {%
+                  \begin{tabular}{lc}
+                    \toprule
+                    \multicolumn{1}{c}{\tabhead Variables}
+                      & \tabhead Constraints\\
+                    \midrule
+                      $\mVar{x} \in \mSet{1, 2}$ & $\mVar{x} \neq \mVar{y}$\\
+                      $\mVar{y} \in \mSet{1, 2}$ & $\mVar{x} \neq \mVar{z}$\\
+                      $\mVar{z} \in \mSet{1, 2, 3, 4}$
+                        & $\mVar{y} \neq \mVar{z}$\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{Solutions\labelFigure{cp-example-solutions}}%
+                {%
+                  $\begin{array}{c}
+                     \langle \mVar{x} = 1, \mVar{y} = 2, \mVar{z} = 3 \rangle \\
+                     \langle \mVar{x} = 2, \mVar{y} = 1, \mVar{z} = 3 \rangle \\
+                     \langle \mVar{x} = 1, \mVar{y} = 2, \mVar{z} = 4 \rangle \\
+                     \langle \mVar{x} = 2, \mVar{y} = 1, \mVar{z} = 4 \rangle \\
+                   \end{array}$%
+                }%
+  \hfill\hfill%
+  \mbox{}
+
+  \caption[Example of a constraint model]%
+          {%
+            Example of a constraint model, corresponding to a problem where
+            three variables must be assigned values which are different from one
+            another%
+          }
+  \labelFigure{cp-example}
+\end{figure}
+
+
+
+\paragraph{Global Constraints}
+
+If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
+\glspl{variable}, then a \gls!{global.c}[ \gls{constraint}] is a
+\gls{constraint} involving three or more
+\glspl{variable}~\cite{VanHoeveKatriel:2006}.
+%
+\Gls{global.c} \glspl{constraint} capture recurring problem structures and
+improve solving compared to relations modeled using multiple \gls{binary.c}
+\glspl{constraint}.
+%
+An example of a \gls{global.c} \gls{constraint} is $\mDistinct$ (also known as
+$\mAllDiff$), which is defined as follows:
+%
+\begin{equation}
+  \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
+  \equiv
+  \todo{fix}.
+\end{equation}
+%
+In other words, $\mDistinct$ enforces all \glspl{variable} in a given set to
+take distinct values.
+%
+Hence the \glspl{constraint} in \refFigure{cp-example} can be replaced by
+$\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
+
+\todo{discuss circuit}
+
+\todo{discuss table}
 
 
 
