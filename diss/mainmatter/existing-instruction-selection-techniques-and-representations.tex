@@ -9,14 +9,14 @@
 
 This chapter introduces terminology and relevant background.
 %
-\refSection{refining-instruction-selection-into-a-graph-problem} refines
-\gls{instruction selection} into a graph problem and provides many definitions
-that will be used throughout the dissertation.
+\refSection{ex-isel-rep-refining-instruction-selection-into-a-graph-problem}
+refines \gls{instruction selection} into a graph problem and provides many
+definitions that will be used throughout the dissertation.
 %
-\refSection{traditional-approaches} discusses existing \glspl{traditional
-  approach} to \gls{instruction selection}, and
-\refSection{combinatorial-approaches} discusses the \glsshort{combinatorial
-  approach} counterparts.
+\refSection{ex-isel-rep-traditional-approaches} discusses existing
+\glspl{traditional approach} to \gls{instruction selection}, and
+\refSection{ex-isel-rep-combinatorial-approaches} discusses the
+\glsshort{combinatorial approach} counterparts.
 %
 In this dissertation, \glsshort!{traditional approach} approaches include the
 techniques discussed in most \gls{compiler} textbooks, and derivations thereof.
@@ -27,8 +27,8 @@ techniques discussed in most \gls{compiler} textbooks, and derivations thereof.
 %
 The model is then solved using either complete methods or greedy heuristics.
 %
-Lastly, \refSection{limitations-of-existing-approaches} discusses limitations of
-these approaches.
+Lastly, \refSection{ex-isel-rep-limitations-of-existing-approaches} discusses
+limitations of these approaches.
 
 A more extensive discussion is also given in
 \refAppendixRange{macro-expansion}{graph-covering}.
@@ -36,7 +36,7 @@ A more extensive discussion is also given in
 
 
 \section{Refining Instruction Selection into a Graph Problem}
-\labelSection{refining-instruction-selection-into-a-graph-problem}
+\labelSection{ex-isel-rep-refining-instruction-selection-into-a-graph-problem}
 
 \Gls{instruction selection} can be reduced into two subproblems:%
 %
@@ -191,7 +191,7 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 
 
 \section{Traditional Approaches}
-\labelSection{traditional-approaches}
+\labelSection{ex-isel-rep-traditional-approaches}
 
 In the interest of producing decent code while maintaining short compilation
 times, most modern \glspl{compiler} either limit themselves to \glspl{expression
@@ -1155,7 +1155,7 @@ method described in~\cite{Click:1995}.
 
 
 \section{Combinatorial Approaches}
-\labelSection{combinatorial-approaches}
+\labelSection{ex-isel-rep-combinatorial-approaches}
 
 A trait exhibited by \glspl{combinatorial approach} is that, unlike
 \glspl{traditional approach}, they first create a model that describes the
@@ -1983,9 +1983,9 @@ in order to improve solving.
 
 
 \section{Limitations of Existing Approaches}
-\labelSection{limitations-of-existing-approaches}
+\labelSection{ex-isel-rep-limitations-of-existing-approaches}
 
-To solve the problems described in \refSection{motivation}, none of the
+To solve the problems described in \refSection{intro-motivation}, none of the
 approaches discussed in this chapter can be applied directly.
 %
 The \glspl{traditional approach} apply greedy heuristics that only concern
