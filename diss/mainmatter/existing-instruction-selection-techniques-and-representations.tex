@@ -1191,12 +1191,12 @@ algorithms when \gls{pattern matching}.
 
 The \gls!{subgraph isomorphism} problem, which is known to be
 NP-complete~{\cite{Cook:1971}}, is to find instances where a
-\gls{graph}~\mbox{$\mGP = \mPair*{\mNP}{\mEP}$} is \glsshort{isomorphism} to a
-\gls{subgraph} in another \gls{graph}~\mbox{$\mGF = \mPair*{\mNF}{\mEF}$}.
+\gls{graph}~\mbox{$\mGP = \mPair{\mNP}{\mEP}$} is \glsshort{isomorphism} to a
+\gls{subgraph} in another \gls{graph}~\mbox{$\mGF = \mPair{\mNF}{\mEF}$}.
 %
 $\mGP$ is \glsshort!{isomorphism} to $\mGF$ if and only if there exists a
-mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair*{n}{o} \in
-  \mEP$} implies \mbox{$\mPair*{f(n)}{f(o)} \in \mEF$}.
+mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair{n}{o} \in
+  \mEP$} implies \mbox{$\mPair{f(n)}{f(o)} \in \mEF$}.
 %
 In this context, $\mGP$ denotes the \gls{pattern}, $\mGF$ denotes the \gls{block
   DAG} or \gls{function graph}, and $m$ denotes a \gls{match}.
@@ -1869,8 +1869,8 @@ defined as follows:
 \begin{equation}
   \mCount(v, \mVar{x}, \mBinaryRel, l)
   \equiv
-  \todo{fix}
-%  |\mSetBuilder*{\mVar{x}_i}{\mVar{x}_i = v}| \mBinaryRel l.
+%  \todo{fix}
+  |\mSetBuilder{\mVar{x}_i}{\mVar{x}_i = v}| \mBinaryRel l.
   \labelEquation{pattern-selection-using-count}
 \end{equation}
 %

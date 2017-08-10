@@ -171,9 +171,9 @@
 }\newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
 \NewDocumentCommand{\mSet}{sm}{%
-  \IfBooleanF{#1}{\left}\{%
+  \IfBooleanT{#1}{\left}\{%
     #2%
-  \IfBooleanF{#1}{\right}\}%
+  \IfBooleanT{#1}{\right}\}%
 }
 \def\mSetSep{\mid}%
 \NewDocumentCommand{\mSetBuilder}{smm}{%
@@ -187,14 +187,14 @@
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
 \NewDocumentCommand{\mPair}{smm}{%
-  \IfBooleanF{#1}{\left}(%
+  \IfBooleanT{#1}{\left}(%
     #2, #3%
-  \IfBooleanF{#1}{\right})%
+  \IfBooleanT{#1}{\right})%
 }
-\NewDocumentCommand{\mTuple}{smm}{%
-  \IfBooleanF{#1}{\left}\langle%
-    #2, #3%
-  \IfBooleanF{#1}{\right}\rangle%
+\NewDocumentCommand{\mTuple}{sm}{%
+  \IfBooleanT{#1}{\left}\langle%
+    #2%
+  \IfBooleanT{#1}{\right}\rangle%
 }
 \newcommand{\mUnDirEdge}[2]{\mPair{#1}{#2}}
 \newcommand{\mAnd}{\wedge}
