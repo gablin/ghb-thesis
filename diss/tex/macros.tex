@@ -170,31 +170,35 @@
   2^{#1}
 }\newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
-\NewDocumentCommand{\mSet}{sm}{%
-  \IfBooleanT{#1}{\left}\{%
-    #2%
-  \IfBooleanT{#1}{\right}\}%
+\NewDocumentCommand{\mSet}{sm}{
+  \IfBooleanT{#1}{\left}\{
+    #2
+  \IfBooleanT{#1}{\right}\}
 }
 \def\mSetSep{\mid}%
-\NewDocumentCommand{\mSetBuilder}{smm}{%
-  \IfBooleanTF{#1}{%
-    \mSet*{#2 \mSetSep #3}%
-  }{%
-    \mSet{#2 \mSetSep #3}%
-  }%
+\NewDocumentCommand{\mSetBuilder}{smm}{
+  \IfBooleanTF{#1}{
+    \left\{
+    \begin{array}{@{}c|c@{}}
+      #2 & #3
+    \end{array}
+    \right\}
+  }{
+    \mSet{#2 \mSetSep #3}
+  }
 }
 \newcommand{\mCard}[1]{\left| #1 \right|}
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
-\NewDocumentCommand{\mPair}{smm}{%
-  \IfBooleanT{#1}{\left}(%
-    #2, #3%
-  \IfBooleanT{#1}{\right})%
+\NewDocumentCommand{\mPair}{smm}{
+  \IfBooleanT{#1}{\left}(
+    #2, #3
+  \IfBooleanT{#1}{\right})
 }
-\NewDocumentCommand{\mTuple}{sm}{%
-  \IfBooleanT{#1}{\left}\langle%
-    #2%
-  \IfBooleanT{#1}{\right}\rangle%
+\NewDocumentCommand{\mTuple}{sm}{
+  \IfBooleanT{#1}{\left}\langle
+    #2
+  \IfBooleanT{#1}{\right}\rangle
 }
 \newcommand{\mUnDirEdge}[2]{\mPair{#1}{#2}}
 \newcommand{\mAnd}{\wedge}
@@ -202,8 +206,8 @@
 \newcommand{\mImp}{\Rightarrow}
 \newcommand{\mEq}{\Leftrightarrow}
 \newcommand{\mQuantSep}{\quad}
-\newcommand{\mFunDecl}[3]{%
-  #1 : #2 \rightarrow #3%
+\newcommand{\mFunDecl}[3]{
+  #1 : #2 \rightarrow #3
 }
 \newcommand{\mVector}[1]{\vec{#1}}
 
