@@ -214,7 +214,7 @@ form, which will therefore be discussed first.
 
 
 
-\paragraph{Machine Grammars}
+\subsubsection{Machine Grammars}
 \labelPage{machine-grammars}
 
 The \gls{instruction set} of a \gls{target machine} is typically described in a
@@ -340,7 +340,7 @@ A method for finding the sequence with least cost is described shortly.
 
 
 
-\paragraph{Machine Grammars in Normal Form}
+\subsubsection{Machine Grammars in Normal Form}
 
 To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
 can be rewritten into \gls!{normal form.g}. A \gls{grammar} is in \gls{normal
@@ -433,7 +433,7 @@ height.
 
 
 
-\paragraph{Optimal Pattern Selection on Expression Trees}
+\subsubsection{Optimal Pattern Selection on Expression Trees}
 
 The technique by \citeauthor{AhoEtAl:1989} is centered around the following
 assumption: the cost of reducing \gls{node}~$n$ in an \gls{expression tree} to
@@ -601,7 +601,7 @@ architecture.
 
 
 
-\paragraph{Precomputing Costs and Rule Decisions}
+\subsubsection{Precomputing Costs and Rule Decisions}
 
 Shortly after its introduction, it was recognized that the costs computed by
 \refAlgorithm{aho-etal-cost-algorithm} could be precomputed for any
@@ -692,7 +692,7 @@ To derive the \gls{rule} selection algorithm, one only needs to adapt line~2 in
 
 
 
-\paragraph{Limitations}
+\subsubsection{Limitations}
 
 \begin{filecontents*}{exp-trees-limit-example.c}
 t = a + b;
@@ -805,7 +805,7 @@ linear-time complexity.
 
 
 
-\paragraph{Maximum Munch}
+\subsubsection{Maximum Munch}
 
 The most common approach for greedy \gls{pattern selection} on \glspl{block DAG}
 is called \gls!{maximum munch} (coined by \textcite{Cattell:1978}).
@@ -826,7 +826,7 @@ common subexpressions.
 
 
 
-\paragraph{Balancing Splitting and Duplication}
+\subsubsection{Balancing Splitting and Duplication}
 
 Several approaches have been made in attempting to balance \gls{edge splitting}
 and \gls{node duplication}.
@@ -875,7 +875,7 @@ recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 
 
-\paragraph{Limitations}
+\subsubsection{Limitations}
 
 Although using \glspl{block DAG} addresses the issue of whether to
 \glsshort{edge splitting} or \glsshort{node duplication}[e] common
@@ -1003,7 +1003,7 @@ will therefore be discussed first.
 
 
 
-\paragraph{Sea-of-nodes IRs}
+\subsubsection{Sea-of-nodes IRs}
 
 \begin{filecontents*}{fact.c}
 int fact(int n) {
@@ -1131,7 +1131,7 @@ to connect the \gls{operation} with its original \gls{block} placement.
 
 
 
-\paragraph{Pattern Selection on a Sea of Nodes}
+\subsubsection{Pattern Selection on a Sea of Nodes}
 
 \citeauthor{PalecznyEtAl:2001} first divides the \gls{function graph} into a set
 of possibly overlapping \glspl{expression tree}.
@@ -1180,7 +1180,7 @@ algorithms when \gls{pattern matching}.
 
 
 
-\paragraph{Pattern Matching as a Subgraph Isomorphism Problem}
+\subsubsection{Pattern Matching as a Subgraph Isomorphism Problem}
 
 \def\mGP{G_{\textsc{p}}}
 \def\mGF{G_{\textsc{f}}}
@@ -1281,7 +1281,7 @@ An example is shown in \refFigure{mis-example}.
 
 
 
-\paragraph{Applications}
+\subsubsection{Applications}
 
 \textcite{ScharwaechterEtAl:2007} appears to have pioneered the modeling of
 \gls{instruction selection} as a \gls{MWIS} problem, although the main
@@ -1412,7 +1412,7 @@ Although both problems are NP-complete in general, a subclass of \gls{PBQP} can
 be solved in linear time which inspired \citeauthor{ScholzEckstein:2002} in
 developing a greedy, linear-time solver.
 
-Formally, a \gls{PBQP} is defined as follows:
+Formally, a \gls{PBQP} is defined as follows.
 %
 \begin{definition}[PBQP]%
   \begin{displaymath}
@@ -1608,7 +1608,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
 
 
 
-\paragraph{Handling DAG-shaped Patterns}
+\subsubsection{Handling DAG-shaped Patterns}
 
 The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
 %
@@ -1678,7 +1678,7 @@ For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
 
 
 
-\paragraph{Applications}
+\subsubsection{Applications}
 
 \textcite{EcksteinEtAl:2003} were first with modeling \gls{instruction
   selection} as a \gls{PBQP}, and \textcite{EbnerEtAl:2008} extended their
@@ -1736,7 +1736,7 @@ whether match~$m$ is selected.
 
 
 
-\paragraph{Applications}
+\subsubsection{Applications}
 
 Although mostly known for their work in \gls!{integrated.cg}[ \gls{code
     generation}] -- meaning \gls{instruction selection}, \gls{instruction
@@ -1861,7 +1861,7 @@ solving.
 
 
 
-\paragraph{Modeling Pattern Selection Using Global Constraints}
+\subsubsection{Modeling Pattern Selection Using Global Constraints}
 
 \Gls{pattern selection} can be modeled using a \gls{global.c} \gls{constraint}
 called the \gls!{global cardinality constraint}.
@@ -1926,7 +1926,7 @@ reduces solving time~\cite{FlochEtAl:2010}.
 
 
 
-\paragraph{Applications}
+\subsubsection{Applications}
 
 The use of \gls{CP}-based \gls{instruction selection} appears to have been
 pioneered by \textcite{BashfordLeupers:1999}.
