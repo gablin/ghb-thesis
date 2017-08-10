@@ -56,17 +56,24 @@ A \gls!{constraint model} consists of two elements:%
 \end{inlinelist}.
 %
 \Glspl!{variable} represent problem decisions and take their values from a
-finite domain.
+finite \gls{domain}.
 %
-The domain is typically is a range of integers, but it can also consist of real
-numbers and complex structures such as string, sets, and
-\glspl{graph}~\cite{Gervet:2006}.
+The \gls!{domain} of a variable~$x$, denoted $\mDomain(\mVar{x})$, is typically
+is a set of integers, but it can also consist of real numbers and complex
+structures such as string, sets, and \glspl{graph}~\cite{Gervet:2006}.
 %
 \Glspl!{constraint} express relations between \glspl{variable} and forbid
-\gls{variable} assignments that are illegal in the problem.
+assignments that are illegal in the problem.
 %
-A \gls{variable} assignment that fulfills all \glspl{constraint} in the
-\gls{constraint model} constitute a \gls!{solution}.
+Formally, we say that a \gls{constraint}~$C$ applied on a set of
+\glspl{variable} returns a subset of the Cartesian product of the
+\glspl{variable}' \glspl{domain}, i.e.\ \mbox{$C(\mVar{x}_1, \ldots, \mVar{x}_k)
+  \subseteq \mDomain(\mVar{x}_1) \times \ldots \times \mDomain(\mVar{x}_k)$}.
+%
+A tuple $\mTuple{d_1, \ldots, d_k} \in C(\mVar{x}_1, \ldots, \mVar{x}_k)$ is
+called a \gls!{solution}[ to $C$], and an assignment to all \glspl{variable}
+that fulfills all \glspl{constraint} in a \gls{constraint model}~$M$ is called a
+\gls!{solution}[ to $M$].
 %
 An example is shown in \refFigure{cp-example}.
 
@@ -91,12 +98,17 @@ An example is shown in \refFigure{cp-example}.
                 }%
   \hfill%
   \subcaptionbox{Solutions\labelFigure{cp-example-solutions}}%
+                [21mm]%
                 {%
-                  $\begin{array}{c}
-                     \langle \mVar{x} = 1, \mVar{y} = 2, \mVar{z} = 3 \rangle \\
-                     \langle \mVar{x} = 2, \mVar{y} = 1, \mVar{z} = 3 \rangle \\
-                     \langle \mVar{x} = 1, \mVar{y} = 2, \mVar{z} = 4 \rangle \\
-                     \langle \mVar{x} = 2, \mVar{y} = 1, \mVar{z} = 4 \rangle \\
+                  $\begin{array}{c@{\:}c@{\:}c@{\:}c@{\:}c}
+                       & \mVar{x}\phantom{,}
+                       & \mVar{y}\phantom{,}
+                       & \mVar{z}
+                       & \\
+                     \langle & 1, & 2, & 3 & \rangle \\
+                     \langle & 2, & 1, & 3 & \rangle \\
+                     \langle & 1, & 2, & 4 & \rangle \\
+                     \langle & 2, & 1, & 4 & \rangle \\
                    \end{array}$%
                 }%
   \hfill\hfill%
@@ -129,8 +141,10 @@ $\mAllDiff$), which is defined as follows:
 %
 \begin{equation}
   \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
-  \equiv
-  \todo{fix}.
+  =
+  \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+              {\forall_i \: d_i \in D(\mVar{x}_i),
+               \forall_{i \neq j} \: d_i \neq d_j}.
 \end{equation}
 %
 In other words, $\mDistinct$ enforces all \glspl{variable} in a given set to
