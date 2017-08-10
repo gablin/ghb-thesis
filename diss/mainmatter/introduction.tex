@@ -154,7 +154,7 @@ while (i < N) {
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
 
-\paragraph{For global instruction selection and new representations}
+\subsubsection{Global Instruction Selection and New Representations}
 
 \labelPage{saturated-arithmetic}
 
@@ -209,7 +209,7 @@ In comparison, existing representations only capture data flow.
 
 
 
-\paragraph{For combining instruction selection and global code motion}
+\subsubsection{Combining Instruction Selection and Global Code Motion}
 
 Assume that the \gls{target machine} also has a \gls{SIMD.instr}
 \gls{instruction} for addition.\!%
@@ -240,7 +240,7 @@ detrimental for the \gls{instruction selector}.
 
 
 
-\paragraph{For taking the cost of data copying into account}
+\subsubsection{Taking Cost of Data Copying Into Account}
 
 Although selecting \gls{SIMD.instr} \glspl{instruction} may significantly
 improve code quality -- like in the previous example -- doing so carelessly may
@@ -262,7 +262,7 @@ effective use of \gls{SIMD.instr} \glspl{instruction}.
 
 
 
-\paragraph{For combining instruction selection and block ordering}
+\subsubsection{Combining Instruction Selection and Block Ordering}
 
 \begin{filecontents*}{isel-blorder-example.c}
 int f() {
@@ -476,7 +476,7 @@ containing the selected \glspl{instruction}.
 
 
 
-\section{Research methods}
+\section{Research Methods}
 \labelSection{intro-research-methods}
 
 \todo{write}
