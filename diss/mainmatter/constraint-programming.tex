@@ -155,6 +155,36 @@ Formally, the \gls{constraint} is defined as follows.
 Hence the \glspl{constraint} in \refFigure{cp-example} can be replaced by
 $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
 
+In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
+\gls{constraint} -- $\mCount$, defined in \refEquation{count-def} -- and how it
+can be used to model the \gls{pattern selection} problem.
+%
+Another relevant example is the \gls!{circuit constraint}, typically referred to
+as $\mCircuit$ or $\mCycle$, which enforces that the \glspl{variable}
+representing adjacency forms a cycle.
+%
+Formally, assuming \mbox{$\mDomain(\mVar{x}_i) \subseteq \mSet{1, \ldots, k}$},
+the \gls{constraint} is defined as follows:
+%
+\begin{definition}[\Gls{circuit constraint}]
+
+
+  \begin{displaymath}
+    \mCircuit(\mVar{x}_1, \ldots, \mVar{x}_k)
+    =
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                  \text{$d_1, \ldots, d_k$ is cyclic}
+                }.
+  \end{displaymath}
+\end{definition}
+%
+As will be seen in \refChapter{modeling-block-ordering}, $\mCircuit$ can be used
+to model \gls{block ordering}.
+
+
+
 \todo{discuss circuit}
 
 \todo{discuss table}
