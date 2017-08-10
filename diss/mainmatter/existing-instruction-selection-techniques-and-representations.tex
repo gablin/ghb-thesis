@@ -1858,29 +1858,31 @@ solving.
 
 \paragraph{Modeling Pattern Selection Using Global Constraints}
 
-\def\mBinaryRel{\Join}
-
 \Gls{pattern selection} can be modeled using a \gls{global.c} \gls{constraint}
 called the \gls!{global cardinality constraint}.
 %
-The \gls{constraint}, which is typically referred to as $\mCount$ or $\mGCC$, is
-defined as follows:
+The \gls{constraint}, typically referred to as $\mCount$ or $\mGCC$, constrains
+the number of \glspl{decision variable} assigned a particular value (which may
+also be a \gls{decision variable}).
+%
+Formally, the \gls{constraint} is defined as follows:
 %
 \begin{equation}
-  \mCount(v, \mVar{x}, \mBinaryRel, l)
-  \equiv
-%  \todo{fix}
-  |\mSetBuilder{\mVar{x}_i}{\mVar{x}_i = v}| \mBinaryRel l.
-  \labelEquation{pattern-selection-using-count}
+  \mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
+  =
+  \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
+               {
+                 \begin{array}{l}
+                   \forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                   e \in \mDomain(\mVar{y}), \\
+                   e = |\mSetBuilder{d_i}{\forall_i \: d_i = v}|
+                 \end{array}
+               }.
 \end{equation}
 %
-In other words, if $N$ is the number of \glspl{decision variable} in the
-set~$\mVar{x}$, then $\mCount$ enforces that \mbox{$N \mBinaryRel l$} holds,
-where $\mBinaryRel$ is a binary relation.
-%
-For example, the constraint \mbox{$\mCount(4, \langle \mVar{x}_1 = 4, \mVar{x}_2
-  = 5, \mVar{x}_3 = 6 \rangle, \leq, 1)$} holds since at most one
-\glsshort{decision variable} is assigned the value~4.
+For example, the constraint \mbox{$\mCount(4, \mVar{x}_1 \in \mSet{4},
+  \mVar{x}_2 \in \mSet{5}, \mVar{x}_3 \in \mSet{6}, \mVar{y} \in \mSet{1})$}
+holds as exactly one \glsshort{decision variable} is assigned the value~4.
 
 To model \gls{pattern selection} using $\mCount$, two new sets of
 \glspl{decision variable} are needed.
@@ -1905,10 +1907,10 @@ modeled as
   \mCount(
     m,
     \cup_{n \in \mCovers(m)} \, \mVar{match}_n,
-    =,
     \mVar{count}_m
   ),
   \forall m \in M,
+  \labelEquation{pattern-selection-using-count}
 \end{equation}
 %
 which is more restrictive than \refEquation{pattern-selection-in-ip} and thus
