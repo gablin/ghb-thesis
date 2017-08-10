@@ -1412,25 +1412,27 @@ Although both problems are NP-complete in general, a subclass of \gls{PBQP} can
 be solved in linear time which inspired \citeauthor{ScholzEckstein:2002} in
 developing a greedy, linear-time solver.
 
-A \gls{PBQP} is defined as follows:
+Formally, a \gls{PBQP} is defined as follows:
 %
-\begin{equation}
-  \begin{array}{rll}
-    \text{minimize}
-      & \multicolumn{2}{c}{
-          \displaystyle
-          \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
-          \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
-          \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i,
-        } \\
-    \text{subject to}
-      & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!,
-      & \forall 1 \leq i \leq n, \\
-    \text{and}
-      & \mVector{1}^T \mVar{x}_i = 1,
-      & \forall 1 \leq i \leq n. \\
-  \end{array}
-\end{equation}
+\begin{definition}[PBQP]%
+  \begin{displaymath}
+    \begin{array}{rll}
+      \text{minimize}
+        & \multicolumn{2}{c}{
+            \displaystyle
+            \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
+            \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
+            \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i,
+          } \\
+      \text{subject to}
+        & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!,
+        & \forall 1 \leq i \leq n, \\
+      \text{and}
+        & \mVector{1}^T \mVar{x}_i = 1,
+        & \forall 1 \leq i \leq n. \\
+    \end{array}
+  \end{displaymath}%
+\end{definition}
 %
 Intuitively, one can interpret this definition as follows.
 %
@@ -1695,22 +1697,25 @@ also referred to as \gls!{integer linear programming} -- which is a method for
 solving combinatorial optimization problems (see \cite{Wolsey:1998} for an
 overview).
 %
-An \gls{IP} problem is defined as follows:
+Formally, an \gls{IP} problem is defined as follows.
 %
-\begin{equation}
-  \begin{array}{rl}
-    \text{maximize} &
-      \multirow{2}{*}{$\mVector{c}^T \mVar{x}$} \\
-    \text{or minimize} & \\
-    \text{subject to} & A \mVar{x} \leq \mVector{b}, \\
-      & A \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
-    \text{and} & \mVar{x} \in \mathbb{N}^n\!, \\
-  \end{array}
-\end{equation}
-%
-where $\mVector{c}$ and $\mVector{b}$ are integer vectors, $A$ is an integer
-matrix, and $\mVar{x}$ is a set of integer \glspl{decision variable}.
-%
+\begin{definition}[IP]%
+  Let $\mVector{c}$ and $\mVector{b}$ be integer vectors, $A$ be an integer
+  matrix, and $\mVar{x}$ be a vector of integer \glspl{decision variable}.
+  %
+  Then
+  \begin{displaymath}
+    \begin{array}{rl}
+      \text{maximize} &
+        \multirow{2}{*}{$\mVector{c}^T \mVar{x}$} \\
+      \text{or minimize} & \\
+      \text{subject to} & A \mVar{x} \leq \mVector{b}, \\
+        & A \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
+      \text{and} & \mVar{x} \in \mathbb{N}^n\!. \\
+    \end{array}
+  \end{displaymath}%
+\end{definition}
+
 Such problems are NP-complete in general, but extensive research in the field
 has made \gls{IP} a practical tool for solving problems containing tens of
 thousands of \glspl{variable}.
@@ -1865,20 +1870,23 @@ The \gls{constraint}, typically referred to as $\mCount$ or $\mGCC$, constrains
 the number of \glspl{decision variable} assigned a particular value (which may
 also be a \gls{decision variable}).
 %
-Formally, the \gls{constraint} is defined as follows:
+Formally, the \gls{constraint} is defined as follows.
 %
-\begin{equation}
-  \mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
-  =
-  \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
-               {
-                 \begin{array}{l}
-                   \forall_i \: d_i \in \mDomain(\mVar{x}_i),
-                   e \in \mDomain(\mVar{y}), \\
-                   e = |\mSetBuilder{d_i}{\forall_i \: d_i = v}|
-                 \end{array}
-               }.
-\end{equation}
+\begin{definition}[\Gls{global cardinality constraint}]%
+  \begin{displaymath}
+    \mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
+    =
+    \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
+                 {
+                   \begin{array}{l}
+                     \forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                     e \in \mDomain(\mVar{y}), \\
+                     e = |\mSetBuilder{d_i}{\forall_i \: d_i = v}|
+                   \end{array}
+                 }.
+  \end{displaymath}%
+  \labelDefinition{count-def}%
+\end{definition}
 %
 For example, the constraint \mbox{$\mCount(4, \mVar{x}_1 \in \mSet{4},
   \mVar{x}_2 \in \mSet{5}, \mVar{x}_3 \in \mSet{6}, \mVar{y} \in \mSet{1})$}

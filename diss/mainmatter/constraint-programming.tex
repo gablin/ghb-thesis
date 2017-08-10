@@ -135,20 +135,22 @@ If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
 \Gls{global.c} \glspl{constraint} capture recurring problem structures and
 improve solving compared to relations modeled using multiple \gls{binary.c}
 \glspl{constraint}.
+
+An example of a \gls{global.c} \gls{constraint} is the \gls!{distinct
+  constraint}, typically referred to as $\mDistinct$ or $\mAllDiff$, which
+enforces all \glspl{variable} in a given set to take distinct values.
 %
-An example of a \gls{global.c} \gls{constraint} is $\mDistinct$ (also known as
-$\mAllDiff$), which is defined as follows:
+Formally, the \gls{constraint} is defined as follows.
 %
-\begin{equation}
-  \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
-  =
-  \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-              {\forall_i \: d_i \in D(\mVar{x}_i),
-               \forall_{i \neq j} \: d_i \neq d_j}.
-\end{equation}
-%
-In other words, $\mDistinct$ enforces all \glspl{variable} in a given set to
-take distinct values.
+\begin{definition}[\Gls{distinct constraint}]%
+  \begin{displaymath}
+    \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
+    =
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {\forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                 \forall_{i \neq j} \: d_i \neq d_j}.
+  \end{displaymath}%
+\end{definition}
 %
 Hence the \glspl{constraint} in \refFigure{cp-example} can be replaced by
 $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.

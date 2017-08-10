@@ -45,6 +45,7 @@
 \buildLabelRefCommands{Algorithm}{Alg}
 \buildLabelRefCommands{Appendix}[Appendices]{App}
 \buildLabelRefCommands{Chapter}{Chap}
+\buildLabelRefCommands{Definition}{Def}
 \buildLabelRefCommands{Equation}{Eq}
 \buildLabelRefCommands{Figure}{Fig}
 \buildLabelRefCommands{Section}{Sect}
@@ -161,6 +162,19 @@
 %======
 % MATH
 %======
+
+% Define 'definition' environment
+\newtheoremstyle{def}%
+                {\topsep}%
+                {\topsep}%
+                {}%
+                {}%
+                {\sffamily\bfseries}%
+                {}%
+                {1em}%
+                {\thmname{#1}\thmnumber{ #2}\thmnote{ -- #3}}
+\theoremstyle{def}
+\newtheorem{definition}{Definition}[chapter]
 
 % General commands
 \newcommand{\overbar}[1]{
