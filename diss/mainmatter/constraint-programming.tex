@@ -171,6 +171,18 @@ Formally, the \gls{constraint} is defined as follows.
   respective \glspl{domain} \mbox{$\mDomain(\mVar{x}_i) \subseteq \mSet{1,
       \ldots, k}$} for \mbox{$i = 1, \ldots, k$}.
   %
+  Also let a permutation~\mbox{$P = d_1, \ldots, d_k$} of \gls{domain} values be
+  considered \emph{cyclic} if the set $S_P$, defined as
+  %
+  \begin{displaymath}
+    \begin{array}{c}
+      1 \in S_P,
+      i \in S_P \mImp d_i \in S_P,
+    \end{array}
+  \end{displaymath}
+  %
+  has $k$ elements.
+  %
   Then
   %
   \begin{displaymath}
