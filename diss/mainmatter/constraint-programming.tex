@@ -152,8 +152,8 @@ Formally, the \gls{constraint} is defined as follows.
     \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
     =
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {\forall_i \: d_i \in \mDomain(\mVar{x}_i),
-                 \forall_{i \neq j} \: d_i \neq d_j}.
+                {\forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
+                 \forall_{\! i \neq j} \: d_i \neq d_j}.
   \end{displaymath}%
 \end{definition}
 
@@ -194,7 +194,7 @@ Formally, the \gls{constraint} is defined as follows.
     =
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {
-                  \forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
                   \text{$d_1, \ldots, d_k$ is cyclic}
                 }.
   \end{displaymath}
@@ -223,7 +223,7 @@ Formally, the \gls{constraint} is defined as follows.
     =
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {
-                  \forall_{\!i} \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\!i } \: d_i \in \mDomain(\mVar{x}_i),
                   d_1, \ldots, d_k \in T
                 }.
   \end{displaymath}
