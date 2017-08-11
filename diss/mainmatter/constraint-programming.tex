@@ -258,6 +258,27 @@ refining the modeling of cost.
 
 
 
+\subsubsection{Optimization}
+
+In \gls{CP}, an optimization problem is modeled by maximizing or minimizing a
+\gls{variable}~$\mVar{c}$ whose value is constrained according to the objective
+function.
+%
+For example, if $\mVar{x}_m$ is Boolean \gls{variable} representing whether
+match~$m$ is selected and $c_m$ denotes the cost of selecting $m$, then a
+\gls{CP} idiom for modeling \gls{optimal.ps} \gls{pattern selection} is
+%
+\begin{equation}
+  \begin{array}{rl}
+      \text{minimize} & \mVar{c} \\
+    \text{subject to} & \mVar{c} = \displaystyle\sum_m c_m \mVar{x}_m
+  \end{array}
+  \labelEquation{pattern-selection-in-cp}
+\end{equation}
+%
+In this context, $\mVar{c}$ is called a \gls!{cost variable}.
+
+
 \section{Solving}
 \labelSection{cp-solving}
 
