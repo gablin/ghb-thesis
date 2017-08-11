@@ -1430,10 +1430,10 @@ Formally, a \gls{PBQP} is defined as follows.
       \text{minimize}
         & \displaystyle
           \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
-          \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
-          \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i, \\
+          \mVar{x}_i^{\transp} C_{ij} \, \mVar{x}_j +
+          \sum_{1 \leq i \leq n} \mVector{c}_i^{\transp} \mVar{x}_i, \\
       \text{subject to}
-        & \forall_{\! i} \: \mVector{1}^T \mVar{x}_i = 1. \\
+        & \forall_{\! i} \: \mVector{1}^{\transp} \mVar{x}_i = 1. \\
     \end{array}
   \end{displaymath}%
 \end{definition}
@@ -1447,8 +1447,8 @@ Then $\mVar{x}_i$ is a \gls!{decision variable} with $k$~elements, where
 decision~$i$.
 %
 For each \gls{decision variable}, the condition
-\raisebox{0pt}[\height-2pt]{$\mVector{1}^T \mVar{x}_i = 1$} ensures that exactly
-one choice is selected.
+\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVar{x}_i = 1$} ensures that
+exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
@@ -1631,7 +1631,7 @@ Each \gls{complex.m} \gls{match}~$i$ in turn introduces a \gls{decision
   variable}~\raisebox{0pt}[\height-2pt]{$\mVar{x}_i \in \mSet{0, 1}^2$} to
 decide whether $i$ is selected.
 %
-Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^T \mVar{x}_i = 1$}
+Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVar{x}_i = 1$}
 condition, every such \gls{variable} has exactly two elements (one representing
 \emph{on} and the other \emph{off}).
 %
@@ -1663,7 +1663,7 @@ The \gls{PBQP} model is thus augmented with another sum
 \begin{equation}
   \sum_{i \in N, j \in M}
   \hspace*{-.5em}
-  \mVar{x}_i^T D_{ij} \, \mVar{x}_j
+  \mVar{x}_i^{\transp} D_{ij} \, \mVar{x}_j
 \end{equation}
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
@@ -1712,7 +1712,7 @@ Formally, an \gls{IP} problem is defined as follows.
   \begin{displaymath}
     \begin{array}{rl}
       \text{maximize} &
-        \multirow{2}{*}{$\mVector{c}^T \mVar{x}$} \\
+        \multirow{2}{*}{$\mVector{c}^{\transp} \mVar{x}$} \\
       \text{or minimize} & \\
       \text{subject to} & A \mVar{x} \leq \mVector{b}, \\
         & A \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
