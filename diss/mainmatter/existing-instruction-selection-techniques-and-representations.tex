@@ -1871,20 +1871,20 @@ solving.
 \Gls{pattern selection} can be modeled using a \gls{global.c} \gls{constraint}
 called the \gls!{global cardinality constraint}.
 %
-The \gls{constraint}, typically referred to as $\mCount$ or $\mGCC$, constrains
+The \gls{constraint}, typically referred to as $\mGCC$ or $\mCount$, constrains
 the number of \glspl{decision variable} assigned a particular value (which may
 also be a \gls{decision variable}).
 %
-We say that \mbox{$\mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds
+We say that \mbox{$\mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds
 if exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
   \mVar{x}_k$} are assigned value~$v$ (for a formal definition, see
-\refChapter{constraint-programming}, \refDefinition{count}).
+\refChapter{constraint-programming}, \refDefinition{gcc}).
 %
-For example, the constraint \mbox{$\mCount(4, \mVar{x}_1 \in \mSet{4},
+For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 \in \mSet{4},
   \mVar{x}_2 \in \mSet{5}, \mVar{x}_3 \in \mSet{6}, \mVar{y} \in \mSet{1})$}
 holds as exactly one \glsshort{decision variable} is assigned the value~4.
 
-To model \gls{pattern selection} using $\mCount$, two new sets of
+To model \gls{pattern selection} using $\mGCC$, two new sets of
 \glspl{decision variable} are needed.
 %
 Assume that $M$ denotes the \gls{match set} and $\mCovers(m)$ denotes the set of
@@ -1904,13 +1904,13 @@ With these \glsplshort{decision variable}, \gls{pattern selection} can be
 modeled as
 %
 \begin{equation}
-  \mCount(
+  \mGCC(
     m,
     \cup_{n \in \mCovers(m)} \, \mVar{match}_n,
     \mVar{count}_m
   ),
   \forall m \in M,
-  \labelEquation{pattern-selection-using-count}
+  \labelEquation{pattern-selection-using-gcc}
 \end{equation}
 %
 which is more restrictive than \refEquation{pattern-selection-in-ip} and thus
@@ -1960,7 +1960,7 @@ in~\cite{WolinskiKuchcinski:2007}.
 \Gls{pattern selection} is modeled as \refEquation{pattern-selection-in-ip} in
 another \gls{constraint model}, which was later improved by
 \textcite{FlochEtAl:2010} who replaced the \gls{pattern selection}
-\glspl{constraint} with \refEquation{pattern-selection-using-count}, and then
+\glspl{constraint} with \refEquation{pattern-selection-using-gcc}, and then
 extended by \textcite{ArslanKuchcinski:2014} for targeting \gls{VLIW}
 processors%
 %

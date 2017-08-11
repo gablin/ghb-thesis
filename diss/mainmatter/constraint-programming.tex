@@ -163,7 +163,7 @@ $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
 \gls{constraint} -- the \gls{global cardinality constraint} -- and how it can be
 used to model the \gls{pattern selection} problem (see
-\refEquation{pattern-selection-using-count}).
+\refEquation{pattern-selection-using-gcc}).
 %
 For completeness, we provide the formal definition of the \gls{constraint}.
 %
@@ -174,7 +174,7 @@ For completeness, we provide the formal definition of the \gls{constraint}.
   Then
   %
   \begin{displaymath}
-    \mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
+    \mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
     =
     \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
                  {
@@ -185,7 +185,7 @@ For completeness, we provide the formal definition of the \gls{constraint}.
                    \end{array}
                  }.
   \end{displaymath}%
-  \labelDefinition{count}%
+  \labelDefinition{gcc}%
 \end{definition}
 
 Another relevant example is the \gls!{circuit constraint}, typically referred to
