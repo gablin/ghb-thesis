@@ -514,23 +514,25 @@
 \setsubsubsecheadstyle{\sffamily\bfseries}
 \setparaheadstyle{\sffamily\bfseries}
 
-% Customize typesetting of page headers
-\newcommand{\headerpsep}{%
-  \hspace{30pt}% 2x \parindent
+% Customize typesetting of page headers and footers
+\newcommand{\headerFont}{%
+  \footnotesize%
 }
 \nouppercaseheads
-\makeevenhead{headings}{\thepage\headerpsep\leftmark}{}{}
-\makeoddhead{headings}{}{}{\rightmark\headerpsep\thepage}
+\makeevenhead{headings}{\headerFont\thepage}{}{\headerFont\leftmark}
+\makeoddhead{headings}{\headerFont\rightmark}{}{\headerFont\thepage}
+\makeoddfoot{plain}{}{\headerFont\thepage}{}
+
+% Remove chapter section numbers from header marks
+\addtopsmarks{headings}{}{
+  \createmark{chapter}{left}{shownumber}{}{ \ }
+}
+\addtopsmarks{headings}{}{
+  \createmark{section}{right}{shownumber}{}{ \ }
+}
+
+% Activate changes
 \pagestyle{headings}
-
-% Remove 'Chapter' from page headers
-\makeatletter
-\patchcmd{\chaptermark}{\@chapapp\ }{}{}{}
-\makeatother
-
-% Remove number dot from page headers
-\patchcmd{\chaptermark}{. \ }{ \ }{}{}
-\patchcmd{\sectionmark}{. \ }{ \ }{}{}
 
 
 
