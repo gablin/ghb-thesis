@@ -1415,21 +1415,25 @@ developing a greedy, linear-time solver.
 Formally, a \gls{PBQP} is defined as follows.
 %
 \begin{definition}[PBQP]%
+  Let \mbox{$\mVector{c}_1, \ldots, \mVector{c}_n$} be a set of vectors, and let
+  \mbox{$C_{1,1}, C_{1,2}, \ldots, C_{1,n}$}, \mbox{$C_{2,2}, \ldots, C_{n,n}$}
+  be a set of matrices of size \mbox{$|c_i| \times |c_j|$} for \mbox{$i = 1,
+    \ldots, n$} and \mbox{$j = i, \ldots, n$}.
+  %
+  Let also \mbox{$\mVar{x}_1, \ldots, \mVar{x}_n$} be a set of vectors, where
+  \mbox{$\mVar{x}_i \in \mSet{0, 1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
+  %
+  Then
+  %
   \begin{displaymath}
-    \begin{array}{rll}
+    \begin{array}{rl}
       \text{minimize}
-        & \multicolumn{2}{c}{
-            \displaystyle
-            \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
-            \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
-            \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i,
-          } \\
+        & \displaystyle
+          \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
+          \mVar{x}_i^T C_{ij} \, \mVar{x}_j +
+          \sum_{1 \leq i \leq n} \mVector{c}_i^T \mVar{x}_i, \\
       \text{subject to}
-        & \mVar{x}_i \in \mSet{0, 1}^{|c_i|}\!,
-        & \forall 1 \leq i \leq n, \\
-      \text{and}
-        & \mVector{1}^T \mVar{x}_i = 1,
-        & \forall 1 \leq i \leq n. \\
+        & \forall_{\! i} \: \mVector{1}^T \mVar{x}_i = 1. \\
     \end{array}
   \end{displaymath}%
 \end{definition}
