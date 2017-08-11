@@ -517,13 +517,16 @@
 \setparaheadstyle{\sffamily\bfseries}
 
 % Customize typesetting of page headers and footers
-\newcommand{\headerFont}{%
-  \footnotesize%
+\newcommand{\hfPageText}[1]{%
+  \footnotesize#1%
+}
+\newcommand{\hfMarkText}[1]{%
+  \footnotesize\textosf{\textsc{\MakeLowercase{#1}}}%
 }
 \nouppercaseheads
-\makeevenhead{headings}{\headerFont\thepage}{}{\headerFont\leftmark}
-\makeoddhead{headings}{\headerFont\rightmark}{}{\headerFont\thepage}
-\makeoddfoot{plain}{}{\headerFont\thepage}{}
+\makeevenhead{headings}{\hfPageText{\thepage}}{}{\hfMarkText{\leftmark}}
+\makeoddhead{headings}{\hfMarkText{\rightmark}}{}{\hfPageText{\thepage}}
+\makeoddfoot{plain}{}{\hfPageText{\thepage}}{}
 
 % Remove chapter section numbers from header marks
 \addtopsmarks{headings}{}{
