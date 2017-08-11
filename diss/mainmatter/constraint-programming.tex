@@ -261,7 +261,31 @@ refining the modeling of cost.
 \section{Solving}
 \labelSection{cp-solving}
 
-\todo{write}
+Solving of \glspl{constraint model} involves interleaving of \gls{propagation}
+and \gls{search}.
+%
+\Gls!{propagation} removes \gls{domain} values that are known not to appear in
+any \gls{solution}, and \gls!{search} attempts several alternatives when
+\gls{propagation} is not enough to find a \gls{solution}.
+%
+An entity that performs \gls{propagation} and \gls{search} is called a
+\gls!{constraint solver} (or just \gls!{solver}).
+
+In practice, however, this alone is not enough for many problem instances
+because the \gls{search space} is simply too large.
+%
+The \gls{search space} can be reduced by extending the \gls{constraint model}
+with \gls{implied.c} and \gls{dominance breaking.c} \glspl{constraint} and by
+performing \gls{presolving}.
+%
+An \gls!{implied.c}[ \gls{constraint}] is a \gls{constraint} that strengthens
+propagation without removing any \glspl{solution}.
+%
+A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
+removes \glspl{solution} known to be dominated by another \gls{solution}.
+%
+\Gls!{presolving} applies problem-specific techniques before solving that shrink
+the \gls{variable} \glspl{domain}.
 
 
 
@@ -277,7 +301,7 @@ refining the modeling of cost.
 
 
 
-\subsubsection{Implied Constraints and Dominance Breaking}
+\subsubsection{Implied and Dominance Breaking Constraints}
 
 \todo{write}
 
