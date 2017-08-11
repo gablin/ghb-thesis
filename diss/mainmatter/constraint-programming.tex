@@ -199,7 +199,34 @@ Formally, the \gls{constraint} is defined as follows.
 As will be seen in \refChapter{modeling-block-ordering}, $\mCircuit$ can be used
 to model \gls{block ordering}.
 
-\todo{discuss table}
+The last \gls{global.c} \gls{constraint} relevant for this dissertation is the
+\gls{table constraint}, which constrains a vector of \glspl{variable} such that
+the values appear as a row in a given matrix.
+%
+By encoding legal \gls{variable} assignments into the matrix, any relation can
+be expressed using a \gls{table constraint}.
+%
+Formally, the \gls{constraint} is defined as follows.
+%
+\begin{definition}[\Gls{table constraint}]
+  Let \mbox{$X = \mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable},
+  and let $T$ be an \mbox{$m \times k$} matrix, where \mbox{$m \in \mathbb{N}$}.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mTable(\mVar{x}_1, \ldots, \mVar{x}_k, T)
+    =
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_{\!i} \: d_i \in \mDomain(\mVar{x}_i),
+                  d_1, \ldots, d_k \in T
+                }.
+  \end{displaymath}
+\end{definition}
+
+As will be seen in \refChapter{solving-techniques}, $\mTable$ can be used to
+refining the modeling of cost.
 
 
 
