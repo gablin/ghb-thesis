@@ -261,15 +261,12 @@ refining the modeling of cost.
 \section{Solving}
 \labelSection{cp-solving}
 
-Solving of \glspl{constraint model} involves interleaving of \gls{propagation}
-and \gls{search}.
+A \gls!{constraint solver} (or just \gls!{solver}) finds \glspl{solution} to a
+\gls{constraint model} by interleaving \gls{propagation} and \gls{search}.
 %
 \Gls!{propagation} removes \gls{domain} values that are known not to appear in
 any \gls{solution}, and \gls!{search} attempts several alternatives when
 \gls{propagation} is not enough to find a \gls{solution}.
-%
-An entity that performs \gls{propagation} and \gls{search} is called a
-\gls!{constraint solver} (or just \gls!{solver}).
 
 In practice, however, this alone is not enough for many problem instances
 because the \gls{search space} is simply too large.
