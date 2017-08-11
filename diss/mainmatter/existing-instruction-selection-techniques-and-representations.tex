@@ -1730,13 +1730,13 @@ In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 \begin{equation}
   \sum_{\substack{m \in M, \\ n \in \mCovers(m)}}
   \hspace*{-1em}
-  \mVar{x}_m = 1, \forall n \in N,
+  \mVar{x}[m] = 1, \forall n \in N,
   \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
 where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
-match~$m$, and $\mVar{x}_m$ is a Boolean \gls{decision variable} indicating
+match~$m$, and $\mVar{x}[m]$ is a Boolean \gls{decision variable} indicating
 whether match~$m$ is selected.
 
 
@@ -1765,7 +1765,7 @@ In most cases, not all copies are needed and therefore not all \glspl{operation}
 must be covered.
 %
 Consequently, \citeauthor{WilsonEtAl:1994} model \gls{pattern selection} as
-\mbox{$\sum \mVar{x}_m \leq 1$}.
+\mbox{$\sum \mVar{x}[m] \leq 1$}.
 
 Another approach for \gls{integrated.cg} \gls{code generation} was made by
 \textcite{BednarskiKessler:2006}, whose design was later reused by
