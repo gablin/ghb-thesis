@@ -161,9 +161,33 @@ Hence the \glspl{constraint} in \refFigure{cp-example} can be replaced by
 $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
-\gls{constraint} -- $\mCount$, defined in \refDefinition{count} -- and how it
-can be used to model the \gls{pattern selection} problem.
+\gls{constraint} -- the \gls{global cardinality constraint} -- and how it can be
+used to model the \gls{pattern selection} problem (see
+\refEquation{pattern-selection-using-count}).
 %
+For completeness, we provide the formal definition of the \gls{constraint}.
+%
+\begin{definition}[\Gls{global cardinality constraint}]%
+  Let $v$ be a value, and let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y}$}
+  be a set of \glspl{variable}.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mCount(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
+    =
+    \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
+                 {
+                   \begin{array}{l}
+                     \forall_i \: d_i \in \mDomain(\mVar{x}_i),
+                     e \in \mDomain(\mVar{y}), \\
+                     e = |\mSetBuilder{d_i}{\forall_i \: d_i = v}|
+                   \end{array}
+                 }.
+  \end{displaymath}%
+  \labelDefinition{count}%
+\end{definition}
+
 Another relevant example is the \gls!{circuit constraint}, typically referred to
 as $\mCircuit$ or $\mCycle$, which enforces that the \glspl{variable}
 representing adjacency forms a cycle.
