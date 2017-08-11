@@ -176,6 +176,12 @@
 \theoremstyle{def}
 \newtheorem{definition}{Definition}[chapter]
 
+% Reduce vertical spacing of displaymath inside a 'definition' environment
+\AtBeginEnvironment{definition}{%
+  \setlength{\abovedisplayskip}{5pt plus 2pt minus 2pt}%
+  \setlength{\belowdisplayskip}{5pt plus 2pt minus 2pt}%
+}
+
 % General commands
 \newcommand{\overbar}[1]{
   \mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu
