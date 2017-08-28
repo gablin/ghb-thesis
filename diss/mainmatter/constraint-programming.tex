@@ -316,19 +316,139 @@ the \gls{variable} \glspl{domain}.
 \Gls{constraint solver} typically keep track of \glspl{variable} and their
 \glspl{domain} using \glspl{constraint store}.
 %
-A \gls!{constraint store} is a ...
+A \gls!{constraint store} (or just \gls!{store}) is a data structure that maps a
+set of \glspl{variable} to sets of \glspl{domain}.
 %
-\todo{finish paragraph}
-%
-\todo{cite \cite{Bessiere:2006}}
-%
-\todo{cite \cite{SchulteCarlsson:2006}}
+A \gls{store}~$S_1$ is \gls!{stronger.cs} than another \gls{store}~$S_2$,
+denoted \mbox{$S_1 \mStronger S_2$}, if \mbox{$\mDomain_1(\mVar{x}) \subseteq
+  \mDomain_2(\mVar{x})$} for all \glspl{variable}~$\mVar{x}$, where
+$\mDomain_i(\mVar{x})$ denotes the domain of \gls{variable}~$\mVar{x}$ in
+store~$S_i$.
 
-\todo{discuss propagation strengths}
+A function that takes a \gls{constraint store} as input and produces another
+\gls{store} is called a \gls!{propagator}~\cite{SchulteCarlsson:2006}.
+%
+A \gls{propagator} implements a \gls{constraint} if it does not remove any
+\glspl{solution} to the \gls{constraint} and only keeps \gls{variable}
+assignments that are part of a \gls{solution}.
+%
+For solving to be well-behaved, \glspl{propagator} are also expected to be
+\gls!{decreasing.p} -- it does not add any values, hence \mbox{$p(S) \mStronger
+  S$} -- and \gls!{monotonic.p} -- if \mbox{$S_1 \mStronger S_2$}, then
+\mbox{$p(S_1) \mStronger p(S_2)$}.
+
+\Glspl{propagator} implementing the same \gls{constraint} can differ in the
+amount of propagation they perform.
+%
+A \gls{propagator} is \gls!{value-consistent.p} if it only propagates when one
+of its \glspl{variable} becomes \gls{assigned.v}, \gls!{bound-consistent.p} if
+it only reduces the bounds of a \gls{domain}, and \gls!{domain-consistent.p} if
+it removes all values that do not appear in any \gls{solution} to the
+\gls{constraint}.
+%
+\begin{figure}
+  \centering%
+  \figureFont\figureFontSize%
+  \subcaptionbox{%
+                  Solving with inequality constraints%
+                  \labelFigure{cp-prop-strengths-example-inequality-cons}%
+                }{%
+                  \begin{tabular}{%
+                                   l%
+                                   c@{}c@{ }c@{}c%
+                                   c@{}c@{ }c@{}c%
+                                   c@{}c@{ }c@{ }c@{ }c@{}c%
+                                 }
+                    \toprule
+                      \multicolumn{1}{c}{\tabhead Event}
+                        & \multicolumn{14}{c}{\tabhead Store}\\
+                      \cmidrule(lr){2-15}%
+                        & \multicolumn{4}{c}{$\mVar{x}$}
+                        & \multicolumn{4}{c}{$\mVar{y}$}
+                        & \multicolumn{6}{c}{$\mVar{z}$}\\
+                    \midrule
+                      Initial store
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                      Propagate all constraints
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                      Search on $\mVar{z}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1  &    &    &   & $\}$\\
+                      Propagate $\mVar{y} \neq \mVar{z}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ &    & 2  & $\}$
+                        & $\{$ & 1  &    &    &   & $\}$\\
+                      Propagate $\mVar{x} \neq \mVar{z}$
+                        & $\{$ &    & 2  & $\}$
+                        & $\{$ &    & 2  & $\}$
+                        & $\{$ & 1  &    &    &   & $\}$\\
+                      Propagate $\mVar{x} \neq \mVar{y}$
+                        & $\{$ &    &    & $\}$
+                        & $\{$ &    & 2  & $\}$
+                        & $\{$ & 1  &    &    &   & $\}$\\
+                    \bottomrule
+                  \end{tabular}%
+                }
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox{%
+                  Solving with $\mDistinct$ constraint%
+                  \labelFigure{cp-prop-strengths-example-distinct}%
+                }{%
+                  \begin{tabular}{%
+                                   l%
+                                   c@{}c@{ }c@{}c%
+                                   c@{}c@{ }c@{}c%
+                                   c@{}c@{ }c@{ }c@{ }c@{}c%
+                                 }
+                    \toprule
+                      \multicolumn{1}{c}{\tabhead Event}
+                        & \multicolumn{14}{c}{\tabhead Store}\\
+                      \cmidrule(lr){2-15}%
+                        & \multicolumn{4}{c}{$\mVar{x}$}
+                        & \multicolumn{4}{c}{$\mVar{y}$}
+                        & \multicolumn{6}{c}{$\mVar{z}$}\\
+                    \midrule
+                      Initial store
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                      Propagate $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ & 1, & 2  & $\}$
+                        & $\{$ &    &    & 3, & 4 & $\}$\\
+                    \bottomrule
+                  \end{tabular}%
+                }
+
+  \caption[Example illustrating different propagation strengths]%
+          {%
+            Example illustrating the different propagation strengths of
+            $\mDistinct$ and its binary decomposition%
+          }
+  \labelFigure{cp-prop-strengths-example}
+\end{figure}
+%
+For example, \refFigure{cp-prop-strengths-example} shows solving of two versions
+of the \glsshort{constraint model} given in \refFigure{cp-model-example}, one
+using $\mDistinct$ and another using inequality \glspl{constraint}.
+%
+Because the inequality \glspl{constraint} are \gls{value-consistent.p}, they
+cannot propagate anything until at least one \gls{variable} becomes
+\gls{assigned.v}.
+%
+In comparison, a \gls{domain-consistent.p} implementation of $\mDistinct$ can
+remove values~1 and~2 from the \gls{domain} of \gls{variable}~$\mVar{z}$ without
+any \gls{search} as these values do not appear in any \glspl{solution} (see
+\refFigure{cp-model-example-solutions}).
 
 \todo{discuss propagators for global constraints}
-
-\todo{compare propagation between distinct and binary decomposition}
 
 
 

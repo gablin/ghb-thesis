@@ -123,16 +123,24 @@
 \newterm{constraint propagation}[see={propagation}]
 \newterm{constraint model}[user1={model}, user2={models}]
 \newterm{constraint solver}[user1={solver}, see={solver}]
-\newterm{constraint store}
+\newterm{constraint store}[see={store}]
+\newterm[stronger.cs]{stronger}[parent={constraint store}]
 \newterm{distinct constraint}
 \newterm{domain}
 \newterm{global cardinality constraint}
 \newterm{presolving}
 \newterm{propagation}[see={constraint propagation}]
+\newterm{propagator}
+\newterm[bound-consistent.p]{bound-consistent}[parent={propagator}]
+\newterm[decreasing.p]{decreasing}[parent={propagator}]
+\newterm[domain-consistent.p]{domain-consistent}[parent={propagator}]
+\newterm[monotonic.p]{monotonic}[parent={propagator}]
+\newterm[value-consistent.p]{value-consistent}[parent={propagator}]
 \newterm{search}
 \newterm{search space}
 \newterm{solution}
 \newterm{solution space}
+\newterm{store}[see={constraint store}]
 \newterm{table constraint}
 \newterm{variable}
 \newterm[assigned.v]{assigned}[parent={variable}]
