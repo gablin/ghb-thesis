@@ -164,8 +164,9 @@ Hence the \glspl{constraint} in \refFigure{cp-model-example} can be replaced by
 $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
-\gls{constraint} -- the \gls{global cardinality constraint} -- and how it can be
-used to model the \gls{pattern selection} problem (see
+\gls{constraint} -- the \gls{global cardinality constraint}, which is a
+generalization of the \gls{distinct constraint} -- and how it can be used to
+model the \gls{pattern selection} problem (see
 \refEquation{pattern-selection-using-gcc}).
 %
 For completeness, we provide the formal definition of the \gls{constraint}.
@@ -328,6 +329,8 @@ store~$S_i$.
 A function that takes a \gls{constraint store} as input and produces another
 \gls{store} is called a \gls!{propagator}~\cite{SchulteCarlsson:2006}.
 %
+\Gls{propagator} are often also called \glspl{filtering algorithm}.
+%
 A \gls{propagator} implements a \gls{constraint} if it does not remove any
 \glspl{solution} to the \gls{constraint} and only keeps \gls{variable}
 assignments that are part of a \gls{solution}.
@@ -340,11 +343,11 @@ For solving to be well-behaved, \glspl{propagator} are also expected to be
 \Glspl{propagator} implementing the same \gls{constraint} can differ in the
 amount of propagation they perform.
 %
-A \gls{propagator} is \gls!{value-consistent.p} if it only propagates when one
-of its \glspl{variable} becomes \gls{assigned.v}, \gls!{bound-consistent.p} if
-it only reduces the bounds of a \gls{domain}, and \gls!{domain-consistent.p} if
-it removes all values that do not appear in any \gls{solution} to the
-\gls{constraint}.
+A \gls{propagator} is \glshyphened!{value consistency} if it only propagates
+when one of its \glspl{variable} becomes \gls{assigned.v}, \glshyphened!{bounds
+  consistency} if it only reduces the bounds of a \gls{domain}, and
+\glshyphened!{domain consistency} if it removes all values that do not appear in
+any \gls{solution} to the \gls{constraint}.
 %
 \begin{figure}
   \centering%
@@ -439,16 +442,35 @@ For example, \refFigure{cp-prop-strengths-example} shows solving of two versions
 of the \glsshort{constraint model} given in \refFigure{cp-model-example}, one
 using $\mDistinct$ and another using inequality \glspl{constraint}.
 %
-Because the inequality \glspl{constraint} are \gls{value-consistent.p}, they
-cannot propagate anything until at least one \gls{variable} becomes
-\gls{assigned.v}.
+Because at most \gls{value consistency} can be achieved for inequality
+\glspl{constraint}, they cannot propagate anything until at least one
+\gls{variable} becomes \gls{assigned.v}.
 %
-In comparison, a \gls{domain-consistent.p} implementation of $\mDistinct$ can
-remove values~1 and~2 from the \gls{domain} of \gls{variable}~$\mVar{z}$ without
-any \gls{search} as these values do not appear in any \glspl{solution} (see
-\refFigure{cp-model-example-solutions}).
+In comparison, a \glshyphened{domain consistency} implementation of the
+\gls{distinct constraint} can remove values~1 and~2 from the \gls{domain} of
+\gls{variable}~$\mVar{z}$ without any \gls{search} as these values do not appear
+in any \glspl{solution} (see \refFigure{cp-model-example-solutions}).
 
-\todo{discuss propagators for global constraints}
+As to be expected, stronger propagation comes at a price of greater complexity.
+%
+For the \gls{distinct constraint}, there exist \glsshort{bounds consistency} and
+\glshyphened{domain consistency} \glspl{propagator} with worst-case time
+complexities~$\mBigO(n \log n)$~\cite{Lopez-OrtizEtAl:2003}
+and~$\mBigO(n^{2.5})$~\cite{Regin:1994}, respectively, where $n$ denotes the
+number of \glspl{variable}.
+%
+The same can be achieved for the \gls{global cardinality constraint} at similar
+cost~\cite{QuimperEtAl:2005, Regin:1996}.
+
+Many \glshyphened{domain consistency} \gls{propagator} exist for the \gls{table
+  constraint} \cite{LecoutreSzymanek:2006, Lecoutre:2011, MairyEtAl:2014,
+  PerezRegin:2014, LecoutreEtAl:2015, DemeulenaereEtAl:2016}, although these
+exhibit worst-case time complexity.
+%
+\Gls{domain consistency} for \gls{circuit constraint} cannot be achieved in
+polynomial time as it involves finding Hamiltonian cycles, which is an
+NP-complete problem~\cite{GareyJohnson:1979}, although an incomplete
+polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
 
 
 

@@ -113,7 +113,7 @@
 \newterm{solver}
 
 \newacronym{CP}{constraint programming}
-\newterm{circuit constraint}
+\newterm{circuit constraint}[user1={circuit}]
 \newterm{cost variable}
 \newterm{constraint}
 \newterm[binary.c]{binary}[parent={constraint}]
@@ -125,23 +125,24 @@
 \newterm{constraint solver}[user1={solver}, see={solver}]
 \newterm{constraint store}[see={store}]
 \newterm[stronger.cs]{stronger}[parent={constraint store}]
-\newterm{distinct constraint}
+\newterm{distinct constraint}[user1={distinct}]
 \newterm{domain}
+\newterm{filtering algorithm}[see={propagator}]
 \newterm{global cardinality constraint}
 \newterm{presolving}
 \newterm{propagation}[see={constraint propagation}]
-\newterm{propagator}
-\newterm[bound-consistent.p]{bound-consistent}[parent={propagator}]
+\newterm{propagator}[see={filtering algorithm}]
+\newterm{bounds consistency}[user1={bounds}, user3={bounds-consistent}]
 \newterm[decreasing.p]{decreasing}[parent={propagator}]
-\newterm[domain-consistent.p]{domain-consistent}[parent={propagator}]
+\newterm{domain consistency}[user1={domain}, user3={domain-consistent}]
 \newterm[monotonic.p]{monotonic}[parent={propagator}]
-\newterm[value-consistent.p]{value-consistent}[parent={propagator}]
+\newterm{value consistency}[user1={value}, user3={value-consistent}]
 \newterm{search}
 \newterm{search space}
 \newterm{solution}
 \newterm{solution space}
 \newterm{store}[see={constraint store}]
-\newterm{table constraint}
+\newterm{table constraint}[user1={table}]
 \newterm{variable}
 \newterm[assigned.v]{assigned}[parent={variable}]
 
