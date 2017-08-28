@@ -352,15 +352,16 @@ any \gls{solution} to the \gls{constraint}.
 \begin{figure}
   \centering%
   \figureFont\figureFontSize%
+  \newcolumntype{C}{>{$}c<{$}}%
   \subcaptionbox{%
                   Solving with inequality constraints%
                   \labelFigure{cp-prop-strengths-example-inequality-cons}%
                 }{%
                   \begin{tabular}{%
                                    l%
-                                   c@{}c@{ }c@{}c%
-                                   c@{}c@{ }c@{}c%
-                                   c@{}c@{ }c@{ }c@{ }c@{}c%
+                                   C@{}C@{ }C@{}C%
+                                   C@{}C@{ }C@{}C%
+                                   C@{}C@{ }C@{ }C@{ }C@{}C%
                                  }
                     \toprule
                       \multicolumn{1}{c}{\tabhead Event}
@@ -371,29 +372,29 @@ any \gls{solution} to the \gls{constraint}.
                         & \multicolumn{6}{c}{$\mVar{z}$}\\
                     \midrule
                       Initial store
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2, & 3, & 4 & \}\\
                       Propagate all constraints
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2, & 3, & 4 & \}\\
                       Search on $\mVar{z}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1  &    &    &   & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1  &    &    &   & \}\\
                       Propagate $\mVar{y} \neq \mVar{z}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ &    & 2  & $\}$
-                        & $\{$ & 1  &    &    &   & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ &    & 2  & \}
+                        & \{ & 1  &    &    &   & \}\\
                       Propagate $\mVar{x} \neq \mVar{z}$
-                        & $\{$ &    & 2  & $\}$
-                        & $\{$ &    & 2  & $\}$
-                        & $\{$ & 1  &    &    &   & $\}$\\
+                        & \{ &    & 2  & \}
+                        & \{ &    & 2  & \}
+                        & \{ & 1  &    &    &   & \}\\
                       Propagate $\mVar{x} \neq \mVar{y}$
-                        & $\{$ &    &    & $\}$
-                        & $\{$ &    & 2  & $\}$
-                        & $\{$ & 1  &    &    &   & $\}$\\
+                        & \{ &    &    & \}
+                        & \{ &    & 2  & \}
+                        & \{ & 1  &    &    &   & \}\\
                     \bottomrule
                   \end{tabular}%
                 }
@@ -406,9 +407,9 @@ any \gls{solution} to the \gls{constraint}.
                 }{%
                   \begin{tabular}{%
                                    l%
-                                   c@{}c@{ }c@{}c%
-                                   c@{}c@{ }c@{}c%
-                                   c@{}c@{ }c@{ }c@{ }c@{}c%
+                                   C@{}C@{ }C@{}C%
+                                   C@{}C@{ }C@{}C%
+                                   C@{}C@{ }C@{ }C@{ }C@{}C%
                                  }
                     \toprule
                       \multicolumn{1}{c}{\tabhead Event}
@@ -419,13 +420,13 @@ any \gls{solution} to the \gls{constraint}.
                         & \multicolumn{6}{c}{$\mVar{z}$}\\
                     \midrule
                       Initial store
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2, & 3, & 4 & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2, & 3, & 4 & \}\\
                       Propagate $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ & 1, & 2  & $\}$
-                        & $\{$ &    &    & 3, & 4 & $\}$\\
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ &    &    & 3, & 4 & \}\\
                     \bottomrule
                   \end{tabular}%
                 }
