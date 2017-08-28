@@ -77,14 +77,14 @@ called a \gls!{solution}[ to $C$], and an assignment to all \glspl{variable}
 that fulfills all \glspl{constraint} in a \gls{constraint model}~$M$ is called a
 \gls!{solution}[ to $M$].
 %
-An example is shown in \refFigure{cp-example}.
+An example is shown in \refFigure{cp-model-example}.
 
 \begin{figure}
   \centering%
   \figureFont\figureFontSize%
   \mbox{}%
   \hfill\hfill%
-  \subcaptionbox{Constraint model\labelFigure{cp-example-model}}%
+  \subcaptionbox{Constraint model\labelFigure{cp-model-example-instance}}%
                 {%
                   \begin{tabular}{lc}
                     \toprule
@@ -99,7 +99,7 @@ An example is shown in \refFigure{cp-example}.
                   \end{tabular}%
                 }%
   \hfill%
-  \subcaptionbox{Solutions\labelFigure{cp-example-solutions}}%
+  \subcaptionbox{Solutions\labelFigure{cp-model-example-solutions}}%
                 [21mm]%
                 {%
                   $\begin{array}{c@{\:}c@{\:}c@{\:}c@{\:}c}
@@ -122,7 +122,7 @@ An example is shown in \refFigure{cp-example}.
             three variables must be assigned values which are different from one
             another%
           }
-  \labelFigure{cp-example}
+  \labelFigure{cp-model-example}
 \end{figure}
 
 
@@ -160,7 +160,7 @@ Formally, the \gls{constraint} is defined as follows.
   \end{displaymath}%
 \end{definition}
 
-Hence the \glspl{constraint} in \refFigure{cp-example} can be replaced by
+Hence the \glspl{constraint} in \refFigure{cp-model-example} can be replaced by
 $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
