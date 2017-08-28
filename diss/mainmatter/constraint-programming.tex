@@ -45,8 +45,10 @@ This also makes \gls{CP} particularly suited for solving problems that appear in
 \labelSection{cp-modeling}
 
 To solve a problem using \gls{CP}, it must first be formulated as a
-\gls{constraint model}~\cite{Smith:2006}.
+\gls{constraint model}.
 %
+A detailed account on modeling strategies is given by \textcite{Smith:2006}.
+
 A \gls!{constraint model} consists of two elements:%
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
@@ -315,6 +317,13 @@ the \gls{variable} \glspl{domain}.
 
 \subsubsection{Propagation}
 
+\Gls{propagation} is the process of removing values from the \glspl{variable}'
+\glspl{domain}, which is discussed in detail by \textcite{Bessiere:2006}.
+%
+\Gls{propagation} is also discussed by \textcite{SchulteCarlsson:2006} when
+describing how to build \glsdesc{CP} systems.
+
+
 \Gls{constraint solver} typically keep track of \glspl{variable} and their
 \glspl{domain} using \glspl{constraint store}.
 %
@@ -328,9 +337,7 @@ $\mDomain_i(\mVar{x})$ denotes the domain of \gls{variable}~$\mVar{x}$ in
 store~$S_i$.
 
 A function that takes a \gls{constraint store} as input and produces another
-\gls{store} is called a \gls!{propagator}~\cite{SchulteCarlsson:2006}.
-%
-\Gls{propagator} are often also called \glspl{filtering algorithm}.
+\gls{store} is called a \gls!{propagator} (or \gls!{filtering algorithm}).
 %
 A \gls{propagator} implements a \gls{constraint} if it does not remove any
 \glspl{solution} to the \gls{constraint} and only keeps \gls{variable}
@@ -340,9 +347,12 @@ For solving to be well-behaved, \glspl{propagator} are also expected to be
 \gls!{decreasing.p} -- it does not add any values, hence \mbox{$p(S) \mStronger
   S$} -- and \gls!{monotonic.p} -- if \mbox{$S_1 \mStronger S_2$}, then
 \mbox{$p(S_1) \mStronger p(S_2)$}.
+%
+A \gls{propagator} for which \mbox{$p(S) = S$} holds is said to be at
+\gls!{fixpoint}.
 
 \Glspl{propagator} implementing the same \gls{constraint} can differ in the
-amount of propagation they perform~\cite{Bessiere:2006}.
+amount of propagation they perform.
 %
 A \gls{propagator} is \glshyphened!{value consistency} if it only propagates
 when one of its \glspl{variable} becomes \gls{assigned.v}, \glshyphened!{bounds
@@ -355,7 +365,7 @@ any \gls{solution} to the \gls{constraint}.
   \figureFont\figureFontSize%
   \newcolumntype{C}{>{$}c<{$}}%
   \subcaptionbox{%
-                  Solving with inequality constraints%
+                  Solving with value-consistent inequality constraints%
                   \labelFigure{cp-prop-strengths-example-inequality-cons}%
                 }{%
                   \begin{tabular}{%
@@ -380,7 +390,7 @@ any \gls{solution} to the \gls{constraint}.
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2, & 3, & 4 & \}\\
-                      Search on $\mVar{z}$
+                      Search by attempting $\mVar{z} = 1$
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1  &    &    &   & \}\\
@@ -403,7 +413,7 @@ any \gls{solution} to the \gls{constraint}.
   \vspace{\betweensubfigures}
 
   \subcaptionbox{%
-                  Solving with $\mDistinct$ constraint%
+                  Solving with domain-consistent distinct constraint%
                   \labelFigure{cp-prop-strengths-example-distinct}%
                 }{%
                   \begin{tabular}{%
@@ -432,10 +442,11 @@ any \gls{solution} to the \gls{constraint}.
                   \end{tabular}%
                 }
 
-  \caption[Example illustrating different propagation strengths]%
+  \caption[Example illustrating propagation]%
           {%
-            Example illustrating the different propagation strengths of
-            $\mDistinct$ and its binary decomposition%
+            Example illustrating propagation for two versions of the model given
+            in \refFigure{cp-model-example}, one using the distinct constraint
+            and the other using a binary decomposition%
           }
   \labelFigure{cp-prop-strengths-example}
 \end{figure}
