@@ -283,6 +283,17 @@ selecting $m$, then a \gls{CP} idiom for modeling \gls{optimal.ps} \gls{pattern
 %
 In this context, $\mVar{c}$ is called a \gls!{cost variable}.
 
+The optimal solution is found using a method called \gls!{branch and
+  bound}~\cite{VanBeek:2006}.
+%
+During \gls{search}, the best \gls{solution} found so far is kept and a
+\gls{constraint} is added to enforce all subsequent \glspl{solution} to have
+strictly less (or greater) cost.
+%
+When the entire \gls{search space} has been explored, the last found
+\gls{solution} is guaranteed to be optimal.
+
+
 
 \section{Solving}
 \labelSection{cp-solving}
