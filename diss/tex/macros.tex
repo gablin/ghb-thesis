@@ -332,6 +332,16 @@
   urldate=iso8601,
 }
 
+% Include prefixes in citations.
+% https://tex.stackexchange.com/a/228215/2634
+\ExecuteBibliographyOptions{%
+  useprefix=false,
+}
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\makeatother
+\renewbibmacro*{begentry}{\midsentence}
+
 % Customize appearance of chapter heading
 \newcommand{\refname}{References}
 \defbibheading{bibliography}[\refname]{%
