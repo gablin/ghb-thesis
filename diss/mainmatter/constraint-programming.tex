@@ -489,12 +489,16 @@ polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
 
 \subsubsection{Search}
 
-\todo{write}
+When no more \gls{propagation} can be performed -- that is, when all
+\glspl{propagator} are at \gls{fixpoint} -- the \gls{solver} resorts to
+\gls{search}.
 %
-\todo{cite \cite{VanBeek:2006}}
+A detailed account on \gls{search} is given by \textcite{VanBeek:2006}.
 
+\todo{explain search}
 
-The optimal solution is found using a method called \gls!{branch and bound}.
+Optimal \glspl{solution} are found using a method called \gls!{branch and
+  bound}.
 %
 During \gls{search}, the best \gls{solution} found so far is kept and a
 \gls{constraint} is added to enforce all subsequent \glspl{solution} to have
