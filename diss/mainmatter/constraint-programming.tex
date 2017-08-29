@@ -661,9 +661,20 @@ that is, the number of items in the sequence -- must be equal to the length of
 the sequence.
 
 A \gls!{symmetry breaking.c}[ \gls{constraint}] is a \gls{constraint} that
-removes \glspl{solution} considered to be identical to one another.
+removes \glspl{solution} considered to be symmetric to one another.
 %
-\todo{give example of symmetry breaking constraint}
+For example, assume a \glsshort{constraint model} for solving a problem of
+packing rectangles inside another, larger rectangle.
+%
+Given a \gls{solution} to this problem, more \glspl{solution} can found by
+rotating, flipping, and mirroring the initial \gls{solution}.
+%
+As these \glspl{solution} are essentially the same, only one of them should be
+kept in the \gls{search space}.
+%
+A simple method of removing most (but not all) symmetric \glspl{solution} is to
+force one of the rectangles to be packed into one of the quadrants of the
+enclosing rectangle.
 
 A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
 removes \glspl{solution} known to be dominated by another \gls{solution}.
