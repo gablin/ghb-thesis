@@ -664,7 +664,8 @@ A \gls!{symmetry breaking.c}[ \gls{constraint}] is a \gls{constraint} that
 removes \glspl{solution} considered to be symmetric to one another.
 %
 For example, assume a \glsshort{constraint model} for solving a problem of
-packing rectangles inside another, larger rectangle.
+packing $n$ squares of sizes \mbox{$1, \ldots, n$} inside another, larger
+square.
 %
 Given a \gls{solution} to this problem, more \glspl{solution} can found by
 rotating, flipping, and mirroring the initial \gls{solution}.
@@ -673,8 +674,8 @@ As these \glspl{solution} are essentially the same, only one of them should be
 kept in the \gls{search space}.
 %
 A simple method of removing most (but not all) symmetric \glspl{solution} is to
-force one of the rectangles to be packed into one of the quadrants of the
-enclosing rectangle.
+force one of the squares to be packed into one of the quadrants of the enclosing
+square.
 
 A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
 removes \glspl{solution} known to be dominated by another \gls{solution}.
@@ -682,7 +683,21 @@ removes \glspl{solution} known to be dominated by another \gls{solution}.
 \Gls{dominance breaking.c} is therefore a generalization of \gls{symmetry
   breaking.c}.
 %
-\todo{give example of dominance breaking constraint}
+\begin{figure}
+  \centering%
+  \input{figures/constraint-programming/square-packing-partial-sol}
+
+  \caption[TODO]%
+          {%
+            TODO
+          }
+  \labelFigure{square-packing-partial-sol}
+\end{figure}
+%
+Let us revisit the \glsshort{constraint model} capturing the square packing
+problem, and assume the partial \gls{solution} shown in
+\refFigure{square-packing-partial-sol}~\cite{Korf:2004}.
+%
 
 
 
