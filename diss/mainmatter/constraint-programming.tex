@@ -47,9 +47,10 @@ This also makes \gls{CP} particularly suited for solving problems that appear in
 To solve a problem using \gls{CP}, it must first be formulated as a
 \gls{constraint model}.
 %
-A detailed account on modeling strategies is given by \textcite{Smith:2006}.
+Modeling strategies are discussed in detail by \textcite{Smith:2006}.
 
-A \gls!{constraint model} consists of two elements:%
+A \gls!{constraint model} (or just \glsshort!{constraint model}) consists of two
+elements:%
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
   \item a set of \glspl{variable}
@@ -317,12 +318,12 @@ the \gls{variable} \glspl{domain}.
 
 \subsubsection{Propagation}
 
-\Gls{propagation} is the process of removing values from the \glspl{variable}'
-\glspl{domain}, which is discussed in detail by \textcite{Bessiere:2006}.
+Performing \gls{propagation} requires an array of \gls{domain}-pruning
+algorithms and a system that allows these algorithms to interact.
 %
-\Gls{propagation} is also discussed by \textcite{SchulteCarlsson:2006} when
-describing how to build \glsdesc{CP} systems.
-
+\Gls{propagation} theory is discussed in detail by \textcite{Bessiere:2006}, and
+\glsdesc{CP} systems are throroughly discussed by
+\textcite{SchulteCarlsson:2006}.
 
 \Gls{constraint solver} typically keep track of \glspl{variable} and their
 \glspl{domain} using \glspl{constraint store}.
@@ -517,9 +518,7 @@ polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
 
 When no more \gls{propagation} can be performed -- that is, when all
 \glspl{propagator} are at \gls{fixpoint} -- the \gls{solver} resorts to
-\gls{search}.
-%
-A detailed account on \gls{search} is given by \textcite{VanBeek:2006}.
+\gls{search}, which is discussed in detail by \textcite{VanBeek:2006}.
 
 In exploring the \gls{search space}, two decisions need to be made repeatedly:
 %
