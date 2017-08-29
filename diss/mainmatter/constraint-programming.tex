@@ -299,21 +299,13 @@ A \gls!{constraint solver} (or just \gls!{solver}) finds \glspl{solution} to a
 any \gls{solution}, and \gls!{search} attempts several alternatives when
 \gls{propagation} is not enough to find a \gls{solution}.
 
-In practice, however, this alone is not enough for many problem instances
+In practice, however, this alone is often not enough for many problem instances
 because the \gls{search space} is simply too large.
 %
-The \gls{search space} can be reduced by extending the \gls{constraint model}
-with \gls{implied.c} and \gls{dominance breaking.c} \glspl{constraint} and by
-performing \gls{presolving}.
-%
-An \gls!{implied.c}[ \gls{constraint}] is a \gls{constraint} that strengthens
-propagation without removing any \glspl{solution}.
-%
-A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
-removes \glspl{solution} known to be dominated by another \gls{solution}.
-%
-\Gls!{presolving} applies problem-specific techniques before solving that shrink
-the \gls{variable} \glspl{domain}.
+In such cases, the \gls{search space} can be further reduced by extending the
+\gls{constraint model} with additional \glspl{constraint} to strengthen
+propagation and remove uninteresting \glspl{solution} and by performing
+\gls{presolving}.
 
 
 
@@ -631,12 +623,37 @@ optimal \gls{solution}.
 
 
 
-\subsubsection{Implied and Dominance Breaking Constraints}
+\subsubsection{Implied, Symmetry Breaking, and Dominance Breaking Constraints}
 
-\todo{write}
+As stated earlier, solving can be improved by extending the \gls{constraint
+  model} with additional \glspl{constraint}.
+%
+An \gls!{implied.c}[ \gls{constraint}] is a \gls{constraint} that strengthens
+propagation without removing any \glspl{solution}.
+%
+A \gls!{symmetry breaking.c}[ \gls{constraint}] is a \gls{constraint} that
+removes \glspl{solution} considered to be identical to one another.
+%
+A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
+removes \glspl{solution} known to be dominated by another \gls{solution}.
+%
+\Gls{dominance breaking.c} is therefore a generalization of \gls{symmetry
+  breaking.c}.
+%
+These \glspl{constraint} are discussed in detail by \textcite{Smith:2006},
+\textcite{GentEtAl:2006}, and \textcite{ChuStuckey:2015}, respectively.
+
+\todo{give example of implied constraint}
+
+\todo{give example of symmetry breaking constraint}
+
+\todo{give example of dominance breaking constraint}
 
 
 
 \subsubsection{Presolving}
+
+\Gls!{presolving} is the process of applying problem-specific algorithms to
+shrink the \gls{variable} \glspl{domain} before solving.
 
 \todo{write}
