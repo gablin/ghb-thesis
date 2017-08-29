@@ -1880,9 +1880,9 @@ if exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
   \mVar{x}_k$} are assigned value~$v$ (for a formal definition, see
 \refChapter{constraint-programming}, \refDefinition{gcc}).
 %
-For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 \in \mSet{4},
-  \mVar{x}_2 \in \mSet{5}, \mVar{x}_3 \in \mSet{6}, \mVar{y} \in \mSet{1})$}
-holds as exactly one \glsshort{decision variable} is assigned the value~4.
+For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 = \mSet{4}, \mVar{x}_2 =
+  \mSet{5}, \mVar{x}_3 = \mSet{6}, \mVar{y} = \mSet{1})$} holds as exactly one
+\glsshort{decision variable} is assigned the value~4.
 
 To model \gls{pattern selection} using $\mGCC$, two new sets of
 \glspl{decision variable} are needed.
