@@ -333,14 +333,20 @@
 }
 
 % Include prefixes in citations.
-% https://tex.stackexchange.com/a/228215/2634
+% https://tex.stackexchange.com/a/23397/2634
 \ExecuteBibliographyOptions{%
   useprefix=false,
 }
 \makeatletter
-\AtBeginDocument{\toggletrue{blx@useprefix}}
+\AtBeginDocument{%
+  \toggletrue{blx@useprefix}% Use prefixes in running text
+  \renewcommand*{\mkbibnameprefix}[1]{\MakeCapital{#1}}}% Capitalize prefixes in
+                                                        % running text
+\AtBeginBibliography{%
+  \renewcommand*{\mkbibnameprefix}[1]{#1}}% Uncapitalize prefixes in
+                                          % bibliography
 \makeatother
-\renewbibmacro*{begentry}{\midsentence}
+
 
 % Customize appearance of chapter heading
 \newcommand{\refname}{References}
