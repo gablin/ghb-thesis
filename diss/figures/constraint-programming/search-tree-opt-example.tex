@@ -1,0 +1,137 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\newcolumntype{C}{@{}c@{}}%
+\def\lineWidth{.8pt}
+\def\nodeDist{36pt}
+\begin{tikzpicture}[%
+    intermediate node/.style={%
+      nothing,
+      draw,
+      circle,
+      line width=\lineWidth,
+      fill=white!50!shade1,
+      font=\smaller,
+      node distance=\nodeDist,
+    },
+    solution/.style={%
+      intermediate node,
+      diamond,
+    },
+    failure/.style={%
+      solution,
+      rectangle,
+    },
+    branch/.style={%
+      line width=\lineWidth,
+    },
+    branch label/.style={%
+      nothing,
+      inner sep=2pt,
+      auto,
+      pos=.4,
+    },
+    bound label/.style={%
+      nothing,
+      inner sep=2pt,
+      node distance=4pt,
+    },
+  ]
+
+  \node [solution] (sol1)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{3} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol1] (sol2)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{4} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol2, opacity=0] (sol3)% Needed for positioning
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{3} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol3, opacity=0] (sol4)% Needed for positioning
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{4} \\
+            \end{array}
+          $%
+        };
+  \node [intermediate node,
+         above=.25*\nodeDist of $(sol1.north) !.5! (sol2.north)$] (int1)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{3, 4} \\
+            \end{array}
+          $%
+        };
+  \coordinate (above-sol3-sol4) at ($(sol3.north) !.5! (sol4.north)$);
+  \node [failure, minimum size=12mm] at (above-sol3-sol4 |- int1) (fail)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{} \\
+            \end{array}
+          $%
+        };
+  \node [intermediate node, above=0 of $(int1.north) !.5! (fail.north)$] (root)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1, 2} \\
+              \mVar{y} = \mSet{1, 2} \\
+              \mVar{z} = \mSet{3, 4} \\
+            \end{array}
+          $%
+        };
+
+  \begin{scope}[branch]
+    \draw (root)
+          -- node [branch label, swap] {$\mVar{x} = 1$}
+          (int1);
+    \draw (root)
+          -- node [branch label] {$\mVar{x} \neq 1$}
+          (fail);
+    \draw (int1)
+          -- node [branch label, swap] {$\mVar{z} = 3$}
+          (sol1);
+    \draw (int1)
+          -- node [branch label] {$\mVar{z} \neq 3$}
+          (sol2);
+  \end{scope}
+
+  \node [bound label, below=of sol1] {posting \ $\mVar{z} > 3$};
+  \node [bound label, below=of sol2] {posting \ $\mVar{z} > 4$};
+\end{tikzpicture}%
+\endgroup%

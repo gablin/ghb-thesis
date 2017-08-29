@@ -521,9 +521,65 @@ When no more \gls{propagation} can be performed -- that is, when all
 %
 A detailed account on \gls{search} is given by \textcite{VanBeek:2006}.
 
+In exploring the \gls{search space}, two decisions need to be made repeatedly:
+%
+\begin{enumerate*}[label=(\arabic*), itemjoin*={, and\ }]
+  \item select a \gls{variable} on which to branch
+  \item select a value from its \gls{domain}
+\end{enumerate*}.
+%
+These decisions constitute a \gls!{branching strategy} which arranges the
+\gls{search space} into a \gls!{search tree}, where each \gls{node} represents a
+\gls{store} at \gls{fixpoint}.
+%
+An example is given in \refFigure{cp-search-tree-sat-example}.
+%
+Since the \glspl{solution} (and \glspl{failure}) appear at the leaf
+\glspl{node}, the \gls{search tree} is typically explored depth-first.
 
+\begin{figure}
+  \centering%
+  \input{figures/constraint-programming/search-tree-sat-example}
 
-\todo{explain search}
+  \caption[Example of a search tree]%
+          {%
+            Example of a search tree for the model given in
+            \refFigure{cp-model-example}.
+            %
+            Diamond-shaped nodes represent solutions%
+          }
+  \labelFigure{cp-search-tree-sat-example}
+\end{figure}
+
+For \gls{search} to be well-behaved, a \gls{branching strategy} must preserve
+all \glspl{solution} in the \gls{search space} and must not duplicate any
+\gls{solution}.
+%
+A common strategy in choosing a \gls{variable}, called the \gls!{first-fail
+  principle}, is to select the \gls{variable} most likely to cause a
+\gls{failure}~\cite{HaralickElliott:1980}.
+%
+Other strategies involve selecting the \gls{variable} with the smallest or
+largest value in its \gls{domain}, or selecting a random \gls{variable}.
+%
+Similar strategies are applied in value selection, which is typically done by
+posting \gls{constraint} when branching.
+%
+Most common is to post unary \gls{constraint} that divides a \gls{domain} into
+two.
+%
+For example, at the root \gls{node} in \refFigure{cp-search-tree-sat-example},
+\gls{search} branches on \gls{variable}~$\mVar{x}$ by posting \mbox{$\mVar{x} =
+  1$} in one branch and \mbox{$\mVar{x} \neq 1$} in the other.
+%
+Another strategy is to split the domain by posting inequality \glspl{constraint}
+(for example, \mbox{$\mVar{x} \leq 3$} in one branch and \mbox{$\mVar{x} > 3$}
+in the other), which is useful for solving \glsplshort{constraint model} with
+arithmetic \glspl{constraint}.
+%
+More than one \gls{branching strategy} can be used for the same
+\glsshort{constraint model} and, if needed, they can be customized by the user,
+making it a key strength of \gls{CP}.
 
 \Glspl{solution} to optimization problems are found using a method called
 \gls!{branch and bound}.
@@ -534,6 +590,44 @@ strictly less (or greater) cost.
 %
 When the entire \gls{search space} has been explored, the last found
 \gls{solution} is guaranteed to be optimal.
+%
+\begin{figure}
+  \centering%
+  \input{figures/constraint-programming/search-tree-opt-example}
+
+  \caption[Example of a search tree for an optimization problem]%
+          {%
+            Example of a search tree for the model given in
+            \refFigure{cp-model-example} with the additional requirement that
+            the value of $\mVar{z}$ should be maximized.
+            %
+            The search tree is explored depth first, left to right.
+            %
+            Diamond-shaped nodes represent solutions and square-shaped nodes
+            represent failures%
+          }
+  \labelFigure{cp-search-tree-opt-example}
+\end{figure}
+%
+An example of shown in \refFigure{cp-search-tree-opt-example}.
+%
+Assuming the \gls{search tree} is explored depth first, left to right, the first
+solution to be found is \mbox{$S_1 = \mTuple{\mVar{x} = \mSet{1}, \mVar{y} =
+    \mSet{2}, \mVar{z} = \mSet{3}}$}.
+%
+Since the value of $\mVar{z}$ is to be maximized, this causes the
+\gls{constraint} \mbox{$\mVar{z} > 3$} to be posted.
+%
+The next solution to be found is \mbox{$S_2 = \mTuple{\mVar{x} = \mSet{1},
+    \mVar{y} = \mSet{2}, \mVar{z} = \mSet{4}}$}, which is clearly better than
+$S_1$, causing the \gls{constraint} \mbox{$\mVar{z} > 4$} to be posted.
+%
+Since the \gls{domain} of $\mVar{z}$ has no value greater than 4, the
+\gls{constraint} \mbox{$\mVar{z} > 4$} causes a \gls{failure} when the exploring
+the other branch at the root.
+%
+At this point the entire \gls{search space} has been explored, making $S_2$ the
+optimal \gls{solution}.
 
 
 

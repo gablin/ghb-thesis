@@ -1,0 +1,131 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\newcolumntype{C}{@{}c@{}}%
+\def\lineWidth{.8pt}
+\def\nodeDist{36pt}
+\begin{tikzpicture}[%
+    intermediate node/.style={%
+      nothing,
+      draw,
+      circle,
+      line width=\lineWidth,
+      fill=white!50!shade1,
+      font=\smaller,
+      node distance=\nodeDist,
+    },
+    solution/.style={%
+      intermediate node,
+      diamond,
+    },
+    branch/.style={%
+      line width=\lineWidth,
+    },
+    branch label/.style={%
+      nothing,
+      inner sep=2pt,
+      auto,
+      pos=.4,
+    },
+  ]
+
+  \node [solution] (sol1)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{3} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol1] (sol2)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{4} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol2] (sol3)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{3} \\
+            \end{array}
+          $%
+        };
+  \node [solution, right=of sol3] (sol4)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{4} \\
+            \end{array}
+          $%
+        };
+  \node [intermediate node,
+         above=.25*\nodeDist of $(sol1.north) !.5! (sol2.north)$] (int1)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1} \\
+              \mVar{y} = \mSet{2} \\
+              \mVar{z} = \mSet{3, 4} \\
+            \end{array}
+          $%
+        };
+  \node [intermediate node,
+         above=.25*\nodeDist of $(sol3.north) !.5! (sol4.north)$] (int2)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{2} \\
+              \mVar{y} = \mSet{1} \\
+              \mVar{z} = \mSet{3, 4} \\
+            \end{array}
+          $%
+        };
+  \node [intermediate node, above=0 of $(int1.north) !.5! (int2.north)$] (root)
+        {%
+          $%
+            \begin{array}{C}
+              \mVar{x} = \mSet{1, 2} \\
+              \mVar{y} = \mSet{1, 2} \\
+              \mVar{z} = \mSet{3, 4} \\
+            \end{array}
+          $%
+        };
+
+  \begin{scope}[branch]
+    \draw (root)
+          -- node [branch label, swap] {$\mVar{x} = 1$}
+          (int1);
+    \draw (root)
+          -- node [branch label] {$\mVar{x} \neq 1$}
+          (int2);
+    \draw (int1)
+          -- node [branch label, swap] {$\mVar{z} = 3$}
+          (sol1);
+    \draw (int1)
+          -- node [branch label] {$\mVar{z} \neq 3$}
+          (sol2);
+    \draw (int2)
+          -- node [branch label, swap] {$\mVar{z} = 3$}
+          (sol3);
+    \draw (int2)
+          -- node [branch label] {$\mVar{z} \neq 3$}
+          (sol4);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
