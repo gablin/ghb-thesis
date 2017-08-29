@@ -391,26 +391,36 @@ any \gls{solution} to the \gls{constraint}.
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2, & 3, & 4 & \}\\
-                      Propagate all constraints
+                      Propagate until fixpoint
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2, & 3, & 4 & \}\\
                       Search by attempting $\mVar{z} = 1$
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
-                        & \{ & 1  &    &    &   & \}\\
+                        & \{ & 1\phantom{,}
+                                  &    &    &   & \}\\
                       Propagate $\mVar{y} \neq \mVar{z}$
                         & \{ & 1, & 2  & \}
                         & \{ &    & 2  & \}
-                        & \{ & 1  &    &    &   & \}\\
+                        & \{ & 1\phantom{,}
+                                  &    &    &   & \}\\
                       Propagate $\mVar{x} \neq \mVar{z}$
                         & \{ &    & 2  & \}
                         & \{ &    & 2  & \}
-                        & \{ & 1  &    &    &   & \}\\
+                        & \{ & 1\phantom{,}
+                                  &    &    &   & \}\\
                       Propagate $\mVar{x} \neq \mVar{y}$
                         & \{ &    &    & \}
                         & \{ &    & 2  & \}
-                        & \{ & 1  &    &    &   & \}\\
+                        & \{ & 1\phantom{,}
+                                  &    &    &   & \}\\
+                      Failure reached; backtrack
+                        & \{ & 1, & 2  & \}
+                        & \{ & 1, & 2  & \}
+                        & \{ &    & 2, & 3, & 4 & \}\\
+                      \qquad\raisebox{0pt}[10pt]{$\vdots$}
+                        & & & & & & & & & & & & & & \\[-2pt]
                     \bottomrule
                   \end{tabular}%
                 }
@@ -443,6 +453,8 @@ any \gls{solution} to the \gls{constraint}.
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ &    &    & 3, & 4 & \}\\
+                      \qquad\raisebox{0pt}[10pt]{$\vdots$}
+                        & & & & & & & & & & & & & & \\[-2pt]
                     \bottomrule
                   \end{tabular}%
                 }
@@ -460,14 +472,23 @@ For example, \refFigure{cp-prop-strengths-example} shows solving of two versions
 of the \glsshort{constraint model} given in \refFigure{cp-model-example}, one
 using $\mDistinct$ and another using inequality \glspl{constraint}.
 %
-Because at most \gls{value consistency} can be achieved for inequality
+Because only \gls{value consistency} can be achieved for inequality
 \glspl{constraint}, they cannot propagate anything until at least one
 \gls{variable} becomes \gls{assigned.v}.
 %
-In comparison, a \glshyphened{domain consistency} implementation of the
+As all \glspl{propagator} are already at \gls{fixpoint}, the \gls{solver} must
+resort to \gls{search}.
+%
+In this case, the \gls{solver} makes a wrong guess and is forced to backtrack.
+%
+In comparison, a \glshyphened{domain consistency} \gls{propagator} for the
 \gls{distinct constraint} can remove values~1 and~2 from the \gls{domain} of
-\gls{variable}~$\mVar{z}$ without any \gls{search} as these values do not appear
-in any \glspl{solution} (see \refFigure{cp-model-example-solutions}).
+\gls{variable}~$\mVar{z}$ as these values do not appear in any \glspl{solution}
+(see \refFigure{cp-model-example-solutions}).
+%
+Maximizing \gls{propagation} is key in making solving tractable, as the
+\gls{search space} grows exponentially with the number of \glspl{variable} and
+size of the \glspl{domain}.
 
 As to be expected, stronger propagation comes at a price of greater complexity.
 %
