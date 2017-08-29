@@ -349,7 +349,12 @@ For solving to be well-behaved, \glspl{propagator} are also expected to be
 \mbox{$p(S_1) \mStronger p(S_2)$}.
 %
 A \gls{propagator} for which \mbox{$p(S) = S$} holds is said to be at
-\gls!{fixpoint}.
+\gls!{fixpoint}, and a \gls{store} is at \gls{fixpoint} if all
+\glspl{propagator} are at \gls{fixpoint} for that \gls{store}.
+%
+A \gls{propagator} that returns a \gls{store} with at least one empty
+\gls{domain} has \glsshort!{failure}, meaning there are no \glspl{solution} in
+this part of the \gls{search space}.
 
 \Glspl{propagator} implementing the same \gls{constraint} can differ in the
 amount of propagation they perform.
