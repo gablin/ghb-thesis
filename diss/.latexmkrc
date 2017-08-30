@@ -8,7 +8,11 @@ add_cus_dep('glo', 'gls', 0, 'makeglo2gls');
 sub makeglo2gls {
     system("makeglossaries -t '$_[0]'.glg -o '$_[0]'.gls '$_[0]'");
     # Remove unwanted sequences of commas in the index
-    system("sed -i '/\\glsxtrunusedformat/d' $_[0].gls");
-    # Remove comma before "see also"
-    system("perl -0777 -pi -e 's/\\\\delimN \n\t\t\\\\glsseeformat/ \n\t\t\\\\glsseeformat/igs' $_[0].gls");
+    system("sed -i -E 's/\\\\setentrycounter\\[\\]\\{page\\}\\\\glsxtrunusedformat\\{\[0-9\]*\\}\\\\delimN//' $_[0].gls");
+    # Remove excess whitespace and empty lines caused by the command above
+    system("sed -i -e 's/\[ \\t\]*\$//' $_[0].gls");
+    system("sed -i -e '/^\$/d' $_[0].gls");
+    # Remove comma before "see also" (sed cannot be used as the string to be
+    # replaced spans across two lines)
+    system("perl -0777 -pi -e 's/\\\\delimN\n\t\t\\\\glsseeformat/\n\t\t\\\\glsseeformat/igs' $_[0].gls");
 }
