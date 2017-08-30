@@ -683,19 +683,42 @@ removes \glspl{solution} known to be dominated by another \gls{solution}.
 %
 \begin{figure}
   \centering%
-  \input{figures/constraint-programming/square-packing-partial-sol}
+  \mbox{}%
+  \hfill%
+  \hfill%
+  \input{figures/constraint-programming/square-packing-partial-sol1}%
+  \hfill%
+  \input{figures/constraint-programming/square-packing-partial-sol2}%
+  \hfill%
+  \hfill%
+  \mbox{}
 
-  \caption[TODO]%
+  \caption[Example of dominating solutions]%
           {%
-            TODO
+            Example of two partial solutions to the square packing problem,
+            where the left-most solution is dominated by the right-most
+            solution%
           }
   \labelFigure{square-packing-partial-sol}
 \end{figure}
 %
-Let us revisit the \glsshort{constraint model} capturing the square packing
-problem, and assume the partial \gls{solution} shown in
+For an example, let us revisit the \glsshort{constraint model} capturing the
+square packing problem and assume the two partial \glspl{solution} shown in
 \refFigure{square-packing-partial-sol}~\cite{Korf:2004}.
 %
+In the left-most \gls{solution}, the positioning of the two squares form an
+empty \mbox{$2 \times 3$} rectangle in the corner.
+%
+If this is extended to a complete \gls{solution}, another \gls{solution} can be
+found by sliding the \mbox{$3 \times 3$} square all the way up and moving any
+squares packed above into the space created below.
+%
+Hence the left-most \gls{solution} is dominated by the right-most
+\gls{solution}, and such \glspl{solution} can be removed from the \gls{search
+  space} by forbidding each \mbox{$k \times k$} square from being placed a
+certain distance away from the edge of the enclosing square such that the
+\mbox{$k \times k$} square and the edge forms a rectangle wherein all smaller
+squares can be packed.
 
 
 
