@@ -24,7 +24,7 @@ clean:
 	$(RM) *.run.xml
 
 .PHONY: distclean
-distclean:
+distclean: clean
 	$(LATEXMK) -C $(SRCTEX)
 
 .PHONY: check-environment
