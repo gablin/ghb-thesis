@@ -489,49 +489,56 @@ and \gls{CP}:
 %
 \begin{contributions}
   \item \labelContribution{survey}
-    a comprehensive and structured survey that covers over four decades of
-    research in \gls{instruction selection};
+    It presents a comprehensive and structured survey that covers over four
+    decades of research in \gls{instruction selection}.
   \item \labelContribution{representations}
-    a \gls{program} and \gls{instruction} representation that enables
+    It introduces a \gls{program} and \gls{instruction} representation that
     \begin{contributions}
-      \item \labelContribution{rep-uniformity}
-        uniform treatment of data- and control-flow \glspl{operation}, and
+      \item \labelContribution{rep-data-and-control-flow}
+        captures the data and control flow for entire \glspl{function}
+    \end{contributions}
+    and enables
+    \begin{contributions}[resume]
       \item \labelContribution{rep-complex-instructions}
         modeling and pattern matching of complex \glspl{instruction} as
         \glspl{pattern}, and
       \item \labelContribution{rep-combining-problems}
         modeling of \gls{global.is} \gls{instruction selection} and \gls{global
-          code motion} as a \gls{constraint model};
+          code motion} as a \gls{constraint model}.
     \end{contributions}
   \item \labelContribution{constraint-model}
-    a \gls{constraint model} and related transformations that, for the first
-    time, integrates
+    It introduces a \gls{constraint model} and related transformations that,
+    for the first time, enables
     \begin{contributions}
+      \item \labelContribution{cp-uniform-selection}
+        uniform selection of data and control \glspl{instruction},
+    \end{contributions}
+    and integrates
+    \begin{contributions}[resume]
       \item \labelContribution{cp-global-instruction-selection}
         \gls{global.is} \gls{instruction selection} with
       \item \labelContribution{cp-global-code-motion}
         \gls{global code motion},
     \end{contributions}
-    and also integrates
+    as well as
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
         \gls{data copying},
       \item \labelContribution{cp-block-ordering}
         \gls{block ordering}, and
       \item \labelContribution{cp-value-reuse}
-        \gls{value reuse};
+        \gls{value reuse}.
     \end{contributions}
   \item \labelContribution{solving-techniques}
-    solving techniques that enable practical solving of the \gls{constraint
-      model};
+    It introduces techniques to improve solving of the \gls{constraint model}.
   \item \labelContribution{experiments}
-    thorough experiments demonstrating that the approach scales to medium-sized
-    \glspl{program} and yields better code than \glspl{traditional approach};
-    and
+    It presents thorough experiments demonstrating that the approach scales to
+    medium-sized \glspl{program} and yields better code than \glspl{traditional
+      approach}.
   \item \labelContribution{integration}
-    an initial design showing how the \gls{constraint model} can be extended to
-    integrate other \gls{code generation} tasks, such as \gls{instruction
-      scheduling} and \gls{register allocation}.
+    It describes how the \gls{constraint model} can be extended to integrate
+    other \gls{code generation} tasks, such as \gls{instruction scheduling} and
+    \gls{register allocation}.
 \end{contributions}
 %
 \refTable{contributions-per-chapter} shows in which chapters each contribution
@@ -539,21 +546,22 @@ is manifested and discussed further.
 
 \begin{table}
   \centering%
-  \begin{tabular}{c@{\qquad}*{12}{c}}
+  \begin{tabular}{c@{\qquad}*{13}{c}}
     \toprule
       \tabhead Chapter
     & \tabhead\refContribution{survey}
     & \multicolumn{3}{c}{\tabhead\refContribution{representations}}
-    & \multicolumn{5}{c}{\tabhead\refContribution{constraint-model}}
+    & \multicolumn{6}{c}{\tabhead\refContribution{constraint-model}}
     & \tabhead\refContribution{solving-techniques}
     & \tabhead\refContribution{experiments}
     & \tabhead\refContribution{integration} \\
     \cmidrule(lr){3-5}%
-    \cmidrule(lr){6-10}%
+    \cmidrule(lr){6-11}%
     &
-    & \tabhead\refContribution{rep-uniformity}
+    & \tabhead\refContribution{rep-data-and-control-flow}
     & \tabhead\refContribution{rep-complex-instructions}
     & \tabhead\refContribution{rep-combining-problems}
+    & \tabhead\refContribution{cp-uniform-selection}
     & \tabhead\refContribution{cp-global-instruction-selection}
     & \tabhead\refContribution{cp-global-code-motion}
     & \tabhead\refContribution{cp-data-copying}
@@ -565,6 +573,7 @@ is manifested and discussed further.
     \midrule
     \refChapter*{existing-isel-techniques-and-reps}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -588,11 +597,13 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refChapter*{pattern-matching}
     & \supportNo
+    & \supportNo
     & \supportYes
-    & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -604,8 +615,9 @@ is manifested and discussed further.
     & \supportNo \\
     \refChapter*{modeling-global-instruction-selection}
     & \supportNo
-    & \supportYes
     & \supportNo
+    & \supportNo
+    & \supportYes
     & \supportYes
     & \supportYes
     & \supportNo
@@ -621,6 +633,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportYes
     & \supportNo
+    & \supportNo
     & \supportYes
     & \supportNo
     & \supportNo
@@ -629,6 +642,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo \\
     \refChapter*{modeling-data-copying}
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -649,12 +663,14 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo \\
     \refChapter*{modeling-value-reuse}
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -677,10 +693,12 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportYes
     & \supportNo
     & \supportNo \\
     \refChapter*{comparison-against-the-state-of-the-art}
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -705,9 +723,11 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportYes \\
     \refAppendix*{macro-expansion}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -731,6 +751,7 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refAppendix*{dag-covering}
     & \supportYes
@@ -744,9 +765,11 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refAppendix*{graph-covering}
     & \supportYes
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
@@ -784,18 +807,19 @@ contributions and the publications above.
 %
 \begin{table}
   \centering%
-  \begin{tabular}{c@{\qquad}*{10}{c}}
+  \begin{tabular}{c@{\qquad}*{11}{c}}
     \toprule
       \tabhead Publication
     & \tabhead\refContribution{survey}
     & \tabhead\refContribution{representations}
-    & \multicolumn{5}{c}{\tabhead\refContribution{constraint-model}}
+    & \multicolumn{6}{c}{\tabhead\refContribution{constraint-model}}
     & \tabhead\refContribution{solving-techniques}
     & \tabhead\refContribution{experiments}
     & \tabhead\refContribution{integration} \\
-    \cmidrule(lr){4-8}%
+    \cmidrule(lr){4-9}%
     &
     &
+    & \tabhead\refContribution{cp-uniform-selection}
     & \tabhead\refContribution{cp-global-instruction-selection}
     & \tabhead\refContribution{cp-global-code-motion}
     & \tabhead\refContribution{cp-data-copying}
@@ -815,9 +839,11 @@ contributions and the publications above.
     & \supportNo
     & \supportNo
     & \supportNo
+    & \supportNo
     & \supportNo \\
     \refPublication{cp-paper}
     & \supportNo
+    & \supportYes
     & \supportYes
     & \supportYes
     & \supportYes
@@ -828,6 +854,7 @@ contributions and the publications above.
     & \supportYes
     & \supportNo \\
     \refPublication{cases-paper}
+    & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
