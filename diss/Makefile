@@ -17,8 +17,11 @@ $(SRCPDF): check-environment
 .PHONY: clean
 clean:
 	$(LATEXMK) -c $(SRCTEX)
+	$(RM) *.bbl
 	$(RM) *.c
 	$(RM) *.glg *.glo *.gls *.ist
+	$(RM) *.loa
+	$(RM) *.run.xml
 
 .PHONY: distclean
 distclean:
