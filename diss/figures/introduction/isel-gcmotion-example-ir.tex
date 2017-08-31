@@ -11,7 +11,7 @@
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[
-    every node/.style={
+    block node/.style={
       draw,
       fill=white,
       line width=\opControlFlowLineWidth,
@@ -20,37 +20,31 @@
       inner ysep=2.5pt,
       node distance=\nodeDist,
     },
-    tf label/.style={
-      draw=none,
-      fill=none,
-      minimum size=0,
-      inner xsep=4pt,
-      node distance=0,
-      font=\sffamily,
-      auto,
+    control-flow label/.append style={
+      inner ysep=2.5pt,
     },
     block label/.style={
-      tf label,
+      control-flow label,
       inner xsep=0,
       inner ysep=1pt,
       font=\irFont\bfseries,
     },
   ]
 
-  \node (b1) {%
+  \node [block node] (b1) {%
                \begin{tabular}{@{}l@{}}
                  \irAssign{\irVar{i}}{\irVar{0}}\\
                  \irBr{b2}
                \end{tabular}%
              };
-  \node [below=of b1] (b2)
+  \node [block node, below=of b1] (b2)
         {%
           \begin{tabular}{@{}l@{}}
             \irAssign{\irTemp{1}}{\irLE{\irVar{i}}{\irVar{N}}}\\
             \irCondBr{\irTemp{1}}{b3}{end}
           \end{tabular}%
         };
-  \node [below=of b2] (b3)
+  \node [block node, below=of b2] (b3)
         {%
           \begin{tabular}{@{}l@{}}
             \irAssign{\irTemp{2}}{\irMul{\irVar{i}}{\irVar{4}}}\\
@@ -63,7 +57,7 @@
             \irCondBr{\irTemp{5}}{b4}{b5}
           \end{tabular}%
         };
-  \node [below right=\nodeDist and 0 of b3.south west] (b4)
+  \node [block node, below right=\nodeDist and 0 of b3.south west] (b4)
         {%
           \begin{tabular}{@{}l@{}}
             \irAssign{\irVar{c}}{\irVar{MAX}}\\
@@ -71,7 +65,7 @@
           \end{tabular}%
         };
   \coordinate (from-b4) at ([yshift=\jumpOffset] b4.south east);
-  \node [below right=-\jumpOffset and \nodeDist of from-b4] (b5)
+  \node [block node, below right=-\jumpOffset and \nodeDist of from-b4] (b5)
         {%
           \begin{tabular}{@{}l@{}}
             \irAssign{\irTemp{6}}{\irAdd{\irVar{C}}{\irTemp{2}}}\\
@@ -84,9 +78,18 @@
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
       \draw (b1) -- (b2);
-      \draw (b2) -- node [tf label, inner xsep=3pt] {T} (b3);
-      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);
-      \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.06, swap] {F} (b5);
+      \draw (b2)
+             -- node [control-flow label,
+                      inner xsep=.75\opControlFlowLabelXSep] {T}
+             (b3);
+      \draw (b3)
+             -- node [control-flow label, inner xsep=.5\opControlFlowLabelXSep,
+                      pos=0.1] {T}
+             (b4);
+      \draw (b3)
+            -- node [control-flow label, inner xsep=.5\opControlFlowLabelXSep,
+                     pos=0.06, swap] {F}
+            (b5);
       \draw (from-b4) -- (from-b4 -| b5.west);
       \draw [rounded corners=10pt]
             ([yshift=\jumpOffset] b5.south west)
@@ -95,7 +98,9 @@
             |-
             ([yshift=-\jumpOffset] b2.north west);
       \coordinate (from-b2) at ([yshift=\jumpOffset] b2.south east);
-      \draw (from-b2) -- node [tf label] {F} ([xshift=2*\nodeDist] from-b2);
+      \draw (from-b2)
+            -- node [control-flow label] {F}
+            ([xshift=2*\nodeDist] from-b2);
     \end{scope}
   \end{pgfonlayer}
 

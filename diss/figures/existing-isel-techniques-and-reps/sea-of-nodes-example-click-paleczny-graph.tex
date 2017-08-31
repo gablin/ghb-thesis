@@ -23,12 +23,8 @@
       data flow,
       dash pattern=on 2.5pt off 2.5pt,
     },
-    tf label/.style={
-      nothing,
-      inner xsep=2pt,
-      node distance=0,
-      font=\sffamily,
-      auto,
+    control-flow label/.append style={
+      inner xsep=.5\opControlFlowLabelXSep,
     },
   ]
 
@@ -143,8 +139,8 @@
     \begin{scope}[control flow]
       \draw (entry) -- (head);
       \draw (head) -- (if);
-      \draw (if) -- node [tf label, swap] {F} (body);
-      \draw (if) -- node [tf label] {T} (end);
+      \draw (if) -- node [control-flow label, swap] {F} (body);
+      \draw (if) -- node [control-flow label] {T} (end);
       \draw [rounded corners=4pt]
             (body.west)
             --

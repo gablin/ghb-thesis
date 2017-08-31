@@ -28,6 +28,8 @@
 \setlength{\opDataFlowLineWidth}{.6pt}
 \newlength{\opControlFlowLineWidth}
 \setlength{\opControlFlowLineWidth}{1.2pt}
+\newlength{\opControlFlowLabelXSep}
+\setlength{\opControlFlowLabelXSep}{4pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -84,6 +86,13 @@
     ->,
     line width=\opControlFlowLineWidth,
     shorten <=-\opControlFlowLineWidth,
+  },
+  control-flow label/.style={
+    nothing,
+    inner xsep=\opControlFlowLabelXSep,
+    node distance=0,
+    font=\sffamily,
+    auto,
   },
   match line/.style={%
     dash pattern=on 2.5pt off 3pt,
