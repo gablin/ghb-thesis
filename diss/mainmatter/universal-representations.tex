@@ -18,28 +18,28 @@ we require a \gls{graph}-based representation that fulfills the following
 criteria:
 %
 \begin{requirements}
-  \item \labelRequirement{uni-rep-req-capture-data-control}
+  \item \labelRequirement{uni-rep-capture-data-control}
     It must be able to capture the data and control flow of an entire
     \gls{function}.
     %
     This is needed for modeling \gls{global.is} \gls{instruction selection}
     and for uniform selection of data and control \glspl{instruction}.
-  \item \labelRequirement{uni-rep-req-explicit-ops}
+  \item \labelRequirement{uni-rep-explicit-ops}
     \Glspl{operation}, both for data and control flow, must be explicitly
     represented as \glspl{node}.
     %
     This is needed for \gls{pattern matching}.
-  \item \labelRequirement{uni-rep-req-explicit-values}
+  \item \labelRequirement{uni-rep-explicit-values}
     Values produced and used by the \glspl{operation} must also be explicitly
     represented as \glspl{node}.
     %
     This is needed for modeling \gls{global code motion} and \gls{data copying}.
-  \item \labelRequirement{uni-rep-req-fixed-operations}
+  \item \labelRequirement{uni-rep-fixed-operations}
     The \gls{block} in which a particular \gls{operation} in the \gls{function}
     is to be performed must not be fixed.
     %
     This is needed for modeling \gls{global code motion}.
-  \item \labelRequirement{uni-rep-req-ssa}
+  \item \labelRequirement{uni-rep-ssa}
     The representation must be based on \gls{SSA}.
     %
     Not only is this practical as most \glspl{IR} used in modern
@@ -57,13 +57,44 @@ Consequently, a new representation had to be designed.
 
 \section{Program Representation}
 
-\todo{write}
+To achieve \refRequirement{uni-rep-capture-data-control}, we combine two
+existing graph-based representations -- the \gls{SSA graph} and
+\gls{control-flow graph}%
+%
+\footnote{%
+  A \gls!{control-flow graph} is a \gls{graph} where each \gls{node} represents
+  a \gls{block} in the \gls{function} and each \gls{edge} represents a jump from
+  one \gls{block} to another.
+  %
+  \Glspl{edge} representing conditional jumps are labeled with a Boolean
+  value indicating under which conditions the jump is taken.
+  %
+  For examples, see \refFigure{isel-gcmotion-example} and
+  \refFigure{isel-blorder-example} in \refChapter{introduction} on
+  pages~\refPageOfFigure*{isel-gcmotion-example}
+  and~\refPageOfFigure*{isel-blorder-example}, respectively.
+}
+%
+-- that each captures either the data or the control flow for an entire
+\gls{function}.
+
+\todo{describe how \refRequirement{uni-rep-explicit-ops} is achieved}
+
+\todo{describe how \refRequirement{uni-rep-explicit-values} is achieved}
+
+\todo{describe how \refRequirement{uni-rep-fixed-operations} is achieved}
+
+\todo{describe how \refRequirement{uni-rep-ssa} is achieved}
+
+\todo{give example}
+
+\todo{discuss similarities with \gls{Click-Paleczny graph}}
 
 
 
-\subsubsection{Proof of Semantic Preservation?}
+\subsubsection{Proof of Semantic Preservation}
 
-\todo{write}
+\todo{write?}
 
 
 
