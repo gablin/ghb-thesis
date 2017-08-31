@@ -26,7 +26,7 @@
     block label/.style={
       control-flow label,
       inner xsep=0,
-      inner ysep=1pt,
+      inner ysep=2pt,
       font=\irFont\bfseries,
     },
   ]
@@ -104,7 +104,7 @@
     \end{scope}
   \end{pgfonlayer}
 
-  \node [block label, below left=0 and 0 of b1.north west, inner xsep=1pt] {b1};
+  \node [block label, below left=0 and 0 of b1.north west, inner xsep=2pt] {b1};
   \foreach \i in {2, 3, 4} {
     \node [block label, above right=0 and 0 of b\i.north west] {b\i};
   }
