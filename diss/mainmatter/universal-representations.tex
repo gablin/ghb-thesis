@@ -140,34 +140,48 @@ This makes for a simple construction process as the \glsshort{control-flow
 We start with the \gls{control-flow graph}.
 %
 As it captures the control flow for an entire \gls{function},
-\refRequirement{uni-rep-capture-data-control} is already met (at least
-partially).
+\refRequirement{uni-rep-capture-data-control} is partially fulfilled.
 %
-To achieve \refRequirement{uni-rep-explicit-ops}, we insert \glspl{node}
-representing the \glspl{operation} that change the control flow from on
-\gls{block} to another and redirect the \glspl{edge} such that the control flow
-originate from these \glspl{node}.
+To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
+\glspl!{control node} to represent the \glspl{operation} that change the control
+flow from on \gls{block} to another.
 %
-An example of the extended \gls{control-flow graph} is given in
-\refFigure{uf-graph-example-extended-cf-graph}.
+\todo{rewrite}
 %
 \Glspl{node} representing \glspl{block} and control-flow \glspl{operation} are
 called \glspl!{block node} and \glspl!{control node}, respectively.
 %
-\todo{finish paragraph}
+redirect the \glspl{edge} such that the
+control flow originate from these \glspl{node}.
+%
+For example, for the \gls{control-flow graph} shown in
+\refFigure{uf-graph-example-original-cf-graph}, \todo{finish example}
+%
+This results in the \gls{control-flow graph} given in
+\refFigure{uf-graph-example-extended-cf-graph}.
 
-\todo{describe how \refRequirement{uni-rep-capture-data-control} is
-  achieved}
-
-\todo{describe how \refRequirement{uni-rep-explicit-ops} is achieved}
-
-\todo{describe how \refRequirement{uni-rep-explicit-values} is achieved}
+We continue with the \gls{SSA graph}, using
+\refFigure{uf-graph-example-original-ssa-graph} as an example.
+%
+As it captures the data flow for an entire \gls{function} and represents
+data-flow \glspl{operation} as \glspl{node}, the remaining parts of
+\refRequirement{uni-rep-capture-data-control} and
+\refRequirement{uni-rep-explicit-ops} are fulfilled.
+%
+\refRequirement{uni-rep-ssa} is inherently fulfilled as the \gls{SSA graph}
+requires the \gls{function} to be in \gls{SSA}~form.
+%
+To achieve \refRequirement{uni-rep-explicit-values}, we insert \glspl{node}
+representing values and redirect the \glspl{edge} accordingly.
+%
+Hence 
 
 \todo{describe how \refRequirement{uni-rep-fixed-operations} is achieved}
 
-\todo{describe how \refRequirement{uni-rep-ssa} is achieved}
+This results in the \gls{SSA graph} shown in
+\refFigure{uf-graph-example-extended-ssa-graph}.
 
-\todo{give example}
+\todo{discuss connecting the two extended graphs together}
 
 \todo{discuss similarities with \gls{Click-Paleczny graph}}
 
