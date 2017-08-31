@@ -25,7 +25,7 @@
     },
     tf label/.style={
       nothing,
-      inner xsep=4pt,
+      inner xsep=2pt,
       node distance=0,
       font=\sffamily,
       auto,
@@ -134,8 +134,10 @@
   \coordinate (below-leq) at ([yshift=-.75\opNodeDist] leq.south);
   \node [control node] (if) at (head |- below-leq)
         {\irCode{\noWidth{i{\kern-.5pt}f}}};
-  \node [region node, position=-135 degrees from if] (body) {\irBlock{body}};
-  \node [region node, position=-45 degrees from if] (end) {\irBlock{end}};
+  \node [region node, node distance=1.25\opNodeDist,
+         position=-125 degrees from if] (body) {\irBlock{body}};
+  \node [region node, node distance=1.25\opNodeDist,
+         position=-55 degrees from if] (end) {\irBlock{end}};
 
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]

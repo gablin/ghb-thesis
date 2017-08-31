@@ -84,7 +84,7 @@
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
       \draw (b1) -- (b2);
-      \draw (b2) -- node [tf label] {T} (b3);
+      \draw (b2) -- node [tf label, inner xsep=3pt] {T} (b3);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.1] {T} (b4);
       \draw (b3) -- node [tf label, inner xsep=2pt, pos=0.06, swap] {F} (b5);
       \draw (from-b4) -- (from-b4 -| b5.west);
