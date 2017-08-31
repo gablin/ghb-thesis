@@ -8,7 +8,8 @@
 % TEXT
 %======
 
-% Builds \labelX, \refX, \RefX, \refXRange, and \RefXRange commands:
+% Builds \labelX, \refX, \RefX, \refXRange, \RefXRange, \refPageOfX, and
+% \RefPageOfX commands:
 %    #1: The identifier (X) in singular
 %    #2: Plural identifier term
 %    #3: Short term to appear in reference (without ending dot)
@@ -38,6 +39,18 @@
         \IfValueTF{#2}{#2}{#1s}~%
       }%
       \ref{#1:##2}--\ref{#1:##3}%
+    }%
+  }%
+  \expandafter\NewDocumentCommand\csname refPageOf#1\endcsname{sm}{%
+    \mbox{%
+      \IfBooleanF{##1}{p.\thinspace}%
+      \pageref{#1:##2}%
+    }%
+  }%
+  \expandafter\NewDocumentCommand\csname RefPageOf#1\endcsname{sm}{%
+    \mbox{%
+      \IfBooleanF{##1}{Page~}%
+      \pageref{#1:##2}%
     }%
   }%
 }
