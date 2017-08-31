@@ -1,0 +1,116 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}[remember picture]
+
+  % Data flow
+  \node [value node] (n-1) {\opVar{n}[1]\strut};
+  \node [op node, position=-45 degrees from n-1] (phi-n) {\opPhi};
+  \node [value node, below=of phi-n] (n-2) {\opVar{n}[2]\strut};
+  \node [op node, position=-135 degrees from n-2] (leq) {\opLE};
+  \node [value node, below=of leq] (bool) {};
+  \node [value node, position=135 degrees from leq] (leq-1) {\opVar{1}};
+  \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of n-2]
+        (sub) {\opSub};
+  \node [value node, position=45 degrees from sub] (sub-1) {\opVar{1}};
+  \node [value node, below=of sub] (n-3) {\opVar{n}[3]\strut};
+
+  \node [value node, right=5.75\opNodeDist of n-1] (1-phi-f) {\opVar{1}};
+  \node [op node, position=-45 degrees from 1-phi-f] (phi-f) {\opPhi};
+  \node [value node, below=of phi-f] (f-2) {\opVar{f}[2]};
+  \node [op node, position=-135 degrees from f-2] (mul) {\opMul};
+  \node [value node, below=of mul] (f-3) {\opVar{f}[3]};
+
+  \begin{scope}[data flow]
+    \draw (n-1) -- (phi-n);
+    \draw (phi-n) -- (n-2);
+    \draw (n-2) -- (leq);
+    \draw (leq-1) -- (leq);
+    \draw (leq) -- (bool);
+    \draw (sub-1) -- (sub);
+
+    \path [name path=below-n-2]
+          (n-2)
+          --
+          +(-90:2\opNodeDist);
+    \path [name path=left-of-sub]
+          (sub)
+          --
+          +(135:2\opNodeDist);
+    \draw [name intersections={of=below-n-2 and left-of-sub},
+           rounded corners=3pt,
+          ]
+          (n-2)
+          --
+          (intersection-1)
+          --
+          (sub);
+
+    \draw (sub) -- (n-3);
+
+    \coordinate (2-phi-n) at ([shift=(45:\opNodeDist)] phi-n.45);
+    \draw [-, rounded corners=6pt]
+          (n-3.south)
+          --
+          ++(-90:.5\opNodeDist)
+          [rounded corners=14pt]
+          -|
+          ([xshift=.75\opNodeDist] sub-1.east)
+          [rounded corners=16pt]
+          |- coordinate [pos=1] (tmp)
+          ([xshift=.5\opNodeDist] 2-phi-n);
+    \draw [rounded corners=4pt]
+          (tmp)
+          --
+          (2-phi-n)
+          --
+          (phi-n);
+
+    \draw (1-phi-f) -- (phi-f);
+    \draw (phi-f) -- (f-2);
+    \draw (f-2) -- (mul);
+    \draw (mul) -- (f-3);
+
+    \path [name path=left-of-mul]
+          (mul)
+          --
+          +(135:3\opNodeDist);
+    \path [name path=right-of-n-2]
+          (n-2)
+          --
+          +(0:5\opNodeDist);
+    \draw [name intersections={of=left-of-mul and right-of-n-2},
+           rounded corners=3pt,
+          ]
+          (n-2)
+          --
+          (intersection-1)
+          --
+          (mul);
+
+    \coordinate (2-phi-f) at ([shift=(45:\opNodeDist)] phi-f.45);
+    \draw [-, rounded corners=8pt]
+          (f-3.south)
+          --
+          ++(-90:.75\opNodeDist)
+          [rounded corners=16pt]
+          -| coordinate [pos=1] (tmp)
+          ([xshift=1.5\opNodeDist] f-2.east);
+    \draw [-, rounded corners=8pt]
+          (tmp)
+          |- coordinate [pos=1] (tmp)
+          ([xshift=.25\opNodeDist] 2-phi-f);
+    \draw [rounded corners=3pt]
+          (tmp)
+          --
+          (2-phi-f)
+          --
+          (phi-f);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

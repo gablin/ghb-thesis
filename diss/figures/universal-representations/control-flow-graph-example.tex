@@ -1,0 +1,40 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[%
+    control-flow label/.append style={
+      inner xsep=.5\opControlFlowLabelXSep,
+      pos=.55,
+    },
+  ]
+
+  \node [block node] (entry) {\irBlock{entry}};
+  \node [block node, below=of entry] (head) {\irBlock{head}};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-125 degrees from head] (body) {\irBlock{body}};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-55 degrees from head] (end) {\irBlock{end}};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (entry) -- (head);
+      \draw (head) -- node [control-flow label, swap] {F} (body);
+      \draw (head) -- node [control-flow label] {T} (end);
+      \draw [rounded corners=4pt]
+            (body.west)
+            --
+            +(180:.5\opNodeDist)
+            [rounded corners=8pt]
+            |-
+            (head);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

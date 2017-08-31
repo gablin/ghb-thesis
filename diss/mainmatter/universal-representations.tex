@@ -15,7 +15,7 @@
 
 In order to design \gls{constraint model} introduced later in this dissertation,
 we require a \gls{graph}-based representation that fulfills the following
-criteria:
+requirements:
 %
 \begin{requirements}
   \item \labelRequirement{uni-rep-capture-data-control}
@@ -47,7 +47,7 @@ criteria:
     \gls{global code motion}.
 \end{requirements}
 
-While there exists many graph-based representations -- for a survey, see
+While there exists many \gls{graph}-based representations -- for a survey, see
 \cite{StanierWatson:2013} -- most fulfill only some of the requirements but not
 all.
 %
@@ -57,8 +57,8 @@ Consequently, a new representation had to be designed.
 
 \section{Program Representation}
 
-To achieve \refRequirement{uni-rep-capture-data-control}, we combine two
-existing graph-based representations -- the \gls{SSA graph} and
+The new representation, called \gls!{universal representation}, is essentially a
+combination of two existing representations -- the \gls{SSA graph} and the
 \gls{control-flow graph}%
 %
 \footnote{%
@@ -69,14 +69,86 @@ existing graph-based representations -- the \gls{SSA graph} and
   \Glspl{edge} representing conditional jumps are labeled with a Boolean
   value indicating under which conditions the jump is taken.
   %
-  For examples, see \refFigure{isel-gcmotion-example} and
-  \refFigure{isel-blorder-example} in \refChapter{introduction} on
-  pages~\refPageOfFigure*{isel-gcmotion-example}
-  and~\refPageOfFigure*{isel-blorder-example}, respectively.
+  An example is given in \refFigure{uf-graph-example-original-cf-graph}.
 }
 %
--- that each captures either the data or the control flow for an entire
-\gls{function}.
+-- which have been extended to fulfill the missing requirements and then merged
+into a single \gls{graph}.
+%
+This makes for a simple construction process as the \glsshort{control-flow
+  graph} and \gls{SSA graph} is already used inside most, if not all, modern
+\glspl{compiler}.
+
+\begin{figure}
+  \centering
+
+  \subcaptionbox{A function in SSA form\labelFigure{uf-graph-example-ssa-c}}%
+                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+
+  \vspace{\betweensubfigures}
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Control-flow graph%
+                  \labelFigure{uf-graph-example-original-cf-graph}%
+                }%
+                [32mm]%
+                {\input{figures/universal-representations/control-flow-graph-example}}%
+  \hfill%
+  \subcaptionbox{SSA graph\labelFigure{uf-graph-example-original-ssa-graph}}%
+                {\input{figures/universal-representations/ssa-graph-example}}%
+  \hfill%
+  \mbox{}
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox{%
+                  Extended control-flow graph%
+                  \labelFigure{uf-graph-example-extended-cf-graph}%
+                }%
+                [46mm]%
+                {\input{figures/universal-representations/uf-graph-example-control-part}}%
+  \hfill%
+  \subcaptionbox{%
+                  Extended SSA graph%
+                  \labelFigure{uf-graph-example-extended-ssa-graph}%
+                }%
+                {%
+                  \input{figures/universal-representations/uf-graph-example-data-part}%
+                  \vspace*{1cm}%
+                }%
+
+  \input{figures/universal-representations/uf-graph-example-cross-edges}
+
+  \caption[TODO]%
+          {%
+            TODO%
+          }
+  \labelFigure{uf-graph-example}
+\end{figure}
+
+We start with the \gls{control-flow graph}.
+%
+As it captures the control flow for an entire \gls{function},
+\refRequirement{uni-rep-capture-data-control} is already met (at least
+partially).
+%
+To achieve \refRequirement{uni-rep-explicit-ops}, we insert \glspl{node}
+representing the \glspl{operation} that change the control flow from on
+\gls{block} to another and redirect the \glspl{edge} such that the control flow
+originate from these \glspl{node}.
+%
+An example of the extended \gls{control-flow graph} is given in
+\refFigure{uf-graph-example-extended-cf-graph}.
+%
+\Glspl{node} representing \glspl{block} and control-flow \glspl{operation} are
+called \glspl!{block node} and \glspl!{control node}, respectively.
+%
+\todo{finish paragraph}
+
+\todo{describe how \refRequirement{uni-rep-capture-data-control} is
+  achieved}
 
 \todo{describe how \refRequirement{uni-rep-explicit-ops} is achieved}
 

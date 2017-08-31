@@ -1,0 +1,47 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    remember picture,
+    control-flow label/.append style={
+      inner xsep=.5\opControlFlowLabelXSep,
+      pos=.45,
+    },
+  ]
+
+  \node [block node] (entry) {\irBlock{entry}};
+  \node [control node, below=of entry] (entry-c) {\opBr};
+  \node [block node, below=of entry-c] (head) {\irBlock{head}};
+  \node [control node, below=of head] (head-c) {\opCondBr};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-135 degrees from head-c] (body) {\irBlock{body}};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-45 degrees from head-c] (end) {\irBlock{end}};
+  \node [control node, below=of body] (body-c) {\opBr};
+  \node [control node, below=of end] (end-c) {\opRet};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \foreach \n in {entry, head, body, end} {
+        \draw (\n) -- (\n-c);
+      }
+      \draw (entry-c) -- (head);
+      \draw (head-c) -- node [control-flow label, swap] {F} (body);
+      \draw (head-c) -- node [control-flow label] {T} (end);
+      \draw [rounded corners=8pt]
+            (body-c.west)
+            -|
+            ([xshift=-.75\opNodeDist] body.west)
+            |-
+            (head);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%
