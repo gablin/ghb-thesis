@@ -7,17 +7,17 @@
 \begingroup%
 \figureFont\figureFontSize%
 \begin{tikzpicture}[%
-    data node/.style={%
+    value node/.style={%
       op node,
     },
   ]
 
   % Block DAGs
-  \node [data node, opacity=0] (a) {\opVar{a}};
+  \node [value node, opacity=0] (a) {\opVar{a}};
   \node [op node, position=45 degrees from a] (mul) {\opMul};
-  \node [data node, position=-45 degrees from mul, opacity=0] (b) {\opVar{b}};
+  \node [value node, position=-45 degrees from mul, opacity=0] (b) {\opVar{b}};
   \node [op node, position=135 degrees from mul] (add) {\opAdd};
-  \node [data node, position=-135 degrees from add] (s1) {\opVar{s}};
+  \node [value node, position=-135 degrees from add] (s1) {\opVar{s}};
   \begin{scope}[data flow]
     \draw (a) -- coordinate [pos=0] (below-a) (mul);
     \draw (b) -- coordinate [pos=0] (below-b) (mul);
@@ -28,9 +28,9 @@
     \draw [densely dashed] (below-\i) -- ++(-90:4mm);
   }
 
-  \node [data node, left=of s1.west |- a] (zero) {\opVar{0}};
+  \node [value node, left=of s1.west |- a] (zero) {\opVar{0}};
 
-  \node [data node, right=of b] (s2) {\opVar{s}};
+  \node [value node, right=of b] (s2) {\opVar{s}};
   \node [op node, above=of s2] (ret) {\opRet};
   \draw [data flow] (s2) -- (ret);
 \end{tikzpicture}%

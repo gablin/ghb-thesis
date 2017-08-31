@@ -10,7 +10,7 @@
 \pgfdeclarelayer{background2}%
 \pgfsetlayers{background2,background1,main}%
 \begin{tikzpicture}[%
-    data node/.style={%
+    value node/.style={%
       op node,
     },
     outer match node/.style={%
@@ -29,22 +29,22 @@
 
   % Trees
   \node [op node] (add) {\opAdd};
-  \node [data node, position=-135 degrees from add] (a) {\opVar{a}};
-  \node [data node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
+  \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
   \begin{scope}[data flow]
     \draw (a) -- (add);
     \draw (b) -- (add);
   \end{scope}
 
-  \node [data node, right=of b] (c) {\opVar{c}};
+  \node [value node, right=of b] (c) {\opVar{c}};
   \node [op node, position=45 degrees from c] (mul) {\opMul};
-  \node [data node, position=- 45 degrees from mul] (t1) {\opVar{t}};
+  \node [value node, position=- 45 degrees from mul] (t1) {\opVar{t}};
   \begin{scope}[data flow]
     \draw (c) -- (mul);
     \draw (t1) -- (mul);
   \end{scope}
 
-  \node [data node, right=of t1] (t2) {\opVar{t}};
+  \node [value node, right=of t1] (t2) {\opVar{t}};
   \node [op node, above=of t2] (load) {\opLoad};
   \begin{scope}[data flow]
     \draw (t2) -- (load);

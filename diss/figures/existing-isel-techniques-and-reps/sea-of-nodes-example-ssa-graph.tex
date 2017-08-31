@@ -7,22 +7,22 @@
 \begingroup%
 \figureFont\figureFontSize%
 \begin{tikzpicture}[%
-    data node/.append style={
+    value node/.append style={
       circle,
       minimum size=\opNodeSize,
     },
   ]
 
   % Data flow
-  \node [data node] (n-1) {\opVar{n}[1]};
+  \node [value node] (n-1) {\opVar{n}[1]};
   \node [op node, position=-45 degrees from n-1] (phi-n) {\opPhi};
   \node [op node, position=-135 degrees from phi-n] (leq) {\opLE};
-  \node [data node, position=135 degrees from leq] (leq-1) {\opVar{1}};
+  \node [value node, position=135 degrees from leq] (leq-1) {\opVar{1}};
   \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of phi-n]
         (sub) {\opSub};
-  \node [data node, position=45 degrees from sub] (sub-1) {\opVar{1}};
+  \node [value node, position=45 degrees from sub] (sub-1) {\opVar{1}};
 
-  \node [data node, right=5.5\opNodeDist of n-1] (1-phi-f) {\opVar{1}};
+  \node [value node, right=5.5\opNodeDist of n-1] (1-phi-f) {\opVar{1}};
   \node [op node, position=-45 degrees from 1-phi-f] (phi-f) {\opPhi};
   \node [op node, position=-135 degrees from phi-f] (mul) {\opMul};
   \node [op node, position=-45 degrees from phi-f] (ret) {\opRet};

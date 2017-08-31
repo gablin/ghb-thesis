@@ -10,7 +10,7 @@
 \pgfdeclarelayer{background2}%
 \pgfsetlayers{background2,background1,main}%
 \begin{tikzpicture}[%
-    data node/.style={%
+    value node/.style={%
       op node,
     },
     outer match node/.style={%
@@ -29,9 +29,9 @@
 
   % Graph
   \node [op node] (add) {\opAdd};
-  \node [data node, position=-135 degrees from add] (a) {\opVar{a}};
-  \node [data node, position=- 45 degrees from add] (b) {\opVar{b}};
-  \node [data node, above=of add] (load) {\opLoad};
+  \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
+  \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \node [value node, above=of add] (load) {\opLoad};
   \begin{scope}[data flow]
     \draw (a) -- (add);
     \draw (b) -- (add);
