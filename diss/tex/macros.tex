@@ -140,6 +140,19 @@
   \ref{pub:#1}%
 }
 
+\newlist{requirements}{enumerate}{1}
+\setlist[requirements]{%
+  label=R\arabic*,
+  labelsep=8pt,
+}
+
+\NewDocumentCommand{\labelRequirement}{m}{%
+  \label{req:#1}%
+}
+\NewDocumentCommand{\refRequirement}{m}{%
+  \ref{req:#1}%
+}
+
 
 
 %=========

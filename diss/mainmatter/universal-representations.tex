@@ -14,34 +14,43 @@
 \section{Design Requirements}
 
 To enable the \gls{constraint model} introduced later in this dissertation, we
-require a \gls{graph}-based \gls{program} representation that fulfills the
-following criteria:
+require a \gls{graph}-based representation that fulfills the following criteria:
 %
-\begin{enumerate}
-  \item It must capture the data and control flow of an entire \gls{function}.
+\begin{requirements}
+  \item \labelRequirement{uni-rep-req-capture-data-control}
+    It must be able to capture the data and control flow of an entire
+    \gls{function}.
     %
     This is needed for modeling \gls{global.is} \gls{instruction selection}
     and for uniform selection of data and control \glspl{instruction}.
-  \item \Glspl{operation}, both for data and control flow, must be explicitly
+  \item \labelRequirement{uni-rep-req-explicit-ops}
+    \Glspl{operation}, both for data and control flow, must be explicitly
     represented as \glspl{node}.
     %
     This is needed for \gls{pattern matching}.
-  \item Values produced and used by the \glspl{operation} must also be
-    explicitly represented as \glspl{node}.
+  \item \labelRequirement{uni-rep-req-explicit-values}
+    Values produced and used by the \glspl{operation} must also be explicitly
+    represented as \glspl{node}.
     %
     This is needed for modeling \gls{global code motion} and \gls{data copying}.
-  \item The \gls{block} in which a particular \gls{operation} is to be performed
-    must not be fixed.
+  \item \labelRequirement{uni-rep-req-fixed-operations}
+    The \gls{block} in which a particular \gls{operation} in the \gls{function}
+    is to be performed must not be fixed.
     %
     This is needed for modeling \gls{global code motion}.
-  \item The representation must be based on \gls{SSA}.
+  \item \labelRequirement{uni-rep-req-ssa}
+    The representation must be based on \gls{SSA}.
     %
     Not only is this practical as most \glspl{IR} used in modern
     \glspl{compiler} are already based on \gls{SSA}, it also helps in modeling
     \gls{global code motion}.
-\end{enumerate}
+\end{requirements}
 
-\todo{discuss existing representation in relation to these requirements}
+While there exists many graph-based representations -- for a survey, see
+\cite{StanierWatson:2013} -- most fulfill only some of the requirements but not
+all.
+%
+Consequently, a new representation had to be designed.
 
 
 
