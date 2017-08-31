@@ -1875,10 +1875,11 @@ The \gls{constraint}, typically referred to as $\mGCC$ or $\mCount$, constrains
 the number of \glspl{decision variable} assigned a particular value (which may
 also be a \gls{decision variable}).
 %
-We say that \mbox{$\mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds
-if exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
+We say that \mbox{$\mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds if
+exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
   \mVar{x}_k$} are assigned value~$v$ (for a formal definition, see
-\refChapter{constraint-programming}, \refDefinition{gcc}).
+\refDefinition{gcc} in \refChapter{constraint-programming} on
+\refPageOfDefinition{gcc}).
 %
 For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 = \mSet{4}, \mVar{x}_2 =
   \mSet{5}, \mVar{x}_3 = \mSet{6}, \mVar{y} = \mSet{1})$} holds as exactly one
@@ -2010,7 +2011,7 @@ Second, all \gls{combinatorial approach} only handle tree- and \gls{DAG}-shaped
 \glspl{pattern}, which excludes support for complex \glspl{instruction} that
 extend over multiple \glspl{block} and must therefore be modeled as generic
 \glspl{graph} (one such example is given in
-\refChapter{introduction}, \refPage{saturated-arithmetic}).
+\refChapter{introduction} on \refPage{saturated-arithmetic}).
 
 Third, with the exception of \textcite{TanakaEtAl:2003}, no \gls{combinatorial
   approach} takes the cost of \gls{data copying} into account.
