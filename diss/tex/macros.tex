@@ -9,8 +9,9 @@
 %======
 
 % Builds \labelX, \refX, \RefX, \refXRange, and \RefXRange commands:
-%    #1: the identifier (X)
-%    #2: Short term to appear in reference (without ending dot)
+%    #1: The identifier (X) in singular
+%    #2: Plural identifier term
+%    #3: Short term to appear in reference (without ending dot)
 \NewDocumentCommand{\buildLabelRefCommands}{mom}{%
   \expandafter\newcommand\csname label#1\endcsname[1]{\label{#1:##1}}%
   \expandafter\NewDocumentCommand\csname ref#1\endcsname{sm}{%
