@@ -624,13 +624,13 @@
 }
 \newcommand{\opAssign}{\irCode{\noWidth{$=$}}}
 \newcommand{\opBr}{\irCode{br}}
-\newcommand{\opCondBr}{\irCode{c.br}}
+\newcommand{\opCondBr}{\irCode{c{\kern-1pt}.{\kern-1.2pt}b{\kern-.3pt}r}}
 \newcommand{\opInBr}{\irCode{in.br}}
 \NewDocumentCommand{\opRet}{s}{%
   \IfBooleanTF{#1}{%
     \irCode{ret}%
   }{%
-    \irCode{r{\kern-.5pt}e{\kern-.7pt}t}%
+    \irCode{r{\kern-.3pt}e{\kern-.6pt}t}%
   }%
 }
 \newcommand{\opCopy}{\irCode{\noWidth{cp}}}
