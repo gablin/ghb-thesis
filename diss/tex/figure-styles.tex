@@ -50,6 +50,7 @@
     outer sep=0,
     node distance=\opNodeDist,
     line width=\opDataFlowLineWidth,
+    font=\relsize{-.5},
   },
   control node/.style={%
     op node,
@@ -60,11 +61,12 @@
     rectangle,
     draw,
     fill=shade0,
-    minimum size=0.8\opNodeSize,
+    minimum size=0.7\opNodeSize,
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
     line width=\opDataFlowLineWidth,
+    font=\relsize{-.5},
   },
   block node/.style={%
     rectangle,
@@ -76,7 +78,7 @@
     outer sep=0,
     node distance=\opNodeDist,
     line width=\opControlFlowLineWidth,
-    font=\strut,
+    font=\relsize{-.5}\strut,
   },
   data flow/.style={%
     ->,
