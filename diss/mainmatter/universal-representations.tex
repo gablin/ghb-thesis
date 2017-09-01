@@ -80,7 +80,7 @@ combination of two existing representations -- the \gls{SSA graph} and the
   \Glspl{edge} representing conditional jumps are labeled with a Boolean
   value indicating under which conditions the jump is taken.
   %
-  An example is given in \refFigure{uf-graph-example-original-cf-graph}.
+  An example is given in \refFigure{function-example-cf-graph}.
 }
 %
 -- which have been extended to fulfill the missing requirements and then merged
@@ -93,30 +93,44 @@ This makes for a simple construction process as the \glsshort{control-flow
 \begin{figure}
   \centering
 
-  \subcaptionbox{Function in SSA form\labelFigure{uf-graph-example-ssa-c}}%
-                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+  \begin{minipage}{55mm}
+    \centering%
+    \subcaptionbox{Function in SSA form\labelFigure{function-example-ssa-c}}%
+                  {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}{67mm}
+    \centering%
+    \subcaptionbox{%
+                    Control-flow graph%
+                    \labelFigure{function-example-cf-graph}%
+                  }%
+                  [32mm]%
+                  {%
+                    \input{figures/universal-representations/%
+                      control-flow-graph-example}%
+                  }
 
-  \vspace{\betweensubfigures}
+    \vspace{\baselineskip}
+
+    \subcaptionbox{SSA graph\labelFigure{function-example-ssa-graph}}%
+                  {\input{figures/universal-representations/ssa-graph-example}}
+  \end{minipage}
+
+  \caption[Function example used in describing the program representation]%
+          {%
+            Running example of a function and its corresponding control-flow and
+            SSA graph, which will be used in describing the program
+            representation%
+          }
+  \labelFigure{function-example}
+\end{figure}
+
+\begin{figure}
+  \centering
 
   \mbox{}%
   \hfill%
-  \subcaptionbox{%
-                  Control-flow graph%
-                  \labelFigure{uf-graph-example-original-cf-graph}%
-                }%
-                [32mm]%
-                {%
-                  \input{figures/universal-representations/%
-                    control-flow-graph-example}%
-                }%
-  \hfill%
-  \subcaptionbox{SSA graph\labelFigure{uf-graph-example-original-ssa-graph}}%
-                {\input{figures/universal-representations/ssa-graph-example}}%
-  \hfill%
-  \mbox{}
-
-  \vspace{\betweensubfigures}
-
   \subcaptionbox{%
                   Extended control-flow graph%
                   \labelFigure{uf-graph-example-extended-cf-graph}%
@@ -136,10 +150,36 @@ This makes for a simple construction process as the \glsshort{control-flow
                     figures/universal-representations/%
                     uf-graph-example-data-part%
                   }%
-                  \vspace*{1cm}%
                 }%
+  \hfill%
+  \mbox{}
 
-  \input{figures/universal-representations/uf-graph-example-cross-edges}
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox{%
+                  TODO%
+                  \labelFigure{uf-graph-example-full-graph}%
+                }%
+                {%
+                  \parbox{\textwidth}{%
+                    \parbox[b]{32mm}{%
+                      \input{figures/universal-representations/%
+                        uf-graph-example-control-part}%
+                    }%
+                    \hfill%
+                    \parbox[b]{63mm}{%
+                      \input{%
+                        figures/universal-representations/%
+                        uf-graph-example-data-part%
+                      }%
+                      \vspace*{1cm}%
+                    }%
+                    \input{%
+                      figures/universal-representations/%
+                      uf-graph-example-cross-edges%
+                    }%
+                  }%
+                }%
 
   \caption[TODO]%
           {%
@@ -162,10 +202,10 @@ To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
 flow from on \gls{block} to another and redirect the \glspl{edge} such that
 control flows through these \glspl{node}.
 %
-For example, in the \gls{graph} shown in
-\refFigure{uf-graph-example-original-cf-graph}, \glspl{control node}
-representing unconditional branches is inserted along the \glspl{edge} from
-\irBlock{entry} to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
+For example, in the \gls{control-flow graph} shown in
+\refFigure{function-example-cf-graph}, \glspl{control node} representing
+unconditional branches are inserted along the \glspl{edge} from \irBlock{entry}
+to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
 %
 For the conditional control flow originating from \irBlock{head}, a \gls{control
   node} representing a conditional branch is inserted and connected to
@@ -175,7 +215,7 @@ For the conditional control flow originating from \irBlock{head}, a \gls{control
 Lastly, a \gls{control node} representing \gls{function} return is inserted and
 connected to \irBlock{end}.
 %
-This results in the \gls{control-flow graph} shown in
+This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
 
 We continue with the \gls{SSA graph}.
@@ -195,8 +235,8 @@ extending the \gls{control-flow graph}.
 \Glspl{node} representing \gls{function} return are removed as these are already
 represented in the extended \gls{control-flow graph}.
 %
-Using the \gls{graph} shown in \refFigure{uf-graph-example-original-ssa-graph}
-as example, this results in the \gls{SSA graph} shown in
+Using the \gls{SSA graph} shown in \refFigure{function-example-ssa-graph} as
+example, this results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-ssa-graph}.
 
 We now connect the extended \glspl{graph} together.
