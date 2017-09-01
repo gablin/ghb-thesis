@@ -13,7 +13,7 @@
   \node [op node, position=-45 degrees from n-1] (phi-n) {\opPhi};
   \node [value node, below=of phi-n] (n-2) {\opVar{n}[2]\strut};
   \node [op node, position=-135 degrees from n-2] (leq) {\opLE};
-  \node [value node, below=of leq] (bool) {};
+  \node [value node, below=of leq] (bool) {b};
   \node [value node, position=135 degrees from leq] (leq-1) {\opVar{1}};
   \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of n-2]
         (sub) {\opSub};

@@ -90,13 +90,34 @@ This makes for a simple construction process as the \glsshort{control-flow
   graph} and \glspl{SSA graph} are already used inside most, if not all, modern
 \glspl{compiler}.
 
+\begin{filecontents*}{uf-example-ssa.c}
+int fact(int $\irVar{n}[1]$) {
+  entry:
+    int $\irVar{f}[1]$ = 1;
+  head:
+    int $\irVar{f}[2]$ = $\mPhi$($\irVar{f}[1]$:entry, $\irVar{f}[3]$:body);
+    int $\irVar{n}[2]$ = $\mPhi$($\irVar{n}[1]$:entry, $\irVar{n}[3]$:body);
+    bool b = $\irVar{n}[2]$ <= 1;
+    if b goto end;
+  body:
+    int $\irVar{f}[3]$ = $\irVar{f}[2]$ * $\irVar{n}[2]$;
+    int $\irVar{n}[3]$ = $\irVar{n}[2]$ - 1;
+    goto head;
+  end:
+    return $\irVar{f}[2]$;
+}
+\end{filecontents*}
+
 \begin{figure}
   \centering
 
   \begin{minipage}{55mm}
     \centering%
     \subcaptionbox{Function in SSA form\labelFigure{function-example-ssa-c}}%
-                  {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+                  {%
+                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
+                                    {uf-example-ssa.c}%
+                  }%
   \end{minipage}%
   \hfill%
   \begin{minipage}{67mm}
