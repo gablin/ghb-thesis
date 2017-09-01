@@ -24,6 +24,11 @@ requirements:
     %
     This is needed for modeling \gls{global.is} \gls{instruction selection}
     and for uniform selection of data and control \glspl{instruction}.
+  \item \labelRequirement{uni-rep-explicit-blocks}
+    \Glspl{block} must be explicitly represented as \glspl{node}.
+    %
+    This is needed for \gls{pattern matching} and for modeling \gls{global code
+      motion}.
   \item \labelRequirement{uni-rep-explicit-ops}
     \Glspl{operation}, both for data and control flow, must be explicitly
     represented as \glspl{node}.
@@ -38,7 +43,13 @@ requirements:
     The \gls{block} in which a particular \gls{operation} in the \gls{function}
     is to be performed must not be fixed.
     %
-    This is needed for modeling \gls{global code motion}.
+    This is needed for enabling \gls{global code motion}.
+  \item \labelRequirement{uni-rep-preserve-semantics}
+    \Gls{operation} are not allowed to be placed in \glspl{block} which will
+    break \gls{program} semantics.
+    %
+    This is needed to ensure correctness when performing \gls{global code
+      motion}.
   \item \labelRequirement{uni-rep-ssa}
     The representation must be based on \gls{SSA}.
     %
@@ -76,7 +87,7 @@ combination of two existing representations -- the \gls{SSA graph} and the
 into a single \gls{graph}.
 %
 This makes for a simple construction process as the \glsshort{control-flow
-  graph} and \gls{SSA graph} is already used inside most, if not all, modern
+  graph} and \glspl{SSA graph} are already used inside most, if not all, modern
 \glspl{compiler}.
 
 \begin{figure}
@@ -140,28 +151,34 @@ This makes for a simple construction process as the \glsshort{control-flow
 We start with the \gls{control-flow graph}.
 %
 As it captures the control flow for an entire \gls{function},
-\refRequirement{uni-rep-capture-data-control} is partially fulfilled.
+\refRequirement{uni-rep-capture-data-control} is already partially fulfilled.
+%
+\refRequirement{uni-rep-explicit-blocks} is also fulfilled since \glspl{block}
+in the \gls{control-flow graph} are already represented as \glspl{node}, which
+are called \glspl!{block node}.
 %
 To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
 \glspl!{control node} to represent the \glspl{operation} that change the control
-flow from on \gls{block} to another.
+flow from on \gls{block} to another and redirect the \glspl{edge} such that
+control flows through these \glspl{node}.
 %
-\todo{rewrite}
+For example, in the \gls{graph} shown in
+\refFigure{uf-graph-example-original-cf-graph}, \glspl{control node}
+representing unconditional branches is inserted along the \glspl{edge} from
+\irBlock{entry} to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
 %
-\Glspl{node} representing \glspl{block} and control-flow \glspl{operation} are
-called \glspl!{block node} and \glspl!{control node}, respectively.
+For the conditional control flow originating from \irBlock{head}, a \gls{control
+  node} representing a conditional branch is inserted and connected to
+\irBlock{head}, and the labeled \glspl{edge} are redirected to the new
+\gls{node}.
 %
-redirect the \glspl{edge} such that the
-control flow originate from these \glspl{node}.
+Lastly, a \gls{control node} representing \gls{function} return is inserted and
+connected to \irBlock{end}.
 %
-For example, for the \gls{control-flow graph} shown in
-\refFigure{uf-graph-example-original-cf-graph}, \todo{finish example}
-%
-This results in the \gls{control-flow graph} given in
+This results in the \gls{control-flow graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
 
-We continue with the \gls{SSA graph}, using
-\refFigure{uf-graph-example-original-ssa-graph} as an example.
+We continue with the \gls{SSA graph}.
 %
 As it captures the data flow for an entire \gls{function} and represents
 data-flow \glspl{operation} as \glspl{node}, the remaining parts of
@@ -172,16 +189,26 @@ data-flow \glspl{operation} as \glspl{node}, the remaining parts of
 requires the \gls{function} to be in \gls{SSA}~form.
 %
 To achieve \refRequirement{uni-rep-explicit-values}, we insert \glspl{node}
-representing values and redirect the \glspl{edge} accordingly.
+representing values and redirect the \glspl{edge} in same fashion as when
+extending the \gls{control-flow graph}.
 %
-Hence 
-
-\todo{describe how \refRequirement{uni-rep-fixed-operations} is achieved}
-
-This results in the \gls{SSA graph} shown in
+\Glspl{node} representing \gls{function} return are removed as these are already
+represented in the extended \gls{control-flow graph}.
+%
+Using the \gls{graph} shown in \refFigure{uf-graph-example-original-ssa-graph}
+as example, this results in the \gls{SSA graph} shown in
 \refFigure{uf-graph-example-extended-ssa-graph}.
 
+We now connect the extended \glspl{graph} together.
+%
+
 \todo{discuss connecting the two extended graphs together}
+%
+\refRequirement{uni-rep-fixed-operations},
+%
+To achieve \refRequirement{uni-rep-preserve-semantics}
+%
+\todo{finish discussion}
 
 \todo{discuss similarities with \gls{Click-Paleczny graph}}
 
