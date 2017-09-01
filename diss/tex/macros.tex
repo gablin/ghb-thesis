@@ -602,44 +602,66 @@
   \irCode{t$_{\text{#1}}$}%
 }
 \newcommand{\irAssign}[2]{\mbox{#1 $\leftarrow$ #2}}
-\newcommand{\irAdd}[2]{\mbox{#1 $+$ #2}}
+\newcommand{\irAddText}{$+$}
+\newcommand{\irAdd}[2]{\mbox{#1 \irAddText #2}}
 \newcommand{\irBlock}[1]{\irCode{#1}}
-\newcommand{\irBr}[1]{\mbox{{\irFont\bfseries br} \irBlock{#1}}}
+\newcommand{\irBrText}{br}
+\newcommand{\irBr}[1]{\mbox{{\irFont\bfseries\irBrText} \irBlock{#1}}}
+\newcommand{\irCallText}{call}
+\newcommand{\irCall}[1]{\mbox{{\irFont\bfseries\irCallText} #1}}
+\newcommand{\irCondBrText}{c.br}
 \newcommand{\irCondBr}[3]{%
-  \mbox{\irFont\bfseries c.br} #1, \irBlock{#2}, \irBlock{#3}%
+  \mbox{\irFont\bfseries\irCondBrText} #1, \irBlock{#2}, \irBlock{#3}%
 }
-\newcommand{\irEQ}[2]{\mbox{#1 $=$ #2}}
-\newcommand{\irNE}[2]{\mbox{#1 $\neq$ #2}}
-\newcommand{\irGE}[2]{\mbox{#1 $>$ #2}}
-\newcommand{\irLE}[2]{\mbox{#1 $<$ #2}}
-\newcommand{\irMul}[2]{\mbox{#1 $\times$ #2}}
-\newcommand{\irLoad}[1]{\mbox{{\irFont\bfseries load} #1}}
-\newcommand{\irStore}[2]{\mbox{{\irFont\bfseries store} #1, #2}}
-\newcommand{\irCall}[1]{\mbox{{\irFont\bfseries call} #1}}
-\newcommand{\irRet}[1]{\mbox{{\irFont\bfseries ret} #1}}
+\newcommand{\irCpText}{cp}
+\newcommand{\irEQText}{$=$}
+\newcommand{\irEQ}[2]{\mbox{#1 \irEQText #2}}
+\newcommand{\irNEText}{$\neq$}
+\newcommand{\irNE}[2]{\mbox{#1 \irNEText #2}}
+\newcommand{\irGEText}{$\geq$}
+\newcommand{\irGE}[2]{\mbox{#1 \irGEText #2}}
+\newcommand{\irGTText}{$>$}
+\newcommand{\irGT}[2]{\mbox{#1 \irGTText #2}}
+\newcommand{\irLEText}{$\leq$}
+\newcommand{\irLE}[2]{\mbox{#1 \irLEText #2}}
+\newcommand{\irLTText}{$<$}
+\newcommand{\irLT}[2]{\mbox{#1 \irLTText #2}}
+\newcommand{\irMulText}{$\times$}
+\newcommand{\irMul}[2]{\mbox{#1 \irMulText #2}}
+\newcommand{\irLoadText}{load}
+\newcommand{\irLoad}[1]{\mbox{{\irFont\bfseries\irLoadText} #1}}
+\newcommand{\irPhiText}{$\mPhi$}
+\newcommand{\irPhi}[1]{\mbox{\irPhiText(#1)}}
+\newcommand{\irRetText}{ret}
+\newcommand{\irRet}[1]{\mbox{{\irFont\bfseries\irRetText} #1}}
+\newcommand{\irStoreText}{store}
+\newcommand{\irStore}[2]{\mbox{{\irFont\bfseries\irStoreText} #1, #2}}
+\newcommand{\irSubText}{$-$}
+\newcommand{\irSub}[2]{\mbox{#1 \irSubText #2}}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%
   \raisebox{#2}[\height][0pt]{#1}%
 }
-\newcommand{\opBr}{\irCode{br}}
+\newcommand{\opBlock}[1]{\irCode{#1}}
+\newcommand{\opBr}{\irCode{\irBrText}}
 \newcommand{\opCondBr}{\irCode{c{\kern-1pt}.{\kern-1.2pt}b{\kern-.3pt}r}}
 \NewDocumentCommand{\opRet}{s}{%
   \IfBooleanTF{#1}{%
-    \irCode{ret}%
+    \irCode{\irRetText}%
   }{%
     \irCode{r{\kern-.3pt}e{\kern-.6pt}t}%
   }%
 }
-\newcommand{\opCopy}{\irCode{\noWidth{cp}}}
-\newcommand{\opPhi}{\irCode{\noWidth{$\mPhi$}[.5pt]}}
-\newcommand{\opMul}{\irCode{\noWidth{$\times$}}}
-\newcommand{\opAdd}{\irCode{\noWidth{$+$}}}
-\newcommand{\opSub}{\irCode{\noWidth{$-$}[-1pt]}}
-\newcommand{\opGT}{\irCode{\noWidth{$>$}}}
-\newcommand{\opLT}{\irCode{\noWidth{$<$}}}
-\newcommand{\opGE}{\irCode{\noWidth{$\geq$}}}
-\newcommand{\opLE}{\irCode{\noWidth{$\leq$}}}
+\newcommand{\opCopy}{\irCode{\noWidth{\irCpText}}}
+\newcommand{\opPhi}{\irCode{\noWidth{\irPhiText}[.5pt]}}
+\newcommand{\opMul}{\irCode{\noWidth{\irMulText}}}
+\newcommand{\opAdd}{\irCode{\noWidth{\irAddText}}}
+\newcommand{\opSub}{\irCode{\noWidth{\irSubText}[-1pt]}}
+\newcommand{\opGT}{\irCode{\noWidth{\irGTText}}}
+\newcommand{\opLT}{\irCode{\noWidth{\irLTText}}}
+\newcommand{\opGE}{\irCode{\noWidth{\irGEText}}}
+\newcommand{\opLE}{\irCode{\noWidth{\irLEText}}}
 \newcommand{\opLoad}{\irCode{\noWidth{ld}[.5pt]}}
 \newcommand{\opStore}{\irCode{\noWidth{st}[.5pt]}}
 \NewDocumentCommand{\opVar}{mo}{%
@@ -649,7 +671,6 @@
 \newcommand{\opTemp}[1]{%
   \irTemp{#1}\hspace*{-1pt}%
 }
-\newcommand{\opBlock}[1]{\irCode{#1}}
 
 % Commands used for assembly instructions
 \let\instrFont\irFont
