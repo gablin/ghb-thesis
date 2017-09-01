@@ -399,7 +399,16 @@ inserting a \gls{definition edge} between the value produced by the
 the \gls{IR}.
 %
 This results in the \gls{graph} shown in
-\refFigure{uf-graph-example-full-graph}, which is called \gls!{UF graph}.
+\refFigure{uf-graph-example-full-graph},\hspace{-1pt}%
+%
+\footnote{%
+  In this case, the \glspl{definition edge} from the \irBlock{entry} \gls{node}
+  to the \irVar{n}[1] and \irVar{1} \glspl{node} are redundant since the
+  data-flow \glspl{edge} are sufficient to force these values to be produced in
+  the \irBlock{entry} \gls{block}.
+}
+%
+which is called \gls!{UF graph}.
 
 \todo{discuss similarities with \gls{Click-Paleczny graph}}
 
