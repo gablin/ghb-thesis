@@ -208,7 +208,7 @@ int factorial(int $\irVar{n}[1]$) {
   \vspace{\betweensubfigures}
 
   \subcaptionbox{%
-                  TODO%
+                  Universal function graph%
                   \labelFigure{uf-graph-example-full-graph}%
                 }%
                 {%
@@ -232,9 +232,21 @@ int factorial(int $\irVar{n}[1]$) {
                   }%
                 }%
 
-  \caption[TODO]%
+  \caption[%
+            Example of a universal function graph, built from
+            \refFigure{function-example}%
+          ]%
           {%
-            TODO%
+            Example of a universal function graph, built from the \gls{function}
+            shown in \refFigure{function-example}.
+            %
+            Thick-lined diamonds, boxes, and arrows represent control nodes,
+            block nodes, and control-flow edges, respectively.
+            %
+            Thin-lined circles, boxes, and arrows represent computation nodes,
+            value nodes, and data-flow edges, respectively.
+            %
+            Dotted lines represent definition edges%
           }
   \labelFigure{uf-graph-example}
 \end{figure}
@@ -341,8 +353,8 @@ join:
                 }%
   \hfill\hfill\hfill%
   \subcaptionbox{%
-                  Control-flow graph%
-                  \labelFigure{TODO-graph}%
+                  Subgraph%
+                  \labelFigure{preserving-semantics-graph}%
                 }{%
                   \input{figures/universal-representations/%
                     preserving-semantics-example-graph}%
@@ -350,9 +362,11 @@ join:
   \hfill%
   \mbox{}
 
-  \caption[TODO]%
+  \caption[Example illustrating the need for definition edges]%
           {%
-            TODO%
+            Example illustrating the need for definition edges to prevent
+            certain operations from being moved into blocks that will break
+            program semantics%
           }
   \labelFigure{preserving-semantics-example}
 \end{figure}
