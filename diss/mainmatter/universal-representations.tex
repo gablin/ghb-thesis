@@ -7,15 +7,24 @@
 \chapter{Universal Representations}
 \labelChapter{universal-representations}
 
-\todo{write overview}
+This chapter introduces the representations used in the approach for modeling
+\glspl{function} and \glspl{instruction}.
+%
+\RefSection{uni-rep-design-requirements} lists the design requirements that must
+be fulfilled by the representation.
+%
+\RefSection{uni-rep-program-rep} introduces the representation and describes how
+to use it to model \glspl{function}, and \refSection{uni-rep-instr-rep}
+describes how to model \glspl{instruction}.
 
 
 
 \section{Design Requirements}
+\labelSection{uni-rep-design-requirements}
 
-In order to design \gls{constraint model} introduced later in this dissertation,
-we require a \gls{graph}-based representation that fulfills the following
-requirements:
+In order to construct the \gls{constraint model} introduced later in this
+dissertation, we require a \gls{graph}-based representation that fulfills the
+following requirements:
 %
 \begin{requirements}
   \item \labelRequirement{uni-rep-capture-data-control}
@@ -68,6 +77,7 @@ Consequently, a new representation had to be designed.
 
 
 \section{Program Representation}
+\labelSection{uni-rep-program-rep}
 
 The new representation, called \gls!{universal representation}, is essentially a
 combination of two existing representations -- the \gls{SSA graph} and the
@@ -387,5 +397,6 @@ This results in the \gls{graph} shown in
 
 
 \section{Instruction Representation}
+\labelSection{uni-rep-instr-rep}
 
 \todo{write}
