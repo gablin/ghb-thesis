@@ -117,8 +117,9 @@ control flows through these \glspl{node}.
 %
 For example, in the \gls{control-flow graph} shown in
 \refFigure{function-example-cf-graph}, \glspl{control node} representing
-unconditional branches are inserted along the \glspl{edge} from \irBlock{entry}
-to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
+unconditional branches are inserted along the \glspl{edge} between the
+\irBlock{entry} and \irBlock{head} \glspl{node} and between the \irBlock{body}
+and \irBlock{head} \glspl{node}.
 %
 \begin{filecontents*}{uf-example-ssa.c}
 int factorial(int $\irVar{n}[1]$) {
@@ -251,13 +252,13 @@ int factorial(int $\irVar{n}[1]$) {
   \labelFigure{uf-graph-example}
 \end{figure}
 %
-For the conditional control flow originating from \irBlock{head}, a \gls{control
-  node} representing a conditional branch is inserted and connected to
-\irBlock{head}, and the labeled \glspl{edge} are redirected to the new
-\gls{node}.
+For the conditional control flow originating from the \irBlock{head}
+\gls{block}, a \gls{control node} representing a conditional branch is inserted
+and connected to the \irBlock{head} \gls{node}, and the labeled \glspl{edge} are
+redirected to the new \gls{node}.
 %
 Lastly, a \gls{control node} representing \gls{function} return is inserted and
-connected to \irBlock{end}.
+connected to the \irBlock{end} \gls{node}.
 %
 This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
@@ -371,9 +372,9 @@ join:
   \labelFigure{preserving-semantics-example}
 \end{figure}
 %
-In the original code, the addition should be performed in the
-\irBlock{inc}~\gls{block} while the subtraction should be performed in the
-\irBlock{dec}~\gls{block}.
+In the original code, the addition should be performed in the \irBlock{inc}
+\gls{block} while the subtraction should be performed in the \irBlock{dec}
+\gls{block}.
 %
 But according to the \gls{graph}, swapping the placement of these
 \glspl{operation} would be considered a valid move, which clearly results in a
@@ -383,7 +384,7 @@ We recognize that such problems only occur in situations where a value is
 expected to be produce in a particular \gls{block}, which are captured by the
 \glspl{phi-function}.
 %
-Consequently, for each value-\gls{block} pair~\mbox{$\mPair{v}{b}$} appearing as
+Consequently, for each value-\gls{block} pair \mbox{$\mPair{v}{b}$} appearing as
 argument to a \gls{phi-function}, we add a \gls!{definition edge} between the
 corresponding \glsshort{value node} and \gls{block node}.
 %
