@@ -91,6 +91,25 @@ This makes for a simple construction process as the \glsshort{control-flow
   graph} and \glspl{SSA graph} are already used inside most, if not all, modern
 \glspl{compiler}.
 
+We start with the \gls{control-flow graph}.
+%
+As it captures the control flow for an entire \gls{function},
+\refRequirement{uni-rep-capture-data-control} is already partially fulfilled.
+%
+\refRequirement{uni-rep-explicit-blocks} is also fulfilled since \glspl{block}
+in the \gls{control-flow graph} are already represented as \glspl{node}, which
+are called \glspl!{block node}.
+%
+To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
+\glspl!{control node} representing \glspl{operation} that change the control
+flow from on \gls{block} to another and redirect the \glspl{edge} such that
+control flows through these \glspl{node}.
+%
+For example, in the \gls{control-flow graph} shown in
+\refFigure{function-example-cf-graph}, \glspl{control node} representing
+unconditional branches are inserted along the \glspl{edge} from \irBlock{entry}
+to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
+%
 \begin{filecontents*}{uf-example-ssa.c}
 int factorial(int $\irVar{n}[1]$) {
   entry:
@@ -108,7 +127,7 @@ int factorial(int $\irVar{n}[1]$) {
     return $\irVar{f}[2]$;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering
 
@@ -147,7 +166,7 @@ int factorial(int $\irVar{n}[1]$) {
           }
   \labelFigure{function-example}
 \end{figure}
-
+%
 \begin{figure}
   \centering
 
@@ -209,25 +228,6 @@ int factorial(int $\irVar{n}[1]$) {
           }
   \labelFigure{uf-graph-example}
 \end{figure}
-
-We start with the \gls{control-flow graph}.
-%
-As it captures the control flow for an entire \gls{function},
-\refRequirement{uni-rep-capture-data-control} is already partially fulfilled.
-%
-\refRequirement{uni-rep-explicit-blocks} is also fulfilled since \glspl{block}
-in the \gls{control-flow graph} are already represented as \glspl{node}, which
-are called \glspl!{block node}.
-%
-To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
-\glspl!{control node} representing \glspl{operation} that change the control
-flow from on \gls{block} to another and redirect the \glspl{edge} such that
-control flows through these \glspl{node}.
-%
-For example, in the \gls{control-flow graph} shown in
-\refFigure{function-example-cf-graph}, \glspl{control node} representing
-unconditional branches are inserted along the \glspl{edge} from \irBlock{entry}
-to \irBlock{head} and from \irBlock{body} to \irBlock{head}.
 %
 For the conditional control flow originating from \irBlock{head}, a \gls{control
   node} representing a conditional branch is inserted and connected to
