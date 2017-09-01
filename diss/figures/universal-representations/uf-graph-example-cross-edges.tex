@@ -24,18 +24,28 @@
     \draw [rounded corners=16pt]
           (f-2) |- (end-c);
 
-    \path [name path=right-from-head-c]
-          (head-c)
+    \coordinate (df-point-head-c) at
+                ([xshift=.5\opNodeDist, yshift=.5\opNodeDist] head-c.45);
+    \path [name path=right-from-above-head-c]
+          ([xshift=-\opNodeDist] df-point-head-c)
           --
           +(0:.5\textwidth);
+    \path [name path=diagonal-from-head-c]
+          (head-c)
+          --
+          +(45:2\opNodeDist);
     \coordinate (left-of-bool) at ([xshift=-\opNodeDist] bool.west);
     \path [name path=diagonal-from-bool]
           (left-of-bool)
           --
           +(135:2cm);
     \draw [name intersections={
-             of=right-from-head-c and diagonal-from-bool,
+             of=right-from-above-head-c and diagonal-from-bool,
              name=c1-intersection,
+           },
+           name intersections={
+             of=diagonal-from-head-c and right-from-above-head-c,
+             name=c2-intersection,
            },
            rounded corners=5pt,
           ]
@@ -44,6 +54,8 @@
           (left-of-bool)
           --
           (c1-intersection-1)
+          --
+          (c2-intersection-1)
           --
           (head-c);
   \end{scope}
