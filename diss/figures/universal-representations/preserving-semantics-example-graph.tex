@@ -1,0 +1,88 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\setlength{\opNodeDist}{10pt}%
+\begin{tikzpicture}[
+    control-flow label/.append style={
+      inner xsep=.5\opControlFlowLabelXSep,
+      pos=.4,
+    },
+  ]
+
+  % Control-flow graph
+  \node [block node] (check) {\irBlock{check}};
+  \node [control node, below=of check] (check-c) {\opCondBr};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-135 degrees from check-c] (inc) {\irBlock{inc}};
+  \node [block node, node distance=1.5\opNodeDist,
+         position=-45 degrees from check-c] (dec) {\irBlock{dec}};
+  \node [control node, below=of inc] (inc-c) {\opBr};
+  \node [control node, below=of dec] (dec-c) {\opBr};
+  \node [block node, node distance=.5\opNodeDist,
+         below=of $(inc-c.south) !.5! (dec-c.south)$] (join)
+        {\irBlock{join}};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \foreach \n in {check, inc, dec} {
+        \draw (\n) -- (\n-c);
+      }
+      \draw (check-c) -- node [control-flow label, swap] {T} (inc);
+      \draw (check-c) -- node [control-flow label] {F} (dec);
+      \draw (inc-c) -- (join);
+      \draw (dec-c) -- (join);
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Data-flow graph
+  \node [value node, below right=-.2\opNodeDist and 4\opNodeDist of check]
+        (add-1) {\opVar{1}};
+  \node [op node, position=-45 degrees from add-1] (add) {\opAdd};
+  \node [value node, position=45 degrees from add] (x-1) {\opVar{x}[1]};
+  \node [value node, below=of add] (x-2) {\opVar{x}[2]};
+  \node [op node, position=-45 degrees from x-1] (sub) {\opSub};
+  \node [value node, position=45 degrees from sub] (sub-1) {\opVar{1}};
+  \node [value node, below=of sub] (x-3) {\opVar{x}[3]};
+  \node [op node, position=-45 degrees from x-2] (phi) {\opPhi};
+  \node [value node, below=of phi] (x-4) {\opVar{x}[4]};
+  \node [value node, below right=.5\opNodeDist and .9\opNodeDist of check]
+        (b) {\opVar{b}};
+
+
+  \begin{scope}[data flow]
+    \draw (add-1) -- (add);
+    \draw (x-1) -- (add);
+    \draw (add) -- (x-2);
+    \draw (sub-1) -- (sub);
+    \draw (x-1) -- (sub);
+    \draw (sub) -- (x-3);
+    \draw (x-2) -- (phi);
+    \draw (x-3) -- (phi);
+    \draw (phi) -- (x-4);
+
+    \path [name path=from-check-c]
+          (check-c)
+          --
+          +(45:2\opNodeDist);
+    \path [name path=from-b]
+          (b)
+          --
+          +(180:3\opNodeDist);
+    \draw [name intersections={of=from-check-c and from-b},
+           rounded corners=3pt,
+          ]
+          (b)
+          --
+          (intersection-1)
+          --
+          (check-c);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

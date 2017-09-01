@@ -30,13 +30,14 @@ requirements:
     This is needed for \gls{pattern matching} and for modeling \gls{global code
       motion}.
   \item \labelRequirement{uni-rep-explicit-ops}
-    \Glspl{operation}, both for data and control flow, must be explicitly
-    represented as \glspl{node}.
+    Data and control \Glspl{operation} must be explicitly represented as
+    \glspl{node}.
     %
     This is needed for \gls{pattern matching}.
   \item \labelRequirement{uni-rep-explicit-values}
     Values produced and used by the \glspl{operation} must also be explicitly
-    represented as \glspl{node}.
+    represented as \glspl{node}, with the invariant that every such \gls{node}
+    has exactly one inbound data-flow \gls{edge}.
     %
     This is needed for modeling \gls{global code motion} and \gls{data copying}.
   \item \labelRequirement{uni-rep-fixed-operations}
@@ -45,8 +46,8 @@ requirements:
     %
     This is needed for enabling \gls{global code motion}.
   \item \labelRequirement{uni-rep-preserve-semantics}
-    \Gls{operation} are not allowed to be placed in \glspl{block} which will
-    break \gls{program} semantics.
+    Data \gls{operation} must be forbidden to be placed in \glspl{block} that
+    will break \gls{program} semantics.
     %
     This is needed to ensure correctness when performing \gls{global code
       motion}.
@@ -219,7 +220,7 @@ in the \gls{control-flow graph} are already represented as \glspl{node}, which
 are called \glspl!{block node}.
 %
 To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
-\glspl!{control node} to represent the \glspl{operation} that change the control
+\glspl!{control node} representing \glspl{operation} that change the control
 flow from on \gls{block} to another and redirect the \glspl{edge} such that
 control flows through these \glspl{node}.
 %
@@ -238,19 +239,28 @@ connected to \irBlock{end}.
 %
 This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
+%
+An invariant here is that each \gls{control node} has exactly one \gls{edge}
+flowing \emph{from} a \gls{block node}, and each \gls{block node} has exactly
+one \gls{edge} flowing \emph{to} a \gls{control node}.
+%
+In other words, every control \gls{operation} belongs to exactly one
+\gls{block}, and every \gls{block} has exactly one point where changes in
+control occur.
 
 We continue with the \gls{SSA graph}.
 %
-As it captures the data flow for an entire \gls{function} and represents
-data-flow \glspl{operation} as \glspl{node}, the remaining parts of
-\refRequirement{uni-rep-capture-data-control} and
+As it captures the data flow for an entire \gls{function} and represents data
+\glspl{operation} as \glspl{node} -- we call these \glspl!{computation node} --
+the remaining parts of \refRequirement{uni-rep-capture-data-control} and
 \refRequirement{uni-rep-explicit-ops} are fulfilled.
 %
 \refRequirement{uni-rep-ssa} is inherently fulfilled as the \gls{SSA graph}
 requires the \gls{function} to be in \gls{SSA}~form.
 %
-To achieve \refRequirement{uni-rep-explicit-values}, we insert \glspl{node}
-representing values and redirect the \glspl{edge} in same fashion as when
+To achieve \refRequirement{uni-rep-explicit-values}, we insert \glspl!{value
+  node} representing the entities produced and used by the data
+\glspl{operation} and redirect the \glspl{edge} in same fashion as when
 extending the \gls{control-flow graph}.
 %
 \Glspl{node} representing \gls{function} return are removed as these are already
@@ -259,17 +269,112 @@ represented in the extended \gls{control-flow graph}.
 Using the \gls{SSA graph} shown in \refFigure{function-example-ssa-graph} as
 example, this results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-ssa-graph}.
+%
+Note that at this point, the invariant specified in
+\refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
+one inbound data-flow \gls{edge} is broken, but this will be addressed shortly.
 
-We now connect the extended \glspl{graph} together.
+We now connect the two extended \glspl{graph} together.
 %
+First, data-flow \glspl{edge} are inserted to connect control \glspl{operation}
+with the values used by these \glspl{operation}.
+%
+In the case of our running example, such \glspl{edge} are added from
+values~\irVar{b} and~\irVar{f}[2] to the {\irFont\irCondBrText} and
+{\irFont\irRetText} \glspl{operation}, respectively.
+%
+To achieve the invariant specified in \refRequirement{uni-rep-explicit-values},
+data-flow \glspl{edge} are also inserted from the \glsshort{entry block}
+\gls{block node} to each \gls{value node} representing constants and function
+arguments.
+%
+Intuitively, this means that such values are produced at the point of entry to
+the \gls{function}.
 
-\todo{discuss connecting the two extended graphs together}
+Since there are no \glspl{edge} connecting \glspl{computation node} with
+\glspl{block node}, the assignment of data \glspl{operation} to \glspl{block} is
+free, thus fulfilling \refRequirement{uni-rep-fixed-operations}.
 %
-\refRequirement{uni-rep-fixed-operations},
+This alone, however, permits \glspl{operation} to be moved to \glspl{block} that
+will break \gls{program} semantics.
 %
-To achieve \refRequirement{uni-rep-preserve-semantics}
+For example, assume the code snippet and corresponding, extended
+\glsshort{control-flow graph} and \glspl{SSA graph} shown in
+\refFigure{preserving-semantics-example}.
 %
-\todo{finish discussion}
+\begin{filecontents*}{preserving-semantics-code.c}
+  $\ldots$
+  int $\irVar{x}[1]$ = $\ldots$;
+check:
+  bool b = $\ldots$;
+  if b goto dec;
+inc:
+  int $\irVar{x}[2]$ = $\irVar{x}[1]$ + 1;
+  goto merge;
+dec:
+  int $\irVar{x}[3]$ = $\irVar{x}[1]$ - 1;
+join:
+  int $\irVar{x}[4]$ = $\mPhi$($\irVar{x}[2]$:inc, $\irVar{x}[3]$:dec);
+\end{filecontents*}
+%
+\begin{figure}
+  \centering
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Code snippet%
+                  \labelFigure{preserving-semantics-example-code-snippet}%
+                }{%
+                  \lstinputlisting[language=c,mathescape]%
+                                  {preserving-semantics-code.c}%
+                }%
+  \hfill\hfill\hfill%
+  \subcaptionbox{%
+                  Control-flow graph%
+                  \labelFigure{TODO-graph}%
+                }{%
+                  \input{figures/universal-representations/%
+                    preserving-semantics-example-graph}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[TODO]%
+          {%
+            TODO%
+          }
+  \labelFigure{preserving-semantics-example}
+\end{figure}
+%
+In the original code, the addition should be performed in the
+\irBlock{inc}~\gls{block} while the subtraction should be performed in the
+\irBlock{dec}~\gls{block}.
+%
+But according to the \gls{graph}, swapping the placement of these
+\glspl{operation} would be considered a valid move, which clearly results in a
+different \gls{program}.
+%
+We recognize that such problems only occur in situations where a value is
+expected to be produce in a particular \gls{block}, which are captured by the
+\glspl{phi-function}.
+%
+Consequently, for each value-\gls{block} pair~\mbox{$\mPair{v}{b}$} appearing as
+argument to a \gls{phi-function}, we add a \gls!{definition edge} between the
+corresponding \glsshort{value node} and \gls{block node}.
+%
+This forces $v$ to be produced in $b$, which in turn forbids the \gls{operation}
+producing $v$ from being moved out of $b$.
+%
+Hence \refRequirement{uni-rep-preserve-semantics} is achieved.
+%
+Lastly, for convenience we prevent \glspl{phi-function} from being moved by
+inserting a \gls{definition edge} between the value produced by the
+\gls{phi-function} and the \gls{block} wherein the \gls{phi-function} resides in
+the \gls{IR}.
+%
+This results in the \gls{graph} shown in
+\refFigure{uf-graph-example-full-graph}, which is called \gls!{UF graph}.
 
 \todo{discuss similarities with \gls{Click-Paleczny graph}}
 

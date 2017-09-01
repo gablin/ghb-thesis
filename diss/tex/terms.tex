@@ -36,7 +36,7 @@
 
 \newterm{basic block}[see={block}]
 \newterm{block}[see={basic block}]
-\newterm{entry block}
+\newterm{entry block}[user1={entry}]
 \newterm{function}
 \newterm[phi-function]{\mbox{$\mPhi$-function}}[sort={$\mPhi$-function}]
 \newterm{program}
@@ -103,10 +103,13 @@
 \newterm{sea-of-nodes IR}
 \newterm{SSA graph}
 
-\newterm{block node}
-\newterm{control node}
+\newterm{block node}[user1={block}]
+\newterm{computation node}[user1={computation}]
+\newterm{control node}[user1={control}]
+\newterm{definition edge}
 \newterm{universal representation}
 \newterm{UF graph}[first={universal function (UF) graph}]
+\newterm{value node}[user1={value}]
 
 \newacronym{BURS}{bottom-up rewriting system}
 \newterm{combinatorial approach}%
