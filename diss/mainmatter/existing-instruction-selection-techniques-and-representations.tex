@@ -1015,7 +1015,7 @@ will therefore be discussed first.
 \subsubsection{Sea-of-nodes IRs}
 
 \begin{filecontents*}{fact.c}
-int fact(int n) {
+int factorial(int n) {
   entry:
     int f = 1;
   head:
@@ -1030,7 +1030,7 @@ int fact(int n) {
 \end{filecontents*}
 
 \begin{filecontents*}{fact-ssa.c}
-int fact(int $\irVar{n}[1]$) {
+int factorial(int $\irVar{n}[1]$) {
   entry:
     int $\irVar{f}[1]$ = 1;
   head:
