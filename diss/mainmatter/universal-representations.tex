@@ -45,8 +45,10 @@ following requirements:
     This is needed for \gls{pattern matching}.
   \item \labelRequirement{uni-rep-explicit-values}
     Values produced and used by the \glspl{operation} must also be explicitly
-    represented as \glspl{node}, with the invariant that every such \gls{node}
-    has exactly one inbound data-flow \gls{edge}.
+    represented as \glspl{node}.
+    %
+    Also, for \glspl{graph} modeling \glspl{function} every such \gls{node} must
+    have exactly one inbound data-flow \gls{edge}.
     %
     This is needed for modeling \gls{global code motion} and \gls{data copying}.
   \item \labelRequirement{uni-rep-fixed-operations}
@@ -430,7 +432,20 @@ represented as \glspl{node}, nor does it fulfill
 \section{Instruction Representation}
 \labelSection{uni-rep-instr-rep}
 
-\todo{write}
+Modeling \glspl{instruction} as \glspl{pattern} is nearly identical to modeling
+\glspl{function}.
+%
+The exceptions are that the \gls{control-flow graph} becomes empty if the output
+is not dependent on control flow, and that no additional data-flow \glspl{edge}
+are added for \glspl{value node} representing constants and \gls{instruction}
+input.
+%
+In other words, the invariant specified in
+\refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
+one inbound data-flow \gls{edge} does not need to hold for such values.
+%
+This results in a \gls{graph} called \gls!{UP graph}, and two examples are given
+in \refFigure{up-graph-examples}.
 
 \begin{filecontents*}{add-code.c}
 int add(int $\irVar{s}$, int $\irVar{t}$) {
@@ -439,7 +454,7 @@ int add(int $\irVar{s}$, int $\irVar{t}$) {
     return $\irVar{d}$;
 }
 \end{filecontents*}
-%
+
 \begin{filecontents*}{satadd-code.c}
 int satadd(int $\irVar{s}$, int $\irVar{t}$) {
   entry:
@@ -452,7 +467,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
     return $\irVar{d}[3]$;
 }
 \end{filecontents*}
-%
+
 \begin{figure}
   \centering%
   \setlength{\tmpLength}{2\baselineskip + \betweensubfigures}%
