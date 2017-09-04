@@ -603,7 +603,7 @@
 }
 \newcommand{\irAssign}[2]{\mbox{#1 $\leftarrow$ #2}}
 \newcommand{\irAddText}{$+$}
-\newcommand{\irAdd}[2]{\mbox{#1 \irAddText #2}}
+\newcommand{\irAdd}[2]{\mbox{#1 \irAddText{} #2}}
 \newcommand{\irBlock}[1]{\irCode{#1}}
 \newcommand{\irBrText}{br}
 \newcommand{\irBr}[1]{\mbox{{\irFont\bfseries\irBrText} \irBlock{#1}}}
@@ -615,19 +615,19 @@
 }
 \newcommand{\irCpText}{cp}
 \newcommand{\irEQText}{$=$}
-\newcommand{\irEQ}[2]{\mbox{#1 \irEQText #2}}
+\newcommand{\irEQ}[2]{\mbox{#1 \irEQText{} #2}}
 \newcommand{\irNEText}{$\neq$}
-\newcommand{\irNE}[2]{\mbox{#1 \irNEText #2}}
+\newcommand{\irNE}[2]{\mbox{#1 \irNEText{} #2}}
 \newcommand{\irGEText}{$\geq$}
-\newcommand{\irGE}[2]{\mbox{#1 \irGEText #2}}
+\newcommand{\irGE}[2]{\mbox{#1 \irGEText{} #2}}
 \newcommand{\irGTText}{$>$}
-\newcommand{\irGT}[2]{\mbox{#1 \irGTText #2}}
+\newcommand{\irGT}[2]{\mbox{#1 \irGTText{} #2}}
 \newcommand{\irLEText}{$\leq$}
-\newcommand{\irLE}[2]{\mbox{#1 \irLEText #2}}
+\newcommand{\irLE}[2]{\mbox{#1 \irLEText{} #2}}
 \newcommand{\irLTText}{$<$}
-\newcommand{\irLT}[2]{\mbox{#1 \irLTText #2}}
+\newcommand{\irLT}[2]{\mbox{#1 \irLTText{} #2}}
 \newcommand{\irMulText}{$\times$}
-\newcommand{\irMul}[2]{\mbox{#1 \irMulText #2}}
+\newcommand{\irMul}[2]{\mbox{#1 \irMulText{} #2}}
 \newcommand{\irLoadText}{load}
 \newcommand{\irLoad}[1]{\mbox{{\irFont\bfseries\irLoadText} #1}}
 \newcommand{\irPhiText}{$\mPhi$}
@@ -637,7 +637,7 @@
 \newcommand{\irStoreText}{store}
 \newcommand{\irStore}[2]{\mbox{{\irFont\bfseries\irStoreText} #1, #2}}
 \newcommand{\irSubText}{$-$}
-\newcommand{\irSub}[2]{\mbox{#1 \irSubText #2}}
+\newcommand{\irSub}[2]{\mbox{#1 \irSubText{} #2}}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%
