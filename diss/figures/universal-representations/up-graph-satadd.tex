@@ -50,27 +50,27 @@
   \node [value node, below=of add] (d1) {\opVar{d}[1]};
   \node [op node, position=- 45 degrees from d1] (phi) {\opPhi};
   \node [op node, position=-135 degrees from d1] (cmp) {\opLT};
-  \node [value node, position=135 degrees from cmp] (C-1) {\opVar{MAX}};
-  \node [value node, position=45 degrees from phi] (C-2) {\opVar{MAX}};
+  \node [value node, position=135 degrees from cmp] (MAX-1) {\opVar{MAX}};
+  \node [value node, position=45 degrees from phi] (MAX-2) {\opVar{MAX}};
   \node [value node, below=of cmp] (bool) {};
   \node [value node, below=of phi] (d3) {\opVar{d}[3]};
   \begin{scope}[data flow]
     \draw (s) -- (add);
     \draw (t) -- (add);
     \draw (add) -- (d1);
-    \draw (C-1) -- (cmp);
+    \draw (MAX-1) -- (cmp);
     \draw (d1) -- (cmp);
     \draw (cmp) -- (bool);
     \draw (d1) -- (phi);
-    \draw (C-2) -- (phi);
+    \draw (MAX-2) -- (phi);
     \draw (phi) -- (d3);
 
     \coordinate (above-entry-c) at ([shift=(45:\opNodeDist)] entry-c.45);
-    \coordinate (between-clamp-and-C-1) at ($(clamp.east) !.5! (C-1.west)$);
+    \coordinate (between-clamp-and-MAX-1) at ($(clamp.east) !.5! (MAX-1.west)$);
     \draw [rounded corners=8pt]
           (bool)
           -|
-          (between-clamp-and-C-1 |- above-entry-c)
+          (between-clamp-and-MAX-1 |- above-entry-c)
           [rounded corners=3pt]
           --
           (above-entry-c)
@@ -80,18 +80,18 @@
 
   \begin{scope}[definition edge]
     \path [name path=from-clamp]
-          (clamp) -- (clamp -| C-2);
-    \path [name path=from-C-2]
-          (C-2.north west)
+          (clamp) -- (clamp -| MAX-2);
+    \path [name path=from-MAX-2]
+          (MAX-2.north west)
           --
           +(135:1.5\opNodeDist);
     \draw [rounded corners=3pt,
-           name intersections={of=from-clamp and from-C-2}]
+           name intersections={of=from-clamp and from-MAX-2}]
           (clamp)
           --
           (intersection-1)
           --
-          (C-2);
+          (MAX-2);
 
     \path [name path=from-entry]
           (entry) -- (entry -| d1);
