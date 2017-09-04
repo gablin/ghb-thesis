@@ -33,13 +33,36 @@ Due to its simplicity and ease of implementation,
   after showing that, for large body of problem instances, it exhibits
   considerably worse performance compared to two other \gls{subgraph
     isomorphism} algorithms (\gls{LAD}~\cite{Solnon:2010} and
-  Glasgow~\cite{McCreeshProsser:2015}).
+  \gls{Glasgow}~\cite{McCreeshProsser:2015}).
   %
   In case of \gls{instruction selection}, however, the problem instances are
   small enough that the time for finding all \glspl{match} is negligible
   compared to the time for solving the \gls{constraint model}.
 }
 %
+\begin{algorithm}[t]
+  \DeclFunction{FindMatches}{subject graph $S$,
+                             pattern graph $P$}%
+  {%
+    $M$ \Assign $\emptyset$\;
+    \Call{FindMatchRec}{$\emptyset$}\;
+    \Return{$M$}\;
+    \DeclFunction{FindMatchRec}{partial match $M$}%
+    {%
+      $M_c$ \Assign compute mapping candidates\;
+      \todo{finish algorithm}
+    }
+  }
+
+  \caption{VF2 algorithm}
+  \labelAlgorithm{vf2-algorithm}
+\end{algorithm}
+%
+The algorithm, given in \refAlgorithm{vf2-algorithm}, recursively checks every
+\gls{node}-mapping candidate and applies a set of rules for checking whether the
+current mapping will yield a \gls{match}.
+
+
 \todo{describe algorithm}
 
 
