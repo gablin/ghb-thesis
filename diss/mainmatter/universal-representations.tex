@@ -431,3 +431,67 @@ represented as \glspl{node}, nor does it fulfill
 \labelSection{uni-rep-instr-rep}
 
 \todo{write}
+
+\begin{filecontents*}{add-code.c}
+int add(int $\irVar{s}$, int $\irVar{t}$) {
+  entry:
+    int $\irVar{d}$ = $\irVar{s}$ + $\irVar{t}$;
+    return $\irVar{d}$;
+}
+\end{filecontents*}
+%
+\begin{filecontents*}{satadd-code.c}
+int satadd(int $\irVar{s}$, int $\irVar{t}$) {
+  entry:
+    int $\irVar{d}[1]$ = $\irVar{s}$ + $\irVar{t}$;
+    if ($\irVar{d}[1]$ > MAX) goto clamp;
+  clamp:
+    int $\irVar{d}[2]$ = MAX;
+  end:
+    int $\irVar{d}[3]$ = $\mPhi$($\irVar{d}[3]$:entry, $\irVar{d}[2]$:clamp);
+    return $\irVar{d}[3]$;
+}
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \setlength{\tmpLength}{2\baselineskip + \betweensubfigures}%
+  \begin{tabular}{@{}c@{\quad}c@{}}
+    \subcaptionbox{%
+                    Semantic behavior of an \mbox{\instrFont add \$d, \$s, \$t}
+                    instruction%
+                    \labelFigure{up-graph-examples-add-code}%
+                  }%
+                  [40mm]%
+                  {%
+                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
+                                    {add-code.c}%
+                  }%
+    &
+    \subcaptionbox{%
+                    UP graph of {\instrFont add}%
+                    \labelFigure{up-graph-examples-add-graph}%
+                  }%
+                  [28mm]%
+                  {\input{figures/universal-representations/up-graph-add}}%
+    \\[\tmpLength]
+    \subcaptionbox{%
+                    Semantic behavior of a
+                    \mbox{\instrFont satadd \$d, \$s, \$t} instruction%
+                    \labelFigure{up-graph-examples-satadd-code}%
+                  }%
+                  [64mm]%
+                  {%
+                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
+                                    {satadd-code.c}%
+                  }%
+    &
+    \subcaptionbox{%
+                    UP graph of {\instrFont satadd}%
+                    \labelFigure{up-graph-examples-satadd}%
+                  }{\input{figures/universal-representations/up-graph-satadd}}
+  \end{tabular}
+
+  \caption{Examples of universal pattern graphs}
+  \labelFigure{up-graph-examples}
+\end{figure}

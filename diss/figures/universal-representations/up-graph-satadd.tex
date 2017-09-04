@@ -1,0 +1,138 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    control-flow label/.append style={
+      inner ysep=.75\opControlFlowLabelXSep,
+    },
+  ]
+
+  % Control flow
+  \node [block node] (entry) {\opBlock{entry}};
+  \node [control node, below=of entry] (entry-c) {\opCondBr};
+  \node [block node, right=1.25\opNodeDist of entry-c]
+        (clamp) {\opBlock{clamp}};
+  \node [control node, below=of clamp] (clamp-c) {\opBr};
+  \node [block node, below=of clamp-c] (end) {\opBlock{end}};
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \foreach \b in {entry, clamp} {
+        \draw (\b) -- (\b-c);
+      }
+      \draw (entry-c)
+            -- node [control-flow label, swap, xshift=-2pt] {T}
+            (clamp);
+      \draw [rounded corners=6pt]
+            (entry-c)
+            -- node [control-flow label, pos=.125, swap] {F}
+            (entry-c |- end)
+            --
+            (end);
+      \draw (clamp-c) -- (end);
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Data flow
+  \coordinate (cf-north-east) at (entry.north -| clamp-c.east);
+  \node [value node, right=3\opNodeDist of cf-north-east,
+         yshift=-.225\opNodeSize]
+        (s) {\opVar{s}};
+  \node [op node, position=-45 degrees from s] (add) {\opAdd};
+  \node [value node, position= 45 degrees from add] (t) {\opVar{t}};
+  \node [value node, below=of add] (d1) {\opVar{d}[1]};
+  \node [op node, position=- 45 degrees from d1] (phi) {\opPhi};
+  \node [op node, position=-135 degrees from d1] (cmp) {\opLT};
+  \node [value node, position=135 degrees from cmp] (C-1) {\opVar{MAX}};
+  \node [value node, position=45 degrees from phi] (C-2) {\opVar{MAX}};
+  \node [value node, below=of cmp] (bool) {};
+  \node [value node, below=of phi] (d2) {\opVar{d}[2]};
+  \begin{scope}[data flow]
+    \draw (s) -- (add);
+    \draw (t) -- (add);
+    \draw (add) -- (d1);
+    \draw (C-1) -- (cmp);
+    \draw (d1) -- (cmp);
+    \draw (cmp) -- (bool);
+    \draw (d1) -- (phi);
+    \draw (C-2) -- (phi);
+    \draw (phi) -- (d2);
+
+    \coordinate (above-entry-c) at ([shift=(45:\opNodeDist)] entry-c.45);
+    \coordinate (between-clamp-and-C-1) at ($(clamp.east) !.5! (C-1.west)$);
+    \draw [rounded corners=8pt]
+          (bool)
+          -|
+          (between-clamp-and-C-1 |- above-entry-c)
+          [rounded corners=3pt]
+          --
+          (above-entry-c)
+          --
+          (entry-c);
+  \end{scope}
+
+  \begin{scope}[definition edge]
+    \path [name path=from-clamp]
+          (clamp) -- (clamp -| C-2);
+    \path [name path=from-C-2]
+          (C-2.north west)
+          --
+          +(135:1.5\opNodeDist);
+    \draw [rounded corners=3pt,
+           name intersections={of=from-clamp and from-C-2}]
+          (clamp)
+          --
+          (intersection-1)
+          --
+          (C-2);
+
+    \path [name path=from-entry]
+          (entry) -- (entry -| d1);
+    \path [name path=from-d1]
+          (d1.north west)
+          --
+          ([shift=(135:2cm)] d1.135);
+    \draw [rounded corners=6pt,
+           name intersections={of=from-entry and from-d1}]
+          (d1)
+          --
+          (intersection-1)
+          --
+          (entry);
+
+    \path [name path=from-end]
+          (end.south east)
+          --
+          +(-45:.5\opNodeDist);
+    \path [name path=from-d2]
+          (d2.south west)
+          --
+          +(-135:\opNodeDist);
+    \path [name path=right-from-below-end]
+          ([yshift=-.25\opNodeDist] end.south)
+          --
+          +(0:8\opNodeDist);
+    \draw [name intersections={
+             of=right-from-below-end and from-end, name=c1-intersection,
+           },
+           name intersections={
+             of=right-from-below-end and from-d2, name=c2-intersection,
+           },
+           rounded corners=3pt]
+          (end)
+          --
+          (c1-intersection-1)
+          --
+          (c2-intersection-1)
+          --
+          (d2);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

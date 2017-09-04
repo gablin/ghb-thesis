@@ -1,0 +1,22 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\begin{tikzpicture}
+  % Data flow
+  \node [value node] (s) {\opVar{s}};
+  \node [op node, position=-45 degrees from s] (add) {\opAdd};
+  \node [value node, position=45 degrees from add] (t) {\opVar{t}};
+  \node [value node, below=of add] (d) {\opVar{d}};
+  \begin{scope}[data flow]
+    \draw (s) -- (add);
+    \draw (t) -- (add);
+    \draw (add) -- (d);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
