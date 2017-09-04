@@ -53,7 +53,7 @@
   \node [value node, position=135 degrees from cmp] (C-1) {\opVar{MAX}};
   \node [value node, position=45 degrees from phi] (C-2) {\opVar{MAX}};
   \node [value node, below=of cmp] (bool) {};
-  \node [value node, below=of phi] (d2) {\opVar{d}[2]};
+  \node [value node, below=of phi] (d3) {\opVar{d}[3]};
   \begin{scope}[data flow]
     \draw (s) -- (add);
     \draw (t) -- (add);
@@ -63,7 +63,7 @@
     \draw (cmp) -- (bool);
     \draw (d1) -- (phi);
     \draw (C-2) -- (phi);
-    \draw (phi) -- (d2);
+    \draw (phi) -- (d3);
 
     \coordinate (above-entry-c) at ([shift=(45:\opNodeDist)] entry-c.45);
     \coordinate (between-clamp-and-C-1) at ($(clamp.east) !.5! (C-1.west)$);
@@ -111,8 +111,8 @@
           (end.south east)
           --
           +(-45:.5\opNodeDist);
-    \path [name path=from-d2]
-          (d2.south west)
+    \path [name path=from-d3]
+          (d3.south west)
           --
           +(-135:\opNodeDist);
     \path [name path=right-from-below-end]
@@ -123,7 +123,7 @@
              of=right-from-below-end and from-end, name=c1-intersection,
            },
            name intersections={
-             of=right-from-below-end and from-d2, name=c2-intersection,
+             of=right-from-below-end and from-d3, name=c2-intersection,
            },
            rounded corners=3pt]
           (end)
@@ -132,7 +132,7 @@
           --
           (c2-intersection-1)
           --
-          (d2);
+          (d3);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%
