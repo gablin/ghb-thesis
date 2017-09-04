@@ -410,12 +410,20 @@ This results in the \gls{graph} shown in
 %
 which is called \gls!{UF graph}.
 
-The \gls{UF graph} has many similarities to the \gls{Click-Paleczny graph}
-(compare for example \refFigure{uf-graph-example-full-graph} with
+The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
+example \refFigure{uf-graph-example-full-graph} with
 \refFigure{sea-of-nodes-example-click-paleczny-graph} on
 \refPageOfFigure{sea-of-nodes-example-click-paleczny-graph}).
 %
-\todo{finish discussion}
+Both are combinations of \glsshort{control-flow graph} and \glspl{SSA graph},
+they represent (some) of the control \glspl{operation} as \glspl{node}, and they
+can restrict the placement of \glspl{operation} to \glspl{block} through
+auxiliary edges.
+%
+However, the \gls{Click-Paleczny graph} does not completely fulfill
+\refRequirement{uni-rep-explicit-ops} as unconditional branches are not
+represented as \glspl{node}, nor does it fulfill
+\refRequirement{uni-rep-explicit-values}.
 
 
 
