@@ -40,17 +40,31 @@ Due to its simplicity and ease of implementation,
   compared to the time for solving the \gls{constraint model}.
 }
 %
+\def\subN{N_{\textrm{\textsc{s}}}}%
+\def\subE{E_{\textrm{\textsc{s}}}}%
+\def\patN{N_{\textrm{\textsc{p}}}}%
+\def\patE{E_{\textrm{\textsc{p}}}}%
 \begin{algorithm}[t]
-  \DeclFunction{FindMatches}{subject graph $S$,
-                             pattern graph $P$}%
+  \DeclFunction{FindMatches}{subject graph $\mPair{\subN}{\subE}$,
+                             pattern graph $\mPair{\patN}{\patE}$}%
   {%
     $M$ \Assign $\emptyset$\;
     \Call{FindMatchRec}{$\emptyset$}\;
     \Return{$M$}\;
-    \DeclFunction{FindMatchRec}{partial match $M$}%
+    \DeclFunction{FindMatchRec}{partial match $m$}%
     {%
-      $M_c$ \Assign compute mapping candidates\;
-      \todo{finish algorithm}
+      \If{$\mCard{m} = \mCard{\patN}$}{%
+        $M$ \Assign $M \cup m$%
+        \tcp*{match found}
+      }
+      \Else{%
+        $C$ \Assign compute mapping candidates\;
+        \ForEach{$c \in C$}{%
+          \If{$c$ passes syntactic and semantic checks}{%
+            \Call{FindMatchRec}{$m \cup c$}\;
+          }
+        }
+      }
     }
   }
 
