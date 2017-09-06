@@ -49,78 +49,82 @@
 
   % Matches
   \begin{pgfonlayer}{background1}
-    \node [match node, fill=shade2, fit=(add1)] (m1) {};
-    \node [match node, fill=shade2, fit=(add2)] (m2) {};
-    \node [match node, fill=shade2, fit=(mul)] (m3) {};
-    % m4
+    \node [match node, fill=shade2, fit=(i)] (m1) {};
+    \node [match node, fill=shade2, fit=(c1)] (m2) {};
+    \node [match node, fill=shade2, fit=(c4)] (m3) {};
+    \node [match node, fill=shade2, fit=(A)] (m4) {};
+    \node [match node, fill=shade2, fit=(add1)] (m5) {};
+    \node [match node, fill=shade2, fit=(add2)] (m6) {};
+    \node [match node, fill=shade2, fit=(mul)] (m7) {};
+    % m8
     \begin{pgfonlayer}{background2}
-      \node [outer match node, inner sep=-1pt, fit=(m3)] (m4a) {};
-      \node [outer match node, inner sep=-1pt, fit=(m2)] (m4b) {};
+      \node [outer match node, inner sep=-1pt, fit=(m7)] (m8a) {};
+      \node [outer match node, inner sep=-1pt, fit=(m6)] (m8b) {};
       \draw [match line, bend left=45, fill=shade1]
-            (m4a.south east)
+            (m8a.south east)
             to
-            (m4a.south west)
+            (m8a.south west)
             to
-            (m4a.north west)
-            -- coordinate (m4)
-            (m4b.north west)
+            (m8a.north west)
+            -- coordinate (m8)
+            (m8b.north west)
             to
-            (m4b.north east)
+            (m8b.north east)
             to
-            (m4b.south east)
+            (m8b.south east)
             --
             cycle;
     \end{pgfonlayer}
-    \node [match node, fill=shade1, fit=(load)] (m5) {};
-    % m6
+    \node [match node, fill=shade1, fit=(load)] (m9) {};
+    % m10
     \begin{pgfonlayer}{background3}
-      \node [outer match node, inner sep=1pt, fit=(m3)] (m6a) {};
-      \node [outer match node, inner sep=1pt, fit=(m2)] (m6b) {};
-      \node [outer match node, inner sep=-1pt, fit=(m5)] (m6c) {};
+      \node [outer match node, inner sep=1pt, fit=(m7)] (m10a) {};
+      \node [outer match node, inner sep=1pt, fit=(m6)] (m10b) {};
+      \node [outer match node, inner sep=-1pt, fit=(m9)] (m10c) {};
     \end{pgfonlayer}
     % The named paths must be declared outside of pgfonlayer, or else they will
     % disappear when the environment ends
-    \path [name path=m6a-to-m6b-east]
-          (m6a.south east)
+    \path [name path=m10a-to-m10b-east]
+          (m10a.south east)
           --
-          (m6b.south east)
-          --
-          +(45:5mm);
-    \path [name path=m6c-to-m6b-east]
-          (m6b.east)
-          --
-          (m6b.east |- m6b.south);
-    \path [name path=m6a-to-m6b-west]
-          (m6a.north west)
-          --
-          (m6b.north west)
+          (m10b.south east)
           --
           +(45:5mm);
-    \path [name path=m6c-to-m6b-west]
-          (m6c.west)
+    \path [name path=m10c-to-m10b-east]
+          (m10b.east)
           --
-          (m6c.west |- m6b.west);
+          (m10b.east |- m10b.south);
+    \path [name path=m10a-to-m10b-west]
+          (m10a.north west)
+          --
+          (m10b.north west)
+          --
+          +(45:5mm);
+    \path [name path=m10c-to-m10b-west]
+          (m10c.west)
+          --
+          (m10c.west |- m10b.west);
     \begin{pgfonlayer}{background3}
       \draw [match line, bend left=45, fill=shade3,
-             name intersections={of=m6a-to-m6b-west and m6c-to-m6b-west,
+             name intersections={of=m10a-to-m10b-west and m10c-to-m10b-west,
                                  by=x-west},
-             name intersections={of=m6a-to-m6b-east and m6c-to-m6b-east,
+             name intersections={of=m10a-to-m10b-east and m10c-to-m10b-east,
                                  by=x-east},
              rounded corners=4pt,
             ]
-            (m6a.south east)
+            (m10a.south east)
             to
-            (m6a.south west)
+            (m10a.south west)
             to
-            (m6a.north west)
+            (m10a.north west)
             --
             (x-west)
-            -- coordinate [pos=.75] (m6)
-            (m6c.west)
+            -- coordinate [pos=.75] (m10)
+            (m10c.west)
             to
-            (m6c.north)
+            (m10c.north)
             to
-            (m6c.east)
+            (m10c.east)
             --
             (x-east)
             --
@@ -129,13 +133,16 @@
   \end{pgfonlayer}
 
   % Match labels
-  \node [match label, left=of m1] (m1l) {$\strut m_1$};
-  \node [match label, right=of m2] (m2l) {$\strut m_2$};
-  \node [match label, left=of m3] (m3l) {$\strut m_3$};
-  \node [match label, position=135 degrees from m4] (m4l) {$m_4$};
-  \node [match label, right=of m5] (m5l) {$\strut m_5$};
-  \node [match label, left=of m6] (m6l) {$\strut m_6$};
-  \foreach \i in {1, ..., 6} {
+  \foreach \i in {1, ..., 4} {
+    \node [match label, below=of m\i] (m\i l) {$m_{\i}$};
+  }
+  \node [match label, left=of m5] (m5l) {$\strut m_5$};
+  \node [match label, right=of m6] (m6l) {$\strut m_6$};
+  \node [match label, left=of m7] (m7l) {$\strut m_7$};
+  \node [match label, position=135 degrees from m8] (m8l) {$m_8$};
+  \node [match label, right=of m9] (m9l) {$\strut m_9$};
+  \node [match label, left=of m10] (m10l) {$\strut m_{10}$};
+  \foreach \i in {1, ..., 10} {
     \draw [thick] (m\i) -- (m\i l);
   }
 \end{tikzpicture}%

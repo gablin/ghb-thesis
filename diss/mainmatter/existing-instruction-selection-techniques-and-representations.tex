@@ -92,9 +92,8 @@ Having found $M$, the second subproblem -- which is referred to as the
 \gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
 \glspl{match} that \gls{cover}[s]~$G$.
 %
-A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
-\gls!{cover}[s] $G$ if every \gls{operation} in $G$ appears in exactly one match
-from~$C$.
+A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
+$G$ if every \gls{node} in $G$ appears in exactly one match from~$C$.
 %
 Such a subset is called a \gls!{cover}, and examples are shown in
 \refFigure{p-match-sel-example}.
@@ -109,18 +108,17 @@ x = A[i + 1];
                 {\lstinputlisting[language=c]{p-match-sel-example.c}}%
   \hfill%
   \subcaptionbox{%
-                  Instructions. The $*s$ notion means ``get value at address $s$
-                  in memory''%
+                  Instructions. The $*s$ \mbox{notation} means ``get value at
+                  address $s$ in memory''%
                   \labelFigure{p-match-sel-example-instrs}%
-                }%
-                [50mm]%
-                {%
+                }{%
                   \figureFontSize%
                   \begin{tabular}{%
                                    >{\instrFont}r@{\hspace{4pt}}%
                                    >{$}l<{$}@{ $\leftarrow$ }%
                                    >{$}l<{$}%
                                  }
+                    mv     & r & \mathit{int}\\
                     add    & r & s + t\\
                     mul    & r & s \times t\\
                     muladd & r & s \times t + u\\
@@ -140,17 +138,22 @@ x = A[i + 1];
 
   \caption[Example of the pattern matching and selection problem]%
           {%
-            Example demonstrating the pattern matching and selection problem
-            for a program that loads a value from integer array \irVar{A} at
-            offset \mbox{\irVar{i} $+$ \irVar{1}} (it is assumed that \irVar{A}
-            is stored in memory and that an integer is 4~bytes).
+            Example demonstrating the pattern matching and selection problem for
+            a program that loads a value from integer array \irVar{A} at offset
+            \mbox{\irVar{i} $+$ \irVar{1}}.
             %
-            Valid covers are \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
-            \mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}.
+            It is assumed that \irVar{i} is
+            stored in register and that \irVar{A} is stored in memory and that
+            an integer is 4~bytes.
             %
-            Note that variable assignments are not explicitly represented as
-            nodes as this information can be propagated from the root node of
-            an expression tree after having found a cover%
+            Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
+            \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
+            a dummy pattern for covering nodes representing variables.
+            %
+            Variable assignments need not explicitly represented as nodes as
+            this information can be propagated from the root node after having
+            found a cover%
           }
   \labelFigure{p-match-sel-example}
 \end{figure}
@@ -172,20 +175,22 @@ The cost of a \gls{cover}~$C$ is the sum of the costs for the \glspl{match}
 appearing in~$C$, where the cost of a \gls{match} has been assigned to reflect a
 desired characteristic in the produced code.
 %
-For example, assume that the \instrCode{add}, \instrCode{mul}, and
-\instrCode{muladd} \glspl{instruction} in \refFigure{p-match-sel-example} take
-one cycle to execute whereas the \instrCode{load} and \instrCode{amload}
-\glspl{instruction} take five cycles to execute.
+For example, assume that the \instrCode{mv}, \instrCode{add}, \instrCode{mul},
+and \instrCode{muladd} \glspl{instruction} in \refFigure{p-match-sel-example}
+all take one cycle to execute whereas the \instrCode{load} and
+\instrCode{amload} \glspl{instruction} take five cycles to execute.
 %
 Assume further that the \gls{compiler} should maximize performance.
 %
-The corresponding matches \mbox{$m_1, m_2, m_3, m_4, m_5, m_6$} are therefore
-assigned costs \mbox{$1, 1, 1, 1, 5, 5$}, respectively.
+The corresponding matches \mbox{$m_1, m_2, \ldots, m_8, m_9, m_{10}$} are
+therefore assigned costs \mbox{$0, 1, \ldots, 1, 5, 5$}, respectively ($m_1$ has
+zero cost since \gls{variable}~\irVar{i} is already in a \gls{register}).
 %
-Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, m_2, m_3, m_5}$},
-\mbox{$\mSet{m_1, m_4, m_5}$}, and \mbox{$\mSet{m_1, m_6}$}, only the last
-\gls{cover} is considered \gls{optimal.ps} as it has a total cost of~6 whereas
-the other two \glspl{cover} have costs~8 and~7, respectively.
+Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+\mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
+    m_{10}}$}, only the last \gls{cover} is considered \gls{optimal.ps} as it
+has a total cost of~9 whereas the other two \glspl{cover} have costs~11 and~10,
+respectively.
 %
 There is typically a strong correlation between the size of a \gls{cover} and
 its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
@@ -329,7 +334,8 @@ Similarly, the \gls{expression tree} shown in
             offset by an immediate value~\instrCode{o}, and stores the loaded
             value in register~\instrCode{t}, in one cycle.
             %
-            The subscripts are only needed for reference%
+            The subscripts are only needed for referencing the right
+            nonterminal in the action%
           }
   \labelTable{grammar-rules-example}
 \end{table}
@@ -711,8 +717,8 @@ y = *((int*) t);
                 {\lstinputlisting[language=c]{exp-trees-limit-example.c}}%
   \hfill%
   \subcaptionbox{%
-                  Instructions. The $*s$ notion means ``get value at address $s$
-                  in memory''%
+                  Instructions. The $*s$ notation means ``get value at address
+                  $s$ in memory''%
                   \labelFigure{exp-trees-limit-example-instrs}%
                 }%
                 [50mm]%
@@ -765,7 +771,10 @@ y = *((int*) t);
   \caption[Example illustrating the limitation of expression trees]%
           {%
             Example illustrating that using block DAGs results in
-            better code compared to using expression trees%
+            better code compared to using expression trees.
+            %
+            It is assumed variables \irVar{a}, \irVar{b}, \irVar{c},
+            \irVar{t} are stored in registers%
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
@@ -784,13 +793,14 @@ An example illustrating this effect is shown in
 %
 If the \gls{IR} is represented as trees, where the common subexpression for
 computing \irVar{t} has its own \gls{expression tree} (see
-\refFigure{exp-trees-limit-example-trees}), then matches~$m_1$,~$m_2$, and~$m_3$
-must be selected, which results in a total cost of \mbox{$2 + 3 + 5 = 10$}.
+\refFigure{exp-trees-limit-example-trees}), then matches~\mbox{$m_1, \ldots,
+  m_7$}, and~$m_9$ must be selected, which results in a total cost of \mbox{$0 +
+  \cdots + 0 + 2 + 3 + 5 = 10$}.
 %
 If represented as a \gls{block DAG} (see
 \refFigure{exp-trees-limit-example-dag}), it becomes possible of selecting
-matches matches~$m_4$ and~$m_5$, resulting in a total cost is \mbox{$4 + 5 =
-  9$}.
+matches~$m_8$ and~$m_{10}$, resulting in a total cost of \mbox{$0 + \cdots + 0 +
+  4 + 5 = 9$}.
 %
 \Glsshort{node duplication}[ing] the \glspl{node} of the common subexpression
 would, in this case, yield the same \glspl{cover}, but would have resulted in
@@ -1274,9 +1284,7 @@ An example is shown in \refFigure{mis-example}.
   \subcaptionbox{%
                   Interference graph%
                   \labelFigure{mis-example-int-graph}%
-                }%
-                [32mm]%
-                {%
+                }{%
                   \input{figures/existing-isel-techniques-and-reps/%
                     mis-example-int-graph%
                   }%
@@ -1289,9 +1297,9 @@ An example is shown in \refFigure{mis-example}.
             Example of modeling instruction selection as a MIS problem.
             %
             Valid maximal independent sets of the interference graph are
-            \mbox{$\mSet{m_1, m_2, m_4}$}, \mbox{$\mSet{m_2, m_5}$}, and
-            \mbox{$\mSet{m_3, m_4}$}, which correspond to valid covers of the
-            block DAG%
+            \mbox{$\mSet{m_1, \ldots, m_5, m_7}$}, \mbox{$\mSet{m_1, m_2, m_3,
+                m_5, m_8}$}, and \mbox{$\mSet{m_1, m_2, m_3, m_6, m_7}$}, which
+            correspond to valid covers of the block DAG%
           }
   \labelFigure{mis-example}
 \end{figure}

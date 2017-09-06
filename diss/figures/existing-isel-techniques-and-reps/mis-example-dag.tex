@@ -47,73 +47,80 @@
 
   % Matches
   \begin{pgfonlayer}{background1}
-    \node [match node, fill=shade2, fit=(add)] (m1) {};
-    \node [match node, fill=shade2, fit=(mul)] (m2) {};
-    \node [match node, fill=shade1, fit=(load)] (m4) {};
-    % m3
+    \node [match node, fill=shade2, fit=(a)] (m1) {};
+    \node [match node, fill=shade2, fit=(b)] (m2) {};
+    \node [match node, fill=shade2, fit=(c)] (m3) {};
+    \node [match node, fill=shade2, fit=(add)] (m4) {};
+    \node [match node, fill=shade2, fit=(mul)] (m5) {};
+    \node [match node, fill=shade1, fit=(load)] (m7) {};
+    % m6
     \begin{pgfonlayer}{background2}
-      \node [outer match node, inner sep=-1pt, fit=(m2)] (m3a) {};
-      \node [outer match node, inner sep=-1pt, fit=(m1)] (m3b) {};
+      \node [outer match node, inner sep=-1pt, fit=(m5)] (m6a) {};
+      \node [outer match node, inner sep=-1pt, fit=(m4)] (m6b) {};
       \draw [match line, bend left=45, fill=shade1]
-            (m3a.south west)
+            (m6a.south west)
             to
-            (m3a.north west)
+            (m6a.north west)
             to
-            (m3a.north east)
-            -- coordinate [pos=0] (m3)
-            (m3b.north east)
+            (m6a.north east)
+            -- coordinate [pos=0] (m6)
+            (m6b.north east)
             to
-            (m3b.south east)
+            (m6b.south east)
             to
-            (m3b.south west)
+            (m6b.south west)
             --
             cycle;
     \end{pgfonlayer}
-    % m5
+    % m8
     \begin{pgfonlayer}{background3}
-      \node [outer match node, inner sep=-1pt, fit=(m4)] (m5a) {};
-      \node [outer match node, inner sep=1pt, fit=(m1)] (m5b) {};
+      \node [outer match node, inner sep=-1pt, fit=(m7)] (m8a) {};
+      \node [outer match node, inner sep=1pt, fit=(m4)] (m8b) {};
       \draw [match line, bend left=45, fill=shade3]
-            (m5a.north west)
+            (m8a.north west)
             to
-            (m5a.north east)
+            (m8a.north east)
             to
-            (m5a.south east)
-            -- coordinate [pos=.25] (m5)
-            (m5b.south east)
+            (m8a.south east)
+            -- coordinate [pos=.25] (m8)
+            (m8b.south east)
             to
-            (m5b.south west)
+            (m8b.south west)
             to
-            (m5b.north west)
+            (m8b.north west)
             --
             cycle;
     \end{pgfonlayer}
-    % Fill in overdrawn edges of m5
+    % Fill in overdrawn edges of m8
     \begin{pgfonlayer}{background2}
       \draw [match line, bend left=45]
-            (m5a.north west)
+            (m8a.north west)
             to
-            (m5a.north east)
+            (m8a.north east)
             to
-            (m5a.south east)
+            (m8a.south east)
             --
-            (m5b.south east)
+            (m8b.south east)
             to
-            (m5b.south west)
+            (m8b.south west)
             to
-            (m5b.north west)
+            (m8b.north west)
             --
             cycle;
     \end{pgfonlayer}
   \end{pgfonlayer}
 
   % Match labels
-  \node [match label, below=of m1] (m1l) {$\strut m_1$};
-  \node [match label, left=of m2] (m2l) {$\strut m_2$};
-  \node [match label, position=45 degrees from m3] (m3l) {$m_3$};
-  \node [match label, right=of m4] (m4l) {$\strut m_4$};
-  \node [match label, position=-45 degrees from m5] (m5l) {$m_5$};
-  \foreach \i in {1, ..., 5} {
+  \node [match label, below=of m1] (m1l) {$m_1$};
+  \node [match label, below=of m2] (m2l) {$m_2$};
+  \node [match label, below=of m3] (m3l) {$m_3$};
+  \node [match label, below=of m4] (m4l) {$m_4$};
+  \node [match label, left=of m5] (m5l) {$\strut m_5$};
+  \node [match label, position=45 degrees from m6, outer sep=-.5pt] (m6l)
+        {$m_6$};
+  \node [match label, right=of m7] (m7l) {$\strut m_7$};
+  \node [match label, position=-45 degrees from m8] (m8l) {$m_8$};
+  \foreach \i in {1, ..., 8} {
     \draw [thick] (m\i) -- (m\i l);
   }
 \end{tikzpicture}%
