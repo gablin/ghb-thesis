@@ -161,7 +161,7 @@ Formally, the \gls{constraint} is defined as follows.
   %
   \begin{displaymath}
     \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
-    =
+    \equiv
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {\forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
                  \forall_{\! i \neq j} \: d_i \neq d_j}.
@@ -188,7 +188,7 @@ For completeness, we provide the formal definition of the \gls{constraint}.
   %
   \begin{displaymath}
     \mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
-    =
+    \equiv
     \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
                  {
                    \begin{array}{@{}l@{\,}}
@@ -228,7 +228,7 @@ Formally, the \gls{constraint} is defined as follows.
   %
   \begin{displaymath}
     \mCircuit(\mVar{x}_1, \ldots, \mVar{x}_k)
-    =
+    \equiv
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {
                   \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
@@ -257,7 +257,7 @@ Formally, the \gls{constraint} is defined as follows.
   %
   \begin{displaymath}
     \mTable(\mVar{x}_1, \ldots, \mVar{x}_k, T)
-    =
+    \equiv
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {
                   \forall_{\!i } \: d_i \in \mDomain(\mVar{x}_i),

@@ -117,7 +117,8 @@ candidates under consideration for being added to $s$ is computed as follows.
   Then
   %
   \begin{displaymath}
-    \mCandSet = \left\{
+    \mCandSet \equiv
+    \left\{
     \begin{array}{ll}
         \mSetBuilder{\mPair{n}{m}}{n \in \fTout, m \in \pTout}
       & \text{if} \ \fTout \neq \emptyset \mAnd \pTout \neq \emptyset, \\
@@ -149,11 +150,11 @@ The last clause is needed when $\fG$ or $\pG$ consists of disconnected
 
 The syntactic rule check $\mSynRuleCheck$ consists of five rules:
 %
-\begin{displaymath}
-  \mSynRuleCheck(s, n, m) =
+\begin{equation}
+  \mSynRuleCheck(s, n, m) \equiv
   \mSynPredRule(\ldots) \mAnd \mSynSuccRule(\ldots) \mAnd
   \mSynInRule(\ldots) \mAnd \mSynOutRule(\ldots) \mAnd \mSynNewRule(\ldots).
-\end{displaymath}
+\end{equation}
 %
 The first two rules, $\mSynPredRule$ and $\mSynSuccRule$, check the consistency
 of the partial \gls{match} obtained when the candidate~\mbox{$\mPair{n}{m}$} is
