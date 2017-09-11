@@ -47,6 +47,7 @@ Due to its simplicity and ease of implementation,
 \def\fE{E_{\textrm{\textsc{f}}}}%
 \def\pN{N_{\textrm{\textsc{p}}}}%
 \def\pE{E_{\textrm{\textsc{p}}}}%
+\def\mCandSet{P(s)}%
 \def\mSynRuleCheck{F_{\textrm{\textsc{syn}}}}%
 \def\mSemRuleCheck{F_{\textrm{\textsc{sem}}}}%
 \def\fTout{T_{\!\textrm{\textsc{f}}}^{\hspace{.5pt}\textrm{\textsc{out}}}}%
@@ -62,14 +63,16 @@ Due to its simplicity and ease of implementation,
     \Return{$M$}\;
     \DeclFunction{FindMatchRec}{set $s$ of mappings}%
     {%
-      \If{$\mCard{s} = \mCard{\pN}$}{%
-        $M$ \Assign $M \cup s$%
-        \tcp*{match found}
+      \If(\tcp*[f]{if match found}){$\mCard{s} = \mCard{\pN}$}{%
+        $M$ \Assign $M \cup s$\;
       }
       \Else{%
-        $C$ \Assign compute mapping candidates\;
-        \ForEach{$\mPair{n}{m} \in C$}{%
-          \If{$\mSynRuleCheck(s, n, m) \mAnd \mSemRuleCheck(s, n, m)$}{%
+        compute mapping candidate set $\mCandSet$
+        \tcp*{see \refDefinition{pm-cand-set}}
+        \ForEach{$\mPair{n}{m} \in \mCandSet$}{%
+          \If(\tcp*[f]{see \refDefinitionRange{pm-syntactic-rules}{}})%
+             {$\mSynRuleCheck(s, n, m) \mAnd \mSemRuleCheck(s, n, m)$}%
+          {%
             \Call{FindMatchRec}{$s \cup \mPair{n}{m}$}\;
           }
         }
@@ -92,41 +95,44 @@ semantic rules check that \gls{node} and \gls{edge} attributes are compatible.
 
 
 
-\subsubsection{Computing Mapping Candidates}
+\subsubsection{Computing the Mapping Candidate Set}
 
 Given a \gls{function graph}~\mbox{$\fG = \mPair{\fN}{\fE}$}, a \gls{pattern
   graph}~\mbox{$\pG = \mPair{\pN}{\pE}$}, and a set~$s$ of mappings from
-\glspl{node} in $\fG$ to \glspl{node} in $\pG$, the set~$C$ of mapping
+\glspl{node} in $\fG$ to \glspl{node} in $\pG$, the set~$\mCandSet$ of mapping
 candidates under consideration for being added to $s$ is computed as follows.
 %
-Let $\fTout$ and $\pTout$ denote the set of \glspl{node} in $\fG$ and $\pG$,
-respectively, that are targets of \glspl{edge} from \glspl{node} appearing
-in~$s$.
-%
-Likewise, let $\fTin$ and $\pTin$ denote the set of \glspl{node} in $\fG$ and
-$\pG$, respectively, that are sources of \glspl{edge} to \glspl{node} appearing
-in~$s$.
-%
-Then
-%
-\begin{equation}
-  C = \left\{
-  \begin{array}{ll}
-      \mSetBuilder{\mPair{n}{m}}{n \in \fTout, m \in \pTout}
-    & \text{if} \ \fTout \neq \emptyset \mAnd \pTout \neq \emptyset, \\
-      \mSetBuilder{\mPair{n}{m}}{n \in \fTin, m \in \pTin}
-    & \text{if} \ \fTin \neq \emptyset \mAnd \pTin \neq \emptyset, \\
-      \mSetBuilder{\mPair{n}{m}}{
-                                  n \in \fN \setminus \fN(s),
-                                  m \in \pN \setminus \pN(s)
-                                }
-    & \text{otherwise},
-  \end{array}
- \right.
-\end{equation}
-%
-where $\fN(s)$ and $\pN(s)$ denote the sets of \glspl{node} in $\fG$ and $\pG$,
-respectively, that appear in $s$.
+\begin{definition}[Mapping Candidate Set]
+  Let $\fN(s)$ and $\pN(s)$ denote the sets of \glspl{node} in $\fG$ and $\pG$,
+  respectively, that appear in $s$.
+  %
+  Also let $\fTout$ and $\pTout$ denote the set of \glspl{node} in $\fG$ and
+  $\pG$, respectively, that are targets of \glspl{edge} from \glspl{node}
+  appearing in~$s$.
+  %
+  Likewise, let $\fTin$ and $\pTin$ denote the set of \glspl{node} in $\fG$ and
+  $\pG$, respectively, that are sources of \glspl{edge} to \glspl{node}
+  appearing in~$s$.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mCandSet = \left\{
+    \begin{array}{ll}
+        \mSetBuilder{\mPair{n}{m}}{n \in \fTout, m \in \pTout}
+      & \text{if} \ \fTout \neq \emptyset \mAnd \pTout \neq \emptyset, \\
+        \mSetBuilder{\mPair{n}{m}}{n \in \fTin, m \in \pTin}
+      & \text{if} \ \fTin \neq \emptyset \mAnd \pTin \neq \emptyset, \\
+        \mSetBuilder{\mPair{n}{m}}{
+                                    n \in \fN \setminus \fN(s),
+                                    m \in \pN \setminus \pN(s)
+                                  }
+      & \text{otherwise}.
+    \end{array}
+    \right.
+  \end{displaymath}%
+  \labelDefinition{pm-cand-set}%
+\end{definition}
 %
 The last clause is needed when $\fG$ or $\pG$ consists of disconnected
 \glspl{subgraph}.
@@ -135,7 +141,97 @@ The last clause is needed when $\fG$ or $\pG$ consists of disconnected
 
 \subsubsection{Syntactic Rules}
 
-\todo{write}
+\def\mSynPredRule{R_{\textrm{\textsc{pred}}}}
+\def\mSynSuccRule{R_{\textrm{\textsc{succ}}}}
+\def\mSynInRule{R_{\textrm{\textsc{in}}}}
+\def\mSynOutRule{R_{\textrm{\textsc{out}}}}
+\def\mSynNewRule{R_{\textrm{\textsc{new}}}}
+
+The syntactic rule check $\mSynRuleCheck$ consists of five rules:
+%
+\begin{displaymath}
+  \mSynRuleCheck(s, n, m) =
+  \mSynPredRule(\ldots) \mAnd \mSynSuccRule(\ldots) \mAnd
+  \mSynInRule(\ldots) \mAnd \mSynOutRule(\ldots) \mAnd \mSynNewRule(\ldots).
+\end{displaymath}
+%
+The first two rules, $\mSynPredRule$ and $\mSynSuccRule$, check the consistency
+of the partial \gls{match} obtained when the candidate~\mbox{$\mPair{n}{m}$} is
+added to~$s$.
+%
+Intuitively, if there exists an \gls{edge} between two mapped \glspl{node} in
+the \gls{pattern graph}, then a corresponding \gls{edge} must also exist in the
+\gls{function graph}.\!%
+%
+\footnote{%
+  In the paper \cite{CordellaEtAl:2001}, $\mSynPredRule$ and $\mSynSuccRule$
+  also check the inverse -- that is, an \gls{edge} between two mapped
+  \glspl{node} in the \gls{function graph} must have a corresponding \gls{edge}
+  in the \gls{pattern graph} -- thus requiring that $\pG$ is an induced
+  \gls{subgraph} of $\fG$.
+  %
+  In this context, however, it is sufficient with only maintaining the structure
+  of~$\pG$, and the condition above has therefore been removed from
+  \refDefinition{pm-syntactic-rules}.
+}
+%
+The next two rules, $\mSynInRule$ and $\mSynOutRule$, are 1-look-ahead rules
+that check whether there exist a sufficient number of unmapped \glspl{node}
+adjacent to $n$ in the \gls{function graph} for mapping the remaining
+\glspl{node} adjacent to $m$ in the \gls{pattern graph}.
+%
+The last rule, $\mSynNewRule$, is similar to $\mSynInRule$ and $\mSynOutRule$
+but perform a 2-look-ahead check.
+
+Formally, the rules are defined as follows.
+%
+\begin{definition}[Syntactic rules]
+  \def\fT{T_{\!\textrm{\textsc{f}}}}%
+  \def\pT{T_{\!\textrm{\textsc{p}}}}%
+  \def\fNegN{\mkern2mu\overline{\mkern-2mu N}_{\textrm{\textsc{f}}}}%
+  \def\pNegN{\mkern2mu\overline{\mkern-2mu N}_{\textrm{\textsc{p}}}}%
+
+  Let $\mPred(G, n)$ and $\mSucc(G, n)$ denote the sets of predecessor and
+  successor \glspl{node}, respectively, to \gls{node}~$n$ in \gls{graph}~$G$.
+  %
+  Also let \mbox{$\fT = \fTin \cup \fTout$} and \mbox{$\fNegN = \fN \setminus
+    \fN(s) \setminus \fT$}, with similar definitions for $\pT$ and $\pNegN$.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \begin{array}{r@{}l}
+        \mSynPredRule(s, n, m) \equiv \mbox{}
+      & \mPair{n'}{m'} \in s,
+        \forall m' \in \pN(s) \cap \mPred(\pG, m),
+         \exists n' \in \fN(s), \\[\abovedisplayskip]
+
+        \mSynSuccRule(s, n, m) \equiv \mbox{}
+      & \mPair{n'}{m'} \in s,
+        \forall m' \in \pN(s) \cap \mSucc(\pG, m),
+        \exists n' \in \fN(s), \\[\abovedisplayskip]
+
+        \mSynInRule(s, n, m) \equiv \mbox{}
+      & \mCard{\mSucc(\fN, n) \cap \fTin} \geq
+        \mCard{\mSucc(\pN, n) \cap \pTin} \mAnd \mbox{} \\
+      & \mCard{\mPred(\fN, n) \cap \fTin} \geq
+        \mCard{\mPred(\pN, n) \cap \pTin}, \\[\abovedisplayskip]
+
+        \mSynOutRule(s, n, m) \equiv \mbox{}
+      & \mCard{\mSucc(\fN, n) \cap \fTout} \geq
+        \mCard{\mSucc(\pN, n) \cap \pTout} \mAnd \mbox{} \\
+      & \mCard{\mPred(\fN, n) \cap \fTout} \geq
+        \mCard{\mPred(\pN, n) \cap \pTout}, \\[\abovedisplayskip]
+
+        \mSynNewRule(s, n, m) \equiv \mbox{}
+      & \mCard{\fNegN \cap \mPred(\fG, n)} \geq
+        \mCard{\pNegN \cap \mPred(\pG, m)} \mAnd \mbox{} \\
+      & \mCard{\fNegN \cap \mSucc(\fG, n)} \geq
+        \mCard{\pNegN \cap \mSucc(\pG, m)}.
+    \end{array}
+  \end{displaymath}%
+  \labelDefinition{pm-syntactic-rules}%
+\end{definition}
 
 
 

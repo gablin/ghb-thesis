@@ -247,7 +247,11 @@
     \mSet{#2 \mSetSep #3}
   }
 }
-\newcommand{\mCard}[1]{\left| #1 \right|}
+\NewDocumentCommand{\mCard}{sm}{
+  \IfBooleanT{#1}{\left}|
+    #2
+  \IfBooleanT{#1}{\right}|
+}
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
 \NewDocumentCommand{\mPair}{smm}{
@@ -271,6 +275,9 @@
 }
 \newcommand{\mVector}[1]{\vec{#1}}
 \newcommand{\mBigO}{O}
+\DeclareMathOperator{\mPred}{\mFunFont{pred}}
+\DeclareMathOperator{\mRank}{\mFunFont{rank}}
+\DeclareMathOperator{\mSucc}{\mFunFont{succ}}
 
 
 
@@ -324,7 +331,6 @@
 \DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
 \DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
-\DeclareMathOperator{\mRank}{\mFunFont{rank}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
 \DeclareMathOperator{\mTable}{\mConstraintFont{Table}}
