@@ -69,6 +69,10 @@
     line width=\opDataFlowLineWidth,
     font=\relsize{-.5},
   },
+  state node/.style={%
+    value node,
+    fill=shade2,
+  },
   block node/.style={%
     rectangle,
     draw,
@@ -84,6 +88,9 @@
   data flow/.style={%
     ->,
     line width=\opDataFlowLineWidth,
+  },
+  state flow/.style={%
+    data flow,
   },
   control flow/.style={%
     ->,

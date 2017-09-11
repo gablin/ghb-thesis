@@ -427,6 +427,113 @@ However, the \gls{Click-Paleczny graph} does not completely fulfill
 represented as \glspl{node}, nor does it fulfill
 \refRequirement{uni-rep-explicit-values}.
 
+Duplicated constants may either be represented using individual \glspl{value
+  node} (as in \refFigure{uf-graph-example-full-graph}) or through a single
+\gls{value node} (as in \refFigure{preserving-semantics-graph}).
+%
+The former is simpler from a \gls{code generation} perspective, but may result
+in redundant \glspl{instruction} where the same constant is needlessly reloaded.
+%
+This can be avoided by using the latter together with a technique which is
+described in \refChapter{modeling-value-reuse}, but this also necessitates the
+\gls{UF graph} to be transformed and extended with additional \glspl{operation}
+in order to guarantee correctness.
+%
+For example, assume a \gls{function} containing two \glspl{phi-function}
+\mbox{\irFont \irPhi{$\ldots$, 1:\irBlock{a} ,$\ldots$}} and \mbox{\irFont
+  \irPhi{$\ldots$, 1:\irBlock{b} ,$\ldots$}}.
+%
+If the constant~\irVar{1} is represented using a single \gls{value node}, then
+the \gls{value node} will have two \glspl{definition edge}, one from
+\gls{block}~\irBlock{a} and another from \gls{block}~\irBlock{b}.
+%
+Since a value cannot be defined in two \gls{block} simultaneously, there exist
+no \gls{solution} for this \gls{UF graph}.
+%
+This problem is fixed by applying \gls{copy extension}, which will be described
+in \refChapter{modeling-data-copying}.
+
+
+
+\subsubsection{Handling Side Effects}
+
+The representation described thus far is sufficient for handling
+\glspl{operation} without side effects, such as arithmetic computations.
+%
+\Glspl{operation} with side effects, such as memory \glspl{operation} and
+function calls, require additional \gls{graph} structures as they may implicitly
+depend on one another.
+%
+These dependencies are captured using \glspl!{state node}.
+%
+A side-effect \gls{operation} takes, in addition to \glspl{value node}, exactly
+one \gls{state node} as input and produces another \gls{state node}.
+%
+Hence, if an \glspl{operation}~$o$ implicitly depends on another
+\gls{operation}~$p$, then $o$ takes as input the \gls{state node} produced by
+$p$.
+
+We create these dependencies as follows.
+%
+For each \gls{block} in the \gls{function}, a new \gls{state node} is created
+and remembered as the \emph{last} \gls{state node}.
+%
+When a \gls{computation node} with side effects is created, a data-flow
+\gls{edge} is also inserted from the last \gls{state node} to this \gls{node}.
+%
+A new \gls{state node} is then created and set as last, and another data-flow
+\gls{edge} is inserted from the \gls{computation node} to the new \gls{state
+  node}.
+%
+Once all \glspl{operation} in the \gls{block} has been processed, the first and
+last \glspl{state node} are connected to the \gls{block node} through a
+data-flow \gls{edge} and a \gls{definition edge}, respectively (note that,
+unlike with \glspl{value node}, the data-flow \gls{edge} must not be drawn from
+the \glsshort{entry block} \gls{block node}).
+%
+Because the first and the last \gls{state node} must both be defined within the
+\gls{block}, this effectively forbids \glspl{operation} with side effects from
+being moved out of the \gls{block}, which could break \gls{program} semantics.
+%
+An example is shown in \refFigure{uni-rep-side-effects-example}.
+%
+\begin{filecontents*}{side-effects-example-ir.c}
+block:
+  $\ldots$
+  $\irAssign{\irVar{t}[1]}{\irLoad{p}}$
+  $\irAssign{\irVar{t}[2]}{\irCall{foo, \irVar{t}[1]}}$
+  $\irStore{\irVar{q}}{\irVar{t}[2]}$
+}
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{Code snippet\labelFigure{uni-rep-side-effects-example-ir}}%
+                {%
+                  \lstinputlisting[language=c,mathescape]%
+                                  {side-effects-example-ir.c}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  UF subgraph.
+                  %
+                  Gray boxes represent state nodes%
+                  \labelFigure{uni-rep-side-effects-example-graph}%
+                }%
+                [70mm]%
+                {%
+                  \input{figures/universal-representations/%
+                    side-effects-example-graph}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example illustrating how to handle side effects in UF graphs}%
+  \labelFigure{uni-rep-side-effects-example}
+\end{figure}
+
 
 
 \section{Instruction Representation}

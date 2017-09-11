@@ -48,7 +48,7 @@
   \node [value node, position=45 degrees from add] (x-1) {\opVar{x}[1]};
   \node [value node, below=of add] (x-2) {\opVar{x}[2]};
   \node [op node, position=-45 degrees from x-1] (sub) {\opSub};
-  \node [value node, position=45 degrees from sub] (sub-1) {\opVar{1}};
+  \coordinate [node distance=\opNodeDist, position=45 degrees from sub] (sub-1);
   \node [value node, below=of sub] (x-3) {\opVar{x}[3]};
   \node [op node, position=-45 degrees from x-2] (phi) {\opPhi};
   \node [value node, below=of phi] (x-4) {\opVar{x}[4]};
@@ -60,12 +60,26 @@
     \draw (add-1) -- (add);
     \draw (x-1) -- (add);
     \draw (add) -- (x-2);
-    \draw (sub-1) -- (sub);
     \draw (x-1) -- (sub);
     \draw (sub) -- (x-3);
     \draw (x-2) -- (phi);
     \draw (x-3) -- (phi);
     \draw (phi) -- (x-4);
+
+    \coordinate (above-add-1) at ([shift=(45:.5\opNodeDist)] add-1.north east);
+    \draw [-, rounded corners=3pt]
+          (add-1)
+          --
+          (above-add-1)
+          [rounded corners=8pt]
+          -| coordinate [pos=1] (tmp)
+          ([yshift=3pt] sub-1);
+    \draw [rounded corners=3pt]
+          (tmp)
+          --
+          (sub-1)
+          --
+          (sub);
 
     \path [name path=from-check-c]
           (check-c)

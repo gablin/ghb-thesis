@@ -1,0 +1,46 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}
+  \node [state node] (st1) {};
+  \node [op node, position=-45 degrees from st1] (ld) {\opLoad};
+  \node [value node, position=-135 degrees from ld] (p) {\strut\opVar{p}};
+  \node [state node, position=45 degrees from ld] (st2) {};
+  \node [value node, position=-45 degrees from ld] (t1) {\opTemp{1}};
+  \node [op node, position=-45 degrees from st2] (foo) {\opCall{foo}};
+  \node [state node, position=45 degrees from foo] (st3) {};
+  \node [value node, position=-45 degrees from foo] (t2) {\opTemp{2}};
+  \node [op node, position=-45 degrees from st3] (st) {\opStore};
+  \node [state node, right= of st] (st4) {};
+  \node [block node, above=.75\opNodeDist of
+                           $(st1.north west) !.5! (st4.east |- st1.north)$]
+        (block) {\opBlock{block}};
+
+  \begin{scope}[data flow]
+    \draw (p) -- (ld);
+    \draw (ld) -- (t1);
+    \draw (t1) -- (foo);
+    \draw (foo) -- (t2);
+    \draw (t2) -- (st);
+  \end{scope}
+
+  \begin{scope}[state flow]
+    \draw [rounded corners=8pt]
+          (block) -| (st1);
+    \draw (st1) -- (ld);
+    \draw (ld) -- (st2);
+    \draw (st2) -- (foo);
+    \draw (foo) -- (st3);
+    \draw (st3) -- (st);
+    \draw (st) -- (st4);
+  \end{scope}
+
+  \draw [definition edge, rounded corners=16pt]
+        (block) -| (st4);
+\end{tikzpicture}%
+\endgroup%
