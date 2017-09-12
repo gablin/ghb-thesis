@@ -478,18 +478,21 @@ We create these dependencies as follows.
 For each \gls{block} in the \gls{function}, a new \gls{state node} is created
 and remembered as the \emph{last} \gls{state node}.
 %
-When a \gls{computation node} with side effects is created, a data-flow
+When a \gls{computation node} with side effects is created, a state-flow
 \gls{edge} is also inserted from the last \gls{state node} to this \gls{node}.
 %
-A new \gls{state node} is then created and set as last, and another data-flow
+A new \gls{state node} is then created and set as last, and another state-flow
 \gls{edge} is inserted from the \gls{computation node} to the new \gls{state
   node}.
 %
 Once all \glspl{operation} in the \gls{block} has been processed, the first and
 last \glspl{state node} are connected to the \gls{block node} through a
-data-flow \gls{edge} and a \gls{definition edge}, respectively (note that,
-unlike with \glspl{value node}, the data-flow \gls{edge} must not be drawn from
+state-flow \gls{edge} and a \gls{definition edge}, respectively (note that,
+unlike with \glspl{value node}, the state-flow \gls{edge} must not be drawn from
 the \glsshort{entry block} \gls{block node}).
+%
+Hence the same invariant for \glspl{value node} also apply for \glspl{state
+  node}.
 %
 Because the first and the last \gls{state node} must both be defined within the
 \gls{block}, this effectively forbids \glspl{operation} with side effects from
@@ -519,7 +522,8 @@ block:
   \subcaptionbox{%
                   UF subgraph.
                   %
-                  Gray boxes represent state nodes%
+                  Gray boxes represent state nodes, and dashed lines represent
+                  state-flow edges%
                   \labelFigure{uni-rep-side-effects-example-graph}%
                 }%
                 [70mm]%
