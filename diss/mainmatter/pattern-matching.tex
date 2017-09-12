@@ -70,7 +70,8 @@ Due to its simplicity and ease of implementation,
         compute mapping candidate set $\mCandSet$
         \tcp*{see \refDefinition{pm-cand-set}}
         \ForEach{$\mPair{n}{m} \in \mCandSet$}{%
-          \If(\tcp*[f]{see \refDefinitionRange{pm-syntactic-rules}{}})%
+          \If(\tcp*[f]{see \refDefinitionRange{pm-syntactic-rules}%
+                                              {pm-semantic-rules}})%
              {$\mSynRuleCheck(s, n, m) \mAnd \mSemRuleCheck(s, n, m)$}%
           {%
             \Call{FindMatchRec}{$s \cup \mPair{n}{m}$}\;
@@ -238,7 +239,50 @@ Formally, the rules are defined as follows.
 
 \subsubsection{Semantic Rules}
 
-\todo{write}
+\def\mAttrCmp{\backsimeq}%
+\def\mSemNodeRule{R_{\textrm{\textsc{node}}}}
+\def\mSemEdgeRule{R_{\textrm{\textsc{edge}}}}
+
+The semantic rules check two properties:
+%
+\begin{equation}
+  \mSemRuleCheck(s, n, m) \equiv
+  \mSemNodeRule(\ldots) \mAnd \mSemEdgeRule(\ldots).
+\end{equation}
+%
+The first rule checks that the \gls{node} types are compatible, while the second
+rule checks compatibility between \glspl{edge}.
+%
+Formally, the rules are defined as follows.
+%
+\begin{definition}[Semantic rules]
+  Let $\mAttrCmp$ represent a binary relation for comparing the compatibility
+  between \glspl{node} and \glspl{edge}.
+  %
+  Also let $\fE(s)$ and $\pE(s)$ denote the sets of \glspl{edge} in $\fG$ and
+  $\pG$, respectively, for all pairs of \glspl{node} appearing in $s$.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \begin{array}{r@{}l}
+        \mSemNodeRule(s, n, m) \equiv \mbox{}
+      & n \mAttrCmp m, \\[\abovedisplayskip]
+        \mSemEdgeRule(s, n, m) \equiv \mbox{}
+      & \left(
+        \mPair{n}{n'} \in \fE \mImp \mPair{n}{n'} \mAttrCmp \mPair{m}{m'},
+        \forall \mPair{n'}{m'} \in \fE(s)
+        \right) \mAnd \mbox{} \\
+      & \left(
+        \mPair{n'}{n} \in \fE \mImp \mPair{n'}{n} \mAttrCmp \mPair{m'}{m},
+        \forall \mPair{n'}{m'} \in \fE(s)
+        \right)
+    \end{array}
+  \end{displaymath}%
+  \labelDefinition{pm-semantic-rules}%
+\end{definition}
+
+The compatibility relation is refined in the following sections.
 
 
 
