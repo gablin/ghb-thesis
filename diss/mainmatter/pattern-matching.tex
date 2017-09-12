@@ -287,8 +287,7 @@ are of the same type.
 %
 That is, the \glspl{node} must either be two \glspl{block node}, two
 \glspl{computation node}, two \glspl{value node}, \etc (for \glspl{value node}
-their data types must also be compatible, which will be discussed in
-\refSection{pm-matching-data-types}).
+their data types must also be compatible).
 %
 The same applies for two \glspl{edge}~$e$ and~$d$, with the additional condition
 that, for certain \glspl{node}, the order of compatible \glspl{edge} must also
@@ -307,10 +306,3 @@ multiple outgoing \gls{edge} of the same type -- such as conditional jump
 \glspl{operation} -- the \gls{outbound.en} \glspl{edge number} of $e$ and $d$
 must be identical, which prevents swapping of the target labels where
 appropriate.
-
-
-
-\section{Matching Data Types}
-\labelSection{pm-matching-data-types}
-
-\todo{write}
