@@ -282,20 +282,35 @@ Formally, the rules are defined as follows.
   \labelDefinition{pm-semantic-rules}%
 \end{definition}
 
-The compatibility relation is refined in the following sections.
+For two \glspl{node}~$n$ and~$m$, \mbox{$n \mAttrCmp m$} holds if $n$ and $m$
+are of the same type.
+%
+That is, the \glspl{node} must either be two \glspl{block node}, two
+\glspl{computation node}, two \glspl{value node}, \etc (for \glspl{value node}
+their data types must also be compatible, which will be discussed in
+\refSection{pm-matching-data-types}).
+%
+The same applies for two \glspl{edge}~$e$ and~$d$, with the additional condition
+that, for certain \glspl{node}, the order of compatible \glspl{edge} must also
+match.
+%
+Consequently, in a \gls{match} where $e$ and $d$ are connected to \glspl{node}
+representing non-commutative \glspl{operation} -- such as subtraction and
+division, but also memory stores and function calls -- the \gls{inbound.en}
+\glspl{edge number} of $e$ and $d$ must be identical.
+%
+This prevents the arguments of such \glspl{instruction} from being swapped,
+which would obviously break \gls{program} semantics.
+%
+Similarly, in a \gls{match} where $e$ and $d$ are connected to \glspl{node} with
+multiple outgoing \gls{edge} of the same type -- such as conditional jump
+\glspl{operation} -- the \gls{outbound.en} \glspl{edge number} of $e$ and $d$
+must be identical, which prevents swapping of the target labels where
+appropriate.
 
 
 
-\section{Pattern Matching Using Universal Representations}
-\labelSection{pm-using-universal-reps}
-
-\todo{write}
-
-\todo{refine coverage definition}
-
-
-
-\section{Handling Data Types}
-\labelSection{pm-handling-data-types}
+\section{Matching Data Types}
+\labelSection{pm-matching-data-types}
 
 \todo{write}
