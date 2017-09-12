@@ -411,6 +411,12 @@ This results in the \gls{graph} shown in
 }
 %
 which is called \gls!{UF graph}.
+%
+For sake of \gls{pattern matching}, which will be described in
+\refChapter{pattern-matching}, every \gls{edge} has two numbers -- an
+\gls!{inbound.en} \gls!{edge number} and an \gls!{outbound.en} \gls!{edge
+  number} -- that allows the \glspl{edge} to be ordered \wrt to a given
+\gls{node}.
 
 The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
 example \refFigure{uf-graph-example-full-graph} with
@@ -426,6 +432,10 @@ However, the \gls{Click-Paleczny graph} does not completely fulfill
 \refRequirement{uni-rep-explicit-ops} as unconditional branches are not
 represented as \glspl{node}, nor does it fulfill
 \refRequirement{uni-rep-explicit-values}.
+
+
+
+\subsubsection{Representing Constants}
 
 Duplicated constants may either be represented using individual \glspl{value
   node} (as in \refFigure{uf-graph-example-full-graph}) or through a single
