@@ -30,6 +30,8 @@
 \setlength{\opControlFlowLineWidth}{1.2pt}
 \newlength{\opControlFlowLabelXSep}
 \setlength{\opControlFlowLabelXSep}{4pt}
+\newlength{\edgeNrXSep}
+\setlength{\edgeNrXSep}{3pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -108,6 +110,12 @@
   definition edge/.style={%
     line width=\opDataFlowLineWidth,
     dotted,
+  },
+  edge number/.style={
+    nothing,
+    inner xsep=\edgeNrXSep,
+    font=\relsize{-2},
+    auto,
   },
   match line/.style={%
     dash pattern=on 2.5pt off 3pt,

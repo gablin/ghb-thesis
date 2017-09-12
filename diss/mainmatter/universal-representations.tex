@@ -429,7 +429,7 @@ represented as \glspl{node}, nor does it fulfill
 
 
 
-\subsubsection{Representing Constants}
+\subsubsection{Representing Constants As Single Or Multiple Nodes}
 
 Duplicated constants may either be represented using individual \glspl{value
   node} (as in \refFigure{uf-graph-example-full-graph}) or through a single
@@ -456,6 +456,31 @@ no \gls{solution} for this \gls{UF graph}.
 %
 This problem is fixed by applying \gls{copy extension}, which will be described
 in \refChapter{modeling-data-copying}.
+
+
+
+\subsubsection{Data Types of Values}
+
+Both \glspl{program} and \glspl{instruction} expect their argument values to be
+represented in a specific representation.
+%
+For example, in integer arithmetics the values are typically represented using
+signed or unsigned two's complement values of a certain width.
+%
+It is also common that the result is given using the same representation as the
+argument values.
+%
+As this could lead to overflow, mechanisms are often in place to detect such
+occurrances.
+%
+However, if the selected \gls{instruction} produces results of wider bit width
+than specified in the \gls{function graph}, the expected overflow may not occur.
+%
+Consequently, for both \glsshort{function graph} and \glspl{pattern graph} the
+data type of a value is also specified in the corresponding \gls{value node}.
+%
+For integers this entails the value's bit width, and two values are compatible
+if they have the same bit width.
 
 
 
@@ -569,6 +594,19 @@ represent either control flow, data flow, or state flow -- and have the same
 %
 The same naturally also applies for the \gls{inbound.en} \glspl{edge number} of
 all \glspl{edge} with the same type and target \gls{node}.
+%
+\todo{explain the relation between definition edges and data-flow edges}
+%
+An example is given in \refFigure{edge-numbers-example}.
+
+\begin{figure}
+  \centering%
+  \input{figures/universal-representations/edge-numbers-example-graph}
+
+  \caption{Example of edge numbers}%
+  \labelFigure{edge-number-example}
+\end{figure}
+
 
 
 
