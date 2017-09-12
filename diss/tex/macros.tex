@@ -681,7 +681,13 @@
 \newcommand{\opLoad}{\irCode{\noWidth{ld}}}
 \newcommand{\opMul}{\irCode{\noWidth{\irMulText}}}
 \newcommand{\opPhi}{\irCode{\noWidth{\irPhiText}[.5pt]}}
-\newcommand{\opStore}{\irCode{\noWidth{st}}}
+\NewDocumentCommand{\opStore}{s}{%
+  \IfBooleanTF{#1}{%
+    \irCode{st}%
+  }{%
+    \irCode{s{\kern-.2pt}t}%
+  }%
+}
 \newcommand{\opSub}{\irCode{\noWidth{\irSubText}[-1pt]}}
 \newcommand{\opTemp}[1]{%
   \irTemp{#1}\hspace*{-1pt}%
