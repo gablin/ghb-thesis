@@ -411,12 +411,6 @@ This results in the \gls{graph} shown in
 }
 %
 which is called \gls!{UF graph}.
-%
-For sake of \gls{pattern matching}, which will be described in
-\refChapter{pattern-matching}, every \gls{edge} has two numbers -- an
-\gls!{inbound.en} \gls!{edge number} and an \gls!{outbound.en} \gls!{edge
-  number} -- that allows the \glspl{edge} to be ordered \wrt to a given
-\gls{node}.
 
 The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
 example \refFigure{uf-graph-example-full-graph} with
@@ -547,6 +541,34 @@ block:
   \caption{Example illustrating how to handle side effects in UF graphs}%
   \labelFigure{uni-rep-side-effects-example}
 \end{figure}
+
+
+
+\subsubsection{Edge Numbers}
+
+During \gls{graph} construction, every \gls{edge} is given two \glspl!{edge
+  number}, which allows the \glspl{edge} to be ordered \wrt to a given
+\gls{node}.
+%
+This is needed for \gls{pattern matching}, which will be described in
+\refChapter{pattern-matching}.
+%
+For a given \gls{edge}~\mbox{$e = \mPair{n}{m}$} of type~$t$, the
+\gls!{inbound.en} \gls{edge number}, denoted \mbox{$\mInEdgeNr(e)$}, indicates
+that $e$ is the $i$th ingoing \gls{edge} of type~$t$ connected to $m$, where
+\mbox{$i = \mInEdgeNr(e)$}.
+%
+Similarly, the \gls!{outbound.en} \gls{edge number}, denoted
+\mbox{$\mOutEdgeNr(e)$}, indicates that $e$ is the $i$th outgoing \gls{edge} of
+type~$t$ connected to $n$, where \mbox{$i = \mOutEdgeNr(e)$}.
+%
+Consequently, all \glspl{edge} which are of the same type -- that is, they all
+represent either control flow, data flow, or state flow -- and have the same
+\gls{node} as source must be given distinct \gls{outbound.en} \glspl{edge
+  number} such that they form a contiguous sequence.
+%
+The same naturally also applies for the \gls{inbound.en} \glspl{edge number} of
+all \glspl{edge} with the same type and target \gls{node}.
 
 
 
