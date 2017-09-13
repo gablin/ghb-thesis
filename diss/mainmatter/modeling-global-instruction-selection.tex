@@ -21,10 +21,11 @@ There are two variants of this problem:
     \gls{match}, hence allowing matches to \gls{overlap}.
 \end{enumerate*}
 %
-The former problem is more common as it results in simpler models, with smaller
-\glspl{solution space}, and allows use of \glspl{constraint} that enable strong
-\gls{propagation}, which are essential for curbing solving time and increasing
-scalability.
+The former problem is more common as it is stricter, resulting in simpler models
+with smaller \glspl{solution space}.
+%
+It also allows use of \glspl{constraint} that enable strong \gls{propagation},
+which is essential for curbing solving time and increasing scalability.
 
 Depending on the \gls{instruction set}, the latter problem permits
 \glspl{solution} with potentially higher code quality.
@@ -46,6 +47,11 @@ subtraction.
 For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
 performs both an addition and a subtraction, a \gls{solution} to either problem
 requires an add instruction to compute the sum.
+
+Due to the increased complexity of the relaxed version of the problem, we model
+exact coverage in this dissertation.
+
+
 
 \paragraph{Variables}
 
