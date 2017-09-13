@@ -4,21 +4,21 @@
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
 
-\chapter{Universal Representations}
-\labelChapter{universal-representations}
+\chapter{Universal Representation}
+\labelChapter{universal-representation}
 
-This chapter introduces the representations used in the approach for modeling
-\glspl{function} and \glspl{instruction}.
+This chapter introduces the \gls{universal representation}, which is used in the
+approach for modeling \glspl{function} and \glspl{instruction}.
 %
 \RefSection{uni-rep-design-requirements} lists the design requirements that must
-be fulfilled by the representation.
+be fulfilled by a graph-based representation.
 %
-\RefSection{uni-rep-program-rep} introduces the representation and describes how
-to use it to model \glspl{function}, and \refSection{uni-rep-instr-rep}
-describes how to model \glspl{instruction}.
+\RefSection{uni-rep-program-rep} introduces the \gls{universal representation}
+and describes how to use it to model \glspl{function}, and
+\refSection{uni-rep-instr-rep} describes how to model \glspl{instruction}.
 %
 Lastly, \refSection{uni-rep-pattern-matching} describes how to perform
-\gls{pattern matching} using the representation.
+\gls{pattern matching} using the \gls{universal representation}.
 
 
 
@@ -164,14 +164,14 @@ int factorial(int $\irVar{n}[1]$) {
                   }%
                   [32mm]%
                   {%
-                    \input{figures/universal-representations/%
+                    \input{figures/universal-representation/%
                       control-flow-graph-example}%
                   }
 
     \vspace{\baselineskip}
 
     \subcaptionbox{SSA graph\labelFigure{function-example-ssa-graph}}%
-                  {\input{figures/universal-representations/ssa-graph-example}}
+                  {\input{figures/universal-representation/ssa-graph-example}}
   \end{minipage}
 
   \caption[Function example used in describing the program representation]%
@@ -194,7 +194,7 @@ int factorial(int $\irVar{n}[1]$) {
                 }%
                 [46mm]%
                 {%
-                  \input{figures/universal-representations/%
+                  \input{figures/universal-representation/%
                     uf-graph-example-control-part}%
                 }%
   \hfill%
@@ -204,7 +204,7 @@ int factorial(int $\irVar{n}[1]$) {
                 }%
                 {%
                   \input{%
-                    figures/universal-representations/%
+                    figures/universal-representation/%
                     uf-graph-example-data-part%
                   }%
                 }%
@@ -220,19 +220,19 @@ int factorial(int $\irVar{n}[1]$) {
                 {%
                   \parbox{\textwidth}{%
                     \parbox[b]{32mm}{%
-                      \input{figures/universal-representations/%
+                      \input{figures/universal-representation/%
                         uf-graph-example-control-part}%
                     }%
                     \hfill%
                     \parbox[b]{63mm}{%
                       \input{%
-                        figures/universal-representations/%
+                        figures/universal-representation/%
                         uf-graph-example-data-part%
                       }%
                       \vspace*{1cm}%
                     }%
                     \input{%
-                      figures/universal-representations/%
+                      figures/universal-representation/%
                       uf-graph-example-cross-edges%
                     }%
                   }%
@@ -362,7 +362,7 @@ join:
                   UF subgraph%
                   \labelFigure{preserving-semantics-graph}%
                 }{%
-                  \input{figures/universal-representations/%
+                  \input{figures/universal-representation/%
                     preserving-semantics-example-graph}%
                 }%
   \hfill%
@@ -560,7 +560,7 @@ block:
                 }%
                 [70mm]%
                 {%
-                  \input{figures/universal-representations/%
+                  \input{figures/universal-representation/%
                     side-effects-example-graph}%
                 }%
   \hfill%
@@ -602,7 +602,7 @@ An example is given in \refFigure{edge-numbers-example}.
 %
 \begin{figure}
   \centering%
-  \input{figures/universal-representations/edge-numbers-example-graph}
+  \input{figures/universal-representation/edge-numbers-example-graph}
 
   \caption[Example of edge numbers]%
           {%
@@ -689,7 +689,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
                     \labelFigure{up-graph-examples-add-graph}%
                   }%
                   [28mm]%
-                  {\input{figures/universal-representations/up-graph-add}}%
+                  {\input{figures/universal-representation/up-graph-add}}%
     \\[\tmpLength]
     \subcaptionbox{%
                     Semantic behavior of a
@@ -705,7 +705,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
     \subcaptionbox{%
                     UP graph of {\instrFont satadd}%
                     \labelFigure{up-graph-examples-satadd}%
-                  }{\input{figures/universal-representations/up-graph-satadd}}
+                  }{\input{figures/universal-representation/up-graph-satadd}}
   \end{tabular}
 
   \caption{Examples of universal pattern graphs}
