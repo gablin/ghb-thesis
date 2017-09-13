@@ -38,19 +38,25 @@ A more extensive discussion is also given in
 \section{Refining Instruction Selection into a Graph Problem}
 \labelSection{ex-isel-rep-refining-instruction-selection-into-a-graph-problem}
 
-\Gls{instruction selection} can be reduced into two subproblems:%
+Without loss of generality, assume that the input to the \gls{instruction
+  selector} consists of a single \gls{function}, which in turn consists of many
+\glspl{basic block} (henceforth referred to as simply \glspl!{block}).
+%
+Of these \glspl{block} exactly one represents the \gls{function}'s point of
+entry, called the \gls!{entry block}.
+%
+\Gls{instruction selection} can then be reduced into two subproblems:%
 %
 \begin{enumerate}
   \item Finding all instances of instructions that can implement one or more
-    \glspl{operation} in the \gls{program}.
+    \glspl{operation} in the \gls{function}.
   \item Selecting a subset of these instances such that all \glspl{operation}
     are implemented.
 \end{enumerate}
 %
-Without loss of generality, assume that the input to the \gls{instruction
-  selector} to consist of a single \gls{function}, which in turn consists of
-many \glspl{basic block} (henceforth referred to as simply \glspl!{block}) of
-which exactly one, called the \gls!{entry block}, represents the point of entry.
+Unless the second subproblem is constructed such that it impacts the first --
+and I have yet to come across a situation where this is required -- both
+subproblems can be solved in isolation without compromising code quality.
 
 Most \glspl{compiler} solve the two problems above using \gls{graph}-based
 methods.
