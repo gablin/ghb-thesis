@@ -58,35 +58,33 @@ exact coverage in this dissertation.
 
 
 
-\paragraph{Variables}
+\subsubsection{Variables}
 
-TODO: define $\mUFGraph$
-
-For sake of tractability, the constraint model introduced in this chapter
-assumes the former problem of \gls{global.is}[ \gls{instruction selection}].
-%
-The set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0, 1}$} models
-whether \gls{match}~\mbox{$m \in \mMatchSet$} is selected, where $\mMatchSet$
-denotes the match set found for $\mUFGraph$.
+Given a \gls{UF graph}~$\mUFGraph$ and a set~$\mMatchSet$ of \glspl{match} found
+for $\mUFGraph$, the set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0,
+    1}$} models whether \gls{match}~\mbox{$m \in \mMatchSet$} is selected.
 %
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
 which selected match covers operation~\mbox{$o \in \mOpSet$}, where $\mOpSet$
 denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
   \mMatchSet$} denotes the set of \glspl{match} that can cover~$o$.
 
-\paragraph{Constraints}
+
+
+\subsubsection{Constraints}
+
+
+
 
 \begin{equation}
-  \mVar{omatch}[o] = m \mEq \mVar{sel}[m]
-  \mQuantSep
+  \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
   \forall o \in \mOpSet,
   \forall m \in \mMatchSet[o]
   \labelEquation{operation-coverage}
 \end{equation}
 
 \begin{equation}
-  \mVar{dmatch}[d] = m \mEq \mVar{sel}[m]
-  \mQuantSep
+  \mVar{dmatch}[d] = m \mEq \mVar{sel}[m],
   \forall d \in \mDataSet,
   \forall m \in \mMatchSet[d]
   \labelEquation{data-definitions}
@@ -96,11 +94,10 @@ denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
 
 \section{Forbidding Cyclic Data Dependencies}
 
-\paragraph{Constraints}
+\subsubsection{Constraints}
 
 \begin{equation}
-  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
-  \mQuantSep
+  \sum_{m \in f} \mVar{sel}[m] < \mCard{f},
   \forall f \in \mForbiddenCombSet
   \labelEquation{cyclic-data-deps}
 \end{equation}
