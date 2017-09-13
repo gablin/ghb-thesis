@@ -16,6 +16,9 @@ be fulfilled by the representation.
 \RefSection{uni-rep-program-rep} introduces the representation and describes how
 to use it to model \glspl{function}, and \refSection{uni-rep-instr-rep}
 describes how to model \glspl{instruction}.
+%
+Lastly, \refSection{uni-rep-pattern-matching} describes how to perform
+\gls{pattern matching} using the representation.
 
 
 
@@ -712,17 +715,14 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
 
 
 \section{Pattern Matching}
+\labelSection{uni-rep-pattern-matching}
 
-\todo{write}
-
-
-
-\subsection{The VF2 Algorithm}
-\labelSection{uni-rep-vf2-algorithm}
-
-Due to its simplicity and ease of implementation,
-\gls{VF2}~\cite{CordellaEtAl:2001} was selected as the \gls{subgraph
-  isomorphism} algorithm used in this work.\!%
+Because neither \glsshort{UF graph} nor \glspl{UP graph} are necessarily
+tree-shaped, a \gls{subgraph isomorphism} algorithm is needed for performing
+\gls{pattern matching}.
+%
+For this work, \gls{VF2}~\cite{CordellaEtAl:2001} was the \gls{subgraph
+  isomorphism} algorithm of choice due to its simplicity and ease of implementation.\!%
 %
 \footnote{%
   In his dissertation, \textcite{McCreesh:2017} cautions against using \gls{VF2}
@@ -736,6 +736,12 @@ Due to its simplicity and ease of implementation,
   compared to the time to solve the \gls{constraint model}.
 }
 %
+We proceed with a description of this algorithm.
+
+
+
+\subsection{The VF2 Algorithm}
+
 \def\fG{G_{\textrm{\textsc{f}}}}%
 \def\pG{G_{\textrm{\textsc{p}}}}%
 \def\fN{N_{\textrm{\textsc{f}}}}%
@@ -788,7 +794,8 @@ The rules are categorized into \emph{syntactic} and \emph{semantic} rules.
 %
 The syntactic rules check that the \gls{graph} structure is preserved, and the
 semantic rules check that \gls{node} and \gls{edge} attributes are compatible.
-
+%
+\todo{discuss complexity}
 
 
 \subsubsection{Computing the Mapping Candidate Set}
