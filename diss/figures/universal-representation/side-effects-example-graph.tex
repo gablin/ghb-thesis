@@ -8,14 +8,14 @@
 \figureFont\figureFontSize%
 \begin{tikzpicture}
   \node [state node] (st1) {};
-  \node [op node, position=-45 degrees from st1] (ld) {\opLoad};
+  \node [computation node, position=-45 degrees from st1] (ld) {\opLoad};
   \node [value node, position=-135 degrees from ld] (p) {\strut\opVar{p}};
   \node [state node, position=45 degrees from ld] (st2) {};
   \node [value node, position=-45 degrees from ld] (t1) {\opTemp{1}};
-  \node [op node, position=-45 degrees from st2] (foo) {\opCall{foo}};
+  \node [computation node, position=-45 degrees from st2] (foo) {\opCall{foo}};
   \node [state node, position=45 degrees from foo] (st3) {};
   \node [value node, position=-45 degrees from foo] (t2) {\opTemp{2}};
-  \node [op node, position=-45 degrees from st3] (st) {\opStore};
+  \node [computation node, position=-45 degrees from st3] (st) {\opStore};
   \node [state node, right= of st] (st4) {};
   \node [block node, above=.75\opNodeDist of
                            $(st1.north west) !.5! (st4.east |- st1.north)$]

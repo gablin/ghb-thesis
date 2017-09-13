@@ -11,7 +11,7 @@
 \setlength{\opNodeDist}{18pt}%
 \begin{tikzpicture}[
     control-flow label/.append style={
-      inner xsep=.5\opControlFlowLabelXSep,
+      inner xsep=.5\controlFlowLabelXSep,
       pos=.45,
     },
     outbound edge number/.style={
@@ -74,13 +74,13 @@
   % Data-flow graph
   \node [value node, below right=-.2\opNodeDist and 4\opNodeDist of check]
         (add-1) {\opVar{1}};
-  \node [op node, position=-45 degrees from add-1] (add) {\opAdd};
+  \node [computation node, position=-45 degrees from add-1] (add) {\opAdd};
   \node [value node, position=45 degrees from add] (x-1) {\opVar{x}[1]};
   \node [value node, below=of add] (x-2) {\opVar{x}[2]};
-  \node [op node, position=-45 degrees from x-1] (sub) {\opSub};
+  \node [computation node, position=-45 degrees from x-1] (sub) {\opSub};
   \coordinate [node distance=\opNodeDist, position=45 degrees from sub] (sub-1);
   \node [value node, below=of sub] (x-3) {\opVar{x}[3]};
-  \node [op node, position=-45 degrees from x-2] (phi) {\opPhi};
+  \node [computation node, position=-45 degrees from x-2] (phi) {\opPhi};
   \node [value node, below=of phi] (x-4) {\opVar{x}[4]};
   \node [value node, below right=.5\opNodeDist and .9\opNodeDist of check]
         (b) {\opVar{b}};

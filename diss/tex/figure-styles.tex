@@ -24,12 +24,12 @@
 \setlength{\opNodeDist}{16pt}
 \newlength{\opNodeSize}
 \setlength{\opNodeSize}{14pt}
-\newlength{\opDataFlowLineWidth}
-\setlength{\opDataFlowLineWidth}{.6pt}
-\newlength{\opControlFlowLineWidth}
-\setlength{\opControlFlowLineWidth}{1.2pt}
-\newlength{\opControlFlowLabelXSep}
-\setlength{\opControlFlowLabelXSep}{4pt}
+\newlength{\dataFlowLineWidth}
+\setlength{\dataFlowLineWidth}{.6pt}
+\newlength{\controlFlowLineWidth}
+\setlength{\controlFlowLineWidth}{1.2pt}
+\newlength{\controlFlowLabelXSep}
+\setlength{\controlFlowLabelXSep}{4pt}
 \newlength{\edgeNrXSep}
 \setlength{\edgeNrXSep}{3pt}
 \newlength{\edgeNrYSep}
@@ -53,14 +53,18 @@
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
-    line width=\opDataFlowLineWidth,
     font=\relsize{-.5},
+  },
+  computation node/.style={%
+    op node,
+    circle,
+    line width=\dataFlowLineWidth,
   },
   control node/.style={%
     op node,
     diamond,
     minimum size=1.5\opNodeSize,
-    line width=\opControlFlowLineWidth,
+    line width=\controlFlowLineWidth,
   },
   value node/.style={%
     rectangle,
@@ -70,7 +74,7 @@
     inner sep=0,
     outer sep=0,
     node distance=\opNodeDist,
-    line width=\opDataFlowLineWidth,
+    line width=\dataFlowLineWidth,
     font=\relsize{-.5},
   },
   state node/.style={%
@@ -86,12 +90,12 @@
     inner ysep=0,
     outer sep=0,
     node distance=\opNodeDist,
-    line width=\opControlFlowLineWidth,
+    line width=\controlFlowLineWidth,
     font=\relsize{-.5}\strut,
   },
   data flow/.style={%
     ->,
-    line width=\opDataFlowLineWidth,
+    line width=\dataFlowLineWidth,
   },
   state flow/.style={%
     data flow,
@@ -99,18 +103,18 @@
   },
   control flow/.style={%
     ->,
-    line width=\opControlFlowLineWidth,
-    shorten <=-\opControlFlowLineWidth,
+    line width=\controlFlowLineWidth,
+    shorten <=-\controlFlowLineWidth,
   },
   control-flow label/.style={
     nothing,
-    inner xsep=\opControlFlowLabelXSep,
+    inner xsep=\controlFlowLabelXSep,
     node distance=0,
     font=\sffamily\relsize{-.5},
     auto,
   },
   definition edge/.style={%
-    line width=\opDataFlowLineWidth,
+    line width=\dataFlowLineWidth,
     dotted,
   },
   edge number/.style={
@@ -122,7 +126,7 @@
   },
   match line/.style={%
     dash pattern=on 2.5pt off 3pt,
-    line width=\opDataFlowLineWidth,
+    line width=\dataFlowLineWidth,
   },
   match node/.style={%
     match line,

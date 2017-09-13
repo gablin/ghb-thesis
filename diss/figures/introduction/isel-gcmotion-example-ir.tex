@@ -14,7 +14,7 @@
     block node/.style={
       draw,
       fill=white,
-      line width=\opControlFlowLineWidth,
+      line width=\controlFlowLineWidth,
       minimum size=0,
       inner xsep=4pt,
       inner ysep=2.5pt,
@@ -80,14 +80,14 @@
       \draw (b1) -- (b2);
       \draw (b2)
              -- node [control-flow label,
-                      inner xsep=.75\opControlFlowLabelXSep] {T}
+                      inner xsep=.75\controlFlowLabelXSep] {T}
              (b3);
       \draw (b3)
-             -- node [control-flow label, inner xsep=.5\opControlFlowLabelXSep,
+             -- node [control-flow label, inner xsep=.5\controlFlowLabelXSep,
                       pos=0.1] {T}
              (b4);
       \draw (b3)
-            -- node [control-flow label, inner xsep=.5\opControlFlowLabelXSep,
+            -- node [control-flow label, inner xsep=.5\controlFlowLabelXSep,
                      pos=0.06, swap] {F}
             (b5);
       \draw (from-b4) -- (from-b4 -| b5.west);

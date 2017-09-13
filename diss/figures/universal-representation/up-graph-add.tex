@@ -10,7 +10,7 @@
 \begin{tikzpicture}
   % Data flow
   \node [value node] (s) {\opVar{s}};
-  \node [op node, position=-45 degrees from s] (add) {\opAdd};
+  \node [computation node, position=-45 degrees from s] (add) {\opAdd};
   \node [value node, position=45 degrees from add] (t) {\opVar{t}};
   \node [value node, below=of add] (d) {\opVar{d}};
   \begin{scope}[data flow]

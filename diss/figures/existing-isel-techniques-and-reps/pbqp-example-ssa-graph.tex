@@ -11,7 +11,7 @@
 \pgfsetlayers{background2,background1,main}%
 \begin{tikzpicture}[%
     value node/.style={%
-      op node,
+      computation node,
     },
     outer match node/.style={%
       match node,
@@ -28,7 +28,7 @@
   ]
 
   % Graph
-  \node [op node] (add) {\opAdd};
+  \node [computation node] (add) {\opAdd};
   \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
   \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
   \node [value node, above=of add] (load) {\opLoad};

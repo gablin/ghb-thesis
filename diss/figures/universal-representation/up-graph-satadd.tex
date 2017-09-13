@@ -11,7 +11,7 @@
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[
     control-flow label/.append style={
-      inner ysep=.75\opControlFlowLabelXSep,
+      inner ysep=.75\controlFlowLabelXSep,
     },
   ]
 
@@ -45,11 +45,11 @@
   \node [value node, right=3\opNodeDist of cf-north-east,
          yshift=-.225\opNodeSize]
         (s) {\opVar{s}};
-  \node [op node, position=-45 degrees from s] (add) {\opAdd};
+  \node [computation node, position=-45 degrees from s] (add) {\opAdd};
   \node [value node, position= 45 degrees from add] (t) {\opVar{t}};
   \node [value node, below=of add] (d1) {\opVar{d}[1]};
-  \node [op node, position=- 45 degrees from d1] (phi) {\opPhi};
-  \node [op node, position=-135 degrees from d1] (cmp) {\opLT};
+  \node [computation node, position=- 45 degrees from d1] (phi) {\opPhi};
+  \node [computation node, position=-135 degrees from d1] (cmp) {\opLT};
   \node [value node, position=135 degrees from cmp] (MAX-1) {\opVar{MAX}};
   \node [value node, position=45 degrees from phi] (MAX-2) {\opVar{MAX}};
   \node [value node, below=of cmp] (bool) {};

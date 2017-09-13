@@ -12,20 +12,20 @@
 
   % Data flow
   \node [value node] (n1) {\opVar{n}[1]\strut};
-  \node [op node, position=-45 degrees from n1] (phi-n) {\opPhi};
+  \node [computation node, position=-45 degrees from n1] (phi-n) {\opPhi};
   \node [value node, below=of phi-n] (n2) {\opVar{n}[2]\strut};
-  \node [op node, position=-135 degrees from n2] (leq) {\opLE};
+  \node [computation node, position=-135 degrees from n2] (leq) {\opLE};
   \node [value node, below=of leq] (bool) {b};
   \node [value node, position=135 degrees from leq] (leq-1) {\opVar{1}};
-  \node [op node, below right=1.5\opNodeDist and .25\opNodeDist of n2]
+  \node [computation node, below right=1.5\opNodeDist and .25\opNodeDist of n2]
         (sub) {\opSub};
   \node [value node, position=45 degrees from sub] (sub-1) {\opVar{1}};
   \node [value node, below=of sub] (n3) {\opVar{n}[3]\strut};
 
   \node [value node, right=5.75\opNodeDist of n1] (1-phi-f) {\opVar{1}};
-  \node [op node, position=-45 degrees from 1-phi-f] (phi-f) {\opPhi};
+  \node [computation node, position=-45 degrees from 1-phi-f] (phi-f) {\opPhi};
   \node [value node, below=of phi-f] (f2) {\opVar{f}[2]};
-  \node [op node, position=-135 degrees from f2] (mul) {\opMul};
+  \node [computation node, position=-135 degrees from f2] (mul) {\opMul};
   \node [value node, below=of mul] (f3) {\opVar{f}[3]};
 
   \begin{scope}[data flow]
