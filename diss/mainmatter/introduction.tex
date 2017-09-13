@@ -36,8 +36,24 @@ Lastly, \refSection{intro-outline} outlines the structure of the dissertation.
   \labelFigure{compiler-overview}
 \end{figure}
 
+Every quarter, over 100 million microprocessors are shipped in various devices
+such as PCs, servers, tablets, and phones~\cite{Intel:2014:NewsRelease}.
+%
+Each of these processors are built to execute a vast range of \glspl{program},
+from tiny \emph{Hello, world!} tests to large-scale Earth simulations.
+%
+For this task the processor provides a set of \glspl{instruction}, which are
+executed one after another.
+%
+Hence, to run a given \gls{program} on a specific processor, the \gls{program}
+must be implemented using the \glspl{instruction} provided by that processor,
+resulting in a sequence of \glspl{instruction} called \gls!{assembly code}.
+
+Translating a \gls{program} into \gls{assembly code} can in principle be done by
+hand, but for the most part this is done using a \gls{compiler}.
+%
 A \gls!{compiler} is a tool that takes a \gls!{program}, written in some
-programming language, as input and produces equivalent assembly code for a
+programming language, as input and produces equivalent \gls{assembly code} for a
 specific \gls!{target machine} as output.
 %
 As shown in \refFigure{compiler-overview}, a compiler typically consists of
