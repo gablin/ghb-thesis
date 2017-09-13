@@ -595,18 +595,34 @@ represent either control flow, data flow, or state flow -- and have the same
 The same naturally also applies for the \gls{inbound.en} \glspl{edge number} of
 all \glspl{edge} with the same type and target \gls{node}.
 %
-\todo{explain the relation between definition edges and data-flow edges}
-%
 An example is given in \refFigure{edge-numbers-example}.
-
+%
 \begin{figure}
   \centering%
   \input{figures/universal-representations/edge-numbers-example-graph}
 
-  \caption{Example of edge numbers}%
-  \labelFigure{edge-number-example}
+  \caption[Example of edge numbers]%
+          {%
+            Example of edge numbers.
+            %
+            The inbound and outbound edge numbers are attached to the edges'
+            arrows and tails, respectively%
+          }%
+  \labelFigure{edge-numbers-example}
 \end{figure}
-
+%
+Note that the \glspl{definition edge} in the example are oriented and labeled
+with the same \glspl{edge number} as the data-flow \glspl{edge} connected to the
+same \gls{value node}.
+%
+This is to be able to identify which \gls{definition edge} belongs to which
+data-flow \gls{edge} when there exist multiple such \gls{edge}, which is needed
+when performing \gls{copy extension} (to be described in
+\refChapter{modeling-data-copying}).
+%
+In terms of restricting the definition placements, however, the orientation of
+the \glspl{definition edge} does not matter and is thus skipped in cases where
+this information is not needed.
 
 
 

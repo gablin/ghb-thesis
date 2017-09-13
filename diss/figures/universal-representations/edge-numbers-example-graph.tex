@@ -16,12 +16,15 @@
     },
     outbound edge number/.style={
       edge number,
+      inner ysep=0,
+      inner xsep=.75\edgeNrXSep,
       pos=.25,
       swap,
     },
     inbound edge number/.style={
       edge number,
-      pos=.75,
+      inner ysep=0,
+      pos=.8,
     },
   ]
 
@@ -47,14 +50,15 @@
               (\n-c);
       }
       \draw (check-c)
-            -- node [outbound edge number, pos=.1] {0}
+            -- node [outbound edge number, swap] {0}
                node [inbound edge number] {0}
-               node [control-flow label, swap] {T}
+               node [control-flow label, swap, pos=.25] {T}
             (inc);
       \draw (check-c)
             -- node [outbound edge number] {1}
                node [inbound edge number] {0}
-               node [control-flow label] {F}
+               node [control-flow label, pos=.25] {F}
+               coordinate (between-check-c-and-dec)
             (dec);
       \draw (inc-c)
             -- node [outbound edge number, pos=.3] {0}
@@ -62,7 +66,7 @@
             (join);
       \draw (dec-c)
             -- node [outbound edge number, pos=.1] {0}
-               node [inbound edge number] {0}
+               node [inbound edge number, pos=.75] {1}
             (join);
     \end{scope}
   \end{pgfonlayer}
@@ -82,20 +86,54 @@
         (b) {\opVar{b}};
 
 
-  \begin{scope}[data flow]
-    \draw (add-1) -- (add);
-    \draw (x-1) -- (add);
-    \draw (add) -- (x-2);
-    \draw (x-1) -- (sub);
-    \draw (sub) -- (x-3);
-    \draw (x-2) -- (phi);
-    \draw (x-3) -- (phi);
-    \draw (phi) -- (x-4);
+  \begin{scope}[
+      data flow,
+      outbound edge number/.append style={
+        pos=.2,
+      },
+      inbound edge number/.append style={
+        pos=.7,
+      },
+    ]
+
+    \draw (add-1)
+          -- node [outbound edge number] {0}
+             node [inbound edge number] {0}
+          (add);
+    \draw (x-1)
+          -- node [outbound edge number, pos=.05] {0}
+             node [inbound edge number, pos=.8] {1}
+          (add);
+    \draw (add)
+          -- node [outbound edge number] {0}
+             node [inbound edge number, pos=.72] {0}
+          (x-2);
+    \draw (x-1)
+          -- node [outbound edge number] {1}
+             node [inbound edge number] {0}
+          (sub);
+    \draw (sub)
+          -- node [outbound edge number] {0}
+             node [inbound edge number, pos=.72] {0}
+          (x-3);
+    \draw (x-2)
+          -- node [outbound edge number] {0}
+             node [inbound edge number] {0}
+             coordinate (between-x-2-and-phi)
+          (phi);
+    \draw (x-3)
+          -- node [outbound edge number, swap] {0}
+             node [inbound edge number, pos=.8] {1}
+          (phi);
+    \draw (phi)
+          -- node [outbound edge number] {0}
+             node [inbound edge number, pos=.72] {0}
+          (x-4);
 
     \coordinate (above-add-1) at ([shift=(45:.5\opNodeDist)] add-1.north east);
     \draw [-, rounded corners=3pt]
           (add-1)
-          --
+          -- node [outbound edge number] {1}
           (above-add-1)
           [rounded corners=8pt]
           -| coordinate [pos=1] (tmp)
@@ -104,9 +142,10 @@
           (tmp)
           --
           (sub-1)
-          --
+          -- node [inbound edge number, pos=.8] {1}
           (sub);
-
+  \end{scope}
+  \begin{scope}[data flow]
     \path [name path=from-check-c]
           (check-c)
           --
@@ -119,10 +158,94 @@
            rounded corners=3pt,
           ]
           (b)
-          --
+          -- node [outbound edge number, inner ysep=\edgeNrYSep] {0}
           (intersection-1)
-          --
+          -- node [inbound edge number] {0}
           (check-c);
+  \end{scope}
+
+  \begin{scope}[definition edge, ->]
+    \path [overlay, name path=from-dec]
+          (dec)
+          --
+          (dec -| x-2);
+    \path [overlay, name path=left-from-x-2]
+          ([xshift=-.5\opNodeDist] x-2.south west)
+          --
+          +(-45:2cm);
+    \path [overlay, name path=right-from-x-2]
+          ([shift=(-135:2cm)] between-x-2-and-phi)
+          --
+          +(45:4cm);
+    \path [overlay, name path=from-x-3]
+          (x-3.east)
+          --
+          +(180:2cm);
+    \draw [name intersections={of=from-dec and left-from-x-2,
+                               name=1-intersection,
+                              },
+           name intersections={of=left-from-x-2 and right-from-x-2,
+                               name=2-intersection,
+                              },
+           name intersections={of=right-from-x-2 and from-x-3,
+                               name=3-intersection,
+                              },
+           rounded corners=3pt,
+          ]
+          (x-3)
+          -- node [outbound edge number, inner ysep=\edgeNrYSep] {0}
+          (3-intersection-1)
+          [rounded corners=8pt]
+          --
+          (2-intersection-1)
+          [rounded corners=3pt]
+          --
+          (1-intersection-1)
+          -- node [inbound edge number, pos=.9, inner ysep=\edgeNrYSep] {0}
+          (dec);
+
+    \path [overlay, name path=from-inc]
+          (inc)
+          --
+          (inc -| dec);
+    \path [overlay, name path=left-from-dec]
+          ([shift=(-135:2cm)] between-check-c-and-dec)
+          --
+          +(45:4cm);
+    \path [overlay, name path=above-dec]
+          ([yshift=.75\opNodeDist, xshift=-1cm] dec.north)
+          --
+          +(0:4cm);
+    \path [overlay, name path=from-x-2]
+          (x-2.north west)
+          --
+          +(135:2cm);
+    \draw [name intersections={of=from-inc and left-from-dec,
+                               name=1-intersection,
+                              },
+           name intersections={of=left-from-dec and above-dec,
+                               name=2-intersection,
+                              },
+           name intersections={of=above-dec and from-x-2,
+                               name=3-intersection,
+                              },
+           rounded corners=3pt,
+          ]
+          (x-2)
+          -- node [outbound edge number, swap, pos=.05] {0}
+          (3-intersection-1)
+          --
+          (2-intersection-1)
+          --
+          (1-intersection-1)
+          -- node [inbound edge number, pos=.7, inner ysep=\edgeNrYSep] {0}
+          (inc);
+
+    \draw [rounded corners=3pt]
+          (join)
+          -| node [outbound edge number, pos=.02, inner ysep=\edgeNrYSep] {0}
+             node [inbound edge number, swap, pos=.65] {0}
+          (x-4);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%

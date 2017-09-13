@@ -32,6 +32,8 @@
 \setlength{\opControlFlowLabelXSep}{4pt}
 \newlength{\edgeNrXSep}
 \setlength{\edgeNrXSep}{3pt}
+\newlength{\edgeNrYSep}
+\setlength{\edgeNrYSep}{2pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -114,6 +116,7 @@
   edge number/.style={
     nothing,
     inner xsep=\edgeNrXSep,
+    inner ysep=\edgeNrYSep,
     font=\relsize{-2},
     auto,
   },
