@@ -34,6 +34,8 @@
 \setlength{\edgeNrXSep}{3pt}
 \newlength{\edgeNrYSep}
 \setlength{\edgeNrYSep}{2pt}
+\newlength{\matchLabelDist}
+\setlength{\matchLabelDist}{10pt}
 \tikzset{%
   every picture/.style={%
     >=stealth,
@@ -134,6 +136,15 @@
     circle,
     inner sep=1pt,
     outer sep=0,
+  },
+  match label/.style={%
+    nothing,
+    outer sep=1pt,
+    node distance=\matchLabelDist,
+    font=\footnotesize,
+  },
+  match attachment line/.style={%
+    line width=1.25\dataFlowLineWidth,
   },
 }
 \makeatletter

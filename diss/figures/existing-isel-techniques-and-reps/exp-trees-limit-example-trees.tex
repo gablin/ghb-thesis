@@ -18,13 +18,6 @@
       draw=none,
       inner sep=0,
     },
-    match label/.style={%
-      minimum size=0,
-      inner sep=0,
-      outer sep=1pt,
-      node distance=10pt,
-      font=\footnotesize,
-    },
   ]
 
   % Trees
@@ -55,12 +48,12 @@
     \foreach \i/\m in {a/1, b/2, c/3, t1/4, t2/5} {
       \node [match node, fill=shade2, fit=(\i)] (m\m) {};
       \node [match label, below=of m\m] (m\m l){$m_{\m}$};
-      \draw [thick] (m\m) -- (m\m l);
+      \draw [match attachment line] (m\m) -- (m\m l);
     }
     \foreach \i/\m/\p in {add/6/left, mul/7/left, load/9/right} {
       \node [match node, fill=shade2, fit=(\i)] (m\m) {};
       \node [match label, \p=of m\m] (m\m l) {$\strut m_{\m}$};
-      \draw [thick] (m\m) -- (m\m l);
+      \draw [match attachment line] (m\m) -- (m\m l);
     }
   \end{pgfonlayer}
 \end{tikzpicture}%

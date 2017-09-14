@@ -19,13 +19,6 @@
       draw=none,
       inner sep=0,
     },
-    match label/.style={%
-      minimum size=0,
-      inner sep=0,
-      outer sep=1pt,
-      node distance=10pt,
-      font=\footnotesize,
-    },
   ]
 
   % Graph
@@ -122,7 +115,7 @@
   \node [match label, right=of m7] (m7l) {$\strut m_7$};
   \node [match label, position=-45 degrees from m8] (m8l) {$m_8$};
   \foreach \i in {1, ..., 8} {
-    \draw [thick] (m\i) -- (m\i l);
+    \draw [match attachment line] (m\i) -- (m\i l);
   }
 \end{tikzpicture}%
 \endgroup%

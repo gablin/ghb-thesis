@@ -18,13 +18,6 @@
       draw=none,
       inner sep=0,
     },
-    match label/.style={%
-      minimum size=0,
-      inner sep=0,
-      outer sep=1pt,
-      node distance=10pt,
-      font=\footnotesize,
-    },
   ]
 
   % Graph
@@ -72,7 +65,7 @@
   \node [match label, left=of m4] (m4l) {$\strut m_4$};
   \node [match label, right=of m5] (m5l) {$\strut m_5$};
   \foreach \i in {1, ..., 5} {
-    \draw [thick] (m\i) -- (m\i l);
+    \draw [match attachment line] (m\i) -- (m\i l);
   }
 \end{tikzpicture}%
 \endgroup%
