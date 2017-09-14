@@ -51,7 +51,7 @@ following requirements:
     represented as \glspl{node}.
     %
     Also, for \glspl{graph} modeling \glspl{function} every such \gls{node} must
-    have exactly one inbound data-flow \gls{edge}.
+    have exactly one inbound \gls{data-flow edge}.
     %
     This is needed for modeling \gls{global code motion} and \gls{data copying}.
   \item \labelRequirement{uni-rep-fixed-operations}
@@ -304,11 +304,11 @@ example, this results in the \gls{graph} shown in
 %
 Note that at this point, the invariant specified in
 \refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
-one inbound data-flow \gls{edge} is broken, but this will be addressed shortly.
+one inbound \gls{data-flow edge} is broken, but this will be addressed shortly.
 
 We now connect the two extended \glspl{graph} together.
 %
-First, data-flow \glspl{edge} are inserted to connect control \glspl{operation}
+First, \glspl{data-flow edge} are inserted to connect control \glspl{operation}
 with the values used by these \glspl{operation}.
 %
 In the case of our running example, such \glspl{edge} are added from
@@ -316,7 +316,7 @@ values~\irVar{b} and~\irVar{f}[2] to the {\irFont\irCondBrText} and
 {\irFont\irRetText} \glspl{operation}, respectively.
 %
 To achieve the invariant specified in \refRequirement{uni-rep-explicit-values},
-data-flow \glspl{edge} are also inserted from the \glsshort{entry block}
+\glspl{data-flow edge} are also inserted from the \glsshort{entry block}
 \gls{block node} to each \gls{value node} representing constants and function
 arguments.
 %
@@ -417,7 +417,7 @@ This results in the \gls{graph} shown in
 \footnote{%
   In this case, the \glspl{definition edge} from the \irBlock{entry} \gls{node}
   to the \irVar{n}[1] and \irVar{1} \glspl{node} are redundant since the
-  data-flow \glspl{edge} are sufficient to force these values to be produced in
+  \glspl{data-flow edge} are sufficient to force these values to be produced in
   the \irBlock{entry} \gls{block}.
 }
 %
@@ -526,17 +526,17 @@ We create these dependencies as follows.
 For each \gls{block} in the \gls{function}, a new \gls{state node} is created
 and remembered as the \emph{last} \gls{state node}.
 %
-When a \gls{computation node} with side effects is created, a state-flow
-\gls{edge} is also inserted from the last \gls{state node} to this \gls{node}.
+When a \gls{computation node} with side effects is created, a \gls{state-flow
+  edge} is also inserted from the last \gls{state node} to this \gls{node}.
 %
-A new \gls{state node} is then created and set as last, and another state-flow
-\gls{edge} is inserted from the \gls{computation node} to the new \gls{state
-  node}.
+A new \gls{state node} is then created and set as last, and another
+\gls{state-flow edge} is inserted from the \gls{computation node} to the new
+\gls{state node}.
 %
 Once all \glspl{operation} in the \gls{block} has been processed, the first and
 last \glspl{state node} are connected to the \gls{block node} through a
-state-flow \gls{edge} and a \gls{definition edge}, respectively (note that,
-unlike with \glspl{value node}, the state-flow \gls{edge} must not be drawn from
+\gls{state-flow edge} and a \gls{definition edge}, respectively (note that,
+unlike with \glspl{value node}, the \gls{state-flow edge} must not be drawn from
 the \glsshort{entry block} \gls{block node}).
 %
 Hence the same invariant for \glspl{value node} also apply for \glspl{state
@@ -631,11 +631,11 @@ An example is given in \refFigure{edge-numbers-example}.
 \end{figure}
 %
 Note that the \glspl{definition edge} in the example are oriented and labeled
-with the same \glspl{edge number} as the data-flow \glspl{edge} connected to the
+with the same \glspl{edge number} as the \glspl{data-flow edge} connected to the
 same \gls{value node}.
 %
 This is to be able to identify which \gls{definition edge} belongs to which
-data-flow \gls{edge} when there exist multiple such \gls{edge}, which is needed
+\gls{data-flow edge} when there exist multiple such \gls{edge}, which is needed
 when performing \gls{copy extension} (to be described in
 \refChapter{modeling-data-copying}).
 %
@@ -652,13 +652,13 @@ Modeling \glspl{instruction} as \glspl{pattern} is nearly identical to modeling
 \glspl{function}.
 %
 The exceptions are that the \gls{control-flow graph} becomes empty if the output
-is not dependent on control flow, and that no additional data-flow \glspl{edge}
+is not dependent on control flow, and that no additional \glspl{data-flow edge}
 are added for \glspl{value node} representing constants and \gls{instruction}
 input.
 %
 In other words, the invariant specified in
 \refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
-one inbound data-flow \gls{edge} does not need to (and should not) hold for such
+one inbound \gls{data-flow edge} does not need to (and should not) hold for such
 values.
 %
 This results in a \gls{graph} called \gls!{UP graph}, and two examples are given
