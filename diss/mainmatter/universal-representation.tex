@@ -275,6 +275,10 @@ one \gls{edge} flowing \emph{to} a \gls{control node}.
 In other words, every control \gls{operation} belongs to exactly one
 \gls{block}, and every \gls{block} has exactly one point where changes in
 control occur.
+%
+This also means that the extended \gls{control-flow graph} forms a bipartite
+\gls{graph}, with \glspl{block node} on one end and \glspl{control node} on the
+other.
 
 We continue with the \gls{SSA graph}.
 %
@@ -318,6 +322,10 @@ arguments.
 %
 Intuitively, this means that such values are produced at the point of entry to
 the \gls{function}.
+%
+Like with the extended \gls{control-flow graph}, the extended \gls{SSA graph}
+also forms a bipartite \gls{graph}, with \glspl{value node} on one end and
+\glspl{computation node} on the other.
 
 Since there are no \glspl{edge} connecting \glspl{computation node} with
 \glspl{block node}, the assignment of data \glspl{operation} to \glspl{block} is
@@ -437,8 +445,6 @@ Hence, a subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
 \gls!{cover}[s] a \gls{UF graph}~$G$ if every \gls!{operation} in $G$, where an
 \gls{operation} denotes either a \glsshort{computation node} or \gls{control
   node}, appears in exactly one match from~$C$.
-%
-\todo{describe that selection on UF graphs is a form of graph partitioning}
 
 
 
