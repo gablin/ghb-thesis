@@ -1,0 +1,28 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\begin{tikzpicture}[
+    dep node/.style={
+      op node,
+      node distance=2\opNodeDist,
+    },
+    dep flow/.style={
+      data flow,
+      bend left=35,
+    },
+  ]
+
+  \node [dep node] (m1) {$m_1$};
+  \node [dep node, right=of m1] (m2) {$m_2$};
+  \begin{scope}[dep flow]
+    \draw (m1) edge (m2);
+    \draw (m2) edge (m1);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

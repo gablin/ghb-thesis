@@ -1,0 +1,231 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\def\matchPadding{4pt}%
+\def\matchRounding{5pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    match area/.style={
+      nothing,
+      inner sep=\matchPadding,
+    },
+    match 1/.style={
+      draw=none,
+      fill=shade1,
+    },
+    match overlap/.style={
+      draw=none,
+      fill=shade2,
+    },
+    match 2/.style={
+      draw=none,
+      fill=shade3,
+    },
+  ]
+
+  % SSA
+  \node [value node] (q1) {\opVar{q}[1]};
+  \node [computation node, position=-45 degrees from q1] (add-q) {\opAdd};
+  \node [value node, below=of add-q] (q2) {\opVar{q}[2]};
+  \node [computation node, below=1.75\opNodeDist of q2]
+        (store-q) {\opStore};
+  \node [computation node, right=3.75\opNodeDist of add-q] (add-p) {\opAdd};
+  \node [value node, position=45 degrees from add-p] (p1) {\opVar{p}[1]};
+  \node [value node, below=of add-p] (p2) {\opVar{p}[2]};
+  \node [computation node, below=1.75\opNodeDist of p2]
+        (store-p) {\opStore};
+  \coordinate (between-adds) at ($(add-q) !.5! (add-p)$);
+  \node [value node] (c4) at (between-adds |- q1) {\opVar{4}};
+
+  \begin{scope}[data flow]
+    \draw (q1) -- (add-q);
+    \draw (add-q) -- (q2);
+    \draw (p1) -- (add-p);
+    \draw (add-p) -- (p2);
+
+    \path [overlay, name path=left-of-c4]
+          (c4)
+          --
+          (c4 -| add-q);
+    \path [overlay, name path=from-add-q]
+          (add-q.45)
+          --
+          +(45:2\opNodeDist);
+    \draw [name intersections={of=from-add-q and left-of-c4},
+           rounded corners=3pt]
+          (c4)
+          --
+          (intersection-1)
+          --
+          (add-q);
+
+    \path [overlay, name path=right-of-c4]
+          (c4)
+          --
+          (c4 -| add-p);
+    \path [overlay, name path=from-add-p]
+          (add-p.135)
+          --
+          +(135:2\opNodeDist);
+    \draw [name intersections={of=from-add-p and right-of-c4},
+           rounded corners=3pt]
+          (c4)
+          --
+          (intersection-1)
+          --
+          (add-p);
+
+    \path [overlay, name path=from-store-q]
+          (store-q.135)
+          --
+          +(135:2\opNodeDist);
+    \path [overlay, name path=from-q]
+          (q1)
+          --
+          (q1 |- store-q);
+    \draw [name intersections={of=from-q and from-store-q},
+           rounded corners=5pt]
+          (q1)
+          --
+          (intersection-1)
+          --
+          (store-q);
+
+    \path [overlay, name path=from-store-p]
+          (store-p.45)
+          --
+          +(45:2\opNodeDist);
+    \path [overlay, name path=from-p]
+          (p1)
+          --
+          (p1 |- store-p);
+    \draw [name intersections={of=from-p and from-store-p},
+           rounded corners=5pt]
+          (p1)
+          --
+          (intersection-1)
+          --
+          (store-p);
+
+    \path [overlay, name path=from-store-q-2]
+          (store-q.45)
+          --
+          +(45:4\opNodeDist);
+    \path [overlay, name path=from-p2]
+          (p2)
+          --
+          (p2 -| store-q);
+    \draw [name intersections={of=from-p2 and from-store-q-2},
+           rounded corners=5pt]
+          (p2)
+          --
+          (intersection-1)
+          --
+          (store-q);
+
+    \path [overlay, name path=from-store-p-2]
+          (store-p.135)
+          --
+          +(135:4\opNodeDist);
+    \path [overlay, name path=from-q2]
+          (q2)
+          --
+          (q2 -| store-p);
+    \draw [name intersections={of=from-q2 and from-store-p-2},
+           rounded corners=5pt]
+          (q2)
+          --
+          (intersection-1)
+          --
+          (store-p);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    \node [match area, fit=(q1) (c4) (store-q)] (m1) {};
+    \coordinate (above-p2)
+      at ([xshift=\matchPadding, yshift=\matchPadding] p2.north east);
+    \coordinate (below-p2)
+      at ([xshift=\matchPadding, yshift=-\matchPadding] p2.south east);
+    \def\matchIpath{
+      [rounded corners=\matchRounding]
+      (m1.north west)
+      --
+      (m1.north east)
+      [rounded corners=3*\matchRounding]
+      --
+      ($(m1.north east) !.75! (m1.north east |- above-p2)$)
+      [rounded corners=\matchRounding]
+      --
+      (above-p2)
+      --
+      (below-p2)
+      [rounded corners=2*\matchRounding]
+      --
+      ($(m1.south) !.25! (m1.south east)$)
+      [rounded corners=5*\matchRounding]
+      --
+      (m1.south west)
+      [rounded corners=\matchRounding]
+      --
+      (m1.west)
+      --
+      cycle
+    }
+    \draw [match 1] \matchIpath;
+
+    \node [match area, fit=(p1) (c4) (store-p)] (m2) {};
+    \coordinate (above-q2)
+      at ([xshift=-\matchPadding, yshift=\matchPadding] q2.north west);
+    \coordinate (below-q2)
+      at ([xshift=-\matchPadding, yshift=-\matchPadding] q2.south west);
+    \def\matchIIpath{
+      [rounded corners=\matchRounding]
+      (m2.north east)
+      --
+      (m2.north west)
+      [rounded corners=3*\matchRounding]
+      --
+      ($(m2.north west) !.75! (m2.north west |- above-q2)$)
+      [rounded corners=\matchRounding]
+      --
+      (above-q2)
+      --
+      (below-q2)
+      [rounded corners=2*\matchRounding]
+      --
+      ($(m2.south) !.25! (m2.south west)$)
+      [rounded corners=5*\matchRounding]
+      --
+      (m2.south east)
+      [rounded corners=\matchRounding]
+      --
+      (m2.east)
+      --
+      cycle
+    }
+    \draw [match 2] \matchIIpath;
+
+    \begin{scope}
+      \path [clip] \matchIpath;
+      \draw [match overlap] \matchIIpath;
+    \end{scope}
+
+    \draw [match line] \matchIpath;
+    \draw [match line] \matchIIpath;
+  \end{pgfonlayer}
+
+  \node [match label, left=of m1] (m1-label) {$m_1$};
+  \node [match label, right=of m2] (m2-label) {$m_2$};
+  \foreach \i in {1, 2} {
+    \draw [match attachment line]
+          (m\i) -- (m\i-label);
+  }
+\end{tikzpicture}%
+\endgroup%

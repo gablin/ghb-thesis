@@ -133,7 +133,72 @@ selected.
 \section{Forbidding Cyclic Data Dependencies}
 \labelSection{forbidding-cyclic-data-dependencies}
 
+In certain cases, selecting \glspl{match} of \glspl{instruction} producing
+multiple results -- for example, many modern processors provide memory
+\glspl{instruction} that automatically increment or decrement the address value
+-- could lead to cyclic data dependencies~\cite{EbnerEtAl:2008}.
+%
+\begin{filecontents*}{cyclic-data-deps-example-ir.c}
+$\ldots$
+$\irAssign{\irVar{p}[2]}{\irAdd{\irVar{p}[1]}{\irVar{4}}}$
+$\irStore{\irVar{q}[1]}{\irVar{p}[2]}$
+$\irAssign{\irVar{q}[2]}{\irAdd{\irVar{q}[1]}{\irVar{4}}}$
+$\irStore{\irVar{p}[1]}{\irVar{q}[2]}$
+\end{filecontents*}%
+%
+\begin{figure}
+  \subcaptionbox{IR\labelFigure{cyclic-data-deps-example-ir}}%
+                {%
+                  \lstinputlisting[language=c,mathescape]%
+                                  {cyclic-data-deps-example-ir.c}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  UF graph, covered by two matches derived from an
+                  auto-increment store instruction.
+                  %
+                  For brevity, the state node are not included%
+                  \labelFigure{cyclic-data-deps-example-uf-graph}%
+                }%
+                [62mm]%
+                {%
+                  \input{%
+                    figures/modeling-global-instruction-selection/%
+                    cyclic-data-deps-example-uf-graph%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Dependency graph%
+                  \labelFigure{cyclic-data-deps-example-dep-graph}%
+                }%
+                [32mm]%
+                {%
+                  \input{%
+                    figures/modeling-global-instruction-selection/%
+                    cyclic-data-deps-example-dep-graph%
+                  }%
+                }
+
+  \caption{Example illustrating cyclic data dependencies}%
+  \labelFigure{cyclic-data-deps-example}%
+\end{figure}
+%
+An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
+%
+If both \glspl{match} are selected, then either value~\irVar{p}[2] or
+value~\irVar{q}[2] will be used before it is available (depending on the
+instruction order), hence resulting in incorrect code.
+%
+Consequently, such combinations must be identified and forbidden.
+
+\todo{write}
+
+
+
 \subsubsection{Constraints}
+
+\todo{write}
 
 \begin{equation}
   \sum_{m \in f} \mVar{sel}[m] < \mCard{f},
