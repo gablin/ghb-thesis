@@ -11,7 +11,7 @@
 \todo{write summary}
 
 
-\section{Modeling Coverage}
+\section{Modeling Operation Coverage and Data Definitions}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
 selected such that every \gls{operation} in a given \gls{UF graph} is covered.
@@ -52,9 +52,19 @@ subtraction.
 For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
 performs both an addition and a subtraction, a \gls{solution} to either problem
 requires an add instruction to compute the sum.
-
+%
 Due to the increased complexity of the relaxed version of the problem, we model
 exact coverage in this dissertation.
+
+Similarly, every value and state must be produced by exactly one selected match.
+%
+If a \gls!{datum}~$d$ denotes either a \glsshort{state node} or \gls{value node}
+in the \gls{UF graph}, then we say that a \gls{match}~$m$ \emph{defines} $d$ if
+there exists an inbound \glsshort{state-flow edge} or \gls{data-flow edge} to
+$d$ in the \gls{UP graph} from which $m$ was derived.
+%
+Similarly, $m$ \emph{uses} $d$ if there exists an outbound \glsshort{state-flow
+  edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph} of $m$.
 
 
 
@@ -64,17 +74,25 @@ Given a \gls{UF graph}~$\mUFGraph$ and a set~$\mMatchSet$ of \glspl{match} found
 for $\mUFGraph$, the set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0,
     1}$} models whether \gls{match}~\mbox{$m \in \mMatchSet$} is selected.
 %
+Hence $m$ is selected if \mbox{$\mVar{sel}[m] = 1$}, abbreviated
+$\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
+\mbox{$\neg\mVar{sel}[m]$}.
+
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
-which selected match covers operation~\mbox{$o \in \mOpSet$}, where $\mOpSet$
-denotes the set of operations in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq
-  \mMatchSet$} denotes the set of \glspl{match} that can cover~$o$.
+which selected \gls{match} covers \gls{operation}~\mbox{$o \in \mOpSet$}, where
+$\mOpSet$ denotes the set of \glspl{operation} in $\mUFGraph$, and
+\mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set of \glspl{match}
+that can cover~$o$.
+%
+Similarly, the set of \glspl{variable} \mbox{$\mVar{dmatch}[d] \in
+  \mMatchSet[o]$} models which selected \gls{match} defines \gls{datum}~\mbox{$d
+  \in \mDataSet$}, where $\mDataSet$ denotes the set of \glspl{datum} in
+$\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq \mMatchSet$} denotes the set of
+\glspl{match} that can define~$d$.
 
 
 
 \subsubsection{Constraints}
-
-
-
 
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
