@@ -414,14 +414,13 @@
 % Set URLs in smaller font in bibliography
 \DeclareFieldFormat{url}{URL:~\small\url{#1}}
 
-% Set ISBN, ISSN, and DOI fields in normal font
-\DeclareFieldFormat{isbn}{ISBN:~#1}
-\DeclareFieldFormat{issn}{ISSN:~#1}
-\DeclareFieldFormat{doi}{DOI:~#1}
+% Set URL field in normal font
+\DeclareFieldFormat{url}{\textsc{url}:~#1}
 
 % Use "Doctoral thesis" instead of "PhD thesis"
 \DefineBibliographyStrings{english}{%
   phdthesis={doctoral thesis},
+  urlseen={accessed},
 }
 
 % Prevent pagebreaks within entries
