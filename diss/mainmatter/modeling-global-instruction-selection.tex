@@ -94,21 +94,30 @@ denotes the set of \glspl{match} that can define~$d$.
 
 \subsubsection{Constraints}
 
-The \gls{constraint} that every \glspl{operation} be covered is modeled as
+The \gls{constraint} that every \gls{operation} must be covered is modeled as
 %
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
-  \forall o \in \mOpSet\hspace{-1pt},
-  \forall m \in \mMatchSet[o]\hspace{-1pt}.
+  \forall o \in \mOpSet \hspace{-1pt},
+  \forall m \in \mMatchSet[o] \hspace{-1pt}.
   \labelEquation{operation-coverage}
 \end{equation}
+%
+Hence an \gls{operation}~$o$ is covered by a match~$m$ if and only if $m$ is
+selected.
 
+Likewise, the \gls{constraint} that every \gls{datum} must be defined is modeled
+as
+%
 \begin{equation}
   \mVar{dmatch}[d] = m \mEq \mVar{sel}[m],
-  \forall d \in \mDatumSet,
-  \forall m \in \mMatchSet[d]
+  \forall d \in \mDatumSet \hspace{-1.5pt},
+  \forall m \in \mMatchSet[d].
   \labelEquation{data-definitions}
 \end{equation}
+%
+Hence a \gls{datum}~$d$ is defined by a match~$m$ if and only if $m$ is
+selected.
 
 
 
