@@ -8,10 +8,19 @@
         {Modeling Global\\ Instruction Selection}
 \labelChapter{modeling-global-instruction-selection}
 
-\todo{write summary}
+This chapter describes the part of the \gls{constraint model} which captures
+\gls{global.is} \gls{instruction selection}.
+%
+\RefSection{modeling-operation-coverage-and-data-definitions} describes modeling
+of \gls{operation} coverage and \glspl{datum} definitions.
+%
+\RefSection{forbidding-cyclic-data-dependencies} describes how to forbid
+selection of \glspl{match} that will lead to cyclic data dependencies.
+
 
 
 \section{Modeling Operation Coverage and Data Definitions}
+\labelSection{modeling-operation-coverage-and-data-definitions}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
 selected such that every \gls{operation} in a given \gls{UF graph} is covered.
@@ -122,6 +131,7 @@ selected.
 
 
 \section{Forbidding Cyclic Data Dependencies}
+\labelSection{forbidding-cyclic-data-dependencies}
 
 \subsubsection{Constraints}
 
