@@ -2,6 +2,7 @@
 ** TODO Add forward references from Chap 2 to appendices
 ** TODO Fix bad page breaks
 ** TODO Fix figure placements
+** TODO Fix bad kerning, especially in math
 ** TODO Fix paragraphs ending with only one word on last line
 ** TODO Remove 'electronic' document class option
 ** TODO In appendices, swap typesetting convention of terminals and nonterminals
