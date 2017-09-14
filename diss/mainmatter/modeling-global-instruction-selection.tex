@@ -79,25 +79,27 @@ $\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
 \mbox{$\neg\mVar{sel}[m]$}.
 
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
-which selected \gls{match} covers \gls{operation}~\mbox{$o \in \mOpSet$}, where
-$\mOpSet$ denotes the set of \glspl{operation} in $\mUFGraph$, and
-\mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set of \glspl{match}
-that can cover~$o$.
+which selected \gls{match} covers \gls{operation}~\mbox{$o \in
+  \mOpSet$\hspace{-1pt}}, where $\mOpSet$ denotes the set of \glspl{operation}
+in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set
+of \glspl{match} that can cover~$o$.
 %
 Similarly, the set of \glspl{variable} \mbox{$\mVar{dmatch}[d] \in
   \mMatchSet[o]$} models which selected \gls{match} defines \gls{datum}~\mbox{$d
-  \in \mDatumSet$}, where $\mDatumSet$ denotes the set of \glspl{datum} in
-$\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq \mMatchSet$} denotes the set of
-\glspl{match} that can define~$d$.
+  \in \mDatumSet$\hspace{-1.5pt}}, where $\mDatumSet$ denotes the set of
+\glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq \mMatchSet$}
+denotes the set of \glspl{match} that can define~$d$.
 
 
 
 \subsubsection{Constraints}
 
+The \gls{constraint} that every \glspl{operation} be covered is modeled as
+%
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
-  \forall o \in \mOpSet,
-  \forall m \in \mMatchSet[o]
+  \forall o \in \mOpSet\hspace{-1pt},
+  \forall m \in \mMatchSet[o]\hspace{-1pt}.
   \labelEquation{operation-coverage}
 \end{equation}
 

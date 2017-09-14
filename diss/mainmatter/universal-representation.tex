@@ -841,9 +841,11 @@ candidates under consideration for being added to $s$ is computed as follows.
     \left\{
     \begin{array}{ll}
         \mSetBuilder{\mPair{n}{m}}{n \in \fTout, m \in \pTout}
-      & \text{if} \ \fTout \neq \emptyset \mAnd \pTout \neq \emptyset, \\
+      & \text{if} \ \fTout \neq \emptyset \mAnd \pTout \neq \emptyset
+        \hspace{-1pt}, \\
         \mSetBuilder{\mPair{n}{m}}{n \in \fTin, m \in \pTin}
-      & \text{if} \ \fTin \neq \emptyset \mAnd \pTin \neq \emptyset, \\
+      & \text{if} \ \fTin \neq \emptyset \mAnd \pTin \neq \emptyset
+        \hspace{-1pt}, \\
         \mSetBuilder{\mPair{n}{m}}{
                                     n \in \fN \setminus \fN(s),
                                     m \in \pN \setminus \pN(s)
