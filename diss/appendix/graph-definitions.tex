@@ -36,9 +36,9 @@ then the \gls{graph} is a \gls!{multigraph}, otherwise it is a \gls!{simple.g}
 A sequence of \glspl{edge} that describe how to get from one \gls{node} to
 another is called a \gls!{path}.
 %
-More formally, we define a \gls{path} between two \glspl{node}~$n$ and $m$ as an
-ordered sequence of \glspl{edge}~\mbox{$p = \mSequence{e_1, \ldots, e_l}$} such
-that for a \gls{directed.g} \gls{graph}~\mbox{$\mPair{N}{E}$}, \mbox{$e_i \in E,
+More formally, we define a \gls{path} between two \glspl{node}~$n$ and $m$ in a
+\gls{directed.g} \gls{graph}~\mbox{$\mPair{N}{E}$} as an ordered
+sequence~\mbox{$p = \mSequence{e_1, \ldots, e_l}$} for which \mbox{$e_i \in E,
   \forall e_i \in p$}, and \mbox{$\mTarget(e_i) = \mSource(e_{i+1}), \forall 1
   \leq i < l-1$}.
 %
