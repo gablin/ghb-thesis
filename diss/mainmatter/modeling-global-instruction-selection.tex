@@ -112,8 +112,8 @@ The \gls{constraint} that every \gls{operation} must be covered is modeled as
   \labelEquation{operation-coverage}
 \end{equation}
 %
-Hence an \gls{operation}~$o$ is covered by a match~$m$ if and only if $m$ is
-selected.
+In other words, an \gls{operation}~$o$ is covered by a match~$m$ if and only if
+$m$ is selected.
 
 Likewise, the \gls{constraint} that every \gls{datum} must be defined is modeled
 as
@@ -125,8 +125,8 @@ as
   \labelEquation{data-definitions}
 \end{equation}
 %
-Hence a \gls{datum}~$d$ is defined by a match~$m$ if and only if $m$ is
-selected.
+In other words, a \gls{datum}~$d$ is defined by a match~$m$ if and only if $m$
+is selected.
 
 
 
@@ -188,20 +188,37 @@ An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
 %
 If both \glspl{match} are selected, then either value~\irVar{p}[2] or
 value~\irVar{q}[2] will be used before it is available (depending on the
-instruction order), hence resulting in incorrect code.
+instruction order), thus resulting in incorrect code.
 %
 Consequently, such combinations must be identified and forbidden.
 
-\todo{write}
+We detect such combinations -- which could involve more than two \glspl{match}
+-- by first constructing a \gls!{dependency graph}, where each \gls{node}
+represents a \gls{match} and each directed \gls{edge}~$\mPair{n}{m}$ indicates
+that \gls{match}~$m$ uses \glspl{datum} produced by \gls{match}~$n$.
+%
+A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
+which will lead to a cyclic data dependency if all \glspl{match} are selected.
+%
+Hence, we find all \glspl{cycle} in the \gls{dependency graph} -- we applied
+\citeauthor{Johnson:1975}'s algorithm for this task~\cite{Johnson:1975} -- and
+add \glspl{constraint} forbidding selection of all \glspl{match} appearing in a
+\gls{cycle}.
 
 
 
 \subsubsection{Constraints}
 
-\todo{write}
-
+Given a set~\mbox{$\mForbiddenCombSet \subseteq \mPowerset{\mMatchSet}$} of
+\glspl{cycle} found for the \gls{dependency graph} built from a \gls{UF graph}
+and \gls{match set}, the \gls{constraint} forbidding cyclic data dependencies is
+modeled as
+%
 \begin{equation}
   \sum_{m \in f} \mVar{sel}[m] < \mCard{f},
-  \forall f \in \mForbiddenCombSet
+  \forall f \in \mForbiddenCombSet.
   \labelEquation{cyclic-data-deps}
 \end{equation}
+%
+In other words, the number of selected \glspl{match} must be strictly less than
+the number of \gls{match} appearing in the \gls{cycle}.
