@@ -185,25 +185,57 @@
 
 \newacronym{SAT}{Boolean satisfiability}
 
+\newterm{child}[see={node}]
 \newterm{cycle}
 \newacronym{DAG}{directed acyclic graph}
 \newterm{edge}
+\newterm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
+\newterm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
+\newterm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
+\newterm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
 \newterm{edge number}
 \newterm[inbound.en]{inbound}[parent={edge number}]
 \newterm[outbound.en]{outbound}[parent={edge number}]
 \newterm{edge splitting}[user1={split}]
+\newterm{forest}
 \newterm{graph}
+\newterm[connected.g]{connected}[parent={graph}]
+\newterm[directed.g]{directed}[parent={graph}]
+\newterm[ordered.g]{ordered}[parent={graph}]
+\newterm[simple.g]{simple}[parent={graph}]
+\newterm[strongly connected.g]{strongly connected}[parent={graph}]
+\newterm[undirected.g]{undirected}[parent={graph}]
+\newterm[weakly connected.g]{weakly connected}[parent={graph}]
+\newterm{graph homomorphism}
+\newterm{graph isomorphism}
 \newterm{independent set}
 \newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
+\newterm{leaf}[plural={leaves}, see={node}]
+\newterm{loop edge}[see={loop}]
+\newterm{loop}[see={loop edge}]
+\newterm{multigraph}
 \newterm{node}
+\newterm[adjacent.n]{adjacent}[parent={node}]
+\newterm[connected.n]{connected}[parent={node}]
 \newterm[fixed.n]{fixed}[parent={node}]
 \newterm{node duplication}[user1={duplicat}]% The short term is without the
                                             % ending 'e' in order to be used in
                                             % words like 'duplicate' and
                                             % 'duplicating'.
+\newterm{parent}[see={node}]
+\newterm{path}
+\newterm{root}[see={node}]
+\newterm{source}
 \newterm{subgraph}
 \newterm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
+\newterm{subtree}[see={tree}]
 \newterm{super node}
+\newterm{target}
+\newterm{topological sort}
+\newterm{tree}
+\newterm[directed.t]{directed}[parent={tree}]
+\newterm[rooted directed.t]{rooted directed}[parent={tree}]
+\newterm{vertex}[plural={vertices}, see={node}]
 
 \newterm[Glasgow]{\toolFont{Glasgow}}[sort={Glasgow}]
 \newterm[LAD]{\toolFont{LAD}}[sort={LAD}]

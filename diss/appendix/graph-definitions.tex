@@ -6,3 +6,147 @@
 
 \chapter{Graph Definitions}
 \labelAppendix{graph-definitions}
+
+\todo{write summary}
+
+A \gls!{graph} is defined as a tuple~\mbox{$\mPair{N}{E}$} where $N$ is a set of
+\glspl!{node} (also known as \glspl!{vertex}) and $E$ is a set of \glspl!{edge},
+each consisting of a pair of \glspl{node}~\mbox{$n, m \in N$}.
+%
+A \gls{graph} is \gls!{undirected.g} if its \glspl{edge} have no direction, and
+\gls!{directed.g} if they do.
+%
+In a \gls{directed.g} \gls{graph}, an \gls{edge}~$e$ from a \gls{node}~$n$ to
+another \gls{node}~$m$ is written \mbox{$\mPair{n}{m}$} and we say that $e$ is
+\gls!{outgoing.e} (or \gls!{outbound.e}) with respect to~$n$, and
+\gls!{ingoing.e} (or \gls!{inbound.e}) with respect to~$m$.
+%
+We also call $n$ and $m$ the \gls!{source} and \gls!{target}, respectively, of
+$e$, and introduce two functions, \mbox{$\mSource \! : E \rightarrow N$} and
+\mbox{$\mTarget \! : E \rightarrow N$}, that respectively returns an
+\gls{edge}'s \gls{source} and \gls{target}.
+%
+\Glspl{edge} for which \mbox{$\mSource(e) = \mTarget(e)$} are known as
+\glspl!{loop edge} (or simply \glspl!{loop}).
+%
+If there exists more than one \gls{edge} between the same pair of \glspl{node}
+then the \gls{graph} is a \gls!{multigraph}, otherwise it is a \gls!{simple.g}
+\gls{graph}.
+
+A sequence of \glspl{edge} that describe how to get from one \gls{node} to
+another is called a \gls!{path}.
+%
+More formally, we define a \gls{path} between two \glspl{node}~$n$ and $m$ as an
+ordered sequence of \glspl{edge}~\mbox{$p = \mSequence{e_1, \ldots, e_l}$} such
+that for a \gls{directed.g} \gls{graph}~\mbox{$\mPair{N}{E}$}, \mbox{$e_i \in E,
+  \forall e_i \in p$}, and \mbox{$\mTarget(e_i) = \mSource(e_{i+1}), \forall 1
+  \leq i < l-1$}.
+%
+\Glspl{path} for \gls{undirected.g} \glspl{graph} are similarly defined and
+will thus be skipped.
+%
+A \gls{path} for which \mbox{$\mSource(e_1) = \mTarget(e_l)$} is known as a
+\gls!{cycle}.
+%
+Two \glspl{node}~$n$ and~$m$, where \mbox{$n \neq m$}, are said to be
+\gls!{connected.n} if there exists a \gls{path} from $n$ to~$m$, and if the
+\gls{path} is of length~1 then $n$ and $m$ are also \gls!{adjacent.n}.
+%
+A \gls{directed.g} \gls{graph} containing no \glspl{cycle} is known as a
+\glsreset{DAG}\gls!{DAG}.
+%
+An \gls{undirected.g} \gls{graph} is \gls!{connected.g} if and only if there
+exists a \gls{path} for every distinct pair of \glspl{node}.
+%
+For completeness, a \gls{directed.g} \gls{graph} is \gls!{strongly connected.g}
+iff, for every pair of distinct \glspl{node}~$n$ and~$m$, there exists a
+\gls{path} from $n$ to $m$ and a \gls{path} from $m$ to $n$.
+%
+Also, a \gls{directed.g} \gls{graph} is \gls!{weakly connected.g} if replacing
+all \glspl{edge} with \gls{undirected.g} \glspl{edge} yields a \gls{connected.g}
+\gls{undirected.g} \gls{graph}.
+%
+An example is shown in \refFigure{graph-example}.
+
+\begin{figure}
+  \centering%
+  \input{figures/graph-definitions/graph-example}
+
+  \caption[Example of two simple directed graphs]%
+          {%
+            An example of two simple, directed graphs~$G_m$ and~$G_n$.
+            %
+            Through the graph homomorphism~$f$ we see that $G_m$ is an
+            isomorphic subgraph of~$G_n$.
+            %
+            Both graphs are weakly connected, and $G_n$ also has a strongly
+            connected subgraph, consisting of $n_2$, $n_3$, and~$n_4$ which form
+            a cycle%
+          }%
+          \labelFigure{graph-example}%
+\end{figure}
+
+A \gls{simple.g}, \gls{undirected.g} \gls{graph} that is \gls{connected.g},
+contains no \glspl{cycle}, and has exactly one \gls{path} between any two
+\glspl{node}, is called a \gls!{tree}.
+%
+A set of \glspl{tree} constitutes a \gls!{forest}.
+%
+\Glspl{node} in a \gls{tree} with exactly one neighbor are known as
+\glspl!{leaf}.
+%
+A \gls!{directed.t}[ \gls{tree}] is a \gls{directed.g} \gls{graph} that would
+become a \gls{tree} when ignoring the direction of its \glspl{edge}.
+%
+A \gls!{rooted directed.t}[ \gls{tree}] is a \gls{directed.t} \gls{tree} where
+one \gls{node} has been assigned as \gls!{root} and all \glspl{edge} either
+point away or towards the \gls{root}.
+%
+In a \gls{rooted directed.t} \gls{tree}, a \gls!{parent} of a \gls{node}~$n$ is
+the \gls{node} \gls{adjacent.n} to $n$ that is closest to the \gls{root}.
+%
+Likewise, if a node~$n$ is the parent of another node~$m$, then $m$ is a
+\gls!{child} of $n$.
+%
+In this dissertation, we assume all \glspl{tree} to be \gls{rooted directed.t}
+\glspl{tree}, and a \gls{tree} will always be drawn with its \gls{root}
+appearing at the top.
+
+A \gls{graph}~\mbox{$G = \mPair{N}{E}$} is a \gls!{subgraph} of another
+\gls{graph}~\mbox{$G' = \mPair{N'}{E'}$}, also written as \mbox{$G \subseteq
+  G'$}, iff \mbox{$N \subseteq N'$} and \mbox{$E \subseteq E'$}.
+%
+Likewise, a \gls{tree}~$T$ is a \gls!{subtree} of another \gls{tree}~$T'$ iff
+\mbox{$T \subseteq T'$}.
+
+A \gls!{graph homomorphism} is a mapping between two \glspl{graph} such that
+their structure is preserved.
+%
+More formally, a \gls{graph homomorphism}~$f$ from a \gls{graph}~\mbox{$G =
+  \mPair{N}{E}$} to another \gls{graph} ~\mbox{$G' = \mPair{N'}{E'}$} is a
+mapping $f : N \rightarrow N'$ such that \mbox{$\mSet{u, v} \in E$} implies
+\mbox{$\mSet{f(u), f(v)} \in E'$}.
+%
+If the \gls{graph homomorphism}~$f$ is an injective function, then $f$ is also
+called a \gls!{subgraph isomorphism}.
+%
+If there exists such a mapping then we say that $G$ is an \emph!{isomorphic
+  \gls{subgraph}} of~$G'$, and an example of this is given in
+\refFigure{graph-example}.
+%
+If $f$ is a bijection, whose inverse function is also a \gls{graph
+  homomorphism}, then $f$ is also called a \gls!{graph isomorphism}.
+
+Lastly we introduce the notion of \gls!{topological sort}, where the
+\glspl{node} of a \gls{graph}~\mbox{$\mPair{N}{E}$} are arranged in an ordered
+sequence~\mbox{$\mSequence{n_1, \ldots, n_n}$} such that \mbox{$n_i \in N,
+  \forall 1 \leq i \leq n$}, and for no pair of \glspl{node}~$n_i$ and $n_j$,
+where \mbox{$i < j$}, does there exist an \gls{edge} \mbox{$\mPair{n_j}{n_i} \in
+  E$}.
+%
+In other words, if the \glspl{edge} are added to the list then all \glspl{edge}
+will go point forward from left to right (hence \glspl{topological sort} are
+only defined for \glspl{DAG}).
+%
+Several methods exists for achieving a \gls{topological sort}, see for example
+in \textcite[Sect.\thinspace22.4]{CormenEtAl:2009}.

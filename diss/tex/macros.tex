@@ -239,6 +239,11 @@
 \newcommand{\transp}{\mathsf{T}}
 \newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
+\NewDocumentCommand{\mSequence}{sm}{
+  \IfBooleanT{#1}{\left}\langle
+    #2
+  \IfBooleanT{#1}{\right}\rangle
+}
 \NewDocumentCommand{\mSet}{sm}{
   \IfBooleanT{#1}{\left}\{
     #2
@@ -289,6 +294,8 @@
 \DeclareMathOperator{\mPred}{\mFunFont{pred}}
 \DeclareMathOperator{\mRank}{\mFunFont{rank}}
 \DeclareMathOperator{\mSucc}{\mFunFont{succ}}
+\DeclareMathOperator{\mSource}{\mFunFont{source}}
+\DeclareMathOperator{\mTarget}{\mFunFont{target}}
 
 
 

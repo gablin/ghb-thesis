@@ -1,0 +1,60 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{20pt}
+\setlength{\opNodeSize}{16pt}
+\begin{tikzpicture}[
+    node/.style={
+      op node,
+      minimum size=0.8\opNodeSize,
+      node distance=0.8\opNodeDist,
+    },
+    edge/.style={
+      data flow,
+    },
+    mapping/.style={
+      data flow,
+      dashed,
+      shorten >=4pt,
+      shorten <=6pt,
+    },
+    graph label/.style={
+      nothing,
+      node distance=1em,
+    },
+  ]
+
+  % Graph m
+  \node [node] (m1) {$m_1$};
+  \node [node, below=of m1] (m2) {$m_2$};
+  \node [node, position=-120 degrees from m2] (m3) {$m_3$};
+  \begin{scope}[edge]
+    \draw (m1) -- coordinate (m12) (m2);
+    \draw (m2) -- coordinate (m23) (m3);
+  \end{scope}
+  \node [graph label, above=of m1] {$G_m$};
+
+  % Graph n
+  \node [node, right=3\opNodeDist of m1] (n1) {$n_1$};
+  \node [node, below=of n1] (n2) {$n_2$};
+  \node [node, position=-120 degrees from n2] (n3) {$n_3$};
+  \node [node, position=-60 degrees from n2] (n4) {$n_4$};
+  \begin{scope}[edge]
+    \draw (n1) -- coordinate (n12) (n2);
+    \draw (n2) -- coordinate (n23) (n3);
+    \draw (n3) -- (n4);
+    \draw (n4) -- (n2);
+  \end{scope}
+  \node [graph label, above=of n1] {$G_n$};
+
+  % Mappings
+  \foreach \i in {1, ..., 3} {%
+    \draw [mapping] (m\i) -- node [above] {$f$} (n\i);
+  }
+\end{tikzpicture}%
+\endgroup%
