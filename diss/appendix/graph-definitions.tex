@@ -14,10 +14,12 @@ each consisting of a pair of \glspl{node}~\mbox{$n, m \in N$}.
 A \gls{graph} is \gls!{undirected.g} if its \glspl{edge} have no direction, and
 \gls!{directed.g} if they do.
 %
-In a \gls{directed.g} \gls{graph}, an \gls{edge}~$e$ from a \gls{node}~$n$ to
-another \gls{node}~$m$ is written \mbox{$\mPair{n}{m}$} and we say that $e$ is
-\gls!{outgoing.e} (or \gls!{outbound.e}) with respect to~$n$, and
-\gls!{ingoing.e} (or \gls!{inbound.e}) with respect to~$m$.
+\Glspl{edge} with a direction are written $\mPair{n}{m}$, and \glspl{edge}
+without are written $\mSet{n, m}$.
+%
+In a \gls{directed.g} \gls{graph}, we say that an \gls{edge}~\mbox{$e =
+  \mPair{n}{m}$} $e$ is \gls!{outgoing.e} (or \gls!{outbound.e}) with respect
+to~$n$, and \gls!{ingoing.e} (or \gls!{inbound.e}) with respect to~$m$.
 %
 We also call $n$ and $m$ the \gls!{source} and \gls!{target}, respectively, of
 $e$, and introduce two functions, \mbox{$\mSource \! : E \rightarrow N$} and
