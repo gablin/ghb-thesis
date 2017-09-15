@@ -7,8 +7,6 @@
 \chapter{Graph Definitions}
 \labelAppendix{graph-definitions}
 
-\todo{write summary}
-
 A \gls!{graph} is defined as a tuple~\mbox{$\mPair{N}{E}$} where $N$ is a set of
 \glspl!{node} (also known as \glspl!{vertex}) and $E$ is a set of \glspl!{edge},
 each consisting of a pair of \glspl{node}~\mbox{$n, m \in N$}.
@@ -113,8 +111,8 @@ In this dissertation, we assume all \glspl{tree} to be \gls{rooted directed.t}
 appearing at the top.
 
 A \gls{graph}~\mbox{$G = \mPair{N}{E}$} is a \gls!{subgraph} of another
-\gls{graph}~\mbox{$G' = \mPair{N'}{E'}$}, also written as \mbox{$G \subseteq
-  G'$}, iff \mbox{$N \subseteq N'$} and \mbox{$E \subseteq E'$}.
+\gls{graph}~\mbox{$G' = \mPair{N'}{E'}$}, written \mbox{$G \subseteq G'$}, iff
+\mbox{$N \subseteq N'$} and \mbox{$E \subseteq E'$}.
 %
 Likewise, a \gls{tree}~$T$ is a \gls!{subtree} of another \gls{tree}~$T'$ iff
 \mbox{$T \subseteq T'$}.
@@ -130,12 +128,12 @@ mapping $f : N \rightarrow N'$ such that \mbox{$\mSet{u, v} \in E$} implies
 If the \gls{graph homomorphism}~$f$ is an injective function, then $f$ is also
 called a \gls!{subgraph isomorphism}.
 %
-If there exists such a mapping then we say that $G$ is an \emph!{isomorphic
-  \gls{subgraph}} of~$G'$, and an example of this is given in
-\refFigure{graph-example}.
+If there exists such a mapping then we say that $G$ is an
+\glsshort!{isomorphism}[ \gls{subgraph}] of~$G'$, and an example of this is
+given in \refFigure{graph-example}.
 %
 If $f$ is a bijection, whose inverse function is also a \gls{graph
-  homomorphism}, then $f$ is also called a \gls!{graph isomorphism}.
+  homomorphism}, then $f$ is called a \gls!{graph isomorphism}.
 
 Lastly we introduce the notion of \gls!{topological sort}, where the
 \glspl{node} of a \gls{graph}~\mbox{$\mPair{N}{E}$} are arranged in an ordered
