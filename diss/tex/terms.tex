@@ -25,14 +25,17 @@
 \newterm{instruction selector}
 \newterm{instruction scheduler}
 \newterm{instruction scheduling}
-\newacronym{IR}{intermediate representation}
+\newterm{IR}%
+        [description={intermediate representation},
+        first={intermediate representation~(IR)}]
 \newterm{loop unrolling}
 \newterm{middle-end}[see={optimizer}]
 \newterm{optimizer}[see={middle-end}]
 \newterm{register allocation}
 \newterm{register allocator}
 \newterm{register spilling}
-\newacronym{SSA}{static single assignment}
+\newterm{SSA}%
+        [first={static single assignment~(SSA)}]
 \newterm{value reuse}
 
 \newterm{basic block}[see={block}]
@@ -42,21 +45,28 @@
 \newterm[phi-function]{\mbox{$\mPhi$-function}}[sort={$\mPhi$-function}]
 \newterm{program}
 
-\newacronym{ASIP}{application-specific instruction set processor}
+\newacronym{ASIP}%
+           {application-specific instruction set processor}%
+\newacronym{CISC}%
+           {complex instruction-set computer}%
 \newacronym{DSP}%
            {digital signal processor}%
-           [firstplural={digital signal processors (DSPs)}]
 \newterm{instruction}
-\newterm[SIMD.instr]%
-        {SIMD}%
-        [first={single-instruction, multiple-data (SIMD)}, parent={instruction}]
+\newacronym[SIMD.instr]%
+           {SIMD}%
+           {single-instruction, multiple-data}%
+           [parent={instruction}]
 \newterm{instruction set}
 \newterm{machine description}
+\newterm{MIPS}
 \newterm{register}
+\newacronym{RISC}%
+           {reduced instruction-set computer}%
 \newterm{target machine}[user1={target}]
 \newterm{temporary}[plural={temporaries}]
 \newterm[virtual.temp]{virtual}[parent={temporary}]
-\newacronym{VLIW}{very long instruction word}
+\newacronym{VLIW}%
+           {very long instruction word}
 
 \newterm{context-free grammar}
 \newterm{grammar}[see={machine grammar}]
@@ -120,7 +130,8 @@
 \newterm{UP graph}[first={universal pattern (UP) graph}, user1={UP}]
 \newterm{value node}[user1={value}]
 
-\newacronym{BURS}{bottom-up rewriting system}
+\newterm{BURS}%
+        [first=bottom-up rewriting system~(BURS)]
 \newterm{combinatorial approach}%
         [user1={combinatorial}, plural={combinatorial approaches}]
 \newterm{maximum munch}
@@ -130,7 +141,9 @@
 \newterm{decision variable}[see={variable}, user1={variable}, user2={variables}]
 \newterm{solver}
 
-\newacronym{CP}{constraint programming}
+\newterm{CP}%
+        [description={constraint programming},
+         first={constraint programming~(CP)}]
 \newterm{branch and bound}[user3={branch-and-bound}]
 \newterm{branching strategy}[plural={branching strategies}]
 \newterm{circuit constraint}[user1={circuit}]
@@ -173,17 +186,25 @@
 
 \newterm{magic sequence problem}
 
-\newacronym{MIS}{maximal independent set}
-\newacronym{MWIS}{maximal/minimal weighted independent set}
+\newterm{MIS}%
+        [first={maximal independent set~(MIS)},
+         firstplural={maximal independent sets~(MISs)}]
+\newterm{MWIS}%
+        [first={maximal/minimal weighted independent set~(MWIS)},
+         firstplural={maximal/minimal weighted independent sets (MWISs)}]
 
-\newacronym{PBQP}{partitioned Boolean quadratic problem}
-\newacronym{QAP}{quadratic assignment problem}
+\newterm{PBQP}%
+        [first={partitioned Boolean quadratic problem~(PBQP)}]
+\newterm{QAP}%
+        [first={quadratic assignment problem~(QAP)}]
 
-\newacronym{IP}{integer programming}
+\newterm{IP}%
+        [first={integer programming~(IP)}]
 \newterm{Horn clause}
 \newterm{integer linear programming}
 
-\newacronym{SAT}{Boolean satisfiability}
+\newterm{SAT}%
+        [first={Boolean satisfiability~(SAT)}]
 
 \newterm{child}[see={node}]
 \newterm{cycle}
@@ -241,14 +262,18 @@
 \newterm[LAD]{\toolFont{LAD}}[sort={LAD}]
 \newterm[VF2]{\toolFont{VF2}}[sort={VF2}]
 
-\newacronym{FRT}{factorized register transfer}
+\newterm{FRT}%
+        [first=factorized register transfer (FRT),
+         firstplural=factorized register transfers (FRTs)]
 
+\newterm{principle}
 \newterm{macro expansion}
 \newterm{tree covering}
 \newterm{DAG covering}
 \newterm{graph covering}
 
-\newterm{instruction characteristic}
+\newterm{instruction characteristic}%
+        [user1={characteristic}, user2={characteristics}]
 \newterm[single-output.ic]%
         {single-output}%
         [parent={instruction characteristic}]

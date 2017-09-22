@@ -484,14 +484,18 @@
 % Commands for introducing terms and acronyms
 \NewDocumentCommand{\newterm}{omO{}}{%
   \IfNoValueTF{#1}{%
-    \newglossaryentry{#2}{name={#2}, description=\nopostdesc, #3}%
+    \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
   }{%
-    \newglossaryentry{#1}{name={#2}, description=\nopostdesc, #3}%
+    \newglossaryentry{#1}{name={#2}, description={#2}, #3}%
   }%
 }
 \let\oldnewacronym\newacronym
-\RenewDocumentCommand{\newacronym}{mmO{}}{%
-  \oldnewacronym[sort={#2},#3]{#1}{#1}{#2}%
+\RenewDocumentCommand{\newacronym}{ommO{}}{%
+  \IfNoValueTF{#1}{%
+    \oldnewacronym[sort={#3},#4]{#2}{#2}{#3}%
+  }{%
+    \oldnewacronym[sort={#3},#4]{#1}{#2}{#3}%
+  }%
 }
 
 % Commands for referring to a short version of a term or acronym
@@ -523,7 +527,7 @@
 \renewcommand{\glossaryname}{Index}
 
 % Restore long expansion of acronyms on first use
-\setabbreviationstyle[acronym]{long-short}
+\setabbreviationstyle[acronym]{short-long}
 
 
 
