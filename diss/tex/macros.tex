@@ -453,6 +453,15 @@
 % Disable hyperlinks from terms to index
 \glsdisablehyper
 
+% Add new field to glossary entries
+\glsaddkey{indextext}%
+          {\relax}%
+          {\glsentryindextext}%
+          {\Glsentryindextext}%
+          {\glsindextext}%
+          {\Glsindextext}%
+          {\GLSindextext}
+
 % Customize glossary style
 \newglossarystyle{myglossary}{%
   \setglossarystyle{mcolindex}
@@ -460,7 +469,16 @@
   \renewcommand*{\glstreenamefmt}[1]{##1}
   \renewcommand*{\glossentry}[2]{%
      \item\glsentryitem{##1}%
-       \glstreenamefmt{\glstarget{##1}{\glsentryfirst{##1}}}%
+       \glstreenamefmt{%
+         \glstarget{##1}{%
+           \glsletentryfield{\tmp}{##1}{indextext}%
+           \if\tmp\relax%
+             \glsentryfirst{##1}%
+           \else%
+             \glsentryindextext{##1}%
+           \fi%
+         }%
+       }%
        \space\hfill\space##2%
   }
   \renewcommand{\subglossentry}[3]{%
@@ -492,9 +510,9 @@
 \let\oldnewacronym\newacronym
 \RenewDocumentCommand{\newacronym}{ommO{}}{%
   \IfNoValueTF{#1}{%
-    \oldnewacronym[sort={#3},#4]{#2}{#2}{#3}%
+    \oldnewacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
   }{%
-    \oldnewacronym[sort={#3},#4]{#1}{#2}{#3}%
+    \oldnewacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
   }%
 }
 
