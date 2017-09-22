@@ -9,9 +9,10 @@
 
 This chapter introduces terminology and relevant background.
 %
-\RefSection{ex-isel-rep-refining-instruction-selection-into-a-graph-problem}
-refines \gls{instruction selection} into a graph problem and provides many
-definitions that will be used throughout the dissertation.
+\RefSection{ex-isel-rep-instr-chars-principles} introduces a set of
+\glspl{instruction characteristic} together with fundamental \glspl{principle}
+of \gls{instruction selection}, thus providing many of the definitions used for
+the remainder of the dissertation.
 %
 \refSection{ex-isel-rep-traditional-approaches} discusses existing
 \glspl{traditional approach} to \gls{instruction selection}, and
@@ -30,7 +31,104 @@ The model is then solved using either complete methods or greedy heuristics.
 Lastly, \refSection{ex-isel-rep-limitations-of-existing-approaches} discusses
 limitations of these approaches.
 
-For the full survey, see \refAppendixRange{macro-expansion}{graph-covering}.
+
+
+\section{Instruction Characteristics and Principles of Instruction Selection}
+\labelSection{ex-isel-rep-instr-chars-principles}
+
+\Gls{instruction selection} has been actively researched in over four decades --
+the first publications began to appear at the end of the 1960s -- and advances
+are continuously made as processors become more complex.
+%
+When surveying the existing methods, it was discovered that essentially all
+apply one of four fundamental \glspl!{principle} of \gls{instruction selection}
+-- \gls{macro expansion}, \gls{tree covering}, \gls{DAG covering}, and
+\gls{graph covering} -- and that their capabilities can be compared in terms of
+handling \glspl{instruction} with five \glsplshort!{instruction characteristic}
+-- \gls{single-output.ic}, \gls{multi-output.ic}, \gls{disjoint-output.ic},
+\gls{inter-block.ic}, and \gls{interdependent.ic} \glspl{instruction}.
+%
+We first introduce the \gls{instruction characteristic} and then the
+\gls{principle}, together with a discussion of how the existing methods are
+categorized according to these concepts.
+%
+As a complete comparison is superfluous for understanding the rest of the
+dissertation, only a brief discussion is given in this chapter for sake of
+brevity.
+%
+For the full discussion, see \refAppendixRange{macro-expansion}{graph-covering}.
+
+
+
+\subsubsection{Single-Output Instructions}
+
+The simplest kind of \gls{instruction} forms the set of
+\glspl!{single-output.ic} \glspl{instruction}.
+%
+These produce only a single observable output, in the sense that ``observable''
+means a value that can be read and accessed by the \gls{assembly code}.
+%
+This includes all \glspl{instruction} that implement a single operation (such as
+addition, multiplication, and bit operations), but it also includes more
+complicated \glspl{instruction} that implement several operations (such as
+memory operations with complicated addressing modes).
+%
+As long as the observable output constitutes a single value, a
+\gls{single-output.ic} \gls{instruction} can be arbitrarily complex.
+
+This class comprises the majority of \glspl{instruction} in most
+\glspl{instruction set}, and in simple \glspl{RISC}, such as \gls{MIPS}
+architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
+\glspl{instruction}. Naturally, all \glspl{instruction selector} are expected to
+support this kind of \gls{instruction}.
+
+
+
+\subsubsection{Multi-Output Instructions}
+
+\todo{write}
+
+
+
+\subsubsection{Disjoint-Output Instructions}
+
+\todo{write}
+
+
+
+\subsubsection{Inter-Block Instructions}
+
+\todo{write}
+
+
+
+\subsubsection{Interdependent Instructions}
+
+\todo{write}
+
+
+
+\subsubsection{Macro Expansion}
+
+\todo{write}
+
+
+
+\subsubsection{Tree Covering}
+
+\todo{write}
+
+
+
+\subsubsection{DAG Covering}
+
+\todo{write}
+
+
+
+\subsubsection{Graph Covering}
+
+\todo{write}
 
 
 
