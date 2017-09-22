@@ -179,9 +179,10 @@
           -|
           (phi-f);
 
-    \draw [rounded corners=10pt]
-          (c-above-n-1 -| phi-n)
-          --
+    \coordinate (above-phi-n) at (c-above-n-1 -| phi-n);
+    \draw [rounded corners=5pt]
+          ([xshift=-5pt] above-phi-n)
+          -|
           (phi-n);
 
     \draw [rounded corners=16pt]
