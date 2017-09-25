@@ -385,7 +385,8 @@ Applications of \gls{naive.me} \gls{macro expansion} and the
 \subsubsection{Tree Covering}
 \labelSection{ex-isel-rep-tree-covering}
 
-Beginning of 1970s, a new principle called \gls!{tree covering} began to emerge.
+Beginning of 1970s, a \gls{principle} called \gls!{tree covering} began to
+emerge.
 %
 Unlike \gls{macro expansion}, \gls{tree covering} approaches \gls{instruction
   selection} as a graph problem.
@@ -532,7 +533,30 @@ There is typically a strong correlation between the size of a \gls{cover} and
 its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 -- but this depends heavily on the properties of the \gls{target machine}.
 
-Applications of \gls{tree covering} are examined in \refAppendix{tree-covering}.
+\Gls{tree covering} has several advantages over \gls{macro expansion}.
+%
+First, modeling the \glspl{instruction} as \glspl{pattern} makes it simpler to
+capture the behavior of \gls{instruction} that cover multiple \glspl{operation}.
+%
+Second, as it separates \gls{selection} from \gls{matching}, tradeoffs in
+selecting certain combinations of \glspl{match} can be considered, which
+improves code quality.
+%
+Third, \gls{tree covering} can be based on a formal foundation which enables
+proof of completeness.
+%
+The main limitation of \gls{tree covering} is that because both the
+\glspl{function} and \glspl{instruction} must be modeled as \glspl{tree},
+\glspl{instruction selector} based on this \gls{principle} effectively only
+support \gls{single-output.ic} \glspl{instruction}.
+%
+Restricting oneself to \glspl{expression tree} may also lead to redundant code
+duplication, as will be explained in
+\refSection{ex-isel-rep-traditional-approaches}.
+
+This chapter covers the most well-known applications of \gls{tree covering}.
+%
+For the complete examination, see \refAppendix{tree-covering}.
 
 
 
