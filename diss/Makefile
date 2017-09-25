@@ -4,15 +4,21 @@
 # LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 # of the license).
 
-SRCTEX  := dissertation.tex
-SRCPDF  := $(SRCTEX:.tex=.pdf)
-LATEX   := latex
-LATEXMK := latexmk
+SRCTEX   := dissertation.tex
+SRCPDF   := $(SRCTEX:.tex=.pdf)
+LATEX    := latex
+LATEXMK  := latexmk -recorder -use-make -deps
 OKAY_TEXLIVE_VERSION := 2016
+DEPS_DIR := .deps
 
-.PHONY: $(SRCPDF)
+-include $(DEPS_DIR)/$(SRCTEX).d
+
+$(DEPS_DIR):
+	mkdir $@
+
 $(SRCPDF): check-environment
-	$(LATEXMK) -pdf $(SRCTEX)
+	if [ ! -e $(DEPS_DIR) ];then mkdir $(DEPS_DIR); fi
+	$(LATEXMK) -pdf -deps-out=$(DEPS_DIR)/$(SRCTEX).d $(SRCTEX)
 
 .PHONY: clean
 clean:
@@ -26,6 +32,7 @@ clean:
 .PHONY: distclean
 distclean: clean
 	$(LATEXMK) -C $(SRCTEX)
+	$(RM) -rf $(DEPS_DIR)
 
 .PHONY: check-environment
 check-environment:
