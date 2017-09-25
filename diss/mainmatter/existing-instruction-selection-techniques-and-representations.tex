@@ -42,11 +42,8 @@ are continuously made as processors become more complex.
 %
 When surveying the existing methods, it was discovered that essentially all
 apply one of four fundamental \glspl!{principle} of \gls{instruction selection}
--- \gls{macro expansion}, \gls{tree covering}, \gls{DAG covering}, and
-\gls{graph covering} -- and that their capabilities can be compared in terms of
-handling \glspl{instruction} with five \glsplshort!{instruction characteristic}
--- \gls{single-output.ic}, \gls{multi-output.ic}, \gls{disjoint-output.ic},
-\gls{inter-block.ic}, and \gls{interdependent.ic} \glspl{instruction}.
+and that their capabilities can be compared in terms of handling
+\glspl{instruction} with five \glsplshort!{instruction characteristic}.
 %
 We first introduce the \gls{instruction characteristic} and then the
 \gls{principle}, together with a discussion of how the existing methods are
@@ -59,6 +56,19 @@ dissertation.
 The full discussion is given in
 \refAppendixRange{macro-expansion}{graph-covering}, and a table listing all
 existing methods is given in \refAppendix{list-of-approaches}.
+
+
+
+\subsection{Instruction Characteristics}
+
+The set of \gls{instruction} can be said to exhibit five \glsplshort{instruction
+  characteristic}: \gls{single-output.ic}, \gls{multi-output.ic},
+\gls{disjoint-output.ic}, \gls{inter-block.ic}, and \gls{interdependent.ic}.
+%
+The first three \glsplshort{instruction characteristic} form sets of
+\glspl{instruction} that are disjoint from one another, whereas the last two
+\glsplshort{instruction characteristic} can be combined as appropriate with any
+of the other \glsplshort{instruction characteristic}.
 
 
 
@@ -129,8 +139,9 @@ exception that all output values in the latter originate from the same input
 values.
 %
 Another way to put it is that if one formed the \glspl{pattern} that correspond
-to each output, all these \glspl{pattern} would be disjoint from one
-another.
+to each output -- this will be explained in
+\refSection{ex-isel-rep-tree-covering} -- all these \glspl{pattern} would be
+disjoint from one another.
 %
 This typically includes \gls{SIMD.instr} \glspl{instruction}, which execute the
 same operations simultaneously on many distinct input values.
@@ -200,14 +211,79 @@ violate the set of assumptions made by the underlying techniques.
 
 
 
+\subsection{Principles}
+
+An \gls{instruction selector} can be said to apply one of four fundamental
+\glspl{principle} -- \gls{macro expansion}, \gls{tree covering}, \gls{DAG
+  covering}, and \gls{graph covering} -- where \gls{DAG covering} is a
+generalization of \gls{tree covering} and \gls{graph covering} is a
+generalization of \gls{DAG covering}.
+%
+As seen in \refFigure{principles-timeline}, the trend of \gls{macro expansion}
+was quickly overtaken by \gls{tree covering}, which in turn is in decline in
+favor of \gls{DAG covering}. Applications of \gls{graph covering} have been
+scarce until recently due to the inherent increase in complexity.
+
+\begin{figure}
+  \centering%
+  \newcommand{\numTotalPublications}{?}% Will be redefined in the file below
+  \input{figures/existing-isel-techniques-and-reps/principles-timeline-styles}%
+  {%
+    \figureFont\figureFontSize%
+%    \input{figures/existing-isel-techniques-and-reps/principles-timeline}%
+  }%
+
+  \caption[Principle timeline diagram]%
+          {%
+            Diagram illustrating how research on instruction selection
+            (\numTotalPublications~publications in total), with respect to the
+            fundamental principles, has progressed over time.
+            %
+            The bar widths indicate the number of publications --
+            \tikz{\node [nothing, fill=black, minimum height=1.25ex,
+                         minimum width=\pgfkeysvalueof{/tikz/bar unit width}]
+                        {}} represent one publication --
+            for a given year%
+          }
+  \labelFigure{principles-timeline}
+\end{figure}
+
+Without loss of generality, assume that the input to the \gls{instruction
+  selector} consists of a single \gls{function}, which in turn consists of many
+\glspl{basic block} (henceforth referred to as simply \glspl!{block}).
+%
+Of these \glspl{block} exactly one represents the \gls{function}'s point of
+entry, called the \gls!{entry block}.
+%
+\Gls{instruction selection} can then be reduced into two subproblems:%
+%
+\begin{enumerate}
+  \item Finding all instances of instructions that can implement one or more
+    \glspl{operation} in the \gls{function}.
+    %
+    This problem is called \gls!{matching}.
+  \item Selecting a subset of these instances such that all \glspl{operation}
+    are implemented.
+    %
+    This problem is called \gls!{selection}.
+\end{enumerate}
+%
+Unless the second subproblem is constructed such that it impacts the first --
+and I have yet to come across a situation where this is required -- both
+subproblems can be solved in isolation without compromising code quality.
+
+
+
 \subsubsection{Macro Expansion}
 
-The first \gls{principle} to emerge was \gls!{macro expansion}.
+The first \gls{principle} to emerge was \gls!{macro expansion}, with
+applications starting to appear in the 1960s.
 %
-The \glspl{instruction} are expressed as \glspl!{macro} which consist of two
-parts: a \gls{pattern} to be matched over the \gls{function}, and a routine to
-be executed upon the part of the \gls{function} that was matched (see
-\refFigure{macro-example} for an example).
+In \gls{macro expansion}, the \glspl{instruction} are expressed as
+\glspl!{macro} which consist of two parts: a \gls!{template} to be matched over
+the \gls{function}, and an \gls!{expand procedure} to be executed upon the part
+of the \gls{function} that was matched (see \refFigure{macro-example} for an
+example).
 %
 \begin{filecontents*}{macro-example.c}
 expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
@@ -228,8 +304,9 @@ expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
           {%
             Example of a macro expanding an IR addition into assembly code.
             %
-            The pattern to match is given as function argument, and the routine
-            to run upon expansion is given as function body%
+            The template to match is given as argument to {\codeFont expand},
+            and the procedure to run upon expansion is given as
+            {\codeFont expand}'s body%
           }
   \labelFigure{macro-example}
 \end{figure}%
@@ -238,9 +315,12 @@ A \gls!{macro expander} traverses the \gls{function} under compilation and
 attempts one \gls{macro} after another, typically in the order they are declared
 in the \gls{machine description}.
 %
-Upon a \gls{match} it executes the corresponding routine and then resumes the
-traversal with the next, unmatched part until the entire \gls{function} has been
-expanded.
+Upon a \gls{match} it executes the corresponding \gls{expand procedure} and then
+resumes the traversal with the next, unmatched part until the entire
+\gls{function} has been expanded.
+%
+Consequently, \gls{matching} and \gls{selection} is combined into a single task
+as the first \gls{macro} matched is the \gls{macro} to be selected.
 
 The main benefit of \gls{macro expansion} is that it is intuitive and
 straightforward to apply.
@@ -299,53 +379,17 @@ for a simpler and more incremental retargeting effort.
 Due to the people who pioneered the idea, this scheme is known as the
 \gls!{Davidson-Fraser approach}~\cite{DavidsonFraser:1984}.
 
+Applications of \gls{naive.me} \gls{macro expansion} and the
+\gls{Davidson-Fraser approach} are examined in \refAppendix{macro-expansion}.
 
 
 \subsubsection{Tree Covering}
+\labelSection{ex-isel-rep-tree-covering}
 
-\todo{write}
-
-
-
-\subsubsection{DAG Covering}
-
-\todo{write}
-
-
-
-\subsubsection{Graph Covering}
-
-\todo{write}
-
-\todo{insert timeline figure}
-
-
-
-\section{Refining Instruction Selection into a Graph Problem}
-\labelSection{ex-isel-rep-refining-instruction-selection-into-a-graph-problem}
-
-Without loss of generality, assume that the input to the \gls{instruction
-  selector} consists of a single \gls{function}, which in turn consists of many
-\glspl{basic block} (henceforth referred to as simply \glspl!{block}).
+Beginning of 1970s, a new principle called \gls!{tree covering} began to emerge.
 %
-Of these \glspl{block} exactly one represents the \gls{function}'s point of
-entry, called the \gls!{entry block}.
-%
-\Gls{instruction selection} can then be reduced into two subproblems:%
-%
-\begin{enumerate}
-  \item Finding all instances of instructions that can implement one or more
-    \glspl{operation} in the \gls{function}.
-  \item Selecting a subset of these instances such that all \glspl{operation}
-    are implemented.
-\end{enumerate}
-%
-Unless the second subproblem is constructed such that it impacts the first --
-and I have yet to come across a situation where this is required -- both
-subproblems can be solved in isolation without compromising code quality.
-
-Most \glspl{compiler} solve the two problems above using \gls{graph}-based
-methods.
+Unlike \gls{macro expansion}, \gls{tree covering} approaches \gls{instruction
+  selection} as a graph problem.
 %
 First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
 \glspl{node} represent \glspl{operation} in the function and \glspl{edge}
@@ -353,7 +397,7 @@ represent data dependencies between the \glspl{operation}.
 %
 \Glspl{data-flow graph} are called \glspl!{expression tree} if they are limited
 to single, tree-shaped expressions, \glspl!{block DAG} if they capture many
-expressions in a \gls{block} as a \gls{DAG}, and \glspl{data-flow graph} if they
+expressions in a \gls{block} as a \gls{DAG}, and \glspl!{function graph} if they
 capture the data flow of entire functions.
 %
 An \gls{instruction selector} is \gls!{local.is} if it selects
@@ -367,22 +411,23 @@ the \gls{target machine}.
 The set of \glspl{pattern graph} for a particular \gls{target machine}
 constitute a \gls!{pattern set}.
 
-The first subproblem can be reduced to finding all instances where a
+The \gls{matching} problem can be reduced to finding all instances where a
 \gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to~$G$,
 where $G$ denotes either a \gls{block DAG} or a \gls{function graph}.
 %
 Each such instance is called a \gls!{match}, and the set of all \glspl{match}
 constitute a \gls!{match set}, which is denoted by~$M$.
 %
-Hence this subproblem is referred to as the \gls!{pattern matching}[ problem].
+Hence, in this context the subproblem is referred to as the \gls!{pattern
+  matching}[ problem].
 %
 \Gls{pattern matching} can be done in linear time if both $G$ and all
 \glspl{pattern} are tree-shaped, otherwise it is an NP-complete
 problem~\cite{GareyJohnson:1979,HoffmannODonnell:1982}.
 %
-Having found $M$, the second subproblem -- which is referred to as the
-\gls!{pattern selection}[ problem] -- can be reduced to selecting a set of
-\glspl{match} that \gls{cover}[s]~$G$.
+Having found $M$, the \gls{selection} problem -- which in this context is
+referred to as the \gls!{pattern selection}[ problem] -- can be reduced to
+selecting a set of \glspl{match} that \gls{cover}[s]~$G$.
 %
 A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
 $G$ if every \gls{node} in $G$ appears in exactly one match from~$C$.
@@ -487,6 +532,18 @@ respectively.
 There is typically a strong correlation between the size of a \gls{cover} and
 its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 -- but this depends heavily on the properties of the \gls{target machine}.
+
+
+
+\subsubsection{DAG Covering}
+
+\todo{write}
+
+
+
+\subsubsection{Graph Covering}
+
+\todo{write}
 
 
 
