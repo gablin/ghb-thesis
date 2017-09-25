@@ -65,7 +65,7 @@ existing methods is given in \refAppendix{list-of-approaches}.
 \subsubsection{Single-Output Instructions}
 
 The simplest kind of \gls{instruction} forms the set of
-\gls!{single-output.ic} \glspl{instruction}.
+\gls!{single-output.ic}[ \glspl{instruction}].
 %
 These produce only a single observable output, in the sense that ``observable''
 means a value that can be accessed through the \gls{assembly code}.
@@ -88,8 +88,8 @@ support this kind of \gls{instruction}.
 
 \subsubsection{Multi-Output Instructions}
 
-As expected from their name, \gls!{multi-output.ic} \glspl{instruction} produce
-more than one observable output from the same input.
+As expected from their name, \gls!{multi-output.ic}[ \glspl{instruction}]
+produce more than one observable output from the same input.
 %
 Examples include \instrCode{divmod}~\glspl{instruction}, which compute both the
 quotient and the remainder of two input values, as well as arithmetic
@@ -121,8 +121,8 @@ Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
 \subsubsection{Disjoint-Output Instructions}
 
 \Glspl{instruction} which produce many observable output values from many
-different input values are referred to as \gls{disjoint-output.ic}
-\glspl{instruction}.
+different input values are called \gls!{disjoint-output.ic}[
+  \glspl{instruction}].
 %
 These are similar to \glspl{multi-output.ic} \glspl{instruction} with the
 exception that all output values in the latter originate from the same input
@@ -147,8 +147,7 @@ extensions~\cite{ARM11:2008}.
 \subsubsection{Inter-Block Instructions}
 
 \Glspl{instruction} whose behavior essentially spreads across multiple
-\glspl{block} are referred to as \gls{inter-block.ic}
-\glspl{instruction}.
+\glspl{block} are called \gls!{inter-block.ic}[ \glspl{instruction}].
 %
 Examples of such \glspl{instruction} are those implementing \gls{saturation
   arithmetic}%
@@ -182,7 +181,7 @@ If no such routine or \gls{compiler intrinsic} is available, making use of these
 
 \subsubsection{Interdependent Instructions}
 
-The last class is the set of \gls{interdependent.ic} \glspl{instruction}.
+The last class is the set of \gls!{interdependent.ic}[ \glspl{instruction}].
 %
 This includes \glspl{instruction} which exhibit additional constraints that
 appear when they are combined with other \glspl{instruction} in certain ways.
