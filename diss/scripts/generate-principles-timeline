@@ -1,0 +1,151 @@
+#!/usr/bin/python
+#
+# Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+#
+# This work is licensed under a Creative Commons 4.0 International License (see
+# LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+# of the license).
+
+import sys
+import datetime
+from pybtex.database.input import bibtex
+import StringIO
+
+def getYear(fields_dict):
+    if "year" in fields_dict:
+        return int(fields_dict["year"])
+    elif "date" in fields_dict:
+        return int(fields_dict["date"][:4])
+    else:
+        return -1
+
+# Get BibTex file
+if not len(sys.argv) == 2:
+    print "No BibTex file!"
+    sys.exit();
+bib_file = sys.argv[1]
+
+# Read BibTex file
+with open(bib_file) as f:
+    content = f.readlines()
+
+# Remove LaTeX comments (not handled by bybtex)
+new_content = []
+for l in content:
+    l = l.strip()
+    if len(l) > 0 and l[0] != '%':
+        new_content.append(l)
+content = new_content
+
+# Get BibTex file as array
+bib_stream = StringIO.StringIO("\n".join(content))
+bib_parser = bibtex.Parser()
+all_bibdata = bib_parser.parse_stream(bib_stream)
+
+is_bib_dict = {}
+
+# Gather instruction selection-tagged entries
+for bib_id in all_bibdata.entries:
+    b = all_bibdata.entries[bib_id].fields
+    if "istype" in b:
+        if b["istype"] == "MACRO" or b["istype"] == "TREE" or \
+           b["istype"] == "DAG" or b["istype"] == "GRAPH":
+            fields = {};
+            for field_id in b:
+                fields[field_id] = b[field_id]
+            is_bib_dict[bib_id] = fields
+        elif not b["istype"] == "NONE":
+            sys.stderr.write("WARNING: Invalid 'istype' for bib entry "
+                             + bib_id + "\n")
+    else:
+        sys.stderr.write("WARNING: No 'istype' for bib entry " + bib_id + "\n")
+
+# Find time interval
+first_pub_year = 9999
+last_pub_year = 0
+for bib_id in is_bib_dict:
+    year = getYear(is_bib_dict[bib_id])
+    if year < first_pub_year:
+        first_pub_year = year
+    if year > last_pub_year:
+        last_pub_year = year
+
+# Initialize publication data
+num_years = last_pub_year - first_pub_year + 1
+pub_data = {}
+pub_data["MACRO"] = [0 for x in range(num_years)]
+pub_data["TREE"] = [0 for x in range(num_years)]
+pub_data["DAG"] = [0 for x in range(num_years)]
+pub_data["GRAPH"] = [0 for x in range(num_years)]
+
+# Gather publication data
+for bib_id in is_bib_dict:
+    year_index = getYear(is_bib_dict[bib_id]) - first_pub_year
+    pub_data[is_bib_dict[bib_id]["istype"]][year_index] += 1
+
+# Count total number of publications
+total_num_pubs = 0
+for type_id in pub_data:
+    year_data = pub_data[type_id]
+    for year_index in range(0, len(year_data)):
+        total_num_pubs = total_num_pubs + year_data[year_index]
+
+# Generate figure and print to screen
+print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + "\n" + \
+      "%  AUTO-GENERATED " + str(datetime.datetime.now()) + "\n" \
+      "%  BY " + __file__ + "\n" + \
+      "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + "\n" + \
+      "%"
+print "\\renewcommand{\\numTotalPublications}{" + str(total_num_pubs) + "}"
+print "\\begingroup" + "\n" + \
+      "\\renewcommand{\\arraystretch}{0.7}" + "\n" + \
+      "\\begin{tikzpicture}" + "\n" + \
+      "  \\coordinate (origin) at (0, 0);" + "\n" + \
+      "  \\coordinate (year-start) at " + \
+      "(\pgfkeysvalueof{/tikz/year x-offset}," + \
+      " \pgfkeysvalueof{/tikz/year y-offset});" + "\n" + \
+      "  \\coordinate (type-start) at " + \
+      "(\pgfkeysvalueof{/tikz/type x-offset}," + \
+      " \pgfkeysvalueof{/tikz/type y-offset});" + "\n"
+print "  % Year labels" + "\n" + \
+      "  \\foreach \\y [count=\\i, remember=\\y as \\prevY] in {" \
+        + str(first_pub_year) + ", ..., " + str(last_pub_year) + "} {%" \
+        + "\n" + \
+      "    \\ifnumequal{\\i}{1}{%" + "\n" + \
+      "      \\node [year label] (year-\\y) at (year-start) {\\y};" + "\n" + \
+      "    }{%" + "\n" + \
+      "      \\node [year label, below=of year-\\prevY] (year-\\y) {\\y};" \
+        + "\n" + \
+      "    }" + "\n" + \
+      "  }" + "\n"
+print "  % Type coordinates" + "\n" + \
+      "  \\foreach \\t/\\str [count=\\i, remember=\\t as \\prevT]" + "\n" + \
+      "      in {macro/macro\\\\expansion, tree/tree\\\\covering, " \
+        + "dag/dag\\\\covering, graph/graph\\\\covering} {%" + "\n" + \
+      "    \\ifnumequal{\\i}{1}{%" + "\n" + \
+      "      \\node [type label, right=of type-start, above] (type-\\t) {%" + "\n" + \
+      "        \\begin{tabular}{c}\\str\\end{tabular}" + "\n" + \
+      "      };" + "\n" + \
+      "    }{%" + "\n" + \
+      "      \\node [type label, right=of type-\\prevT.south east, above] (type-\\t) {%" \
+        + "\n" + \
+      "        \\begin{tabular}{c}\\str\\end{tabular}" + "\n" + \
+      "      };" + "\n" + \
+      "    }" + "\n" + \
+      "  }" + "\n"
+print "  % Axis lines" + "\n" + \
+      "  \draw (origin |- type-graph.north) -- (origin |- year-" \
+        + str(last_pub_year) + ".south);" + "\n" + \
+      "  \draw (origin -| year-" + str(first_pub_year) + ".west) -- " \
+      + "(origin -| type-graph.east);"
+print "  % Publication bars"
+for type_id in pub_data:
+    year_data = pub_data[type_id]
+    for year_index in range(0, len(year_data)):
+        if year_data[year_index] == 0: continue
+        year = year_index + first_pub_year
+        print "  \\node [bar, minimum width=" + str(year_data[year_index]) \
+            + "*\\pgfkeysvalueof{/tikz/bar unit width}] at " \
+            + "(type-" + type_id.lower() + " |- year-" + str(year) + ") {};"
+print "\\end{tikzpicture}%" + "\n" + \
+      "\\endgroup%"

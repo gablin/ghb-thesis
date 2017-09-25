@@ -1,0 +1,39 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\tikzset{%
+  bar height/.initial=1.35ex,
+  bar unit width/.initial=4pt,
+  year x-offset/.initial=-4mm,
+  year y-offset/.initial=-2mm,
+  type x-offset/.initial=0,
+  type y-offset/.initial=1mm,
+  year label/.style={%
+    minimum width=0,
+    minimum height=\pgfkeysvalueof{/tikz/bar height},
+    inner sep=0,
+    inner ysep=1pt,
+    outer sep=0,
+    node distance=0,
+    font=\relsize{-1},
+  },
+  type label/.style={%
+    minimum size=0,
+    inner sep=0,
+    outer sep=0,
+    node distance=1cm,
+    font=\scshape,
+  },
+  bar/.style={%
+    draw=black,
+    fill=black,
+    minimum width=0,
+    minimum height=\pgfkeysvalueof{/tikz/bar height}+2pt,
+    inner sep=0,
+    outer sep=0,
+    node distance=0,
+  },
+}%

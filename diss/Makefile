@@ -64,3 +64,9 @@ check-environment:
 	fi
 	@echo "OK"
 
+figures/existing-isel-techniques-and-reps/principles-timeline.tex: \
+  references.bib \
+  scripts/generate-principles-timeline \
+  figures/existing-isel-techniques-and-reps/principles-timeline-styles.tex
+	scripts/generate-principles-timeline references.bib \
+		> figures/existing-isel-techniques-and-reps/principles-timeline.tex
