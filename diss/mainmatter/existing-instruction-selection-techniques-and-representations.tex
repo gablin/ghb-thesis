@@ -202,7 +202,102 @@ violate the set of assumptions made by the underlying techniques.
 
 \subsubsection{Macro Expansion}
 
-\todo{write}
+The first \gls{principle} to emerge was \gls!{macro expansion}.
+%
+The \glspl{instruction} are expressed as \glspl!{macro} which consist of two
+parts: a \gls{pattern} to be matched over the \gls{function}, and a routine to
+be executed upon the part of the \gls{function} that was matched (see
+\refFigure{macro-example} for an example).
+%
+\begin{filecontents*}{macro-example.c}
+expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
+  r1 = getRegOf($\$$1);
+  r2 = getRegOf($\$$2);
+  r3 = mkNewReg($\$$3);
+  print "add " + r3 + ", " + r1 + ", " + r2;
+}
+\end{filecontents*}%
+%
+\begin{figure}
+  \centering%
+  \begin{minipage}{.6\textwidth}
+    \lstinputlisting[mathescape]{macro-example.c}
+  \end{minipage}
+
+  \caption[Example of a macro]%
+          {%
+            Example of a macro expanding an IR addition into assembly code.
+            %
+            The pattern to match is given as function argument, and the routine
+            to run upon expansion is given as function body%
+          }
+  \labelFigure{macro-example}
+\end{figure}%
+%
+A \gls!{macro expander} traverses the \gls{function} under compilation and
+attempts one \gls{macro} after another, typically in the order they are declared
+in the \gls{machine description}.
+%
+Upon a \gls{match} it executes the corresponding routine and then resumes the
+traversal with the next, unmatched part until the entire \gls{function} has been
+expanded.
+
+The main benefit of \gls{macro expansion} is that it is intuitive and
+straightforward to apply.
+%
+Because the \gls{macro expander} is implemented separately from the
+\glspl{macro}, the former can be kept generic and simple while the latter can be
+made as customized as needed for the \gls{target machine}.
+%
+This also allows the \gls{macro expander} to be void of any \glsshort{target
+  machine}-specific details, thus necessiting only the \glspl{macro} to be
+rewritten when retargeting the \gls{compiler} to another machine.
+%
+To this end, the \glspl{macro} are typically written in some dedicated language
+in order to simplify this task by raising the level of abstraction.
+
+Due to its simplicity, the principle also suffers from two shortcomings.
+%
+Depending on the complexity of the \glspl{macro}, \gls{macro expansion} could
+in principle support all kinds of \gls{instruction}.
+%
+In practice, however, \glshyphened{macro expansion}[ding] \glspl{instruction
+  selector} are typically limited to \gls{single-output.ic} \glspl{instruction}
+and often only expand one \gls{IR}~operation at at time, which results in poor
+code quality.
+%
+Another disadvantage is that because of idiosyncrasies of the dedicated
+language, the \glspl{macro} are often hard to read and understand, making them
+difficult to extend and maintain.
+%
+We call this variant of the principle \gls!{naive.me}[ \gls{macro expansion}].
+
+To mitigate these problems, \gls{macro expansion} can be combined with
+\gls{peephole optimization}.\!%
+%
+\footnote{%
+  A \gls!{peephole optimizer} is a \gls{program} that combines two or more
+  adjacent \glspl{instruction} into a single \gls{instruction}.
+  %
+  The term \emph{peephole} come from the narrow window of operation, as a
+  \gls{peephole optimizer} only considers a small number of \glspl{instruction}
+  at a time.
+}
+%
+First, a \gls{naive.me} \gls{macro expander} expands the \gls{function} under
+compilation one \gls{IR}~operation at at time.
+%
+Once fully expanded, a \gls{peephole optimizer} runs over the result and
+replaces inefficient sequences of \glspl{instruction} with more compentent
+equivalences.
+%
+Consequently, the \glspl{macro} can be divided up into those required for
+correctness -- that is, the simple, single-operation \gls{macro} which ensure
+that code can always be produced -- and those used for efficiency, which makes
+for a simpler and more incremental retargeting effort.
+%
+Due to the people who pioneered the idea, this scheme is known as the
+\gls!{Davidson-Fraser approach}~\cite{DavidsonFraser:1984}.
 
 
 
@@ -221,6 +316,8 @@ violate the set of assumptions made by the underlying techniques.
 \subsubsection{Graph Covering}
 
 \todo{write}
+
+\todo{insert timeline figure}
 
 
 
