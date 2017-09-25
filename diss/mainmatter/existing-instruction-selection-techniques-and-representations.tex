@@ -576,19 +576,18 @@ For the complete examination, see \refAppendix{tree-covering}.
 \labelSection{ex-isel-rep-traditional-approaches}
 
 In the interest of producing decent code while maintaining short compilation
-times, most modern \glspl{compiler} either limit themselves to \glspl{expression
-  tree} or apply greedy, linear-time heuristics.
+times, most modern \glspl{compiler} either limit themselves to \gls{tree
+  covering} or apply greedy, linear-time heuristics.
 %
-For \glspl{expression tree} one can find \gls{least-cost.c} \glspl{cover} in
-linear time, but at the price of precluding optimization decisions that only
-become possible when operating on \glsshort{block DAG} or \glspl{function
-  graph}.
+In \glspl{tree covering} one can find \gls{least-cost.c} \glspl{cover} in linear
+time, but at the price of precluding optimization decisions that only become
+possible when operating on \glsshort{block DAG} or \glspl{function graph}.
 
 
 
-\subsection{Approaches Using Expression Trees}
+\subsection{Approaches Based on Tree Covering}
 
-The most common and well known technique that uses \glspl{expression tree} was
+The most common and well known technique based on \gls{tree covering} was
 introduced by \textcite{AhoEtAl:1989}.
 %
 The approach assumes the \glspl{instruction} to be expressed in a particular
@@ -1184,7 +1183,7 @@ suboptimal code in cases where the \instrCode{addmul} and \instrCode{addload}
 
 
 
-\subsection{Approaches Using Block DAGs}
+\subsection{Approaches Based on DAG Covering}
 
 The cost of improving code quality by moving from \glspl{expression tree} to
 \glspl{block DAG} is that \gls{optimal.ps} \gls{pattern selection} becomes an
@@ -1268,12 +1267,12 @@ recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 
 \subsubsection{Limitations}
 
-Although using \glspl{block DAG} addresses the issue of whether to
-\glsshort{edge splitting} or \glsshort{node duplication}[e] common
-subexpressions within a \gls{block}, the problem still remains for expressions
-that are spread across multiple \glspl{block}.
+Although \glspl{DAG covering} addresses the issue of whether to \glsshort{edge
+  splitting} or \glsshort{node duplication}[e] common subexpressions within a
+\gls{block}, the problem still remains for expressions that are spread across
+multiple \glspl{block}.
 %
-To fully address this problem, one must resort to \glspl{function graph}.
+To fully address this problem, one must resort to \glspl{graph covering}.
 
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
@@ -1386,7 +1385,7 @@ approaches.
 
 
 
-\subsection{Approaches Using Function Graphs}
+\subsection{Approaches Based on Graph Covering}
 
 To the best of my knowledge, only \textcite{PalecznyEtAl:2001} have attempted to
 apply \glsshort{traditional approach} methods on \glspl{function graph}.
@@ -1562,8 +1561,9 @@ In doing so, they may choose between applying either complete solving methods --
 for optimality -- or greedy heuristics -- for tractability.
 
 Since there already exist methods for optimally covering \glspl{expression tree}
-in linear time, nearly all \glspl{combinatorial approach} operate on
-\glspl{block DAG}, with one exception operating on \glspl{function graph}.
+in linear time, nearly all \glspl{combinatorial approach} are based on
+\glspl{DAG covering} with one exception, which is based on \glspl{graph
+  covering}.
 %
 The approaches in this section are therefore grouped according to the tools they
 apply for modeling \gls{instruction selection}.
