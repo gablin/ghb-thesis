@@ -975,8 +975,9 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 In many cases, this technique produces code of sufficient quality.
 %
 In fact, for architectures with simple \glspl{instruction set}, where the
-\glspl{rule pattern} can naturally be modeled as trees, it is often optimal or
-near optimal.
+\glspl{rule pattern} can naturally be modeled as trees (such as
+\gls{single-output.ic} \glspl{instruction}), it is often optimal or near
+optimal.
 %
 The \gls{MIPS} \gls{instruction set}~\cite{Sweetman:2006}, for example, is one
 such architecture.
@@ -1373,15 +1374,11 @@ lower code quality as the value would needlessly have to be shifted back before
 returning, which takes an extra \gls{instruction}.
 
 Lastly, most of these approaches are restricted to tree-shaped \glspl{pattern},
-meaning they only support \glspl{instruction} that produce a single value.
+meaning they only support \gls{single-output.ic} \glspl{instruction}.
 %
-Many \glspl{instruction set}, however, contain \glspl{instruction} that produce
-multiple values, such as memory \glspl{instruction} that load a value from
-memory while simultaneously incrementing the address.
-%
-Modeling such \glspl{instruction} require \gls{DAG}-shaped \glspl{pattern},
-which violate underlying assumptions made by many of the aforementioned
-approaches.
+Many \glspl{instruction set}, however, contain \gls{multi-output.ic}
+\glspl{instruction} and require \gls{DAG}-shaped \glspl{pattern}, which violate
+underlying assumptions made by many of the aforementioned approaches.
 
 
 
@@ -1685,7 +1682,7 @@ An example is shown in \refFigure{mis-example}.
 \textcite{ScharwaechterEtAl:2007} appears to have pioneered the modeling of
 \gls{instruction selection} as a \gls{MWIS} problem, although the main
 contribution of their paper is the extension of \glspl{machine grammar} to
-handle \glspl{instruction} that produce multiple results.
+handle \gls{multi-output.ic} \glspl{instruction}.
 %
 The idea is to model such \glspl{instruction} using \gls!{complex.r}[
   \glspl{rule}], which each consists of multiple \glspl{production} -- one for
@@ -2019,8 +2016,8 @@ The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
 %
 To handle \gls{DAG}-shaped \glspl{pattern}, the model must be extended.
 %
-First assume an extended \gls{grammar} where multi-output \glspl{instruction}
-are described using \gls{complex.r} \glspl{rule} (described
+First assume an extended \gls{grammar} where \gls{multi-output.ic}
+\glspl{instruction} are described using \gls{complex.r} \glspl{rule} (described
 on \refPage{extended-machine-grammars}, see also
 \refFigure{extended-machine-grammar-rule-anatomy}).
 %
@@ -2184,11 +2181,12 @@ the \gls{block DAG} to \glspl{node} and \glspl{edge} in a \gls{pattern}.
 An upper bound on the number of \glspl{match} needed is computed using a
 heuristic.
 
-An \gls{IP}-based approach for selecting \gls{instruction} with multiple output
+An \gls{IP}-based approach for selecting \gls{multi-output.ic} \gls{instruction}
 was introduced by \textcite{LeupersMarwedel:1995, LeupersMarwedel:1996}.
 %
-Each \gls{DAG}-shaped \gls{pattern} of a multi-output \gls{instruction} is first
-decomposed into trees, which are used for covering an \gls{expression tree}.
+Each \gls{DAG}-shaped \gls{pattern} of a \gls{multi-output.ic} \gls{instruction}
+is first decomposed into trees, which are used for covering an \gls{expression
+  tree}.
 %
 After having found a \gls{least-cost.c} \gls{cover} (using
 \refAlgorithm{opt-pat-sel-labeling-algorithm}), the \gls{expression tree} is
@@ -2197,7 +2195,7 @@ represents a set of \glspl{node} in the \gls{expression tree} covered by the
 same \gls{pattern}.
 %
 The problem is then to try to merge \glspl{super node} such that the combination
-can be implemented using a multi-output \gls{instruction}.
+can be implemented using a \gls{multi-output.ic} \gls{instruction}.
 %
 This is often called \gls!{instruction compaction}, and as there is an abundance
 of overlap between such combinations, \citeauthor{LeupersMarwedel:1995} solved
@@ -2207,7 +2205,8 @@ this problem using \gls{IP}.
 selecting \gls{SIMD.instr} \glspl{instruction}.
 %
 Again, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.instr}
-\gls{instruction} is decomposed into trees, but in this approach they are used
+\gls{instruction} is decomposed into trees -- making it a
+\gls{disjoint-output.ic} \gls{instruction} -- but in this approach they are used
 for covering a \gls{block DAG} that has been transformed into \glspl{expression
   tree} through \gls{edge splitting}.
 %
@@ -2410,9 +2409,10 @@ First, while many \glspl{combinatorial approach} combine \gls{instruction
 clear how to extend the model to integrate this task.
 
 Second, all \gls{combinatorial approach} only handle tree- and \gls{DAG}-shaped
-\glspl{pattern}, which excludes support for complex \glspl{instruction} that
-extend over multiple \glspl{block} and must therefore be modeled as generic
-\glspl{graph} (one such example is given in on \refPage{saturated-arithmetic}).
+\glspl{pattern}, which excludes support for \gls{inter-block.ic}
+\glspl{instruction} as these extend over multiple \glspl{block} and must
+therefore be modeled as generic \glspl{graph} (one such example is given in
+on \refPage{saturated-arithmetic}).
 
 Third, with the exception of \textcite{TanakaEtAl:2003}, no \gls{combinatorial
   approach} takes the cost of \gls{data copying} into account.
