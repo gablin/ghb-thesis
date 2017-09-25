@@ -51,7 +51,7 @@ handling \glspl{instruction} with five \glsplshort!{instruction characteristic}
 We first introduce the \gls{instruction characteristic} and then the
 \gls{principle}, together with a discussion of how the existing methods are
 categorized according to these concepts.
-
+%
 For sake of brevity, only a brief discussion is given in this chapter as a
 complete comparison is superfluous for understanding the rest of the
 dissertation.
@@ -65,10 +65,10 @@ existing methods is given in \refAppendix{list-of-approaches}.
 \subsubsection{Single-Output Instructions}
 
 The simplest kind of \gls{instruction} forms the set of
-\glspl!{single-output.ic} \glspl{instruction}.
+\gls!{single-output.ic} \glspl{instruction}.
 %
 These produce only a single observable output, in the sense that ``observable''
-means a value that can be read and accessed by the \gls{assembly code}.
+means a value that can be accessed through the \gls{assembly code}.
 %
 This includes all \glspl{instruction} that implement a single operation (such as
 addition, multiplication, and bit operations), but it also includes more
@@ -88,25 +88,116 @@ support this kind of \gls{instruction}.
 
 \subsubsection{Multi-Output Instructions}
 
-\todo{write}
+As expected from their name, \gls!{multi-output.ic} \glspl{instruction} produce
+more than one observable output from the same input.
+%
+Examples include \instrCode{divmod}~\glspl{instruction}, which compute both the
+quotient and the remainder of two input values, as well as arithmetic
+\glspl{instruction} that, in addition to computing the result, also set one or
+more \glspl{status flag}.\!%
+%
+\footnote{%
+  A \gls!{status flag} (sometimes also known as a \gls!{condition flag} or a
+  \gls!{condition code}) is a single bit that signifies additional information
+  about the result of a computation, for example if there was a carry overflow
+  or the result was equal to~0.%
+}
+%
+For this reason such \glspl{instruction} are often said to have side effects,
+but in reality these bits are nothing else but additional output values produced
+by the \gls{instruction}, and will thus be referred to as \gls{multi-output.ic}
+\glspl{instruction}.
+%
+Memory load and store \glspl{instruction}, which access a memory value and then
+increment the address pointer, are also considered \gls{multi-output.ic}
+\glspl{instruction}.
+
+Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
+\glspl{instruction} of this class, although they are typically not as common as
+\gls{single-output.ic} \glspl{instruction}.
 
 
 
 \subsubsection{Disjoint-Output Instructions}
 
-\todo{write}
+\Glspl{instruction} which produce many observable output values from many
+different input values are referred to as \gls{disjoint-output.ic}
+\glspl{instruction}.
+%
+These are similar to \glspl{multi-output.ic} \glspl{instruction} with the
+exception that all output values in the latter originate from the same input
+values.
+%
+Another way to put it is that if one formed the \glspl{pattern} that correspond
+to each output, all these \glspl{pattern} would be disjoint from one
+another.
+%
+This typically includes \gls{SIMD.instr} \glspl{instruction}, which execute the
+same operations simultaneously on many distinct input values.
+
+\Glspl{disjoint-output.ic} \glspl{instruction} are common in high-throughput
+graphics architectures and \glspl{DSP}, but also appear in \gls{X86} as
+extensions under names like \gls{SSE} and \gls{AVX}~\cite{Intel64:2015}.
+%
+Recently, certain \gls{ARM} processors are also equipped with such
+extensions~\cite{ARM11:2008}.
 
 
 
 \subsubsection{Inter-Block Instructions}
 
-\todo{write}
+\Glspl{instruction} whose behavior essentially spreads across multiple
+\glspl{block} are referred to as \gls{inter-block.ic}
+\glspl{instruction}.
+%
+Examples of such \glspl{instruction} are those implementing \gls{saturation
+  arithmetic}%
+%
+\footnote{%
+  Recently, a request was made to extend the \gls{LLVM} \gls{compiler} with
+  \glspl!{compiler intrinsic}, a kind of special \gls{IR} operations, to
+  facilitate selection of such \glspl{instruction}~\cite{LLVM:2015:Intrinsics}.%
+}
+%
+and hardware loop \glspl{instruction}, which repeat a fixed sequence of
+\glspl{operation} a certain number of times.
+
+\Glspl{instruction} with this \glsshort{instruction characteristic} typically
+appear in customized architectures and \glspl{DSP} such as \gls{ARM}'s
+\gls{Cortex-M7} processor~\cite{ARM:Cortex-M7:2015} and \gls{TI}'s
+\gls{TMS320C55x} processor~\cite{TI:TMS320C55x:2002}.
+%
+But because of their complexity, these \glspl{instruction} require sophisticated
+techniques for capturing their behavior which are not provided by most
+\glspl{compiler}.
+%
+Instead, individual \glspl{instruction} are supported either via customized
+\gls{program} optimization routines or through \glspl{compiler intrinsic}.
+%
+If no such routine or \gls{compiler intrinsic} is available, making use of these
+\glspl{instruction} requires the \gls{program} to be written directly in
+\gls{assembly code}.
 
 
 
 \subsubsection{Interdependent Instructions}
 
-\todo{write}
+The last class is the set of \gls{interdependent.ic} \glspl{instruction}.
+%
+This includes \glspl{instruction} which exhibit additional constraints that
+appear when they are combined with other \glspl{instruction} in certain ways.
+%
+An example includes an \instrCode{add}~\gls{instruction}, again from the
+\gls{TMS320C55x} \gls{instruction set}, which cannot be combined with an
+\instrCode{rpt}~instruction if a particular addressing mode is used for the
+\instrCode{add}~instruction.
+
+\Gls{interdependent.ic} \glspl{instruction} are rare and can typically be found
+in complex, heterogeneous architectures such as \glspl{DSP}.
+%
+This is another class of \glspl{instruction} that most \glspl{instruction
+  selector} struggle with, mainly because these \glspl{instruction} typically
+violate the set of assumptions made by the underlying techniques.
 
 
 
