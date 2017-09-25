@@ -96,7 +96,7 @@ print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + "\n" + \
       "%  BY " + __file__ + "\n" + \
       "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + "\n" + \
       "%"
-print "\\renewcommand{\\numTotalPublications}{" + str(total_num_pubs) + "}"
+print "\\global\\def\\numTotalPublications{" + str(total_num_pubs) + "}%"
 print "\\begingroup" + "\n" + \
       "\\renewcommand{\\arraystretch}{0.7}" + "\n" + \
       "\\begin{tikzpicture}" + "\n" + \

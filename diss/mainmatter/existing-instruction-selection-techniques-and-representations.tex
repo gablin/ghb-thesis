@@ -33,7 +33,7 @@ limitations of these approaches.
 
 
 
-\section{Instruction Characteristics and Principles of Instruction Selection}
+\section{Instruction Characteristics and Principles}
 \labelSection{ex-isel-rep-instr-chars-principles}
 
 \Gls{instruction selection} has been actively researched in over four decades --
@@ -211,7 +211,7 @@ violate the set of assumptions made by the underlying techniques.
 
 
 
-\subsection{Principles}
+\subsection{Principles of Instruction Selection}
 
 An \gls{instruction selector} can be said to apply one of four fundamental
 \glspl{principle} -- \gls{macro expansion}, \gls{tree covering}, \gls{DAG
@@ -226,24 +226,23 @@ scarce until recently due to the inherent increase in complexity.
 
 \begin{figure}
   \centering%
-  \newcommand{\numTotalPublications}{?}% Will be redefined in the file below
+  \def\numTotalPublications{?}% Will be redefined in the file below
   \input{figures/existing-isel-techniques-and-reps/principles-timeline-styles}%
   {%
     \figureFont\figureFontSize%
     \input{figures/existing-isel-techniques-and-reps/principles-timeline}%
-  }%
+  }
 
   \caption[Principle timeline diagram]%
           {%
-            Diagram illustrating how research on instruction selection
-            (\numTotalPublications~publications in total), with respect to the
-            fundamental principles, has progressed over time.
+            Diagram illustrating how research on instruction selection with
+            respect to the fundamental principles, has progressed over time.
             %
-            The bar widths indicate the number of publications --
-            \tikz{\node [nothing, fill=black, minimum height=1.25ex,
-                         minimum width=\pgfkeysvalueof{/tikz/bar unit width}]
-                        {}} represent one publication --
-            for a given year%
+            With \numTotalPublications~publications in total, the width of the
+            bars indicate the number of relative publications for a given year
+            (\tikz{\node [nothing, fill=black, minimum height=1.25ex,
+                          minimum width=\pgfkeysvalueof{/tikz/bar unit width}]
+                         {}} represent one publication)%
           }
   \labelFigure{principles-timeline}
 \end{figure}
