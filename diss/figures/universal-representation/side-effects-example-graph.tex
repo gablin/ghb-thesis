@@ -8,36 +8,44 @@
 \figureFont\figureFontSize%
 \begin{tikzpicture}
   \node [state node] (st1) {};
-  \node [computation node, position=-45 degrees from st1] (ld) {\opLoad};
-  \node [value node, position=-135 degrees from ld] (p) {\strut\opVar{p}};
-  \node [state node, position=45 degrees from ld] (st2) {};
-  \node [value node, position=-45 degrees from ld] (t1) {\opTemp{1}};
+  \node [computation node, position=-45 degrees from st1] (store-1) {\opStore};
+  \node [value node, position=-135 degrees from store-1] (p1) {\strut\opVar{p}};
+  \node [state node, position=45 degrees from store-1] (st2) {};
+  \node [value node, position=-45 degrees from store-1, opacity=0] (p2) {};
   \node [computation node, position=-45 degrees from st2] (foo) {\opCall{foo}};
   \node [state node, position=45 degrees from foo] (st3) {};
-  \node [value node, position=-45 degrees from foo] (t2) {\opTemp{2}};
-  \node [computation node, position=-45 degrees from st3] (st) {\opStore};
-  \node [state node, right= of st] (st4) {};
+  \node [value node, position=-45 degrees from foo, opacity=0] (p3) {};
+  \node [computation node, position=-45 degrees from st3] (store-2) {\opStore};
+  \node [state node, right= of store-2] (st4) {};
   \node [block node, above=.75\opNodeDist of
                            $(st1.north west) !.5! (st4.east |- st1.north)$]
         (block) {\opBlock{block}};
 
   \begin{scope}[data flow]
-    \draw (p) -- (ld);
-    \draw (ld) -- (t1);
-    \draw (t1) -- (foo);
-    \draw (foo) -- (t2);
-    \draw (t2) -- (st);
+    \draw (p1) -- (store-1);
+    \draw [rounded corners=3pt]
+          (p1)
+          --
+          (p2.center)
+          --
+          (foo);
+    \draw [rounded corners=3pt]
+          ([xshift=-3pt] p2.center)
+          --
+          (p3.center)
+          --
+          (store-2);
   \end{scope}
 
   \begin{scope}[state flow]
     \draw [rounded corners=8pt]
           (block) -| (st1);
-    \draw (st1) -- (ld);
-    \draw (ld) -- (st2);
+    \draw (st1) -- (store-1);
+    \draw (store-1) -- (st2);
     \draw (st2) -- (foo);
     \draw (foo) -- (st3);
-    \draw (st3) -- (st);
-    \draw (st) -- (st4);
+    \draw (st3) -- (store-2);
+    \draw (store-2) -- (st4);
   \end{scope}
 
   \draw [definition edge, rounded corners=16pt]

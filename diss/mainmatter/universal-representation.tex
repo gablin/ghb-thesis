@@ -551,9 +551,9 @@ An example is shown in \refFigure{uni-rep-side-effects-example}.
 \begin{filecontents*}{side-effects-example-ir.c}
 block:
   $\ldots$
-  $\irAssign{\irVar{t}[1]}{\irLoad{p}}$
-  $\irAssign{\irVar{t}[2]}{\irCall{foo, \irVar{t}[1]}}$
-  $\irStore{\irVar{q}}{\irVar{t}[2]}$
+  store p, $\ldots$
+  call foo, p
+  store p, $\ldots$
 }
 \end{filecontents*}
 %
@@ -562,6 +562,7 @@ block:
   \mbox{}%
   \hfill%
   \subcaptionbox{Code snippet\labelFigure{uni-rep-side-effects-example-ir}}%
+                [25mm]%
                 {%
                   \lstinputlisting[language=c,mathescape]%
                                   {side-effects-example-ir.c}%
