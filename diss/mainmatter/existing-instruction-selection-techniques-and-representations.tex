@@ -404,12 +404,18 @@ An \gls{instruction selector} is \gls!{local.is} if it selects
 \glspl{instruction} for \glspl{expression tree} or \glspl{block DAG}, and
 \gls!{global.is} if it does so for \glspl{function graph}.
 %
-Corresponding \glspl{data-flow graph}, called \glspl!{pattern graph} (or simply
-\glspl!{pattern}), are also built to represent the \gls{instruction} provided by
-the \gls{target machine}.
+Corresponding \glspl{data-flow graph} are also built to represent the
+\gls{instruction} provided by the \gls{target machine}.
 %
-The set of \glspl{pattern graph} for a particular \gls{target machine}
-constitute a \gls!{pattern set}.
+Such \glspl{data-flow graph} are called either \glspl!{pattern tree},
+\glspl!{pattern DAG}, or \glspl!{pattern graph}, depending on whether they are
+shaped as \glspl{tree}, \glspl{DAG}, or \glspl{graph}, respectively.
+%
+When the shape is clear from the context, they are simply called
+\glspl!{pattern}.
+%
+The set of \glspl{pattern} for a particular \gls{target machine} constitute a
+\gls!{pattern set}.
 
 The \gls{matching} problem can be reduced to finding all instances where a
 \gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to~$G$,
@@ -554,7 +560,8 @@ Restricting oneself to \glspl{expression tree} may also lead to redundant code
 duplication, as will be explained in
 \refSection{ex-isel-rep-traditional-approaches}.
 
-This chapter covers the most well-known applications of \gls{tree covering}.
+This chapter considers the traditional and most well-known applications of
+\gls{tree covering}.
 %
 For the complete examination, see \refAppendix{tree-covering}.
 
@@ -562,13 +569,61 @@ For the complete examination, see \refAppendix{tree-covering}.
 
 \subsubsection{DAG Covering}
 
-\todo{write}
+By replacing the \glspl{expression tree} used in \gls{tree covering} with
+\glspl{block DAG}, and allowing \glspl{instruction} to be modeled either as
+\glspl{pattern tree} or \glspl{pattern DAG}, we attain a more general principle
+called \gls!{DAG covering}.
+%
+Unlike \gls{tree covering}, which can be solved optimally in linear time,
+finding the \gls{least-cost.c} \gls{cover} of a \gls{block DAG} is NP-complete.
+%
+Consequently, \gls{DAG covering} started to gain traction in the beginning of
+the 1990s when exponential increase in compute power and significant progress
+made in the field of combinatorial optimization enabled such methods to be
+applied to \gls{instruction selection}.
+%
+Several near-optimal approaches to \gls{DAG covering} also exist.
+
+\Gls{DAG covering} has several advantages of \gls{tree covering}.
+%
+First, as will be explained shortly, the \gls{block DAG} does not need to be
+decomposed into \glspl{expression tree}, which compromises code quality.
+%
+Second, it enables selection of \gls{multi-output.ic} \glspl{instruction}, which
+must be modeled as \glspl{pattern DAG}.
+%
+The main disadvantage of \gls{DAG covering} is increased complexity and no
+support for \gls{inter-block.ic} \glspl{instruction}.
+
+This chapter only considers the \glspl{combinatorial approach} to \gls{DAG
+  covering}.
+%
+For the complete examination, see \refAppendix{dag-covering}.
 
 
 
 \subsubsection{Graph Covering}
 
-\todo{write}
+The most general principle is called \gls{graph covering}, where entire
+\glspl{function} are modeled as \glspl{function graph} and \glspl{instruction}
+are allowed to be modeled using any shape of \glspl{pattern}.
+%
+Compared to the other \glspl{principle}, there exist relatively few applications
+of \gls{graph covering}, the most known of which appeared in the 2000s.
+
+The main advantage is that \gls{graph covering} support selection of
+\gls{inter-block.ic} \glspl{instruction}, whose behavior entail both control and
+data flow and must therefore be captured as \glspl{pattern graph}.
+%
+The representations typically used, however, only model data flow, which
+stresses the need for new representations in order to handle the
+\glspl{instruction} of modern and forthcoming processors, which grow
+increasingly complex.
+
+This chapter only considers the \glspl{combinatorial approach} to \gls{graph
+  covering}.
+%
+For the complete examination, see \refAppendix{graph-covering}.
 
 
 
