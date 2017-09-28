@@ -68,12 +68,13 @@ exact coverage in this dissertation.
 Similarly, every value and state must be produced by exactly one selected match.
 %
 If a \gls!{datum}~$d$ denotes either a \glsshort{state node} or \gls{value node}
-in the \gls{UF graph}, then we say that a \gls{match}~$m$ \emph{defines} $d$ if
-there exists an inbound \glsshort{state-flow edge} or \gls{data-flow edge} to
+in the \gls{UF graph}, then we say that a \gls{match}~$m$ \gls!{define.d}[s] $d$
+if there exists an inbound \glsshort{state-flow edge} or \gls{data-flow edge} to
 $d$ in the \gls{UP graph} from which $m$ was derived.
 %
-Similarly, $m$ \emph{uses} $d$ if there exists an outbound \glsshort{state-flow
-  edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph} of $m$.
+Similarly, $m$ \gls!{use.d}[s] $d$ if there exists an outbound
+\glsshort{state-flow edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph}
+of $m$.
 
 
 
@@ -94,10 +95,10 @@ in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set
 of \glspl{match} that can cover~$o$.
 %
 Similarly, the set of \glspl{variable} \mbox{$\mVar{dmatch}[d] \in
-  \mMatchSet[o]$} models which selected \gls{match} defines \gls{datum}~\mbox{$d
-  \in \mDataSet$\hspace{-1.5pt}}, where $\mDataSet$ denotes the set of
-\glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq \mMatchSet$}
-denotes the set of \glspl{match} that can define~$d$.
+  \mMatchSet[o]$} models which selected \gls{match} \gls{define.d}[s]
+\gls{datum}~\mbox{$d \in \mDataSet$\hspace{-1.5pt}}, where $\mDataSet$ denotes
+the set of \glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq
+  \mMatchSet$} denotes the set of \glspl{match} that can \gls{define.d}~$d$.
 
 
 
@@ -115,8 +116,8 @@ The \gls{constraint} that every \gls{operation} must be covered is modeled as
 In other words, an \gls{operation}~$o$ is covered by a match~$m$ if and only if
 $m$ is selected.
 
-Likewise, the \gls{constraint} that every \gls{datum} must be defined is modeled
-as
+Likewise, the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
+is modeled as
 %
 \begin{equation}
   \mVar{dmatch}[d] = m \mEq \mVar{sel}[m],
@@ -125,8 +126,8 @@ as
   \labelEquation{data-definitions}
 \end{equation}
 %
-In other words, a \gls{datum}~$d$ is defined by a match~$m$ if and only if $m$
-is selected.
+In other words, a \gls{datum}~$d$ is \gls{define.d}[d] by a match~$m$ if and
+only if $m$ is selected.
 
 
 
@@ -187,15 +188,15 @@ $\irStore{\irVar{p}[1]}{\irVar{q}[2]}$
 An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
 %
 If both \glspl{match} are selected, then either value~\irVar{p}[2] or
-value~\irVar{q}[2] will be used before it is available (depending on the
-instruction order), thus resulting in incorrect code.
+value~\irVar{q}[2] will be \gls{use.d}[d] before it is available (depending on
+the instruction order), thus resulting in incorrect code.
 %
 Consequently, such combinations must be identified and forbidden.
 
 We detect such combinations -- which could involve more than two \glspl{match}
 -- by first constructing a \gls!{dependency graph}, where each \gls{node}
 represents a \gls{match} and each directed \gls{edge}~$\mPair{n}{m}$ indicates
-that \gls{match}~$m$ uses \glspl{datum} produced by \gls{match}~$n$.
+that \gls{match}~$m$ \gls{use.d}[s] \glspl{datum} produced by \gls{match}~$n$.
 %
 A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
 which will lead to a cyclic data dependency if all \glspl{match} are selected.
