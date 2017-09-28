@@ -68,7 +68,16 @@ example).
 %
 By definition, a \gls{block} always \gls{dominate.b}[s] itself.
 %
-\todo{finish discussion}
+Hence a placement of \glspl{match} into \glspl{block} is a \gls{solution} to the
+\gls{global code motion} problem if each \gls{datum}~$d$ is \gls{define.d}[d] by
+some selected \gls{match} placed in a \gls{block}~$b$, and every
+non-\gls{phi-match} \glsshort{use.d}[ing] $d$ is placed in a \gls{block}
+\gls{dominate.b}[d] by~$b$.
+%
+The \glspl{phi-match} must be excluded since, due to the \glspl{definition
+  edge}, at least one \gls{datum} used by such \glspl{match} must be
+\gls{define.d}[d] in a \gls{block} that does not \gls{dominate.b} the
+\gls{block} wherein the \gls{phi-match} must be placed.
 
 
 
