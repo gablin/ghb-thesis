@@ -7,9 +7,80 @@
 \chapter{Modeling Global Code Motion}
 \labelChapter{modeling-global-code-motion}
 
-\paragraph{Variables}
+\todo{write summary}
 
-\paragraph{Constraints}
+
+
+\section{Definitions and Uses of Data}
+
+\Glspl{datum} must be placed in \glspl{block} such that each definition of a
+\gls{datum}~$d$ precedes all \gls{use.d}[s] of~$d$.
+%
+This condition can be expressed in terms of \gls{block} dominance.
+%
+Given a \gls{function}~$f$, a \gls{block}~$b$ in $f$ \gls!{dominate.b}[s]
+another \gls{block}~$c$ in $f$ if $b$ appears on every control-flow path from
+$f$'s \gls{entry block} to $c$ (see \refFigure{block-dominance-example} for an
+example).
+%
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{Control-flow graph\labelFigure{block-dominance-example-cfg}}%
+                [34mm]%
+                {%
+                  \input{%
+                    figures/modeling-global-code-motion/block-dominance-example%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{Dominance\labelFigure{block-dominance-example-doms}}%
+                {%
+                  \figureFontSize%
+                  \begin{tabular}{cc}
+                    \toprule
+                      \tabhead Block
+                    & \tabhead dominates\\
+                    \midrule
+                      \irBlock{entry}
+                    & $\mSet{\irBlock{entry}, \irBlock{A}, \irBlock{B},
+                        \irBlock{C}, \irBlock{D}, \irBlock{E}}$\\
+                      \irBlock{A}
+                    & $\mSet{\irBlock{A}, \irBlock{B}, \irBlock{C},
+                        \irBlock{D}}$\\
+                      \irBlock{B}
+                    & $\mSet{\irBlock{B}}$\\
+                      \irBlock{C}
+                    & $\mSet{\irBlock{C}}$\\
+                      \irBlock{D}
+                    & $\mSet{\irBlock{D}}$\\
+                      \irBlock{E}
+                    & $\mSet{\irBlock{E}}$\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example of block dominance}
+  \labelFigure{block-dominance-example}
+\end{figure}%
+%
+By definition, a \gls{block} always \gls{dominate.b}[s] itself.
+%
+\todo{finish discussion}
+
+
+
+\subsubsection{Variables}
+
+\todo{introduce variables}
+
+
+
+\subsubsection{Constraints}
+
+\todo{explain constraints}
 
 \begin{equation}
   \begin{array}{c}
