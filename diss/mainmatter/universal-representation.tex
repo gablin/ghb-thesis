@@ -731,6 +731,34 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
 
 
 
+\subsubsection{Covering $\mPhi$-Nodes}
+
+Since covering of a \gls{UF graph} also includes the \glspl!{phi-node} -- that
+is, the \glspl{node} representing \glspl{phi-function} -- which typically do not
+correspond to any \gls{instruction} on the \gls{target machine}, we need a
+special \gls{pattern} for covering such \glspl{node}.
+%
+Consequently, it is assumed that the \gls{pattern set} always includes a
+\gls!{phi-pattern}, which is illustrated in \refFigure{phi-pattern}.
+%
+The \gls{phi-pattern} has a variable number of input values since a
+\gls{phi-function} may take an arbitrary number of arguments.
+%
+In our experiments, it proved sufficient to duplicate the \gls{phi-pattern} for
+\mbox{$k = 2, \ldots, 10$}.
+%
+A \gls{match} derived from a \gls{phi-pattern} is called a \gls!{phi-match}.
+
+\begin{figure}
+  \centering%
+  \input{figures/universal-representation/phi-pattern}
+
+  \caption{The $\mPhi$-pattern}
+  \labelFigure{phi-pattern}
+\end{figure}
+
+
+
 \section{Pattern Matching}
 \labelSection{uni-rep-pattern-matching}
 
