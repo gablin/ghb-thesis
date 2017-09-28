@@ -508,63 +508,68 @@ and \gls{CP}:
     It presents a comprehensive survey that
     \begin{contributions}
       \item \labelContribution{survey-spanning}
-        examines over four decades of research,
+        examines over four decades of research on \gls{instruction selection},
+        covering a significantly wider scope and timespan compared to existing
+        surveys \cite{Cattell:1977, GanapathiEtAl:1982:Survey, Lunell:1983,
+          Leupers:2000:Survey, BoulytchevLomov:2001} which are either too old
+        or incomplete.
     \end{contributions}
-    from which
+    The survey structures the approaches according to two dimensions:
     \begin{contributions}[resume]
       \item \labelContribution{survey-principles}
-        four fundamental principles (\gls{macro expansion}, \gls{tree covering},
-        \gls{DAG covering}, and \gls{graph covering})
+        the fundamental \gls{principle} -- \gls{macro expansion}, \gls{tree
+          covering}, \gls{DAG covering}, or \gls{graph covering} -- that they
+        apply, and
     \end{contributions}
-    and
     \begin{contributions}[resume]
       \item \labelContribution{survey-instruction-characteristics}
-        five \gls{instruction} characteristics (\gls{single-output.ic},
+        the \glspl{instruction characteristic} -- \gls{single-output.ic},
         \gls{multi-output.ic}, \gls{disjoint-output.ic}, \gls{inter-block.ic},
-        and \gls{interdependent.ic} \glspl{instruction})
-    \end{contributions}
-    have been identified. The approaches are thus
-    \begin{contributions}[resume]
-      \item \labelContribution{survey-categorization}
-        carefully evaluated and categorized according to these two dimensions.
+        and \gls{interdependent.ic} -- that they support.
     \end{contributions}
     %
     In addition, the survey
     \begin{contributions}[resume]
       \item \labelContribution{survey-problem-identification}
-        identifies problems closely related to \gls{instruction selection} that
-        have yet to be addressed by existing approaches.
+        identifies connections between \gls{instruction selection} and other
+        \gls{code generation} problems that have yet to be investigated.
     \end{contributions}
   \item \labelContribution{representations}
-    It introduces a \gls{program} and \gls{instruction} representation that
+    It introduces a novel \gls{program} and \gls{instruction} representation
+    that
     \begin{contributions}
       \item \labelContribution{rep-data-and-control-flow}
-        captures the data and control flow for entire \glspl{function}
+        captures both data and control flow for entire \glspl{function} and
+        \glspl{instruction},
     \end{contributions}
-    and enables
+    which enables
     \begin{contributions}[resume]
       \item \labelContribution{rep-complex-instructions}
-        modeling and pattern matching of complex \glspl{instruction} as
-        \glspl{pattern}, and
+        an unprecedented range of instruction behaviors to be captured and
+        modeled as \glspl{pattern}.
+    \end{contributions}
+    In addition, the representation is crucial for
+    \begin{contributions}[resume]
       \item \labelContribution{rep-combining-problems}
-        modeling of \gls{global.is} \gls{instruction selection} and \gls{global
-          code motion} as a \gls{constraint model}.
+        combining \gls{instruction selection} and \gls{global code motion} --
+        two problems that have until now been considered separately from one
+        another -- and solving these two problems in unison.
     \end{contributions}
   \item \labelContribution{constraint-model}
-    It introduces a \gls{constraint model} and related transformations that,
-    for the first time, enables
+    It introduces a \gls{constraint model} and related transformations for
+    \gls{universal instruction selection} which, for the first time, enables
     \begin{contributions}
       \item \labelContribution{cp-uniform-selection}
         uniform selection of data and control \glspl{instruction},
     \end{contributions}
-    and integrates
+    and integration of
     \begin{contributions}[resume]
       \item \labelContribution{cp-global-instruction-selection}
         \gls{global.is} \gls{instruction selection} with
       \item \labelContribution{cp-global-code-motion}
-        \gls{global code motion},
+        \gls{global code motion}.
     \end{contributions}
-    as well as
+    In addition, the \gls{constraint model} integrates
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
         \gls{data copying},
