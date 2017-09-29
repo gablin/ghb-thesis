@@ -4,9 +4,10 @@
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
 
-\chapter[Modeling Global Instruction Selection]
-        {Modeling Global\\ Instruction Selection}
-\labelChapter{modeling-global-instruction-selection}
+\chapter{Constraint Model}
+\labelChapter{constraint-model}
+
+\todo{write chapter summary}
 
 This chapter describes the part of the \gls{constraint model} which captures
 \gls{global.is} \gls{instruction selection}.
@@ -19,7 +20,14 @@ selection of \glspl{match} that will lead to cyclic data dependencies.
 
 
 
-\section{Modeling Operation Coverage and Data Definitions}
+\section{Modeling Global Instruction Selection}
+\labelSection{modeling-global-instruction-selection}
+
+\todo{write introduction}
+
+
+
+\subsection{Modeling Operation Coverage and Data Definitions}
 \labelSection{modeling-operation-coverage-and-data-definitions}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
@@ -131,7 +139,7 @@ only if $m$ is selected.
 
 
 
-\section{Forbidding Cyclic Data Dependencies}
+\subsection{Forbidding Cyclic Data Dependencies}
 \labelSection{forbidding-cyclic-data-dependencies}
 
 In certain cases, selecting \glspl{match} of \glspl{instruction} producing
@@ -223,3 +231,353 @@ modeled as
 %
 In other words, the number of selected \glspl{match} must be strictly less than
 the number of \gls{match} appearing in the \gls{cycle}.
+
+
+
+\section{Modeling Global Code Motion}
+\labelSection{modeling-global-code-motion}
+
+\todo{write introduction}
+
+
+
+\subsection{Definitions and Uses of Data}
+
+\Glspl{datum} must be placed in \glspl{block} such that each definition of a
+\gls{datum}~$d$ precedes all \gls{use.d}[s] of~$d$.
+%
+This condition can be expressed in terms of \gls{block} dominance.
+%
+Given a \gls{function}~$f$, a \gls{block}~$b$ in $f$ \gls!{dominate.b}[s]
+another \gls{block}~$c$ in $f$ if $b$ appears on every control-flow path from
+$f$'s \gls{entry block} to $c$ (see \refFigure{block-dominance-example} for an
+example).
+%
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{Control-flow graph\labelFigure{block-dominance-example-cfg}}%
+                [34mm]%
+                {%
+                  \input{%
+                    figures/modeling-global-code-motion/block-dominance-example%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{Dominance\labelFigure{block-dominance-example-doms}}%
+                {%
+                  \figureFontSize%
+                  \begin{tabular}{cc}
+                    \toprule
+                      \tabhead Block
+                    & \tabhead dominates\\
+                    \midrule
+                      \irBlock{entry}
+                    & $\mSet{\irBlock{entry}, \irBlock{A}, \irBlock{B},
+                        \irBlock{C}, \irBlock{D}, \irBlock{E}}$\\
+                      \irBlock{A}
+                    & $\mSet{\irBlock{A}, \irBlock{B}, \irBlock{C},
+                        \irBlock{D}}$\\
+                      \irBlock{B}
+                    & $\mSet{\irBlock{B}}$\\
+                      \irBlock{C}
+                    & $\mSet{\irBlock{C}}$\\
+                      \irBlock{D}
+                    & $\mSet{\irBlock{D}}$\\
+                      \irBlock{E}
+                    & $\mSet{\irBlock{E}}$\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example of block dominance}
+  \labelFigure{block-dominance-example}
+\end{figure}%
+%
+By definition, a \gls{block} always \gls{dominate.b}[s] itself.
+%
+Hence a placement of \glspl{match} into \glspl{block} is a \gls{solution} to the
+\gls{global code motion} problem if each \gls{datum}~$d$ is \gls{define.d}[d] by
+some selected \gls{match} placed in a \gls{block}~$b$, and every
+non-\gls{phi-match} \glsshort{use.d}[ing] $d$ is placed in a \gls{block}
+\gls{dominate.b}[d] by~$b$.
+%
+The \glspl{phi-match} must be excluded since, due to the \glspl{definition
+  edge}, at least one \gls{datum} used by such \glspl{match} must be
+\gls{define.d}[d] in a \gls{block} that does not \gls{dominate.b} the
+\gls{block} wherein the \gls{phi-match} must be placed.
+
+
+
+\subsubsection{Variables}
+
+\todo{introduce variables}
+
+
+
+\subsubsection{Constraints}
+
+\todo{explain constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
+    \forall m \in \mMatchSet,
+    \forall o_1 \in \mCovers(m),
+    \forall o_2 \in \mCovers(m)
+  \end{array}
+  \labelEquation{operation-placement}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
+    \forall m \in \mMatchSet,
+    \forall o \in \mCovers(m),
+    \forall b \in \mEntry(m)
+  \end{array}
+  \labelEquation{jump-placements}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall d \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom}
+\end{equation}
+
+\begin{equation}
+  \mVar{dplace}[d] = b
+  \mQuantSep
+  \forall \mUnDirEdge{d}{b} \in \mDefEdgeSet,
+  \labelEquation{def-edges}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{oplace}[o] \neq b \\
+    \forall o \in \mOpSet,
+    \forall m \in \mMatchSet,
+    \forall b \in \mConsumes(m)
+  \end{array}
+  \labelEquation{consumption}
+\end{equation}
+
+
+
+\section{Modeling Data Copying}
+\labelSection{modeling-data-copying}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[d] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mDataSet \;\text{s.t.} \mStores(m, d) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[d] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall d \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values}
+\end{equation}
+
+
+
+\subsection{Handling Calling Conventions}
+
+\paragraph{Constraints}
+
+
+
+\section{Modeling Value Reuse}
+\labelSection{modeling-value-reuse}
+
+\subsection{Match Duplication}
+
+\paragraph{Variables}
+\paragraph{Constraints}
+
+\subsection{Alternative Values}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]) \\
+    \forall m \in \mMatchCompSet{\mPhi},
+    \forall \hlDiff{p} \in \mUses(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{dom-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in
+      \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in \mDefines(m),
+    \forall o \in \mCovers(m)
+  \end{array}
+  \labelEquation{spanning-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p) \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in
+      \hlDiff{\mOperandSet} \;\text{s.t.}
+      \mStores(m, \hlDiff{p}) \neq \mEmptySet
+  \end{array}
+  \labelEquation{valid-locations-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation \\
+    \forall m \in \mMatchSet,
+    \forall \hlDiff{p} \in \mIntValues(m)
+  \end{array}
+  \labelEquation{locs-of-intermediate-values-alt}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mEq
+    \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchSet[\mKill],
+    \forall p \in \mDefines(m)
+  \end{array}
+  \labelEquation{inactivity-when-killed}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \neg \mVar{inactive}[\mVar{alt}[p]] \\
+    \forall m \in \mMatchCompSet{\mKill},
+    \forall p \in \mUses(m)
+  \end{array}
+  \labelEquation{inactivity-when-used}
+\end{equation}
+
+\subsection{Experimental Evaluation}
+
+\subsection{Discussion}
+
+
+
+\section{Modeling Block Ordering}
+\labelSection{modeling-block-ordering}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \mCircuit\left(
+    \cup_{b \in \mBlockSet} \{\mVar{succ}[b]\}
+  \right)
+  \labelEquation{block-order}
+\end{equation}
+
+
+
+
+\subsection{Handling Branch Fallthroughs}
+
+\subsection{Branch Extension}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\subsection{Dual-target Branch Patterns}
+
+\paragraph{Variables}
+
+\paragraph{Constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[\mEntry(m)] = b \mOr \mbox{} \\
+    \big(
+      \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
+      \mAnd
+      \mEmptyBlock(\mVar{succ}[\mEntry(m)])
+    \big) \\
+    \forall \mPair{m}{b} \in \mFallThroughSet,
+  \end{array}
+  \labelEquation{fall-through}
+\end{equation}
+%
+where
+%
+\begin{equation*}
+  \mEmptyBlock(b) =
+  \mVar{oplace}[o] \neq b
+  \mOr
+  \mVar{omatch}[o] \in \mMatchSet[\mNull]
+  \mQuantSep
+  \forall o \in \mOpSet
+\end{equation*}
+
+
+
+\subsection{Experimental Evaluation}
+\subsubsection{With or Without Block Ordering}
+\subsubsection{Branch Extension Vs. Dual-target Branch Patterns}
+
+\subsection{Discussion}
+
+
+
+\section{Limitations}
+\labelSection{limitations}
+
+\subsection{Recomputation}
+\subsection{Common Subexpression Elimination}
+\subsection{Implicit Sign/Zero Extensions and Truncations}

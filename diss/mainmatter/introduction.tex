@@ -596,30 +596,15 @@ is manifested and discussed further.
 
 \begin{table}
   \centering%
-  \begin{tabular}{c@{\qquad}*{13}{c}}
+  \begin{tabular}{c@{\qquad}*{6}{c}}
     \toprule
       \tabhead Chapter
     & \tabhead\refContribution{survey}
-    & \multicolumn{3}{c}{\tabhead\refContribution{representations}}
-    & \multicolumn{6}{c}{\tabhead\refContribution{constraint-model}}
+    & \tabhead\refContribution{representations}
+    & \tabhead\refContribution{constraint-model}
     & \tabhead\refContribution{solving-techniques}
     & \tabhead\refContribution{experiments}
-    & \tabhead\refContribution{integration} \\
-    \cmidrule(lr){3-5}%
-    \cmidrule(lr){6-11}%
-    &
-    & \tabhead\refContribution{rep-data-and-control-flow}
-    & \tabhead\refContribution{rep-complex-instructions}
-    & \tabhead\refContribution{rep-combining-problems}
-    & \tabhead\refContribution{cp-uniform-selection}
-    & \tabhead\refContribution{cp-global-instruction-selection}
-    & \tabhead\refContribution{cp-global-code-motion}
-    & \tabhead\refContribution{cp-data-copying}
-    & \tabhead\refContribution{cp-value-reuse}
-    & \tabhead\refContribution{cp-block-ordering}
-    &
-    &
-    & \\
+    & \tabhead\refContribution{integration}\\
     \midrule
     \refChapter*{existing-isel-techniques-and-reps}
     & \supportYes
@@ -627,196 +612,70 @@ is manifested and discussed further.
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refChapter*{universal-representation}
     & \supportNo
     & \supportYes
-    & \supportYes
-    & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
-    \refChapter*{modeling-global-instruction-selection}
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportYes
-    & \supportYes
-    & \supportYes
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
-    \refChapter*{modeling-global-code-motion}
-    & \supportNo
+    & \supportNo\\
+    \refChapter*{constraint-model}
     & \supportNo
     & \supportNo
     & \supportYes
     & \supportNo
     & \supportNo
-    & \supportYes
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
-    \refChapter*{modeling-data-copying}
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportYes
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
-    \refChapter*{modeling-value-reuse}
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportYes
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
-    \refChapter*{modeling-block-ordering}
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportYes
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refChapter*{solving-techniques}
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
     & \supportYes
     & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refChapter*{comparison-against-the-state-of-the-art}
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
     & \supportYes
-    & \supportNo \\
+    & \supportNo\\
     \refChapter*{future-work}
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportYes \\
+    & \supportYes\\
     \refAppendix*{macro-expansion}
     & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refAppendix*{tree-covering}
     & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refAppendix*{dag-covering}
     & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \refAppendix*{graph-covering}
     & \supportYes
     & \supportNo
     & \supportNo
     & \supportNo
     & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo
-    & \supportNo \\
+    & \supportNo\\
     \bottomrule
   \end{tabular}
 
