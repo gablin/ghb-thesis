@@ -646,7 +646,8 @@ Modeling \glspl{instruction} as \glspl{pattern} is nearly identical to modeling
 \glspl{function}.
 %
 The exceptions are that the \gls{control-flow graph} becomes empty if the output
-is not dependent on control flow, and that no additional \glspl{data-flow edge}
+is not dependent on control flow -- hence a \gls{pattern} has either none or
+exactly one \gls{entry block} -- and that no additional \glspl{data-flow edge}
 are added for \glspl{value node} representing constants and \gls{instruction}
 input.
 %
