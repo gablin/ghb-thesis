@@ -1,5 +1,4 @@
 * BEFORE SUBMISSION
-** TODO Replace 'distinct' with 'alldiff'
 ** TODO Replace triple newlines with double newlines
 ** TODO Remove misuse of glossary terms "variable" and "operation"
 ** TODO Add forward references from Chap 2 to appendices

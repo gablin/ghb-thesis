@@ -147,20 +147,20 @@ improve solving compared to relations modeled using multiple \gls{binary.c}
 \glspl{constraint}.
 
 Arguably, the most well-known \gls{global.c} \gls{constraint} is the
-\gls!{distinct constraint}.
+\gls!{all-different constraint}.
 %
-Typically referred to as $\mDistinct$ or $\mAllDiff$, the \gls{constraint}
+Typically referred to as $\mAllDiff$ or $\mDistinct$, the \gls{constraint}
 enforces all \glspl{variable} in a given set to take distinct values.
 %
 Formally, the \gls{constraint} is defined as follows.
 %
-\begin{definition}[Distinct Constraint]%
+\begin{definition}[All-different Constraint]%
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable}.
   %
   Then
   %
   \begin{displaymath}
-    \mDistinct(\mVar{x}_1, \ldots, \mVar{x}_k)
+    \mAllDiff(\mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {\forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
@@ -169,12 +169,12 @@ Formally, the \gls{constraint} is defined as follows.
 \end{definition}
 
 Hence the \glspl{constraint} in \refTable{cp-model-example} can be replaced by
-$\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$.
+$\mAllDiff(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
 \gls{constraint} -- the \gls{global cardinality constraint}, which is a
-generalization of the \gls{distinct constraint} -- and how it can be used to
-model the \gls{pattern selection} problem (see
+generalization of the \gls{all-different constraint} -- and how it can be used
+to model the \gls{pattern selection} problem (see
 \refEquation{pattern-selection-using-gcc} on
 \refPageOfEquation{pattern-selection-using-gcc}).
 %
@@ -427,8 +427,8 @@ any \gls{solution} to the \gls{constraint}.
   \vspace{\betweensubfigures}
 
   \subcaptionbox{%
-                  Solving with domain-consistent distinct constraint%
-                  \labelTable{cp-prop-strengths-example-distinct}%
+                  Solving with domain-consistent all-different constraint%
+                  \labelTable{cp-prop-strengths-example-alldiff}%
                 }{%
                   \begin{tabular}{%
                                    l%
@@ -448,7 +448,7 @@ any \gls{solution} to the \gls{constraint}.
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2, & 3, & 4 & \}\\
-                      Propagate $\mDistinct(\mVar{x}, \mVar{y}, \mVar{z})$
+                      Propagate $\mAllDiff(\mVar{x}, \mVar{y}, \mVar{z})$
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ &    &    & 3, & 4 & \}\\
@@ -461,15 +461,15 @@ any \gls{solution} to the \gls{constraint}.
   \caption[Example illustrating propagation]%
           {%
             Example illustrating propagation for two versions of the model given
-            in \refTable{cp-model-example}, one using the distinct constraint
-            and the other using a binary decomposition%
+            in \refTable{cp-model-example}, one using the all-different
+            constraint and the other using a binary decomposition%
           }
   \labelTable{cp-prop-strengths-example}
 \end{table}
 %
 For example, \refTable{cp-prop-strengths-example} shows solving of two versions
 of the \glsshort{constraint model} given in \refTable{cp-model-example}, one
-using $\mDistinct$ and another using inequality \glspl{constraint}.
+using $\mAllDiff$ and another using inequality \glspl{constraint}.
 %
 Because only \gls{value consistency} can be achieved for inequality
 \glspl{constraint}, they cannot propagate anything until at least one
@@ -481,9 +481,9 @@ resort to \gls{search}.
 In this case, the \gls{solver} makes a wrong guess and is forced to backtrack.
 %
 In comparison, a \glshyphened{domain consistency} \gls{propagator} for the
-\gls{distinct constraint} can remove values~1 and~2 from the \gls{domain} of
-\gls{variable}~$\mVar{z}$ as these values do not appear in any \glspl{solution}
-(see \refTable{cp-model-example-solutions}).
+\gls{all-different constraint} can remove values~1 and~2 from the \gls{domain}
+of \gls{variable}~$\mVar{z}$ as these values do not appear in any
+\glspl{solution} (see \refTable{cp-model-example-solutions}).
 %
 Maximizing \gls{propagation} is key in making solving tractable, as the
 \gls{search space} grows exponentially with the number of \glspl{variable} and
@@ -491,9 +491,9 @@ size of the \glspl{domain}.
 
 As to be expected, stronger propagation comes at a price of greater complexity.
 %
-For the \gls{distinct constraint}, there exist \glsshort{bounds consistency} and
-\glshyphened{domain consistency} \glspl{propagator} with worst-case time
-complexities~$\mBigO(n \log n)$~\cite{Lopez-OrtizEtAl:2003}
+For the \gls{all-different constraint}, there exist \glsshort{bounds
+  consistency} and \glshyphened{domain consistency} \glspl{propagator} with
+worst-case time complexities~$\mBigO(n \log n)$~\cite{Lopez-OrtizEtAl:2003}
 and~$\mBigO(n^{2.5})$~\cite{Regin:1994}, respectively, where $n$ denotes the
 number of \glspl{variable}.
 %
