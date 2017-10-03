@@ -7,16 +7,17 @@
 \chapter{Constraint Model}
 \labelChapter{constraint-model}
 
-\todo{write chapter summary}
+This chapter introduces the \gls{constraint model} for \gls{universal
+  instruction selection}.
+%
+\RefSectionRange{modeling-global-instruction-selection}{modeling-block-ordering}
+introduce the \glspl{variable} and \gls{constraint} for modeling \gls{global.is}
+\gls{instruction selection}, \gls{global code motion}, \gls{data copying},
+\gls{value reuse}, and \gls{block ordering}, respectively.
+%
+The \glsshort{constraint model} limitations are discussed in
+\refSection{cm-limitations}.
 
-This chapter describes the part of the \gls{constraint model} which captures
-\gls{global.is} \gls{instruction selection}.
-%
-\RefSection{modeling-operation-coverage-and-data-definitions} describes modeling
-of \gls{operation} coverage and \glspl{datum} definitions.
-%
-\RefSection{forbidding-cyclic-data-dependencies} describes how to forbid
-selection of \glspl{match} that will lead to cyclic data dependencies.
 
 
 \section{Modeling Global Instruction Selection}
@@ -559,7 +560,7 @@ where
 
 
 \section{Limitations}
-\labelSection{limitations}
+\labelSection{cm-limitations}
 
 \subsection{Recomputation}
 \subsection{Common Subexpression Elimination}
