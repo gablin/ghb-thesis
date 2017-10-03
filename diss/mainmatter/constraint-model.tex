@@ -471,31 +471,73 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
 \section{Modeling Data Copying}
 \labelSection{modeling-data-copying}
 
-\paragraph{Variables}
+\todo{write introduction}
 
-\paragraph{Constraints}
 
+\subsubsection{Variables}
+
+The set of \glspl{variable} \mbox{$\mVar{loc}[d] \subseteq \mLocationSet \cup
+  \mSet{\mNullLocation}$} models in which location \gls{datum}~$d$ is available,
+where $\mLocationSet$ denotes the set of locations provided by the \gls{target
+  machine} and $\mNullLocation$ denotes a special location not available for any
+\glsshort{input datum} or \glspl{output datum}.
+%
+The special location is used for intermediate values produced internally by an
+\gls{instruction} which can only be accessed by this very \gls{instruction}.
+%
+For example, the address computed by a memory load \gls{instruction} with a
+sophisticated addressing mode is produced within the pipeline and thus cannot be
+reused by other \glspl{instruction}.
+
+
+\subsubsection{Constraints}
+
+Every \gls{datum} must be made available in a location that is compatible for
+all selected \glspl{match}.
+%
+To this end, let \mbox{$\mStores(m, d) \subseteq \mLocationSet$} denote the set
+of compatible locations for a \gls{datum}~$d$ which is either an \glsshort{input
+  datum} or \gls{output datum} to a \gls{match}~$m$.
+%
+Let also \mbox{$\mExtValues(m) \subseteq \mDataSet$} denote the set of values
+which are either \glsshort{input datum} or \glspl{output datum} to~$m$ (note
+that this does not include any \glspl{state node} \gls{define.d}[d] or
+\gls{use.d}[d] by $m$).
+%
+Likewise, let \mbox{$\mIntValues(m) \subseteq \mDataSet$} denote the set of
+values which are intermediate values produced by~$m$.
+%
+With these definitions, this \gls{constraint} is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
     \mVar{loc}[d] \in \mStores(m, p), \\
     \forall m \in \mMatchSet,
-    \forall d \in \mDataSet \;\text{s.t.} \mStores(m, d) \neq \mEmptySet
+    \forall d \in \mExtValues(m).
   \end{array}
   \labelEquation{valid-locations}
 \end{equation}
 
+The \gls{constraint} that intermediate values must be placed in the special
+location is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
     \mVar{loc}[d] = \mNullLocation, \\
     \forall m \in \mMatchSet,
-    \forall d \in \mIntValues(m)
+    \forall d \in \mIntValues(m).
   \end{array}
   \labelEquation{locs-of-intermediate-values}
 \end{equation}
+
+
+\subsection{Copy Extension}
+
+\todo{describe method}
 
 
 \subsection{Handling Calling Conventions}
