@@ -324,7 +324,7 @@ modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
+    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2], \\
     \forall m \in \mMatchSet,
     \forall o_1\hspace{-1pt}, o_2 \in \mCovers(m).
   \end{array}
@@ -345,7 +345,7 @@ or a set containing only the \gls{entry block} of match~$m$ (when the \gls{UP
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b\hspace{-1.2pt}, \\
     \forall m \in \mMatchSet,
     \forall o \in \mCovers(m),
     \forall b \in \mEntry(m).
@@ -369,7 +369,7 @@ With these definitions, the \gls{constraint} is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]), \\
     \forall m \in \mMatchCompSet{\mPhi},
     \forall d \in \mUses(m),
     \forall o \in \mCovers(m),
@@ -439,7 +439,7 @@ If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m), \\
     \forall m \in \mMatchSet,
     \forall d \in \mDefines(m),
     \forall o \in \mCovers(m).
@@ -459,7 +459,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{oplace}[o] \neq b \\
+    \mVar{oplace}[o] \neq b\hspace{-1.2pt}, \\
     \forall m \in \mMatchSet,
     \forall o \in \mOpSet \setminus \mCovers(m),
     \forall b \in \mConsumes(m).
@@ -479,7 +479,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[d] \in \mStores(m, p) \\
+    \mVar{loc}[d] \in \mStores(m, p), \\
     \forall m \in \mMatchSet,
     \forall d \in \mDataSet \;\text{s.t.} \mStores(m, d) \neq \mEmptySet
   \end{array}
@@ -490,7 +490,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[d] = \mNullLocation \\
+    \mVar{loc}[d] = \mNullLocation, \\
     \forall m \in \mMatchSet,
     \forall d \in \mIntValues(m)
   \end{array}
@@ -519,7 +519,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]) \\
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]), \\
     \forall m \in \mMatchCompSet{\mPhi},
     \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m)
@@ -532,7 +532,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
     \mVar{sel}[m]
     \mImp
     \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in
-      \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
+      \mSet{\mVar{oplace}[o]} \cup \mSpans(m), \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mDefines(m),
     \forall o \in \mCovers(m)
@@ -544,7 +544,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p) \\
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p), \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in
       \hlDiff{\mOperandSet} \;\text{s.t.}
@@ -557,7 +557,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation \\
+    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation, \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mIntValues(m)
   \end{array}
@@ -568,7 +568,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mEq
-    \mVar{inactive}[\mVar{alt}[p]] \\
+    \mVar{inactive}[\mVar{alt}[p]], \\
     \forall m \in \mMatchSet[\mKill],
     \forall p \in \mDefines(m)
   \end{array}
@@ -579,7 +579,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \neg \mVar{inactive}[\mVar{alt}[p]] \\
+    \neg \mVar{inactive}[\mVar{alt}[p]], \\
     \forall m \in \mMatchCompSet{\mKill},
     \forall p \in \mUses(m)
   \end{array}
@@ -640,8 +640,7 @@ where
   \mEmptyBlock(b) =
   \mVar{oplace}[o] \neq b
   \mOr
-  \mVar{omatch}[o] \in \mMatchSet[\mNull]
-  \mQuantSep
+  \mVar{omatch}[o] \in \mMatchSet[\mNull],
   \forall o \in \mOpSet
 \end{equation*}
 
