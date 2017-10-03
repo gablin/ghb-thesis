@@ -235,13 +235,9 @@ the number of \gls{match} appearing in the \gls{cycle}.
 \section{Modeling Global Code Motion}
 \labelSection{modeling-global-code-motion}
 
-\todo{write introduction}
-
-
-\subsection{Definitions of Data Before Use}
-
-\Glspl{datum} must be placed in \glspl{block} such that each definition of a
-\gls{datum}~$d$ precedes all \gls{use.d}[s] of~$d$.
+The \gls{global code motion} problem entails that \glspl{datum} must be placed
+in \glspl{block} such that each definition of a \gls{datum}~$d$ precedes all
+\gls{use.d}[s] of~$d$.
 %
 This condition can be expressed in terms of \gls{block} dominance.
 %
