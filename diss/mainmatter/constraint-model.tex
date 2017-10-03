@@ -309,50 +309,136 @@ The \glspl{phi-match} must be excluded since, due to the \glspl{definition
 
 \subsubsection{Variables}
 
-\todo{introduce variables}
+The set of \glspl{variable} \mbox{$\mVar{oplace}[o] \in \mBlockSet$} models in
+which \gls{block} \gls{operation}~$o$ is placed, where $\mBlockSet$ denotes the
+set of \glspl{block} in $\mUFGraph$.
+%
+Likewise, the set of \glspl{variable} \mbox{$\mVar{dplace}[d] \in \mBlockSet$}
+models in which \gls{block} the definition of \gls{datum}~$d$ is placed.
 
 
 \subsubsection{Constraints}
 
-\todo{explain constraints}
-
+Intuitively, all \glspl{operation} covered by a \gls{match}~$m$ must be placed
+in the same \gls{block} wherein $m$ itself is placed.
+%
+Hence, if \mbox{$\mCovers(m) \subseteq \mOpSet$} denotes the set of
+\glspl{operation} covered by \gls{match}~$m$, then this \gls{constraint} is
+modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
     \forall m \in \mMatchSet,
-    \forall o_1 \in \mCovers(m),
-    \forall o_2 \in \mCovers(m)
+    \forall o_1\hspace{-1pt}, o_2 \in \mCovers(m).
   \end{array}
   \labelEquation{operation-placement}
 \end{equation}
+%
+This also enables the placement of $m$ to be deduced from any of the
+corresponding $\mVar{oplace}$~\glspl{variable}.
 
+We prevent control-flow \glspl{operation} from being moved to another
+\gls{block}, which in all likelihood would break \gls{program} semantics, by
+forcing selected \glspl{match} with control flow to be placed in the \gls{block}
+matched by the \gls{UP graph}'s \gls{entry block}.
+%
+Hence, if \mbox{$\mEntry(m) \subseteq \mBlockSet$} returns either the empty set
+or a set containing only the \gls{entry block} of match~$m$ (when the \gls{UP
+  graph} of $m$ has such a node), then this \gls{constraint} is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m] \mImp \mVar{oplace}[o] = b \\
     \forall m \in \mMatchSet,
     \forall o \in \mCovers(m),
-    \forall b \in \mEntry(m)
+    \forall b \in \mEntry(m).
   \end{array}
-  \labelEquation{jump-placements}
+  \labelEquation{preventing-control-flow-op-moves}
 \end{equation}
 
+As stated previously, each \gls{datum}~$d$ must be \gls{define.d}[d] in some
+\gls{block}~\mbox{$b \in \mBlockSet$} such that $b$ \gls{dominate.b}[s] every
+\gls{block} wherein $d$ is \gls{use.d}[d], excluding \gls{use.d}[s] made by the
+\glspl{phi-match}.
+%
+To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
+\mbox{$\mUses(m) \subseteq \mOperandSet$} denote the set of \glspl{datum}
+\gls{define.d}[d] respectively \gls{use.d}[d] by \gls{match}~$m$.
+%
+Let also \mbox{$\mDom(b) \subseteq \mBlockSet$} denote the set of \glspl{block}
+that \gls{dominate.b} \gls{block}~$b$.
+%
+With these definitions, the \gls{constraint} is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
     \forall m \in \mMatchCompSet{\mPhi},
     \forall d \in \mUses(m),
-    \forall o \in \mCovers(m)
+    \forall o \in \mCovers(m),
   \end{array}
   \labelEquation{dom}
 \end{equation}
+%
+where $\mMatchCompSet{\mPhi}$ denotes the set~$\mMatchSet$ without the
+\glspl{phi-match}.
 
+The restrictions imposed by the \glspl{definition edge} are modeled as
+%
 \begin{equation}
-  \mVar{dplace}[d] = b
-  \mQuantSep
-  \forall \mUnDirEdge{d}{b} \in \mDefEdgeSet,
+  \mVar{dplace}[d] = b,
+  \forall \mPair{d}{b} \in \mDefEdgeSet,
   \labelEquation{def-edges}
 \end{equation}
+%
+where $\mDefEdgeSet$ denotes the set of \glspl{definition edge} in $\mUFGraph$.
+%
+It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
+that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
+and all \glspl{target} are \glspl{block node}.
 
+So far, there is no connection between the $\mVar{oplace}$ and $\mVar{dplace}$
+\glspl{variable}.
+%
+Intuitively, every \gls{datum} \gls{define.d}[d] by a \gls{match}~$m$ should be
+placed in the same \gls{block} as $m$ together with all \glspl{operation}
+covered by~$m$.
+%
+This alone, however, could result in an over-constrained \glsshort{constraint
+  model} that prevents selection of certain \glspl{match}.
+%
+For example, assume a \gls{match}~$m$ of the \gls{UP graph} shown in
+\refFigure{up-graph-examples-add-graph} on
+\refPageOfFigure{up-graph-examples-add-graph}, where the \glspl{block node}
+\irBlock{entry}, \irBlock{clamp}, and \irBlock{end} are matched to \glspl{block}
+in $\mUFGraph$ labeled \irBlock{A}, \irBlock{B}, and \irBlock{C}, respectively.
+%
+Because of \refEquation{preventing-control-flow-op-moves}, $m$ must be placed in
+the \irBlock{A}~\gls{block}.
+%
+But because of \refEquation{def-edges}, one of its \glspl{value node} must be
+placed in the \irBlock{B}~\gls{block}.
+%
+Consequently, for such conditions the \gls{constraint} is relaxed as follows.
+%
+We say that a \gls{match} \gls!{span.b}[s] the \glspl{block} matched by the
+\gls{UP graph}'s \glspl{block node} (hence $m$ \gls{span.b}[s] \glspl{block}
+\irBlock{A}, \irBlock{B}, and~\irBlock{C}).
+%
+We also say that a \gls{match} \gls!{consume.b}[s] any matched \glspl{block}
+where the corresponding \gls{block node} has both \gls{inbound.e} and
+\gls{outbound.e} control-flow \glspl{edge} in the \gls{UP graph} (hence $m$
+\gls{consume.b}[s] \gls{block}~\irBlock{B}).
+%
+Consequently, every \gls{datum}~$d$ \gls{define.d}[d] by a \gls{match}~$m$ must
+be placed in the same \gls{block} as $m$ only if $m$ \gls{span.b}[s] no
+\glspl{block}, otherwise $d$ may be \gls{define.d}[d] in any of the
+\glspl{block} \gls{span.b}[ned] by~$m$.
+%
+If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
+\gls{span.b}[ned] by \gls{match}~$m$, then this constraint is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -360,19 +446,27 @@ The \glspl{phi-match} must be excluded since, due to the \glspl{definition
     \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
     \forall m \in \mMatchSet,
     \forall d \in \mDefines(m),
-    \forall o \in \mCovers(m)
+    \forall o \in \mCovers(m).
   \end{array}
   \labelEquation{spanning}
 \end{equation}
 
+\Glsshort{consume.b}[ing] a \gls{block} entails that the corresponding
+\gls{instruction} assumes full control of the control flow to and from that
+\gls{block}, which in turn means no \glspl{operation} covered by other
+\glspl{match} may be placed in that \gls{block}.
+%
+Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
+\gls{consume.b}[d] by \gls{match}~$m$, then this constraint is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
     \mVar{oplace}[o] \neq b \\
-    \forall o \in \mOpSet,
     \forall m \in \mMatchSet,
-    \forall b \in \mConsumes(m)
+    \forall o \in \mOpSet \setminus \mCovers(m),
+    \forall b \in \mConsumes(m).
   \end{array}
   \labelEquation{consumption}
 \end{equation}
