@@ -20,7 +20,6 @@ solving these \glsplshort{constraint model}.
 For a comprehensive overview of \gls{CP}, see \cite{RossiEtAl:2006}.
 
 
-
 \section{Overview}
 \labelSection{cp-overview}
 
@@ -39,7 +38,6 @@ recurring problem structures that must be decomposed and reformulated in
 %
 This also makes \gls{CP} particularly suited for solving problems that appear in
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
-
 
 
 \section{Modeling}
@@ -132,7 +130,6 @@ An example is shown in \refTable{cp-model-example}.
           }
   \labelTable{cp-model-example}
 \end{table}
-
 
 
 \subsubsection{Global Constraints}
@@ -270,7 +267,6 @@ As will be seen in \refChapter{solving-techniques}, $\mTable$ can be used to
 refining the modeling of cost.
 
 
-
 \subsubsection{Optimization}
 
 In \gls{CP}, an optimization problem is modeled by maximizing or minimizing a
@@ -293,7 +289,6 @@ selecting $m$, then a \gls{CP} idiom for modeling \gls{optimal.ps} \gls{pattern
 In this context, $\mVar{c}$ is called a \gls!{cost variable}.
 
 
-
 \section{Solving}
 \labelSection{cp-solving}
 
@@ -311,7 +306,6 @@ In such cases, the \gls{search space} can be further reduced by extending the
 \gls{constraint model} with additional \glspl{constraint} to strengthen
 propagation and remove uninteresting \glspl{solution} and by performing
 \gls{presolving}.
-
 
 
 \subsubsection{Propagation}
@@ -511,7 +505,6 @@ NP-complete problem~\cite{GareyJohnson:1979}, although an incomplete
 polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
 
 
-
 \subsubsection{Search}
 
 When no more \gls{propagation} can be performed -- that is, when all
@@ -628,7 +621,6 @@ At this point the entire \gls{search space} has been explored, making $S_2$ the
 optimal \gls{solution}.
 
 
-
 \subsubsection{Implied, Symmetry Breaking, and Dominance Breaking Constraints}
 
 Solving can be improved by extending the \gls{constraint model} with additional
@@ -725,7 +717,6 @@ Hence the left-most \gls{solution} is dominated by the right-most
 certain distance away from the edge of the enclosing square such that the
 \mbox{$k \times k$} square and the edge forms a rectangle wherein all smaller
 squares can be packed.
-
 
 
 \subsubsection{Presolving}

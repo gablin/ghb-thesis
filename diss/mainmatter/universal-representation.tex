@@ -21,7 +21,6 @@ Lastly, \refSection{uni-rep-pattern-matching} describes how to perform
 \gls{pattern matching} using the \gls{universal representation}.
 
 
-
 \section{Design Requirements}
 \labelSection{uni-rep-design-requirements}
 
@@ -78,7 +77,6 @@ While there exists many \gls{graph}-based representations -- for a survey, see
 all.
 %
 Consequently, a new representation had to be designed.
-
 
 
 \section{Program Representation}
@@ -447,7 +445,6 @@ Hence, a subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
   node}, appears in exactly one match from~$C$.
 
 
-
 \subsubsection{Representing Constants As Single Or Multiple Nodes}
 
 Duplicated constants may either be represented using individual \glspl{value
@@ -477,7 +474,6 @@ This problem is fixed by applying \gls{copy extension}, which will be described
 in \refChapter{modeling-data-copying}.
 
 
-
 \subsubsection{Data Types of Values}
 
 Both \glspl{program} and \glspl{instruction} expect their argument values to be
@@ -500,7 +496,6 @@ data type of a value is also specified in the corresponding \gls{value node}.
 %
 For integers this entails the value's bit width, and two values are compatible
 if they have the same bit width.
-
 
 
 \subsubsection{Handling Side Effects}
@@ -588,7 +583,6 @@ block:
 \end{figure}
 
 
-
 \subsubsection{Edge Numbers}
 
 During \gls{graph} construction, every \gls{edge} is given two \glspl!{edge
@@ -643,7 +637,6 @@ when performing \gls{copy extension} (to be described in
 In terms of restricting the definition placements, however, the orientation of
 the \glspl{definition edge} does not matter and is thus skipped in cases where
 this information is not needed.
-
 
 
 \section{Instruction Representation}
@@ -730,7 +723,6 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
 \end{figure}
 
 
-
 \subsubsection{Covering $\mPhi$-Nodes}
 
 Since covering of a \gls{UF graph} also includes the \glspl!{phi-node} -- that
@@ -758,7 +750,6 @@ A \gls{match} derived from a \gls{phi-pattern} is called a \gls!{phi-match}.
 \end{figure}
 
 
-
 \section{Pattern Matching}
 \labelSection{uni-rep-pattern-matching}
 
@@ -782,7 +773,6 @@ For this work, \gls{VF2}~\cite{CordellaEtAl:2001} was the \gls{subgraph
 }
 %
 We proceed with a description of this algorithm.
-
 
 
 \subsection{The VF2 Algorithm}
@@ -843,7 +833,6 @@ semantic rules check that \gls{node} and \gls{edge} attributes are compatible.
 In the worst case, \mbox{$\mBigO(N! N)$} mappings need to be checked.
 
 
-
 \subsubsection{Computing the Mapping Candidate Set}
 
 Given a \gls{function graph}~\mbox{$\fG = \mPair{\fN}{\fE}$}, a \gls{pattern
@@ -888,7 +877,6 @@ candidates under consideration for being added to $s$ is computed as follows.
 %
 The last clause is needed when $\fG$ or $\pG$ consists of disconnected
 \glspl{subgraph}.
-
 
 
 \subsubsection{Syntactic Rules}
@@ -984,7 +972,6 @@ Formally, the rules are defined as follows.
   \end{displaymath}%
   \labelDefinition{pm-syntactic-rules}%
 \end{definition}
-
 
 
 \subsubsection{Semantic Rules}

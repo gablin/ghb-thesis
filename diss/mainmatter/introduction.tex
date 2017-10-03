@@ -24,7 +24,6 @@ publications.
 Lastly, \refSection{intro-outline} outlines the structure of the dissertation.
 
 
-
 \section{Overview}
 \labelSection{intro-overview}
 
@@ -125,7 +124,6 @@ problems by proposing ideas on how to extend the model to integrate
 \gls{instruction scheduling} and \gls{register allocation}.
 
 
-
 \section{Motivation}
 \labelSection{intro-motivation}
 
@@ -224,7 +222,6 @@ captures both data and control flow.
 In comparison, existing representations only capture data flow.
 
 
-
 \subsubsection{Combining Instruction Selection and Global Code Motion}
 
 Assume that the \gls{target machine} also has a \gls{SIMD.instr}
@@ -255,7 +252,6 @@ Consequently, the \gls{global code mover} may take decisions which are
 detrimental for the \gls{instruction selector}.
 
 
-
 \subsubsection{Taking Cost of Data Copying Into Account}
 
 Although selecting \gls{SIMD.instr} \glspl{instruction} may significantly
@@ -275,7 +271,6 @@ such \glspl{instruction} would be needed, leading to a slowdown of over
 %
 These restrictions must be known by the \gls{instruction selector} to make
 effective use of \gls{SIMD.instr} \glspl{instruction}.
-
 
 
 \subsubsection{Combining Instruction Selection and Block Ordering}
@@ -454,7 +449,6 @@ By \emph{extensible}, it means that the approach can be extended to integrate
 other \gls{code generation} tasks.
 
 
-
 \section{Approach}
 \labelSection{intro-approach}
 
@@ -490,7 +484,6 @@ The \gls{constraint model} is then solved by a generic off-the-shelf
 %
 The \gls{solution} is then fed to a code emitter, which produces the code
 containing the selected \glspl{instruction}.
-
 
 
 \section{Research Methods}

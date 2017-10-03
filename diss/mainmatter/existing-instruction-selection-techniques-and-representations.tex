@@ -32,7 +32,6 @@ Lastly, \refSection{ex-isel-rep-limitations-of-existing-approaches} discusses
 limitations of these approaches.
 
 
-
 \section{Instruction Characteristics and Principles}
 \labelSection{ex-isel-rep-instr-chars-principles}
 
@@ -58,7 +57,6 @@ The full discussion is given in
 existing methods is given in \refAppendix{list-of-approaches}.
 
 
-
 \subsection{Instruction Characteristics}
 
 The set of \gls{instruction} can be said to exhibit five \glsplshort{instruction
@@ -69,7 +67,6 @@ The first three \glsplshort{instruction characteristic} form sets of
 \glspl{instruction} that are disjoint from one another, whereas the last two
 \glsplshort{instruction characteristic} can be combined as appropriate with any
 of the other \glsplshort{instruction characteristic}.
-
 
 
 \subsubsection{Single-Output Instructions}
@@ -93,7 +90,6 @@ This class comprises the majority of \glspl{instruction} in most
 architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
 \glspl{instruction}. Naturally, all \glspl{instruction selector} are expected to
 support this kind of \gls{instruction}.
-
 
 
 \subsubsection{Multi-Output Instructions}
@@ -127,7 +123,6 @@ Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
 \gls{single-output.ic} \glspl{instruction}.
 
 
-
 \subsubsection{Disjoint-Output Instructions}
 
 \Glspl{instruction} which produce many observable output values from many
@@ -152,7 +147,6 @@ extensions under names like \gls{SSE} and \gls{AVX}~\cite{Intel64:2015}.
 %
 Recently, certain \gls{ARM} processors are also equipped with such
 extensions~\cite{ARM11:2008}.
-
 
 
 \subsubsection{Inter-Block Instructions}
@@ -189,7 +183,6 @@ If no such routine or \gls{compiler intrinsic} is available, making use of these
 \gls{assembly code}.
 
 
-
 \subsubsection{Interdependent Instructions}
 
 The last class is the set of \gls!{interdependent.ic}[ \glspl{instruction}].
@@ -208,7 +201,6 @@ in complex, heterogeneous architectures such as \glspl{DSP}.
 This is another class of \glspl{instruction} that most \glspl{instruction
   selector} struggle with, mainly because these \glspl{instruction} typically
 violate the set of assumptions made by the underlying techniques.
-
 
 
 \subsection{Principles of Instruction Selection}
@@ -270,7 +262,6 @@ entry, called the \gls!{entry block}.
 Unless the second subproblem is constructed such that it impacts the first --
 and I have yet to come across a situation where this is required -- both
 subproblems can be solved in isolation without compromising code quality.
-
 
 
 \subsubsection{Macro Expansion}
@@ -380,7 +371,6 @@ Due to the people who pioneered the idea, this scheme is known as the
 
 Applications of \gls{naive.me} \gls{macro expansion} and the
 \gls{Davidson-Fraser approach} are examined in \refAppendix{macro-expansion}.
-
 
 \subsubsection{Tree Covering}
 \labelSection{ex-isel-rep-tree-covering}
@@ -566,7 +556,6 @@ This chapter considers the traditional and most well-known applications of
 For the complete examination, see \refAppendix{tree-covering}.
 
 
-
 \subsubsection{DAG Covering}
 
 By replacing the \glspl{expression tree} used in \gls{tree covering} with
@@ -601,7 +590,6 @@ This chapter only considers the \glspl{combinatorial approach} to \gls{DAG
 For the complete examination, see \refAppendix{dag-covering}.
 
 
-
 \subsubsection{Graph Covering}
 
 The most general principle is called \gls{graph covering}, where entire
@@ -626,7 +614,6 @@ This chapter only considers the \glspl{combinatorial approach} to \gls{graph
 For the complete examination, see \refAppendix{graph-covering}.
 
 
-
 \section{Traditional Approaches}
 \labelSection{ex-isel-rep-traditional-approaches}
 
@@ -639,7 +626,6 @@ time, but at the price of precluding optimization decisions that only become
 possible when operating on \glsshort{block DAG} or \glspl{function graph}.
 
 
-
 \subsection{Approaches Based on Tree Covering}
 
 The most common and well known technique based on \gls{tree covering} was
@@ -647,7 +633,6 @@ introduced by \textcite{AhoEtAl:1989}.
 %
 The approach assumes the \glspl{instruction} to be expressed in a particular
 form, which will therefore be discussed first.
-
 
 
 \subsubsection{Machine Grammars}
@@ -776,7 +761,6 @@ becomes equivalent to finding a sequence of \gls{rule} applications (called
 A method for finding the sequence with least cost is described shortly.
 
 
-
 \subsubsection{Machine Grammars in Normal Form}
 
 To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
@@ -867,7 +851,6 @@ most reasonable \glspl{grammar}~\cite{HoffmannODonnell:1982}.
 As we will see, this also simplifies \gls{pattern selection} as the
 \glspl{pattern} on the right-hand side in all \glspl{production} have uniform
 height.
-
 
 
 \subsubsection{Optimal Pattern Selection on Expression Trees}
@@ -1038,7 +1021,6 @@ The \gls{MIPS} \gls{instruction set}~\cite{Sweetman:2006}, for example, is one
 such architecture.
 
 
-
 \subsubsection{Precomputing Costs and Rule Decisions}
 
 Shortly after its introduction, it was recognized that the costs computed by
@@ -1127,7 +1109,6 @@ The algorithm for labeling an \gls{expression tree} is shown in
 %
 To derive the \gls{rule} selection algorithm, one only needs to adapt line~2 in
 \refAlgorithm{aho-etal-select-algorithm}.
-
 
 
 \subsubsection{Limitations}
@@ -1238,7 +1219,6 @@ suboptimal code in cases where the \instrCode{addmul} and \instrCode{addload}
 
 
 
-
 \subsection{Approaches Based on DAG Covering}
 
 The cost of improving code quality by moving from \glspl{expression tree} to
@@ -1248,7 +1228,6 @@ is also available in \refAppendix{dag-covering}).
 %
 Consequently, traditional approaches sacrifice optimality in favor of retaining
 linear-time complexity.
-
 
 
 \subsubsection{Maximum Munch}
@@ -1269,7 +1248,6 @@ In addition to being non-optimal, however, it also suffers from the same
 drawback as \glspl{expression tree} regarding whether to select \glspl{cover}
 that effectively \glsshort{edge splitting} or \glsshort{node duplication}[e] the
 common subexpressions.
-
 
 
 \subsubsection{Balancing Splitting and Duplication}
@@ -1318,7 +1296,6 @@ only be covered by \glspl{pattern} where $n$ is the root \gls{node}.
 %
 Once all such \glspl{node} have been processed, another pass is performed to
 recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
-
 
 
 \subsubsection{Limitations}
@@ -1436,7 +1413,6 @@ Many \glspl{instruction set}, however, contain \gls{multi-output.ic}
 underlying assumptions made by many of the aforementioned approaches.
 
 
-
 \subsection{Approaches Based on Graph Covering}
 
 To the best of my knowledge, only \textcite{PalecznyEtAl:2001} have attempted to
@@ -1444,7 +1420,6 @@ apply \glsshort{traditional approach} methods on \glspl{function graph}.
 %
 The approach represents \glspl{function} using a graph-based \gls{IR}, which
 will therefore be discussed first.
-
 
 
 \subsubsection{Sea-of-nodes IRs}
@@ -1578,7 +1553,6 @@ If an \gls{operation} should not be allowed to be moved to another \gls{block}
 to connect the \gls{operation} with its original \gls{block} placement.
 
 
-
 \subsubsection{Pattern Selection on a Sea of Nodes}
 
 \citeauthor{PalecznyEtAl:2001} first divides the \gls{function graph} into a set
@@ -1599,7 +1573,6 @@ Once labeled, each \gls{expression tree} is covered using a variant of
 %
 The \glspl{instruction} are then emitted and placed in \glspl{block} using a
 method described in~\cite{Click:1995}.
-
 
 
 \section{Combinatorial Approaches}
@@ -1625,7 +1598,6 @@ time.
 %
 Consequently, they typically apply generic \glshyphened{subgraph isomorphism}
 algorithms when \gls{pattern matching}.
-
 
 
 \subsubsection{Pattern Matching as a Subgraph Isomorphism Problem}
@@ -1657,7 +1629,6 @@ been devoted to this problem (see for example \cite{Ullmann:1976,
 Due to its simplicity, most approaches apply the algorithm given in
 \cite{CordellaEtAl:2001}, of which a detailed description is given in
 \refChapter{pattern-matching}.
-
 
 
 \subsection{MIS- and MWIS-based Approaches}
@@ -1728,7 +1699,6 @@ An example is shown in \refFigure{mis-example}.
           }
   \labelFigure{mis-example}
 \end{figure}
-
 
 
 \subsubsection{Applications}
@@ -1845,7 +1815,6 @@ only consist of disconnected \glspl{pattern}, hence forbidding sharing of values
 across the \gls{proxy.p} \glspl{pattern} -- was addressed by
 \textcite{YounEtAl:2011} by introducing the use of index subscripts for the
 \glspl{node} representing the input arguments.
-
 
 
 \subsection{PBQP-based Approaches}
@@ -2063,7 +2032,6 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
 \end{figure}
 
 
-
 \subsubsection{Handling DAG-shaped Patterns}
 
 The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
@@ -2133,7 +2101,6 @@ For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
   3K$}.
 
 
-
 \subsubsection{Applications}
 
 \textcite{EcksteinEtAl:2003} were first with modeling \gls{instruction
@@ -2143,7 +2110,6 @@ approach to support \gls{DAG}-shaped \glspl{pattern}.
 \textcite{BuchwaldZwinkau:2010} reused the \gls{PBQP} model but replaced the use
 of \glspl{machine grammar} with rewrite rules based on algebraic graph
 transformations~\cite{LoweEhrig:1991}.
-
 
 
 \subsection{IP-based Approaches}
@@ -2190,7 +2156,6 @@ where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
 match~$m$, and $\mVar{x}[m]$ is a Boolean \gls{decision variable} indicating
 whether match~$m$ is selected.
-
 
 
 \subsubsection{Applications}
@@ -2300,7 +2265,6 @@ where \glspl{Horn clause} are applied to model \gls{register allocation}
 \refEquation{pattern-selection-in-ip}.
 
 
-
 \subsection{CP-based Approaches}
 
 \glsreset{CP}
@@ -2319,7 +2283,6 @@ linear equations.
 Instead, relations among multiple \glspl{variable} are modeled using
 \gls{global.c} \glspl{constraint}, which simplifies modeling and improves
 solving.
-
 
 
 \subsubsection{Modeling Pattern Selection Using Global Constraints}
@@ -2371,7 +2334,6 @@ modeled as
 %
 which is more restrictive than \refEquation{pattern-selection-in-ip} and thus
 reduces solving time~\cite{FlochEtAl:2010}.
-
 
 
 \subsubsection{Applications}
@@ -2440,7 +2402,6 @@ Both \gls{pattern matching} and \gls{pattern selection} are integrated into the
 same \gls{constraint model}, and \citeauthor{Beg:2013} also applied
 \refAlgorithm{aho-etal-cost-algorithm} in computing an upper bound on the cost
 in order to improve solving.
-
 
 
 \section{Limitations of Existing Approaches}
