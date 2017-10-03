@@ -23,11 +23,15 @@ The \glsshort{constraint model} limitations are discussed in
 \section{Modeling Global Instruction Selection}
 \labelSection{modeling-global-instruction-selection}
 
-\todo{write introduction}
+Modeling \gls{global.is} \gls{instruction selection} entails that all
+\glspl{operation} must be \gls{cover}[ed] and all \glspl{datum} must be
+\gls{define.d}[d].
+%
+This could, however, lead to situations resulting in cyclic data dependencies,
+which must be forbidden.
 
 
-\subsection{Modeling Operation Coverage and Data Definitions}
-\labelSection{modeling-operation-coverage-and-data-definitions}
+\subsection{Covering Operations and Defining Data}
 
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
 selected such that every \gls{operation} in a given \gls{UF graph} is covered.
