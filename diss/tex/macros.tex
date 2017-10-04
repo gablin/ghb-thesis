@@ -305,6 +305,7 @@
 \newcommand{\mUFGraph}{G}
 \newcommand{\mPatternSet}{S}
 \newcommand{\mExtPatternSet}{\mPatternSet_\mathrm{ext}}
+\newcommand{\mArgSet}{A}
 \newcommand{\mOpSet}{O}
 \newcommand{\mOperandSet}{P}
 \newcommand{\mForbiddenCombSet}{F}
@@ -322,13 +323,15 @@
 }
 \newcommand{\mLocationSet}{L}
 \newcommand{\mFallThroughSet}{J}
-\newcommand{\mNullLocation}{l_\mathrm{null}}
+\newcommand{\mMemLocation}{l_\textsc{mem}}
+\newcommand{\mNullLocation}{l_\textsc{null}}
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }
 \newcommand{\mLlvmCost}{C_{\textsc{llvm}}}
 \newcommand{\mRelaxedCost}{C_{\textsc{rlx}}}
 \DeclareMathOperator{\mAllDiff}{\mConstraintFont{AllDiff}}
+\DeclareMathOperator{\mArgLoc}{\mFunFont{argloc}}
 \DeclareMathOperator{\mCircuit}{\mConstraintFont{Circuit}}
 \DeclareMathOperator{\mConsumes}{\mFunFont{consumes}}
 \DeclareMathOperator{\mCount}{\mConstraintFont{Count}}

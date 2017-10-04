@@ -566,7 +566,42 @@ emitted whose cost will be accounted for.
 
 \subsection{Handling Calling Conventions}
 
-\paragraph{Constraints}
+The method for handling \gls{data copying} can also be used for handling calling
+conventions of the specific \gls{target machine}.
+%
+\Glspl{constraint} that callee arguments (that is, arguments to the
+\gls{function} under compilation) must reside in a specific location are modeled
+as
+%
+\begin{equation}
+  \mVar{loc}[d] \in \mArgLoc(d),
+  \forall d \in \mArgSet,
+  \labelEquation{function-args}
+\end{equation}
+%
+where \mbox{$\mArgSet \subseteq \mDataSet$} denotes the set of \gls{function}
+arguments in $\mUFGraph$ and \mbox{$\mArgLoc(d) \subseteq \mLocationSet$}
+denotes the set of locations in which argument~$d$ resides.
+%
+Arguments residing on the stack can be signified using a special $\mMemLocation$
+location, thus requiring a memory load \gls{instruction} in order to be used by
+other \glspl{instruction}.
+
+Locations for caller arguments (that is, arguments to \glspl{function} calls
+made from within the \gls{function} under compilation) can be enforced either
+through \refEquation{function-args} or through
+\refEquation{compatible-locations}.
+%
+If the calling convention depends on the \gls{instruction} selected then the
+former is needed, otherwise the latter is more suitable as the restrictions can
+be enforced before a \gls{match} is selected.\!%
+%
+\footnote{%
+  If exactly one \gls{match}~$m$ can cover a given \gls{function} call
+  \gls{node}, then both \glspl{constraint} provide the same amount of
+  propagation as \mbox{$\mVar{sel}[m] = 1$} will always hold for the implication
+  in \refEquation{compatible-locations}.
+}
 
 
 \section{Modeling Value Reuse}
