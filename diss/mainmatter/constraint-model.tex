@@ -490,8 +490,12 @@ selected, that \mbox{$\mVar{x} \in L$}.
 The set of \glspl{variable} \mbox{$\mVar{loc}[d] \subseteq \mLocationSet \cup
   \mSet{\mNullLocation}$} models in which location \gls{datum}~$d$ is available,
 where $\mLocationSet$ denotes the set of locations provided by the \gls{target
-  machine} and $\mNullLocation$ denotes a special location not available for any
-\glsshort{input datum} or \glspl{output datum}.
+  machine} and $\mNullLocation$ denotes a special location for values that
+cannot be reused across \glspl{instruction}.
+%
+In this context a location is an abstract representation, typically representing
+a \gls{register}, but it could also indicate that the value is for example
+stored in memory.
 %
 The special location is used for intermediate values produced internally by an
 \gls{instruction} which can only be accessed by this very \gls{instruction}.
