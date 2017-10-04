@@ -203,7 +203,7 @@ Consequently, such combinations must be identified and forbidden.
 
 We detect such combinations -- which could involve more than two \glspl{match}
 -- by first constructing a \gls!{dependency graph}, where each \gls{node}
-represents a \gls{match} and each directed \gls{edge}~$\mPair{n}{m}$ indicates
+represents a \gls{match} and each \gls{edge}~$\mEdge{n}{m}$ indicates
 that \gls{match}~$m$ \gls{use.d}[s] \glspl{datum} produced by \gls{match}~$n$.
 %
 A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
@@ -384,7 +384,7 @@ The restrictions imposed by the \glspl{definition edge} are modeled as
 %
 \begin{equation}
   \mVar{dplace}[d] = b,
-  \forall \mPair{d}{b} \in \mDefEdgeSet,
+  \forall \mEdge{d}{b} \in \mDefEdgeSet,
   \labelEquation{def-edges}
 \end{equation}
 %

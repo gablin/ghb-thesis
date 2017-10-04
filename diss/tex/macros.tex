@@ -263,6 +263,9 @@
 }
 \newcommand{\mEmptySet}{\varnothing}
 \newcommand{\mFunFont}[1]{\textit{#1}}
+\NewDocumentCommand{\mEdge}{mm}{
+  #1 \rightarrow #2
+}
 \NewDocumentCommand{\mPair}{smm}{
   \IfBooleanT{#1}{\left}(
     #2, #3
