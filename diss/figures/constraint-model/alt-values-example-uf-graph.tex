@@ -1,0 +1,93 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+  ]
+
+  \node [value node] (v) {\strut\opVar{v}};
+  \node [computation node, position=-135 degrees from v] (op1) {};
+  \node [computation node, position=- 45 degrees from v] (op2) {};
+
+  \begin{scope}[data flow]
+    \draw (v) -- (op1);
+    \draw (v) -- (op2);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, inner sep=3pt, fit=(v)] (m1a) {};
+    \node [outer match node, fit=(op1)] (m1b) {};
+    \def\pathMI{
+      [bend left=45]
+      (m1a.north west)
+      to
+      (m1a.north east)
+      to
+      (m1a.south east)
+      --
+      (m1b.south east)
+      to
+      (m1b.south west)
+      to
+      (m1b.north west)
+      -- coordinate (m1)
+      cycle
+    }
+    \path [fill=shade1]
+          \pathMI;
+
+    % m2
+    \node [outer match node, inner sep=1.5pt, fit=(v)] (m2a) {};
+    \node [outer match node, fit=(op2)] (m2b) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.south west)
+      to
+      (m2a.north west)
+      to
+      (m2a.north east)
+      -- coordinate (m2)
+      (m2b.north east)
+      to
+      (m2b.south east)
+      to
+      (m2b.south west)
+      --
+      cycle
+    }
+    \path [fill=shade1]
+          \pathMII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2]
+            \pathMII;
+    \end{scope}
+
+    \draw [match line]
+          \pathMI;
+    \draw [match line]
+          \pathMII;
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, position=135 degrees from m1] (m1l) {$\strut m_1$};
+  \node [match label, position= 45 degrees from m2] (m2l) {$\strut m_2$};
+  \foreach \i in {1, 2} {
+    \draw [match attachment line] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%

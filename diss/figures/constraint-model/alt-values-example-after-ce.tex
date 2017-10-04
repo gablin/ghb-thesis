@@ -1,0 +1,90 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+  ]
+
+  \node [value node] (v) {\strut\opVar{v}};
+  \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+  \node [computation node, position=- 45 degrees from v] (cp2) {\opCopy};
+  \node [value node, below=of cp1] (v1) {\strut\opVar{v}[\hspace{-1pt}1]};
+  \node [value node, below=of cp2] (v2) {\strut\opVar{v}[\hspace{-1pt}2]};
+  \node [computation node, below=of v1] (op1) {};
+  \node [computation node, below=of v2] (op2) {};
+
+  \begin{scope}[data flow]
+    \draw (v) -- (cp1);
+    \draw (v) -- (cp2);
+    \draw (cp1) -- (v1);
+    \draw (cp2) -- (v2);
+    \draw (v1) -- (op1);
+    \draw (v2) -- (op2);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, inner sep=2pt, fit=(v1)] (m1a) {};
+    \node [outer match node, fit=(op1)] (m1b) {};
+    \def\pathMI{
+      [bend left=45]
+      (m1a.west)
+      to
+      (m1a.north)
+      to
+      (m1a.east)
+      --
+      (m1b.east)
+      to
+      (m1b.south)
+      to
+      (m1b.west)
+      -- coordinate (m1)
+      cycle
+    }
+    \draw [match line, fill=shade1]
+          \pathMI;
+
+    % m2
+    \node [outer match node, inner sep=2pt, fit=(v2)] (m2a) {};
+    \node [outer match node, fit=(op2)] (m2b) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.west)
+      to
+      (m2a.north)
+      to
+      (m2a.east)
+      -- coordinate (m2)
+      (m2b.east)
+      to
+      (m2b.south)
+      to
+      (m2b.west)
+      --
+      cycle
+    }
+    \draw [match line, fill=shade1]
+          \pathMII;
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, left=of m1] (m1l) {$\strut m_1$};
+  \node [match label, right=of m2] (m2l) {$\strut m_2$};
+  \foreach \i in {1, 2} {
+    \draw [match attachment line] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%

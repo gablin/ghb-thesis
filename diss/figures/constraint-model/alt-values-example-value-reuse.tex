@@ -1,0 +1,157 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={%
+      match node,
+      draw=none,
+      inner sep=0,
+    },
+    selected/.style={
+      solid,
+    },
+    redundant/.style={
+      draw=black!60!white,
+      text=black!60!white,
+    },
+  ]
+
+  \node [value node] (v) {\strut\opVar{v}};
+  \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+  \node [computation node, position=- 45 degrees from v, redundant] (cp2)
+        {\opCopy};
+  \node [value node, below=of cp1] (v1) {\strut\opVar{v}[\hspace{-1pt}1]};
+  \node [value node, below=of cp2, redundant] (v2)
+        {\strut\opVar{v}[\hspace{-1pt}2]};
+  \node [computation node, below=of v1] (op1) {};
+  \node [computation node, below=of v2] (op2) {};
+
+  \begin{scope}[data flow]
+    \draw (v) -- (cp1);
+    \draw (cp1) -- (v1);
+    \draw (v1) -- (op1);
+    \draw (v1) -- (op2);
+
+    \begin{scope}[redundant]
+      \draw (v) -- (cp2);
+      \draw (cp2) -- (v2);
+      \draw (v2) -- (op2);
+    \end{scope}
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, inner sep=4.5pt, fit=(v1)] (m1a) {};
+    \node [outer match node, fit=(op1)] (m1b) {};
+    \def\pathMI{
+      [bend left=45]
+      (m1a.west)
+      to
+      (m1a.north)
+      to
+      (m1a.east)
+      --
+      (m1b.east)
+      to
+      (m1b.south)
+      to
+      (m1b.west)
+      -- coordinate (m1)
+      cycle
+    }
+    \path [fill=shade1]
+          \pathMI;
+
+    % m2
+    \node [outer match node, inner sep=1.5pt, fit=(v1)] (m2a) {};
+    \node [outer match node, fit=(op2)] (m2b) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.235)
+      to
+      (m2a.145)
+      to
+      (m2a.55)
+      --
+      (m2b.55)
+      to coordinate (m2)
+      (m2b.-35)
+      to
+      (m2b.-125)
+      --
+      cycle
+    }
+    \path [fill=shade1]
+          \pathMII;
+
+    % m3
+    \node [outer match node, inner sep=1.5pt, fit=(v)] (m3a) {};
+    \node [outer match node, fit=(cp1)] (m3b) {};
+    \node [outer match node, inner sep=3pt, fit=(v1)] (m3c) {};
+    \def\pathMIII{
+      [bend left=45]
+      (m3a.north west)
+      to
+      (m3a.north east)
+      to
+      (m3a.south east)
+      [rounded corners=4pt]
+      --
+      (m3b.east)
+      [rounded corners=0]
+      --
+      (m3c.east)
+      to
+      (m3c.south)
+      to
+      (m3c.west)
+      [rounded corners=4pt]
+      --
+      (m3c.west |- m3b.north west)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \path [fill=shade1]
+          \pathMIII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2]
+            \pathMII;
+    \end{scope}
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2]
+            \pathMIII;
+    \end{scope}
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [clip] \pathMII;
+      \path [fill=shade3]
+            \pathMIII;
+    \end{scope}
+
+    \begin{scope}[selected]
+      \draw \pathMI;
+      \draw \pathMII;
+      \draw \pathMIII;
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Match labels
+  \node [match label, left=of m1] (m1l) {$\strut m_1$};
+  \node [match label, right=of m2] (m2l) {$\strut m_2$};
+  \foreach \i in {1, 2} {
+    \draw [match attachment line] (m\i) -- (m\i l);
+  }
+\end{tikzpicture}%
+\endgroup%
