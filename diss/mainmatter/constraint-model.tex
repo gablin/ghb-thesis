@@ -606,24 +606,11 @@ emitted whose cost will be accounted for.
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, p), \\
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, \hlDiff{p}), \\
     \forall m \in \mMatchSet,
-    \forall \hlDiff{p} \in
-      \hlDiff{\mOperandSet} \;\text{s.t.}
-      \mStores(m, \hlDiff{p}) \neq \mEmptySet
+    \forall \hlDiff{p} \in \mDefines(m) \cup \mUses(m).
   \end{array}
-  \labelEquation{valid-locations-alt}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt[p]}}[1pt]] = \mNullLocation, \\
-    \forall m \in \mMatchSet,
-    \forall \hlDiff{p} \in \mIntValues(m)
-  \end{array}
-  \labelEquation{locs-of-intermediate-values-alt}
+  \labelEquation{compatible-locations-alt}
 \end{equation}
 
 \begin{equation}
