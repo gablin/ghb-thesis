@@ -471,9 +471,18 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
 \section{Modeling Data Copying}
 \labelSection{modeling-data-copying}
 
-\todo{write introduction}
-
-\todo{define input and output data}
+The cost of \gls{data copying} is taken into account by keeping track of the
+location requirements for the data used and produced by the selected
+\glspl{match}.
+%
+The idea is as follows.
+%
+For each value~$v$ in the \gls{UF graph}, let a \gls{variable}~$\mVar{x}$ decide
+in which location provided by the \gls{target machine} $v$ is stored.
+%
+A \gls{match}~$m$ that either \gls{use.d}[s] or \gls{define.d}[s] $v$ and
+requires $v$ to be in one of a set~$L$ of locations can then enforce, if
+selected, that \mbox{$\mVar{x} \in L$}.
 
 
 \subsubsection{Variables}
@@ -497,43 +506,20 @@ reused by other \glspl{instruction}.
 Every \gls{datum} must be made available in a location that is compatible for
 all selected \glspl{match}.
 %
-To this end, let \mbox{$\mStores(m, d) \subseteq \mLocationSet$} denote the set
-of compatible locations for a \gls{datum}~$d$ which is either an \glsshort{input
-  datum} or \gls{output datum} to a \gls{match}~$m$.
-%
-Let also \mbox{$\mExtValues(m) \subseteq \mDataSet$} denote the set of values
-which are either \glsshort{input datum} or \glspl{output datum} to~$m$ (note
-that this does not include any \glspl{state node} \gls{define.d}[d] or
-\gls{use.d}[d] by $m$).
-%
-Likewise, let \mbox{$\mIntValues(m) \subseteq \mDataSet$} denote the set of
-values which are intermediate values produced by~$m$.
-%
-With these definitions, this \gls{constraint} is modeled as
+If \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mNullLocation}$}
+denotes the set of compatible locations (including the special location for
+intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
+\gls{use.d}[d] by a \gls{match}~$m$, then this \gls{constraint} is modeled as
 %
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[d] \in \mStores(m, p), \\
+    \mVar{loc}[d] \in \mStores(m, d), \\
     \forall m \in \mMatchSet,
-    \forall d \in \mExtValues(m).
+    \forall d \in \mDefines(m) \cup \mUses(m).
   \end{array}
   \labelEquation{valid-locations}
-\end{equation}
-
-The \gls{constraint} that intermediate values must be placed in the special
-location is modeled as
-%
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{loc}[d] = \mNullLocation, \\
-    \forall m \in \mMatchSet,
-    \forall d \in \mIntValues(m).
-  \end{array}
-  \labelEquation{locs-of-intermediate-values}
 \end{equation}
 
 
