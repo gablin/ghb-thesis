@@ -519,13 +519,45 @@ intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
     \forall m \in \mMatchSet,
     \forall d \in \mDefines(m) \cup \mUses(m).
   \end{array}
-  \labelEquation{valid-locations}
+  \labelEquation{compatible-locations}
 \end{equation}
 
 
 \subsection{Copy Extension}
 
-\todo{describe method}
+Depending on the \gls{target machine}, \refEquation{compatible-locations} can
+result in an over-constrained \glsshort{constraint model}.
+%
+For example, in many \glspl{target machine} the \gls{SIMD.instr}
+\glspl{instruction} use a different set of \glspl{register} than the other,
+general \glspl{instruction}.
+%
+In such situations, the \glspl{match} derived from the \gls{SIMD.instr}
+\glspl{instruction} and the \glspl{match} derived from the general
+\glspl{instruction} will have non-overlapping locations on the same
+\glspl{datum} (that is, \mbox{$\mStores(m_1, d) \cap \mStores(m_2, d) =
+  \mEmptySet$}), preventing selection of such \glspl{match}.
+
+Since non-overlapping locations entails the need for copy \glspl{instruction},
+we extend the \gls{UF graph} with \glspl!{copy node} through a process called
+\gls!{copy extension}.
+%
+For each \gls{data-flow edge}~$\mEdge{v}{o}$, where $v$ is a \gls{value node}
+and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
+\gls{copy node}~$c$, \gls{value node}~$v'$, and \glspl{data-flow edge} such that
+\mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}.
+%
+If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
+connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.en}
+\gls{edge number} as the \gls{data-flow edge} -- is also moved to $v'$.
+%
+We also extend the \gls{pattern set} with a special \gls!{null-copy pattern},
+with the \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, that covers
+$c$ at zero cost provided that \mbox{$\mVar{loc}[v] = \mVar{loc}[v']$}.
+%
+If the \gls{null-copy pattern} cannot be selected for covering a particular
+\gls{copy node}, then this means an appropriate copy \gls{instruction} must be
+emitted whose cost will be accounted for.
 
 
 \subsection{Handling Calling Conventions}
