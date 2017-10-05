@@ -605,6 +605,10 @@ be enforced before a \gls{match} is selected.\!%
 \section{Modeling Value Reuse}
 \labelSection{modeling-value-reuse}
 
+Code quality can be increased if \glspl{instruction} are allowed to reuse copies
+of values, which is a crucial feature to be expected in the code emitted by any
+modern \gls{instruction selector}.
+%
 \begin{figure}
   \setlength{\opNodeDist}{12pt}%
 
@@ -612,28 +616,17 @@ be enforced before a \gls{match} is selected.\!%
   \hfill%
   \subcaptionbox{%
                   A UF graph with two matches%
-                  \labelFigure{alt-values-example-uf-graph}%
+                  \labelFigure{value-reuse-example-uf-graph}%
                 }%
-                [28mm]%
-                {\input{figures/constraint-model/alt-values-example-uf-graph}}%
+                [50mm]%
+                {\input{figures/constraint-model/value-reuse-example-uf-graph}}%
   \hfill%
   \subcaptionbox{%
                   UF graph after copy extension%
-                  \labelFigure{alt-values-example-after-ce}%
+                  \labelFigure{value-reuse-example-after-ce}%
                 }%
-                {\input{figures/constraint-model/alt-values-example-after-ce}}%
-  \hfill%
-  \subcaptionbox{%
-                  Redundant copying of values%
-                  \labelFigure{alt-values-example-redundant-copies}%
-                }%
-                [32mm]%
-                {%
-                  \input{%
-                    figures/constraint-model/%
-                    alt-values-example-redundant-copies%
-                  }%
-                }%
+                [50mm]%
+                {\input{figures/constraint-model/value-reuse-example-after-ce}}%
   \hfill%
   \mbox{}
 
@@ -642,32 +635,52 @@ be enforced before a \gls{match} is selected.\!%
   \mbox{}%
   \hfill%
   \subcaptionbox{%
-                  Matches with alternative values%
-                  \labelFigure{alt-values-example-new-matches}%
+                  Redundant copying of values%
+                  \labelFigure{value-reuse-example-redundant-copies}%
                 }%
                 [50mm]%
                 {%
                   \input{%
-                    figures/constraint-model/alt-values-example-new-matches%
+                    figures/constraint-model/%
+                    value-reuse-example-redundant-copies%
                   }%
                 }%
   \hfill%
   \subcaptionbox{%
                   Reuse of copied value%
-                  \labelFigure{alt-values-example-value-reuse}%
+                  \labelFigure{value-reuse-example-one-copy}%
                 }%
-                [34mm]%
+                [50mm]%
                 {%
                   \input{%
-                    figures/constraint-model/alt-values-example-value-reuse%
+                    figures/constraint-model/value-reuse-example-one-copy%
                   }%
                 }%
   \hfill%
   \mbox{}
 
-  \caption{TODO}
-  \labelFigure{alt-values-example}
+  \caption{Example of value reuse}
+  \labelFigure{value-reuse-example}
 \end{figure}
+%
+See for example \refFigure{value-reuse-example-uf-graph}, where the
+value~\irVar{v} is used by two \glspl{operation} which are coverable by
+\glspl{match}~$m_1$ and~$m_2$.
+%
+After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
+\irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v} (see
+\refFigure{value-reuse-example-after-ce}).
+%
+Consequently, if both $m_1$ and $m_2$ require \irVar{v} to be copied -- assume,
+for example, that \irVar{v} resides on the stack -- then two copy
+\glspl{instruction} will be emitted (see
+\refFigure{value-reuse-example-redundant-copies}).
+%
+However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same location then
+either of the values could be reused by either \gls{match}, thus necessitating
+only one copy \gls{instruction} (see \refFigure{value-reuse-example-one-copy}).
+%
+We call this notion \gls!{value reuse}.
 
 
 \subsection{Alternative Values}
