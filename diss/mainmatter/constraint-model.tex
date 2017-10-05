@@ -663,24 +663,26 @@ modern \gls{instruction selector}.
   \labelFigure{value-reuse-example}
 \end{figure}
 %
-See for example \refFigure{value-reuse-example-uf-graph}, where the
-value~\irVar{v} is used by two \glspl{operation} which are coverable by
-\glspl{match}~$m_1$ and~$m_2$.
+An example is shown in \refFigure{value-reuse-example}.
+%
+Originally, the \gls{UF graph} has a value~\irVar{v} which is used by two
+\glspl{operation} coverable by \glspl{match}~$m_1$ and~$m_2$
+(\refFigure{value-reuse-example-uf-graph}).
 %
 After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
-\irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v} (see
-\refFigure{value-reuse-example-after-ce}).
+\irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v}
+(\refFigure{value-reuse-example-after-ce}).
 %
 We say \irVar{v}[1] and \irVar{v}[2] are \gls!{copy-related.d}.
 %
 Consequently, if both $m_1$ and $m_2$ require \irVar{v} to be copied -- assume
 for example that \irVar{v} resides on the stack -- then two copy
-\glspl{instruction} will be emitted (see
-\refFigure{value-reuse-example-redundant-copies}).
+\glspl{instruction} will be emitted
+(\refFigure{value-reuse-example-redundant-copies}).
 %
 However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same location then
 either of the values could be reused by either \gls{match}, thus necessitating
-only one copy \gls{instruction} (see \refFigure{value-reuse-example-one-copy}).
+only one copy \gls{instruction} (\refFigure{value-reuse-example-one-copy}).
 %
 We call this notion \gls!{value reuse}.
 
@@ -732,14 +734,15 @@ that are \gls{copy-related.d} to the \glspl{input datum} in $m$, where an
   \labelFigure{match-duplication-example}
 \end{figure}
 %
-See for example \refFigure{match-duplication-example-before}.
+An example is shown in \refFigure{match-duplication-example}.
 %
-Because values~\irVar{v}[1] and \irVar{v}[2] are \gls{copy-related.d}, the
-\gls{match}~$m$ could use either value.
+The \gls{match set} contains a \gls{match}~$m$ that uses value~\irVar{v}[1],
+which is \gls{copy-related.d} with value~\irVar{v}[2]
+(\refFigure{match-duplication-example-before}).
 %
-Since \irVar{v}[1] is an \gls{input datum} to the \gls{pattern} of the
-match~$m$, we duplicate $m$ to instead use \irVar{v}[2], resulting in match~$m'$
-(see \refFigure{match-duplication-example-after}).
+Because \irVar{v}[1] is an \gls{input datum} in~$m$, we duplicate $m$ to instead
+use \irVar{v}[2], resulting in match~$m'$
+(\refFigure{match-duplication-example-after}).
 
 The main advantage of \gls{match duplication} is that no changes need to be done
 for the \gls{constraint model}; the decision of which value to use (and reuse)
