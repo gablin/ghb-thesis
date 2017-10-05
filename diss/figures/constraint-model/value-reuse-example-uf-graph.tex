@@ -83,10 +83,12 @@
   \end{pgfonlayer}
 
   % Match labels
-  \node [match label, position=135 degrees from m1] (m1l) {$\strut m_1$};
-  \node [match label, position= 45 degrees from m2] (m2l) {$\strut m_2$};
-  \foreach \i in {1, 2} {
-    \draw [match attachment line] (m\i) -- (m\i l);
-  }
+  \begin{scope}[overlay]
+    \node [match label, position=135 degrees from m1] (m1l) {$\strut m_1$};
+    \node [match label, position= 45 degrees from m2] (m2l) {$\strut m_2$};
+    \foreach \i in {1, 2} {
+      \draw [match attachment line] (m\i) -- (m\i l);
+    }
+  \end{scope}
 \end{tikzpicture}%
 \endgroup%

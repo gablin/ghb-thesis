@@ -147,10 +147,12 @@
   \end{pgfonlayer}
 
   % Match labels
-  \node [match label, left=of m1] (m1l) {$\strut m_1$};
-  \node [match label, right=of m2] (m2l) {$\strut m_2$};
-  \foreach \i in {1, 2} {
-    \draw [match attachment line] (m\i) -- (m\i l);
-  }
+  \begin{scope}[overlay]
+    \node [match label, left=of m1] (m1l) {$\strut m_1$};
+    \node [match label, right=of m2] (m2l) {$\strut m_2$};
+    \foreach \i in {1, 2} {
+      \draw [match attachment line] (m\i) -- (m\i l);
+    }
+  \end{scope}
 \end{tikzpicture}%
 \endgroup%
