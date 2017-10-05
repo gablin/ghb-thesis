@@ -761,6 +761,15 @@ decisions must be remade for each new \gls{match}, thereby enlarging the
 
 \subsection{Alternative Values}
 
+The idea is as follows.
+%
+For each \gls{match}~$m$, let every \glspl{input datum}~$d$ in $m$ be mapped to
+any \gls{datum} that is \gls{copy-related.d} to~$d$.
+%
+In other words, unlike before when a \gls{match} was \mbox{1-to-1} mapping
+between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
+  graph}, we now allow certain mappings to be a \mbox{1-to-$n$} mapping.
+%
 \begin{figure}
   \setlength{\opNodeDist}{12pt}%
 
@@ -793,12 +802,45 @@ decisions must be remade for each new \gls{match}, thereby enlarging the
   \caption{Example of alternative values}
   \labelFigure{alt-values-example}
 \end{figure}
+%
+An example is shown in \refFigure{alt-values-example-before}.
+%
+Again, the \gls{match set} contains a \gls{match}~$m$ that uses
+value~\irVar{v}[1], which is \gls{copy-related.d} with value~\irVar{v}[2]
+(\refFigure{alt-values-example-before}).
+%
+Because \irVar{v}[1] is an \gls{input datum} in~$m$, we extend the mapping from
+$n$ to \irVar{v}[1] to include \irVar{v}[2], where $n$ is the corresponding
+\gls{value node} in the \gls{UP graph} of~$m$
+(\refFigure{alt-values-example-after}).
+%
+In this context, \irVar{v}[1] and \irVar{v}[2] are said to be
+\glspl!{alternative value} to~$m$.
+%
+For convenience, we assume that the set of \glspl{alternative value} for each
+non-\gls{input datum}~$d$ in a \gls{match} contains only the \glsshort{state
+  node} or \gls{value node} to which $d$ is already mapped.
 
-\todo{describe idea}
+After having extended the \gls{match set} with \glspl{alternative value}, the
+next step is to extend the \gls{constraint model} with an another level of
+indirection wherever a \gls{constraint} refers to a \gls{datum}.
+
 
 \subsubsection{Variables}
 
-\todo{introduce variables}
+Assume first that each \glsshort{define.d}[ition] or \glsshort{use.d}[age] of
+\glspl{datum} within each \gls{match} incurs a unique \gls!{operand}.
+%
+Consequently, instead of \glsshort{define.d}[ing] and \glsshort{use.d}[ing]
+\glspl{datum}, we now assume that all \glspl{match} \gls{define.d} and
+\gls{use.d} \glspl{operand}.
+%
+Hence the set of variables \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models to
+which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
+\mbox{$\mDataSet[p] \subseteq \mDataSet$} denotes the set of alternative values
+for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
+by~$\mMatchSet$.
+
 
 \subsubsection{Constraints}
 
