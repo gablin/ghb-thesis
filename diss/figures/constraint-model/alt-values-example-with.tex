@@ -33,12 +33,11 @@
     \draw (v) -- (cp2);
     \draw (cp1) -- (v1);
     \draw (cp2) -- (v2);
+    \draw (v2) -- (op2);
   \end{scope}
 
   \begin{scope}[alternative data flow]
     \draw (v1) -- (op1);
-    \draw (v1) -- (op2);
-    \draw (v2) -- (op2);
     \draw (v2) -- (op1);
   \end{scope}
 
@@ -58,10 +57,9 @@
       (m1b.east)
       to
       (m1b.south)
-      [rounded corners=8pt]
-      --
-      +(180:.5\opNodeDist)
       [rounded corners=4pt]
+      --
+      +(180:.25\opNodeDist)
       --
       (m1c.south -| m1c.south east)
       [rounded corners=0]
@@ -72,61 +70,14 @@
       -- coordinate (m1)
       cycle
     }
-    \path [fill=shade1]
+    \draw [match line, fill=shade1]
           \pathMI;
-
-    % m2
-    \node [outer match node, inner sep=3.5pt, fit=(v2)] (m2a) {};
-    \node [outer match node, inner sep=3.5pt, fit=(v1)] (m2b) {};
-    \node [outer match node, fit=(op2)] (m2c) {};
-    \def\pathMII{
-      [bend right=45]
-      (m2a.east)
-      to
-      (m2a.north)
-      --
-      (m2b.north)
-      to
-      (m2b.west)
-      to
-      ([yshift=1.5pt] m2b.south)
-      [rounded corners=8pt]
-      --
-      +(0:.5\opNodeDist)
-      [rounded corners=4pt]
-      --
-      (m2c.south -| m2c.south west)
-      [rounded corners=0]
-      --
-      (m2c.south)
-      to
-      (m2c.east)
-      -- coordinate (m2)
-      cycle
-    }
-    \path [fill=shade1]
-          \pathMII;
-
-    \begin{scope}
-      \path [clip]
-            \pathMI;
-      \path [fill=shade2]
-            \pathMII;
-    \end{scope}
-
-    \draw [match line]
-          \pathMI;
-    \draw [match line]
-          \pathMII;
   \end{pgfonlayer}
 
   % Match labels
   \begin{scope}[overlay]
-    \node [match label, left=of m1] (m1l) {$\strut m_1$};
-    \node [match label, right=of m2] (m2l) {$\strut m_2$};
-    \foreach \i in {1, 2} {
-      \draw [match attachment line] (m\i) -- (m\i l);
-    }
+    \node [match label, left=of m1] (m1l) {$\strut m$};
+    \draw [match attachment line] (m1) -- (m1l);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%
