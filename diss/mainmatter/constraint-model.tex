@@ -671,8 +671,10 @@ After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
 \irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v} (see
 \refFigure{value-reuse-example-after-ce}).
 %
-Consequently, if both $m_1$ and $m_2$ require \irVar{v} to be copied -- assume,
-for example, that \irVar{v} resides on the stack -- then two copy
+We say \irVar{v}[1] and \irVar{v}[2] are \gls!{copy-related.d}.
+%
+Consequently, if both $m_1$ and $m_2$ require \irVar{v} to be copied -- assume
+for example that \irVar{v} resides on the stack -- then two copy
 \glspl{instruction} will be emitted (see
 \refFigure{value-reuse-example-redundant-copies}).
 %
@@ -691,7 +693,53 @@ superior to the other.
 
 \subsection{Match Duplication}
 
-\todo{describe idea}
+The idea of \gls!{match duplication} is easily derived from its name: for each
+\gls{match}~$m$, create a new \gls{match} for each permutation of \glspl{datum}
+that are \gls{copy-related.d} to the \glspl{input datum} in $m$, where an
+\gls!{input datum} is a \gls{datum} whose corresponding \gls{node} in the
+\gls{pattern} has no \gls{inbound.e} \glspl{data-flow edge}.
+%
+\begin{figure}
+  \setlength{\opNodeDist}{12pt}%
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Before duplication%
+                  \labelFigure{match-duplication-example-before}%
+                }%
+                [50mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/match-duplication-example-before%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  After duplication%
+                  \labelFigure{match-duplication-example-after}%
+                }%
+                [50mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/match-duplication-example-after%
+                  }%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example of match duplication}
+  \labelFigure{match-duplication-example}
+\end{figure}
+%
+See for example \refFigure{match-duplication-example-before}.
+%
+Because values~\irVar{v}[1] and \irVar{v}[2] are \gls{copy-related.d}, the
+\gls{match}~$m$ could use either value.
+%
+Since \irVar{v}[1] is an \gls{input datum} to the \gls{pattern} of the
+match~$m$, we duplicate $m$ to instead use \irVar{v}[2], resulting in match~$m'$
+(see \refFigure{match-duplication-example-after}).
 
 
 \subsection{Alternative Values}
