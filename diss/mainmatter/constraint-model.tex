@@ -698,8 +698,8 @@ superior to the other.
 The idea of \gls!{match duplication} is easily derived from its name: for each
 \gls{match}~$m$, create a new \gls{match} for each permutation of \glspl{datum}
 that are \gls{copy-related.d} to the \glspl{input datum} in $m$, where an
-\gls!{input datum} is a \gls{datum} whose corresponding \gls{node} in the
-\gls{pattern} has no \gls{inbound.e} \glspl{data-flow edge}.
+\gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not \gls{define.d}[d]
+by~$m$.
 %
 \begin{figure}
   \setlength{\opNodeDist}{12pt}%
