@@ -741,6 +741,21 @@ Since \irVar{v}[1] is an \gls{input datum} to the \gls{pattern} of the
 match~$m$, we duplicate $m$ to instead use \irVar{v}[2], resulting in match~$m'$
 (see \refFigure{match-duplication-example-after}).
 
+The main advantage of \gls{match duplication} is that no changes need to be done
+for the \gls{constraint model}; the decision of which value to use (and reuse)
+depends entirely on the selection of \glspl{match}.
+%
+However, this comes at a cost of inflating the \gls{match set}, which in turn
+inflates the \gls{search space}.
+%
+If a \gls{match} has $k$~\glspl{input datum}, each with $n$~\gls{copy-related.d}
+values, then $\mBigO(n^k)$ new \glspl{match} will be created.
+%
+Although the decision of \gls{value reuse} is intuitively orthogonal to the
+decisions of selecting a \gls{match} and placing it into a \glspl{block}, these
+decisions must be remade for each new \gls{match}, thereby enlarging the
+\gls{search space} with many symmetric \glspl{solution}.
+
 
 \subsection{Alternative Values}
 
