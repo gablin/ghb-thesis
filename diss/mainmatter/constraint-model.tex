@@ -553,6 +553,10 @@ If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
 connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.en}
 \gls{edge number} as the \gls{data-flow edge} -- is also moved to $v'$.
 %
+This is to ensure that the placement restrictions are applied only on the
+\glspl{datum} actually used by the \glspl{phi-function} (that is, the copied
+value and not the original value).
+%
 We also extend the \gls{pattern set} with a special \gls!{null-copy pattern},
 with the \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, that covers
 $c$ at zero cost provided that \mbox{$\mVar{loc}[v] = \mVar{loc}[v']$}.
