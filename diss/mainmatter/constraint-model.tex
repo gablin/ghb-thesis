@@ -884,27 +884,41 @@ Consequently, instead of \glsshort{define.d}[ing] and \glsshort{use.d}[ing]
 \glspl{datum}, we now assume that all \glspl{match} \gls{define.d} and
 \gls{use.d} \glspl{operand}.
 %
-Hence the set of variables \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models to
-which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
+Hence the set of \glspl{variable} \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models
+to which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
 \mbox{$\mDataSet[p] \subseteq \mDataSet$} denotes the set of alternative values
 for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
 by~$\mMatchSet$.
 
+For reasons that will become apparent shortly, we also introduce a set of
+\glspl{variable} \mbox{$\mVar{inactive}[d] \in \mSet{0, 1}$}, which models
+whether a \gls{datum}~$d$ is \gls{inactive.d}.
+
 
 \subsubsection{Constraints}
 
-\todo{explain constraints}
-
+As stated previously, the aim is to add another level of indirection whenever a
+\gls{constraint} refers to a \gls{datum}.
+%
+To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
+\mbox{$\mUses(m) \subseteq \mOperandSet$} now denote the set of \glspl{operand}
+(instead of \glspl{datum}) \gls{define.d}[d] respectively \gls{use.d}[d] by
+\gls{match}~$m$.
+%
+With these new definitions, Eqs.\thinspace\refEquation*{dom},
+\refEquation*{spanning}, and~\refEquation*{compatible-locations} are adjusted
+accordingly (the changes are highlighted in grey):
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]), \\
     \forall m \in \mMatchCompSet{\mPhi},
     \forall \hlDiff{p} \in \mUses(m),
-    \forall o \in \mCovers(m)
+    \forall o \in \mCovers(m),
   \end{array}
   \labelEquation{dom-alt}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -913,11 +927,11 @@ by~$\mMatchSet$.
       \mSet{\mVar{oplace}[o]} \cup \mSpans(m), \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mDefines(m),
-    \forall o \in \mCovers(m)
+    \forall o \in \mCovers(m),
   \end{array}
   \labelEquation{spanning-alt}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -929,6 +943,26 @@ by~$\mMatchSet$.
   \labelEquation{compatible-locations-alt}
 \end{equation}
 
+Due to these changes there may be \glspl{datum} that is not \gls{use.d}[d] by
+any \gls{match}, yet \refEquation{data-definitions} still requires that every
+\gls{datum} must be \gls{define.d}[d] by some \gls{match}.
+%
+We address this by extending the \gls{pattern set} with a \gls!{kill pattern}
+(shaped like \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, where $v$ and $v'$ are
+\glspl{value node} and $c$ is a \gls{copy node}).
+%
+\Glspl{match} derived from this \gls{pattern} are called \glspl!{kill match},
+which have zero cost and emit nothing if selected.
+%
+A \gls{datum} is said to be \gls!{inactive.d} if and only if it is
+\gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are
+forbidden to use \gls{inactive.d} \glspl{datum}.
+%
+Likewise, a \gls{datum} cannot be \gls{inactive.d} if it is used by a
+non-\gls{kill match}.
+%
+These \glspl{constraint} are modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -939,7 +973,7 @@ by~$\mMatchSet$.
   \end{array}
   \labelEquation{inactivity-when-killed}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -950,6 +984,10 @@ by~$\mMatchSet$.
   \end{array}
   \labelEquation{inactivity-when-used}
 \end{equation}
+%
+where $\mMatchSet[\mKill]$ and $\mMatchCompSet{\mKill}$ denote the set of
+\glspl{kill match} respectively the set~$\mMatchSet$ without the \glspl{kill
+  match}.
 
 
 \subsection{Experimental Evaluation}
