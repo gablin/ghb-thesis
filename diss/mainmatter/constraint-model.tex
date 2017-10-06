@@ -568,6 +568,48 @@ If the \gls{null-copy pattern} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
 
+In order to maintain matching of \glspl{pattern}, we also need to perform
+\gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
+%
+\begin{figure}
+  \setlength{\opNodeDist}{12pt}%
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Original UP graph%
+                  \labelFigure{copy-extending-pattern-example-before}%
+                }%
+                [50mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/%
+                    copy-extending-pattern-example-before%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  After copy extension%
+                  \labelFigure{copy-extending-pattern-example-after}%
+                }%
+                [50mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/%
+                    copy-extending-pattern-example-after%
+                  }%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example of copy-extending a pattern}
+  \labelFigure{match-duplication-example}
+\end{figure}
+%
+See for example \refFigure{copy-extending-pattern-example}.
+%
+\todo{finish discussion}
+
 
 \subsection{Handling Calling Conventions}
 

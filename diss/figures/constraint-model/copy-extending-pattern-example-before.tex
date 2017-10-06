@@ -1,0 +1,27 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}
+  \node [computation node] (add) {\opAdd};
+  \node [value node, position=135 degrees from add] (r) {\opVar{r}};
+  \node [value node, position= 45 degrees from add] (s) {\opVar{s}};
+  \node [value node, below=of add] (x) {\opVar{x}};
+  \node [computation node, position=-45 degrees from x] (shift) {\opLSH};
+  \node [value node, position=45 degrees from shift] (const) {\opVar{1}};
+  \node [value node, below=of shift] (t) {\opVar{t}};
+
+  \begin{scope}[data flow]
+    \draw (r) -- (add);
+    \draw (s) -- (add);
+    \draw (add) -- (x);
+    \draw (x) -- (shift);
+    \draw (const) -- (shift);
+    \draw (shift) -- (t);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

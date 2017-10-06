@@ -1,0 +1,35 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}
+  \node [computation node] (add) {\opAdd};
+  \node [value node, position=135 degrees from add] (r) {\opVar{r}};
+  \node [value node, position= 45 degrees from add] (s) {\opVar{s}};
+  \node [value node, below=of add] (x) {\opVar{x}};
+  \node [computation node, below=of x] (cp-x) {\opCopy};
+  \node [value node, below=of cp-x] (x-copy) {};
+  \node [computation node, position=-45 degrees from x-copy] (shift) {\opLSH};
+  \node [value node, position=45 degrees from shift] (const-copy) {};
+  \node [value node, below=of shift] (t) {\opVar{t}};
+  \node [computation node, above=of const-copy] (cp-const) {\opCopy};
+  \node [value node, above=of cp-const] (const) {\opVar{1}};
+
+  \begin{scope}[data flow]
+    \draw (r) -- (add);
+    \draw (s) -- (add);
+    \draw (add) -- (x);
+    \draw (x) -- (cp-x);
+    \draw (cp-x) -- (x-copy);
+    \draw (x-copy) -- (shift);
+    \draw (const) -- (cp-const);
+    \draw (cp-const) -- (const-copy);
+    \draw (const-copy) -- (shift);
+    \draw (shift) -- (t);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
