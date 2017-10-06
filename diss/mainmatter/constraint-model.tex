@@ -608,7 +608,16 @@ In order to maintain matching of \glspl{pattern}, we also need to perform
 %
 See for example \refFigure{copy-extending-pattern-example}.
 %
-\todo{finish discussion}
+An \gls{instruction} that adds two values~\irVar{r} and~\irVar{s} and then
+shifts the result by one bit is depicted as a \gls{UP graph}
+(\refFigure{copy-extending-pattern-example-before}).
+%
+A \gls{match} of this \gls{pattern} will no longer match after \gls{copy
+  extension} as a \gls{copy node} will have been introduced between the
+\glspl{node} corresponding to \irVar{x} and the shift \gls{operation} in the
+\gls{UF graph}.
+%
+\todo{define internal value}
 
 
 \subsection{Handling Calling Conventions}
