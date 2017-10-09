@@ -1013,24 +1013,47 @@ where $\mMatchSet[\mKill]$ and $\mMatchCompSet{\mKill}$ denote the set of
 \section{Modeling Block Ordering}
 \labelSection{modeling-block-ordering}
 
-\todo{write introduction}
+Ordering the \glspl{block} in a \gls{function} entails finding a sequence~$s$
+such that each \gls{block} appears exactly once in~$s$\hspace{-.8pt}.
+%
+Depending on the control-flow \glspl{instruction} selected, some \glspl{block}
+may need to be adjacent.
+%
+For example, assume a \gls{block}~$A$ that jumps to either of two
+\glspl{block}~$B$ and~$C$ depending on whether a condition~$c$ holds.
+%
+Assume also that the conditional branching in $A$ is implemented using an
+\gls{instruction} that jumps to $B$ if $c$ holds, otherwise it continues the
+execution with the next \gls{instruction} in the \gls{assembly code}.
+%
+This notion of execution is called \gls!{fall-through}, and due to this, $C$
+must be placed immediately after $A$ in the sequence.
 
 
 \subsubsection{Variables}
 
-\todo{introduce succ varible}
+The set of \glspl{variable} \mbox{$\mVar{succ}[b] \in \mBlockSet$} models the
+successor of block~$b$\hspace{-.5pt}.
+%
+For example, if \mbox{$\mVar{succ}[b] = b'$}, then \gls{block}~$b'$ will appear
+immediately after \gls{block}~$b$ in the \gls{block ordering} sequence.
 
 
 \subsubsection{Constraints}
 
-\todo{explain constraint below}
-
+A \gls{solution} to the \gls{block ordering} problem is a sequence of
+\gls{block} successors such that they form a \gls{cycle}.
+%
+Using the \gls{circuit constraint} defined in
+\refChapter{constraint-programming} on \refPageOfDefinition{circuit}, this
+\gls{constraint} is modeled as
+%
 \begin{equation}
-  \mCircuit\left(
-    \cup_{b \in \mBlockSet} \{\mVar{succ}[b]\}
-  \right)
+  \mCircuit(\mVar{succ}[b_1], \ldots, \mVar{succ}[b_n]),
   \labelEquation{block-order}
 \end{equation}
+%
+where \mbox{$b_1, \ldots, b_n = \mBlockSet$}.
 
 \todo{explain constraint below}
 
