@@ -1224,7 +1224,81 @@ that would not have been emitted had \gls{branch extension} not been performed.
 
 \subsection{Dual-target Branch Patterns}
 
-\todo{explain idea}
+\def\jmpPattern{p_{\textsc{jmp}}}%
+
+Another method is to extend the \gls{pattern set} with so-called
+\glspl!{dual-target branch pattern}.
+%
+Given a \gls{pattern set}~$S$, first find the \gls{pattern}~\mbox{$\jmpPattern
+  \in S$} which corresponds to a unconditional jump \gls{instruction} that
+directly branches to a given label (it is reasonable to assume such a
+\gls{pattern} always exist for any given \gls{target machine}).
+%
+Let \mbox{$\mCost(p)$} and \mbox{$\mEmits(p)$} denote the cost of pattern~$p$
+respectively the sequence of \glspl{instruction} emitted by $p$ if selected.
+%
+Then, for each \gls{pattern}~\mbox{$p \in S$} which corresponds to a conditional
+jump \gls{instruction} that falls through to a given block~$b$, add to $S$ a new
+\gls{pattern}~$p'$ that is a copy of $p$ but has no \gls{fall-through}
+\gls{constraint}, emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and has
+cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
+%
+\begin{figure}
+  \subcaptionbox{%
+                  A pattern that falls through to the \irBlock{false} block%
+                  \labelFigure{dual-target-branch-pattern-example-original}%
+                }%
+                [68mm]%
+                {%
+                  \begin{tabular}{c}
+                    \input{%
+                      figures/constraint-model/%
+                      dual-target-branch-pattern-example%
+                    }\\[.5\betweensubfigures]
+                    \figureFont\figureFontSize%
+                    \begin{tabular}{lc}
+                      \toprule
+                        \multicolumn{1}{c}{\tabhead emit} & \tabhead cost\\
+                      \midrule
+                        {\instrFont br b, true} & $2$\\
+                      \bottomrule
+                    \end{tabular}%
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  New pattern, without fall-through%
+                  \labelFigure{dual-target-branch-pattern-example-copy}%
+                }%
+                [52mm]%
+                {%
+                  \begin{tabular}{c}
+                    \newcommand{\fallthruString}{}%
+                    \input{%
+                      figures/constraint-model/%
+                      dual-target-branch-pattern-example%
+                    }\\[.5\betweensubfigures]
+                    \figureFont\figureFontSize%
+                    \begin{tabular}{lc}
+                      \toprule
+                        \multicolumn{1}{c}{\tabhead emit} & \tabhead cost\\
+                      \midrule
+                        {\instrFont br b, true}
+                      & \textrm{$2 + \mCost\hspace{.4pt}(\jmpPattern)$}\\
+                        \textrm{$\mEmits(\jmpPattern)$}
+                      & \\
+                      \bottomrule
+                    \end{tabular}%
+                  \end{tabular}%
+                }
+
+  \caption{Example of creating dual-target branch pattern}%
+  \labelFigure{dual-target-branch-pattern-example}
+\end{figure}
+%
+An example is shown in \refFigure{dual-target-branch-pattern-example}.
+
+\todo{finish discussion}
 
 
 \subsection{Experimental Evaluation}

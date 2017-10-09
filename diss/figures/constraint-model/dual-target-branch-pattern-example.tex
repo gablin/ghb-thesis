@@ -1,0 +1,31 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\providecommand{\fallthruString}{fall-thru}
+\begin{tikzpicture}
+  \node [block node] (entry) {\strut\opBlock{entry}};
+  \node [control node, below=of entry] (c) {\opCondBr};
+  \node [block node, position=-135 degrees from c] (true)
+        {\strut\opBlock{true}};
+  \node [block node, position=- 45 degrees from c] (false)
+        {\strut\opBlock{false}};
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (entry) -- (c);
+      \draw (c)
+            -- node [control-flow label, pos=.4, swap] {T}
+            (true);
+      \draw (c)
+            -- node [control-flow label, pos=.4] {F}
+            (false);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%
