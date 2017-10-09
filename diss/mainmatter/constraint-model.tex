@@ -1055,8 +1055,32 @@ Using the \gls{circuit constraint} defined in
 %
 where \mbox{$b_1, \ldots, b_n = \mBlockSet$}.
 
-\todo{explain constraint below}
-
+If a \gls{match}~$m$ with an \gls{entry block} is derived from an
+\gls{instruction} that performs a \gls{fall-through} to \gls{block}~$b$, then
+the \gls{constraint} can naively be modeled as \mbox{$\mVar{sel}[m] \mImp
+  \mVar{succ}[\mEntry(m)] = b$}.
+%
+However, this \gls{constraint} is too limiting as it disallows empty
+\glspl{block} to be placed between $\mEntry(m)$ and~$b$\hspace{-.5pt}, thus
+forcing redundant jump \glspl{instruction} to be emitted.
+%
+A \gls{block}~$b$ is considered empty if either no \glspl{match} are placed in
+$b$ or every \gls{match} in $b$ is a \gls!{null match}, which is a \gls{match}
+that emits nothing if selected.
+%
+As empty \glspl{block} are not uncommon to appear in the \gls{function} under
+compilation -- especially when having performed \gls{global code motion} -- this
+has a significant impact on code quality.
+%
+Hence we extend the naive implementation into a disjunction, where the second
+clause captures \glspl{fall-through} via single empty \glspl{block}.
+%
+Let $\mFallThroughSet$ denote a set of pairs~$\mPair{m}{b}$, where $m$ is a
+\gls{match} and $b$ is a \gls{block} through which $m$ will fall if selected,
+and let $\mMatchSet[\mNull]$ denote the set of \glspl{null match}.
+%
+With these definitions, the \gls{fall-through} \gls{constraint} is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{succ}[\mEntry(m)] = b \mOr \mbox{} \\
@@ -1064,7 +1088,7 @@ where \mbox{$b_1, \ldots, b_n = \mBlockSet$}.
       \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
       \mAnd
       \mEmptyBlock(\mVar{succ}[\mEntry(m)])
-    \big) \\
+    \big)\hspace{-.8pt}, \\
     \forall \mPair{m}{b} \in \mFallThroughSet,
   \end{array}
   \labelEquation{fall-through}
@@ -1073,11 +1097,12 @@ where \mbox{$b_1, \ldots, b_n = \mBlockSet$}.
 where
 %
 \begin{equation*}
-  \mEmptyBlock(b) =
+  \mEmptyBlock(b)
+  \equiv
   \mVar{oplace}[o] \neq b
   \mOr
   \mVar{omatch}[o] \in \mMatchSet[\mNull],
-  \forall o \in \mOpSet
+  \forall o \in \mOpSet\hspace{-.8pt}.
 \end{equation*}
 
 
