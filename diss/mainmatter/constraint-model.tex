@@ -1172,6 +1172,15 @@ where
   \forall o \in \mOpSet\hspace{-.8pt}.
 \end{equation*}
 
+If a \gls{block}~$b$ has a direct jump to another \gls{block}~$b'$ and $b'$
+appears immediately after $b$ in the \gls{block} sequence, then the jump is
+redundant.
+%
+To prevent emission of such jump \glspl{instruction}, we extend the \gls{pattern
+  set} with a special \gls!{null-jump pattern}, with \gls{graph} structure
+\mbox{$\mEdge{b}{\mEdge{c}{b'}}$}, that covers a \gls{control node}~$c$ at zero
+cost provided that \mbox{$\mVar{succ}[b] = b'$}.
+
 
 \subsection{Branch Extension}
 
