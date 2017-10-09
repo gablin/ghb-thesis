@@ -499,6 +499,12 @@ data type of a value is also specified in the corresponding \gls{value node}.
 %
 For integers this entails the value's bit width, and two values are compatible
 if they have the same bit width.
+%
+\Glspl{value node} representing constants also have a value range, which is a
+singleton for constants appearing in the \gls{UF graph}.
+%
+A constant~$c$ is compatible with another constant~$d$ if the value range of~$d$
+is a subset of the value range of~$c$.
 
 
 \subsubsection{Handling Side Effects}
