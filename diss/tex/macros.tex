@@ -702,7 +702,13 @@
 \newcommand{\opBlock}[1]{\irCode{#1}}
 \newcommand{\opBr}{\irCode{\irBrText}}
 \newcommand{\opCall}[1]{\irCode{\noWidth{#1}}}
-\newcommand{\opCondBr}{\irCode{c{\kern-1pt}.{\kern-1.2pt}b{\kern-.3pt}r}}
+\NewDocumentCommand{\opCondBr}{s}{%
+  \IfBooleanTF{#1}{%
+    \irCode{\irCondBrText}%
+  }{%
+    \irCode{c{\kern-1pt}.{\kern-1.2pt}b{\kern-.3pt}r}%
+  }%
+}
 \NewDocumentCommand{\opRet}{s}{%
   \IfBooleanTF{#1}{%
     \irCode{\irRetText}%
