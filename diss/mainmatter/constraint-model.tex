@@ -608,9 +608,9 @@ In order to retain matching of \glspl{pattern}, we also need to perform
 %
 See for example \refFigure{copy-extending-pattern-example}.
 %
-The \gls{UP graph} of an \gls{instruction} that adds two values~\irVar{r}
-and~\irVar{s} and then shifts the result by one bit is depicted in
-\refFigure{copy-extending-pattern-example-before}.
+The \gls{UP graph} captures the behavior of an \gls{instruction} that adds two
+values~\irVar{r} and~\irVar{s} and then shifts the result by one bit to the
+right (\refFigure{copy-extending-pattern-example-before}).
 %
 Since we want to preserve the ability of selecting copy \glspl{instruction} for
 moving \glspl{datum} between \glspl{instruction}, we only copy-extend the
@@ -620,8 +620,8 @@ moving \glspl{datum} between \glspl{instruction}, we only copy-extend the
 We also copy-extend any constant values since these obviously do not require a
 separate copy \gls{instruction} to be used by the \gls{pattern}.
 %
-This results in the \gls{UP graph} shown in
-\refFigure{copy-extending-pattern-example-after}.
+The resulting \gls{UP graph} will now yield the same \glspl{match} as before
+\gls{copy extension} (\refFigure{copy-extending-pattern-example-after}).
 
 
 \subsection{Handling Calling Conventions}
