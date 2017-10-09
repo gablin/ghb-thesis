@@ -1,0 +1,36 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    block node/.append style={
+      node distance=0,
+    },
+  ]
+
+  \node [block node] (B)
+        {%
+          \begin{tabular}{l}
+            \instrFont br y, B\\
+            \instrFont br C\\
+          \end{tabular}%
+        };
+  \node [block node, below=of B] (A)
+        {%
+          \begin{tabular}{l}
+            \instrFont br x, B
+          \end{tabular}%
+        };
+  \node [block node, below=of A] (C) {};
+
+  \node [block label, below left=0 and 2pt of B.north west] {B};
+  \foreach \b in {A, C} {
+    \node [block label, left=2pt of \b.west] {\b};
+  }
+\end{tikzpicture}%
+\endgroup%

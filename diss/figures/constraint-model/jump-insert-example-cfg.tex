@@ -1,0 +1,58 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}
+  \node [block node] (A)
+        {%
+          \begin{tabular}{l}
+            \instrFont br x, B
+          \end{tabular}%
+        };
+  \node [block node, below=of A] (B)
+        {%
+          \begin{tabular}{l}
+            \instrFont br y, B
+          \end{tabular}%
+        };
+  \node [block node, below=of B] (C) {};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (A)
+            -- node [control-flow label, swap] {T}
+            (B);
+      \draw (B)
+            -- node [control-flow label, swap] {F}
+            (C);
+      \draw [rounded corners=3pt]
+            (A)
+            -| node [control-flow label, pos=.25,
+                     inner sep=.5\controlFlowLabelXSep] {F}
+            ([xshift=\opNodeDist] B.east)
+            |-
+            (C);
+      \draw [rounded corners=3pt]
+            ($(B.south) !.5! (B.south east)$)
+            --
+            +(-90:.33\opNodeDist)
+            -| node [control-flow label, pos=.25, swap,
+                     inner sep=.5\controlFlowLabelXSep] {T}
+            ([xshift=.5\opNodeDist] B.east)
+            |-
+            ([yshift=.33\opNodeDist] B.north east)
+            -|
+            ($(B.north) !.5! (B.north east)$);
+    \end{scope}
+  \end{pgfonlayer}
+
+  \foreach \b in {A, B, C} {
+    \node [block label, above right=0 and 0 of \b.north west] {\b};
+  }
+\end{tikzpicture}%
+\endgroup%
