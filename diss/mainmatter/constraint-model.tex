@@ -568,7 +568,7 @@ If the \gls{null-copy pattern} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
 
-In order to maintain matching of \glspl{pattern}, we also need to perform
+In order to retain matching of \glspl{pattern}, we also need to perform
 \gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
 %
 \begin{figure}
@@ -608,16 +608,20 @@ In order to maintain matching of \glspl{pattern}, we also need to perform
 %
 See for example \refFigure{copy-extending-pattern-example}.
 %
-An \gls{instruction} that adds two values~\irVar{r} and~\irVar{s} and then
-shifts the result by one bit is depicted as a \gls{UP graph}
-(\refFigure{copy-extending-pattern-example-before}).
+The \gls{UP graph} of an \gls{instruction} that adds two values~\irVar{r}
+and~\irVar{s} and then shifts the result by one bit is depicted in
+\refFigure{copy-extending-pattern-example-before}.
 %
-A \gls{match} of this \gls{pattern} will no longer match after \gls{copy
-  extension} as a \gls{copy node} will have been introduced between the
-\glspl{node} corresponding to \irVar{x} and the shift \gls{operation} in the
-\gls{UF graph}.
+Since we want to preserve the ability of selecting copy \glspl{instruction} for
+moving \glspl{datum} between \glspl{instruction}, we only copy-extend the
+\glspl!{internal value} in a \gls{UP graph}, which are values that are both
+\gls{define.d}[d] and \gls{use.d}[d] by the \gls{pattern}.
 %
-\todo{define internal value}
+We also copy-extend any constant values since these obviously do not require a
+separate copy \gls{instruction} to be used by the \gls{pattern}.
+%
+This results in the \gls{UP graph} shown in
+\refFigure{copy-extending-pattern-example-after}.
 
 
 \subsection{Handling Calling Conventions}
