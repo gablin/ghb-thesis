@@ -1019,15 +1019,16 @@ such that each \gls{block} appears exactly once in~$s$\hspace{-.8pt}.
 Depending on the control-flow \glspl{instruction} selected, some \glspl{block}
 may need to be adjacent.
 %
-For example, assume a \gls{block}~$A$ that jumps to either of two
-\glspl{block}~$B$ and~$C$ depending on whether a condition~$c$ holds.
+For example, assume a \gls{block}~$b$ that jumps to either of two
+\glspl{block}~$c$ and~$d$ depending on whether a condition holds.
 %
-Assume also that the conditional branching in $A$ is implemented using an
-\gls{instruction} that jumps to $B$ if $c$ holds, otherwise it continues the
-execution with the next \gls{instruction} in the \gls{assembly code}.
+Assume also that the conditional branching in $b$ is implemented using an
+\gls{instruction} that jumps to $c$ if the condition holds, otherwise it
+continues the execution with the next \gls{instruction} in the \gls{assembly
+  code}.
 %
-This notion of execution is called \gls!{fall-through}, and due to this, $C$
-must be placed immediately after $A$ in the sequence.
+This notion of execution is called \gls!{fall-through}, and due to this, $d$
+must be placed immediately after $b$ in the sequence.
 
 For some combinations of \glspl{function} and \glspl{target machine} with
 \gls{fall-through} \glspl{instruction}, there exist no valid \gls{block}
