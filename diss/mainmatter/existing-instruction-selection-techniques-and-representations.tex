@@ -724,8 +724,8 @@ Similarly, the \gls{expression tree} shown in
   \figureFontSize%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
-    \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
-      & \multicolumn{1}{c}{\tabhead Action}\\
+    \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
+      & \multicolumn{1}{c}{\tabhead action}\\
     \midrule
     1 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \mNT{Reg}[2] \; \irCode{const}$
       & 1
@@ -790,8 +790,8 @@ of the following forms:
   \figureFontSize%
   \begin{tabular}{cr@{ $\rightarrow$ }lcl}
     \toprule
-    \tabhead \# & \multicolumn{2}{c}{\tabhead Production} & \tabhead Cost
-      & \multicolumn{1}{c}{\tabhead Action}\\
+    \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
+      & \multicolumn{1}{c}{\tabhead action}\\
     \midrule
     1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
       & 1
@@ -1141,7 +1141,7 @@ y = *((int*) t);
                                    c%
                                  }
                     \toprule
-                    \multicolumn{3}{c}{\tabhead Instruction} & \tabhead Cost\\
+                    \multicolumn{3}{c}{\tabhead instruction} & \tabhead cost\\
                     \midrule
                     add     & r & s + t & 2\\
                     mul     & r & s \times t & 3\\
@@ -1355,7 +1355,7 @@ int f(int* A, int* B, int N) {
       \newcolumntype{L}{@{}l@{}}%
       \begin{tabular}{r@{ $\rightarrow$ }l@{\hspace{3em}}r@{ $\rightarrow$ }lc}
         \toprule
-        \multicolumn{5}{c}{\tabhead Rules}\\
+        \multicolumn{5}{c}{\tabhead rules}\\
         \midrule
         $\mNT{Reg}$ & \irCode{const}
           & $\mNT{SReg}$
@@ -1909,7 +1909,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
       \figureFontSize%
       \begin{tabular}{r@{ $\rightarrow$ }lc}
         \toprule
-        \multicolumn{2}{c}{\tabhead Rules} & \tabhead Cost\\
+        \multicolumn{2}{c}{\tabhead rules} & \tabhead cost\\
         \midrule
         $\mNT{Reg}$ & \irCode{var} & 0\\
         $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$ & 1\\
