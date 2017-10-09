@@ -1019,11 +1019,11 @@ such that each \gls{block} appears exactly once in~$s$\hspace{-.8pt}.
 Depending on the control-flow \glspl{instruction} selected, some \glspl{block}
 may need to be adjacent.
 %
-For example, assume a \gls{block}~$b$ that jumps to either of two
+For example, assume a \gls{block}~$b$ that branches to either of two
 \glspl{block}~$c$ and~$d$ depending on whether a condition holds.
 %
 Assume also that the conditional branching in $b$ is implemented using an
-\gls{instruction} that jumps to $c$ if the condition holds, otherwise it
+\gls{instruction} that branches to $c$ if the condition holds, otherwise it
 continues the execution with the next \gls{instruction} in the \gls{assembly
   code}.
 %
@@ -1077,15 +1077,15 @@ sequence without inserting one or more additional jump \glspl{instruction}.
 See for example \refFigure{jump-insert-example}.
 %
 \Glspl{block}~\irBlock{A} and~\irBlock{B} both contain control-flow
-\glspl{instruction} that jump to the beginning of \irBlock{B} if the condition
-holds, otherwise they should jump to block~\irBlock{C}
+\glspl{instruction} that branches to the beginning of \irBlock{B} if the
+condition holds, otherwise they should branches to block~\irBlock{C}
 (\refFigure{jump-insert-example-cfg}).
 %
 Because of the fall-through \gls{constraint}, \irBlock{A} and \irBlock{B} cannot
 both have \irBlock{C} as its successor \gls{block}.
 %
-Hence an additional \gls{instruction} that directly jumps to \irBlock{C} must be
-inserted after the control-flow \gls{instruction} in either \irBlock{A}
+Hence an additional jump \gls{instruction} that directly branches to \irBlock{C}
+must be inserted after the control-flow \gls{instruction} in either \irBlock{A}
 or~\irBlock{B} (\refFigure{jump-insert-example-solutions}).
 
 In this dissertation, we discuss two methods for inserting jump
@@ -1172,9 +1172,9 @@ where
   \forall o \in \mOpSet\hspace{-.8pt}.
 \end{equation*}
 
-If a \gls{block}~$b$ has a direct jump to another \gls{block}~$b'$ and $b'$
-appears immediately after $b$ in the \gls{block} sequence, then the jump is
-redundant.
+If a \gls{block}~$b$ unconditionally branches to another \gls{block}~$b'$ and
+$b'$ appears immediately after $b$ in the \gls{block} sequence, then a jump
+\gls{instruction} is redundant.
 %
 To prevent emission of such jump \glspl{instruction}, we extend the \gls{pattern
   set} with a special \gls!{null-jump pattern}, with \gls{graph} structure
