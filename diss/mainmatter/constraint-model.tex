@@ -1184,7 +1184,42 @@ cost provided that \mbox{$\mVar{succ}[b] = b'$}.
 
 \subsection{Branch Extension}
 
-\todo{explain idea}
+One method of inserting jump \glspl{instruction} is to extend the \gls{UF graph}
+with additional \glsshort{block node} and \glspl{control node}.
+%
+The idea is as follows.
+%
+For each \gls{control-flow edge}~$\mPair{c}{b}$, where $c$ is a \gls{control
+  node} and $b$ is a \gls{block node}, we remove this \gls{edge} and insert a
+new \gls{block node}~$b'$ and \gls{control node}~$c'$, and \glspl{control-flow
+  edge} such that \mbox{$\mEdge{c}{\mEdge{b'}{\mEdge{c'}{b}}}$}.
+%
+If the new \glspl{control node} are indeed redundant, then each such \gls{node}
+can be covered by a \gls{match} derived from the \gls{null-jump pattern},
+causing the new \glspl{block} to become empty and appear immediately before the
+target \gls{block}.
+%
+Like with \gls{copy extension}, to retain matching \gls{branch extension} must
+also be performed on each \gls{UF graph} in the \gls{pattern set}.
+
+The disadvantage of \gls{branch extension} is that it inflates the \gls{search
+  space}.
+%
+The number of \glspl{block} and \glspl{control node} both increase by
+$\mBigO(nk)$, where $n$ is the number of \glspl{block} before \gls{branch
+  extension} and $k$ is the highest number of \gls{outbound.e}
+\glspl{control-flow edge} from a \gls{control node} in the \gls{UF graph}.
+%
+This leads to more \glspl{operation} to be covered and more \glspl{block}
+wherein an \gls{operation} may be placed.
+%
+In addition, as the majority of the new \glspl{block} will be empty, situations
+often arise where a control-flow \gls{instruction} could successfully fall
+through more than one \gls{block}.
+%
+Because of \refEquation{fall-through}, however, it can only fall through at most
+one empty \gls{block}, causing emission of redundant jump \glspl{instruction}
+that would not have been emitted had \gls{branch extension} not been performed.
 
 
 \subsection{Dual-target Branch Patterns}
