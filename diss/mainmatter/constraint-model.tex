@@ -1029,6 +1029,20 @@ execution with the next \gls{instruction} in the \gls{assembly code}.
 This notion of execution is called \gls!{fall-through}, and due to this, $C$
 must be placed immediately after $A$ in the sequence.
 
+For some combinations of \glspl{function} and \glspl{target machine} with
+\gls{fall-through} \glspl{instruction}, there exist no valid \gls{block}
+sequence without inserting one or more additional jump \glspl{instruction}.
+%
+\todo{give example}
+
+In this dissertation, we discuss two approaches for inserting jump
+\glspl{instruction} when required: \gls{block extension} and \glspl{dual-target
+  branch pattern}.
+%
+We first introduce the \glspl{variable} and \glspl{constraint} for modeling
+\gls{block ordering} before introducing each approach in turn, and then present
+experiments showing that one is superior to the other.
+
 
 \subsubsection{Variables}
 
