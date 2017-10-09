@@ -1051,9 +1051,10 @@ sequence without inserting one or more additional jump \glspl{instruction}.
                 }%
   \hfill%
   \subcaptionbox{%
-                  Valid block sequences%
+                  Valid block sequences, after jump insertion%
                   \labelFigure{jump-insert-example-solutions}%
                 }%
+                [65mm]%
                 {%
                   \input{figures/constraint-model/jump-insert-example-sol1}%
                   \hspace{6mm}%
@@ -1062,7 +1063,13 @@ sequence without inserting one or more additional jump \glspl{instruction}.
   \hfill%
   \mbox{}
 
-  \caption{TODO}
+  \caption[Example that requires additional jump instructions]%
+          {%
+            Example that requires additional jump instructions.
+            %
+            It is assumed that the conditional {\instrFont br}~instruction
+            falls through to the next instruction if the condition is false%
+          }
   \labelFigure{jump-insert-example}
 \end{figure}
 %
