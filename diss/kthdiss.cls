@@ -36,6 +36,10 @@
 \DeclareOption{landscape}{%
   \ClassError{kthdiff}{'landscape' format not supported}%
 }
+\newif\if@kthdiff@phd \@kthdiff@phdfalse
+\newif\if@kthdiff@lic \@kthdiff@licfalse
+\DeclareOption{phd}{\@kthdiff@phdtrue}
+\DeclareOption{lic}{\@kthdiff@lictrue}
 
 % Pass on undeclared options to memoir class
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
@@ -183,6 +187,24 @@
     \@getField{#1}%
   }%
 }
+
+% Set degree fields
+\if@kthdiff@phd
+\else
+  \if@kthdiff@lic
+  \else
+    \ClassError{kthdiss}{Either 'phd' or 'lic' must be provided}
+  \fi
+\fi
+
+\if@kthdiff@phd
+  \thesisDegreeEng{doctor}
+  \thesisDegreeSwe{doktor}
+\fi
+\if@kthdiff@lic
+  \thesisDegreeEng{licentiate}
+  \thesisDegreeSwe{licentiat}
+\fi
 
 \NewDocumentCommand{\@titleFont}{}{%
   \LARGE\bfseries%
