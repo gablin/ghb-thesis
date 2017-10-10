@@ -82,6 +82,10 @@
 % LOAD PACKAGES
 %===============
 
+\RequirePackage{adjustbox}
+\RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{mfirstuc}
 \RequirePackage{xparse}
 
 
@@ -101,6 +105,102 @@
     \large\textbf{#1}%
   \end{center}%
 }{}
+
+\RenewDocumentCommand{\@title}{}{%
+  NO TITLE PROVIDED,
+  USE \textbackslash title COMMAND%
+}
+\NewDocumentCommand{\@subtitle}{}{}
+\NewDocumentCommand{\subtitle}{m}{%
+  \RenewDocumentCommand{\@subtitle}{}{#1}%
+}
+\RenewDocumentCommand{\@author}{}{%
+  NO AUTHOR PROVIDED,
+  USE \textbackslash author COMMAND%
+}
+\NewDocumentCommand{\@kthLogo}{}{%
+  NO KTH LOGO PROVIDED,
+  USE \textbackslash kthLogo COMMAND%
+}
+\NewDocumentCommand{\kthLogo}{m}{%
+  \RenewDocumentCommand{\@kthLogo}{}{%
+    \adjustbox{max width=.2\textwidth, max height=.14\textheight}{#1}%
+  }%
+}
+\NewDocumentCommand{\@kthSchool}{}{%
+  NO SCHOOL PROVIDED,
+  USE \textbackslash kthSchool COMMAND%
+}
+\NewDocumentCommand{\kthSchool}{m}{%
+  \RenewDocumentCommand{\@kthSchool}{}{#1}%
+}
+\NewDocumentCommand{\@thesisDegree}{}{%
+  NO DEGREE PROVIDED,
+  USE \textbackslash kthDegree COMMAND%
+}
+\NewDocumentCommand{\thesisDegree}{m}{%
+  \RenewDocumentCommand{\@thesisDegree}{}{#1}%
+}
+\NewDocumentCommand{\@thesisYear}{}{%
+  NO YEAR PROVIDED,
+  USE \textbackslash thesisYear COMMAND%
+}
+\NewDocumentCommand{\thesisYear}{m}{%
+  \RenewDocumentCommand{\@thesisYear}{}{#1}%
+}
+\NewDocumentCommand{\@thesisMonth}{}{%
+  NO MONTH PROVIDED,
+  USE \textbackslash thesisMonth COMMAND%
+}
+\NewDocumentCommand{\thesisMonth}{m}{%
+  \RenewDocumentCommand{\@thesisMonth}{}{#1}%
+}
+\NewDocumentCommand{\@titleFont}{}{%
+  \LARGE\bfseries%
+}
+\NewDocumentCommand{\@subtitleFont}{}{%
+  \Large%
+}
+\RenewDocumentCommand{\maketitle}{}{%
+  \newpage
+  \thispagestyle{empty}
+  \begin{center}%
+    \@kthLogo\par
+    \vfill%
+    \vskip 2em%
+    {\@titleFont\@title\par}%
+    \expandafter\notblank\expandafter{\@subtitle}{%
+      \vskip .75em%
+      {\@subtitleFont\@subtitle\par}
+    }{}%
+    \vskip 2em%
+    {\Large\scshape\MakeLowercase{\@author}\par}%
+    \vskip 2em%
+    {%
+      \itshape%
+      \begin{tabular}{c}%
+        Submitted in Partial Fulfillment of\\
+        the Requirements for the Degree of
+        \expandafter\capitalisewords\expandafter{\@thesisDegree}
+      \end{tabular}%
+    }%\par
+    \vskip 1em
+    \expandafter\capitalisewords\expandafter{\@thesisMonth}
+    \@thesisYear\par
+    \vfill\vfill\vfill%
+    \begin{tabular}{c}%
+      \@kthSchool\\
+      KTH Royal Institute of Technology\\
+      Stockholm, Sweden
+    \end{tabular}\par
+  \end{center}%
+}
+
+\NewDocumentCommand{\makecopyright}{}{%
+  \newpage
+  \thispagestyle{empty}
+  TODO: implement
+}
 
 \RenewDocumentEnvironment{abstract}{}{%
   \begin{frontMatterChap}{Abstract}%

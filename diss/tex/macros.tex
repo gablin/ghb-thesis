@@ -577,9 +577,13 @@
 \makeatother
 
 
-%==============================
-% CHAPTER AND SECTION HEADINGS
-%==============================
+%======================================
+% TITLE, CHAPTER, AND SECTION HEADINGS
+%======================================
+
+\makeatletter
+\apptocmd{\@titleFont}{\sffamily}{}{}
+\makeatother
 
 \maxsecnumdepth{subsection}
 
