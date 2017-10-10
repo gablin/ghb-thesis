@@ -5,7 +5,8 @@
 % of the license).
 
 \NeedsTeXFormat{LaTeX2e}[2001/01/01]
-\ProvidesClass{kthdiss}[2017/05/09 v0.1 Document class for KTH dissertations]
+\ProvidesClass{kthdiss}%
+              [2017/10/10 v0.1 Document class for KTH ICT dissertations]
 
 %=========
 % OPTIONS
