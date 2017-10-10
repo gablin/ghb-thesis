@@ -103,7 +103,7 @@
 \makepagestyle{frontMatterChapPage}
 \makeevenhead{frontMatterChapPage}{\thepage}{}{}
 \makeoddhead{frontMatterChapPage}{}{}{\thepage}
-\NewDocumentCommand{\@frontMatterChapFont}{}{%
+\newcommand{\@frontMatterChapFont}{%
   \large\bfseries%
 }
 \NewDocumentEnvironment{frontMatterChap}{m}{%
@@ -117,13 +117,13 @@
 
 \NewDocumentCommand{\@mkFieldCommand}{m}{%
   \expandafter\NewDocumentCommand\csname #1\endcsname{m}{%
-    \expandafter\DeclareDocumentCommand\csname @#1\endcsname{}{##1}%
+    \expandafter\def\csname @#1\endcsname{##1}%
   }
 }
 \undef{\@title}
 \undef{\@author}
 \NewDocumentCommand{\kthLogo}{m}{%
-  \DeclareDocumentCommand{\@kthLogo}{}{%
+  \def\@kthLogo{%
     \adjustbox{max width=.2\textwidth, max height=.14\textheight}{#1}%
   }%
 }
@@ -144,6 +144,8 @@
 \@mkFieldCommand{defenseTime}
 \@mkFieldCommand{defenseHallEng}
 \@mkFieldCommand{defenseHallSwe}
+
+% Gets a field if set, otherwise prints an error message
 \NewDocumentCommand{\@getField}{m}{%
   \expandafter\ifcsdef{@#1}{%
     \csname @#1\endcsname%
@@ -151,19 +153,16 @@
     \textbackslash #1 NOT SET!%
   }%
 }
+
+% Checks if a field is set
 \NewDocumentCommand{\@ifHasField}{mmm}{%
   \expandafter\ifcsdef{@#1}{#2}{#3}%
 }
 
-% Commands that convert cases do not play nicely with \@getField, so we provide
-% custom commands that work around this problem
-
-% Capitalizes the first letter
+% Get field and capitalizes the first letter
 \NewDocumentCommand{\@getFieldCap}{m}{%
   \@ifHasField{#1}{%
-    % For some reason, three levels of \expandafter are needed here
-    \expandafter\expandafter\expandafter\makefirstuc%
-    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+    \emakefirstuc{\csname @#1\endcsname}%
   }{%
     % Print appropriate error message
     \@getField{#1}%
@@ -172,9 +171,7 @@
 % Convert to lower case
 \NewDocumentCommand{\@getFieldLC}{m}{%
   \@ifHasField{#1}{%
-    % Same workaround as in \@getFieldCap
-    \expandafter\expandafter\expandafter\MakeLowercase%
-    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+    \MakeLowercase{\csname @#1\endcsname}%
   }{%
     % Print appropriate error message
     \@getField{#1}%
@@ -183,9 +180,7 @@
 % Convert to upper case
 \NewDocumentCommand{\@getFieldUC}{m}{%
   \@ifHasField{#1}{%
-    % Same workaround as in \@getFieldLC
-    \expandafter\expandafter\expandafter\MakeUppercase%
-    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+    \MakeUppercase{\csname @#1\endcsname}%
   }{%
     % Print appropriate error message
     \@getField{#1}%
@@ -210,10 +205,10 @@
   \thesisDegreeSwe{licentiat}
 \fi
 
-\NewDocumentCommand{\@titleFont}{}{%
+\newcommand{\@titleFont}{%
   \LARGE\bfseries%
 }
-\NewDocumentCommand{\@subtitleFont}{}{%
+\newcommand{\@subtitleFont}{%
   \Large%
 }
 \RenewDocumentCommand{\maketitle}{}{%
