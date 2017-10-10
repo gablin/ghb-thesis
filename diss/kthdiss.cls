@@ -166,34 +166,34 @@
   \thispagestyle{empty}
   \begin{center}%
     \@kthLogo\par
-    \vfill%
-    \vskip 2em%
-    {\@titleFont\@title\par}%
+    \vfill
+    \vskip 2em
+    {\@titleFont\@title\par}
     \expandafter\notblank\expandafter{\@subtitle}{%
-      \vskip .75em%
+      \vskip .75em
       {\@subtitleFont\@subtitle\par}
-    }{}%
-    \vskip 2em%
-    {\Large\scshape\MakeLowercase{\@author}\par}%
-    \vskip 2em%
+    }{}
+    \vskip 2em
+    {\Large\scshape\MakeLowercase{\@author}\par}
+    \vskip 2em
     {%
       \itshape%
-      \begin{tabular}{c}%
+      \begin{tabular}{c}
         Submitted in Partial Fulfillment of\\
         the Requirements for the Degree of
         \expandafter\capitalisewords\expandafter{\@thesisDegree}
-      \end{tabular}%
-    }%\par
+      \end{tabular}
+    }\par
     \vskip 1em
     \expandafter\capitalisewords\expandafter{\@thesisMonth}
     \@thesisYear\par
-    \vfill\vfill\vfill%
-    \begin{tabular}{c}%
+    \vfill\vfill\vfill
+    \begin{tabular}{c}
       \@kthSchool\\
       KTH Royal Institute of Technology\\
       Stockholm, Sweden
     \end{tabular}\par
-  \end{center}%
+  \end{center}
 }
 
 \NewDocumentCommand{\makecopyright}{}{%
