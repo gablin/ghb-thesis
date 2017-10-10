@@ -107,53 +107,82 @@
   \end{center}%
 }{}
 
-\RenewDocumentCommand{\@title}{}{%
-  NO TITLE PROVIDED,
-  USE \textbackslash title COMMAND%
+\NewDocumentCommand{\@mkInfoCommand}{m}{%
+  \expandafter\NewDocumentCommand\csname #1\endcsname{m}{%
+    \expandafter\DeclareDocumentCommand\csname @#1\endcsname{}{##1}%
+  }
 }
-\NewDocumentCommand{\@subtitle}{}{}
-\NewDocumentCommand{\subtitle}{m}{%
-  \RenewDocumentCommand{\@subtitle}{}{#1}%
-}
-\RenewDocumentCommand{\@author}{}{%
-  NO AUTHOR PROVIDED,
-  USE \textbackslash author COMMAND%
-}
-\NewDocumentCommand{\@kthLogo}{}{%
-  NO KTH LOGO PROVIDED,
-  USE \textbackslash kthLogo COMMAND%
-}
+\undef{\@title}
+\undef{\@author}
 \NewDocumentCommand{\kthLogo}{m}{%
-  \RenewDocumentCommand{\@kthLogo}{}{%
+  \DeclareDocumentCommand{\@kthLogo}{}{%
     \adjustbox{max width=.2\textwidth, max height=.14\textheight}{#1}%
   }%
 }
-\NewDocumentCommand{\@mkInfoCommand}{mm}{%
-  \expandafter\NewDocumentCommand\csname @#1\endcsname{}{%
-    \notblank{#2}{%
-      NO \MakeUppercase{#2} PROVIDED,
-      USE \textbackslash #1 COMMAND%
-    }{}%
-  }
-  \expandafter\NewDocumentCommand\csname #1\endcsname{m}{%
-    \expandafter\RenewDocumentCommand\csname @#1\endcsname{}{##1}%
-  }
+\@mkInfoCommand{subtitle}
+\@mkInfoCommand{kthSchool}
+\@mkInfoCommand{thesisDegreeEng}
+\@mkInfoCommand{thesisDegreeSwe}
+\@mkInfoCommand{thesisYear}
+\@mkInfoCommand{thesisMonth}
+\@mkInfoCommand{thesisTrita}
+\@mkInfoCommand{thesisIssn}
+\@mkInfoCommand{thesisIsrn}
+\@mkInfoCommand{thesisIsbn}
+\@mkInfoCommand{thesisSubjectEng}
+\@mkInfoCommand{thesisSubjectSwe}
+\@mkInfoCommand{defenseDateEng}
+\@mkInfoCommand{defenseDateSwe}
+\@mkInfoCommand{defenseTime}
+\@mkInfoCommand{defenseHallEng}
+\@mkInfoCommand{defenseHallSwe}
+\NewDocumentCommand{\@getInfo}{m}{%
+  \expandafter\ifcsdef{@#1}{%
+    \csname @#1\endcsname%
+  }{%
+    \textbackslash #1 NOT SET!%
+  }%
 }
-\@mkInfoCommand{kthSchool}{school}
-\@mkInfoCommand{thesisDegree}{degree}
-\@mkInfoCommand{thesisYear}{year}
-\@mkInfoCommand{thesisMonth}{month}
-\@mkInfoCommand{thesisTrita}{TRITA NUMBER}
-\@mkInfoCommand{thesisIssn}{}
-\@mkInfoCommand{thesisIsrn}{}
-\@mkInfoCommand{thesisIsbn}{ISBN NUMBER}
-\@mkInfoCommand{thesisSubjectEng}{thesis subject (english)}
-\@mkInfoCommand{thesisSubjectSwe}{thesis subject (swedish)}
-\@mkInfoCommand{defenseDateEng}{defense date (english)}
-\@mkInfoCommand{defenseDateSwe}{defense date (swedish)}
-\@mkInfoCommand{defenseTime}{defense time}
-\@mkInfoCommand{defenseHallEng}{defense hall (english)}
-\@mkInfoCommand{defenseHallSwe}{defense Hall (swedish)}
+\NewDocumentCommand{\@ifHasInfo}{mmm}{%
+  \expandafter\ifcsdef{@#1}{#2}{#3}%
+}
+
+% Commands that convert cases do not play nicely with \@getInfo, so we provide
+% custom commands that work around this problem
+
+% Capitalizes the first letter
+\NewDocumentCommand{\@getInfoCap}{m}{%
+  \@ifHasInfo{#1}{%
+    % For some reason, three levels of \expandafter are needed here
+    \expandafter\expandafter\expandafter\makefirstuc%
+    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+  }{%
+    % Print appropriate error message
+    \@getInfo{#1}%
+  }%
+}
+% Convert to lower case
+\NewDocumentCommand{\@getInfoLC}{m}{%
+  \@ifHasInfo{#1}{%
+    % Same workaround as in \@getInfoCap
+    \expandafter\expandafter\expandafter\MakeLowercase%
+    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+  }{%
+    % Print appropriate error message
+    \@getInfo{#1}%
+  }%
+}
+% Convert to upper case
+\NewDocumentCommand{\@getInfoUC}{m}{%
+  \@ifHasInfo{#1}{%
+    % Same workaround as in \@getInfoLC
+    \expandafter\expandafter\expandafter\MakeUppercase%
+    \expandafter\expandafter\expandafter{\csname @#1\endcsname}%
+  }{%
+    % Print appropriate error message
+    \@getInfo{#1}%
+  }%
+}
 
 \NewDocumentCommand{\@titleFont}{}{%
   \LARGE\bfseries%
@@ -165,31 +194,29 @@
   \newpage
   \thispagestyle{empty}
   \begin{center}%
-    \@kthLogo\par
+    \@getInfo{kthLogo}\par
     \vfill
     \vskip 2em
-    {\@titleFont\@title\par}
-    \expandafter\notblank\expandafter{\@subtitle}{%
+    {\@titleFont\@getInfo{title}\par}
+    \@ifHasInfo{subtitle}{%
       \vskip .75em
-      {\@subtitleFont\@subtitle\par}
+      {\@subtitleFont\@getInfo{subtitle}}
     }{}
     \vskip 2em
-    {\Large\scshape\MakeLowercase{\@author}\par}
+    {\Large\scshape\MakeLowercase{\@getInfo{author}}\par}
     \vskip 2em
     {%
       \itshape%
       \begin{tabular}{c}
         Submitted in Partial Fulfillment of\\
-        the Requirements for the Degree of
-        \expandafter\capitalisewords\expandafter{\@thesisDegree}
+        the Requirements for the Degree of \@getInfoCap{thesisDegreeEng}
       \end{tabular}
     }\par
     \vskip 1em
-    \expandafter\capitalisewords\expandafter{\@thesisMonth}
-    \@thesisYear\par
+    \@getInfoCap{thesisMonth} \@getInfo{thesisYear}\par
     \vfill\vfill\vfill
     \begin{tabular}{c}
-      \@kthSchool\\
+      \@getInfo{kthSchool}\\
       KTH Royal Institute of Technology\\
       Stockholm, Sweden
     \end{tabular}\par
@@ -205,16 +232,14 @@
   \setlength{\parindent}{0pt}%
   \begin{minipage}{\textwidth}%
     \begin{tabular}[b]{@{}l@{}}
-      TRITA-ICT \@thesisTrita\\
-      \protected@edef\@tempa{\@thesisIssn}%
-      \expandafter\notblank\expandafter{\@tempa}{%
-        ISSN: \@thesisIssn\\
+      TRITA-ICT \@getInfo{thesisTrita}\\
+      \@ifHasInfo{thesisIssn}{%
+        ISSN: \@getInfo{thesisIssn}\\
       }{}%
-      \protected@edef\@tempa{\@thesisIssn}%
-      \expandafter\notblank\expandafter{\@tempa}{%
-        ISRN: \@thesisIsrn\\
+      \@ifHasInfo{thesisIsrn}{%
+        ISRN: \@getInfo{thesisIsrn}\\
       }{}%
-      ISBN: \@thesisIsbn\\
+      ISBN: \@getInfo{thesisIsbn}\\
     \end{tabular}%
     \hfill%
     \begin{tabular}[b]{@{}r@{}}
@@ -227,18 +252,20 @@
   \vskip 1em
   Academic dissertation that, with permission from KTH Royal Institute of
   Technology, is presented for public examination for completion of degree of
-  \MakeLowercase{\@thesisDegree} in \MakeLowercase{\@thesisSubjectEng} on
-  \@defenseDateEng, at \@defenseTime, in \@defenseHallEng, Electrum, KTH Royal
-  Institute of Technology, Kistag{\aa}ngen 16, Kista, Sweden.\par
+  \@getInfoLC{thesisDegreeEng} in \@getInfoLC{thesisSubjectEng} on
+  \@getInfo{defenseDateEng}, at \@getInfo{defenseTime}, in
+  \@getInfo{defenseHallEng}, Electrum, KTH Royal Institute of Technology,
+  Kistag{\aa}ngen 16, Kista, Sweden.\par
   \vskip 1em
   Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
-  framl\"agges till offentlig granskning f\"or avl\"aggande av doktorsexamen i
-  \MakeLowercase{\@thesisSubjectSwe} den \MakeLowercase{\@defenseDateSwe},
-  klockan \@defenseTime, i \@defenseHallSwe, Electrum, Kungl Tekniska
-  H\"ogskolan, Kistag{\aa}ngen 16, Kista.\par
+  framl\"agges till offentlig granskning f\"or avl\"aggande av
+  \@getInfoLC{thesisDegreeSwe}sexamen i \@getInfoLC{thesisSubjectSwe} den
+  \@getInfoLC{defenseDateSwe}, klockan \@getInfo{defenseTime}, i
+  \@getInfo{defenseHallSwe}, Electrum, Kungl Tekniska H\"ogskolan,
+  Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
-  \textcopyright\hspace{4pt}\@author,
-  \expandafter\capitalisewords\expandafter{\@thesisMonth} \@thesisYear
+  \textcopyright\hspace{4pt}\@getInfo{author},
+  \@getInfoLC{thesisMonth} \@getInfo{thesisYear}
   \vskip 1em
   Printed by Universitetsservice US AB
   \endgroup%
