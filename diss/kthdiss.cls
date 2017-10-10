@@ -86,6 +86,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
 \RequirePackage{mfirstuc}
+\RequirePackage{textcomp}
 \RequirePackage{xparse}
 
 
@@ -127,34 +128,33 @@
     \adjustbox{max width=.2\textwidth, max height=.14\textheight}{#1}%
   }%
 }
-\NewDocumentCommand{\@kthSchool}{}{%
-  NO SCHOOL PROVIDED,
-  USE \textbackslash kthSchool COMMAND%
+\NewDocumentCommand{\@mkInfoCommand}{mm}{%
+  \expandafter\NewDocumentCommand\csname @#1\endcsname{}{%
+    \notblank{#2}{%
+      NO \MakeUppercase{#2} PROVIDED,
+      USE \textbackslash #1 COMMAND%
+    }{}%
+  }
+  \expandafter\NewDocumentCommand\csname #1\endcsname{m}{%
+    \expandafter\RenewDocumentCommand\csname @#1\endcsname{}{##1}%
+  }
 }
-\NewDocumentCommand{\kthSchool}{m}{%
-  \RenewDocumentCommand{\@kthSchool}{}{#1}%
-}
-\NewDocumentCommand{\@thesisDegree}{}{%
-  NO DEGREE PROVIDED,
-  USE \textbackslash kthDegree COMMAND%
-}
-\NewDocumentCommand{\thesisDegree}{m}{%
-  \RenewDocumentCommand{\@thesisDegree}{}{#1}%
-}
-\NewDocumentCommand{\@thesisYear}{}{%
-  NO YEAR PROVIDED,
-  USE \textbackslash thesisYear COMMAND%
-}
-\NewDocumentCommand{\thesisYear}{m}{%
-  \RenewDocumentCommand{\@thesisYear}{}{#1}%
-}
-\NewDocumentCommand{\@thesisMonth}{}{%
-  NO MONTH PROVIDED,
-  USE \textbackslash thesisMonth COMMAND%
-}
-\NewDocumentCommand{\thesisMonth}{m}{%
-  \RenewDocumentCommand{\@thesisMonth}{}{#1}%
-}
+\@mkInfoCommand{kthSchool}{school}
+\@mkInfoCommand{thesisDegree}{degree}
+\@mkInfoCommand{thesisYear}{year}
+\@mkInfoCommand{thesisMonth}{month}
+\@mkInfoCommand{thesisTrita}{TRITA NUMBER}
+\@mkInfoCommand{thesisIssn}{}
+\@mkInfoCommand{thesisIsrn}{}
+\@mkInfoCommand{thesisIsbn}{ISBN NUMBER}
+\@mkInfoCommand{thesisSubjectEng}{thesis subject (english)}
+\@mkInfoCommand{thesisSubjectSwe}{thesis subject (swedish)}
+\@mkInfoCommand{defenseDateEng}{defense date (english)}
+\@mkInfoCommand{defenseDateSwe}{defense date (swedish)}
+\@mkInfoCommand{defenseTime}{defense time}
+\@mkInfoCommand{defenseHallEng}{defense hall (english)}
+\@mkInfoCommand{defenseHallSwe}{defense Hall (swedish)}
+
 \NewDocumentCommand{\@titleFont}{}{%
   \LARGE\bfseries%
 }
@@ -199,7 +199,49 @@
 \NewDocumentCommand{\makecopyright}{}{%
   \newpage
   \thispagestyle{empty}
-  TODO: implement
+  \mbox{}
+  \vfill
+  \begingroup%
+  \setlength{\parindent}{0pt}%
+  \begin{minipage}{\textwidth}%
+    \begin{tabular}[b]{@{}l@{}}
+      TRITA-ICT \@thesisTrita\\
+      \protected@edef\@tempa{\@thesisIssn}%
+      \expandafter\notblank\expandafter{\@tempa}{%
+        ISSN: \@thesisIssn\\
+      }{}%
+      \protected@edef\@tempa{\@thesisIssn}%
+      \expandafter\notblank\expandafter{\@tempa}{%
+        ISRN: \@thesisIsrn\\
+      }{}%
+      ISBN: \@thesisIsbn\\
+    \end{tabular}%
+    \hfill%
+    \begin{tabular}[b]{@{}r@{}}
+      School of ICT\\
+      KTH Royal Institute of Technology\\
+      SE-164 40 Kista\\
+      SWEDEN
+    \end{tabular}%
+  \end{minipage}
+  \vskip 1em
+  Academic dissertation that, with permission from KTH Royal Institute of
+  Technology, is presented for public examination for completion of degree of
+  \MakeLowercase{\@thesisDegree} in \MakeLowercase{\@thesisSubjectEng} on
+  \@defenseDateEng, at \@defenseTime, in \@defenseHallEng, Electrum, KTH Royal
+  Institute of Technology, Kistag{\aa}ngen 16, Kista, Sweden.\par
+  \vskip 1em
+  Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
+  framl\"agges till offentlig granskning f\"or avl\"aggande av doktorsexamen i
+  \MakeLowercase{\@thesisSubjectSwe} den \MakeLowercase{\@defenseDateSwe},
+  klockan \@defenseTime, i \@defenseHallSwe, Electrum, Kungl Tekniska
+  H\"ogskolan, Kistag{\aa}ngen 16, Kista.\par
+  \vskip 1em
+  \textcopyright\hspace{4pt}\@author,
+  \expandafter\capitalisewords\expandafter{\@thesisMonth} \@thesisYear
+  \vskip 1em
+  Printed by Universitetsservice US AB
+  \endgroup%
 }
 
 \RenewDocumentEnvironment{abstract}{}{%
