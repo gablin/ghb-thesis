@@ -102,12 +102,15 @@
 \makepagestyle{frontMatterChapPage}
 \makeevenhead{frontMatterChapPage}{\thepage}{}{}
 \makeoddhead{frontMatterChapPage}{}{}{\thepage}
+\NewDocumentCommand{\@frontMatterChapFont}{}{%
+  \large\bfseries%
+}
 \NewDocumentEnvironment{frontMatterChap}{m}{%
   \clearpage%
   \markboth{#1}{#1}%
   \thispagestyle{frontMatterChapPage}%
   \begin{center}%
-    \large\textbf{#1}%
+    \@frontMatterChapFont{#1}%
   \end{center}%
 }{}
 
