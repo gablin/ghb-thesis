@@ -224,7 +224,7 @@
       {\@subtitleFont\@getField{subtitle}}
     }{}
     \vskip 2em
-    {\Large\scshape\MakeLowercase{\@getField{author}}\par}
+    {\Large\scshape\@getFieldLC{author}\par}
     \vskip 2em
     {%
       \itshape%
