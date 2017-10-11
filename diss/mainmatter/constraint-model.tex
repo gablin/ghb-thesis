@@ -1297,8 +1297,20 @@ cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
 \end{figure}
 %
 An example is shown in \refFigure{dual-target-branch-pattern-example}.
+%
+Because a \gls{dual-target branch pattern} has no \gls{fall-through}
+\gls{constraint}, it essentially models a conditional jump \gls{instruction}
+capable of directly branching to two \glspl{block} (hence the name).
 
-\todo{finish discussion}
+Consequently, if a \gls{pattern set} contains $k$~\glspl{pattern} with
+\gls{fall-through} \glspl{constraint} and a \gls{UF graph} contains
+$n$~\glspl{control node} representing conditional jumps, then using
+\glspl{dual-target branch pattern} will enlarge the \gls{match set} by
+$\mBigO(nk)$~\glspl{match}.
+%
+Unlike \gls{branch extension}, however, the \gls{UF graph} does not need to be
+extended with additional \glspl{block} wherein \glspl{operation} may be placed,
+which results in a significantly \gls{search space}.
 
 
 \subsection{Experimental Evaluation}
