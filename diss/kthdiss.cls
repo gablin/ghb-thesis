@@ -140,8 +140,6 @@
 \@mkFieldCommand{thesisIssn}
 \@mkFieldCommand{thesisIsrn}
 \@mkFieldCommand{thesisIsbn}
-\@mkFieldCommand{thesisSubjectEng}
-\@mkFieldCommand{thesisSubjectSwe}
 \@mkFieldCommand{defenseWeekdayEng}
 \@mkFieldCommand{defenseWeekdaySwe}
 \NewDocumentCommand{\defenseDate}{m}{%
