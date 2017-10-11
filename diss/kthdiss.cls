@@ -134,8 +134,6 @@
 \@mkFieldCommand{kthSchool}
 \@mkFieldCommand{thesisDegreeEng}
 \@mkFieldCommand{thesisDegreeSwe}
-\@mkFieldCommand{thesisYear}
-\@mkFieldCommand{thesisMonth}
 \@mkFieldCommand{thesisTrita}
 \@mkFieldCommand{thesisIssn}
 \@mkFieldCommand{thesisIsrn}
@@ -190,16 +188,28 @@
   }%
 }
 
+% Prints the month of the defense date in the specific language.
+\NewDocumentCommand{\@getDefenseMonth}{m}{%
+  \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
+  \protected@edef\@tmonthalp{%
+    \csname DTM#1monthname\endcsname{\@tmonthnum}%
+  }%
+  \@tmonthalp%
+}
+
+% Prints the year of the defense date.
+\NewDocumentCommand{\@getDefenseYear}{}{%
+  \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
+  \@tyear%
+}
+
 % Prints the defense date in English to be used in the copyright page.
 \NewDocumentCommand{\@printDefenseDateEng}{}{%
   \@ifHasField{defenseDate}{%
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
-    \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
-    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday, \@tmonthalp\ \@tday, \@tyear%
+    \@tweekday, \@getDefenseMonth{english}\ \@tday, \@getDefenseYear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -212,10 +222,7 @@
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMswedishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
-    \protected@edef\@tmonthalp{\DTMswedishmonthname{\@tmonthnum}}%
-    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday{}en den \@tday\ \@tmonthalp\ \@tyear%
+    \@tweekday{}en den \@getDefenseMonth{swedish}\ \@tday, \@getDefenseYear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -269,7 +276,7 @@
       \end{tabular}
     }\par
     \vskip 1em
-    \@getFieldCap{thesisMonth} \@getField{thesisYear}\par
+    \@getDefenseMonth{english} \@getDefenseYear\par
     \vfill\vfill\vfill
     \begin{tabular}{c}
       \@getField{kthSchool}\\
@@ -319,7 +326,7 @@
   \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
-  \@getFieldLC{thesisMonth} \@getField{thesisYear}
+  \@getDefenseMonth{english} \@getDefenseYear\par
   \vskip 1em
   Printed by Universitetsservice US AB
   \endgroup%
