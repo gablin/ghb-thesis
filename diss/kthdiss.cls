@@ -163,7 +163,8 @@
 % Get field and capitalizes the first letter
 \NewDocumentCommand{\@getFieldCap}{m}{%
   \@ifHasField{#1}{%
-    \emakefirstuc{\csname @#1\endcsname}%
+    \MFUnocap{of}%
+    \ecapitalisewords{\csname @#1\endcsname}%
   }{%
     % Print appropriate error message
     \@getField{#1}%
@@ -239,12 +240,12 @@
 \fi
 
 \if@kthdiff@phd
-  \thesisDegreeEng{doctor}
-  \thesisDegreeSwe{doktor}
+  \thesisDegreeEng{doctor of philosophy}
+  \thesisDegreeSwe{teknologie doktorsexamen}
 \fi
 \if@kthdiff@lic
-  \thesisDegreeEng{licentiate}
-  \thesisDegreeSwe{licentiat}
+  \thesisDegreeEng{licentiate of engineering}
+  \thesisDegreeSwe{teknologie licentiatexamen}
 \fi
 
 \newcommand{\@titleFont}{%
@@ -271,8 +272,8 @@
     {%
       \itshape%
       \begin{tabular}{c}
-        Submitted in Partial Fulfillment of\\
-        the Requirements for the Degree of \@getFieldCap{thesisDegreeEng}
+        Submitted in Partial Fulfillment of the Requirements\\
+        for the Degree of \@getFieldCap{thesisDegreeEng}
       \end{tabular}
     }\par
     \vskip 1em
@@ -320,15 +321,14 @@
   Sweden.\par
   \vskip 1em
   Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
-  till offentlig granskning f\"or avl\"aggande av teknologie
-  \@getFieldLC{thesisDegreeSwe}sexamen p{\aa}
-  \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
+  till offentlig granskning f\"or avl\"aggande av \@getFieldLC{thesisDegreeSwe}
+  p{\aa} \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
   \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
   \@getDefenseMonth{english} \@getDefenseYear\par
   \vskip 1em
-  Printed by Universitetsservice US AB
+  Printed by Universitetsservice US-AB
   \endgroup%
 }
 
