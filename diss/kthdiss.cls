@@ -131,13 +131,14 @@
   }%
 }
 \@mkFieldCommand{subtitle}
-\@mkFieldCommand{kthSchool}
-\@mkFieldCommand{thesisDegreeEng}
-\@mkFieldCommand{thesisDegreeSwe}
-\@mkFieldCommand{thesisTrita}
-\@mkFieldCommand{thesisIssn}
-\@mkFieldCommand{thesisIsrn}
-\@mkFieldCommand{thesisIsbn}
+\@mkFieldCommand{degreeEng}
+\@mkFieldCommand{degreeSwe}
+\@mkFieldCommand{tritaYear}
+\@mkFieldCommand{tritaNumber}
+\@mkFieldCommand{issn}
+\@mkFieldCommand{isrn}
+\@mkFieldCommand{isbn}
+\@mkFieldCommand{monthSubmitted}
 \NewDocumentCommand{\defenseDate}{m}{%
   \def\@defenseDate{#1}%
   \DTMsavedate{defensedate}{#1}%
@@ -189,19 +190,17 @@
   }%
 }
 
-% Prints the month of the defense date in the specific language.
-\NewDocumentCommand{\@getDefenseMonth}{m}{%
-  \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
-  \protected@edef\@tmonthalp{%
-    \csname DTM#1monthname\endcsname{\@tmonthnum}%
+% Prints the month of submission in the specific language.
+\NewDocumentCommand{\@printMonthSubmitted}{m}{%
+  \@ifHasField{monthSubmitted}{%
+    \protected@edef\@tmonth{%
+      \csname DTM#1monthname\endcsname{\@monthSubmitted}%
+    }%
+    \@tmonth%
+  }{%
+    % Print appropriate error message
+    \@getField{defenseDate}%
   }%
-  \@tmonthalp%
-}
-
-% Prints the year of the defense date.
-\NewDocumentCommand{\@getDefenseYear}{}{%
-  \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-  \@tyear%
 }
 
 % Prints the defense date in English to be used in the copyright page.
@@ -210,7 +209,10 @@
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \@tweekday\ \@tday\ \@getDefenseMonth{english} \@getDefenseYear%
+    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
+    \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
+    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
+    \@tweekday\ \@tday\ \@tmonthalp\ \@tyear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -223,7 +225,10 @@
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMswedishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \@tweekday{}en den \@tday\ \@getDefenseMonth{swedish}\ \@getDefenseYear%
+    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
+    \protected@edef\@tmonthalp{\DTMswedishmonthname{\@tmonthnum}}%
+    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
+    \@tweekday{}en den \@tday\ \@tmonthalp\ \@tyear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -240,12 +245,12 @@
 \fi
 
 \if@kthdiff@phd
-  \thesisDegreeEng{doctor of philosophy}
-  \thesisDegreeSwe{teknologie doktorsexamen}
+  \degreeEng{doctor of philosophy}
+  \degreeSwe{teknologie doktorsexamen}
 \fi
 \if@kthdiff@lic
-  \thesisDegreeEng{licentiate of engineering}
-  \thesisDegreeSwe{teknologie licentiatexamen}
+  \degreeEng{licentiate of engineering}
+  \degreeSwe{teknologie licentiatexamen}
 \fi
 
 \newcommand{\@titleFont}{%
@@ -273,14 +278,14 @@
       \itshape%
       \begin{tabular}{c}
         Submitted in Partial Fulfillment of the Requirements\\
-        for the Degree of \@getFieldCap{thesisDegreeEng}
+        for the Degree of \@getFieldCap{degreeEng}
       \end{tabular}
     }\par
     \vskip 1em
-    \@getDefenseMonth{english} \@getDefenseYear\par
+    \@printMonthSubmitted{english} \@getField{tritaYear}\par
     \vfill\vfill\vfill
     \begin{tabular}{c}
-      \@getField{kthSchool}\\
+      School of Information and Communication Technology\\
       KTH Royal Institute of Technology\\
       Stockholm, Sweden
     \end{tabular}\par
@@ -296,14 +301,14 @@
   \setlength{\parindent}{0pt}%
   \begin{minipage}{\textwidth}%
     \begin{tabular}[b]{@{}l@{}}
-      TRITA-ICT \@getField{thesisTrita}\\
-      \@ifHasField{thesisIssn}{%
-        ISSN: \@getField{thesisIssn}\\
+      TRITA-ICT \@getField{tritaYear}:\@getField{tritaNumber}\\
+      \@ifHasField{issn}{%
+        ISSN: \@getField{issn}\\
       }{}%
-      \@ifHasField{thesisIsrn}{%
-        ISRN: \@getField{thesisIsrn}\\
+      \@ifHasField{isrn}{%
+        ISRN: \@getField{isrn}\\
       }{}%
-      ISBN: \@getField{thesisIsbn}\\
+      ISBN: \@getField{isbn}\\
     \end{tabular}%
     \hfill%
     \begin{tabular}[b]{@{}r@{}}
@@ -315,18 +320,18 @@
   \end{minipage}
   \vskip 1em
   Academic dissertation that with permission from KTH is presented for public
-  examination for completion of degree of \@getFieldLC{thesisDegreeEng} on
+  examination for completion of degree of \@getFieldLC{degreeEng} on
   \@printDefenseDateEng\ at \@getField{defenseTime} in
   \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
   Sweden.\par
   \vskip 1em
   Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
-  till offentlig granskning f\"or avl\"aggande av \@getFieldLC{thesisDegreeSwe}
+  till offentlig granskning f\"or avl\"aggande av \@getFieldLC{degreeSwe}
   p{\aa} \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
   \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
-  \@getDefenseMonth{english} \@getDefenseYear\par
+  \@printMonthSubmitted{english} \@getField{tritaYear}\par
   \vskip 1em
   Printed by Universitetsservice US-AB
   \endgroup%
