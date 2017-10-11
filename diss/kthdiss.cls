@@ -321,7 +321,7 @@
   \vskip 1em
   Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
   till offentlig granskning f\"or avl\"aggande av teknologie
-  \@getFieldLC{thesisDegreeSwe}sexamen
+  \@getFieldLC{thesisDegreeSwe}sexamen p{\aa}
   \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
   \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
