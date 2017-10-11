@@ -209,7 +209,7 @@
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \@tweekday, \@getDefenseMonth{english}\ \@tday, \@getDefenseYear%
+    \@tweekday\ \@tday\ \@getDefenseMonth{english} \@getDefenseYear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -315,7 +315,7 @@
   \vskip 1em
   Academic dissertation that with permission from KTH is presented for public
   examination for completion of degree of \@getFieldLC{thesisDegreeEng} on
-  \@printDefenseDateEng, at \@getField{defenseTime} in
+  \@printDefenseDateEng\ at \@getField{defenseTime} in
   \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
   Sweden.\par
   \vskip 1em
