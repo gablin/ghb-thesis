@@ -3,6 +3,8 @@
 % This work is licensed under a Creative Commons 4.0 International License (see
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
+%
+% Based on the 'kthesis' class by Lars Engebretsen.
 
 \NeedsTeXFormat{LaTeX2e}[2001/01/01]
 \ProvidesClass{kthdiss}%
