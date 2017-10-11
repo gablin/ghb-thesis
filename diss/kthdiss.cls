@@ -90,6 +90,7 @@
 \RequirePackage{adjustbox}
 \RequirePackage{etoolbox}
 \RequirePackage{graphicx}
+\RequirePackage[english,swedish,calc]{datetime2}
 \RequirePackage{mfirstuc}
 \RequirePackage{textcomp}
 \RequirePackage{xparse}
@@ -139,8 +140,12 @@
 \@mkFieldCommand{thesisIsbn}
 \@mkFieldCommand{thesisSubjectEng}
 \@mkFieldCommand{thesisSubjectSwe}
-\@mkFieldCommand{defenseDateEng}
-\@mkFieldCommand{defenseDateSwe}
+\@mkFieldCommand{defenseWeekdayEng}
+\@mkFieldCommand{defenseWeekdaySwe}
+\NewDocumentCommand{\defenseDate}{m}{%
+  \def\@defenseDate{#1}%
+  \DTMsavedate{defensedate}{#1}%
+}
 \@mkFieldCommand{defenseTime}
 \@mkFieldCommand{defenseHallEng}
 \@mkFieldCommand{defenseHallSwe}
@@ -184,6 +189,38 @@
   }{%
     % Print appropriate error message
     \@getField{#1}%
+  }%
+}
+
+% Prints the defense date in English to be used in the copyright page.
+\NewDocumentCommand{\@printDefenseDateEng}{}{%
+  \@ifHasField{defenseDate}{%
+    \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
+    \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
+    \protected@edef\@tday{\DTMfetchday{defensedate}}%
+    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
+    \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
+    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
+    \@tweekday, \@tmonthalp\ \@tday, \@tyear%
+  }{%
+    % Print appropriate error message
+    \@getField{defenseDate}%
+  }%
+}
+
+% Prints the defense date in Swedish to be used in the copyright page.
+\NewDocumentCommand{\@printDefenseDateSwe}{}{%
+  \@ifHasField{defenseDate}{%
+    \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
+    \protected@edef\@tweekday{\DTMswedishweekdayname{\dowindex}}%
+    \protected@edef\@tday{\DTMfetchday{defensedate}}%
+    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
+    \protected@edef\@tmonthalp{\DTMswedishmonthname{\@tmonthnum}}%
+    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
+    \@tweekday{}en den \@tday\ \@tmonthalp\ \@tyear%
+  }{%
+    % Print appropriate error message
+    \@getField{defenseDate}%
   }%
 }
 
@@ -271,19 +308,17 @@
     \end{tabular}%
   \end{minipage}
   \vskip 1em
-  Academic dissertation that, with permission from KTH Royal Institute of
-  Technology, is presented for public examination for completion of degree of
-  \@getFieldLC{thesisDegreeEng} in \@getFieldLC{thesisSubjectEng} on
-  \@getField{defenseDateEng}, at \@getField{defenseTime}, in
-  \@getField{defenseHallEng}, Electrum, KTH Royal Institute of Technology,
-  Kistag{\aa}ngen 16, Kista, Sweden.\par
+  Academic dissertation that with permission from KTH is presented for public
+  examination for completion of degree of \@getFieldLC{thesisDegreeEng} on
+  \@printDefenseDateEng, at \@getField{defenseTime} in
+  \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
+  Sweden.\par
   \vskip 1em
-  Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
-  framl\"agges till offentlig granskning f\"or avl\"aggande av
-  \@getFieldLC{thesisDegreeSwe}sexamen i \@getFieldLC{thesisSubjectSwe} den
-  \@getFieldLC{defenseDateSwe}, klockan \@getField{defenseTime}, i
-  \@getField{defenseHallSwe}, Electrum, Kungl Tekniska H\"ogskolan,
-  Kistag{\aa}ngen 16, Kista.\par
+  Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
+  till offentlig granskning f\"or avl\"aggande av teknologie
+  \@getFieldLC{thesisDegreeSwe}sexamen
+  \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
+  \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
   \@getFieldLC{thesisMonth} \@getField{thesisYear}
