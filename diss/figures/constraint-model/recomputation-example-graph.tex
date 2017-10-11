@@ -1,0 +1,116 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={
+      match node,
+      draw=none,
+      inner sep=3pt,
+    },
+  ]
+
+  \node [computation node] (add) {\opAdd};
+  \node [value node, position=135 degrees from add] (x) {\opVar{x}};
+  \node [value node, position= 45 degrees from add] (y) {\opVar{y}};
+  \node [value node, below=of add] (a) {\opVar{a}};
+  \node [computation node, position=-135 degrees from a] (st1) {\opStore};
+  \node [computation node, position=- 45 degrees from a] (st2) {\opStore};
+  \node [value node, position=135 degrees from st1] (v1) {};
+  \node [value node, position= 45 degrees from st2] (v2) {};
+
+  \begin{scope}[data flow]
+    \draw (x) -- (add);
+    \draw (y) -- (add);
+    \draw (add) -- (a);
+    \draw (a) -- (st1);
+    \draw (a) -- (st2);
+    \draw (v1) -- (st1);
+    \draw (v2) -- (st2);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, fit=(v1)]               (m1a) {};
+    \node [outer match node, fit=(x)]                (m1b) {};
+    \node [outer match node, fit=(y)]                (m1c) {};
+    \node [outer match node, fit=(add), inner sep=0] (m1d) {};
+    \node [outer match node, fit=(a)]                (m1e) {};
+    \node [outer match node, fit=(st1), inner sep=0] (m1f) {};
+
+    \def\pathMI{
+      [rounded corners=4pt]
+      (m1a.north west)
+      --
+      (m1b.north west)
+      --
+      (m1c.north east)
+      --
+      (m1c.south east)
+      [rounded corners=8pt]
+      --
+      (m1d.east)
+      [rounded corners=4pt]
+      --
+      (m1e.south east)
+      --
+      (m1f.south -| m1f.south east)
+      --
+      (m1f.south -| m1f.south west)
+      --
+      (m1a.south west)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMI;
+
+    % m2
+    \node [outer match node, fit=(v2)]               (m2a) {};
+    \node [outer match node, fit=(y)]                (m2b) {};
+    \node [outer match node, fit=(x)]                (m2c) {};
+    \node [outer match node, fit=(add), inner sep=0] (m2d) {};
+    \node [outer match node, fit=(a)]                (m2e) {};
+    \node [outer match node, fit=(st2), inner sep=0] (m2f) {};
+
+    \def\pathMII{
+      [rounded corners=4pt]
+      (m2a.north east)
+      --
+      (m2b.north east)
+      --
+      (m2c.north west)
+      --
+      (m2c.south west)
+      [rounded corners=8pt]
+      --
+      (m2d.west)
+      [rounded corners=4pt]
+      --
+      (m2e.south west)
+      --
+      (m2f.south -| m2f.south west)
+      --
+      (m2f.south -| m2f.south east)
+      --
+      (m2a.south east)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2] \pathMII;
+    \end{scope}
+
+    \draw [match line] \pathMI;
+    \draw [match line] \pathMII;
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

@@ -1323,12 +1323,83 @@ which results in a significantly \gls{search space}.
 \section{Limitations}
 \labelSection{cm-limitations}
 
-\todo{write introduction}
+The \gls{constraint model} described in this chapter has several limitations
+that affect code quality.
+%
+Consequently, a \gls{solution} that is considered optimal with respect to this
+\glsshort{constraint model} may still be inferior to the code produced by an
+\gls{instruction selector} without these limitations.
+%
+The first limitation concerns \gls{recomputation} of values, the second concerns
+elimination of common subexpressions, and the third concerns implicit value
+extensions and truncations.
 
 
 \subsubsection{Recomputation}
 
-\todo{discuss limitation}
+For some combinations of \glspl{function} and \glspl{target machine}, it may be
+beneficial to recompute a values appearing in common subexpression instead of
+reusing it.
+%
+\begin{filecontents*}{recomputation-example-ir.c}
+$\irAssign{a}{x + y}$
+store a, $\ldots$
+$\ldots$
+store a, $\ldots$
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{Code snippet\labelFigure{recomputation-example-ir}}%
+                [25mm]%
+                {%
+                  \lstinputlisting[language=c,mathescape]%
+                                  {recomputation-example-ir.c}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  UF subgraph, covered by two matches derived from a
+                  store instruction with base-plus-index addressing mode.
+                  %
+                  For brevity, the state nodes are not included%
+                  \labelFigure{recomputation-example-graph}%
+                }%
+                [74mm]%
+                {%
+                  \input{figures/constraint-model/recomputation-example-graph}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{%
+    Example illustrating when recomputation is preferred over value reuse%
+  }%
+  \labelFigure{recomputation-example}
+\end{figure}
+%
+See for example \refFigure{recomputation-example}.
+%
+The \gls{function} performs two memory stores using the same address
+value~\irVar{a} (\refFigure{recomputation-example-ir}).
+%
+If the \gls{target machine} provides a memory \gls{instruction} with
+base-plus-index addressing mode (that is, the address to be used is the sum of
+the values appearing in a base and an index \gls{register}), then no
+add~\gls{instruction} is needed for computing~\irVar{a}.
+%
+In the context of \gls{instruction selection}, this means letting the
+\gls{operation} representing the addition to be covered by more than one
+\gls{match} (\refFigure{recomputation-example-graph}).
+%
+However, \refEquationRange{operation-coverage}{data-definitions} require that
+every \gls{operation} and \gls{datum} must be covered respectively
+\gls{define.d}[d] by exactly one selected \gls{match}, thus forbidding such
+\glspl{solution}.
+%
+In addition, many of the solving techniques rely on the fact that \todo{finish
+  sentence}
 
 
 \subsubsection{Common Subexpression Elimination}
