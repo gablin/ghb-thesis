@@ -222,7 +222,7 @@
     \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
     \protected@edef\@tweekday{\DTMswedishweekdayname{\dowindex}}%
     \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \@tweekday{}en den \@getDefenseMonth{swedish}\ \@tday, \@getDefenseYear%
+    \@tweekday{}en den \@tday\ \@getDefenseMonth{swedish}\ \@getDefenseYear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
