@@ -1338,8 +1338,8 @@ extensions and truncations.
 \subsubsection{Recomputation}
 
 For some combinations of \glspl{function} and \glspl{target machine}, it may be
-beneficial to recompute a values appearing in common subexpression instead of
-reusing it.
+beneficial to \glsshort!{recomputation} values appearing in common
+subexpressions instead of reusing it.
 %
 \begin{filecontents*}{recomputation-example-ir.c}
 $\irAssign{a}{x + y}$
@@ -1393,20 +1393,15 @@ In the context of \gls{instruction selection}, this means letting the
 \gls{operation} representing the addition to be covered by more than one
 \gls{match} (\refFigure{recomputation-example-graph}).
 %
-However, \refEquationRange{operation-coverage}{data-definitions} require that
-every \gls{operation} and \gls{datum} must be covered respectively
-\gls{define.d}[d] by exactly one selected \gls{match}, thus forbidding such
-\glspl{solution}.
+However, Eqs.\thinspace\refEquation*{operation-coverage}
+and~\refEquation*{data-definitions} require that every \gls{operation} and
+\gls{datum} must be covered respectively \gls{define.d}[d] by exactly one
+selected \gls{match}, thus forbidding such \glspl{solution}.
 %
 Many of the solving techniques introduced in this dissertation also rely on
 exact \gls{cover}[age].
 
 
-\subsubsection{Common Subexpression Elimination}
-
-\todo{discuss limitation}
-
-
-\subsubsection{Implicit Sign/Zero Extensions and Truncations}
+\subsubsection{Implicit Sign and Zero Extensions and Truncations}
 
 \todo{discuss limitation}

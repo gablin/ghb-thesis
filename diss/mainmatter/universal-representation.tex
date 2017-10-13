@@ -507,6 +507,26 @@ A constant~$c$ is compatible with another constant~$d$ if the value range of~$d$
 is a subset of the value range of~$c$.
 
 
+\subsubsection{Common Subexpression Elimination}
+
+Common subexpressions may appear as part of legalizing the \gls{function} before
+passing it to the \gls{instruction selector}.
+%
+For example, in \gls{LLVM} there is an operation called {\instrFont
+  getelementptr} which takes care of computing the address when accessing an
+array element or object field.
+%
+To construct the corresponding \gls{UF graph}, these operations first need to be
+lowered into a series of additions and multiplications.
+%
+However, if two or more {\instrFont getelementptr}s compute the same address
+then these expressions will be duplicated, thus resulting in redundant
+\glspl{instruction}.
+%
+Consequently, such common subexpressions should be eliminated after having
+performed legalization but before constructing the \gls{UF graph}.
+
+
 \subsubsection{Handling Side Effects}
 
 The representation described thus far is sufficient for handling
