@@ -1398,10 +1398,36 @@ and~\refEquation*{data-definitions} require that every \gls{operation} and
 \gls{datum} must be covered respectively \gls{define.d}[d] by exactly one
 selected \gls{match}, thus forbidding such \glspl{solution}.
 %
-Many of the solving techniques introduced in this dissertation also rely on
-exact \gls{cover}[age].
+Although these constraints can be relaxed to allow \glspl{operation} and
+\glspl{datum} to be covered respectively \gls{define.d}[d] by at least one
+selected \gls{match}, many of the solving techniques introduced in this
+dissertation which are needed for scalability and robustness rely on exact
+\gls{cover}[age].
 
 
-\subsubsection{Implicit Sign and Zero Extensions and Truncations}
+\subsubsection{Implicit Bit Conversions}
 
-\todo{discuss limitation}
+In cases where the \gls{function} contains bit conversions, such as sign or zero
+extensions or truncations, depending on the hardware the \gls{constraint model}
+may produce code with redundant \glspl{instruction}.
+%
+\begin{figure}
+  \centering%
+  \input{figures/constraint-model/implicit-bit-conversions-graph}
+
+  \caption{Example illustrating implicit bit conversions}%
+  \labelFigure{implicit-bit-conversion-example}
+\end{figure}
+%
+See for example \refFigure{implicit-bit-conversions-example}, which depicts a
+\glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
+and~$m_3$.
+%
+Assume that {\irFont foo} represents a \gls{function} call and that \irVar{a},
+\irVar{b}, and \irVar{c} represent 8-bit values.
+%
+\todo{explain example}
+
+\todo{suggest workaround with duplicate patterns}
+
+\todo{suggest workaround with additional variables}

@@ -1,0 +1,131 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={
+      match node,
+      draw=none,
+      inner sep=3pt,
+    },
+  ]
+
+  \node [computation node] (eq) {\opEQ};
+  \node [value node, position=135 degrees from eq] (a) {\opVar{a}};
+  \node [value node, position= 45 degrees from eq] (b) {\opVar{b}};
+  \node [value node, below=of eq] (c) {\opVar{c}};
+  \node [computation node, above=of a] (call) {\opCall{foo}};
+  \node [computation node, above=of b] (load) {\opLoad};
+
+  \begin{scope}[data flow]
+    \draw (call) -- (a);
+    \draw (load) -- (b);
+    \draw (a) -- (eq);
+    \draw (b) -- (eq);
+    \draw (eq) -- (c);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, fit=(call), inner sep=1pt] (m1a) {};
+    \node [outer match node, fit=(a)]                   (m1b) {};
+
+    \def\pathMI{
+      [bend left=45]
+      (m1a.west)
+      to
+      (m1a.north)
+      to
+      (m1a.east)
+      --
+      (m1a.east |- m1b.east)
+      to
+      (m1b.south)
+      to
+      (m1a.west |- m1b.west)
+      -- coordinate (m1)
+      cycle
+    }
+    \path [fill=shade1] \pathMI;
+
+    % m2
+    \node [outer match node, fit=(load), inner sep=1pt] (m2a) {};
+    \node [outer match node, fit=(b)]                   (m2b) {};
+
+    \def\pathMII{
+      [bend left=45]
+      (m2a.west)
+      to
+      (m2a.north)
+      to
+      (m2a.east)
+      -- coordinate (m2)
+      (m2a.east |- m2b.east)
+      to
+      (m2b.south)
+      to
+      (m2a.west |- m2b.west)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMII;
+
+    % m3
+    \begin{scope}[outer match node/.append style={inner sep=5pt}]
+      \node [outer match node, fit=(a)] (m3a) {};
+      \node [outer match node, fit=(b)] (m3b) {};
+      \node [outer match node, fit=(c)] (m3c) {};
+    \end{scope}
+
+    \def\pathMIII{
+      [rounded corners=8pt]
+      (m3a.north west)
+      --
+      (m3b.north east)
+      --
+      (m3b.south east)
+      --
+      (m3c.south east)
+      --
+      (m3c.south west)
+      -- coordinate (m3)
+      (m3a.south west)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMIII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2] \pathMIII;
+    \end{scope}
+    \begin{scope}
+      \path [clip] \pathMII;
+      \path [fill=shade2] \pathMIII;
+    \end{scope}
+
+    \begin{scope}[match line]
+      \draw \pathMI;
+      \draw \pathMII;
+      \draw \pathMIII;
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Match labels
+  \begin{scope}[overlay]
+    \node [match label, left=of m1, outer sep=1.5pt] (m1l) {$\strut m_1$};
+    \node [match label, right=of m2, outer sep=1.5pt] (m2l) {$\strut m_2$};
+    \node [match label, left=of m3] (m3l) {$\strut m_3$};
+
+    \foreach \i in {1, 2, 3} {
+      \draw [match attachment line] (m\i) -- (m\i l);
+    }
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
