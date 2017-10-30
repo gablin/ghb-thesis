@@ -699,6 +699,8 @@
 \newcommand{\irStore}[2]{\mbox{{\irFont\bfseries\irStoreText} #1, #2}}
 \newcommand{\irSubText}{$-$}
 \newcommand{\irSub}[2]{\mbox{#1 \irSubText{} #2}}
+\newcommand{\irZextText}{zxt}
+\newcommand{\irZext}[1]{\mbox{\irZextText{} #1}}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%
@@ -723,6 +725,7 @@
   }%
 }
 \newcommand{\opCopy}{\irCode{\noWidth{\irCpText}}}
+\newcommand{\opEQ}{\irCode{\noWidth{\irEQText}}}
 \newcommand{\opGT}{\irCode{\noWidth{\irGTText}}}
 \newcommand{\opLT}{\irCode{\noWidth{\irLTText}}}
 \newcommand{\opGE}{\irCode{\noWidth{\irGEText}}}
@@ -739,6 +742,7 @@
   }%
 }
 \newcommand{\opSub}{\irCode{\noWidth{\irSubText}[-1pt]}}
+\newcommand{\opZext}{\irCode{\noWidth{\irZextText}}}
 \newcommand{\opTemp}[1]{%
   \irTemp{#1}\hspace*{-1pt}%
 }
