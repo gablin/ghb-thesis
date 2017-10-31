@@ -1,0 +1,193 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\setlength{\opNodeDist}{12pt}%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background2}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background2,background,main}%
+\begin{tikzpicture}[
+    outer match node/.style={%
+      match node,
+      rectangle,
+      draw=none,
+      inner sep=5pt,
+    },
+  ]
+
+  \node [block node] (entry) {\opBlock{entry}};
+  \node [control node, below=of entry] (entry-c) {\opCondBr};
+  \node [block node, below=of entry-c] (body) {\opBlock{body}};
+  \node [control node, below=of body] (body-c) {\opBr};
+  \node [block node, below=of body-c] (end) {\opBlock{end}};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (entry) -- (entry-c);
+      \draw (entry-c)
+            -- node [control-flow label, pos=.4, swap] {T}
+            (body);
+      \draw [rounded corners=4pt]
+            (entry-c.east)
+            --
+            +(0:.75\opNodeDist)
+            |- node [control-flow label, pos=.093, swap] {F}
+            ($(end.north east) !.33! (end.south east)$);
+      \draw (body) -- (body-c);
+      \draw (body-c) -- (end);
+    \end{scope}
+  \end{pgfonlayer}
+
+  \node [value node, node distance=.5\opNodeDist,
+         position=45 degrees from entry-c] (p) {\opVar{p}};
+
+  \node [value node, left=3.5\opNodeDist of body] (a) {\opVar{a}};
+  \node [computation node, above=of a] (add-a) {\opAdd};
+  \node [value node, position=135 degrees from add-a] (x) {\opVar{x}};
+  \node [value node, position= 45 degrees from add-a] (y) {\opVar{y}};
+  \node [computation node, position=-135 degrees from a] (phi-a) {\opPhi};
+  \node [value node, position=135 degrees from phi-a] (phi-a-arg) {};
+  \node [value node, below=of phi-a] (phi-a-out) {};
+
+  \node [value node, right=3.5\opNodeDist of body] (b) {\opVar{b}};
+  \node [computation node, above=of b] (add-b) {\opAdd};
+  \node [value node, position=135 degrees from add-b] (v) {\opVar{v}};
+  \node [value node, position= 45 degrees from add-b] (w) {\opVar{w}};
+  \node [computation node, position=-45 degrees from b] (phi-b) {\opPhi};
+  \node [value node, position=45 degrees from phi-b] (phi-b-arg) {};
+  \node [value node, below=of phi-b] (phi-b-out) {};
+
+  \begin{scope}[data flow]
+    \draw (p) -- (entry-c);
+
+    \draw (x) -- (add-a);
+    \draw (y) -- (add-a);
+    \draw (add-a) -- (a);
+    \draw (a) -- (phi-a);
+    \draw (phi-a-arg) -- (phi-a);
+    \draw (phi-a) -- (phi-a-out);
+
+    \draw (v) -- (add-b);
+    \draw (w) -- (add-b);
+    \draw (add-b) -- (b);
+    \draw (b) -- (phi-b);
+    \draw (phi-b-arg) -- (phi-b);
+    \draw (phi-b) -- (phi-b-out);
+  \end{scope}
+
+  \begin{scope}[definition edge]
+    \draw [rounded corners=8pt]
+          (entry)
+          -|
+          (phi-a-arg);
+    \draw [rounded corners=8pt]
+          (entry)
+          -|
+          (phi-b-arg);
+    \draw (a) -- (body);
+    \draw (b) -- (body);
+
+    \path [overlay, name path=from-phi-a-out]
+          (phi-a-out.south east)
+          --
+          +(-45:1cm);
+    \path [overlay, name path=left-from-end]
+          (end)
+          --
+          (end -| phi-a-out);
+    \draw [name intersections={of=from-phi-a-out and left-from-end},
+           rounded corners=3pt,
+          ]
+          (phi-a-out.south east)
+          --
+          (intersection-1)
+          --
+          (end);
+
+    \coordinate (end-point) at ($(end.north east) !.67! (end.south east)$);
+    \path [overlay, name path=from-phi-b-out]
+          (phi-b-out.south west)
+          --
+          +(-135:1cm);
+    \path [overlay, name path=right-from-end]
+          (end-point)
+          --
+          (end-point -| phi-b-out);
+    \draw [name intersections={of=from-phi-b-out and right-from-end},
+           rounded corners=3pt,
+          ]
+          (phi-b-out.south west)
+          --
+          (intersection-1)
+          --
+          (end-point);
+  \end{scope}
+
+  \begin{pgfonlayer}{background2}
+    % m1
+    \node [outer match node, fit=(entry), inner ysep=7pt, inner xsep=10pt]
+          (m1a) {};
+    \node [outer match node, fit=(end), inner ysep=7pt] (m1b) {};
+    \node [outer match node, fit=(phi-a-arg)]           (m1c) {};
+    \node [outer match node, fit=(phi-a-out)]           (m1d) {};
+
+    \def\pathMI{
+      [rounded corners=8pt]
+      (m1a.north east)
+      --
+      (m1a.north east |- m1b.south east)
+      --
+      (m1b.south -| m1d.east)
+      -- coordinate (m1)
+      (m1c.west |- m1d.north)
+      |-
+      (m1a.north)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMI;
+
+    % m2
+    \node [outer match node, fit=(entry)]     (m2a) {};
+    \node [outer match node, fit=(end)]       (m2b) {};
+    \node [outer match node, fit=(phi-b-arg)] (m2c) {};
+    \node [outer match node, fit=(phi-b-out)] (m2d) {};
+
+    \def\pathMII{
+      [rounded corners=8pt]
+      (m2a.north west)
+      --
+      (m2a.north west |- m2b.south west)
+      --
+      (m2b.south -| m2d.west)
+      -- coordinate (m2)
+      (m2c.east |- m2d.north)
+      |-
+      (m2a.north)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2] \pathMII;
+    \end{scope}
+
+    \draw [match line] \pathMI;
+    \draw [match line] \pathMII;
+  \end{pgfonlayer}
+
+  % Match labels
+  \begin{scope}[overlay]
+    \node [match label, position=-135 degrees from m1] (m1l) {$m_1$};
+    \node [match label, position=- 45 degrees from m2] (m2l) {$m_2$};
+    \draw [match attachment line] (m1) -- (m1l);
+    \draw [match attachment line] (m2) -- (m2l);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

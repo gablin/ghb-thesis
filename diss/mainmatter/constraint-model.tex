@@ -1407,7 +1407,113 @@ dissertation which are needed for scalability and robustness rely on exact
 
 \subsubsection{If-Conversions}
 
-\todo{discuss limitation}
+In most cases, performing a branch incurs a performance penalty.
+%
+Some architectures therefore allow the \glspl{instruction} to be predicated with
+a boolean flag for optional execution, which allows \glspl{function} with
+if-then-else structures to be transformed into linear code.
+%
+This process is called \gls!{if-conversion}.
+
+Although the \gls{universal representation} enables predicated versions of the
+\glspl{instruction} to be captured as \glspl{pattern}, selection of such
+\glspl{pattern} is typically prevented by the \gls{constraint model}.
+%
+\begin{filecontents*}{if-conversions-example-ir.c}
+entry:
+  $\ldots$
+  if p goto body
+  else goto end;
+body:
+  $\irAssign{a}{x + y}$
+  $\irAssign{b}{v + w}$
+end:
+  $\ldots$
+\end{filecontents*}
+%
+\begin{filecontents*}{if-conversions-example-instrs.c}
+entry:
+  $\ldots$
+  if (p) add a, x, y
+  if (p) add b, v, w
+  $\ldots$
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \mbox{}%
+  \hfill%
+  \begin{minipage}{36mm}%
+    \centering%
+    \subcaptionbox{Code snippet\labelFigure{if-conversions-example-ir}}%
+                  [28mm]
+                  {%
+                    \lstinputlisting[language=c,mathescape]%
+                                    {if-conversions-example-ir.c}%
+                  }
+
+    \vspace{\betweensubfigures}
+
+    \subcaptionbox{%
+                    Assembly code with predicated instructions%
+                    \labelFigure{if-conversions-example-instrs}%
+                  }{%
+                    \lstinputlisting[mathescape]%
+                                    {if-conversions-example-instrs.c}%
+                  }
+  \end{minipage}%
+  \hfill\hfill\hfill%
+  \adjustbox{valign=M}{%
+    \subcaptionbox{%
+                    UF subgraph, covered by two matches derived predicated
+                    add instructions%
+                    \labelFigure{if-conversions-example-graph}%
+                  }{%
+                    \input{%
+                      figures/constraint-model/if-conversions-example-graph%
+                    }%
+     p             }%
+  }%
+  \hfill%
+  \mbox{}
+
+  \caption{%
+    Example illustrating if-conversions%
+  }%
+  \labelFigure{if-conversions-example}
+\end{figure}
+%
+See for example \refFigure{if-conversions-example}.
+%
+Assume a \gls{function} containing two sums, \irVar{a} and~\irVar{b}, which are
+conditionally computed given a certain predicate~\irVar{p}
+(\refFigure{if-conversions-example-ir}).
+%
+Because this constitutes an if-then-else structure, this code snippet is eligble
+for \gls{if-conversion} (\refFigure{if-conversions-example-instrs}).
+%
+Representing the predicated versions of add~\glspl{instruction} as
+\glspl{pattern} gives rise to two \glspl{match}, $m_1$ and~$m_2$, which can
+collectively cover the \glsshort{computation node} and \glspl{control node} in
+the corresponding \gls{UF graph} (\refFigure{if-conversions-example-graph}).
+%
+However, since $m_1$ and $m_2$ both cover the same \glspl{control node}, only
+one of the \glspl{match} can be selected (due to
+Eqs.\thinspace\refEquation*{operation-coverage}
+and~\refEquation*{data-definitions}).
+%
+In addition, because both \glspl{match} \gls{consume.b} the \irBlock{body}
+\gls{block}, no other \glspl{operation} may be placed in \irBlock{body} if
+either is selected (due to \refEquation{consumption}).
+%
+This means either both or none of the \glspl{match} must be selected.
+%
+Together with the \gls{constraint} of exact \gls{cover}[age], in all
+\glspl{solution} neither of $m_1$ or $m_2$ is selected.
+%
+This problem can be fixed by relaxing the \gls{constraint} of exact
+\gls{cover}[age], but as in the case of \gls{recomputation} this inhibits many
+of the necessary solving techniques.
 
 
 \subsubsection{Implicit Sign or Zero Extensions}
