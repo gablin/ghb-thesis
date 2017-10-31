@@ -24,8 +24,12 @@ Lastly, \refSection{uni-rep-pattern-matching} describes how to perform
 \section{Design Requirements}
 \labelSection{uni-rep-design-requirements}
 
-In order to construct the \gls{constraint model} introduced later in this
-dissertation, we require a \gls{graph}-based representation that fulfills the
+As discussed in \refChapter{existing-isel-techniques-and-reps}, in order to
+address the limitations of existing approaches we necessitate a \gls{constraint
+  model} capable of capturing the problems described in
+\refSection{intro-motivation}.
+%
+To this end, we require a \gls{graph}-based representation that fulfills the
 following requirements:
 %
 \begin{requirements}
@@ -463,8 +467,8 @@ described in \refChapter{modeling-value-reuse}, but this also necessitates the
 in order to guarantee correctness.
 %
 For example, assume a \gls{function} containing two \glspl{phi-function}
-\mbox{\irFont \irPhi{$\ldots$, 1:\irBlock{a} ,$\ldots$}} and \mbox{\irFont
-  \irPhi{$\ldots$, 1:\irBlock{b} ,$\ldots$}}.
+\mbox{\irFont \irPhi{$\ldots$, 1:\irBlock{a}, $\ldots$}} and \mbox{\irFont
+  \irPhi{$\ldots$, 1:\irBlock{b}, $\ldots$}}.
 %
 If the constant~\irVar{1} is represented using a single \gls{value node}, then
 the \gls{value node} will have two \glspl{definition edge}, one from
