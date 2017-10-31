@@ -1405,29 +1405,87 @@ dissertation which are needed for scalability and robustness rely on exact
 \gls{cover}[age].
 
 
-\subsubsection{Implicit Bit Conversions}
+\subsubsection{If-Conversions}
 
-In cases where the \gls{function} contains bit conversions, such as sign or zero
-extensions or truncations, depending on the hardware the \gls{constraint model}
-may produce code with redundant \glspl{instruction}.
+\todo{discuss limitation}
+
+
+\subsubsection{Implicit Sign or Zero Extensions}
+
+In cases where the \gls{function} contains sign or zero extensions, depending on
+the hardware the \gls{constraint model} may produce code with redundant
+\glspl{instruction}.
 %
 \begin{figure}
   \centering%
-  \input{figures/constraint-model/implicit-bit-conversions-graph}
+  \input{figures/constraint-model/implicit-extensions-graph}
 
-  \caption{Example illustrating implicit bit conversions}%
-  \labelFigure{implicit-bit-conversion-example}
+  \caption{Example illustrating implicit sign or zero extensions}%
+  \labelFigure{implicit-extensions-example}
 \end{figure}
 %
-See for example \refFigure{implicit-bit-conversions-example}, which depicts a
+See for example \refFigure{implicit-extensions-example}, which depicts a
 \glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
 and~$m_3$.
 %
 Assume that {\irFont foo} represents a \gls{function} call and that \irVar{a},
-\irVar{b}, and \irVar{c} represent 8-bit values.
+\irVar{b}, and \irVar{c} represent 8-bit values stored in 32-bit
+\glspl{register}.
 %
-\todo{explain example}
+As is common, $m_3$ will be derived from an \gls{instruction} that checks
+whether the full contents of two \glspl{register} are equal.
+%
+Consequently, as a precaution the upper bytes of the \glspl{register} need to be
+zero-extended (that is, those bits are all set to~0) before doing the
+comparison.
+%
+While this is certainly necessary for the \gls{register} of \irVar{a} as nothing
+can be assumed about the value returned by {\irFont foo}, it may be redundant
+for the register of \irVar{b}.
+%
+For example, $m_2$ may be derived from a single-byte load \gls{instruction} that
+clears the entire \gls{register} before loading the value.
+%
+But since this information is lost in the \gls{constraint model}, $m_3$ must
+assume both \glspl{register} need to be zero-extended.
 
-\todo{suggest workaround with duplicate patterns}
+One solution to this problem is to extend the \gls{pattern set} with additional
+\glspl{pattern} that capture these situations.
+%
+For example, merging the \glspl{pattern} of $m_2$ and $m_3$ results in a
+\gls{match} which, if selected, emits the \gls{instruction} of $m_2$ followed by
+the \glspl{instruction} of $m_3$ without the redundant clearing of \irVar{b}.
+%
+Depending on the \gls{instruction set}, however, this may result in an
+exponential number of \glspl{pattern}.
+%
+If the \gls{instruction set} contains $n$~\glspl{instruction} with implicit
+extensions and $m$~\gls{instruction} each taking $k$~values that must first be
+sign- or zero-extended, then this will result in $\mBigO(n^k m)$ additional
+\glspl{pattern}.
 
-\todo{suggest workaround with additional variables}
+Another solution is to apply the same mechanism used in \gls{copy extension}.
+%
+In the same manner as with \glspl{copy node}, first the \gls{UF graph} is
+extended with \glspl!{extension node}.
+%
+Hence, for each \gls{data-flow edge}~$\mEdge{v}{o}$, where $v$ is a \gls{value
+  node} and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a
+new \gls{extension node}~$e$, \gls{value node}~$v'$, and \glspl{data-flow edge}
+such that \mbox{$\mEdge{v}{\mEdge{e}{\mEdge{v'}{o}}}$}.
+%
+Then the \gls{constraint model} is extended with two sets of \glspl{variable},
+\mbox{$\mVar{sext}[d] \in \mSet{0, 1}$} and \mbox{$\mVar{zext}[d] \in \mSet{0,
+    1}$}, denoting whether a value has been sign- respectively zero-extended.
+%
+We also extend the \gls{pattern set} with a special \gls!{null-extend pattern},
+with \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{e}{v'}}$}, that covers $e$ at
+zero cost provided that \mbox{$(\mVar{sext}[v] \mOr \neg\mVar{sext}[v']) \mAnd
+  (\mVar{zext}[v] \mOr \neg\mVar{zext}[v'])$} holds.
+%
+Obviously, a \gls{match} derived from the \gls{null-extend pattern} emits
+nothing if selected.
+%
+If the \gls{null-extend pattern} cannot be selected for covering a particular
+\gls{extension node}, then this means an appropriate extension \gls{instruction}
+must be emitted.
