@@ -27,14 +27,6 @@ Lastly, \refSection{intro-outline} outlines the structure of the dissertation.
 \section{Overview}
 \labelSection{intro-overview}
 
-\begin{figure}[t]
-  \centering%
-  \input{figures/introduction/compiler-overview}
-
-  \caption{Overview of a typical compiler}
-  \labelFigure{compiler-overview}
-\end{figure}
-
 Every quarter, over 100~million microprocessors are shipped in various devices
 such as PCs, servers, tablets, and phones~\cite{Intel:2014:NewsRelease}.
 %
@@ -54,6 +46,14 @@ hand, but for the most part this is done using a \gls{compiler}.
 A \gls!{compiler} is a tool that takes a \gls!{program}, written in some
 programming language, as input and produces equivalent \gls{assembly code} for a
 specific \gls!{target machine} as output.
+%
+\begin{figure}
+  \centering%
+  \input{figures/introduction/compiler-overview}
+
+  \caption{Overview of a typical compiler}
+  \labelFigure{compiler-overview}
+\end{figure}
 %
 As shown in \refFigure{compiler-overview}, a compiler typically consists of
 three parts:%
@@ -127,6 +127,8 @@ problems by proposing ideas on how to extend the model to integrate
 \section{Motivation}
 \labelSection{intro-motivation}
 
+\subsubsection{Global Instruction Selection and New Representations}
+
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
 while (i < N) {
@@ -167,8 +169,6 @@ while (i < N) {
           }
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
-
-\subsubsection{Global Instruction Selection and New Representations}
 
 \labelPage{saturated-arithmetic}
 
@@ -721,7 +721,7 @@ This dissertation is based on material presented in the following publications:
 %
 \refTable{contributions-per-publication} shows the relation between the
 contributions and the publications above.
-%
+
 \begin{table}
   \centering%
   \begin{tabular}{c@{\qquad}*{11}{c}}
