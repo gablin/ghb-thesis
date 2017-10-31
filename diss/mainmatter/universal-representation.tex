@@ -17,8 +17,10 @@ be fulfilled by a graph-based representation.
 and describes how to use it to model \glspl{function}, and
 \refSection{uni-rep-instr-rep} describes how to model \glspl{instruction}.
 %
-Lastly, \refSection{uni-rep-pattern-matching} describes how to perform
-\gls{pattern matching} using the \gls{universal representation}.
+\RefSection{uni-rep-pattern-matching} describes how to perform \gls{pattern
+  matching} using the \gls{universal representation}.
+%
+Lastly, \refSection{uni-rep-summary} summarizes the chapter.
 
 
 \section{Design Requirements}
@@ -1077,3 +1079,26 @@ multiple outgoing \gls{edge} of the same type -- such as conditional jump
 \glspl{operation} -- the \gls{outbound.en} \glspl{edge number} of $e$ and $d$
 must be identical, which prevents swapping of the target labels where
 appropriate.
+
+
+\section{Summary}
+\labelSection{uni-rep-summary}
+
+In this chapter, we have introduced a novel graph-based representation, called
+\gls{universal representation}, that models both data and control flow on a
+global scope.
+%
+This means that entire \gls{function} can be captured as a single graph and that
+complex \glspl{instruction}, with or without control flow, can be modeled as
+\glspl{pattern}.
+%
+The \gls{universal representation} also provides enough freedom to move
+computations from one \gls{block} to another without breaking \gls{program}
+semantics.
+%
+These features jointly enable the problems of \gls{global.is} \gls{instruction
+  selection}, \gls{global code motion}, and \gls{data copying} to be modeled as
+a \gls{constraint model}, which is introduced in the next chapter.
+%
+We have also described an algorithm for performing \gls{pattern matching} using
+the \gls{universal representation}.
