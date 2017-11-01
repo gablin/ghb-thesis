@@ -15,6 +15,9 @@ introduce the \glspl{variable} and \gls{constraint} for modeling \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, \gls{data copying},
 \gls{value reuse}, and \gls{block ordering}, respectively.
 %
+\RefSection{cm-objective-function} introduces the \gls{objective function}
+applied in the \gls{constraint model}.
+%
 \RefSection{cm-limitations} discusses the \glsshort{constraint model}
 limitations.
 %
@@ -1319,6 +1322,53 @@ which results in a significantly \gls{search space}.
 \todo{insert data}
 
 \todo{discuss data}
+
+
+\section{Objective Function}
+\labelSection{cm-objective-function}
+
+In \gls{instruction selection} most \glspl{compiler} optimize for performance,
+meaning they attempt to minimize the total cost -- this is typically the
+\gls{instruction} latency -- of the selected \glspl{match} per \gls{block}~$b$
+while factoring in the execution frequency of~$b$.
+%
+The intuition is that the \glspl{instruction} selected for ``hot'' \glspl{block}
+-- that is, those which are part of a loop with many iterations -- will have
+greater impact than those selected for scarcely executed \glspl{block}.
+%
+In this chapter we introduce a straightforward but naive implementation of the
+\gls{objective function}, which will be refined in
+\refChapter{solving-techniques}.
+
+
+\subsubsection{Variables}
+
+The \gls{variable} \mbox{$\mVar{cost} \in \mathbb{N}$} models the total cost of
+the selected \glspl{match}.
+%
+It is assumed the total cost can never be negative.
+
+
+\subsubsection{Constraints}
+
+A straightforward implementation of the \gls{objective function} described above
+can be modeled as
+%
+\begin{equation}
+  \mVar{cost} =
+  \sum_{m \in \mMatchSet}
+  \mVar{sel}[m] \times \mCost(m) \times \mFreq(\mBlockOf(m)),
+  \labelEquation{naive-objective-function}
+\end{equation}
+%
+where \mbox{$\mCost(m) \in \mNatNumSet$} denotes the cost of \gls{match}~$m$,
+\mbox{$\mFreq(b) \in \mNatNumSet$} denotes the execution frequency of
+block~$b$\!, and \mbox{$\mBlockOf(m) \in \mBlockSet$} denotes the block wherein
+$m$ is placed.
+%
+However, as previously stated \refEquation{naive-objective-function} is a naive
+implementation and we therefore use a refined version, introduced in
+\refChapter{solving-techniques}, which offers much stronger propagation.
 
 
 \section{Limitations}
