@@ -161,6 +161,9 @@ and~$o_2$ is between~3 and~40 respectively between~1 and~20.
 Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
 much tighter bound compared to that achieved using the naive \gls{objective
   function}.
+%
+This in turn has a tremendous impact on solving time, for reasons that will
+become clear in \refSection{st-cost-bounds}.
 
 
 \subsubsection{Variables}
@@ -213,6 +216,11 @@ This means that if a part of the \gls{search space} is known not to contain any
 better \glspl{solution} -- this is achieved by checking the current lower bound
 of the \gls{cost variable} -- then this part need not be explored during
 \gls{search}.
+%
+For this to be effective, however, it must be possible to infer reasonable
+bounds on the \gls{cost variable}, which asserts the need for the refined
+\gls{objective function} introduced in
+\refSection{st-refined-objective-function}.
 
 By the same mechanism, solving can improved by tightening the lower and upper
 bounds of the \gls{cost variable} before commencing \gls{search}.
