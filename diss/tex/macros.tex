@@ -300,6 +300,7 @@
 \newcommand{\mStronger}{\leq}
 \newcommand{\mConstraintFont}[1]{\textrm{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\mBrPattern}{g_{\mathrm{br}}}
+\newcommand{\mCopy}{\circ}
 \newcommand{\mKill}{\times}
 \newcommand{\mNull}{\bot}
 \newcommand{\mUFGraph}{G}
@@ -307,7 +308,12 @@
 \newcommand{\mExtPatternSet}{\mPatternSet_\mathrm{ext}}
 \newcommand{\mArgSet}{A}
 \newcommand{\mOpSet}{O}
-\newcommand{\mOperandSet}{P}
+\NewDocumentCommand{\mOperandSet}{o}{
+  \IfValueTF{#1}{P_{#1}}{P}
+}
+\NewDocumentCommand{\mOperandCompSet}{m}{
+  P_{\overbar{#1}}
+}
 \newcommand{\mForbiddenCombSet}{F}
 \newcommand{\mCostMatrix}{C_{\textsc{m}}}
 \NewDocumentCommand{\mDataSet}{o}{
@@ -323,6 +329,9 @@
 }
 \newcommand{\mLocationSet}{L}
 \newcommand{\mFallThroughSet}{J}
+\NewDocumentCommand{\mInterchDataSet}{o}{
+  \IfValueTF{#1}{I_{#1}}{I}
+}
 \newcommand{\mMemLocation}{l_\textsc{mem}}
 \newcommand{\mNullLocation}{l_\textsc{null}}
 \NewDocumentCommand{\mVar}{mo}{
@@ -340,6 +349,7 @@
 \DeclareMathOperator{\mCovers}{\mFunFont{covers}}
 \DeclareMathOperator{\mCycle}{\mConstraintFont{Cycle}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
+\DeclareMathOperator{\mDefSet}{\mFunFont{defset}}
 \DeclareMathOperator{\mDistinct}{\mConstraintFont{Distinct}}
 \DeclareMathOperator{\mDom}{\mFunFont{dom}}
 \DeclareMathOperator{\mDomain}{\mFunFont{D}}
@@ -349,6 +359,7 @@
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
 \DeclareMathOperator{\mExtValues}{\mFunFont{extvalues}}
+\DeclareMathOperator{\mIncreasing}{\mConstraintFont{inc}}
 \DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
@@ -356,6 +367,7 @@
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
 \DeclareMathOperator{\mTable}{\mConstraintFont{Table}}
 \DeclareMathOperator{\mUses}{\mFunFont{uses}}
+\DeclareMathOperator{\mValuePrecChain}{\mConstraintFont{valprec}}
 \DeclareMathOperator{\mWeight}{\mFunFont{weight}}
 
 % blkarray-related commands

@@ -121,7 +121,7 @@ Let \mbox{$\mOpCost(m, o) \in \mNatNumSet$} denote this cost such that
   \setlength{\belowdisplayskip}{1ex}%
   %
   If a strict partial order $<$ exists over the set of \glspl{operation}, and
-  $\mCovers(m)$ returns an ordered, 0-indexed list for which \mbox{$o_1 < o_2 <
+  $\mCovers(m)$ returns an ordered, 1-indexed list for which \mbox{$o_1 < o_2 <
     \cdots < o_k$} holds, then the cost can be divided as follows.
   %
   Given a match~$m$, let \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)}
@@ -133,7 +133,7 @@ Let \mbox{$\mOpCost(m, o) \in \mNatNumSet$} denote this cost such that
     \mOpCost(m, o) =
     \left\{
     \begin{array}{ll}
-      q + 1 & \text{if $o < \mCovers(m)[r]$}, \\
+      q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
       q     & \text{otherwise}. \\
     \end{array}
     \right.
@@ -301,6 +301,90 @@ bounded as
 
 \section{Dominance Breaking Constraints}
 \labelSection{st-dom-breaking-constraints}
+
+\todo{write intro}
+
+
+\subsubsection{Location of State Nodes}
+
+\todo{explain constraint}
+
+\begin{equation}
+  \mVar{loc}[d] = \mNullLocation,
+  \forall d \in \mDataSet, \text{$d$ is a \gls{state node}}
+  \labelEquation{loc-of-state-nodes}
+\end{equation}
+
+
+\subsubsection{Operands of Non-Selected Matches}
+
+\todo{explain constraint}
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \min(\mDataSet[p]), \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mDefines(m) \cup \mUses(m)
+  \end{array}
+  \labelEquation{operands-of-non-selected-matches}
+\end{equation}
+
+
+\subsubsection{Interchangeable Data}
+
+\todo{explain constraint}
+
+\begin{equation}
+  \begin{array}{c}
+    \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]), \\
+    \forall c \in \mInterchDataSet,
+    \forall p_1, \ldots, p_k \in \mOperandSet \setminus \mOperandSet[\mPhi],
+    p_1 \neq \cdots \neq p_k
+    \mAnd
+    \forall_{\! i} \: \mDataSet[p_i] \! = c
+  \end{array}
+  \labelEquation{interchangeable-data-chain-precedence}
+\end{equation}
+
+\todo{explain constraint}
+
+\begin{equation}
+  \begin{array}{c}
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
+    \forall c \in \mInterchDataSet[\mCopy],
+    \forall m_1, \ldots, m_k \in \mMatchSet[\mNull]
+                                 \setminus
+                                 \mMatchSet[\mKill],
+    \forall_{\! i} \: m_i = \min( \mDefSet(c[i])
+                                \cap
+                                \mMatchSet[\mNull]
+                                \setminus
+                                \mMatchSet[\mKill]
+                              )
+  \end{array}
+  \labelEquation{null-copy-matches-symmetry-breaking}
+\end{equation}
+%
+where $\mInterchDataSet[\mCopy]$ denotes the set of chains of \glspl{datum} that
+can only be defined by \glspl{copy match}, $\mMatchSet[\mNull]$ and
+$\mMatchSet[\mKill]$ denote the set of \glsshort{null match} and \glspl{kill
+  match}, respectively, and \mbox{$\mDefSet(d) \subseteq \mMatchSet$} denotes
+the set of \glspl{match} that can define a \gls{datum}~$d$.
+
+\todo{explain constraint}
+
+\begin{equation}
+  \begin{array}{c}
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
+    \forall c \in \mInterchDataSet[\mCopy],
+    \forall m_1, \ldots, m_k \in \mMatchSet[\mKill],
+    \forall_{\! i} \: m_i = \min( \mDefSet(c[i])
+                                \cap
+                                \mMatchSet[\mKill]
+                              )
+  \end{array}
+  \labelEquation{kill-matches-symmetry-breaking}
+\end{equation}
 
 
 \section{Presolving}
