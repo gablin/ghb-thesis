@@ -12,11 +12,6 @@
 \todo{state clearly Mats' contribution}
 
 
-\section{Branching Strategies}
-
-\todo{discuss mimicking of maximum munch}
-
-
 \section{Refined Objective Function}
 
 As stated in \refChapter{constraint-model},
@@ -102,10 +97,10 @@ yet to be decided, either all those \glspl{match} are selected and placed in the
 %
 In the example above, this means the \gls{cost variable} is initially bounded as
 \mbox{$0 < \mVar{cost} < 100$}, which are very weak bounds as we know that the
-\gls{UF graph} must at least be covered at cost~5 (either both $m_1$ and $m_2$
-are selected and placed in $b_2$, or $m_3$ is selected and placed in $b_2$) and
-can at most be covered at cost~50 (the selected \glspl{match} are placed in
-$b_1$).
+\gls{UF graph} must at least be covered at a cost of~5 (either both $m_1$ and
+$m_2$ are selected and placed in $b_2$, or $m_3$ is selected and placed in
+$b_2$) and can at most be covered at a cost of~50 (the selected \glspl{match}
+are placed in $b_1$).
 
 Instead of reasoning about the cost incurred by the \glspl{match} -- which may
 or may not be selected -- a better approach is to infer the cost incurred on the
@@ -201,6 +196,11 @@ The total cost is then modeled as
   \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[o].
   \labelEquation{total-cost}
 \end{equation}
+
+
+\section{Branching Strategies}
+
+\todo{discuss mimicking of maximum munch}
 
 
 \section{Cost Bounding}
