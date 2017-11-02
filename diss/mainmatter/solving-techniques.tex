@@ -9,46 +9,199 @@
 
 \todo{write chapter overview}
 
+\todo{state clearly Mats' contribution}
 
-\section{Search Strategies}
+
+\section{Branching Strategies}
+
+\todo{discuss mimicking of maximum munch}
+
 
 \section{Refined Objective Function}
-\subsection{Modeling}
 
+As stated in \refChapter{constraint-model},
+\refEquation{naive-objective-function} is a naive implementation of the
+\gls{objective function} that offers poor \gls{propagation}.
+%
+This is because it fails to reason on how cost is distributed across the
+\glspl{operation} that need to be covered.
+%
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{UF graph\labelFigure{cost-example-graph}}%
+                {%
+                  \input{figures/solving-techniques/cost-example-graph}%
+                }%
+  \hfill%
+  \subcaptionbox{Cost matrix\labelFigure{cost-example-matrix}}%
+                {%
+                  \figureFontSize%
+                  \begin{minipage}{50mm}%
+                    \centering%
+                    \begin{displaymath}
+                      \begin{adjblockarray}{cccccc}{1ex}
+                          \text{\tabhead op}
+                        & \text{\tabhead match}
+                        & \text{\tabhead block}
+                        & \multicolumn{3}{c}{%
+                            \text{%
+                              \parbox{20.5mm}{%
+                                % The parbox is used to create a bit of space
+                                % between the content and the right bracket
+                                \centering\tabhead opcost%
+                              }%
+                            }%
+                          } \\[-.5ex]
+                        \begin{block}{[cccc@{\;\times\;}c@{\;=\;}c]}
+                          \rule{0pt}{2.5ex}
+                          o_1 & m_1 & b_1 & 4 & 10 & 40 \\
+                          o_1 & m_1 & b_2 & 4 &  1 &  4 \\
+                          o_1 & m_3 & b_1 & 3 & 10 & 30 \\
+                          o_1 & m_3 & b_2 & 3 &  1 &  3 \\
+                          o_2 & m_2 & b_1 & 1 & 10 & 10 \\
+                          o_2 & m_2 & b_2 & 1 &  1 &  1 \\
+                          o_2 & m_3 & b_1 & 2 & 10 & 20 \\
+                          o_2 & m_3 & b_2 & 2 &  1 &  2 \\[.55ex]
+                        \end{block}
+                      \end{adjblockarray}
+                    \end{displaymath}
+                  \end{minipage}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[Example illustrating match cost distributed over operations]%
+          {%
+            Example illustrating match cost distributed over operations.
+            %
+            It is assumed that matches~$m_1$, $m_2$, and~$m_3$ have costs~4,
+            1, and~5, respectively, and that they can be placed in one of two
+            blocks, $b_1$ and $b_2$, with execution frequencies~10 and~1,
+            respectively.
+            %
+            The cost of $m_3$ distributed over $o_1$ and $o_2$ is~3 and~2,
+            respectively%
+          }
+  \labelFigure{cost-example}
+\end{figure}
+%
+See for example \refFigure{cost-example}.
+%
+Assume a \gls{UF graph} that can be covered by three \glspl{match} -- $m_1$,
+$m_2$, and~$m_3$ -- which have costs~4, 1, and~5, respectively, and that they
+can be placed in one of two blocks, $b_1$ and $b_2$, with execution
+frequencies~10 and~1, respectively (\refFigure{cost-example-graph}).
+%
+Because \refEquation{naive-objective-function} is modeled as a summation, it can
+only propagate the bounds of the \gls{cost variable}.
+%
+Consequently, for any \glspl{match} where their $\mVar{sel}$~\gls{variable} have
+yet to be decided, either all those \glspl{match} are selected and placed in the
+\gls{block} with highest execution frequency, or none are selected.
+%
+In the example above, this means the \gls{cost variable} is initially bounded as
+\mbox{$0 < \mVar{cost} < 100$}, which are very weak bounds as we know that the
+\gls{UF graph} must at least be covered at cost~5 (either both $m_1$ and $m_2$
+are selected and placed in $b_2$, or $m_3$ is selected and placed in $b_2$) and
+can at most be covered at cost~50 (the selected \glspl{match} are placed in
+$b_1$).
+
+Instead of reasoning about the cost incurred by the \glspl{match} -- which may
+or may not be selected -- a better approach is to infer the cost incurred on the
+\glspl{operation} since these must always be covered.
+%
+The idea is as follows.
+%
+First, for each \gls{match}~$m$, evenly divide the cost of $m$ over each
+\gls{operation}~$o$ covered by $m$.
+%
+Let \mbox{$\mOpCost(m, o) \in \mNatNumSet$} denote this cost such that
+\mbox{$\sum_{o \in \mCovers(m)} \mOpCost(m, o) = \mCost(m)$} holds for every
+\gls{match}~$m$.\!%
+%
+\footnote{%
+  If a strict partial order $<$ exists over the set of \glspl{operation}, and
+  $\mCovers(m)$ returns an ordered, 0-indexed list for which \mbox{$o_1 < o_2 <
+    \cdots < o_k$} holds, then the cost can be divided as follows.
+  %
+  Given a match~$m$, let \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)}
+    \rfloor$} and \mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mOpCost(m, o) =
+    \left\{
+    \begin{array}{ll}
+      q + 1 & \text{if $o < \mCovers(m)[r]$}, \\
+      q     & \text{otherwise}. \\
+    \end{array}
+    \right.
+  \end{displaymath}
+}
+%
+Then, for each \gls{block}~$b$, weigh \mbox{$\mOpCost(m, o)$} with the execution
+frequency of~$b$.
+%
+This information can be represented as a cost matrix
+%
 \begin{equation}
-  \mCostMatrix =
   \begin{bmatrix}
     \begin{array}{@{\:}c|c@{\:}}
-        o, m, b, \big( \mFreq(b) \times \mOpCost(m, o) \big)
-      & \begin{array}{@{}c@{}}
-          m \in \mMatchSet, \\
-          o \in \mCovers(m), \\
-          b \in \mBlockSet \\
-        \end{array}
+        o, m, b, \big( \mOpCost(m, o) \times \mFreq(b) \big)
+      & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
     \end{array}
   \end{bmatrix}
   \labelEquation{cost-matrix}
 \end{equation}
+where each row denotes the cost of an \gls{operation}~$o$ if covered by a
+\gls{match}~$m$ and placed in a \gls{block}~$b$.
+%
+An example of this cost matrix is given in \refFigure{cost-example-matrix}, and
+from this matrix we can deduce that the cost of covering operations~$o_1$
+and~$o_2$ is between~3 and~40 respectively between~1 and~20.
+%
+Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
+much tighter bound compared to that achieved using the naive \gls{objective
+  function}.
 
+
+\subsubsection{Variables}
+
+The set of \glspl{variable} \mbox{$\mVar{ocost}[o] \in \mNatNumSet$} models the
+cost incurred by covering operation~$o$\hspace{-.8pt}.
+%
+It is assumed the \gls{domain} is the same as for the \gls{cost variable}.
+
+
+\subsubsection{Constraints}
+
+For each \gls{operation}~$o$\hspace{-.8pt}, the combination
+\mbox{$o\hspace{-.8pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
+must appear as a row in the cost matrix.
+%
+Hence, given a cost matrix~$\mCostMatrix$ this \gls{constraint} is modeled as
+%
 \begin{equation}
   \mTable\left(
-    \langle
-      o,
-      \mVar{omatch}[o],
-      \mVar{oplace}[o],
-      \mVar{ocost}[o]
-    \rangle,
+    o\hspace{-1pt},
+    \mVar{omatch}[o],
+    \mVar{oplace}[o],
+    \mVar{ocost}[o],
     \mCostMatrix
-  \right)
-  \mQuantSep
-  \forall o \in \mOpSet
+  \right)\!,
+  \forall o \in \mOpSet \hspace{-.8pt}.
   \labelEquation{omatch-oplace-ocost-connection}
 \end{equation}
-
+%
+The total cost is then modeled as
+%
 \begin{equation}
-  \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[m]
+  \mVar{cost} = \sum_{o \in \mOpSet} \mVar{ocost}[o].
   \labelEquation{total-cost}
 \end{equation}
+
 
 \section{Cost Bounding}
 \subsection{Problem}
