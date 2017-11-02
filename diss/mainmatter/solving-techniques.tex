@@ -198,23 +198,65 @@ The total cost is then modeled as
 \end{equation}
 
 
-\section{Branching Strategies}
+\section{Cost Bounds}
 
-\todo{discuss mimicking of maximum munch}
+As explained in \refChapter{constraint-programming}, in \gls{CP} optimization
+problems are solved using \gls{branch and bound}.
+%
+In other words, when a \gls{solution} is found a \gls{constraint} is added to
+the \glsshort{constraint model}, forcing any subsequently found \glspl{solution}
+to be strictly better.
+%
+This means that if a part of the \gls{search space} is known not to contain any
+better \glspl{solution} -- this is achieved by checking the current lower bound
+of the \gls{cost variable} -- then this part need not be explored during
+\gls{search}.
 
+By the same mechanism, solving can improved by tightening the lower and upper
+bounds of the \gls{cost variable} before commencing \gls{search}.
+%
+A tight upper bound helps the \gls{constraint solver} to prune away parts of the
+\gls{search space} that contains inferior \glspl{solution}, while a tight lower
+bound helps the \gls{constraint solver} to prune away parts of the \gls{search
+  space} that contains no \glspl{solution}.
+%
+A decent upper bound can be computed by solving the same problem using a greedy
+but fast heuristic.
+%
+To this end, any modern \gls{compiler} can be used.
+%
+A decent lower bound be computed by solving a relaxed version of the
+\gls{constraint model} that only models the \gls{global.is} \gls{instruction
+  selection} and \gls{block ordering} problems, which obviously is simpler to
+solve than the complete \glsshort{constraint model}.
+%
+Hence, the relaxed \glsshort{constraint model} consists of only the
+$\mVar{omatch}$, $\mVar{opcosts}$, $\mVar{sel}$, $\mVar{succ}$, and
+$\mVar{cost}$ variables, \refEquation{operation-coverage}, relaxed versions of
+Eqs.\thinspace\refEquation*{block-order} and \refEquation*{fall-through} that
+allow fall-throughs via non-empty \glspl{block}, and modified versions of
+Eqs.\thinspace\refEquation*{cost-matrix}--\refEquation*{total-cost} that do not
+take the execution frequencies into account.
 
-\section{Cost Bounding}
-\subsection{Problem}
-\subsection{Lower Bound}
-\subsubsection{Modeling}
-
+If $\mRelaxedCost$ and $\mHeuristicCost$ denote the cost computed from the
+relaxation and by the heuristic, respectively, then the \gls{cost variable} is
+bounded as
+%
 \begin{equation}
-  \mRelaxedCost \leq \mVar{cost} < \mLlvmCost
-  \labelEquation{bounds}
+  \mRelaxedCost \leq \mVar{cost} < \mHeuristicCost.
+  \labelEquation{lower-bound}
 \end{equation}
 
-\subsection{Upper Bound}
-\subsubsection{Modeling}
+
+\section{Branching Strategies}
+
+\todo{mention mimicking of maximum munch}
+
+\todo{first branch on the $\mVar{ocost}$ variables}
+
+\todo{then branch on the block order}
+
+
 
 \section{Presolving}
 \subsection{Dominated matches}
