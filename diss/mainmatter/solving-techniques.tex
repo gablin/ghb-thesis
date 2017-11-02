@@ -166,7 +166,28 @@ much tighter bound compared to that achieved using the naive \gls{objective
   function}.
 %
 This in turn has a tremendous impact on solving time, for reasons that will
-become clear in \refSection{st-cost-bounds}.
+become clear in \refSection{st-cost-bounds}.\!%
+%
+\footnote{%
+  For the experiments in \cite{HjortBlindellEtAl:2017:CASES}, the refined
+  \gls{objective function} was actually implemented as \emph{first} multiply the
+  \gls{match} cost with the execution frequency, and \emph{then} evenly divide
+  the product over the covered \glspl{operation}.
+  %
+  While this scheme also greatly reduces solving time compared to the naive
+  \gls{objective function}, it proves to be significantly inferior to dividing
+  the cost as in \refEquation{cost-matrix}.
+  %
+  One possible explanation is that it may result in weaker bounds -- for the
+  example given in \refFigure{cost-example}, using this scheme bounds the total
+  cost as \mbox{$4 < \mVar{cost} < 65$} -- but this does not apply for every
+  case.
+  %
+  Hence the intuition behind why it is better to first divide the \gls{match}
+  cost and then multiply the execution frequency remains unclear, thus
+  underscoring the fact that seemingly trivial changes to a \gls{constraint
+    model} may have considerable impact.%
+}
 
 
 \subsubsection{Variables}
