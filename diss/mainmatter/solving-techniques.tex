@@ -308,15 +308,15 @@ bounded as
 \subsubsection{Location of State Nodes}
 
 Since \glspl{datum} also includes the \glspl{state node}, this means a
-$\mVar{loc}$~\gls{variable} will be allocated for each individual
-\glsshort{state}.
+$\mVar{loc}$~\gls{variable} will be allocated for each individual \gls{state
+  node}.
 %
-However, since \glsplshort{state} are abstract entities used only to capture
+However, since \glspl{state node} are abstract entities used only to capture
 implicit dependencies between certain \gls{operation}, the assignment to these
 \glspl{variable} has no actual bearing on the \gls{solution}, thus giving rise
 to many symmetric \glspl{solution}.
 %
-Consequently, it makes sense to fix the location for each \glsshort{state node},
+Consequently, it makes sense to fix the location for each \gls{state node},
 which is modeled as
 %
 \begin{equation}
