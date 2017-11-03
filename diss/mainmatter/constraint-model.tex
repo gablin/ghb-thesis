@@ -565,12 +565,14 @@ We also extend the \gls{pattern set} with a special \gls!{null-copy pattern},
 with \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, that covers $c$ at
 zero cost provided that \mbox{$\mVar{loc}[v] = \mVar{loc}[v']$}.
 %
-Obviously, a \gls{match} derived from the \gls{null-copy pattern} emits nothing
-if selected.
+Obviously, \glspl{match} derived from the \gls{null-copy pattern} -- we call
+these \glspl!{null-copy match} -- emit nothing if selected.
 %
-If the \gls{null-copy pattern} cannot be selected for covering a particular
+If the \gls{null-copy match} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
+%
+\Glspl{match} covering exactly a \gls{copy node} are called \glspl!{copy match}.
 
 In order to retain matching of \glspl{pattern}, we also need to perform
 \gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
