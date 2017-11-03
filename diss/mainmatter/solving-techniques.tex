@@ -326,15 +326,21 @@ which is modeled as
 \end{equation}
 
 
-\subsubsection{Operands of Non-Selected Matches}
+\subsubsection{Data of Non-Selected Matches}
 
-\todo{explain constraint}
-
+The $\mVar{alt}$~\glspl{variable} of \glspl{match} that are not selected still
+need to be assigned a value.
+%
+Since this assignment does not matter for the \gls{solution}, it gives rise to
+many symmetric \glspl{solution}.
+%
+We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \min(\mDataSet[p]), \\
     \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m) \cup \mUses(m)
+    \forall p \in \mDefines(m) \cup \mUses(m).
   \end{array}
   \labelEquation{operands-of-non-selected-matches}
 \end{equation}
