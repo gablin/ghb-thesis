@@ -307,11 +307,21 @@ bounded as
 
 \subsubsection{Location of State Nodes}
 
-\todo{explain constraint}
-
+Since \glspl{datum} also includes the \glspl{state node}, this means a
+$\mVar{loc}$~\gls{variable} will be allocated for each individual
+\glsshort{state}.
+%
+However, since \glsplshort{state} are abstract entities used only to capture
+implicit dependencies between certain \gls{operation}, the assignment to these
+\glspl{variable} has no actual bearing on the \gls{solution}, thus giving rise
+to many symmetric \glspl{solution}.
+%
+Consequently, it makes sense to fix the location for each \glsshort{state node},
+which is modeled as
+%
 \begin{equation}
   \mVar{loc}[d] = \mNullLocation,
-  \forall d \in \mDataSet, \text{$d$ is a \gls{state node}}
+  \forall d \in \mDataSet, \text{$d$ is a \gls{state node}}.
   \labelEquation{loc-of-state-nodes}
 \end{equation}
 
