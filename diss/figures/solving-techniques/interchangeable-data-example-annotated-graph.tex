@@ -1,0 +1,174 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/solving-techniques/interchangeable-data-example-styles}%
+\begin{tikzpicture}
+  \node [value node] (v) {};
+  \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+  \node [computation node, position=- 45 degrees from v] (cp2) {\opCopy};
+  \node [value node, below=of cp1] (v1) {\opVar{v}[1]};
+  \node [value node, below=of cp2] (v2) {\opVar{v}[2]};
+  \node [alt node, below=of v1] (alt1) {$\mVar{alt}[p_1]$};
+  \node [alt node, below=of v2] (alt2) {$\mVar{alt}[p_2]$};
+  \node [computation node, node distance=1.4\opNodeDist,
+         position=-135 degrees from alt1] (add1) {\opAdd};
+  \node [computation node, node distance=1.4\opNodeDist,
+         position=- 45 degrees from alt2] (add2) {\opAdd};
+  \node [value node, position=135 degrees from add1] (add1-arg) {};
+  \node [value node, position= 45 degrees from add2] (add2-arg) {};
+  \node [value node, below=of add1] (add1-res) {};
+  \node [value node, below=of add2] (add2-res) {};
+
+  \begin{scope}[data flow]
+    \draw (v) -- (cp1);
+    \draw (v) -- (cp2);
+    \draw (cp1) -- (v1);
+    \draw (cp2) -- (v2);
+    \draw (alt1) -- (add1);
+    \draw (alt2) -- (add2);
+    \foreach \i in {1, 2} {
+      \draw (add\i-arg) -- (add\i);
+      \draw (add\i) -- (add\i-res);
+    }
+  \end{scope}
+
+  \begin{scope}[alternative data flow]
+    \draw (v1) -- (alt1);
+    \draw (v1) -- (alt2.north west);
+    \draw (v2) -- (alt1.north east);
+    \draw (v2) -- (alt2);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % Chain
+    \node [chain, fit=(v1) (v2)] (chain) {};
+    \def\pathChain{
+      [rounded corners=4pt]
+      (chain.north west)
+      --
+      (chain.north east)
+      --
+      (chain.south east)
+      --
+      (chain.south west)
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathChain;
+    \node [chain label, left=of chain] {\rotatebox{90}{chain}};
+
+    % m1
+    \node [outer match node, inner sep=2pt, fit=(v)] (m1a) {};
+    \node [outer match node, inner sep=2pt, fit=(v1)] (m1b) {};
+    \node [outer match node, fit=(cp1)] (m1c) {};
+    \def\pathMI{
+      [bend left=45]
+      (m1a.north west)
+      to
+      (m1a.north east)
+      to
+      (m1a.south east)
+      [rounded corners=8pt]
+      --
+      (m1b.east |- m1c.east)
+      [rounded corners=0]
+      --
+      (m1b.east)
+      to
+      (m1b.south)
+      to
+      (m1b.west)
+      [rounded corners=8pt]
+      --
+      (m1b.west |- m1c.north)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMI;
+
+    % m2
+    \node [outer match node, inner sep=2pt, fit=(v)] (m2a) {};
+    \node [outer match node, inner sep=2pt, fit=(v2)] (m2b) {};
+    \node [outer match node, fit=(cp1)] (m2c) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.south west)
+      to
+      (m2a.north west)
+      to
+      (m2a.north east)
+      [rounded corners=8pt]
+      --
+      (m2b.east |- m2c.north)
+      [rounded corners=0]
+      --
+      (m2b.east)
+      to
+      (m2b.south)
+      to
+      (m2b.west)
+      [rounded corners=8pt]
+      --
+      (m2b.west |- m2c.west)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMII;
+
+    % m3
+    \node [outer match node, inner sep=5pt, fit=(add1-res)] (m3a) {};
+    \node [outer match node, inner sep=5pt, fit=(add1-arg)] (m3b) {};
+    \draw [match line, fill=shade1, rounded corners=8pt]
+          (m3a.south west)
+          --
+          (m3b.south west)
+          --
+          (m3b.north west)
+          [rounded corners=0]
+          -|
+          ([xshift=-1.5pt] alt1.south east)
+          [rounded corners=8pt]
+          --
+          (m3a.south east)
+          --
+          cycle;
+
+    % m4
+    \node [outer match node, inner sep=5pt, fit=(add2-res)] (m4a) {};
+    \node [outer match node, inner sep=5pt, fit=(add2-arg)] (m4b) {};
+    \draw [match line, fill=shade1, rounded corners=8pt]
+          (m4a.south east)
+          --
+          (m4b.south east)
+          --
+          (m4b.north east)
+          [rounded corners=0]
+          -|
+          ([xshift=1.5pt] alt2.south west)
+          [rounded corners=8pt]
+          --
+          (m4a.south west)
+          --
+          cycle;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2] \pathMII;
+    \end{scope}
+    \begin{scope}
+      \path [clip] \pathChain;
+      \path [fill=shade2] \pathMI;
+      \path [fill=shade2] \pathMII;
+    \end{scope}
+
+    \draw [match line] \pathMI;
+    \draw [match line] \pathMII;
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

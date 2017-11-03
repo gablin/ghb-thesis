@@ -1,0 +1,40 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\tikzset{
+  alt node/.style={
+    value node,
+    rounded corners=2pt,
+    inner sep=2pt,
+  },
+  alternative data flow/.style={
+    data flow,
+    densely dotted,
+  },
+  chain/.style={
+    nothing,
+    inner xsep=10pt,
+    inner ysep=2pt,
+  },
+  chain label/.style={
+    nothing,
+    node distance=3pt,
+    font=\footnotesize,
+  },
+  match label/.append style={%
+    outer sep=0,
+    node distance=3pt,
+  },
+  outer match node/.style={
+    match node,
+    draw=none,
+    inner sep=0,
+  },
+}%

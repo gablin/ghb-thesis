@@ -1,0 +1,103 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/solving-techniques/interchangeable-data-example-styles}%
+\begin{tikzpicture}
+  \node [value node] (v) {};
+  \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+  \node [computation node, position=- 45 degrees from v] (cp2) {\opCopy};
+  \node [value node, below=of cp1] (v1) {\opVar{v}[1]};
+  \node [value node, below=of cp2] (v2) {\opVar{v}[2]};
+
+  % We do this to get the same positioning of the nodes for all subfigures
+  \begin{scope}[overlay, opacity=0]
+    \node [alt node, below=of v1] (alt1) {$\mVar{alt}[p_1]$};
+    \node [alt node, below=of v2] (alt2) {$\mVar{alt}[p_2]$};
+  \end{scope}
+  \path (alt2.east |- cp2) -- +(0:1pt);
+
+  \begin{scope}[data flow]
+    \draw (v) -- (cp1);
+    \draw (v) -- (cp2);
+    \draw (cp1) -- (v1);
+    \draw (cp2) -- (v2);
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m1
+    \node [outer match node, inner sep=2pt, fit=(v)] (m1a) {};
+    \node [outer match node, inner sep=2pt, fit=(v1)] (m1b) {};
+    \node [outer match node, fit=(cp1)] (m1c) {};
+    \def\pathMI{
+      [bend left=45]
+      (m1a.north west)
+      to
+      (m1a.north east)
+      to
+      (m1a.south east)
+      [rounded corners=8pt]
+      --
+      (m1b.east |- m1c.east)
+      [rounded corners=0]
+      --
+      (m1b.east)
+      to
+      (m1b.south)
+      to
+      (m1b.west)
+      [rounded corners=8pt]
+      -- coordinate (m1)
+      (m1b.west |- m1c.north)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMI;
+
+    % m2
+    \node [outer match node, inner sep=2pt, fit=(v)] (m2a) {};
+    \node [outer match node, inner sep=2pt, fit=(v2)] (m2b) {};
+    \node [outer match node, fit=(cp1)] (m2c) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.south west)
+      to
+      (m2a.north west)
+      to
+      (m2a.north east)
+      [rounded corners=8pt]
+      --
+      (m2b.east |- m2c.north)
+      [rounded corners=0]
+      -- coordinate (m2)
+      (m2b.east)
+      to
+      (m2b.south)
+      to
+      (m2b.west)
+      [rounded corners=8pt]
+      --
+      (m2b.west |- m2c.west)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \path [fill=shade1] \pathMII;
+
+    \begin{scope}
+      \path [clip] \pathMI;
+      \path [fill=shade2] \pathMII;
+    \end{scope}
+
+    \draw [selected match line] \pathMI;
+    \draw [selected match line] \pathMII;
+
+    \node [overlay, match label, left=of m1]  {\rotatebox{90}{actual copy}};
+    \node [overlay, match label, right=of m2] {\rotatebox{-90}{null copy}};
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

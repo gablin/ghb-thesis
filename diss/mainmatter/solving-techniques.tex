@@ -299,7 +299,7 @@ bounded as
   our model}
 
 
-\section{Dominance Breaking Constraints}
+\section{Symmetry and Dominance Breaking Constraints}
 \labelSection{st-dom-breaking-constraints}
 
 \todo{write intro}
@@ -348,8 +348,176 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 
 \subsubsection{Interchangeable Data}
 
-\todo{explain constraint}
+As described in \refSection{modeling-value-reuse}, \glspl{datum} in the \gls{UF
+  graph} that are copies of the same value are \gls{copy-related.d} and
+therefore interchangeable.
+%
+\begin{figure}
+  \begin{minipage}{58mm}%
+    \centering%
+    \subcaptionbox{%
+                    UF graph, where the values \irVar{v}[1] and \irVar{v}[2]
+                    constitute a chain of interchangeable data%
+                    \labelFigure{interchangeable-data-example-annotated-graph}%
+                  }%
+                  [\textwidth]%
+                  {%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-annotated-graph%
+                    }%
+                  }
 
+    \vspace{\betweensubfigures}
+
+    \subcaptionbox{%
+                    Symmetries due to how data can be connected to operands.
+                    %
+                    We wish to forbid the second solution%
+                    \labelFigure{interchangeable-data-example-alt-solutions}%
+                  }%
+                  [\textwidth]%
+                  {%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-alt-1%
+                    }%
+                    \hspace{8mm}%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-alt-2%
+                    }%
+                  }%
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}{58mm}%
+    \centering%
+    \subcaptionbox{%
+                    Symmetries due to how null-copy matches can be selected.
+                    %
+                    We wish to forbid the second solution%
+                    \labelFigure{interchangeable-data-example-null-solutions}%
+                  }%
+                  [\textwidth]%
+                  {%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-null-1%
+                    }%
+                    \hspace{8mm}%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-null-2%
+                    }%
+                  }
+
+    \vspace{\betweensubfigures}
+
+    \subcaptionbox{%
+                    Symmetries due to how kill matches can be selected.
+                    %
+                    We wish to forbid the second solution%
+                    \labelFigure{interchangeable-data-example-kill-solutions}%
+                  }%
+                  [\textwidth]%
+                  {%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-kill-1%
+                    }%
+                    \hspace{8mm}%
+                    \input{%
+                      figures/solving-techniques/%
+                      interchangeable-data-example-kill-2%
+                    }%
+                  }%
+  \end{minipage}
+
+  \caption[Example of interchangeable data]%
+          {%
+            Example of interchangeable data and how these give rise to
+            symmetries%
+          }
+  \labelFigure{interchangeable-data-example}
+\end{figure}
+%
+This is another source for symmetric \glspl{solution}, which is illustrated in
+\refFigure{interchangeable-data-example}.
+
+Assume a \gls{UF graph} containing two \gls{copy-related.d} values, \irVar{v}[1]
+and~\irVar{v}[2], that may both be connected to two \glspl{operand}~$p_1$
+and~$p_2$ (\refFigure{interchangeable-data-example-annotated-graph}).
+%
+We say that a set of values constitute a chain of \gls!{interchangeable.d} if
+they can be swapped in a \gls{solution} without affecting the \gls{program}
+semantics, which is the case if the values are all \gls{copy-related.d} and none
+is both \gls{define.d}[d] and \gls{use.d}[d] by some \gls{match}.
+%
+In the above example, \irVar{v}[1] and~\irVar{v}[2] constitute such a chain and
+can therefore be swapped for $p_1$ and~$p_2$, giving rise to unwanted symmetric
+\glspl{solution} (\refFigure{interchangeable-data-example-alt-solutions}).
+%
+The intuition here is to forbid \glspl{solution} containing ``cross-over''
+connections between the values in a chain and the $\mVar{alt}$~\glspl{variable}.
+%
+As a precaution, however, we will exclude \glspl{operand} used by
+\glspl{phi-match} due to the \gls{definition edge} which may require such
+cross-over connections.
+
+If we assume that there exists a partial order $\leq$ for~$\mDataSet$, then we
+can remove these symmetries using the \gls!{value-precede-chain constraint},
+which requires a sequence of \glspl{variable} to be sorted according to a given
+chain of values.
+%
+Formally, the \gls{constraint} is defined as follows.
+%
+\begin{definition}[Value-Precede-Chain Constraint]%
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
+  \glspl{variable}.
+  %
+  Let also $c$ be a 1-indexed sequence with $n$ elements.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mValuePrecChain(c, \mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \bigcap_{1 \leq i < n}
+    \mValuePrec(c[i], c[i+1], \mVar{x}[1], \ldots \mVar{x}[k]),
+  \end{displaymath}
+  %
+  where
+  \begin{displaymath}
+    \mValuePrec(s, t, \mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\! i} \: d_i = t
+                  \mImp \exists_{j} \: j < i \mAnd d_j = s
+                }.
+  \end{displaymath}
+\end{definition}
+%
+For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
+  \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
+  \mSet{4})$} holds because the~4 is preceded by a~5, which in turn is preceded
+by a~6, in the permutation of $\mVar{x}$~\glspl{variable}.
+%
+Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
+  \mVar{x}_2 \in \mSet{1})$} also holds because 4 does not appear among the
+$\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
+not matter).
+%
+However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
+  \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
+
+Hence, if $\mInterchDataSet$ denotes the set of chains of
+\gls{interchangeable.d} \glspl{datum} and \mbox{$\mOperandSet[\mPhi] \subseteq
+  \mOperandSet$} denotes the set of \glspl{operand} used by \glspl{phi-match},
+then the \gls{symmetry breaking.c} \gls{constraint} described above is modeled
+as
+%
 \begin{equation}
   \begin{array}{c}
     \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]), \\
@@ -357,13 +525,52 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
     \forall p_1, \ldots, p_k \in \mOperandSet \setminus \mOperandSet[\mPhi],
     p_1 \neq \cdots \neq p_k
     \mAnd
-    \forall_{\! i} \: \mDataSet[p_i] \! = c
+    \forall_{\! i} \: \mDataSet[p_i] \! = c.
   \end{array}
   \labelEquation{interchangeable-data-chain-precedence}
 \end{equation}
 
-\todo{explain constraint}
-
+Additional symmetries may appear due to \glspl{null-copy match}.
+%
+Returning to the previous example, if one of the two \glspl{copy node} need to
+be covered using a \gls{copy match} derived from actual copy \gls{instruction},
+then we are free to decide which.
+%
+Intuitively, we want to forbid \glspl{solution} where selected \glspl{null-copy
+  match} appear to the ``left'' of a non-\gls{null-copy match}.
+%
+To this end, we make use of the \gls!{increasing constraint}, which requires a
+sequence of \glspl{variable} to be assigned values in a non-strictly increasing
+order.
+%
+Formally, the \gls{constraint} is defined as follows.
+%
+\begin{definition}[Increasing Constraint]%
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
+  \glspl{variable}.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\! i < k} \: d_i \leq d_{i+1}
+                }.
+  \end{displaymath}
+\end{definition}
+%
+Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
+can only be defined by \glspl{copy match}, $\mMatchSet[\mNull]$ and
+$\mMatchSet[\mKill]$ denote the set of \glsshort{null match} and \glspl{kill
+  match}, respectively, and \mbox{$\mDefSet(d) \subseteq \mMatchSet$} denote
+the set of \glspl{match} that can define a \gls{datum}~$d$.
+%
+Using these definitions, this \gls{symmetry breaking.c} \glspl{constraint} is
+modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
@@ -376,18 +583,12 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
                                 \mMatchSet[\mNull]
                                 \setminus
                                 \mMatchSet[\mKill]
-                              )
+                              ).
   \end{array}
   \labelEquation{null-copy-matches-symmetry-breaking}
 \end{equation}
-%
-where $\mInterchDataSet[\mCopy]$ denotes the set of chains of \glspl{datum} that
-can only be defined by \glspl{copy match}, $\mMatchSet[\mNull]$ and
-$\mMatchSet[\mKill]$ denote the set of \glsshort{null match} and \glspl{kill
-  match}, respectively, and \mbox{$\mDefSet(d) \subseteq \mMatchSet$} denotes
-the set of \glspl{match} that can define a \gls{datum}~$d$.
 
-\todo{explain constraint}
+\todo{describe constraint}
 
 \begin{equation}
   \begin{array}{c}
@@ -397,7 +598,7 @@ the set of \glspl{match} that can define a \gls{datum}~$d$.
     \forall_{\! i} \: m_i = \min( \mDefSet(c[i])
                                 \cap
                                 \mMatchSet[\mKill]
-                              )
+                              ).
   \end{array}
   \labelEquation{kill-matches-symmetry-breaking}
 \end{equation}

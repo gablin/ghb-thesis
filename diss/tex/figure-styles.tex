@@ -136,6 +136,10 @@
     dash pattern=on 2.5pt off 3pt,
     line width=\dataFlowLineWidth,
   },
+  selected match line/.style={%
+    match line,
+    solid,
+  },
   match node/.style={%
     match line,
     draw,
@@ -151,6 +155,10 @@
   },
   match attachment line/.style={%
     line width=1.25\dataFlowLineWidth,
+  },
+  dead/.style={
+    draw=black!60!white,
+    text=black!60!white,
   },
 }
 \makeatletter

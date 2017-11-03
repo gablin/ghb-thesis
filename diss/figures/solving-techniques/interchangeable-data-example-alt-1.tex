@@ -1,0 +1,26 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/solving-techniques/interchangeable-data-example-styles}%
+\begin{tikzpicture}
+  \begin{scope}[overlay, opacity=0]
+    % We do this to get the same positioning of the nodes for all subfigures
+    \node [value node] (v) {};
+    \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+    \node [computation node, position=- 45 degrees from v] (cp2) {\opCopy};
+  \end{scope}
+  \node [value node, below=of cp1] (v1) {\opVar{v}[1]};
+  \node [value node, below=of cp2] (v2) {\opVar{v}[2]};
+  \node [alt node, below=of v1] (alt1) {$\mVar{alt}[p_1]$};
+  \node [alt node, below=of v2] (alt2) {$\mVar{alt}[p_2]$};
+
+  \begin{scope}[data flow]
+    \draw (v1) -- (alt1);
+    \draw (v2) -- (alt2);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

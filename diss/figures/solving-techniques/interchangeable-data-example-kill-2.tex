@@ -1,0 +1,63 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/solving-techniques/interchangeable-data-example-styles}%
+\begin{tikzpicture}
+  \node [value node] (v) {};
+  \node [computation node, position=-135 degrees from v, dead] (cp1) {\opCopy};
+  \node [computation node, position=- 45 degrees from v] (cp2) {\opCopy};
+  \node [value node, below=of cp1, dead] (v1) {\opVar{v}[1]};
+  \node [value node, below=of cp2] (v2) {\opVar{v}[2]};
+  \node [alt node, below=of v1] (alt1) {$\mVar{alt}[p_1]$};
+  \node [alt node, below=of v2] (alt2) {$\mVar{alt}[p_2]$};
+
+  \begin{scope}[data flow]
+    \draw (v) -- (cp2);
+    \draw (cp2) -- (v2);
+    \draw (v2) -- (alt2);
+    \draw (v2) -- (alt1.north east);
+
+    \begin{scope}[dead]
+      \draw (v) -- (cp1);
+      \draw (cp1) -- (v1);
+      \draw (v1) -- (alt1);
+    \end{scope}
+  \end{scope}
+
+  \begin{pgfonlayer}{background}
+    % m2
+    \node [outer match node, inner sep=2pt, fit=(v)] (m2a) {};
+    \node [outer match node, inner sep=2pt, fit=(v2)] (m2b) {};
+    \node [outer match node, fit=(cp1)] (m2c) {};
+    \def\pathMII{
+      [bend left=45]
+      (m2a.south west)
+      to
+      (m2a.north west)
+      to
+      (m2a.north east)
+      [rounded corners=8pt]
+      --
+      (m2b.east |- m2c.north)
+      [rounded corners=0]
+      --
+      (m2b.east)
+      to
+      (m2b.south)
+      to
+      (m2b.west)
+      [rounded corners=8pt]
+      --
+      (m2b.west |- m2c.west)
+      [rounded corners=0]
+      --
+      cycle
+    }
+    \draw [selected match line, fill=shade1] \pathMII;
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

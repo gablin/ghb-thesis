@@ -17,18 +17,14 @@
     selected/.style={
       solid,
     },
-    redundant/.style={
-      draw=black!60!white,
-      text=black!60!white,
-    },
   ]
 
   \node [value node] (v) {\strut\opVar{v}};
   \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
-  \node [computation node, position=- 45 degrees from v, redundant] (cp2)
+  \node [computation node, position=- 45 degrees from v, dead] (cp2)
         {\opCopy};
   \node [value node, below=of cp1] (v1) {\strut\opVar{v}[\hspace{-1pt}1]};
-  \node [value node, below=of cp2, redundant] (v2)
+  \node [value node, below=of cp2, dead] (v2)
         {\strut\opVar{v}[\hspace{-1pt}2]};
   \node [computation node, below=of v1] (op1) {};
   \node [computation node, below=of v2] (op2) {};
@@ -39,7 +35,7 @@
     \draw (v1) -- (op1);
     \draw (v1) -- (op2);
 
-    \begin{scope}[redundant]
+    \begin{scope}[dead]
       \draw (v) -- (cp2);
       \draw (cp2) -- (v2);
       \draw (v2) -- (op2);
