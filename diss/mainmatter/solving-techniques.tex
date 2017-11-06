@@ -563,8 +563,8 @@ Formally, the \gls{constraint} is defined as follows.
 \end{definition}
 %
 Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
-can only be defined by \glspl{copy match}, $\mMatchSet[\mNull]$ and
-$\mMatchSet[\mKill]$ denote the set of \glsshort{null match} and \glspl{kill
+can only be defined by \glspl{copy match}, $\mNullMatchSet$ and
+$\mKillMatchSet$ denote the set of \glsshort{null match} and \glspl{kill
   match}, respectively, and \mbox{$\mDefSet(d) \subseteq \mMatchSet$} denote
 the set of \glspl{match} that can define a \gls{datum}~$d$.
 %
@@ -575,15 +575,12 @@ modeled as
   \begin{array}{c}
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
     \forall c \in \mInterchDataSet[\mCopy],
-    \forall m_1, \ldots, m_k \in \mMatchSet[\mNull]
-                                 \setminus
-                                 \mMatchSet[\mKill],
-    \forall_{\! i} \: m_i = \mMin( \mDefSet(c[i])
-                                 \cap
-                                 \mMatchSet[\mNull]
-                                 \setminus
-                                 \mMatchSet[\mKill]
-                               ).
+    \forall 1 \leq i < k,
+    \exists m_i \in \mDefSet(c[i])
+                    \cap
+                    \mNullMatchSet
+                    \setminus
+                    \mKillMatchSet.
   \end{array}
   \labelEquation{null-copy-matches-symmetry-breaking}
 \end{equation}
@@ -603,11 +600,8 @@ we make use of the \gls{increasing constraint} to model this \gls{symmetry
   \begin{array}{c}
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
     \forall c \in \mInterchDataSet[\mCopy],
-    \forall m_1, \ldots, m_k \in \mMatchSet[\mKill],
-    \forall_{\! i} \: m_i = \mMin( \mDefSet(c[i])
-                                 \cap
-                                 \mMatchSet[\mKill]
-                               ).
+    \forall 1 \leq i < k,
+    \exists m_i \in \mDefSet(c[i]) \cap \mKillMatchSet.
   \end{array}
   \labelEquation{kill-matches-symmetry-breaking}
 \end{equation}

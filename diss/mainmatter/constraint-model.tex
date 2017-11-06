@@ -372,14 +372,14 @@ With these definitions, the \gls{constraint} is modeled as
 \begin{equation}
   \begin{array}{c}
     \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]), \\
-    \forall m \in \mMatchCompSet{\mPhi},
+    \forall m \in \mPhiMatchCompSet,
     \forall d \in \mUses(m),
     \forall o \in \mCovers(m),
   \end{array}
   \labelEquation{dom}
 \end{equation}
 %
-where $\mMatchCompSet{\mPhi}$ denotes the set~$\mMatchSet$ without the
+where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
 \glspl{phi-match}.
 
 The restrictions imposed by the \glspl{definition edge} are modeled as
@@ -931,7 +931,7 @@ accordingly (the changes are highlighted in grey):
 \begin{equation}
   \begin{array}{c}
     \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]), \\
-    \forall m \in \mMatchCompSet{\mPhi},
+    \forall m \in \mPhiMatchCompSet,
     \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m),
   \end{array}
@@ -987,7 +987,7 @@ These \glspl{constraint} are modeled as
     \mVar{sel}[m]
     \mEq
     \mVar{inactive}[\mVar{alt}[p]], \\
-    \forall m \in \mMatchSet[\mKill],
+    \forall m \in \mKillMatchSet,
     \forall p \in \mDefines(m)
   \end{array}
   \labelEquation{inactivity-when-killed}
@@ -998,15 +998,14 @@ These \glspl{constraint} are modeled as
     \mVar{sel}[m]
     \mImp
     \neg \mVar{inactive}[\mVar{alt}[p]], \\
-    \forall m \in \mMatchCompSet{\mKill},
+    \forall m \in \mKillMatchCompSet,
     \forall p \in \mUses(m)
   \end{array}
   \labelEquation{inactivity-when-used}
 \end{equation}
 %
-where $\mMatchSet[\mKill]$ and $\mMatchCompSet{\mKill}$ denote the set of
-\glspl{kill match} respectively the set~$\mMatchSet$ without the \glspl{kill
-  match}.
+where $\mKillMatchSet$ and $\mKillMatchCompSet$ denote the set of \glspl{kill
+  match} respectively the set~$\mMatchSet$ without the \glspl{kill match}.
 
 
 \subsection{Experimental Evaluation}
@@ -1150,7 +1149,7 @@ clause captures \glspl{fall-through} via single empty \glspl{block}.
 %
 Let $\mFallThroughSet$ denote a set of pairs~$\mPair{m}{b}$, where $m$ is a
 \gls{match} and $b$ is a \gls{block} through which $m$ will fall if selected,
-and let $\mMatchSet[\mNull]$ denote the set of \glspl{null match}.
+and let $\mNullMatchSet$ denote the set of \glspl{null match}.
 %
 With these definitions, the \gls{fall-through} \gls{constraint} is modeled as
 %
@@ -1174,7 +1173,7 @@ where
   \equiv
   \mVar{oplace}[o] \neq b
   \mOr
-  \mVar{omatch}[o] \in \mMatchSet[\mNull],
+  \mVar{omatch}[o] \in \mNullMatchSet,
   \forall o \in \mOpSet\hspace{-.8pt}.
 \end{equation*}
 

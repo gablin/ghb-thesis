@@ -329,6 +329,11 @@
 \NewDocumentCommand{\mMatchCompSet}{m}{
   M_{\overbar{#1}}
 }
+\newcommand{\mKillMatchSet}{\mMatchSet[\mKill]}
+\newcommand{\mKillMatchCompSet}{\mMatchCompSet{\mKill}}
+\newcommand{\mNullMatchSet}{\mMatchSet[\!\mNull]}
+\newcommand{\mPhiMatchSet}{\mMatchSet[\mPhi]}
+\newcommand{\mPhiMatchCompSet}{\mMatchCompSet{\mPhi}}
 \newcommand{\mLocationSet}{L}
 \newcommand{\mFallThroughSet}{J}
 \NewDocumentCommand{\mInterchDataSet}{o}{
