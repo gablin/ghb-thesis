@@ -321,7 +321,7 @@ which is modeled as
 %
 \begin{equation}
   \mVar{loc}[d] = \mNullLocation,
-  \forall d \in \mDataSet, \text{$d$ is a \gls{state node}}.
+  \forall d \in \mDataSet\!, \text{$d$ is a \gls{state node}}.
   \labelEquation{loc-of-state-nodes}
 \end{equation}
 
@@ -338,9 +338,10 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[p]), \\
+    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = d\hspace{-1pt}, \\
     \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m) \cup \mUses(m).
+    \forall p \in \mDefines(m) \cup \mUses(m),
+    \exists d \in \mDataSet[\hspace{-1pt}p].
   \end{array}
   \labelEquation{operands-of-non-selected-matches}
 \end{equation}
