@@ -338,7 +338,7 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \min(\mDataSet[p]), \\
+    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[p]), \\
     \forall m \in \mMatchSet,
     \forall p \in \mDefines(m) \cup \mUses(m).
   \end{array}
@@ -578,12 +578,12 @@ modeled as
     \forall m_1, \ldots, m_k \in \mMatchSet[\mNull]
                                  \setminus
                                  \mMatchSet[\mKill],
-    \forall_{\! i} \: m_i = \min( \mDefSet(c[i])
-                                \cap
-                                \mMatchSet[\mNull]
-                                \setminus
-                                \mMatchSet[\mKill]
-                              ).
+    \forall_{\! i} \: m_i = \mMin( \mDefSet(c[i])
+                                 \cap
+                                 \mMatchSet[\mNull]
+                                 \setminus
+                                 \mMatchSet[\mKill]
+                               ).
   \end{array}
   \labelEquation{null-copy-matches-symmetry-breaking}
 \end{equation}
@@ -604,10 +604,10 @@ we make use of the \gls{increasing constraint} to model this \gls{symmetry
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
     \forall c \in \mInterchDataSet[\mCopy],
     \forall m_1, \ldots, m_k \in \mMatchSet[\mKill],
-    \forall_{\! i} \: m_i = \min( \mDefSet(c[i])
-                                \cap
-                                \mMatchSet[\mKill]
-                              ).
+    \forall_{\! i} \: m_i = \mMin( \mDefSet(c[i])
+                                 \cap
+                                 \mMatchSet[\mKill]
+                               ).
   \end{array}
   \labelEquation{kill-matches-symmetry-breaking}
 \end{equation}
