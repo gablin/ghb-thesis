@@ -564,10 +564,10 @@ Formally, the \gls{constraint} is defined as follows.
 \end{definition}
 %
 Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
-can only be defined by \glspl{copy match}, $\mNullMatchSet$ and
-$\mKillMatchSet$ denote the set of \glsshort{null match} and \glspl{kill
-  match}, respectively, and \mbox{$\mDefSet(d) \subseteq \mMatchSet$} denote
-the set of \glspl{match} that can define a \gls{datum}~$d$.
+can only be defined by \glspl{copy match}, \mbox{$\mNullCopyMatchSet \subseteq
+  \mMatchSet$} denote the set of \glspl{null-copy match}, and \mbox{$\mDefSet(d)
+  \subseteq \mMatchSet$} denote the set of \glspl{match} that can define a
+\gls{datum}~$d$.
 %
 Using these definitions, this \gls{symmetry breaking.c} \glspl{constraint} is
 modeled as
@@ -577,11 +577,7 @@ modeled as
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
-    \exists m_i \in \mDefSet(c[i])
-                    \cap
-                    \mNullMatchSet
-                    \setminus
-                    \mKillMatchSet.
+    \exists m_i \in \mDefSet(c[i]) \cap \mNullCopyMatchSet.
   \end{array}
   \labelEquation{null-copy-matches-symmetry-breaking}
 \end{equation}
@@ -605,10 +601,12 @@ we make use of the \gls{increasing constraint} to model this \gls{symmetry
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
-    \exists m_i \in \mDefSet(c[i]) \cap \mKillMatchSet.
+    \exists m_i \in \mDefSet(c[i]) \cap \mKillMatchSet,
   \end{array}
   \labelEquation{kill-matches-symmetry-breaking}
 \end{equation}
+%
+where $\mKillMatchSet$ denotes the set of \glspl{kill match}.
 %
 It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
   node}.
