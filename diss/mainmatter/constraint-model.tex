@@ -125,9 +125,6 @@ The \gls{constraint} that every \gls{operation} must be covered is modeled as
   \forall m \in \mMatchSet[o] \hspace{-1pt}.
   \labelEquation{operation-coverage}
 \end{equation}
-%
-Hence an \gls{operation}~$o$ is covered by a match~$m$ if and only if $m$ is
-selected.
 
 Likewise, the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
 is modeled as
@@ -139,8 +136,10 @@ is modeled as
   \labelEquation{data-definitions}
 \end{equation}
 %
-Hence a \gls{datum}~$d$ is \gls{define.d}[d] by a match~$m$ if and only if $m$
-is selected.
+For \glspl{datum} representing \gls{function} arguments and constants, we assume
+the \gls{pattern set} has been extended with a special \gls!{null-def pattern},
+with \gls{graph} structure \mbox{$\mEdge{b}{d}$} where $b$ is a \gls{entry
+  block} and $d$ is a \gls{datum}, that defines $d$ at zero cost.
 
 
 \subsection{Forbidding Cyclic Data Dependencies}
@@ -229,9 +228,6 @@ modeled as
   \forall f \in \mForbiddenCombSet.
   \labelEquation{cyclic-data-deps}
 \end{equation}
-%
-In other words, the number of selected \glspl{match} must be strictly less than
-the number of \gls{match} appearing in the \gls{cycle}.
 
 
 \section{Modeling Global Code Motion}
