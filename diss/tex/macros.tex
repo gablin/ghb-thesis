@@ -310,7 +310,12 @@
 \newcommand{\mPatternSet}{S}
 \newcommand{\mExtPatternSet}{\mPatternSet_\mathrm{ext}}
 \newcommand{\mArgSet}{A}
-\newcommand{\mOpSet}{O}
+\NewDocumentCommand{\mOpSet}{o}{
+  \IfValueTF{#1}{O_{#1}}{O}
+}
+\NewDocumentCommand{\mOpCompSet}{m}{
+  O_{\overbar{#1}}
+}
 \NewDocumentCommand{\mOperandSet}{o}{
   \IfValueTF{#1}{P_{#1}}{P}
 }
@@ -319,6 +324,7 @@
 }
 \newcommand{\mForbiddenCombSet}{F}
 \newcommand{\mCostMatrix}{C_{\textsc{m}}}
+\newcommand{\mDomMatrix}{R}
 \NewDocumentCommand{\mDataSet}{o}{
   \IfValueTF{#1}{D_{#1}}{D}
 }
@@ -357,8 +363,8 @@
 \DeclareMathOperator{\mCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mCovers}{\mFunFont{covers}}
 \DeclareMathOperator{\mCycle}{\mConstraintFont{Cycle}}
+\DeclareMathOperator{\mDataOf}{\mFunFont{dataOf}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
-\DeclareMathOperator{\mDefSet}{\mFunFont{defset}}
 \DeclareMathOperator{\mDistinct}{\mConstraintFont{Distinct}}
 \DeclareMathOperator{\mDom}{\mFunFont{dom}}
 \DeclareMathOperator{\mDomain}{\mFunFont{D}}
