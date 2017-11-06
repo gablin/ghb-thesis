@@ -537,7 +537,7 @@ be covered using a \gls{copy match} derived from actual copy \gls{instruction},
 then we are free to decide which.
 %
 Intuitively, we want to forbid \glspl{solution} where selected \glspl{null-copy
-  match} appear to the ``left'' of a non-\gls{null-copy match}.
+  match} ``appear to the left'' of a non-\gls{null-copy match}.
 %
 To this end, we make use of the \gls!{increasing constraint}, which requires a
 sequence of \glspl{variable} to be assigned values in a non-strictly increasing
@@ -588,8 +588,17 @@ modeled as
   \labelEquation{null-copy-matches-symmetry-breaking}
 \end{equation}
 
-\todo{describe constraint}
-
+Similarly to \glspl{null-copy match}, symmetries can also arise due to
+\glspl{kill match}.
+%
+In the previous example, for example, if only one of the two \glspl{copy node}
+are needed, then we are free to decide which.
+%
+Intuitively, we want to forbid \glspl{solution} where \gls{inactive.d}
+\glspl{datum} ``appear to the right'' of \gls{active.d} \glspl{datum}, and again
+we make use of the \gls{increasing constraint} to model this \gls{symmetry
+  breaking.c} \gls{constraint} as
+%
 \begin{equation}
   \begin{array}{c}
     \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
