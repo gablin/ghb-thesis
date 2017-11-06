@@ -117,7 +117,11 @@ the set of \glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq
 
 \subsubsection{Constraints}
 
-The \gls{constraint} that every \gls{operation} must be covered is modeled as
+If an \gls{operation}~$o$ is covered by a \gls{match}~$m$, then that entails
+selection of $m$, and vice versa.
+%
+Hence the \gls{constraint} that every \gls{operation} must be covered is modeled
+as
 %
 \begin{equation}
   \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
@@ -126,7 +130,10 @@ The \gls{constraint} that every \gls{operation} must be covered is modeled as
   \labelEquation{operation-coverage}
 \end{equation}
 
-Likewise, the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
+Likewise, if a \gls{datum}~$d$ is \gls{define.d}[d] by a \gls{match}~$m$, then
+that entails selection of $m$, and vice versa.
+%
+Hence the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
 is modeled as
 %
 \begin{equation}
@@ -136,10 +143,13 @@ is modeled as
   \labelEquation{data-definitions}
 \end{equation}
 %
-For \glspl{datum} representing \gls{function} arguments and constants, we assume
-the \gls{pattern set} has been extended with a special \gls!{null-def pattern},
-with \gls{graph} structure \mbox{$\mEdge{b}{d}$} where $b$ is a \gls{entry
-  block} and $d$ is a \gls{datum}, that defines $d$ at zero cost.
+We assume the \gls{pattern set} has been extended with a special \gls!{null-def
+  pattern}, with \gls{graph} structure \mbox{$\mEdge{b}{d}$} where $b$ is a
+\gls{entry block} and $d$ is a \gls{datum}, that defines $d$ at zero cost.
+%
+This \gls{pattern} is needed for defining \glspl{datum} representing
+\gls{function} arguments and constants since these are not produced by any
+\gls{operation}.
 
 
 \subsection{Forbidding Cyclic Data Dependencies}
