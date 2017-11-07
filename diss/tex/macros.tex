@@ -306,6 +306,7 @@
 \newcommand{\mKill}{\times}
 \newcommand{\mNull}{\bot}
 \newcommand{\mNullCopy}{\rlap{$\mCopy$} \mkern-.125mu \mNull}
+\newcommand{\mState}{\square}
 \newcommand{\mUFGraph}{G}
 \newcommand{\mPatternSet}{S}
 \newcommand{\mExtPatternSet}{\mPatternSet_\mathrm{ext}}
@@ -328,6 +329,11 @@
 \NewDocumentCommand{\mDataSet}{o}{
   \IfValueTF{#1}{D_{#1}}{D}
 }
+\NewDocumentCommand{\mDataCompSet}{m}{
+  \mDataSet_{\overbar{#1}}
+}
+\newcommand{\mStateDataSet}{\mDataSet[\mState]}
+\newcommand{\mStateDataCompSet}{\mDataCompSet{\mState}}
 \newcommand{\mBlockSet}{B}
 \newcommand{\mDefEdgeSet}{E}
 \NewDocumentCommand{\mMatchSet}{o}{
@@ -365,17 +371,18 @@
 \DeclareMathOperator{\mCycle}{\mConstraintFont{Cycle}}
 \DeclareMathOperator{\mDataOf}{\mFunFont{dataOf}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
+\DeclareMathOperator{\mDisableIncompUsers}{\mFunFont{disableUses}}
+\DeclareMathOperator{\mExtDefines}{\mFunFont{extdefines}}
 \DeclareMathOperator{\mDistinct}{\mConstraintFont{Distinct}}
 \DeclareMathOperator{\mDom}{\mFunFont{dom}}
 \DeclareMathOperator{\mDomain}{\mFunFont{D}}
 \DeclareMathOperator{\mEmits}{\mFunFont{emits}}
-\DeclareMathOperator{\mEmptyBlock}{\mFunFont{empty}}
+\DeclareMathOperator{\mEmptyBlock}{\mFunFont{isEmpty}}
 \DeclareMathOperator{\mEntry}{\mFunFont{entry}}
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
 \DeclareMathOperator{\mExtValues}{\mFunFont{extvalues}}
 \DeclareMathOperator{\mIncreasing}{\mConstraintFont{inc}}
-\DeclareMathOperator{\mIntValues}{\mFunFont{intvalues}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
 \DeclareMathOperator{\mStates}{\mFunFont{states}}

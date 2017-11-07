@@ -15,6 +15,97 @@
 \section{Refined Define-Before-Use Constraint}
 \labelSection{st-refined-def-before-use-constraint}
 
+% Enforce that every datum is defined in a block such that the block dominates
+% all blocks wherein the datum is used. This constraint shall not be applied to
+% the generic phi patterns, nor to null instructions.
+%
+% This used to be enforced by the following constraint:
+%   constraint
+%     forall ( m in allMatches
+%            , o in operandsUsedByMatch[m]
+%              where not (m in phiInstrMatches)
+%            )
+%     ( dplace[alt[o]] in domSetsOfBlocksInFunction[place[m]] );
+% but it has been reformulated using table constraints to avoid the use of set
+% variables.
+%
+% [MC] Assumes that matches which use some data cover at least one operation.
+% [GHB] This assumption should always hold.
+%
+%constraint
+%  forall (p in nonPhiUseOperands)
+%  ( table([uplace[p], dplace[Alt(p)]], domRelMatrix) );
+%
+%constraint
+%  forall (p in allOperands diff nonPhiUseOperands)
+%  ( uplace[p] = 1 );
+%
+%constraint
+%  forall ( m in allMatches diff phiInstrMatches
+%         , p in operandsUsedByMatch[m]
+%         )
+%  ( not sel[m] -> uplace[p] = dplace[Alt(p)] );
+%
+%constraint
+%  forall ( m in allMatches diff phiInstrMatches
+%         , o in operandsUsedByMatch[m]
+%         , c in operationsCoveredByMatch[m]
+%         )
+%  ( sel[m] -> oplace[c] = uplace[o] );
+
+\todo{write}
+
+
+\section{Refined Kill Constraint}
+\labelSection{st-refined-kill-constraint}
+
+% If a datum d is used by at least one operand in at least one selected match,
+% then d must not be defined by any kill match.  Otherwise, d must be
+% defined by an kill match.
+% constraint
+%   forall ( mi in killInstrMatches
+%          , oi in operandsDefinedByMatch[mi]
+%          , d in operandAlternatives[oi]
+%          )
+%   ( exists ( m in allMatches
+%            , o in operandsUsedByMatch[m]
+%              where d in operandAlternatives[o]
+%            )
+%     ( sel[m] /\ alt[o] = d )
+%     <->
+%     not sel[mi]
+%   );
+%
+% [MC 1]
+% If and only if a datum d is used by at least one operand in at least
+% one selected match, then d must not be defined by any kill
+% match.  If and only if d is used by at least one external operand in
+% at least one selected match, then d must not placed in the null
+% location.
+%
+%constraint
+%  forall ( mi in killInstrMatches
+%         , oi in operandsDefinedByMatch[mi]
+%         , d in operandAlternatives[oi]
+%         )
+%  ( let { var bool: ui,
+%          var bool: ue } in
+%    ( ui <-> exists ( m in allMatches
+%                    , o in operandsUsedByMatch[m] intersect
+%                           operandsInternalToMatch[m]
+%                    where d in operandAlternatives[o]
+%                    )
+%             ( sel[m] /\ alt[o] = d ) ) /\
+%    ( ue <-> exists ( m in allMatches
+%                    , o in operandsUsedByMatch[m] intersect
+%                           operandsExternalToMatch[m]
+%                    where d in operandAlternatives[o]
+%                    )
+%             ( sel[m] /\ alt[o] = d ) ) /\
+%    ( sel[mi] <-> not ui /\ not ue ) /\
+%    ( loc[d] != locValueForNull <-> ue )
+%  );
+
 \todo{write}
 
 
@@ -366,8 +457,8 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{oplace}[o] = b \\
-    \forall b \in \mBlockSet,
+    \mVar{oplace}[o] = b \hspace{-.8pt}, \\
+    \forall b \in \mBlockSet \hspace{-1pt},
     \forall o \in
       \mSetBuilder{o'}%
                   {%
@@ -387,15 +478,15 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[d] \in S, \\
-    \forall S \in \mPowerset{\mBlockSet},
-    \forall d \in \mDataSet,
+    \mVar{dplace}[d] \in S \hspace{-.8pt}, \\
+    \forall S \in \mPowerset{\mBlockSet} \!\!,
+    \forall d \in \mDataSet \!,
     \forall o \in
       \mSetBuilder*{o'}%
                    {%
                      \begin{array}{@{}l@{}}
                        o' \in \mOpCompSet{\mPhi},
-                       m \in \mMatchSet[o'],
+                       m \in \mMatchSet[o'] \hspace{-1pt},
                        \exists p \in \mDefines(m), \\
                        \mSpans(m) = S \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
@@ -412,14 +503,14 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mTable(b, \mVar{dplace}[d], \mDomMatrix), \\
-    \forall b \in \mBlockSet,
+    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix), \\
+    \forall b \in \mBlockSet \hspace{-1pt},
     \forall d \in
       \mSetBuilder*{d'}%
                    {%
                      \begin{array}{@{}l@{}}
                        d' \in \mOpCompSet{\mPhi},
-                       m \in \mMatchSet[d'],
+                       m \in \mMatchSet[d'] \hspace{-1pt},
                        \exists p \in \mUses(m), \\
                        \mEntry(m) = \mSet{b}
                        \mAnd \mDataSet[p] = \mSet{d}
@@ -431,154 +522,171 @@ where
 
 \subsubsection{TODO: rename (phi stuff)}
 
-% % If all matches for an operation o are all phi instructions and have the same
-% % def operand, then the def operand as well as o itself must all be placed in
-% % the block mentioned in the output def edge.
-% constraint
-%   forall ( o in allOperationsInFunction
-%          , d in allDataInFunction
-%            where matchsetOfOp[o] subset phiInstrMatches
-%          )
-%   ( let { set of int: BO = { outputDefEdgesInMatch[j, 2]
-%                            | j in index_set_1of2(outputDefEdgesInMatch)
-%                              where outputDefEdgesInMatch[j, 1] in
-%                                    matchsetOfOp[o]
-%                            }
-%         , set of int: DO = { outputDefEdgesInMatch[j, 3]
-%                            | j in index_set_1of2(outputDefEdgesInMatch)
-%                              where outputDefEdgesInMatch[j, 1] in
-%                                    matchsetOfOp[o]
-%                            }
-%         }
-%     in if card(BO) = 1 /\ forall (do in DO)
-%                           ( operandAlternatives[do] = {d} )
-%        then dplace[d] = min(BO) /\ oplace[o] = min(BO)
-%        else true
-%        endif
-%   );
+\todo{describe constraint}
+
+% If all matches for an operation o are all phi instructions and have the same
+% def operand, then the def operand as well as o itself must all be placed in
+% the block mentioned in the output def edge.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{oplace}[o] = b \hspace{-.8pt}, \\
+    \forall \mEdge{d}{b} \in \mDefEdgeSet,
+    \forall o \in
+      \mSetBuilder*{o'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       o' \in \mOpSet[\mPhi] \hspace{-1pt},
+                       m \in \mMatchSet[o'] \hspace{-1pt},
+                       p \in \mDefines(m), \\
+                       m \in \mPhiMatchSet \mAnd \mDataSet[p] = \mSet{d}
+                     \end{array}
+                   } \!.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
 %
-% % If for any two given blocks p and q, and fallThroughBlockOfMatch contains
-% % [_, p, q] but does not contain [_, p, q'] or [_, p', q], then succ[p] = q can
-% % only help, never hurt.
-% constraint
-%   let { array[allBlocksInFunction] of set of allBlocksInFunction: fwd =
-%           array1d( allBlocksInFunction
-%                  , [ { s | i in index_set_1of2(fallThroughBlockOfMatch)
-%                          , m in {fallThroughBlockOfMatch[i, 1]}
-%                          , s in {fallThroughBlockOfMatch[i, 2]}
-%                            where entryBlockOfMatch[m] = {b}
-%                      }
-%                    | b in allBlocksInFunction
-%                    ]
-%                  )
-%       , array[allBlocksInFunction] of set of allBlocksInFunction: bwd =
-%           array1d( allBlocksInFunction
-%                  , [ { s | i in index_set_1of2(fallThroughBlockOfMatch)
-%                          , m in {fallThroughBlockOfMatch[i, 1]}
-%                          , s in entryBlockOfMatch[m]
-%                            where fallThroughBlockOfMatch[i, 2] = b
-%                      }
-%                    | b in allBlocksInFunction
-%                    ]
-%                  )
-%       }
-%   in forall ( p in allBlocksInFunction
-%             , q in allBlocksInFunction
-%             )
-%      ( if fwd[p] = {q} /\ bwd[q] = {p}
-%        then succ[p] = q
-%        else true
-%        endif
-%      );
+It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
+that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
+and all \glspl{target} are \glspl{block node}.
+
+
+\subsubsection{TODO: rename (?)}
+
+\todo{describe constraint}
+
+% For non-phi matches, no spanned blocks:
+% if selected, blocks of outputs and blocks of use of inputs must be all equal.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{uplace}[q], \\
+    \forall m \in
+      \mSetBuilder{m'}%
+                  {%
+                    m \in \mPhiMatchCompSet \hspace{-1pt},
+                    \mSpans(m) = \mEmptySet
+                  },
+    \forall p \hspace{-.8pt}, q \in \mUses(m) \setminus \mDefines(m),
+    p < q \hspace{-.8pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\mVar{alt}[p]] = \mVar{dplace}[\mVar{alt}[q]], \\
+    \forall m \in
+      \mSetBuilder{m'}%
+                  {%
+                    m \in \mPhiMatchCompSet \hspace{-1pt},
+                    \mSpans(m) = \mEmptySet
+                  },
+    \forall p \hspace{-.8pt}, q \in \mDefines(m), p < q \hspace{-.8pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[q]], \\
+    \forall m \in
+      \mSetBuilder{m'}%
+                  {%
+                    m \in \mPhiMatchCompSet \hspace{-1pt},
+                    \mSpans(m) = \mEmptySet
+                  }, \\
+    \forall p \in \mUses(m) \setminus \mDefines(m),
+    \forall q \in \mDefines(m).
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\todo{describe constraint}
+
+% For non-phi matches, spanned blocks:
+% if selected, blocks of use of inputs must be all equal.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{uplace}[q], \\
+    \forall m \in
+      \mSetBuilder{m'}%
+                  {%
+                    m \in \mPhiMatchCompSet \hspace{-1pt},
+                    \mSpans(m) \neq \mEmptySet
+                  },
+    \forall p \hspace{-.8pt}, q \in \mUses(m) \setminus \mDefines(m),
+    p < q \hspace{-.8pt}.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+
+\subsubsection{TODO: rename (loc stuff)}
+
+\todo{describe constraint}
+
+% If all matches in the matchset covering a particular operation uses some
+% datum d as input, then d cannot be placed in the null location.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{loc}[d] \neq \mNullLocation, \\
+    \forall S \in \mPowerset{\mStateDataCompSet} \hspace{-2pt},
+    \forall o \in
+      \mSetBuilder{o'}%
+                  {%
+                    o' \in \mOpSet \!,
+                    m \in \mMatchSet[o'] \hspace{-1pt},
+                    \exists p \in \mUses(m) \setminus \mDefines(m),
+                    \mDataSet[p] = S
+                  }, \\
+    \exists d \in S.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
+
+\todo{describe constraint}
+
+% [MC 3]
 %
-% % For non-phi matches, no spanned blocks:
-% % if selected, blocks of outputs and blocks of use of inputs must be all equal.
-% constraint
-%   forall ( m in allMatches diff phiInstrMatches
-%            where card(spannedBlocksInMatch[m]) = 0
-%          )
-%   ( let { array[int] of int: defs = [x | x in operandsDefinedByMatch[m]]
-%         , array[int] of int: usonly = [ x | x in operandsUsedByMatch[m]
-%                                             diff operandsDefinedByMatch[m]
-%                                       ]
-%         }
-%     in forall ( i in index_set(usonly)
-%               , j in index_set(usonly)
-%                 where i < j
-%               )
-%        ( sel[m] -> uplace[usonly[i]] = uplace[usonly[j]] )
-%        /\
-%        forall ( i in index_set(defs)
-%               , j in index_set(defs)
-%                 where i < j
-%               )
-%        ( sel[m] -> dplace[Alt(defs[i])] = dplace[Alt(defs[j])] )
-%        /\
-%        forall ( i in index_set(usonly)
-%               , j in index_set(defs)
-%               )
-%        ( sel[m] -> uplace[usonly[i]] = dplace[Alt(defs[j])] )
-%   );
+% If all matches in the matchset that defines a non-state datum d, are active,
+% and define it in an external operand, then d must not be placed in the null
+% location.
 %
-% % For non-phi matches, spanned blocks:
-% % if selected, blocks of use of inputs must be all equal.
-% constraint
-%   forall ( m in allMatches diff phiInstrMatches
-%            where card(spannedBlocksInMatch[m]) > 0
-%          )
-%   ( let { array[int] of int: use = [x | x in operandsUsedByMatch[m]] }
-%     in forall ( i in index_set(use)
-%               , j in index_set(use)
-%                 where i < j
-%               )
-%        ( sel[m] -> uplace[use[i]] = uplace[use[j]] )
-%   );
+% [MC 3] does not dominate [MC 2], nor vice versa.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{loc}[d] \neq \mNullLocation, \\
+    \forall d \in
+      \mSetBuilder*{d'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       d' \in \mStateDataCompSet,
+                       m \in \mMatchSet[d'] \hspace{-1pt},
+                       \exists p \in \mExtDefines(m), \\
+                       m \notin \mKillMatchSet
+                       \mAnd
+                       \mDataSet[p] = \mSet{d'}
+                     \end{array}
+                   } \!.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+% [MC 4]
 %
-% % [MC 2]
-% %
-% % If all matches in the matchset that either covers a particular operation or
-% % defines a datum, and use some datum d in an external operand, then d
-% % cannot be placed in the null location.
-% constraint
-%   forall ( M in matchsetOfOp ++ defsetOfDatumOnly )
-%   ( let { set of int: uses1 = operandsUsedByMatch[min(M)] intersect
-%                               operandsExternalToMatch[min(M)]
-%         }
-%     in forall (use1 in uses1)
-%        ( let { set of int: data1 = operandAlternatives[use1] }
-%          in if forall ( m in M where m > min(M) )
-%                ( exists ( use2 in operandsUsedByMatch[m] intersect
-%                                   operandsExternalToMatch[m]
-%                         )
-%                  ( operandAlternatives[use2] = data1 )
-%                ) /\
-%                forall (d in data1)(not dLocCantBeNull(d))
-%             then exists (d in data1)
-%                  ( loc[d] != locValueForNull )
-%             else true
-%             endif
-%        )
-%   );
-%
-% % [MC 3]
-% %
-% % If all matches in the matchset that defines a non-state datum d, are active,
-% % and define it in an external operand, then d must not be placed in the null
-% % location.
-% %
-% % [MC 3] does not dominate [MC 2], nor vice versa.
-% constraint
-%   forall (d in allDataInFunction diff statesInFunction )
-%   ( if dLocCantBeNull(d)
-%     then loc[d] != locValueForNull
-%     else true
-%     endif
-%   );
-%
-% % [MC 4]
-% %
-% % If an external operand does not take its min value, then its match must be
-% % selected and hence the datum cannot be in the null location.
+% If an external operand does not take its min value, then its match must be
+% selected and hence the datum cannot be in the null location.
+
 % constraint
 %   forall ( m in allMatches
 %          , o in operandsUsedByMatch[m] intersect operandsExternalToMatch[m]
@@ -586,11 +694,49 @@ where
 %                    /\ not oLocCantBeNull(o)
 %          )
 %   ( alt[o] != min(operandAlternatives[o]) -> loc[alt[o]] != locValueForNull );
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{alt}[p] \neq \mMin(\mDataSet[p])
+    \mImp
+    \mVar{alt}[p] \neq \mNullLocation, \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mUses(m) \setminus \mDefines(m),
+    \mCard{\mDataSet[p]} > 1
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+
+\subsubsection{TODO: rename (fall-through stuff)}
+
+\todo{describe constraint}
+
+% If for any two given blocks p and q, and fallThroughBlockOfMatch contains
+% [_, p, q] but does not contain [_, p, q'] or [_, p', q], then succ[p] = q can
+% only help, never hurt.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[b] = c, \\
+    \forall b \hspace{-1pt}, c \in \mBlockSet \hspace{-1pt},
+    \mSetBuilder{\mEntry(m)}{\mPair{m}{c} \in \mFallThroughSet} = \mSet{b}
+    \mAnd
+    \mSetBuilder{m}{\mPair{m}{b} \in \mFallThroughSet} = \mEmptySet.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\todo{describe constraint}
+
+
+\subsubsection{TODO: remove?}
+
+% [MC 5]
 %
-% % [MC 5]
-% %
-% % Constrain the location of d to be where its definers can put it. Also, disable
-% % users that would access it elsewhere.
+% Constrain the location of d to be where its definers can put it. Also, disable
+% users that would access it elsewhere.
+
 % constraint
 %   forall (d in allDataInFunction diff statesInFunction)
 %   ( let { array[int] of int: O =
@@ -620,6 +766,25 @@ where
 %        else true
 %        endif
 %   );
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{loc}[d] = S \mAnd \mDisableIncompUsers(d, S), \\
+    \forall d \in \mStateDataCompSet,
+    \forall S \in
+      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \!, \\
+    S = \mSetBuilder{l}%
+                    {%
+                      m \in \mDataSet[d] \setminus \mKillMatchSet,
+                      p \in \mDefines(m),
+                      l \in \mStores(m, p),
+                      d \in \mDataSet[p]
+                    },
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+%
+where
 %
 % predicate knock_out_users(allDataInFunction: d, set of allLocValues: D) =
 %   let { array[int] of int: O =
@@ -641,11 +806,30 @@ where
 %   in forall (i in I)
 %      ( not sel[validDataLocRangesInMatch[i, 1]] );
 %
-% % [MC 6]
-% %
-% % Constrain the location of d to be where its users can access it. Also, disable
-% % definers that would put it elsewhere. Valid for such d that are used at least
-% % once.
+\begin{equation}
+  \mDisableIncompUsers(d, S)
+  \equiv
+  \neg\mVar{sel}[m],
+  \forall m \in
+    \mSetBuilder*{m'}%
+                 {%
+                   \begin{array}{@{}l@{}}
+                     m' \in \mKillMatchCompSet,
+                     p \in \mUses(m'), \\
+                     d \in \mDataSet[p]
+                     \mAnd
+                     \mStores(m', p) \cap S = \mEmptySet
+                   \end{array}
+                 } \!.
+  \labelEquation{todo}
+\end{equation}
+
+% [MC 6]
+%
+% Constrain the location of d to be where its users can access it. Also, disable
+% definers that would put it elsewhere. Valid for such d that are used at least
+% once.
+
 % constraint
 %   forall (d in dataInFunctionUsedAtLeastOnce)
 %   ( let { array[int] of int: O =
@@ -720,9 +904,12 @@ which is modeled as
 %
 \begin{equation}
   \mVar{loc}[d] = \mNullLocation,
-  \forall d \in \mDataSet\!, \text{$d$ is a \gls{state node}}.
+  \forall d \in \mStateDataSet,
   \labelEquation{loc-of-state-nodes}
 \end{equation}
+%
+where \mbox{$\mStateDataSet \subseteq \mDataSet$} denotes the set of
+\glspl{state node}.
 
 
 \subsubsection{Data of Non-Selected Matches}
