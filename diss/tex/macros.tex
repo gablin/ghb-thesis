@@ -314,13 +314,13 @@
   \IfValueTF{#1}{O_{#1}}{O}
 }
 \NewDocumentCommand{\mOpCompSet}{m}{
-  O_{\overbar{#1}}
+  \mOpSet_{\overbar{#1}}
 }
 \NewDocumentCommand{\mOperandSet}{o}{
   \IfValueTF{#1}{P_{#1}}{P}
 }
 \NewDocumentCommand{\mOperandCompSet}{m}{
-  P_{\overbar{#1}}
+  \mOperandSet_{\overbar{#1}}
 }
 \newcommand{\mForbiddenCombSet}{F}
 \newcommand{\mCostMatrix}{C_{\textsc{m}}}
@@ -334,7 +334,7 @@
   \IfValueTF{#1}{M_{#1}}{M}
 }
 \NewDocumentCommand{\mMatchCompSet}{m}{
-  M_{\overbar{#1}}
+  \mMatchSet_{\overbar{#1}}
 }
 \newcommand{\mKillMatchSet}{\mMatchSet[\mKill]}
 \newcommand{\mKillMatchCompSet}{\mMatchCompSet{\mKill}}
