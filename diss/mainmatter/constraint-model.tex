@@ -915,10 +915,6 @@ to which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
 for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
 by~$\mMatchSet$.
 
-For reasons that will become apparent shortly, we also introduce a set of
-\glspl{variable} \mbox{$\mVar{inactive}[d] \in \mSet{0, 1}$}, which models
-whether a \gls{datum}~$d$ is \gls{inactive.d}.
-
 
 \subsubsection{Constraints}
 
@@ -980,38 +976,34 @@ We address this by extending the \gls{pattern set} with a \gls!{kill pattern}
 which have zero cost and emit nothing if selected.
 %
 A \gls{datum} is said to be \gls!{inactive.d} if and only if it is
-\gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are
-forbidden to use \gls{inactive.d} \glspl{datum}.
+\gls{define.d}[d] by a \gls{kill match}.
 %
-Likewise, a \gls{datum} cannot be \gls{inactive.d} if it is used by a
-non-\gls{kill match}.
+Non-\gls{inactive.d} \glspl{datum} are said to be \gls!{active.d}, and
+non-\glspl{kill match} are only allowed to make use of \gls{active.d}
+\glspl{datum}.
 %
-These \glspl{constraint} are modeled as
+These \glspl{constraint} are joinly modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m]
-    \mEq
-    \mVar{inactive}[\mVar{alt}[p]], \\
+    \neg\mVar{sel}[m] \mEq \mVar{sel}[n] \mAnd \mVar{alt}[p] = d, \\
     \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m)
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p], \\
+    \exists n \in \mKillMatchCompSet,
+    \forall q \in \mUses(n),
+    d \in \mDataSet[q],
   \end{array}
-  \labelEquation{inactivity-when-killed}
-\end{equation}
-%
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \neg \mVar{inactive}[\mVar{alt}[p]], \\
-    \forall m \in \mKillMatchCompSet,
-    \forall p \in \mUses(m)
-  \end{array}
-  \labelEquation{inactivity-when-used}
+  \labelEquation{data-activity}
 \end{equation}
 %
 where $\mKillMatchSet$ and $\mKillMatchCompSet$ denote the set of \glspl{kill
   match} respectively the set~$\mMatchSet$ without the \glspl{kill match}.
+%
+\RefEquation{data-activity} assumes that every \gls{datum}~$d$
+\glsshort{define.d}[able] by some \gls{kill match} is used by at least one
+non-\gls{kill match}, which is reasonable or else the \glspl{operation} defining
+$d$ would be considered dead code.
 
 
 \subsection{Experimental Evaluation}
