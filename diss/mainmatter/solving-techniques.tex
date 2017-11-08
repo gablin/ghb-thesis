@@ -97,44 +97,44 @@
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{useint}[m, p \hspace{-1pt}, d]
+    \mVar{useint}[m_1, p_1, d]
     \mEq
     \left(
     \begin{array}{@{}c@{}}
-      \exists n \in \mKillMatchCompSet,
-      \forall q \in \mUses(n), \\
-      d \in \mDataSet[q] \mAnd \mIsInt(n, q)
+      \exists m_2 \in \mKillMatchCompSet,
+      \forall p_2 \in \mUses(m_2), \\
+      d \in \mDataSet[p_2] \mAnd \mIsInt(m_2, p_2)
       \mAnd
-      \mVar{sel}[n]
+      \mVar{sel}[m_2]
       \mAnd
-      \mVar{alt}[q] = d
+      \mVar{alt}[p_2] = d
     \end{array}
     \right) \!, \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-1pt},
+    \forall m_1 \in \mKillMatchSet,
+    \forall p_1 \in \mDefines(m_1),
+    \forall d \in \mDataSet[p_1],
   \end{array}
   \labelEquation{todo}
 \end{equation}
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{useext}[m, p \hspace{-1pt}, d]
+    \mVar{useext}[m_1, p_1, d]
     \mEq
     \left(
     \begin{array}{@{}c@{}}
-      \exists n \in \mKillMatchCompSet,
-      \forall q \in \mUses(n), \\
-      d \in \mDataSet[q] \mAnd \neg\mIsInt(n, q)
+      \exists m_2 \in \mKillMatchCompSet,
+      \forall p_2 \in \mUses(m_2), \\
+      d \in \mDataSet[p_2] \mAnd \neg\mIsInt(m_2, p_2)
       \mAnd
-      \mVar{sel}[n]
+      \mVar{sel}[m_2]
       \mAnd
-      \mVar{alt}[q] = d
+      \mVar{alt}[p_2] = d
     \end{array}
     \right) \!, \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-1pt},
+    \forall m_1 \in \mKillMatchSet,
+    \forall p_1 \in \mDefines(m_1),
+    \forall d \in \mDataSet[p_1],
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -456,9 +456,9 @@ bounded as
 
 \begin{equation}
   \begin{array}{c}
-    \mTable(\mVar{dplace}[d], \mVar{dplace}[e], \mDomMatrix)
+    \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
     \mAnd
-    \mVar{oplace}[o] = \mVar{dplace}[d], \\
+    \mVar{oplace}[o] = \mVar{dplace}[d_1], \\
     \forall o \in
       \mSetBuilder{o'}%
                   {%
@@ -466,21 +466,21 @@ bounded as
                     m \in \mMatchSet[o'] \hspace{-1pt},
                     \mCard{\mConsumes(m)} = 0
                   }, \\
-    \forall d \in
-      \mSetBuilder{d'}%
+    \forall d_1 \in
+      \mSetBuilder{d}%
                   {%
-                    d' \in \mDataOf(o \hspace{-1pt}, \mDefines),
+                    d \in \mDataOf(o \hspace{-1pt}, \mDefines),
                     m \in \mMatchSet[o] \hspace{-1pt},
                     \exists p \in \mDefines(m),
-                    \mDataSet[p] = \mSet{d'}
+                    \mDataSet[p] = \mSet{d}
                   }, \\
-    \forall e \in
-      \mSetBuilder{e'}%
+    \forall d_2 \in
+      \mSetBuilder{d}%
                   {%
-                    e' \in \mDataOf(o \hspace{-1pt}, \mUses),
+                    d \in \mDataOf(o \hspace{-1pt}, \mUses),
                     m \in \mMatchSet[o] \hspace{-1pt},
                     \exists p \in \mUses(m),
-                    \mDataSet[p] = \mSet{e'}
+                    \mDataSet[p] = \mSet{d}
                   }.
   \end{array}
   \labelEquation{todo}
@@ -611,15 +611,15 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{uplace}[q], \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2], \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p \hspace{-.8pt}, q \in \mUses(m) \setminus \mDefines(m),
-    p < q \hspace{-.8pt},
+    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m), \\
+    p_1 < p_2,
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -628,14 +628,14 @@ and all \glspl{target} are \glspl{block node}.
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[\mVar{alt}[p]] = \mVar{dplace}[\mVar{alt}[q]], \\
+    \mVar{dplace}[\mVar{alt}[p_1]] = \mVar{dplace}[\mVar{alt}[p_2]], \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p \hspace{-.8pt}, q \in \mDefines(m), p < q \hspace{-.8pt},
+    \forall p_1, p_2 \in \mDefines(m), p_1 < p_2,
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -644,15 +644,15 @@ and all \glspl{target} are \glspl{block node}.
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[q]], \\
+    \mVar{uplace}[p_1] = \mVar{dplace}[\mVar{alt}[p_2]], \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   }, \\
-    \forall p \in \mUses(m) \setminus \mDefines(m),
-    \forall q \in \mDefines(m).
+    \forall p_1 \in \mUses(m) \setminus \mDefines(m),
+    \forall p_2 \in \mDefines(m).
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -664,15 +664,15 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{uplace}[q], \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2], \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) \neq \mEmptySet
                   },
-    \forall p \hspace{-.8pt}, q \in \mUses(m) \setminus \mDefines(m),
-    p < q \hspace{-.8pt}.
+    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m), \\
+    p_1 < p_2.
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -745,11 +745,11 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{succ}[b] = c, \\
-    \forall b \hspace{-1pt}, c \in \mBlockSet \hspace{-1pt},
-    \mSetBuilder{\mEntry(m)}{\mPair{m}{c} \in \mFallThroughSet} = \mSet{b}
+    \mVar{succ}[b_1] = b_2, \\
+    \forall b_1, b_2 \in \mBlockSet \hspace{-1pt},
+    \mSetBuilder{\mEntry(m)}{\mPair{m}{b_2} \in \mFallThroughSet} = \mSet{b_1}
     \mAnd
-    \mSetBuilder{m}{\mPair{m}{b} \in \mFallThroughSet} = \mEmptySet.
+    \mSetBuilder{m}{\mPair{m}{b_1} \in \mFallThroughSet} = \mEmptySet.
   \end{array}
   \labelEquation{todo}
 \end{equation}
