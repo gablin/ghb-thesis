@@ -534,6 +534,21 @@ intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
   \labelEquation{compatible-locations}
 \end{equation}
 
+As expected, \glspl{phi-match} require the locations of all its \glspl{datum} to
+be the same.
+%
+This \gls{constraint} is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[d_1] = \mVar{loc}[d_2], \\
+    \forall m \in \mPhiMatchSet,
+    \forall d_1 \hspace{-.8pt}, d_2 \in \mDefines(m) \cup \mUses(m).
+  \end{array}
+  \labelEquation{phi-match-locations}
+\end{equation}
 
 \subsection{Copy Extension}
 
@@ -959,9 +974,22 @@ accordingly (the changes are highlighted in grey):
     \mImp
     \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, \hlDiff{p}), \\
     \forall m \in \mMatchSet,
-    \forall \hlDiff{p} \in \mDefines(m) \cup \mUses(m).
+    \forall \hlDiff{p} \in \mDefines(m) \cup \mUses(m),
   \end{array}
   \labelEquation{compatible-locations-alt}
+\end{equation}
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{loc}[\hlDiff{\mVar{alt}[p_1]}] = \mVar{loc}[\hlDiff{\mVar{alt}[p_2]}],
+    \\
+    \forall m \in \mPhiMatchSet,
+    \forall \hlDiff{p}_1 \hspace{-.8pt}, \hlDiff{p}_2 \in
+      \mDefines(m) \cup \mUses(m).
+  \end{array}
+  \labelEquation{phi-match-locations-alt}
 \end{equation}
 
 Due to these changes there may be \glspl{datum} that is not \gls{use.d}[d] by
