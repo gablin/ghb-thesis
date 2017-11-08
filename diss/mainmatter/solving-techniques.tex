@@ -676,7 +676,7 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
                        \mAnd
                        \mDataSet[p] = \mSet{d'}
                        \mAnd
-                       \mNullLocation \notin \mStores(m, p)
+                       \neg\mIsInt(m, p)
                      \end{array}
                    } \!.
   \end{array}
@@ -799,7 +799,7 @@ where
                        m' \in \mKillMatchCompSet,
                        p \in \mDefines(m'),
                        d \in \mDataSet[p] \hspace{-1pt}, \\
-                       \mNullLocation \notin \mStores(m, p)
+                       \neg\mIsInt(m, p)
                        \mAnd
                        \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
                      \end{array}
