@@ -124,9 +124,11 @@ Hence the \gls{constraint} that every \gls{operation} must be covered is modeled
 as
 %
 \begin{equation}
-  \mVar{omatch}[o] = m \mEq \mVar{sel}[m],
-  \forall o \in \mOpSet \hspace{-1pt},
-  \forall m \in \mMatchSet[o] \hspace{-1pt}.
+  \begin{array}{c}
+    \mVar{omatch}[o] = m \mEq \mVar{sel}[m] \\
+    \forall o \in \mOpSet \hspace{-1pt},
+    \forall m \in \mMatchSet[o] \hspace{-1pt}.
+  \end{array}
   \labelEquation{operation-coverage}
 \end{equation}
 
@@ -137,9 +139,11 @@ Hence the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
 is modeled as
 %
 \begin{equation}
-  \mVar{dmatch}[d] = m \mEq \mVar{sel}[m],
-  \forall d \in \mDataSet \hspace{-1.5pt},
-  \forall m \in \mMatchSet[d] \hspace{-1pt}.
+  \begin{array}{c}
+    \mVar{dmatch}[d] = m \mEq \mVar{sel}[m] \\
+    \forall d \in \mDataSet \hspace{-1.5pt},
+    \forall m \in \mMatchSet[d] \hspace{-1pt}.
+  \end{array}
   \labelEquation{data-definitions}
 \end{equation}
 %
@@ -234,7 +238,8 @@ and \gls{match set}, the \gls{constraint} forbidding cyclic data dependencies is
 modeled as
 %
 \begin{equation}
-  \sum_{m \in f} \mVar{sel}[m] < \mCard{f},
+  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
+  \mQuantSep
   \forall f \in \mForbiddenCombSet.
   \labelEquation{cyclic-data-deps}
 \end{equation}
@@ -332,7 +337,7 @@ modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2], \\
+    \mVar{sel}[m] \mImp \mVar{oplace}[o_1] = \mVar{oplace}[o_2] \\
     \forall m \in \mMatchSet,
     \forall o_1\hspace{-1pt}, o_2 \in \mCovers(m).
   \end{array}
@@ -353,7 +358,7 @@ or a set containing only the \gls{entry block} of match~$m$ (when the \gls{UP
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b\hspace{-1.2pt}, \\
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = b\hspace{-1.2pt} \\
     \forall m \in \mMatchSet,
     \forall o \in \mCovers(m),
     \forall b \in \mEntry(m).
@@ -377,7 +382,7 @@ With these definitions, the \gls{constraint} is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]), \\
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]) \\
     \forall m \in \mPhiMatchCompSet,
     \forall d \in \mUses(m),
     \forall o \in \mCovers(m),
@@ -391,7 +396,8 @@ where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
 The restrictions imposed by the \glspl{definition edge} are modeled as
 %
 \begin{equation}
-  \mVar{dplace}[d] = b,
+  \mVar{dplace}[d] = b
+  \mQuantSep
   \forall \mEdge{d}{b} \in \mDefEdgeSet,
   \labelEquation{def-edges}
 \end{equation}
@@ -447,7 +453,7 @@ If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m), \\
+    \mVar{dplace}[d] \in \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
     \forall m \in \mMatchSet,
     \forall d \in \mDefines(m),
     \forall o \in \mCovers(m).
@@ -467,7 +473,7 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{oplace}[o] \neq b\hspace{-1.2pt}, \\
+    \mVar{oplace}[o] \neq b \\
     \forall m \in \mMatchSet,
     \forall o \in \mOpSet \setminus \mCovers(m),
     \forall b \in \mConsumes(m).
@@ -527,7 +533,7 @@ intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[d] \in \mStores(m, d), \\
+    \mVar{loc}[d] \in \mStores(m, d) \\
     \forall m \in \mMatchSet,
     \forall d \in \mDefines(m) \cup \mUses(m).
   \end{array}
@@ -543,8 +549,8 @@ This \gls{constraint} is modeled as
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[d_1] = \mVar{loc}[d_2], \\
-    \forall m \in \mPhiMatchSet,
+    \mVar{loc}[d_1] = \mVar{loc}[d_2] \\
+    \forall m \in \mPhiMatchSet \hspace{-.8pt},
     \forall d_1 \hspace{-.8pt}, d_2 \in \mDefines(m) \cup \mUses(m).
   \end{array}
   \labelEquation{phi-match-locations}
@@ -661,7 +667,8 @@ conventions of the specific \gls{target machine}.
 as
 %
 \begin{equation}
-  \mVar{loc}[d] \in \mArgLoc(d),
+  \mVar{loc}[d] \in \mArgLoc(d)
+  \mQuantSep
   \forall d \in \mArgSet,
   \labelEquation{function-args}
 \end{equation}
@@ -947,7 +954,7 @@ accordingly (the changes are highlighted in grey):
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]), \\
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]) \\
     \forall m \in \mPhiMatchCompSet,
     \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m),
@@ -960,7 +967,7 @@ accordingly (the changes are highlighted in grey):
     \mVar{sel}[m]
     \mImp
     \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in
-      \mSet{\mVar{oplace}[o]} \cup \mSpans(m), \\
+      \mSet{\mVar{oplace}[o]} \cup \mSpans(m) \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mDefines(m),
     \forall o \in \mCovers(m),
@@ -972,7 +979,7 @@ accordingly (the changes are highlighted in grey):
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, \hlDiff{p}), \\
+    \mVar{loc}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mStores(m, \hlDiff{p}) \\
     \forall m \in \mMatchSet,
     \forall \hlDiff{p} \in \mDefines(m) \cup \mUses(m),
   \end{array}
@@ -983,7 +990,7 @@ accordingly (the changes are highlighted in grey):
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{loc}[\hlDiff{\mVar{alt}[p_1]}] = \mVar{loc}[\hlDiff{\mVar{alt}[p_2]}],
+    \mVar{loc}[\hlDiff{\mVar{alt}[p_1]}] = \mVar{loc}[\hlDiff{\mVar{alt}[p_2]}]
     \\
     \forall m \in \mPhiMatchSet,
     \forall \hlDiff{p}_1 \hspace{-.8pt}, \hlDiff{p}_2 \in
@@ -1016,14 +1023,15 @@ These \glspl{constraint} are jointly modeled as
   \begin{array}{c}
     \neg\mVar{sel}[m] \mEq
     \exists n \in \mKillMatchCompSet,
-    \forall q \in \mUses(n),
+    \forall q \in \mUses(n)
+    \text{ \st }
     d \in \mDataSet[q]
     \mAnd
     \mVar{sel}[n]
-    \mAnd \mVar{alt}[p] = d, \\
+    \mAnd \mVar{alt}[p] = d \\
     \forall m \in \mKillMatchSet,
     \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p],
+    \forall d \in \mDataSet[p] \hspace{-.8pt},
   \end{array}
   \labelEquation{data-activity}
 \end{equation}
@@ -1189,7 +1197,7 @@ With these definitions, the \gls{fall-through} \gls{constraint} is modeled as
       \mVar{succ}[\mVar{succ}[\mEntry(m)]] = b
       \mAnd
       \mEmptyBlock(\mVar{succ}[\mEntry(m)])
-    \big)\hspace{-.8pt}, \\
+    \big) \\
     \forall \mPair{m}{b} \in \mFallThroughSet,
   \end{array}
   \labelEquation{fall-through}
@@ -1197,14 +1205,15 @@ With these definitions, the \gls{fall-through} \gls{constraint} is modeled as
 %
 where
 %
-\begin{equation*}
+\begin{equation}
   \mEmptyBlock(b)
   \equiv
   \mVar{oplace}[o] \neq b
   \mOr
-  \mVar{omatch}[o] \in \mNullMatchSet,
+  \mVar{omatch}[o] \in \mNullMatchSet
+  \mQuantSep
   \forall o \in \mOpSet\hspace{-.8pt}.
-\end{equation*}
+\end{equation}
 
 If a \gls{block}~$b$ unconditionally branches to another \gls{block}~$b'$ and
 $b'$ appears immediately after $b$ in the \gls{block} sequence, then a jump

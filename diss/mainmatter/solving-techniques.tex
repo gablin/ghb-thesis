@@ -39,20 +39,22 @@
 % [GHB] This assumption should always hold.
 
 \begin{equation}
-  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix),
+  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix)
+  \mQuantSep
   \forall p \in \mPhiOperandCompSet.
   \labelEquation{todo}
 \end{equation}
 
 \begin{equation}
-  \mVar{uplace}[p] = \mMin(\mBlockSet),
+  \mVar{uplace}[p] = \mMin(\mBlockSet)
+  \mQuantSep
   \forall p \in \mPhiOperandSet.
   \labelEquation{todo}
 \end{equation}
 
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]], \\
+    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
     \forall m \in \mPhiMatchCompSet,
     \forall p \in \mUses(m).
   \end{array}
@@ -61,7 +63,7 @@
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p], \\
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p] \\
     \forall m \in \mPhiMatchCompSet,
     \forall o \in \mCovers(m),
     \forall p \in \mUses(m).
@@ -87,7 +89,7 @@
     \mImp
     \neg\mVar{useint}[m, p \hspace{-1pt}, d]
     \mAnd
-    \neg\mVar{useext}[m, p \hspace{-1pt}, d], \\
+    \neg\mVar{useext}[m, p \hspace{-1pt}, d] \\
     \forall m \in \mKillMatchSet,
     \forall p \in \mDefines(m),
     \forall d \in \mDataSet[p] \hspace{-1pt},
@@ -102,14 +104,14 @@
     \left(
     \begin{array}{@{}c@{}}
       \exists m_2 \in \mKillMatchCompSet,
-      \forall p_2 \in \mUses(m_2), \\
+      \forall p_2 \in \mUses(m_2) \text{ \st} \\
       d \in \mDataSet[p_2] \mAnd \mIsInt(m_2, p_2)
       \mAnd
       \mVar{sel}[m_2]
       \mAnd
       \mVar{alt}[p_2] = d
     \end{array}
-    \right) \!, \\
+    \right) \\
     \forall m_1 \in \mKillMatchSet,
     \forall p_1 \in \mDefines(m_1),
     \forall d \in \mDataSet[p_1],
@@ -124,14 +126,14 @@
     \left(
     \begin{array}{@{}c@{}}
       \exists m_2 \in \mKillMatchCompSet,
-      \forall p_2 \in \mUses(m_2), \\
+      \forall p_2 \in \mUses(m_2) \text{ \st} \\
       d \in \mDataSet[p_2] \mAnd \neg\mIsInt(m_2, p_2)
       \mAnd
       \mVar{sel}[m_2]
       \mAnd
       \mVar{alt}[p_2] = d
     \end{array}
-    \right) \!, \\
+    \right) \\
     \forall m_1 \in \mKillMatchSet,
     \forall p_1 \in \mDefines(m_1),
     \forall d \in \mDataSet[p_1],
@@ -150,7 +152,7 @@ where
   \begin{array}{c}
     \mVar{useext}[m, p \hspace{-1pt}, d]
     \mEq
-    \mVar{loc}[d] \neq \mNullLocation, \\
+    \mVar{loc}[d] \neq \mNullLocation \\
     \forall m \in \mKillMatchSet,
     \forall p \in \mDefines(m),
     \forall d \in \mDataSet[p] \hspace{-1pt}.
@@ -354,13 +356,14 @@ must appear as a row in the cost matrix.
 Hence, given a cost matrix~$\mCostMatrix$ this \gls{constraint} is modeled as
 %
 \begin{equation}
-  \mTable\left(
+  \mTable(
     o\hspace{-1pt},
     \mVar{omatch}[o],
     \mVar{oplace}[o],
     \mVar{ocost}[o],
     \mCostMatrix
-  \right)\!,
+  )
+  \mQuantSep
   \forall o \in \mOpSet \hspace{-.8pt}.
   \labelEquation{omatch-oplace-ocost-connection}
 \end{equation}
@@ -458,20 +461,22 @@ bounded as
   \begin{array}{c}
     \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
     \mAnd
-    \mVar{oplace}[o] = \mVar{dplace}[d_1], \\
+    \mVar{oplace}[o] = \mVar{dplace}[d_1] \\
     \forall o \in
       \mSetBuilder{o'}%
                   {%
                     o' \in \mOpCompSet{\mPhi},
-                    m \in \mMatchSet[o'] \hspace{-1pt},
-                    \mCard{\mConsumes(m)} = 0
+                    m \in \mMatchSet[o'] \hspace{-1pt}
+                    \text{ \st }
+                    \mConsumes(m) = \mEmptySet
                   }, \\
     \forall d_1 \in
       \mSetBuilder{d}%
                   {%
                     d \in \mDataOf(o \hspace{-1pt}, \mDefines),
                     m \in \mMatchSet[o] \hspace{-1pt},
-                    \exists p \in \mDefines(m),
+                    \exists p \in \mDefines(m)
+                    \text{ \st }
                     \mDataSet[p] = \mSet{d}
                   }, \\
     \forall d_2 \in
@@ -479,7 +484,8 @@ bounded as
                   {%
                     d \in \mDataOf(o \hspace{-1pt}, \mUses),
                     m \in \mMatchSet[o] \hspace{-1pt},
-                    \exists p \in \mUses(m),
+                    \exists p \in \mUses(m)
+                    \text{ \st }
                     \mDataSet[p] = \mSet{d}
                   }.
   \end{array}
@@ -494,8 +500,9 @@ where
   \mSetBuilder{\mDataSet[p]}%
               {%
                 m \in \mMatchSet[o] \hspace{-1pt},
-                p \in f\hspace{-1pt}(m),
-                \mCard{\mCovers(m)} = 1
+                p \in f\hspace{-1pt}(m)
+                \text{ \st }
+                \mCovers(m) = \mSet{o}
               }
   \labelEquation{todo}
 \end{equation}
@@ -508,13 +515,14 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{oplace}[o] = b \hspace{-.8pt}, \\
+    \mVar{oplace}[o] = b \\
     \forall b \in \mBlockSet \hspace{-1pt},
     \forall o \in
       \mSetBuilder{o'}%
                   {%
                     o' \in \mOpCompSet{\mPhi},
-                    m \in \mMatchSet[o'] \hspace{-1pt},
+                    m \in \mMatchSet[o'] \hspace{-1pt}
+                    \text{ \st }
                     \mEntry(m) = \mSet{b}
                   }.
   \end{array}
@@ -529,8 +537,8 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{dplace}[d] \in S \hspace{-.8pt}, \\
-    \forall S \in \mPowerset{\mBlockSet} \!\!,
+    \mVar{dplace}[d] \in S \\
+    \forall S \in \mPowerset{\mBlockSet} \hspace{-2pt},
     \forall d \in \mDataSet \!,
     \forall o \in
       \mSetBuilder*{o'}%
@@ -538,7 +546,8 @@ where
                      \begin{array}{@{}l@{}}
                        o' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[o'] \hspace{-1pt},
-                       \exists p \in \mDefines(m), \\
+                       \exists p \in \mDefines(m) \\
+                       \text{\st }
                        \mSpans(m) = S \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
                    } \!.
@@ -554,7 +563,7 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix), \\
+    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix) \\
     \forall b \in \mBlockSet \hspace{-1pt},
     \forall d \in
       \mSetBuilder*{d'}%
@@ -562,9 +571,9 @@ where
                      \begin{array}{@{}l@{}}
                        d' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[d'] \hspace{-1pt},
-                       \exists p \in \mUses(m), \\
-                       \mEntry(m) = \mSet{b}
-                       \mAnd \mDataSet[p] = \mSet{d}
+                       \exists p \in \mUses(m) \\
+                       \text{ \st}
+                       \mEntry(m) = \mSet{b} \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
                    } \!.
   \end{array}
@@ -581,16 +590,17 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{oplace}[o] = b \hspace{-.8pt}, \\
+    \mVar{oplace}[o] = b \\
     \forall \mEdge{d}{b} \in \mDefEdgeSet,
     \forall o \in
       \mSetBuilder*{o'}%
                    {%
                      \begin{array}{@{}l@{}}
                        o' \in \mOpSet[\mPhi] \hspace{-1pt},
-                       m \in \mMatchSet[o'] \hspace{-1pt},
-                       p \in \mDefines(m), \\
-                       m \in \mPhiMatchSet \mAnd \mDataSet[p] = \mSet{d}
+                       m \in \mMatchSet[o'] \cap \mPhiMatchSet,
+                       p \in \mDefines(m) \\
+                       \text{\st }
+                       \mDataSet[p] = \mSet{d}
                      \end{array}
                    } \!.
   \end{array}
@@ -611,15 +621,15 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2], \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m), \\
-    p_1 < p_2,
+    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
+    \text{\st } p_1 < p_2,
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -628,14 +638,14 @@ and all \glspl{target} are \glspl{block node}.
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[\mVar{alt}[p_1]] = \mVar{dplace}[\mVar{alt}[p_2]], \\
+    \mVar{dplace}[\mVar{alt}[p_1]] = \mVar{dplace}[\mVar{alt}[p_2]] \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p_1, p_2 \in \mDefines(m), p_1 < p_2,
+    \forall p_1, p_2 \in \mDefines(m) \text{ \st } p_1 < p_2,
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -644,7 +654,7 @@ and all \glspl{target} are \glspl{block node}.
   \begin{array}{c}
     \mVar{sel}[m]
     \mImp
-    \mVar{uplace}[p_1] = \mVar{dplace}[\mVar{alt}[p_2]], \\
+    \mVar{uplace}[p_1] = \mVar{dplace}[\mVar{alt}[p_2]] \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
@@ -664,15 +674,15 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2], \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) \neq \mEmptySet
                   },
-    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m), \\
-    p_1 < p_2.
+    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
+    \text{\st } p_1 < p_2.
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -687,16 +697,19 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \exists d \in S, \mVar{loc}[d] \neq \mNullLocation, \\
+    \exists d \in S, \mVar{loc}[d] \neq \mNullLocation \\
     \forall S \in \mPowerset{\mStateDataCompSet} \hspace{-2pt},
     \forall o \in
-      \mSetBuilder{o'}%
-                  {%
-                    o' \in \mOpSet \!,
-                    m \in \mMatchSet[o'] \hspace{-1pt},
-                    \exists p \in \mUses(m) \setminus \mDefines(m),
-                    \mDataSet[p] = S
-                  }.
+      \mSetBuilder*{o'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       o' \in \mOpSet \!,
+                       m \in \mMatchSet[o'] \hspace{-1pt},
+                       \exists p \in \mUses(m) \setminus \mDefines(m) \\
+                       \text{\st }
+                       \mDataSet[p] = S
+                     \end{array}
+                   }.
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -715,16 +728,14 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{loc}[d] \neq \mNullLocation, \\
+    \mVar{loc}[d] \neq \mNullLocation \\
     \forall d \in
       \mSetBuilder*{d'}%
                    {%
                      \begin{array}{@{}l@{}}
                        d' \in \mStateDataCompSet,
-                       m \in \mMatchSet[d'] \hspace{-1pt},
-                       \exists p \in \mDefines(m), \\
-                       m \notin \mKillMatchSet
-                       \mAnd
+                       m \in \mMatchSet[d'] \setminus \mKillMatchSet,
+                       \exists p \in \mDefines(m) \text{ \st} \\
                        \mDataSet[p] = \mSet{d'}
                        \mAnd
                        \neg\mIsInt(m, p)
@@ -745,8 +756,9 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{succ}[b_1] = b_2, \\
-    \forall b_1, b_2 \in \mBlockSet \hspace{-1pt},
+    \mVar{succ}[b_1] = b_2 \\
+    \forall b_1, b_2 \in \mBlockSet
+    \text{ \st }
     \mSetBuilder{\mEntry(m)}{\mPair{m}{b_2} \in \mFallThroughSet} = \mSet{b_1}
     \mAnd
     \mSetBuilder{m}{\mPair{m}{b_1} \in \mFallThroughSet} = \mEmptySet.
@@ -763,15 +775,16 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{loc}[d] = S, \\
+    \mVar{loc}[d] = S \\
     \forall d \in \mStateDataCompSet,
     \forall S \in
-      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \!, \\
+      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \text{ \st} \\
     S = \mSetBuilder{l}%
                     {%
                       m \in \mDataSet[d] \setminus \mKillMatchSet,
                       p \in \mDefines(m),
-                      l \in \mStores(m, p),
+                      l \in \mStores(m, p)
+                      \text{ \st }
                       d \in \mDataSet[p]
                     },
   \end{array}
@@ -785,14 +798,15 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m], \\
+    \neg\mVar{sel}[m] \\
     \forall m \in
       \mSetBuilder*{m'}%
                    {%
                      \begin{array}{@{}l@{}}
                        m' \in \mKillMatchCompSet,
                        p \in \mUses(m') \setminus \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt}, \\
+                       d \in \mDataSet[p] \hspace{-1pt} \\
+                       \text{\st }
                        \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
                      \end{array}
                    } \!,
@@ -802,13 +816,15 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 where
 %
 \begin{equation}
+  \hspace*{-1em}
   \mDefLocsOf(d)
   \equiv
   \mSetBuilder{l}%
               {%
                 m \in \mMatchSet[d] \setminus \mKillMatchSet,
                 p \in \mDefines(m),
-                l \in \mStores(m, p),
+                l \in \mStores(m, p)
+                \text{ \st }
                 d \in \mDataSet[p]
               }.
 \end{equation}
@@ -820,15 +836,16 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{loc}[d] = S, \\
+    \mVar{loc}[d] = S \\
     \forall d \in \mDataUsedOnceSet,
     \forall S \in
-      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \!, \\
+      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \text{ \st} \\
     S = \mSetBuilder{l}%
                     {%
                       m \in \mKillMatchCompSet,
                       p \in \mUses(m),
-                      l \in \mStores(m, p),
+                      l \in \mStores(m, p)
+                      \text{ \st }
                       d \in \mDataSet[p]
                     },
   \end{array}
@@ -842,14 +859,14 @@ where
 
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m], \\
+    \neg\mVar{sel}[m] \\
     \forall m \in
       \mSetBuilder*{m'}%
                    {%
                      \begin{array}{@{}l@{}}
                        m' \in \mKillMatchCompSet,
                        p \in \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt}, \\
+                       d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
                        \neg\mIsInt(m, p)
                        \mAnd
                        \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
@@ -867,7 +884,8 @@ where
               {%
                 m \in \mKillMatchCompSet,
                 p \in \mUses(m),
-                l \in \mStores(m, p),
+                l \in \mStores(m, p)
+                \text{ \st }
                 d \in \mDataSet[p]
               }.
 \end{equation}
@@ -894,7 +912,8 @@ Consequently, it makes sense to fix the location for each \gls{state node},
 which is modeled as
 %
 \begin{equation}
-  \mVar{loc}[d] = \mNullLocation,
+  \mVar{loc}[d] = \mNullLocation
+  \mQuantSep
   \forall d \in \mStateDataSet,
   \labelEquation{loc-of-state-nodes}
 \end{equation}
@@ -915,7 +934,7 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]), \\
+    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]) \\
     \forall m \in \mMatchSet,
     \forall p \in \mDefines(m) \cup \mUses(m).
   \end{array}
@@ -931,9 +950,10 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
   \begin{array}{c}
     \mVar{alt}[p] \neq \mMin(\mDataSet[p])
     \mImp
-    \mVar{alt}[p] \neq \mNullLocation, \\
+    \mVar{alt}[p] \neq \mNullLocation \\
     \forall m \in \mMatchSet,
-    \forall p \in \mUses(m) \setminus \mDefines(m),
+    \forall p \in \mUses(m) \setminus \mDefines(m)
+    \text{ \st }
     \mCard{\mDataSet[p]} > 1
   \end{array}
   \labelEquation{todo}
@@ -1109,9 +1129,10 @@ as
 %
 \begin{equation}
   \begin{array}{c}
-    \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]), \\
+    \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]) \\
     \forall c \in \mInterchDataSet,
-    \forall p_1, \ldots, p_k \in \mOperandSet \setminus \mOperandSet[\mPhi],
+    \forall p_1, \ldots, p_k \in \mOperandSet \setminus \mOperandSet[\mPhi]
+    \text{ \st }
     p_1 \neq \cdots \neq p_k
     \mAnd
     \forall_{\! i} \: \mDataSet[p_i] \! = c.
@@ -1162,7 +1183,7 @@ modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]) \\
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
     \exists m_i \in \mMatchSet[c[i]] \cap \mNullCopyMatchSet.
@@ -1186,7 +1207,7 @@ we make use of the \gls{increasing constraint} to model this \gls{symmetry
 %
 \begin{equation}
   \begin{array}{c}
-    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]), \\
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]) \\
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
     \exists m_i \in \mMatchSet[c[i]] \cap \mKillMatchSet,
