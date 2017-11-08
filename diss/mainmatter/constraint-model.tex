@@ -982,17 +982,20 @@ Non-\gls{inactive.d} \glspl{datum} are said to be \gls!{active.d}, and
 non-\glspl{kill match} are only allowed to make use of \gls{active.d}
 \glspl{datum}.
 %
-These \glspl{constraint} are joinly modeled as
+These \glspl{constraint} are jointly modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mEq \mVar{sel}[n] \mAnd \mVar{alt}[p] = d, \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p], \\
+    \neg\mVar{sel}[m] \mEq
     \exists n \in \mKillMatchCompSet,
     \forall q \in \mUses(n),
-    d \in \mDataSet[q],
+    d \in \mDataSet[q]
+    \mAnd
+    \mVar{sel}[n]
+    \mAnd \mVar{alt}[p] = d, \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p],
   \end{array}
   \labelEquation{data-activity}
 \end{equation}

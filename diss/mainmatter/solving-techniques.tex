@@ -636,7 +636,7 @@ and all \glspl{target} are \glspl{block node}.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{loc}[d] \neq \mNullLocation, \\
+    \exists d \in S, \mVar{loc}[d] \neq \mNullLocation, \\
     \forall S \in \mPowerset{\mStateDataCompSet} \hspace{-2pt},
     \forall o \in
       \mSetBuilder{o'}%
@@ -645,8 +645,7 @@ and all \glspl{target} are \glspl{block node}.
                     m \in \mMatchSet[o'] \hspace{-1pt},
                     \exists p \in \mUses(m) \setminus \mDefines(m),
                     \mDataSet[p] = S
-                  }, \\
-    \exists d \in S.
+                  }.
   \end{array}
   \labelEquation{todo}
 \end{equation}
