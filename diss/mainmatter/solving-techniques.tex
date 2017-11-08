@@ -81,29 +81,6 @@
 % at least one selected match, then d must not placed in the null
 % location.
 
-%constraint
-%  forall ( mi in killInstrMatches
-%         , oi in operandsDefinedByMatch[mi]
-%         , d in operandAlternatives[oi]
-%         )
-%  ( let { var bool: ui,
-%          var bool: ue } in
-%    ( ui <-> exists ( m in allMatches
-%                    , o in operandsUsedByMatch[m] intersect
-%                           operandsInternalToMatch[m]
-%                    where d in operandAlternatives[o]
-%                    )
-%             ( sel[m] /\ alt[o] = d ) ) /\
-%    ( ue <-> exists ( m in allMatches
-%                    , o in operandsUsedByMatch[m] intersect
-%                           operandsExternalToMatch[m]
-%                    where d in operandAlternatives[o]
-%                    )
-%             ( sel[m] /\ alt[o] = d ) ) /\
-%    ( sel[mi] <-> not ui /\ not ue ) /\
-%    ( loc[d] != locValueForNull <-> ue )
-%  );
-
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
