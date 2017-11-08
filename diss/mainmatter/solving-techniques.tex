@@ -15,6 +15,12 @@
 \section{Refined Define-Before-Use Constraint}
 \labelSection{st-refined-def-before-use-constraint}
 
+\todo{introduce $\mVar{uplace}$ variables}
+
+\todo{introduce dominance relation matrix}
+
+\todo{describe constraints}
+
 % Enforce that every datum is defined in a block such that the block dominates
 % all blocks wherein the datum is used. This constraint shall not be applied to
 % the generic phi patterns, nor to null instructions.
@@ -31,58 +37,50 @@
 %
 % [MC] Assumes that matches which use some data cover at least one operation.
 % [GHB] This assumption should always hold.
-%
-%constraint
-%  forall (p in nonPhiUseOperands)
-%  ( table([uplace[p], dplace[Alt(p)]], domRelMatrix) );
-%
-%constraint
-%  forall (p in allOperands diff nonPhiUseOperands)
-%  ( uplace[p] = 1 );
-%
-%constraint
-%  forall ( m in allMatches diff phiInstrMatches
-%         , p in operandsUsedByMatch[m]
-%         )
-%  ( not sel[m] -> uplace[p] = dplace[Alt(p)] );
-%
-%constraint
-%  forall ( m in allMatches diff phiInstrMatches
-%         , o in operandsUsedByMatch[m]
-%         , c in operationsCoveredByMatch[m]
-%         )
-%  ( sel[m] -> oplace[c] = uplace[o] );
 
-\todo{write}
+\begin{equation}
+  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix),
+  \forall p \in \mPhiOperandCompSet.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \mVar{uplace}[p] = \mMin(\mBlockSet),
+  \forall p \in \mPhiOperandSet.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]], \\
+    \forall m \in \mPhiMatchCompSet,
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p], \\
+    \forall m \in \mPhiMatchCompSet,
+    \forall o \in \mCovers(m),
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
 
 
 \section{Refined Kill Constraint}
 \labelSection{st-refined-kill-constraint}
 
-% If a datum d is used by at least one operand in at least one selected match,
-% then d must not be defined by any kill match.  Otherwise, d must be
-% defined by an kill match.
-% constraint
-%   forall ( mi in killInstrMatches
-%          , oi in operandsDefinedByMatch[mi]
-%          , d in operandAlternatives[oi]
-%          )
-%   ( exists ( m in allMatches
-%            , o in operandsUsedByMatch[m]
-%              where d in operandAlternatives[o]
-%            )
-%     ( sel[m] /\ alt[o] = d )
-%     <->
-%     not sel[mi]
-%   );
-%
-% [MC 1]
+\todo{describe constraint}
+
 % If and only if a datum d is used by at least one operand in at least
 % one selected match, then d must not be defined by any kill
 % match.  If and only if d is used by at least one external operand in
 % at least one selected match, then d must not placed in the null
 % location.
-%
+
 %constraint
 %  forall ( mi in killInstrMatches
 %         , oi in operandsDefinedByMatch[mi]
@@ -106,7 +104,82 @@
 %    ( loc[d] != locValueForNull <-> ue )
 %  );
 
-\todo{write}
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \neg\mVar{useint}[m, p \hspace{-1pt}, d]
+    \mAnd
+    \neg\mVar{useext}[m, p \hspace{-1pt}, d], \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useint}[m, p \hspace{-1pt}, d]
+    \mEq
+    \left(
+    \begin{array}{@{}c@{}}
+      \exists n \in \mKillMatchCompSet,
+      \forall q \in \mUses(n), \\
+      d \in \mDataSet[q] \mAnd \mIsInt(n, q)
+      \mAnd
+      \mVar{sel}[n]
+      \mAnd
+      \mVar{alt}[q] = d
+    \end{array}
+    \right) \!, \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useext}[m, p \hspace{-1pt}, d]
+    \mEq
+    \left(
+    \begin{array}{@{}c@{}}
+      \exists n \in \mKillMatchCompSet,
+      \forall q \in \mUses(n), \\
+      d \in \mDataSet[q] \mAnd \neg\mIsInt(n, q)
+      \mAnd
+      \mVar{sel}[n]
+      \mAnd
+      \mVar{alt}[q] = d
+    \end{array}
+    \right) \!, \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \mIsInt(m, q) \equiv \mStores(m, q) = \mSet{\mNullLocation}.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useext}[m, p \hspace{-1pt}, d]
+    \mEq
+    \mVar{loc}[d] \neq \mNullLocation, \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt}.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
 
 
 \section{Refined Objective Function}
