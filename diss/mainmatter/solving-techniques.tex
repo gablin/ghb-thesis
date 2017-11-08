@@ -672,37 +672,14 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
                      \begin{array}{@{}l@{}}
                        d' \in \mStateDataCompSet,
                        m \in \mMatchSet[d'] \hspace{-1pt},
-                       \exists p \in \mExtDefines(m), \\
+                       \exists p \in \mDefines(m), \\
                        m \notin \mKillMatchSet
                        \mAnd
                        \mDataSet[p] = \mSet{d'}
+                       \mAnd
+                       \mNullLocation \notin \mStores(m, p)
                      \end{array}
                    } \!.
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-% [MC 4]
-%
-% If an external operand does not take its min value, then its match must be
-% selected and hence the datum cannot be in the null location.
-
-% constraint
-%   forall ( m in allMatches
-%          , o in operandsUsedByMatch[m] intersect operandsExternalToMatch[m]
-%                 where card(operandAlternatives[o]) > 1
-%                    /\ not oLocCantBeNull(o)
-%          )
-%   ( alt[o] != min(operandAlternatives[o]) -> loc[alt[o]] != locValueForNull );
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{alt}[p] \neq \mMin(\mDataSet[p])
-    \mImp
-    \mVar{alt}[p] \neq \mNullLocation, \\
-    \forall m \in \mMatchSet,
-    \forall p \in \mUses(m) \setminus \mDefines(m),
-    \mCard{\mDataSet[p]} > 1
   \end{array}
   \labelEquation{todo}
 \end{equation}
@@ -732,44 +709,11 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
 
 \subsubsection{TODO: remove?}
 
-% [MC 5]
-%
-% Constrain the location of d to be where its definers can put it. Also, disable
-% users that would access it elsewhere.
-
-% constraint
-%   forall (d in allDataInFunction diff statesInFunction)
-%   ( let { array[int] of int: O =
-%             [o | m in defsetOfDatum[d] diff killInstrMatches
-%                , o in operandsDefinedByMatch[m]
-%                  where d in operandAlternatives[o]
-%             ]
-%         , array[int] of int: X =
-%             [ i | i in index_set_1of2(validDataLocRangesInMatch)
-%                   where validDataLocRangesInMatch[i, 2] in {o | o in O}
-%             ]
-%         }
-%     in if length(O) = length(X)
-%        then let { set of int: D =
-%                     { addr | addr in canonicalDataLocs
-%                            , i in X
-%                              where addr in validDataLocRangesInMatch[i, 3]
-%                                            ..
-%                                            validDataLocRangesInMatch[i, 4]
-%                     }
-%                 }
-%             in if card(D) < card(canonicalDataLocs)
-%                then knock_out_users(d, D union {locValueForNull}) /\
-%                     loc[d] in D union {locValueForNull}
-%                else true
-%                endif
-%        else true
-%        endif
-%   );
+% Constrain the location of d to be where its definers can put it.
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{loc}[d] = S \mAnd \mDisableIncompUsers(d, S), \\
+    \mVar{loc}[d] = S, \\
     \forall d \in \mStateDataCompSet,
     \forall S \in
       \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \!, \\
@@ -783,103 +727,100 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow null location.
   \end{array}
   \labelEquation{todo}
 \end{equation}
+
+\todo{describe constraint}
+
+% Disable users of input data that would access it elsewhere to where its
+% definers can put them.
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m], \\
+    \forall m \in
+      \mSetBuilder*{m'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       m' \in \mKillMatchCompSet,
+                       p \in \mUses(m') \setminus \mDefines(m'),
+                       d \in \mDataSet[p] \hspace{-1pt}, \\
+                       \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
+                     \end{array}
+                   } \!,
+  \end{array}
+\end{equation}
 %
 where
 %
-% predicate knock_out_users(allDataInFunction: d, set of allLocValues: D) =
-%   let { array[int] of int: O =
-%           [ o | o in array_union(operandsUsedByMatch) diff killOperands
-%                      where d in operandAlternatives[o]
-%           ]
-%       , array[int] of int: I =
-%           [ i | i in index_set_1of2(validDataLocRangesInMatch)
-%                      where validDataLocRangesInMatch[i,2] in {o | o in O} /\
-%                            card( ( validDataLocRangesInMatch[i, 3]
-%                                    ..
-%                                    validDataLocRangesInMatch[i, 4]
-%                                  )
-%                                  intersect
-%                                  D
-%                                ) = 0
-%           ]
-%       }
-%   in forall (i in I)
-%      ( not sel[validDataLocRangesInMatch[i, 1]] );
-%
 \begin{equation}
-  \mDisableIncompUsers(d, S)
-  \equiv
-  \neg\mVar{sel}[m],
-  \forall m \in
-    \mSetBuilder*{m'}%
-                 {%
-                   \begin{array}{@{}l@{}}
-                     m' \in \mKillMatchCompSet,
-                     p \in \mUses(m'), \\
-                     d \in \mDataSet[p]
-                     \mAnd
-                     \mStores(m', p) \cap S = \mEmptySet
-                   \end{array}
-                 } \!.
+  \mDefLocsOf(d)
+  =
+  \mSetBuilder{l}%
+              {%
+                m \in \mMatchSet[d] \setminus \mKillMatchSet,
+                p \in \mDefines(m),
+                l \in \mStores(m, p),
+                d \in \mDataSet[p]
+              }.
+\end{equation}
+
+\todo{describe constraint}
+
+% Constrain the location of d to be where its users can access it. Valid for
+% such d that are used at least once.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{loc}[d] = S, \\
+    \forall d \in \mDataUsedOnceSet,
+    \forall S \in
+      \mPowerset{\mLocationSet \, \cup \, \mSet{\mNullLocation}} \!, \\
+    S = \mSetBuilder{l}%
+                    {%
+                      m \in \mKillMatchCompSet,
+                      p \in \mUses(m),
+                      l \in \mStores(m, p),
+                      d \in \mDataSet[p]
+                    },
+  \end{array}
   \labelEquation{todo}
 \end{equation}
 
-% [MC 6]
-%
-% Constrain the location of d to be where its users can access it. Also, disable
-% definers that would put it elsewhere. Valid for such d that are used at least
-% once.
+\todo{describe constraint}
 
-% constraint
-%   forall (d in dataInFunctionUsedAtLeastOnce)
-%   ( let { array[int] of int: O =
-%             [ o | o in array_union(operandsUsedByMatch) diff killOperands
-%                   where d in operandAlternatives[o]
-%             ]
-%         , array[int] of int: X =
-%             [ i | i in index_set_1of2(validDataLocRangesInMatch)
-%                   where validDataLocRangesInMatch[i,2] in {o | o in O}
-%             ]
-%         }
-%     in if length(O) = length(X)
-%        then let { set of int: D =
-%                     { addr | addr in canonicalDataLocs
-%                            , i in X
-%                              where addr in validDataLocRangesInMatch[i, 3]
-%                                            ..
-%                                            validDataLocRangesInMatch[i, 4]
-%                     }
-%                 }
-%             in if card(D) < card(canonicalDataLocs)
-%                then knock_out_definers(d, D union {locValueForNull}) /\
-%                     loc[d] in D union {locValueForNull}
-%                else true
-%                endif
-%        else true
-%        endif
-%   );
+% Disable definers of output data that would put it elsewhere to where its
+% users can access them. Valid for data that are used at least once.
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m], \\
+    \forall m \in
+      \mSetBuilder*{m'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       m' \in \mKillMatchCompSet,
+                       p \in \mDefines(m'),
+                       d \in \mDataSet[p] \hspace{-1pt}, \\
+                       \mNullLocation \notin \mStores(m, p)
+                       \mAnd
+                       \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
+                     \end{array}
+                   } \!,
+  \end{array}
+\end{equation}
 %
-% predicate knock_out_definers(allDataInFunction: d, set of allLocValues: D) =
-%   forall (m in defsetOfDatum[d])
-%   ( let { array[int] of int: O =
-%             [ o | o in operandsDefinedByMatch[m]
-%                   where d in operandAlternatives[o]
-%             ]
-%         }
-%     in if exists (i in index_set_1of2(validDataLocRangesInMatch))
-%           ( validDataLocRangesInMatch[i,2] in {o | o in O} /\
-%             card( ( validDataLocRangesInMatch[i, 3]
-%                     ..
-%                     validDataLocRangesInMatch[i, 4]
-%                   )
-%                   intersect
-%                   D
-%                 ) = 0
-%           )
-%        then not sel[m]
-%        else true
-%        endif
-%   );
+where
+%
+\begin{equation}
+  \mUseLocsOf(d)
+  =
+  \mSetBuilder{l}%
+              {%
+                m \in \mKillMatchCompSet,
+                p \in \mUses(m),
+                l \in \mStores(m, p),
+                d \in \mDataSet[p]
+              }.
+\end{equation}
 
 
 \section{Symmetry and Dominance Breaking Constraints}
@@ -924,12 +865,28 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = d\hspace{-1pt}, \\
+    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]), \\
     \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m) \cup \mUses(m),
-    \exists d \in \mDataSet[\hspace{-1pt}p].
+    \forall p \in \mDefines(m) \cup \mUses(m).
   \end{array}
   \labelEquation{operands-of-non-selected-matches}
+\end{equation}
+
+\todo{explain implied constraint below}
+
+% If an external operand does not take its min value, then its match must be
+% selected and hence the datum cannot be in the null location.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{alt}[p] \neq \mMin(\mDataSet[p])
+    \mImp
+    \mVar{alt}[p] \neq \mNullLocation, \\
+    \forall m \in \mMatchSet,
+    \forall p \in \mUses(m) \setminus \mDefines(m),
+    \mCard{\mDataSet[p]} > 1
+  \end{array}
+  \labelEquation{todo}
 \end{equation}
 
 
