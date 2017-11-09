@@ -389,7 +389,7 @@ With these definitions together with the fact that the placement of a
     \forall d \in \mUses(m),
     \forall o \in \mCovers(m),
   \end{array}
-  \labelEquation{dom}
+  \labelEquation{naive-dom}
 \end{equation}
 %
 where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
@@ -398,7 +398,7 @@ where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
 This implementation, however, has a number of flaws that will be explained and
 addressed in \refChapter{solving-techniques}.
 %
-We therefore only use \refEquation{dom} for sake of describing the
+We therefore only use \refEquation{naive-dom} for sake of describing the
 \glsshort{constraint model}, keeping in mind that a refined version is applied
 in practice.
 
@@ -957,7 +957,7 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 (instead of \glspl{datum}) \gls{define.d}[d] respectively \gls{use.d}[d] by
 \gls{match}~$m$.
 %
-With these new definitions, Eqs.\thinspace\refEquation*{dom},
+With these new definitions, Eqs.\thinspace\refEquation*{naive-dom},
 \refEquation*{spanning}, and~\refEquation*{compatible-locations} are adjusted
 accordingly (the changes are highlighted in grey):
 %
@@ -968,7 +968,7 @@ accordingly (the changes are highlighted in grey):
     \forall \hlDiff{p} \in \mUses(m),
     \forall o \in \mCovers(m),
   \end{array}
-  \labelEquation{dom-alt}
+  \labelEquation{naive-dom-alt}
 \end{equation}
 %
 \begin{equation}
