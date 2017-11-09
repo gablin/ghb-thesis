@@ -976,11 +976,12 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
   \labelEquation{operands-of-non-selected-matches}
 \end{equation}
 
-\todo{describe implied constraint below}
-
-% If an external operand does not take its min value, then its match must be
-% selected and hence the datum cannot be in the null location.
-
+The \gls{symmetry breaking.c} \gls{constraint} above also implies that if an
+\gls{operand} representing input with multiple \glspl{datum} does not take its
+minimum value, then the corresponding \gls{match} must be selected, which means
+that the location of the corresponding \gls{datum} cannot be $\mNullLocation$.
+%
+This is modeled as
 \begin{equation}
   \begin{array}{c}
     \mVar{alt}[p] \neq \mMin(\mDataSet[p])
@@ -989,9 +990,9 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
     \forall m \in \mMatchSet,
     \forall p \in \mUses(m) \setminus \mDefines(m)
     \text{ \st }
-    \mCard{\mDataSet[p]} > 1
+    \mCard{\mDataSet[p]} > 1.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{input-operands-not-taking-min-value}
 \end{equation}
 
 
@@ -1159,7 +1160,7 @@ However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
 Hence, if $\mInterchDataSet$ denotes the set of chains of
 \gls{interchangeable.d} \glspl{datum} and \mbox{$\mOperandSet[\mPhi] \subseteq
   \mOperandSet$} denotes the set of \glspl{operand} used by \glspl{phi-match},
-then the \gls{symmetry breaking.c} \gls{constraint} described above is modeled
+then the \gls{dominance breaking.c} \gls{constraint} described above is modeled
 as
 %
 \begin{equation}
@@ -1213,7 +1214,7 @@ can only be defined by \glspl{copy match}, \mbox{$\mNullCopyMatchSet \subseteq
 \mbox{$\mMatchSet[d] \subseteq \mMatchSet$} denote the set of \glspl{match} that
 can define a \gls{datum}~$d$.
 %
-Using these definitions, this \gls{symmetry breaking.c} \glspl{constraint} is
+Using these definitions, this \gls{dominance breaking.c} \glspl{constraint} is
 modeled as
 %
 \begin{equation}
@@ -1237,7 +1238,7 @@ are needed, then we are free to decide which.
 %
 Intuitively, we want to forbid \glspl{solution} where \gls{inactive.d}
 \glspl{datum} ``appear to the right'' of \gls{active.d} \glspl{datum}, and again
-we make use of the \gls{increasing constraint} to model this \gls{symmetry
+we make use of the \gls{increasing constraint} to model this \gls{dominance
   breaking.c} \gls{constraint} as
 %
 \begin{equation}
