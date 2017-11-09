@@ -378,7 +378,7 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 Let also \mbox{$\mDom(b) \subseteq \mBlockSet$} denote the set of \glspl{block}
 \gls{dominate.b}[d] by \gls{block}~$b$.
 %
-With these definitions, the \gls{constraint} is modeled as
+With these definitions, the \gls{constraint} can naively be modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -392,6 +392,13 @@ With these definitions, the \gls{constraint} is modeled as
 %
 where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
 \glspl{phi-match}.
+%
+This implementation, however, has a number of flaws that will be explained and
+addressed in \refChapter{solving-techniques}.
+%
+We therefore only use \refEquation{dom} for sake of describing the
+\glsshort{constraint model}, keeping in mind that a refined version is applied
+in practice.
 
 The restrictions imposed by the \glspl{definition edge} are modeled as
 %
@@ -1017,7 +1024,10 @@ Non-\gls{inactive.d} \glspl{datum} are said to be \gls!{active.d}, and
 non-\glspl{kill match} are only allowed to make use of \gls{active.d}
 \glspl{datum}.
 %
-These \glspl{constraint} are jointly modeled as
+Assuming that every \gls{datum}~$d$ \glsshort{define.d}[able] by some \gls{kill
+  match} is used by at least one non-\gls{kill match} -- this is reasonable or
+else the \glspl{operation} defining $d$ would be considered dead code -- then
+these \glspl{constraint} can be jointly modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -1039,10 +1049,8 @@ These \glspl{constraint} are jointly modeled as
 where $\mKillMatchSet$ and $\mKillMatchCompSet$ denote the set of \glspl{kill
   match} respectively the set~$\mMatchSet$ without the \glspl{kill match}.
 %
-\RefEquation{data-activity} assumes that every \gls{datum}~$d$
-\glsshort{define.d}[able] by some \gls{kill match} is used by at least one
-non-\gls{kill match}, which is reasonable or else the \glspl{operation} defining
-$d$ would be considered dead code.
+However, this is a naive implementation and we use instead a refined version
+introduced in \refChapter{solving-techniques}.
 
 
 \subsection{Experimental Evaluation}
