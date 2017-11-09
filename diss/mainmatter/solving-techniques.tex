@@ -12,15 +12,167 @@
 \todo{state clearly Mats' contribution}
 
 
-\section{Refined Objective Function}
+\section{Model Refinements}
+
+\todo{write introduction}
+
+
+\subsection{Refining the Define-Before-Use Constraint}
+\labelSection{st-refined-def-before-use-constraint}
+
+\todo{introduce $\mVar{uplace}$ variables}
+
+\todo{introduce dominance relation matrix}
+
+\todo{describe constraints}
+
+% Enforce that every datum is defined in a block such that the block dominates
+% all blocks wherein the datum is used. This constraint shall not be applied to
+% the generic phi patterns, nor to null instructions.
+%
+% This used to be enforced by the following constraint:
+%   constraint
+%     forall ( m in allMatches
+%            , o in operandsUsedByMatch[m]
+%              where not (m in phiInstrMatches)
+%            )
+%     ( dplace[alt[o]] in domSetsOfBlocksInFunction[place[m]] );
+% but it has been reformulated using table constraints to avoid the use of set
+% variables.
+%
+% [MC] Assumes that matches which use some data cover at least one operation.
+% [GHB] This assumption should always hold.
+
+\begin{equation}
+  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix)
+  \mQuantSep
+  \forall p \in \mPhiOperandCompSet.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \mVar{uplace}[p] = \mMin(\mBlockSet)
+  \mQuantSep
+  \forall p \in \mPhiOperandSet.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
+    \forall m \in \mPhiMatchCompSet,
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p] \\
+    \forall m \in \mPhiMatchCompSet,
+    \forall o \in \mCovers(m),
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+
+\subsection{Refining the Activity Constraint}
+\labelSection{st-refined-kill-constraint}
+
+\todo{describe constraint}
+
+% If and only if a datum d is used by at least one operand in at least
+% one selected match, then d must not be defined by any kill
+% match.  If and only if d is used by at least one external operand in
+% at least one selected match, then d must not placed in the null
+% location.
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \neg\mVar{useint}[m, p \hspace{-1pt}, d]
+    \mAnd
+    \neg\mVar{useext}[m, p \hspace{-1pt}, d] \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt},
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useint}[m_1, p_1, d]
+    \mEq
+    \left(
+    \begin{array}{@{}c@{}}
+      \exists m_2 \in \mKillMatchCompSet,
+      \forall p_2 \in \mUses(m_2) \text{ \st} \\
+      d \in \mDataSet[p_2] \mAnd \mIsInt(m_2, p_2)
+      \mAnd
+      \mVar{sel}[m_2]
+      \mAnd
+      \mVar{alt}[p_2] = d
+    \end{array}
+    \right) \\
+    \forall m_1 \in \mKillMatchSet,
+    \forall p_1 \in \mDefines(m_1),
+    \forall d \in \mDataSet[p_1],
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useext}[m_1, p_1, d]
+    \mEq
+    \left(
+    \begin{array}{@{}c@{}}
+      \exists m_2 \in \mKillMatchCompSet,
+      \forall p_2 \in \mUses(m_2) \text{ \st} \\
+      d \in \mDataSet[p_2] \mAnd \neg\mIsInt(m_2, p_2)
+      \mAnd
+      \mVar{sel}[m_2]
+      \mAnd
+      \mVar{alt}[p_2] = d
+    \end{array}
+    \right) \\
+    \forall m_1 \in \mKillMatchSet,
+    \forall p_1 \in \mDefines(m_1),
+    \forall d \in \mDataSet[p_1],
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \mIsInt(m, q) \equiv \mStores(m, q) = \mSet{\mNullLocation}.
+  \labelEquation{todo}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useext}[m, p \hspace{-1pt}, d]
+    \mEq
+    \mVar{loc}[d] \neq \mNullLocation \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt}.
+  \end{array}
+  \labelEquation{todo}
+\end{equation}
+
+
+\subsection{Refining the Objective Function}
 \labelSection{st-refined-objective-function}
 
-As stated in \refChapter{constraint-model},
-\refEquation{naive-objective-function} is a naive implementation of the
-\gls{objective function} that offers poor \gls{propagation}.
-%
-This is because it fails to reason on how cost is distributed across the
-\glspl{operation} that need to be covered.
+The naive implementation (\refEquation{naive-objective-function}) of the
+\gls{objective function} offers poor \gls{propagation} because it fails to
+reason on how cost is distributed across the \glspl{operation} that need to be
+covered.
 %
 \begin{figure}
   \mbox{}%
@@ -326,155 +478,6 @@ This is because the \gls{constraint solver} will most likely attempt to select
 In such a setting, it is generally a good approach to first try a \gls{kill
   match}, which incurs no cost and encourages value reuse, and then the
 \gls{match} which incurs the least cost.
-
-
-\section{Refined Define-Before-Use Constraint}
-\labelSection{st-refined-def-before-use-constraint}
-
-\todo{introduce $\mVar{uplace}$ variables}
-
-\todo{introduce dominance relation matrix}
-
-\todo{describe constraints}
-
-% Enforce that every datum is defined in a block such that the block dominates
-% all blocks wherein the datum is used. This constraint shall not be applied to
-% the generic phi patterns, nor to null instructions.
-%
-% This used to be enforced by the following constraint:
-%   constraint
-%     forall ( m in allMatches
-%            , o in operandsUsedByMatch[m]
-%              where not (m in phiInstrMatches)
-%            )
-%     ( dplace[alt[o]] in domSetsOfBlocksInFunction[place[m]] );
-% but it has been reformulated using table constraints to avoid the use of set
-% variables.
-%
-% [MC] Assumes that matches which use some data cover at least one operation.
-% [GHB] This assumption should always hold.
-
-\begin{equation}
-  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix)
-  \mQuantSep
-  \forall p \in \mPhiOperandCompSet.
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \mVar{uplace}[p] = \mMin(\mBlockSet)
-  \mQuantSep
-  \forall p \in \mPhiOperandSet.
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
-    \forall m \in \mPhiMatchCompSet,
-    \forall p \in \mUses(m).
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p] \\
-    \forall m \in \mPhiMatchCompSet,
-    \forall o \in \mCovers(m),
-    \forall p \in \mUses(m).
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-
-\section{Refined Kill Constraint}
-\labelSection{st-refined-kill-constraint}
-
-\todo{describe constraint}
-
-% If and only if a datum d is used by at least one operand in at least
-% one selected match, then d must not be defined by any kill
-% match.  If and only if d is used by at least one external operand in
-% at least one selected match, then d must not placed in the null
-% location.
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \neg\mVar{useint}[m, p \hspace{-1pt}, d]
-    \mAnd
-    \neg\mVar{useext}[m, p \hspace{-1pt}, d] \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-1pt},
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{useint}[m_1, p_1, d]
-    \mEq
-    \left(
-    \begin{array}{@{}c@{}}
-      \exists m_2 \in \mKillMatchCompSet,
-      \forall p_2 \in \mUses(m_2) \text{ \st} \\
-      d \in \mDataSet[p_2] \mAnd \mIsInt(m_2, p_2)
-      \mAnd
-      \mVar{sel}[m_2]
-      \mAnd
-      \mVar{alt}[p_2] = d
-    \end{array}
-    \right) \\
-    \forall m_1 \in \mKillMatchSet,
-    \forall p_1 \in \mDefines(m_1),
-    \forall d \in \mDataSet[p_1],
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-%
-\begin{equation}
-  \begin{array}{c}
-    \mVar{useext}[m_1, p_1, d]
-    \mEq
-    \left(
-    \begin{array}{@{}c@{}}
-      \exists m_2 \in \mKillMatchCompSet,
-      \forall p_2 \in \mUses(m_2) \text{ \st} \\
-      d \in \mDataSet[p_2] \mAnd \neg\mIsInt(m_2, p_2)
-      \mAnd
-      \mVar{sel}[m_2]
-      \mAnd
-      \mVar{alt}[p_2] = d
-    \end{array}
-    \right) \\
-    \forall m_1 \in \mKillMatchSet,
-    \forall p_1 \in \mDefines(m_1),
-    \forall d \in \mDataSet[p_1],
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-%
-where
-%
-\begin{equation}
-  \mIsInt(m, q) \equiv \mStores(m, q) = \mSet{\mNullLocation}.
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{useext}[m, p \hspace{-1pt}, d]
-    \mEq
-    \mVar{loc}[d] \neq \mNullLocation \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-1pt}.
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
 
 
 \section{Implied Constraints}
