@@ -1031,17 +1031,17 @@ these \glspl{constraint} can be jointly modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m] \mEq
-    \exists n \in \mKillMatchCompSet,
-    \forall q \in \mUses(n)
+    \neg\mVar{sel}[m_1] \mEq
+    \big(
+    \exists m_2 \in \mKillMatchCompSet,
+    \forall p_2 \in \mUses(m_2)
     \text{ \st }
-    d \in \mDataSet[q]
-    \mAnd
-    \mVar{sel}[n]
-    \mAnd \mVar{alt}[p] = d \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-.8pt},
+    \mVar{sel}[m_2]
+    \mAnd \mVar{alt}[p_2] = d
+    \big) \\
+    \forall m_1 \in \mKillMatchSet,
+    \forall p_1 \in \mDefines(m_1),
+    \forall d \in \mDataSet[p_1] \hspace{-.8pt},
   \end{array}
   \labelEquation{data-activity}
 \end{equation}
