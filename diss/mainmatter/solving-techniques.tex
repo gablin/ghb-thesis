@@ -13,6 +13,7 @@
 
 
 \section{Model Refinements}
+\labelSection{st-model-refinements}
 
 When introducing the \gls{constraint model} in \refChapter{constraint-model},
 several parts were presented using naive implementations that are indeed correct
@@ -23,7 +24,6 @@ In this section, we fix these problems by refining the \glsshort{constraint
 
 
 \subsection{Refining the Define-Before-Use Constraint}
-\labelSection{st-refined-def-before-use-constraint}
 
 When describing the \gls{constraint} that all \glspl{datum} must be
 \gls{define.d}[d] before \gls{use.d}[d], a simple but naive implementation was
@@ -161,8 +161,7 @@ We therefore fix the assignment in such cases, which is modeled as
 \end{equation}
 
 
-\subsection{Refining the Activity Constraint}
-\labelSection{st-refined-kill-constraint}
+\subsection{Refining the Data Activity Constraint}
 
 \todo{describe constraint}
 
@@ -251,7 +250,6 @@ where
 
 
 \subsection{Refining the Objective Function}
-\labelSection{st-refined-objective-function}
 
 The straightforward implementation of the \gls{objective function}
 (\refEquation{naive-objective-function}) is naive because it fails to reason on
