@@ -234,10 +234,10 @@ where
 \subsection{Refining the Objective Function}
 \labelSection{st-refined-objective-function}
 
-The naive implementation (\refEquation{naive-objective-function}) of the
-\gls{objective function} offers poor \gls{propagation} because it fails to
-reason on how cost is distributed across the \glspl{operation} that need to be
-covered.
+The straightforward implementation of the \gls{objective function}
+(\refEquation{naive-objective-function}) is naive because it fails to reason on
+how cost is distributed across the \glspl{operation} that need to be covered,
+which in turn results in poor \gls{propagation}.
 %
 \begin{figure}
   \mbox{}%
