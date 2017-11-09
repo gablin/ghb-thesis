@@ -107,6 +107,25 @@ This is modeled as
   \end{array}
   \labelEquation{refined-dom-selected}
 \end{equation}
+%
+An example illustrating the interaction between \refEquation{refined-dom} and
+\refEquation{refined-dom-selected} is shown in \refFigure{refined-dom-example}.
+
+\begin{figure}
+  \centering%
+  \input{figures/solving-techniques/dom-example}%
+
+  \caption[Example illustrating the refined define-before-use constraint]%
+          {%
+            Example illustrating the refined define-before-use constraint.
+            %
+            The assignments on the right-hand side show how these
+            variables should be set if the two matches~$m_1$ and~$m_2$ are
+            placed in blocks~$b_1$ respectively $b_2$, where $b_1$ is assumed to
+            dominate~$b_2$%
+          }
+  \labelFigure{refined-dom-example}
+\end{figure}
 
 Due to \refEquation{refined-dom-selected}, the assignment to the
 $\mVar{uplace}$~\glspl{variable} for non-selected \glspl{match} does not matter

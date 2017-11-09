@@ -1,0 +1,167 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\setlength{\opNodeDist}{12pt}%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\adjustbox{valign=M}{%
+  \begin{tikzpicture}[
+      outer match node/.style={
+        match node,
+        draw=none,
+        inner sep=3pt,
+      },
+    ]
+
+    \node [computation node] (o2) {$o_2$};
+    \node [value node, position=135 degrees from o2] (c) {$d$};
+    \node [value node, position= 45 degrees from o2] (d) {};
+    \node [value node, below=of o2] (e) {};
+    \node [computation node, above=of c] (o1) {$o_1$};
+    \node [value node, position=135 degrees from o1] (a) {};
+    \node [value node, position= 45 degrees from o1] (b) {};
+
+    \begin{scope}[data flow]
+      \draw (a) -- (o1);
+      \draw (b) -- (o1);
+      \draw (o1) -- (c);
+      \draw (c) -- (o2);
+      \draw (d) -- (o2);
+      \draw (o2) -- (e);
+    \end{scope}
+
+    \begin{pgfonlayer}{background}
+      % m1
+      \begin{scope}[outer match node/.append style={inner sep=5pt}]
+        \node [outer match node, fit=(a)] (m1a) {};
+        \node [outer match node, fit=(b)] (m1b) {};
+        \node [outer match node, fit=(c)] (m1c) {};
+      \end{scope}
+
+      \def\pathMI{
+        [rounded corners=8pt]
+        (m1a.north west)
+        --
+        (m1b.north east)
+        --
+        (m1b.south east)
+        --
+        (m1c.south east)
+        --
+        (m1c.south west)
+        -- coordinate (m1)
+        (m1a.south west)
+        --
+        cycle
+      }
+      \path [fill=shade1] \pathMI;
+
+      % m2
+      \begin{scope}[outer match node/.append style={inner sep=5pt}]
+        \node [outer match node, fit=(c)] (m2a) {};
+        \node [outer match node, fit=(d)] (m2b) {};
+        \node [outer match node, fit=(e)] (m2c) {};
+      \end{scope}
+
+      \def\pathMII{
+        [rounded corners=8pt]
+        (m2a.north west)
+        --
+        (m2b.north east)
+        --
+        (m2b.south east)
+        --
+        (m2c.south east)
+        --
+        (m2c.south west)
+        -- coordinate (m2)
+        (m2a.south west)
+        --
+        cycle
+      }
+      \path [fill=shade1] \pathMII;
+
+      \begin{scope}
+        \path [clip] \pathMI;
+        \path [fill=shade2] \pathMII;
+      \end{scope}
+
+      \begin{scope}[match line]
+        \draw \pathMI;
+        \draw \pathMII;
+      \end{scope}
+    \end{pgfonlayer}
+
+    % Match labels
+    \node [match label, left=of m1, outer sep=1.5pt] (m1l) {$\strut m_1$};
+    \node [match label, left=of m2, outer sep=1.5pt] (m2l) {$\strut m_2$};
+    \foreach \i in {1, 2} {
+      \draw [match attachment line] (m\i) -- (m\i l);
+    }
+  \end{tikzpicture}%
+}%
+\hspace{1cm}%
+\setlength{\abovedisplayskip}{0pt}%
+\setlength{\belowdisplayskip}{0pt}%
+\adjustbox{valign=M}{%
+  \begin{tikzpicture}[
+      block node/.append style={
+        minimum width=1cm,
+        minimum height=5mm,
+      },
+      dominance/.style={
+        control flow,
+        dashed,
+      },
+      math/.style={
+        nothing,
+        node distance=4mm,
+      },
+    ]
+
+    \node [block node] (b1) {$b_1$};
+    \node [block node, below=15mm of b1] (b2) {$b_2$};
+
+    \begin{pgfonlayer}{background}
+      \draw [dominance]
+            (b1)
+            -- node [auto] {\smaller\rotatebox{-90}{dominates}}
+            (b2);
+    \end{pgfonlayer}
+
+    \node [math, right=of b1] {%
+      \begin{minipage}{30mm}%
+        \begin{displaymath}
+          m_1
+          \left\{
+          \begin{array}{@{\:}l@{}}
+            \mVar{oplace}[o_1] = b_1 \\
+            \mVar{dplace}[d] = b_1
+          \end{array}
+          \right.
+        \end{displaymath}%
+      \end{minipage}%
+    };
+
+    \node [math, right=of b2] {%
+      \begin{minipage}{30mm}%
+        \begin{displaymath}
+          m_2
+          \left\{
+          \begin{array}{@{\:}l@{}}
+            \mVar{alt}[p] = d \\
+            \mVar{uplace}[p] = b_2 \\
+            \mVar{oplace}[o_2] = b_2
+          \end{array}
+          \right.
+        \end{displaymath}%
+      \end{minipage}%
+    };
+  \end{tikzpicture}%
+}%
+\endgroup%
