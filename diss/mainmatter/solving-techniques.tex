@@ -25,52 +25,79 @@ In this section, we fix these problems by refining the \glsshort{constraint
 \subsection{Refining the Define-Before-Use Constraint}
 \labelSection{st-refined-def-before-use-constraint}
 
-\todo{introduce $\mVar{uplace}$ variables}
-
-\todo{introduce dominance relation matrix}
-
-\todo{describe constraints}
-
-% Enforce that every datum is defined in a block such that the block dominates
-% all blocks wherein the datum is used. This constraint shall not be applied to
-% the generic phi patterns, nor to null instructions.
+When describing the \gls{constraint} that all \glspl{datum} must be
+\gls{define.d}[d] before \gls{use.d}[d], a simple but naive implementation was
+used (\refEquation{dom-alt}).
 %
-% This used to be enforced by the following constraint:
-%   constraint
-%     forall ( m in allMatches
-%            , o in operandsUsedByMatch[m]
-%              where not (m in phiInstrMatches)
-%            )
-%     ( dplace[alt[o]] in domSetsOfBlocksInFunction[place[m]] );
-% but it has been reformulated using table constraints to avoid the use of set
-% variables.
+First, it requires use of set~\glspl{variable},\!%
 %
-% [MC] Assumes that matches which use some data cover at least one operation.
-% [GHB] This assumption should always hold.
+\footnote{%
+  This is because the $\mVar{dplace}$~\glspl{variable} need to be members of the
+  $\mDom$~\gls{function}, which is implemented as an array into which the
+  $\mVar{oplace}$~\glspl{variable} are used as indices.%
+}
+%
+which are expensive and typically results in poor \gls{propagation}.
+%
+Second, many \gls{implied.c} \glspl{constraint} can be applied by introducing
+the notion of in which \glspl{block} \glspl{datum} are \gls{use.d}[d].
+%
+We first get rid the set~\glspl{variable} by capturing the information in the
+$\mDom$~\gls{function} as a dominance relation matrix
+%
+\begin{equation}
+  \begin{bmatrix}
+    \begin{array}{@{\:}c|c@{\:}}
+        b_1, b_2
+      & b_1, b_2 \in \mBlockSet, b_1 \in \mDom(b_2)
+    \end{array}
+  \end{bmatrix}
+  \labelEquation{dominance-matrix}
+\end{equation}
+%
+where each row denotes the fact that a \gls{block}~$b_1$ is \gls{dominate.b}[d]
+by another \gls{block}~$b_2$.
+%
+Next, we introduce the \glspl{variable} needed for capturing uses of
+\glspl{datum}.
 
+
+\subsubsection{Variables}
+
+The set of \glspl{variable} \mbox{$\mVar{uplace}[p] \in \mBlockSet$} models in
+which \gls{block} the \gls{datum} connected to \gls{operand}~$p$ is used.
+%
+Note that unlike the $\mVar{dplace}$~\glspl{variable}, which are indexed using a
+\gls{datum}, the $\mVar{uplace}$~\glspl{variable} are indexed using an
+\gls{operand}.
+
+
+\subsubsection{Constraints}
+
+Intuitively, every \gls{block} wherein a \gls{datum}~$d$ is \gls{use.d}[d] must
+be dominated by the \gls{block} wherein $d$ is \gls{define.d}[d].
+%
+Given a dominance relation matrix~$\mDomMatrix$, this \gls{constraint} is
+modeled as
+%
 \begin{equation}
   \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix)
   \mQuantSep
   \forall p \in \mPhiOperandCompSet.
-  \labelEquation{todo}
+  \labelEquation{refined-dom}
 \end{equation}
+%
+where \mbox{$\mPhiOperandCompSet \subseteq \mOperandSet$} denotes the set of
+\glspl{operand} not appearing in any \gls{phi-match}.
+%
+We exclude such \glspl{operand} for the same reasons \glspl{phi-match} are
+excluded in \refEquation{naive-dom}.
 
-\begin{equation}
-  \mVar{uplace}[p] = \mMin(\mBlockSet)
-  \mQuantSep
-  \forall p \in \mPhiOperandSet.
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
-    \forall m \in \mPhiMatchCompSet,
-    \forall p \in \mUses(m).
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
+Next, if a \gls{match}~$m$ is selected and placed in \gls{block}~$b$, then all
+\gls{use.d}[s] of \glspl{datum} made by $m$ should also occur in~$b$.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p] \\
@@ -78,7 +105,40 @@ In this section, we fix these problems by refining the \glsshort{constraint
     \forall o \in \mCovers(m),
     \forall p \in \mUses(m).
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-dom-selected}
+\end{equation}
+
+Due to \refEquation{refined-dom-selected}, the assignment to the
+$\mVar{uplace}$~\glspl{variable} for non-selected \glspl{match} does not matter
+as long as \refEquation{refined-dom} is satisfied, which gives rise to symmetric
+\glspl{solution}.
+%
+To break these symmetries, we fix the assignments in such cases to the
+\gls{block} wherein the \gls{datum} is \gls{define.d}[d] since a \gls{block}
+always \gls{dominate.b}[s] itself.
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
+    \forall m \in \mPhiMatchCompSet,
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{refined-dom-not-selected}
+\end{equation}
+
+Since neither of the above \glspl{constraint} apply to \glspl{operand} belonging
+to \glspl{phi-match}, the assignment to their $\mVar{uplace}$~\glspl{variable}
+does not matter, again giving rise to symmetric \glspl{solution}.
+%
+We therefore fix the assignment in such cases, which is modeled as
+%
+\begin{equation}
+  \mVar{uplace}[p] = \mMin(\mBlockSet)
+  \mQuantSep
+  \forall p \in \mPhiOperandSet.
+  \labelEquation{refined-dom-phi-operands}
 \end{equation}
 
 
