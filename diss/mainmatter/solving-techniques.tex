@@ -601,6 +601,17 @@ In such a setting, it is generally a good approach to first try a \gls{kill
 \section{Implied Constraints}
 \labelSection{st-impl-constraints}
 
+As explained in \refChapter{constraint-programming}, \gls{implied.c}
+\glspl{constraint} are \glspl{constraint} that strengthen the \gls{propagation}
+while preserving all \glspl{solution}.
+%
+Stronger \gls{propagation} leads to less \gls{search}, which in turn leads to
+shorter solving times.
+%
+In this section, we discuss such \glspl{constraint} that have been added to the
+\glsshort{constraint model}.
+
+
 \todo{mention that \refEquation{pattern-selection-using-gcc} did not give for
   our model}
 
