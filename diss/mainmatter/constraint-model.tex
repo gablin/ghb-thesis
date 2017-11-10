@@ -520,12 +520,16 @@ In this context a location is an abstract representation, typically representing
 a \gls{register}, but it could also indicate that the value is for example
 stored in memory.
 %
-The special location is used for intermediate values produced internally by an
-\gls{instruction} which can only be accessed by this very \gls{instruction}.
+The special location is used for \glspl!{intermediate value}, which are values
+produced within an \gls{instruction} and can only be accessed by this very
+\gls{instruction}.
 %
 For example, the address computed by a memory load \gls{instruction} with a
 sophisticated addressing mode is produced within the pipeline and thus cannot be
 reused by other \glspl{instruction}.
+%
+A value which is not an \gls{intermediate value} is called an \gls!{exterior
+  value}, meaning it can be accessed by other \glspl{instruction}.
 
 
 \subsubsection{Constraints}
@@ -655,9 +659,9 @@ values~\irVar{r} and~\irVar{s} and then shifts the result by one bit to the
 right (\refFigure{copy-extending-pattern-example-before}).
 %
 Since we want to preserve the ability of selecting copy \glspl{instruction} for
-moving \glspl{datum} between \glspl{instruction}, we only copy-extend the
-\glspl!{internal value} in a \gls{UP graph}, which are values that are both
-\gls{define.d}[d] and \gls{use.d}[d] by the \gls{pattern}.
+moving \glspl{datum} between \glspl{instruction}, we only copy-extend the values
+in a \gls{UP graph} which are both \gls{define.d}[d] and \gls{use.d}[d] by the
+\gls{pattern}.
 %
 We also copy-extend any constant values since these obviously do not require a
 separate copy \gls{instruction} to be used by the \gls{pattern}.
