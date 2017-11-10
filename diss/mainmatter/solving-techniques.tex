@@ -847,44 +847,6 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
 
 \todo{describe constraint}
 
-% Disable users of input data that would access it elsewhere to where its
-% definers can put them.
-
-\begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \\
-    \forall m \in
-      \mSetBuilder*{m'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       m' \in \mKillMatchCompSet,
-                       p \in \mUses(m') \setminus \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt} \\
-                       \text{\st }
-                       \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
-                     \end{array}
-                   } \!,
-  \end{array}
-\end{equation}
-%
-where
-%
-\begin{equation}
-  \hspace*{-1em}
-  \mDefLocsOf(d)
-  \equiv
-  \mSetBuilder{l}%
-              {%
-                m \in \mMatchSet[d] \setminus \mKillMatchSet,
-                p \in \mDefines(m),
-                l \in \mStores(m, p)
-                \text{ \st }
-                d \in \mDataSet[p]
-              }.
-\end{equation}
-
-\todo{describe constraint}
-
 % Constrain the location of d to be where its users can access it. Valid for
 % such d that are used at least once.
 
@@ -909,42 +871,6 @@ where
 \end{equation}
 
 \todo{describe constraint}
-
-% Disable definers of output data that would put it elsewhere to where its
-% users can access them. Valid for data that are used at least once.
-
-\begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \\
-    \forall m \in
-      \mSetBuilder*{m'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       m' \in \mKillMatchCompSet,
-                       p \in \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
-                       \neg\mIsInt(m, p)
-                       \mAnd
-                       \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
-                     \end{array}
-                   } \!,
-  \end{array}
-\end{equation}
-%
-where
-%
-\begin{equation}
-  \mUseLocsOf(d)
-  \equiv
-  \mSetBuilder{l}%
-              {%
-                m \in \mKillMatchCompSet,
-                p \in \mUses(m),
-                l \in \mStores(m, p)
-                \text{ \st }
-                d \in \mDataSet[p]
-              }.
-\end{equation}
 
 
 \section{Symmetry and Dominance Breaking Constraints}
@@ -1293,6 +1219,80 @@ It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
 \labelSection{st-pre-dom-matches}
 
 \subsection{Illegal matches}
+
+% Disable definers of output data that would put it elsewhere to where its
+% users can access them. Valid for data that are used at least once.
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \\
+    \forall m \in
+      \mSetBuilder*{m'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       m' \in \mKillMatchCompSet,
+                       p \in \mDefines(m'),
+                       d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
+                       \neg\mIsInt(m, p)
+                       \mAnd
+                       \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
+                     \end{array}
+                   } \!,
+  \end{array}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \mUseLocsOf(d)
+  \equiv
+  \mSetBuilder{l}%
+              {%
+                m \in \mKillMatchCompSet,
+                p \in \mUses(m),
+                l \in \mStores(m, p)
+                \text{ \st }
+                d \in \mDataSet[p]
+              }.
+\end{equation}
+
+% Disable users of input data that would access it elsewhere to where its
+% definers can put them.
+
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{sel}[m] \\
+    \forall m \in
+      \mSetBuilder*{m'}%
+                   {%
+                     \begin{array}{@{}l@{}}
+                       m' \in \mKillMatchCompSet,
+                       p \in \mUses(m') \setminus \mDefines(m'),
+                       d \in \mDataSet[p] \hspace{-1pt} \\
+                       \text{\st }
+                       \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
+                     \end{array}
+                   } \!,
+  \end{array}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \hspace*{-1em}
+  \mDefLocsOf(d)
+  \equiv
+  \mSetBuilder{l}%
+              {%
+                m \in \mMatchSet[d] \setminus \mKillMatchSet,
+                p \in \mDefines(m),
+                l \in \mStores(m, p)
+                \text{ \st }
+                d \in \mDataSet[p]
+              }.
+\end{equation}
+
+
 \subsection{Redundant kill instructions}
 \subsection{Redundant null-copy instructions}
 
