@@ -360,8 +360,9 @@
 \NewDocumentCommand{\mInterchDataSet}{o}{
   \IfValueTF{#1}{I_{#1}}{I}
 }
+\newcommand{\mIntLocation}{l_\textsc{int}}
+\newcommand{\mKilledLocation}{l_\textsc{killed}}
 \newcommand{\mMemLocation}{l_\textsc{mem}}
-\newcommand{\mNullLocation}{l_\textsc{null}}
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }

@@ -511,9 +511,9 @@ selected, that \mbox{$\mVar{x} \in L$}.
 \subsubsection{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{loc}[d] \in \mLocationSet \cup
-  \mSet{\mNullLocation}$} models in which location \gls{datum}~$d$ is available,
+  \mSet{\mIntLocation}$} models in which location \gls{datum}~$d$ is available,
 where $\mLocationSet$ denotes the set of locations provided by the \gls{target
-  machine} and $\mNullLocation$ denotes a special location for values that
+  machine} and $\mIntLocation$ denotes a special location for values that
 cannot be reused across \glspl{instruction}.
 %
 In this context a location is an abstract representation, typically representing
@@ -537,7 +537,7 @@ A value which is not an \gls{intermediate value} is called an \gls!{exterior
 Every \gls{datum} must be made available in a location that is compatible for
 all selected \glspl{match}.
 %
-If \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mNullLocation}$}
+If \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mIntLocation}$}
 denotes the set of compatible locations (including the special location for
 intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
 \gls{use.d}[d] by a \gls{match}~$m$, then this \gls{constraint} is modeled as
@@ -1023,41 +1023,27 @@ We address this by extending the \gls{pattern set} with a \gls!{kill pattern}
 \Glspl{match} derived from this \gls{pattern} are called \glspl!{kill match},
 which have zero cost and emit nothing if selected.
 %
-A \gls{datum} is said to be \gls!{inactive.d} if and only if it is
-\gls{define.d}[d] by a \gls{kill match}.
+A \gls{datum} is said to be \gls!{killed.d} if and only if it is
+\gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are only
+allowed to make use of not \gls{killed.d} \glspl{datum}.
+
+To model whether a \gls{datum} is \gls{killed.d}, we extend the location set
+with a special location~$\mKilledLocation$ and require that a \gls{kill
+  match}~$m$ is selected if and only if the location of the \gls{datum}
+\gls{define.d}[d] by $m$ is $\mKilledLocation$.
 %
-Non-\gls{inactive.d} \glspl{datum} are said to be \gls!{active.d}, and
-non-\glspl{kill match} are only allowed to make use of \gls{active.d}
-\glspl{datum}.
-%
-Assuming that every \gls{datum}~$d$ \glsshort{define.d}[able] by some \gls{kill
-  match} is used by at least one non-\gls{kill match} -- this is reasonable or
-else the \glspl{operation} defining $d$ would be considered dead code -- then
-these \glspl{constraint} can be jointly modeled as
+This is modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \neg\mVar{sel}[m_1] \mEq
-    \big(
-    \exists m_2 \in \mKillMatchCompSet,
-    \forall p_2 \in \mUses(m_2)
-    \text{ \st }
-    \mVar{sel}[m_2]
-    \mAnd \mVar{alt}[p_2] = d
-    \big) \\
-    \forall m_1 \in \mKillMatchSet,
-    \forall p_1 \in \mDefines(m_1),
-    \forall d \in \mDataSet[p_1] \hspace{-.8pt},
+    \mVar{sel}[m] \mEq \mVar{loc}[\mVar{alt}[p]] = \mKilledLocation \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m).
   \end{array}
-  \labelEquation{data-activity}
+  \labelEquation{killed-data}
 \end{equation}
 %
-where $\mKillMatchSet$ and $\mKillMatchCompSet$ denote the set of \glspl{kill
-  match} respectively the set~$\mMatchSet$ without the \glspl{kill match}.
-%
-However, we use a refined version introduced in \refChapter{solving-techniques}
-which enables an \gls{implied.c} \gls{constraint} to be added to the
-\glsshort{constraint model}.
+where $\mKillMatchSet$ denotes the set of \glspl{kill match}.
 
 
 \subsection{Experimental Evaluation}
