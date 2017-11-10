@@ -163,33 +163,36 @@ We therefore fix the assignment in such cases, which is modeled as
 
 \subsection{Refining the Data Activity Constraint}
 
-\todo{describe constraint}
+\RefEquation{data-activity}, which implements the data activity \gls{constraint}
+-- that is, the \gls{constraint} enforcing that non-\glspl{kill match} can only
+use \glspl{datum} not \gls{define.d}[d] by \glspl{kill match} -- makes no
+distinction on whether a \gls{datum} is only \gls{use.d}[d] internally by a
+\gls{match} or if it also serves as output.
+%
+By making this distinction, we can apply an \gls{implied.c} \gls{constraint}
+that also breaks a few symmetries.
 
-% If and only if a datum d is used by at least one operand in at least
-% one selected match, then d must not be defined by any kill
-% match.  If and only if d is used by at least one external operand in
-% at least one selected match, then d must not placed in the null
-% location.
+We first introduce the \glspl{variable} needed for this task.
 
+
+\subsubsection{Variables}
+
+The two sets of \glspl{variable} \mbox{$\mVar{useint}[m \hspace{-1pt},
+    p \hspace{-1pt}, d] \in \mSet{0, 1}$} and
+\mbox{$\mVar{useext}[m \hspace{-1pt}, p \hspace{-1pt}, d] \in \mSet{0, 1}$}
+model whether the \gls{datum}~$d$, which can be connected to \gls{operand}~$p$
+in a \gls{kill match}~$m$, is used as an \gls!{intermediate value} respectively
+\gls!{exterior value} to some selected non-\gls{kill match}.
+
+
+\subsubsection{Constraints}
+
+First, we constrain the $\mVar{useint}$ and $\mVar{useint}$~\glspl{variable}
+according to the description above, which is modeled as
+%
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \neg\mVar{useint}[m, p \hspace{-1pt}, d]
-    \mAnd
-    \neg\mVar{useext}[m, p \hspace{-1pt}, d] \\
-    \forall m \in \mKillMatchSet,
-    \forall p \in \mDefines(m),
-    \forall d \in \mDataSet[p] \hspace{-1pt},
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{useint}[m_1, p_1, d]
-    \mEq
-    \left(
+    \mVar{useint}[m_1, p_1, d] \mEq \left(
     \begin{array}{@{}c@{}}
       \exists m_2 \in \mKillMatchCompSet,
       \forall p_2 \in \mUses(m_2) \text{ \st} \\
@@ -204,7 +207,7 @@ We therefore fix the assignment in such cases, which is modeled as
     \forall p_1 \in \mDefines(m_1),
     \forall d \in \mDataSet[p_1],
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-data-activity-useint}
 \end{equation}
 %
 \begin{equation}
@@ -226,19 +229,49 @@ We therefore fix the assignment in such cases, which is modeled as
     \forall p_1 \in \mDefines(m_1),
     \forall d \in \mDataSet[p_1],
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-data-activity-useext}
 \end{equation}
 %
 where
 %
 \begin{equation}
-  \mIsInt(m, q) \equiv \mStores(m, q) = \mSet{\mNullLocation}.
-  \labelEquation{todo}
+  \mIsInt(m, p) \equiv \mStores(m, p) = \mSet{\mNullLocation},
+  \labelEquation{is-int}
 \end{equation}
+%
+which checks whether an \gls{operand}~$p$ in a \gls{match}~$m$ represents an
+\gls{intermediate value}.
 
+A \gls{kill match} is selected if and only if none of its
+\glsshort{define.d}[able] \glspl{operand} are connected to \glspl{datum} which
+is used by some selected non-\gls{kill match}.
+%
+Using the $\mVar{useint}$ and $\mVar{useint}$~\glspl{variable}, this is modeled
+as
+%
 \begin{equation}
   \begin{array}{c}
-    \mVar{useext}[m, p \hspace{-1pt}, d]
+    \mVar{sel}[m]
+    \mEq
+    \neg\mVar{useint}[m \hspace{-1pt}, p \hspace{-1pt}, d]
+    \mAnd
+    \neg\mVar{useext}[m \hspace{-1pt}, p \hspace{-1pt}, d] \\
+    \forall m \in \mKillMatchSet,
+    \forall p \in \mDefines(m),
+    \forall d \in \mDataSet[p] \hspace{-1pt}.
+  \end{array}
+  \labelEquation{refined-data-activity}
+\end{equation}
+
+We can now add an \gls{implied.c} \gls{constraint} that if and only if a
+\gls{datum}~$d$ is used as an \gls{exterior value} to some selected
+non-\gls{kill match}, then the location of $d$ cannot be $\mNullLocation$.
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useext}[m \hspace{-1pt}, p \hspace{-1pt}, d]
     \mEq
     \mVar{loc}[d] \neq \mNullLocation \\
     \forall m \in \mKillMatchSet,
@@ -247,6 +280,9 @@ where
   \end{array}
   \labelEquation{todo}
 \end{equation}
+%
+The \gls{constraint} also breaks a symmetry by fixing the location of
+\glspl{datum} defined by \glspl{kill match} to $\mNullLocation$.
 
 
 \subsection{Refining the Objective Function}
