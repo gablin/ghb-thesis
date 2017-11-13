@@ -668,14 +668,18 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
 
 
 \subsubsection{%
-  Implied Constraints due to the Refined Define-Before-Use Constraint%
+  Implied Constraints due to the Define-Before-Use Refinement%
 }
 
-\todo{describe constraint}
+From \refEquationRange{refined-dom}{refined-dom-phi-operands}, we can infer the
+following \gls{implied.c} \glspl{constraint}.
 
-% For non-phi matches, no spanned blocks:
-% if selected, blocks of outputs and blocks of use of inputs must be all equal.
-
+If a non-\gls{phi-match} that \gls{span.b}[s] no \glspl{block} is selected, then
+all \glspl{datum} it \gls{use.d}[s] and \gls{define.d}[s] must take place in the
+same \gls{block}.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
@@ -685,12 +689,12 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
+    \forall p_1, p_2 \in \mUses(m) \\
     \text{\st } p_1 < p_2,
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-dom-impl-no-span-uses}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -704,9 +708,9 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
                   },
     \forall p_1, p_2 \in \mDefines(m) \text{ \st } p_1 < p_2,
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-dom-impl-no-span-defs}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m]
@@ -721,14 +725,15 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
     \forall p_1 \in \mUses(m) \setminus \mDefines(m),
     \forall p_2 \in \mDefines(m).
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-dom-impl-no-span-use-defs}
 \end{equation}
 
-\todo{describe constraint}
-
-% For non-phi matches, spanned blocks:
-% if selected, blocks of use of inputs must be all equal.
-
+If a non-\gls{phi-match} \gls{span.b}[ning] some \glspl{block} is selected, then
+all \gls{use.d}[s] of the input \glspl{datum} must occur in the same
+\gls{block}.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
@@ -741,7 +746,7 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
     \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
     \text{\st } p_1 < p_2.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{refined-dom-impl-spanning-uses}
 \end{equation}
 
 
