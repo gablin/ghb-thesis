@@ -751,14 +751,23 @@ This is modeled as
 \end{equation}
 
 
-\subsubsection{TODO: rename (loc stuff)}
+\subsubsection{Implied Data Locations}
 
-\todo{describe constraint}
+Several \gls{implied.c} \glspl{constraint} can be due to
+\refEquation{compatible-locations}.
 
-% If all matches in the matchset covering a particular operation uses some
-% datum d as input, then d cannot be placed in the intermediate value nor killed
-% location.
-
+If all non-\glspl{kill match} covering some \gls{operation} require some
+non-\glsshort{state node} \gls{datum}~$d$ as input, then $d$ cannot be an
+intermediate value nor be \gls{killed.d}.
+%
+Such \glspl{datum} is said to be \gls!{available.d}, meaning they cannot be
+located in either $\mIntLocation$ or $\mKilledLocation$.
+%
+If the input can be one of several values (due to \glspl{alternative value}),
+then at least one of those values must be made \gls{available.d}.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \exists d \in S,
@@ -776,21 +785,18 @@ This is modeled as
                      \end{array}
                    } \!.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{used-data-must-be-available}
 \end{equation}
-
-Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
-
-\todo{describe constraint}
-
-% [MC 3]
 %
-% If all matches in the matchset that defines a non-state datum d, are active,
-% and define it in an external operand, then d must not be placed in the
-% intermediate value nor killed location.
-%
-% [MC 3] does not dominate [MC 2], nor vice versa.
+where $\mStateDataCompSet$ denotes the set of \glspl{datum} without the
+\glspl{state node}.
 
+If all non-\glspl{kill match} defining a non-\glsshort{state node}
+\gls{datum}~$d$ have $d$ as an \gls{exterior value}, then $d$ must be made
+\gls{available.d}.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation} \\
@@ -803,18 +809,22 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
                        \exists p \in \mDefines(m) \text{ \st} \\
                        \mDataSet[p] = \mSet{d'}
                        \mAnd
-                       \neg\mIsInt(m, p)
+                       \mIsExt(m, p)
                      \end{array}
                    } \!.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{exterior-data-must-be-available}
 \end{equation}
+%
+where \mbox{$\mIsExt(m, p)$} denotes whether an \gls{operand}~$p$ in a
+\gls{match}~$m$ represents an \gls{exterior value}.
 
-
-\subsubsection{TODO: remove?}
-
-% Constrain the location of d to be where its definers can put it.
-
+We can always constrain the locations of a non-\glsshort{state node}
+\gls{datum}~$d$ to those locations where the definers can put $d$.
+%
+The intuition here is to take the union of all those locations, which is modeled
+as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{loc}[d] = S \\
@@ -832,18 +842,18 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
                       d \in \mDataSet[p]
                     },
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{constraint-use-locations}
 \end{equation}
 
-\todo{describe constraint}
-
-% Constrain the location of d to be where its users can access it. Valid for
-% such d that are used at least once.
-
+Likewise, we can always constrain the locations of a non-\glsshort{state node}
+\gls{datum}~$d$ to those locations where the users can access $d$.
+%
+This is modeled similarly as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{loc}[d] = S \\
-    \forall d \in \mDataUsedOnceSet,
+    \forall d \in \mStateDataCompSet,
     \forall S \in
       \mPowerset{\mLocationSet
       \, \cup \,
@@ -855,12 +865,10 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
                       l \in \mStores(m, p)
                       \text{ \st }
                       d \in \mDataSet[p]
-                    },
+                    }.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{constraint-def-locations}
 \end{equation}
-
-\todo{describe constraint}
 
 
 \subsubsection{Implied Fall-Through}
@@ -1250,7 +1258,7 @@ It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
                        m' \in \mKillMatchCompSet,
                        p \in \mDefines(m'),
                        d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
-                       \neg\mIsInt(m, p)
+                       \mIsExt(m, p)
                        \mAnd
                        \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
                      \end{array}
