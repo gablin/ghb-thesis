@@ -1,0 +1,30 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}
+  \node [computation node] (phi) {\opPhi};
+  \node [value node, position=135 degrees from phi] (i1) {\strut\opVar{i}[$1$]};
+  \node [value node, position= 45 degrees from phi] (ik) {\strut\opVar{i}[$k$]};
+  \node [value node, below=of phi] (d) {};
+  \node [block node, above=of i1] (b1) {\strut$\opBlock{b}_{1}$};
+  \node [block node, above=of ik] (bk) {\strut$\opBlock{b}_{k}$};
+
+  \begin{scope}[data flow]
+    \draw (i1) -- (phi);
+    \draw (ik) -- (phi);
+    \draw (phi) -- (d);
+  \end{scope}
+  \begin{scope}[definition edge]
+    \draw (b1) -- (i1);
+    \draw (bk) -- (ik);
+  \end{scope}
+
+  \node [nothing] at ($(i1) !.5! (ik)$) {$\ldots$};
+  \node [nothing] at ($(b1) !.5! (bk)$) {$\ldots$};
+\end{tikzpicture}%
+\endgroup%

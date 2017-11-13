@@ -407,15 +407,16 @@ The restrictions imposed by the \glspl{definition edge} are modeled as
 \begin{equation}
   \mVar{dplace}[d] = b
   \mQuantSep
-  \forall \mEdge{d}{b} \in \mDefEdgeSet,
+  \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
   \labelEquation{def-edges}
 \end{equation}
 %
-where $\mDefEdgeSet$ denotes the set of \glspl{definition edge} in $\mUFGraph$.
+where $\mFunctionDefEdgeSet$ denotes the set of \glspl{definition edge} in
+$\mUFGraph$.
 %
-It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
-that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
-and all \glspl{target} are \glspl{block node}.
+It is assumed that the \glspl{edge} in $\mFunctionDefEdgeSet$ have been
+reoriented such that all \glspl{source} are either \glsshort{state node} or
+\glspl{value node} and all \glspl{target} are \glspl{block node}.
 
 So far, there is no connection between the $\mVar{oplace}$ and $\mVar{dplace}$
 \glspl{variable}.
@@ -912,7 +913,7 @@ between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
   \labelFigure{alt-values-example}
 \end{figure}
 %
-See for example \refFigure{alt-values-example-before}.
+See for example \refFigure{alt-values-example}.
 %
 Again, the \gls{match set} contains a \gls{match}~$m$ that uses
 value~\irVar{v}[1], which is \gls{copy-related.d} with value~\irVar{v}[2]
@@ -929,6 +930,51 @@ In this context, \irVar{v}[1] and \irVar{v}[2] are said to be
 For convenience, we assume that the set of \glspl{alternative value} for each
 non-\gls{input datum}~$d$ in a \gls{match} contains only the \glsshort{state
   node} or \gls{value node} to which $d$ is already mapped.
+
+Special care must be taken to \glspl{match} derived from the \gls{phi-pattern}.
+%
+Assume, for example, that the \gls{match}~$m$ using value~\irVar{v}[1] in
+\refFigure{alt-values-example-before} is a \gls{phi-match}.
+%
+This means that \irVar{v}[1] will participate in a \gls{definition edge},
+forcing \irVar{v}[1] to be \gls{define.d}[d] in some \gls{block}.
+%
+If $m$ is extended as in \refFigure{alt-values-example-after}, then $m$ is
+allowed to make use of value~\irVar{v}[2], which does not participate in the
+\gls{definition edge} and hence could break \gls{program} semantics.
+%
+There are two approaches to fixing this problem:
+%
+\begin{figure}
+  \centering%
+  \input{figures/constraint-model/ext-phi-pattern}
+
+  \caption{Extended $\mPhi$-pattern}
+  \labelFigure{ext-phi-pattern}
+\end{figure}
+%
+\begin{inlinelist}[label=(\roman*), itemjoin={; }, itemjoin*={; or\ }]
+  \item either all \glspl{phi-match} are excluded from being extended with
+    \glspl{alternative value}
+  \item the \gls{phi-pattern} is extended with \glspl{block node} and
+    \glspl{definition edge}, as shown in \refFigure{ext-phi-pattern}, which
+    allows the value placement restrictions to be captured as part of the
+    \gls{match}
+\end{inlinelist}.
+%
+The former is simpler but interferes with an \gls{implied.c} \gls{constraint}
+(\refEquation{kill-matches-symmetry-breaking}) to be introduced in
+\refChapter{solving-techniques}, which may remove potentially optimal
+\glspl{solution}.
+%
+Consequently, we apply the latter.
+%
+The extended \gls{phi-pattern} assumes that no value is used more than once by
+the same \gls{phi-node}, and that no pair of values used by the same
+\gls{phi-node} have \glspl{definition edge} to the same \gls{block}.
+%
+These invariants can be achieved by transforming the \gls{function} before
+\gls{pattern matching}.
 
 After having extended the \gls{match set} with \glspl{alternative value}, the
 next step is to extend the \gls{constraint model} with an another level of
@@ -1044,6 +1090,22 @@ This is modeled as
 \end{equation}
 %
 where $\mKillMatchSet$ denotes the set of \glspl{kill match}.
+
+Lastly, we need to enforce the value placements appearing in the
+\glspl{phi-match}.
+%
+Let $\mMatchDefEdgeSet$ denote this set of value placements, encoded as a
+tuple~\mbox{$\mTuple{m, b, p}$} for each \gls{definition edge} between a
+\gls{block}~$b$ and an operand~$p$ appearing in \gls{match}~$m$.
+%
+These \glspl{constraint} are then modeled as
+%
+\begin{equation}
+  \mVar{sel}[m] \mImp \mVar{dplace}[\mVar{alt}[p]] = b
+  \mQuantSep
+  \forall \mTuple{m, b, p} \in \mMatchDefEdgeSet.
+  \labelEquation{match-def-edges}
+\end{equation}
 
 
 \subsection{Experimental Evaluation}
