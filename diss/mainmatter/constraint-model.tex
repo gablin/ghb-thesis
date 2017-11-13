@@ -402,24 +402,8 @@ We therefore only use \refEquation{naive-dom} for sake of describing the
 \glsshort{constraint model}, keeping in mind that a refined version is applied
 in practice.
 
-The restrictions imposed by the \glspl{definition edge} are modeled as
-%
-\begin{equation}
-  \mVar{dplace}[d] = b
-  \mQuantSep
-  \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
-  \labelEquation{def-edges}
-\end{equation}
-%
-where $\mFunctionDefEdgeSet$ denotes the set of \glspl{definition edge} in
-$\mUFGraph$.
-%
-It is assumed that the \glspl{edge} in $\mFunctionDefEdgeSet$ have been
-reoriented such that all \glspl{source} are either \glsshort{state node} or
-\glspl{value node} and all \glspl{target} are \glspl{block node}.
-
-So far, there is no connection between the $\mVar{oplace}$ and $\mVar{dplace}$
-\glspl{variable}.
+Next, we need to constrain the $\mVar{dplace}$~\glspl{variable} to depend on
+where a selected \gls{match} is placed.
 %
 Intuitively, every \gls{datum} \gls{define.d}[d] by a \gls{match}~$m$ should be
 placed in the same \gls{block} as $m$ together with all \glspl{operation}
@@ -490,6 +474,22 @@ Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
   \end{array}
   \labelEquation{consumption}
 \end{equation}
+
+Lastly, the restrictions imposed by the \glspl{definition edge} are modeled as
+%
+\begin{equation}
+  \mVar{dplace}[d] = b
+  \mQuantSep
+  \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
+  \labelEquation{def-edges}
+\end{equation}
+%
+where $\mFunctionDefEdgeSet$ denotes the set of \glspl{definition edge} in
+$\mUFGraph$.
+%
+It is assumed that the \glspl{edge} in $\mFunctionDefEdgeSet$ have been
+reoriented such that all \glspl{source} are either \glsshort{state node} or
+\glspl{value node} and all \glspl{target} are \glspl{block node}.
 
 
 \section{Modeling Data Copying}
