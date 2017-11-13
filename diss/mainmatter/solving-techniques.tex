@@ -499,14 +499,24 @@ In this section, we discuss such \glspl{constraint} that have been added to the
   our model}
 
 
-\subsubsection{TODO: rename (non-phi stuff)}
+\subsubsection{Implied Operation and Data Placements}
 
-\todo{describe constraint}
-
-% If all matches covering a non-phi-operation o do not span any blocks, use
-% datum u, and define datum d, then the block defining u must dominate the block
-% defining d, and o must be placed in the block defining d.
-
+Due to \refEquationRange{naive-dom}{spanning}, if a selected \gls{match}
+\gls{define.d}[s] some \gls{datum}~$d_1$ and \gls{use.d}[s] some other
+\gls{datum}~$d_2$, then the \gls{block} wherein $d_2$ is \gls{define.d}[d] must
+\gls{dominate.b} the \gls{block} wherein $d_1$ is \gls{define.d}[d].
+%
+From this observation, we can infer that if all \glspl{match} covering a
+non-\gls{phi-node} \gls{operation}~$o$ do not \gls{span.b} any \glspl{block},
+\gls{define.d} some \gls{datum}~$d_1$, and \gls{use.d} some \gls{datum}~$d_2$,
+then the \gls{block} wherein $d_2$ is \gls{define.d}[d] must \gls{dominate.b}
+the \gls{block} wherein $d_1$ is \gls{define.d}[d].
+%
+In addition, $o$ must be placed in the same \gls{block} wherein $d_1$ is
+\gls{define.d}[d].
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
@@ -539,7 +549,7 @@ In this section, we discuss such \glspl{constraint} that have been added to the
                     \mDataSet[p] = \mSet{d}
                   }.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{defs-dominate-defs}
 \end{equation}
 %
 where
@@ -554,67 +564,16 @@ where
                 \text{ \st }
                 \mCovers(m) = \mSet{o}
               }
-  \labelEquation{todo}
+  \labelEquation{data-of-function}
 \end{equation}
 
-If the non-\glspl{phi-match} covering \gls{operation}~$o$ all have the same
-\gls{entry block}~$b$, then $o$ must for sure be placed in~$b$ (due to
-\refEquation{preventing-control-flow-op-moves}).
+Furthermore, we can infer that if all \glspl{match} covering the same
+non-\gls{phi-node} \gls{operation} \gls{span.b} a set~$S$ of \glspl{block} and
+\gls{define.d} some \gls{datum}~$d$\hspace{-1pt}, then $d$ must be
+\gls{define.d}[d] in one of the \glspl{block} in~$S$\hspace{-.8pt}.
 %
 This is modeled as
 %
-\begin{equation}
-  \begin{array}{c}
-    \mVar{oplace}[o] = b \\
-    \forall b \in \mBlockSet \hspace{-1pt},
-    \forall o \in
-      \mSetBuilder{o'}%
-                  {%
-                    o' \in \mOpCompSet{\mPhi},
-                    m \in \mMatchSet[o'] \hspace{-1pt}
-                    \text{ \st }
-                    \mEntry(m) = \mSet{b}
-                  }.
-  \end{array}
-  \labelEquation{place-ops-same-as-entry-block}
-\end{equation}
-
-If a \gls{datum}~$d$ appears in a \gls{definition edge}~$\mEdge{b}{d}$ and is
-\gls{define.d}[d] by \glspl{phi-match} only, then the \gls{operation} covered by
-these \glspl{match} must be placed $b$ (due to \refEquation{def-edges}).
-%
-This is modeled as
-%
-\begin{equation}
-  \begin{array}{c}
-    \mVar{oplace}[o] = b \\
-    \forall \mEdge{d}{b} \in \mDefEdgeSet,
-    \forall o \in
-      \mSetBuilder{o'}%
-                  {%
-                    \begin{array}{@{}l@{}}
-                      m \in \mMatchSet[d] \cap \mPhiMatchSet,
-                      o' \in \mCovers(m)
-                    \end{array}
-                  }.
-  \end{array}
-  \labelEquation{place-phi-ops-same-as-def-edge}
-\end{equation}
-%
-It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
-that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
-and all \glspl{target} are \glspl{block node}.
-
-
-
-
-
-\todo{describe constraint}
-
-% If all matches in the matchset covering a particular non-phi-operation have
-% identical spanned blocks and define datum d, then d must be placed in a
-% spanned block.
-
 \begin{equation}
   \begin{array}{c}
     \mVar{dplace}[d] \in S \\
@@ -632,15 +591,39 @@ and all \glspl{target} are \glspl{block node}.
                      \end{array}
                    } \!.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{def-in-spanned-blocks}
 \end{equation}
 
-\todo{describe constraint}
+From \refEquation{preventing-control-flow-op-moves}, we can infer that if all
+non-\glspl{phi-match} covering \gls{operation}~$o$ have \gls{entry
+  block}~$b$\hspace{-1pt}, then $o$ must for sure be placed in~$b$\hspace{-1pt}.
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{oplace}[o] = b \\
+    \forall b \in \mBlockSet \hspace{-1pt},
+    \forall o \in
+      \mSetBuilder{o'}%
+                  {%
+                    o' \in \mOpSet,
+                    m \in \mMatchSet[o'] \setminus \mPhiMatchSet
+                    \text{ \st }
+                    \mEntry(m) = \mSet{b}
+                  }.
+  \end{array}
+  \labelEquation{place-ops-same-as-entry-block}
+\end{equation}
 
-% If all matches in the matchset covering a non-phi-particular operation have
-% identical entry blocks and use datum d, then the block defining d must
-% dominate the entry block.
-
+Furthermore, we can infer that if the \glspl{match} covering the same
+non-\gls{phi-node} \gls{operation} all have identical \glspl{entry block}, say
+$b$\hspace{-1pt}, and make \gls{use.d} of some \gls{datum}~$d$\hspace{-1pt},
+then the \gls{block} wherein $d$ is \gls{define.d}[d] must dominate
+$b$\hspace{-1pt}.
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix) \\
@@ -649,7 +632,7 @@ and all \glspl{target} are \glspl{block node}.
       \mSetBuilder*{d'}%
                    {%
                      \begin{array}{@{}l@{}}
-                       d' \in \mOpCompSet{\mPhi},
+                       o' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[d'] \hspace{-1pt},
                        \exists p \in \mUses(m) \\
                        \text{ \st}
@@ -657,15 +640,40 @@ and all \glspl{target} are \glspl{block node}.
                      \end{array}
                    } \!.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{dominate-entry-block}
 \end{equation}
 
-\subsubsection{TODO: rename (phi stuff)}
+From \refEquation{def-edges}, we can infer that if a \gls{datum}~$d$ appears in
+a \gls{definition edge}~$\mEdge{b}{d}$ and is \gls{define.d}[d] by
+\glspl{phi-match} only, then the \gls{operation} covered by these \glspl{match}
+must be placed $b$.
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{oplace}[o] = b \\
+    \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
+    \forall o \in
+      \mSetBuilder{o'}%
+                  {%
+                    \begin{array}{@{}l@{}}
+                      m \in \mMatchSet[d] \cap \mPhiMatchSet,
+                      o' \in \mCovers(m)
+                    \end{array}
+                  }.
+  \end{array}
+  \labelEquation{place-phi-ops-same-as-def-edge}
+\end{equation}
+%
+It is assumed that the \glspl{edge} in $\mFunctionDefEdgeSet$ have been
+reoriented such that all \glspl{source} are either \glsshort{state node} or
+\glspl{value node} and all \glspl{target} are \glspl{block node}.
 
-\todo{describe constraint}
 
-
-\subsubsection{TODO: rename (?)}
+\subsubsection{%
+  Implied Constraints due to the Refined Define-Before-Use Constraint%
+}
 
 \todo{describe constraint}
 
