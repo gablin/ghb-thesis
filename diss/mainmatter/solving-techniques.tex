@@ -934,14 +934,14 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 The \gls{symmetry breaking.c} \gls{constraint} above also implies that if an
 \gls{operand} representing input with multiple \glspl{datum} does not take its
 minimum value, then the corresponding \gls{match} must be selected, which means
-that the location of the corresponding \gls{datum} cannot be $\mIntLocation$.
+that the corresponding \gls{datum} must be in a usable location.
 %
 This is modeled as
 \begin{equation}
   \begin{array}{c}
     \mVar{alt}[p] \neq \mMin(\mDataSet[p])
     \mImp
-    \mVar{alt}[p] \neq \mIntLocation \\
+    \mVar{alt}[p] \notin \mSet{\mIntLocation, \mKilledLocation} \\
     \forall m \in \mMatchSet,
     \forall p \in \mUses(m) \setminus \mDefines(m)
     \text{ \st }
