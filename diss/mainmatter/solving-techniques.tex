@@ -81,14 +81,14 @@ Note that unlike the $\mVar{dplace}$~\glspl{variable}, which are indexed using a
 
 \subsubsection{Constraints}
 
-Intuitively, every \gls{block} wherein a \gls{datum}~$d$ is \gls{use.d}[d] must
-be dominated by the \gls{block} wherein $d$ is \gls{define.d}[d].
+Obviously, every \gls{use.d} of \glspl{datum} must be \gls{dominate.b}[d] by its
+definition.
 %
-Given a dominance relation matrix~$\mDomMatrix$, this \gls{constraint} is
-modeled as
+Given a \glsshort{dominate.b}[ance] relation matrix~$\mDomMatrix$, this
+\gls{constraint} is modeled as
 %
 \begin{equation}
-  \mTable(\mVar{uplace}[p], \mVar{dplace}[e], \mDomMatrix)
+  \mTable(\mVar{uplace}[p], \mVar{dplace}[\mVar{alt}[p]], \mDomMatrix)
   \mQuantSep
   \forall p \in \mPhiOperandCompSet.
   \labelEquation{refined-dom}
