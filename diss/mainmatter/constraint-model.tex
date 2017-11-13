@@ -131,6 +131,10 @@ as
   \end{array}
   \labelEquation{operation-coverage}
 \end{equation}
+%
+This \gls{constraint} gives equally strong \gls{propagation} as
+\refEquation{pattern-selection-using-gcc}, making it redundant to add the latter
+as an \gls{implied.c} \gls{constraint} to the \glsshort{constraint model}.
 
 Likewise, if a \gls{datum}~$d$ is \gls{define.d}[d] by a \gls{match}~$m$, then
 that entails selection of $m$, and vice versa.
