@@ -557,12 +557,12 @@ where
   \labelEquation{todo}
 \end{equation}
 
-\todo{describe constraint}
-
-% If all matches in the matchset covering a particular non-phi-operation have
-% identical entry blocks, then the block defining d must dominate the entry
-% block.
-
+If the non-\glspl{phi-match} covering \gls{operation}~$o$ all have the same
+\gls{entry block}~$b$, then $o$ must for sure be placed in~$b$ (due to
+\refEquation{preventing-control-flow-op-moves}).
+%
+This is modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{oplace}[o] = b \\
@@ -576,8 +576,38 @@ where
                     \mEntry(m) = \mSet{b}
                   }.
   \end{array}
-  \labelEquation{todo}
+  \labelEquation{place-ops-same-as-entry-block}
 \end{equation}
+
+If a \gls{datum}~$d$ appears in a \gls{definition edge}~$\mEdge{b}{d}$ and is
+\gls{define.d}[d] by \glspl{phi-match} only, then the \gls{operation} covered by
+these \glspl{match} must be placed $b$ (due to \refEquation{def-edges}).
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{oplace}[o] = b \\
+    \forall \mEdge{d}{b} \in \mDefEdgeSet,
+    \forall o \in
+      \mSetBuilder{o'}%
+                  {%
+                    \begin{array}{@{}l@{}}
+                      m \in \mMatchSet[d] \cap \mPhiMatchSet,
+                      o' \in \mCovers(m)
+                    \end{array}
+                  }.
+  \end{array}
+  \labelEquation{place-phi-ops-same-as-def-edge}
+\end{equation}
+%
+It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
+that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
+and all \glspl{target} are \glspl{block node}.
+
+
+
+
 
 \todo{describe constraint}
 
@@ -633,33 +663,6 @@ where
 \subsubsection{TODO: rename (phi stuff)}
 
 \todo{describe constraint}
-
-% If all matches for an operation o are all phi instructions and have the same
-% def operand, then the def operand as well as o itself must all be placed in
-% the block mentioned in the output def edge.
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{oplace}[o] = b \\
-    \forall \mEdge{d}{b} \in \mDefEdgeSet,
-    \forall o \in
-      \mSetBuilder*{o'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       o' \in \mOpSet[\mPhi] \hspace{-1pt},
-                       m \in \mMatchSet[o'] \cap \mPhiMatchSet,
-                       p \in \mDefines(m) \\
-                       \text{\st }
-                       \mDataSet[p] = \mSet{d}
-                     \end{array}
-                   } \!.
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-%
-It is assumed that the \glspl{edge} in $\mDefEdgeSet$ have been reoriented such
-that all \glspl{source} are either \glsshort{state node} or \glspl{value node}
-and all \glspl{target} are \glspl{block node}.
 
 
 \subsubsection{TODO: rename (?)}
