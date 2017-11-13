@@ -810,29 +810,6 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
 \end{equation}
 
 
-\subsubsection{TODO: rename (fall-through stuff)}
-
-\todo{describe constraint}
-
-% If for any two given blocks p and q, and fallThroughBlockOfMatch contains
-% [_, p, q] but does not contain [_, p, q'] or [_, p', q], then succ[p] = q can
-% only help, never hurt.
-
-\begin{equation}
-  \begin{array}{c}
-    \mVar{succ}[b_1] = b_2 \\
-    \forall b_1, b_2 \in \mBlockSet
-    \text{ \st }
-    \mSetBuilder{\mEntry(m)}{\mPair{m}{b_2} \in \mFallThroughSet} = \mSet{b_1}
-    \mAnd
-    \mSetBuilder{m}{\mPair{m}{b_1} \in \mFallThroughSet} = \mEmptySet.
-  \end{array}
-  \labelEquation{todo}
-\end{equation}
-
-\todo{describe constraint}
-
-
 \subsubsection{TODO: remove?}
 
 % Constrain the location of d to be where its definers can put it.
@@ -883,6 +860,33 @@ Requires \mbox{$\mStores(m, d)$} of kill matches to allow kill location.
 \end{equation}
 
 \todo{describe constraint}
+
+
+\subsubsection{Implied Fall-Through}
+
+Due to \refEquation{fall-through}, if for any two \glspl{block}~$b_1$ and~$b_2$
+there exists a \gls{match} requiring $b_2$ to follow $b_1$ but none requiring
+any other \gls{block} to follow $b_1$ nor $b_2$ to follow any other \gls{block},
+then it is always safe to force $b_2$ to follow $b_1$.
+%
+This is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{succ}[b_1] = b_2 \\
+    \forall b_1, b_2 \in \mBlockSet
+    \text{ \st }
+    \mSetBuilder{\mEntry(m)}{\mPair{m}{b_2} \in \mFallThroughSet} = \mSet{b_1}
+    \mAnd \mbox{} \\
+    \mSetBuilder{b}%
+                {%
+                  \mPair{m}{b} \in \mFallThroughSet
+                  \text{ \st }
+                  \mEntry(m) = \mSet{b_1}%
+                } = \mSet{b_2}.
+  \end{array}
+  \labelEquation{impl-fall-through}
+\end{equation}
 
 
 \section{Symmetry and Dominance Breaking Constraints}
