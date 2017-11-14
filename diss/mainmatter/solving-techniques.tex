@@ -1376,6 +1376,27 @@ With similar reasoning, this set of \gls{illegal.m} \glspl{match} is computed as
   \labelEquation{illegal-matches-undefined-data}
 \end{equation}
 
+If a \gls{kill match}~$m$ \gls{define.d}[s] a \gls{datum}~$d$ and every other
+\gls{match} using $d$ has no \glsshort{alternative value}[s] but~$d$, then $m$
+is \gls{illegal.m} as $d$ must be \gls{define.d}[d] by a non-\gls{kill match}.
+%
+This set of \gls{illegal.m} \glspl{match} is computed as
+%
+\begin{equation}
+  \mSetBuilder*{m_1}%
+               {%
+                 \begin{array}{@{}l@{}}
+                   m_1 \in \mKillMatchSet,
+                   p_1 \in \mDefines(m_1),
+                   d \in \mDataSet[p_1], \\
+                   m_2 \in \mKillMatchCompSet,
+                   p_2 \in \mUses(m_2) \text{ \st }
+                   d \in \mDataSet[p_2] \mImp \mDataSet[p_2] = \mSet{d}
+                 \end{array}
+               }\!.
+  \labelEquation{illegal-matches-kills}
+\end{equation}
+
 If a \gls{match}~$m$ is not a \gls{kill match} and \gls{define.d}[s] a
 \gls{datum}~$d$ in a location that cannot be accessed by any of the
 \glspl{match} making \gls{use.d} of $d$, then $m$ can never be selected and is
