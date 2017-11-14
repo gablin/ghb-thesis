@@ -16,6 +16,9 @@
         draw=none,
         inner sep=3pt,
       },
+      match label/.append style={
+        outer sep=0,
+      },
     ]
 
     \node [computation node] (o2) {$o_2$};
@@ -127,11 +130,8 @@
     \end{pgfonlayer}
 
     % Match labels
-    \node [match label, left=of m1, outer sep=1.5pt] (m1l) {$\strut m_1$};
-    \node [match label, left=of m2, outer sep=1.5pt] (m2l) {$\strut m_2$};
-    \node [match label, left=of m3] (m3l) {$\strut m_3$};
-
     \foreach \i in {1, 2, 3} {
+      \node [match label, position=-155 degrees from m\i] (m\i l) {$m_\i$};
       \draw [match attachment line] (m\i) -- (m\i l);
     }
   \end{tikzpicture}%
