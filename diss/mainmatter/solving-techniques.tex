@@ -1240,13 +1240,68 @@ It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
 \section{Presolving}
 \labelSection{st-presolving}
 
-\todo{write introduction}
+As explained in \refChapter{constraint-programming}, \gls{presolving} is the
+process of applying problem-specific algorithms to reduce the \gls{variable}
+\glspl{domain} before solving.
+%
+In this dissertation, \gls{presolving} is used to remove \glspl{match} which can
+be safely removed without compromising code quality.
 
 
 \subsection{Dominated matches}
 \labelSection{st-pre-dom-matches}
 
-\todo{describe method}
+If two \glspl{match} are equal in all respects except latency, then the
+\gls{match} with longer latency is \gls!{dominate.m}[d] and can safely be
+removed from the \gls{match set}.
+%
+A \gls{match}~$m_1$ is \gls{dominate.m}[d] if there exists another
+\gls{match}~$m_2$ such that
+%
+\begin{itemize}
+  \item $m_1$ has greater than or equal cost to $m_2$,
+  \item both cover the same \glspl{operation},
+  \item both have the same \glspl{entry block} (if any),
+  \item both \gls{span.b} the same \glspl{block} (if any),
+  \item both have the same \glspl{definition edge} (if any),
+  \item $m_1$ has at least as strong location requirements on its \glspl{datum}
+    as $m_2$ -- that is, $\forall p_1 \in \mUses(m_1) \cup \mDefines(m_1),
+    \exists p_2 \in \mUses(m_2) \cup \mDefines(m_2) \text{ \st } \mDataSet[p_1]
+    \subseteq \mDataSet[p_2] \mAnd \mStores(m_1, p_1) \subseteq \mStores(m_2,
+    p_2)$ -- and
+  \item both apply the same auxiliary \glspl{constraint} (if any).
+\end{itemize}
+%
+As a precaution, we assume that \glspl{null match}, \glspl{phi-match}, and
+\glspl{match} with \gls{fall-through} conditions can never be
+\gls{dominate.m}[d].
+
+The method above can be generalized to letting combinations of \glspl{match} to
+be jointly \gls{dominate.m}[d] by another \gls{match}.
+%
+Intuitively, if the combination of \glspl{match} can be selected, then the
+\gls{solution} can always be improved by replacing them with the single
+\gls{match}.
+%
+The idea is to combine the \glspl{match} into a single \gls{match}~$m$, and then
+check whether the above conditions for \glsshort{dominate.m}[ance] apply with
+the additional check that none of intermediate values of $m$ are used by other
+\glspl{match}.
+%
+\begin{figure}
+  \centering%
+  \input{figures/solving-techniques/dominated-matches-example}
+
+  \caption[Example of dominated matches]%
+          {%
+            Example where matches~$m_1$ and $m_2$ are jointly dominated by
+            match~$m_3$ and can therefore safely be removed (provided that no
+            other match uses value~\irVar{v}[3])%
+          }
+  \labelFigure{dominated-matches-example}
+\end{figure}
+%
+An example is shown in \refFigure{dominated-matches-example}.
 
 
 \subsection{Illegal matches}
