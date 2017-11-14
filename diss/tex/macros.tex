@@ -306,6 +306,7 @@
 \newcommand{\mStronger}{\leq}
 \newcommand{\mConstraintFont}[1]{\textrm{\textsc{\MakeLowercase{#1}}}}
 \newcommand{\mBrPattern}{g_{\mathrm{br}}}
+\newcommand{\mConst}{\rule{3pt}{3pt}}
 \newcommand{\mCopy}{\circ}
 \newcommand{\mKill}{\times}
 \newcommand{\mNull}{\bot}
@@ -338,6 +339,8 @@
 \NewDocumentCommand{\mDataCompSet}{m}{
   \mDataSet_{\overbar{#1}}
 }
+\newcommand{\mConstDataSet}{\mDataSet[\mConst]}
+\newcommand{\mConstDataCompSet}{\mDataCompSet{\mConst}}
 \newcommand{\mStateDataSet}{\mDataSet[\mState]}
 \newcommand{\mStateDataCompSet}{\mDataCompSet{\mState}}
 \newcommand{\mBlockSet}{B}
@@ -349,6 +352,8 @@
 \NewDocumentCommand{\mMatchCompSet}{m}{
   \mMatchSet_{\overbar{#1}}
 }
+\newcommand{\mCopyMatchSet}{\mMatchSet[\mCopy]}
+\newcommand{\mCopyMatchCompSet}{\mMatchCompSet{\mCopy}}
 \newcommand{\mKillMatchSet}{\mMatchSet[\mKill]}
 \newcommand{\mKillMatchCompSet}{\mMatchCompSet{\mKill}}
 \newcommand{\mNullMatchSet}{\mMatchSet[\!\mNull]}
@@ -371,6 +376,10 @@
 \DeclareMathOperator{\mAllDiff}{\mConstraintFont{AllDiff}}
 \DeclareMathOperator{\mArgLoc}{\mFunFont{argLoc}}
 \DeclareMathOperator{\mBlockOf}{\mFunFont{blockOf}}
+\DeclareMathOperator{\mCapUseLocsOf}{\mFunFont{capUseLocsOf}}
+\DeclareMathOperator{\mCapDefLocsOf}{\mFunFont{capDefLocsOf}}
+\DeclareMathOperator{\mCupUseLocsOf}{\mFunFont{cupUseLocsOf}}
+\DeclareMathOperator{\mCupDefLocsOf}{\mFunFont{cupDefLocsOf}}
 \DeclareMathOperator{\mCircuit}{\mConstraintFont{Circuit}}
 \DeclareMathOperator{\mConsumes}{\mFunFont{consumes}}
 \DeclareMathOperator{\mCount}{\mConstraintFont{Count}}
@@ -379,7 +388,6 @@
 \DeclareMathOperator{\mCycle}{\mConstraintFont{Cycle}}
 \DeclareMathOperator{\mDataOf}{\mFunFont{dataOf}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
-\DeclareMathOperator{\mDefLocsOf}{\mFunFont{defLocsOf}}
 \DeclareMathOperator{\mDisableIncompUsers}{\mFunFont{disableUses}}
 \DeclareMathOperator{\mDistinct}{\mConstraintFont{Distinct}}
 \DeclareMathOperator{\mDom}{\mFunFont{dom}}
@@ -397,7 +405,6 @@
 \DeclareMathOperator{\mStates}{\mFunFont{states}}
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
 \DeclareMathOperator{\mTable}{\mConstraintFont{Table}}
-\DeclareMathOperator{\mUseLocsOf}{\mFunFont{useLocsOf}}
 \DeclareMathOperator{\mUses}{\mFunFont{uses}}
 \DeclareMathOperator{\mValuePrec}{\mConstraintFont{ValPre}}
 \DeclareMathOperator{\mValuePrecChain}{\mConstraintFont{VPC}}

@@ -1413,7 +1413,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
                    \mIsExt(m, p)
                    \mAnd
-                   \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
+                   \mStores(m, p) \cap \mCupUseLocsOf(d) = \mEmptySet
                  \end{array}
                }\!,
   \labelEquation{illegal-matches-def-locs}
@@ -1422,17 +1422,17 @@ This set of \gls{illegal.m} \glspl{match} is computed as
 where
 %
 \begin{equation}
-  \mUseLocsOf(d)
+  \mCupUseLocsOf(d)
   \equiv
-  \mSetBuilder{l}%
-              {%
-                m \in \mKillMatchCompSet,
-                p \in \mUses(m),
-                l \in \mStores(m, p)
-                \text{ \st }
-                d \in \mDataSet[p]
-              }.
-  \labelEquation{use-locs-of-function}
+  \hspace{-2.5em}
+  \bigcup_{\substack{%
+                   m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
+                   p \, \in \, \mUses(m)
+                   \text{ \st } d \, \in \, \mDataSet[p]
+                  }}
+    \hspace{-2.5em}
+    \mStores(m, p).
+  \labelEquation{cup-use-locs-of-function}
 \end{equation}
 
 Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
@@ -1450,7 +1450,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    p \in \mUses(m) \setminus \mDefines(m),
                    d \in \mDataSet[p] \hspace{-1pt} \\
                    \text{\st }
-                   \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
+                   \mStores(m, p) \cap \mCupDefLocsOf(d) = \mEmptySet
                  \end{array}
                } \!,
   \labelEquation{illegal-matches-use-locs}
@@ -1459,24 +1459,102 @@ This set of \gls{illegal.m} \glspl{match} is computed as
 where
 %
 \begin{equation}
-  \hspace*{-1em}
-  \mDefLocsOf(d)
+  \mCupDefLocsOf(d)
   \equiv
-  \mSetBuilder{l}%
-              {%
-                m \in \mMatchSet[d] \setminus \mKillMatchSet,
-                p \in \mDefines(m),
-                l \in \mStores(m, p)
-                \text{ \st }
-                d \in \mDataSet[p]
-              }.
-  \labelEquation{def-locs-of-function}
+  \hspace{-2.5em}
+  \bigcup_{\substack{%
+                   m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
+                   p \, \in \, \mDefines(m)
+                   \text{ \st } d \, \in \, \mDataSet[p]
+                  }}
+    \hspace{-2.5em}
+    \mStores(m, p).
+  \labelEquation{cup-def-locs-of-function}
 \end{equation}
 
 
-\subsection{Redundant Null-Copy Instructions}
+\subsection{Redundant Null Matches}
 
-\todo{describe method}
+In certain circumstances a \gls{null match} is redundant, meaning it can be
+safely removed without compromising code quality.
+
+One such case is that for each \gls{copy node}~$c$, if there exists a
+\gls{null-copy match} to cover $c$, then the \gls{kill match} covering $c$ is
+redundant since it is always safe to select the \gls{null-copy match} over the
+\gls{kill match}.
+%
+Consequently, all \glspl{kill match} covering \glspl{copy node} that take a
+non-constant value as input -- which cannot be covered using a \gls{null-copy
+  match} -- can be removed from the \gls{match set}.
+%
+This makes sense as the \glspl{kill match} were added to the \gls{match set} as
+a consequence of \gls{alternative value}, which was introduced to handle cases
+where loaded constants could be reused among \glspl{match}.
+%
+Hence this set of redundant \glspl{match} is computed as
+%
+\begin{equation}
+  \mSetBuilder{m}%
+              {%
+                m \in \mKillMatchSet,
+                o \in \mCovers(m)
+                \text{ \st }
+                \mMatchSet[o] \cap \mNullCopyMatchSet \neq \mEmptySet
+              }.
+  \labelEquation{redundant-kills-due-to-null-copies}
+\end{equation}
+
+Another case concerns \glspl{match} that cover a \gls{copy node} and are not
+\glspl{null match}.
+%
+For each copy chain \mbox{$\mEdge{v_1}{\mEdge{c}{v_2}}$}, where $c$ is a
+\gls{copy node} and $v_1$ and $v_2$ are \glspl{value node}, if every \gls{match}
+\glsshort{define.d}[ing] $v_1$ writes the value to a location that can be used
+by all \glspl{match} \glsshort{use.d}[ing]~$v_2$, then all non-\glspl{null
+  match} covering $c$ are redundant since a \gls{null-copy match} can always be
+selected.
+%
+We exclude, however, \glspl{copy node} that take a constant value as input since
+such \glspl{node} can never be covered by a \gls{null-copy match}.
+%
+We also exclude \glspl{copy node} whose \gls{define.d}[d] \gls{datum} is
+\gls{use.d}[d] by some \gls{phi-match} since an actual copy may be needed to
+satisfy \refEquation{phi-match-locations}.
+%
+Hence this set of redundant \glspl{match} is computed as
+%
+\begin{equation}
+  \mSetBuilder*{m}%
+               {%
+                 \begin{array}{@{}l@{}}
+                   m \in \mCopyMatchSet \setminus \mNullMatchSet,
+                   d_1 \in \mUses(m),
+                   d_2 \in \mDefines(m) \\
+                   \text{\st }
+                   \mDataSet[d_1] \cap \mPhiMatchSet = \mEmptySet
+                   \mAnd
+                   \mDataSet[d_2] \cap \mPhiMatchSet = \mEmptySet
+                   \mAnd
+                   d_1 \notin \mConstDataSet \\
+                   \mbox{}\hspace{-2pt} \mAnd
+                   \mCapUseLocsOf(d_1) \cap \mCapDefLocsOf(d_2) \neq \mEmptySet
+                 \end{array}
+               }\!,
+  \labelEquation{redundant-non-null-copies}
+\end{equation}
+%
+where \mbox{$\mCopyMatchSet \subseteq \mMatchSet$} denotes the set of
+\glspl{copy match}, \mbox{$\mConstDataSet \subseteq \mDataSet$} denotes the set
+of \glspl{datum} representing constant values, and \mbox{$\mCapUseLocsOf(d)
+  \subseteq \mLocationSet$} and \mbox{$\mCapDefLocsOf(d) \subseteq
+  \mLocationSet$} denote the intersection of all locations for all \gls{match}
+where a \gls{datum}~$d$ is \gls{use.d}[d] respectively \gls{define.d}[d].
+%
+As can be deduced from their name, $\mCapUseLocsOf$ and $\mCapDefLocsOf$ are
+defined similarly to $\mCupUseLocsOf$ and $\mCupDefLocsOf$ (see
+Eqs.\thinspace\refEquation*{cup-use-locs-of-function}
+and~\refEquation*{cup-def-locs-of-function}), with the exception that locations
+known to violate \refEquation{phi-match-locations} are removed from these sets.
 
 
 \section{Experimental Evaluation}
