@@ -733,8 +733,12 @@ squares can be packed.
 \subsubsection{Presolving}
 
 \Gls!{presolving} is the process of applying problem-specific algorithms to
-reduce the \gls{variable} \glspl{domain} before solving.
+reduce the number of \glspl{variable} or to shrink the \gls{variable}
+\glspl{domain} before solving.
 %
+Fewer \gls{variable} and smaller \glspl{domain} means smaller \glspl{constraint
+  model}, which means shorter solving times.
+
 For example, assume a \glsshort{constraint model} capturing the \gls{pattern
   selection} problem for entire \glspl{function}.
 %
@@ -743,5 +747,5 @@ Solving this problem optimally is NP-complete, but finding a suboptimal
 \refChapter{existing-isel-techniques-and-reps}.
 %
 The cost of such \glspl{solution} can used as an upper bound on the \gls{cost
-  variable}, thereby pruning away the parts of the \gls{search space} containing
-\glspl{solution} that are worse.
+  variable}, thereby shrinking its \gls{domain} which results in pruning away of
+parts of the \gls{search space} containing \glspl{solution} that are worse.
