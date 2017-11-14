@@ -1241,11 +1241,20 @@ It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
 \labelSection{st-presolving}
 
 As explained in \refChapter{constraint-programming}, \gls{presolving} is the
-process of applying problem-specific algorithms to reduce the \gls{variable}
-\glspl{domain} before solving.
+process of applying problem-specific algorithms to reduce the number of
+\glspl{variable} or to shrink the \gls{variable} \glspl{domain} before
+solving.\!%
+%
+\footnote{%
+  In this sense, the bound tightening technique described in
+  \refSection{st-cost-bounds} is a form of \gls{presolving}.%
+}
 %
 In this dissertation, \gls{presolving} is used to remove \glspl{match} which can
-be safely removed without compromising code quality.
+be safely removed without compromising code quality, which directly translates
+to fewer $\mVar{alt}$, $\mVar{sel}$, and $\mVar{uplace}$~\glspl{variable},
+smaller $\mVar{dplace}$ and $\mVar{oplace}$~\glspl{domain}, as well as fewer
+\glspl{constraint} that need to be managed by the \gls{constraint solver}.
 
 
 \subsection{Dominated matches}
