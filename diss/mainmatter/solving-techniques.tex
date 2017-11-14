@@ -1317,29 +1317,85 @@ An example is shown in \refFigure{dominated-matches-example}.
 
 \subsection{Illegal Matches}
 
+Depending on the \gls{instruction set}, the \gls{match set} may contain
+\glspl{match} that will, for one reason or another, never participate in any
+\gls{solution}.
+%
+Such \glspl{match} are said to be \gls!{illegal.m}.
 
+One set of \gls{illegal.m} \glspl{match} are those which would leave some
+\gls{operation} uncoverable if selected.
+%
+\begin{figure}
+  \centering%
+  \input{figures/solving-techniques/uncovered-operations-example}
 
-\todo{describe constraint}
-
-% Disable definers of output data that would put it elsewhere to where its
-% users can access them. Valid for data that are used at least once.
-
+  \caption[Example of an illegal match]%
+          {%
+            Example of an illegal match, where selecting match~$m_1$ would leave
+            operation~$o_2$ uncovered%
+          }
+  \labelFigure{uncovered-operations-example}
+\end{figure}
+%
+In \refFigure{uncovered-operations-example}, for example, selecting
+\gls{match}~$m_1$ would leave \gls{operation}~$o_2$ uncovered since it can only
+be covered by match~$m_2$, but selection of this \gls{match} is inhibited if
+$m_1$ is selected.
+%
+Hence this set of \gls{illegal.m} \glspl{match} is computed as
+%
 \begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \\
-    \forall m \in
-      \mSetBuilder*{m'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       m' \in \mKillMatchCompSet,
-                       p \in \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
-                       \mIsExt(m, p)
-                       \mAnd
-                       \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
-                     \end{array}
-                   } \!,
-  \end{array}
+  \mSetBuilder{m}%
+              {
+                \forall m \in \mMatchSet,
+                \forall o_1, o_2 \in \mOpSet
+                \text{ \st }
+                \mMatchSet[o_1] \subset \mMatchSet[o_2]
+                \mAnd
+                m \in \mMatchSet[o_2]
+              }.
+  \labelEquation{illegal-matches-uncovered-ops}
+\end{equation}
+
+Likewise, a \gls{match} is \gls{illegal.m} if selecting it would
+leave some \gls{datum} un\gls{define.d}[d].
+%
+With similar reasoning, this set of \gls{illegal.m} \glspl{match} is computed as
+%
+\begin{equation}
+  \mSetBuilder{m}%
+              {
+                \forall m \in \mMatchSet,
+                \forall d_1, d_2 \in \mDataSet
+                \text{ \st }
+                \mMatchSet[d_1] \subset \mMatchSet[d_2]
+                \mAnd
+                m \in \mMatchSet[d_2]
+              }.
+  \labelEquation{illegal-matches-undefined-data}
+\end{equation}
+
+If a \gls{match}~$m$ is not a \gls{kill match} and \gls{define.d}[s] a
+\gls{datum}~$d$ in a location that cannot be accessed by any of the
+\glspl{match} making \gls{use.d} of $d$, then $m$ can never be selected and is
+thus \gls{illegal.m}.
+%
+This set of \gls{illegal.m} \glspl{match} is computed as
+%
+\begin{equation}
+  \mSetBuilder*{m}%
+               {%
+                 \begin{array}{@{}l@{}}
+                   m \in \mKillMatchCompSet,
+                   p \in \mDefines(m),
+                   d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
+                   \mIsExt(m, p)
+                   \mAnd
+                   \mStores(m, p) \cap \mUseLocsOf(d) = \mEmptySet
+                 \end{array}
+               }\!,
+  \labelEquation{illegal-matches-def-locs}
 \end{equation}
 %
 where
@@ -1355,28 +1411,28 @@ where
                 \text{ \st }
                 d \in \mDataSet[p]
               }.
+  \labelEquation{use-locs-of-function}
 \end{equation}
 
-\todo{describe constraint}
-
-% Disable users of input data that would access it elsewhere to where its
-% definers can put them.
-
+Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
+\gls{datum}~$d$ from a location that cannot be written to by any of the
+\glspl{match} \glsshort{define.d}[ing]~$d$, then $m$ can never be selected and
+is thus \gls{illegal.m}.
+%
+This set of \gls{illegal.m} \glspl{match} is computed as
+%
 \begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \\
-    \forall m \in
-      \mSetBuilder*{m'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       m' \in \mKillMatchCompSet,
-                       p \in \mUses(m') \setminus \mDefines(m'),
-                       d \in \mDataSet[p] \hspace{-1pt} \\
-                       \text{\st }
-                       \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
-                     \end{array}
-                   } \!,
-  \end{array}
+  \mSetBuilder*{m}%
+               {%
+                 \begin{array}{@{}l@{}}
+                   m \in \mKillMatchCompSet,
+                   p \in \mUses(m) \setminus \mDefines(m),
+                   d \in \mDataSet[p] \hspace{-1pt} \\
+                   \text{\st }
+                   \mStores(m, p) \cap \mDefLocsOf(d) = \mEmptySet
+                 \end{array}
+               } \!,
+  \labelEquation{illegal-matches-use-locs}
 \end{equation}
 %
 where
@@ -1393,12 +1449,8 @@ where
                 \text{ \st }
                 d \in \mDataSet[p]
               }.
+  \labelEquation{def-locs-of-function}
 \end{equation}
-
-
-\subsection{Redundant Kill Instructions}
-
-\todo{describe method}
 
 
 \subsection{Redundant Null-Copy Instructions}

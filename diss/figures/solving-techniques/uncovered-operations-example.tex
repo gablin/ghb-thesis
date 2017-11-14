@@ -1,0 +1,102 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\setlength{\opNodeDist}{12pt}%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\adjustbox{valign=M}{%
+  \begin{tikzpicture}[
+      outer match node/.style={
+        match node,
+        draw=none,
+        inner sep=3pt,
+      },
+    ]
+
+    \node [computation node] (o1) {$o_1$};
+    \node [value node, position=135 degrees from o1] (v1) {};
+    \node [value node, position= 45 degrees from o1] (v2) {};
+    \node [value node, below=of o1] (v3) {};
+    \node [computation node, below=of v3] (o2) {$o_2$};
+    \node [value node, below=of o2] (v4) {};
+
+    \begin{scope}[data flow]
+      \draw (v1) -- (o1);
+      \draw (v2) -- (o1);
+      \draw (o1) -- (v3);
+      \draw (v3) -- (o2);
+      \draw (o2) -- (v4);
+    \end{scope}
+
+    \begin{pgfonlayer}{background}
+      % m2
+      \begin{scope}[outer match node/.append style={inner sep=8pt}]
+        \node [outer match node, fit=(v1)] (m2a) {};
+        \node [outer match node, fit=(v2)] (m2b) {};
+        \node [outer match node, fit=(v4), inner sep=5pt] (m2c) {};
+      \end{scope}
+
+      \def\pathMII{
+        [rounded corners=8pt]
+        (m2a.north west)
+        --
+        (m2b.north east)
+        --
+        (m2b.south east)
+        --
+        (m2c.south east)
+        --
+        (m2c.south west)
+        -- coordinate (m2)
+        (m2a.south west)
+        --
+        cycle
+      }
+      \draw [match line, fill=shade2] \pathMII;
+
+      % m1
+      \begin{scope}[outer match node/.append style={inner sep=5pt}]
+        \node [outer match node, fit=(v1)] (m1a) {};
+        \node [outer match node, fit=(v2)] (m1b) {};
+        \node [outer match node, fit=(v3)] (m1c) {};
+      \end{scope}
+
+      \def\pathMI{
+        [rounded corners=8pt]
+        (m1a.north west)
+        --
+        (m1b.north east)
+        --
+        (m1b.south east)
+        --
+        (m1c.south east)
+        --
+        (m1c.south west)
+        --
+        (m1a.south west)
+        -- coordinate (m1)
+        cycle
+      }
+      \draw [match line, fill=shade1] \pathMI;
+    \end{pgfonlayer}
+
+    % Match labels
+    \node [match label, left=of m1] (m1l) {$\strut m_1$};
+    \node [match label, position=-165 degrees from m2, outer sep=0]
+          (m2l) {$m_2$};
+    \foreach \i in {1, 2} {
+      \draw [match attachment line] (m\i) -- (m\i l);
+    }
+  \end{tikzpicture}%
+}%
+\hspace{6mm}%
+\begin{tabular}{@{}l@{}}
+  $\mMatchSet[o_1] = \mSet{m_1, m_2}$ \\
+  $\mMatchSet[o_2] = \mSet{m_2}$
+\end{tabular}%
+\endgroup%
