@@ -1,0 +1,85 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{foreground}%
+\pgfsetlayers{main,foreground}%
+\def\gridYSize{6mm}%
+\def\gridXSize{3mm}%
+\def\axisWidth{1pt}%
+\begin{tikzpicture}[%
+    axis/.style={
+      ->,
+      line width=\axisWidth,
+    },
+    limit/.style={
+      -,
+      draw=shade3,
+      dashed,
+      line width=\dataFlowLineWidth,
+    },
+    task/.style={
+      nothing,
+      draw,
+      fill=shade1,
+      line width=\dataFlowLineWidth,
+    },
+    label/.style={
+      nothing,
+      node distance=4pt,
+    },
+  ]
+
+  % Grid
+  \foreach \y in {0, ..., 3} {
+    \foreach \x in {0, ..., 20} {
+      \pgfmathtruncatemacro{\py}{\y - 1};
+      \pgfmathtruncatemacro{\px}{\x - 1};
+      \ifnum \x>0
+        \coordinate (\y-\x) at ([xshift=\gridXSize] \y-\px);
+      \else
+        \ifnum \y>0
+          \coordinate (\y-\x) at ([yshift=\gridYSize] \py-\x);
+        \else
+          \coordinate (\y-\x);
+        \fi
+      \fi
+    }
+  }
+
+  % Axes
+  \begin{pgfonlayer}{foreground}
+    \begin{scope}[axis]
+      \draw ([yshift=-.5*\axisWidth] 0-0)
+            -- coordinate (y-axis)
+            (3-0);
+      \draw ([xshift=-.5*\axisWidth] 0-0)
+            -- coordinate (x-axis)
+            (0-20);
+    \end{scope}
+  \end{pgfonlayer}
+  \node [label, left=of y-axis] {\rotatebox{90}{capacity}};
+  \node [label, below=of x-axis] {time};
+
+  % Limit
+  \draw [limit] (2-0)
+        -- coordinate [pos=.075] (limit)
+        (2-20);
+  \node [label, node distance=3pt, above=of limit] {limit};
+
+  % Tasks
+  \node [task, fit=(0-0) (1-5)] (t1) {};
+  \node [task, fit=(1-3) (2-7)] (t2) {};
+  \node [task, fit=(0-7) (2-12)] (t3) {};
+  \node [task, fit=(0-12) (1-19)] (t4) {};
+  \node [task, fit=(1-12) (2-17)] (t5) {};
+
+  \foreach \i in {1, ..., 5} {
+    \node [nothing] at (t\i) {$t_\i$};
+  }
+\end{tikzpicture}%
+\endgroup%

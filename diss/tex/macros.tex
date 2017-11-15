@@ -371,11 +371,13 @@
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }
+\newcommand{\mResourceSet}{R}
 \newcommand{\mHeuristicCost}{C_{\textsc{\textrm{heur}}}}
 \newcommand{\mRelaxedCost}{C_{\textsc{\textrm{rlx}}}}
 \DeclareMathOperator{\mAllDiff}{\mConstraintFont{AllDiff}}
 \DeclareMathOperator{\mArgLoc}{\mFunFont{argLoc}}
 \DeclareMathOperator{\mBlockOf}{\mFunFont{blockOf}}
+\DeclareMathOperator{\mCapOf}{\mFunFont{cap}}
 \DeclareMathOperator{\mCapUseLocsOf}{\mFunFont{capUseLocsOf}}
 \DeclareMathOperator{\mCapDefLocsOf}{\mFunFont{capDefLocsOf}}
 \DeclareMathOperator{\mCupUseLocsOf}{\mFunFont{cupUseLocsOf}}
@@ -385,6 +387,7 @@
 \DeclareMathOperator{\mCount}{\mConstraintFont{Count}}
 \DeclareMathOperator{\mCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mCovers}{\mFunFont{covers}}
+\DeclareMathOperator{\mCumulative}{\mConstraintFont{Cumulative}}
 \DeclareMathOperator{\mCycle}{\mConstraintFont{Cycle}}
 \DeclareMathOperator{\mDataOf}{\mFunFont{dataOf}}
 \DeclareMathOperator{\mDefines}{\mFunFont{defines}}
@@ -400,7 +403,9 @@
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
 \DeclareMathOperator{\mIncreasing}{\mConstraintFont{inc}}
+\DeclareMathOperator{\mLat}{\mFunFont{lat}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
+\DeclareMathOperator{\mResourceUse}{\mFunFont{req}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
 \DeclareMathOperator{\mStates}{\mFunFont{states}}
 \DeclareMathOperator{\mStores}{\mFunFont{stores}}
