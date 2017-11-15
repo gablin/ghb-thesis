@@ -1471,8 +1471,21 @@ can be modeled as
 %
 where \mbox{$\mCost(m) \in \mNatNumSet$} denotes the cost of \gls{match}~$m$,
 \mbox{$\mFreq(b) \in \mNatNumSet$} denotes the execution frequency of
-block~$b$\!, and \mbox{$\mBlockOf(m) \in \mBlockSet$} denotes the block wherein
-$m$ is placed.
+block~$b$\!, and
+%
+\begin{equation}
+  \mBlockOf(m)
+  \equiv
+  \left\{
+  \begin{array}{ll}
+      \mVar{oplace}[\mMin(\mCovers(m))]
+    & \text{if } \mCovers(m) \neq \mEmptySet, \\
+      \mVar{dplace}[\mVar{alt}[\mMin(\mDefines(m))]]
+    & \text{otherwise}.
+  \end{array}
+  \right.
+  \labelEquation{block-of-function}
+\end{equation}
 %
 However, as previously stated \refEquation{naive-objective-function} is a naive
 implementation and we therefore use a refined version, introduced in
