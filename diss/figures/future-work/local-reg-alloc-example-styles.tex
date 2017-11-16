@@ -1,0 +1,27 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\def\axisWidth{1pt}%
+\def\gridYSize{5mm}%
+\def\gridXSize{5mm}%
+\tikzset{
+  axis/.style={
+    ->,
+    line width=\axisWidth,
+  },
+  outer axis label/.style={
+    nothing,
+    node distance=1.4em,
+  },
+  inner axis label/.style={
+    outer axis label,
+    node distance=3pt,
+  },
+}%
+\def\drawVdotsLabel#1{%
+  \node [inner axis label, minimum width=5pt, #1] {\raisebox{7pt}{$\vdots$}};
+}%

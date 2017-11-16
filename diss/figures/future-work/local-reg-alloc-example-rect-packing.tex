@@ -1,0 +1,85 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/future-work/local-reg-alloc-example-styles}%
+\pgfdeclarelayer{foreground}%
+\pgfsetlayers{main,foreground}%
+\begin{tikzpicture}[%
+    variable box line/.style={
+      line width=\dataFlowLineWidth,
+    },
+    variable box/.style={
+      nothing,
+      draw,
+      fill=shade1,
+      variable box line,
+    },
+  ]
+
+  % Grid
+  \foreach \y in {0, ..., 4} {
+    \foreach \x in {0, ..., 4} {
+      \pgfmathtruncatemacro{\py}{\y - 1};
+      \pgfmathtruncatemacro{\px}{\x - 1};
+      \ifnum \x>0
+        \coordinate (\y-\x) at ([xshift=\gridXSize] \y-\px);
+      \else
+        \ifnum \y>0
+          \coordinate (\y-\x) at ([yshift=-\gridYSize] \py-\x);
+        \else
+          \coordinate (\y-\x);
+        \fi
+      \fi
+    }
+  }
+
+  % Axes
+  \begin{pgfonlayer}{foreground}
+    \begin{scope}[axis]
+      \draw ([yshift=-.5*\axisWidth] 0-0)
+            -- coordinate (y-axis)
+            (4-0);
+      \draw ([xshift=-.5*\axisWidth] 0-0)
+            -- coordinate (x-axis)
+            (0-4);
+    \end{scope}
+  \end{pgfonlayer}
+  \node [outer axis label, above=of x-axis] {registers};
+  \foreach \i in {0, ..., 2} {
+    \pgfmathtruncatemacro{\ni}{\i + 1};
+    \node [inner axis label, above=of $(0-\i) !.5! (0-\ni)$]
+          {\instrFont r$_{\text{\ni}}$};
+  }
+  \node [inner axis label, above=of $(0-3) !.5! (0-4)$] {$\cdots$};
+  \foreach \i in {0, ..., 2} {
+    \pgfmathtruncatemacro{\ni}{\i + 1};
+    \pgfmathtruncatemacro{\t}{\i + 1};
+    \node [inner axis label, left=of $(\i-0) !.5! (\ni-0)$] {\t};
+  }
+  \drawVdotsLabel{left=of $(3-0) !.5! (4-0)$}
+
+  % Variables
+  \node [variable box, fit=(0-0) (3-1)] (a) {};
+  \node [variable box, fit=(1-1) (3-3)] (b) {};
+  \node [variable box, draw=none, fit=(2-3) (4-4)] (c) {};
+  \node [variable box, draw=none, fit=(3-0) (4-1)] (d) {};
+  \foreach \v in {c, d} {
+    \draw [variable box line]
+          (\v.south west)
+          --
+          (\v.north west)
+          --
+          (\v.north east)
+          --
+          (\v.south east);
+  }
+
+  \foreach \v in {a, b, c, d} {
+    \node [nothing] at (\v) {\opVar{\v}};
+  }
+\end{tikzpicture}%
+\endgroup%

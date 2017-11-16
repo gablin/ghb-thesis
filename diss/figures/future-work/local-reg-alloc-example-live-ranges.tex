@@ -1,0 +1,72 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/future-work/local-reg-alloc-example-styles}%
+\def\gridXSize{6mm}%
+\begin{tikzpicture}[%
+    live range/.style={
+      <->,
+      >=Bar,
+      line width=\dataFlowLineWidth,
+    },
+    range label/.style={
+      nothing,
+      outer sep=3pt,
+      auto,
+      swap,
+    },
+  ]
+
+  % Grid
+  \foreach \y in {0, ..., 4} {
+    \foreach \x in {0, ..., 4} {
+      \pgfmathtruncatemacro{\py}{\y - 1};
+      \pgfmathtruncatemacro{\px}{\x - 1};
+      \ifnum \x>0
+        \coordinate (\y-\x) at ([xshift=\gridXSize] \y-\px);
+      \else
+        \ifnum \y>0
+          \coordinate (\y-\x) at ([yshift=-\gridYSize] \py-\x);
+        \else
+          \coordinate (\y-\x);
+        \fi
+      \fi
+    }
+  }
+
+  % Axes
+  \begin{scope}[axis]
+    \draw (0-0)
+          -- coordinate (y-axis)
+          (4-0);
+  \end{scope}
+  \foreach \i in {0, ..., 2} {
+    \pgfmathtruncatemacro{\ni}{\i + 1};
+    \pgfmathtruncatemacro{\t}{\i + 1};
+    \node [inner axis label, left=of $(\i-0) !.5! (\ni-0)$] {\t};
+  }
+  \drawVdotsLabel{left=of $(3-0) !.5! (4-0)$}
+
+  % Live ranges
+  \begin{scope}[live range]
+    \draw (0-1)
+          -- node [range label] {\opVar{a}}
+          (3-1);
+    \draw (1-2)
+          -- node [range label] {\opVar{b}}
+          (3-2);
+    \draw [<-]
+          (2-3)
+          -- node [range label] {\opVar{c}}
+          (4-3);
+    \draw [<-]
+          (3-4)
+          -- node [range label] {\opVar{d}}
+          (4-4);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

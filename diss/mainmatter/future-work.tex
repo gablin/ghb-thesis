@@ -207,17 +207,122 @@ In this context, \gls{register allocation} can be described as the problem of
 assigning a location to each \gls{datum}~$d$ such that the value in the location
 is preserved until the last use of~$d$.
 %
-Like with \gls{instruction selection}, the problem can be considered at two
-different scopes: \gls{local.ra} \gls{register allocation} and \gls{global.ra}
-\gls{register allocation}.
+Like with \gls{instruction selection}, this problem can be considered either at
+\gls{local.ra} or \gls{global.ra}.
+%
+In \gls!{local.ra} \gls{register allocation}, \glspl{register} are allocated to
+the variables in the \gls{function} one \gls{block} at a time, whereas
+\gls!{global.ra} \gls{register allocation} does so for the entire
+\gls{function}.
+%
+We begin by discussing the \gls{local.ra} problem and then extend it into the
+\gls{global.ra} problem.
 
-\todo{model local register allocation}
 
-\todo{model global register allocation}
+\subsection{Local Register Allocation}
+
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Scheduled instructions%
+                  \labelFigure{local-reg-alloc-example-ir}%
+                }%
+                [38mm]%
+                {%
+                  \input{figures/future-work/local-reg-alloc-example-styles}%
+                  \adjustbox{valign=M}{%
+                    \rotatebox{90}{cycles}%
+                  }%
+                  \setlength\extrarowheight{\gridYSize-11pt}%
+                  \begin{tabular}{@{\hspace{3pt}}cl@{}}
+                    1 & \irAssign{\irVar{b}}{\ldots} \\
+                    2 & \irAssign{\irVar{c}}{\ldots \irVar{a} \ldots} \\
+                    3 & \irAssign{\irVar{d}}%
+                                 {\ldots \irVar{a}, \irVar{b} \ldots} \\
+                    \raisebox{0pt}[\gridYSize-2pt]{\vdots} &
+                  \end{tabular}
+
+                  \vspace*{3.5pt}
+                }%
+  \hfill\hfill%
+  \subcaptionbox{%
+                  Live ranges%
+                  \labelFigure{local-reg-alloc-example-live-ranges}%
+                }{%
+                  \input{%
+                    figures/future-work/local-reg-alloc-example-live-ranges%
+                  }%
+                }%
+  \hfill\hfill%
+  \subcaptionbox{%
+                  Rectangle packing problem%
+                  \labelFigure{local-reg-alloc-example-rect-packing}%
+                }%
+                [42mm]%
+                {%
+                  \input{%
+                    figures/future-work/local-reg-alloc-example-rect-packing%
+                  }%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[Example of local register allocation]%
+          {%
+            Example of local register allocation.
+            %
+            It is assumed that variables~\irVar{a}, \irVar{c}, and \irVar{d}
+            each fit inside a single register whereas variable \irVar{b}
+            requires two adjacent registers%
+          }
+  \labelFigure{local-reg-alloc-example}
+\end{figure}
+
+We will describe the problem using the example is shown in
+\refFigure{local-reg-alloc-example}.
+%
+Assume a set of \glspl{instruction} in a given \gls{block} that have been
+scheduled (\refFigure{local-reg-alloc-example-ir}).
+%
+From the schedule a \gls!{live range} is computed for each variable, which is
+the point in time where the variable is defined until the point where it is last
+used (\refFigure{local-reg-alloc-example-live-ranges}).
+%
+If two variables have overlapping \glspl{live range}, then they cannot be
+assigned the same \gls{register} as one of the values would be overwritten
+before its last use.
+%
+By representing each variable by a rectangle, the problem of assigning
+\glspl{register} can be modeled as a rectangle packing
+problem~\cite{Quintao-PereiraPalsberg:2008}
+(\refFigure{local-reg-alloc-example-rect-packing}).
+%
+The height of each rectangle corresponds to variable's \gls{live range}, and the
+width corresponds to the size of the value (that is, the number of
+\glspl{register} it requires).
+
+
+\subsubsection{Variables}
+
+\todo{add variables}
 
 
 \subsubsection{Constraints}
 
-\todo{add constraints for local register allocation}
+\todo{add constraints}
 
-\todo{add constraints for global register allocation}
+
+\subsection{Global Register Allocation}
+
+\todo{model the problem}
+
+
+\subsubsection{Variables}
+
+\todo{add variables}
+
+
+\subsubsection{Constraints}
+
+\todo{add constraints}
