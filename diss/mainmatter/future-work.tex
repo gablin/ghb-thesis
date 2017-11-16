@@ -304,15 +304,179 @@ The height of each rectangle corresponds to variable's \gls{live range}, and the
 width corresponds to the size of the value (that is, the number of
 \glspl{register} it requires).
 
+For simplicity, let us assume for now that we only consider \glspl{function}
+containing a single \gls{block}, which removes the need of having to deal with
+\glspl{live range} spanning multiple \glspl{block}.
+
 
 \subsubsection{Variables}
 
-\todo{add variables}
+The two sets of \glspl{variable} \mbox{$\mVar{start}[d] \in \mNatNumSet$} and
+\mbox{$\mVar{end}[d] \in \mNatNumSet$} models the start respectively end of the
+\gls{live range} for a \gls{datum}~$d$\hspace{-1pt}.
+%
+Note that the \gls{register} to which $d$ is assigned is already modeled by the
+$\mVar{loc}$~\glspl{variable}.
+%
+In addition, the set of \glspl{variable} \mbox{$\mVar{alive}[d] \in \mSet{0,
+    1}$} models whether $d$ is alive (in other words, $d$ is not
+\gls{killed.d}), and the set of \glspl{variable}
+\mbox{$\mVar{using}[m \hspace{-1pt}, d] \in \mSet{0, 1}$} models whether
+\gls{match}~$m$ uses \gls{datum}~$d$\hspace{-1pt}.
 
 
 \subsubsection{Constraints}
 
-\todo{add constraints}
+If a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live range}
+for a \gls{datum}~$d$ is determined by the \gls{match} \glsshort{define.d}[ing]
+$d$\hspace{-1pt}.
+%
+This can be modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{alive}[d]
+    \mImp
+    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]] \\
+    \forall d \in \mDataSet \!,
+    \forall m \in \mMatchSet[d] \hspace{-.8pt}.
+  \end{array}
+  \labelEquation{live-range-start}
+\end{equation}
+
+Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
+determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-1pt}.
+%
+This can be modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{alive}[d]
+    \mImp
+    \mVar{end}[d] = \mMax(
+                           \cup_{m \,\in\, \mUsersOf(d)} \,
+                           \mVar{cycle}[m]
+                           \times
+                           \mVar{using}[m \hspace{-1pt}, d]
+                         ) \\
+    \forall d \in \mDataSet \!.
+  \end{array}
+  \labelEquation{live-range-end}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \mUsersOf(d)
+  \equiv
+  \mSetBuilder{m}%
+              {
+                m \in \mMatchSet,
+                \exists p \in \mUses(m)
+                \text{ \st } d \in \mDataSet[p]
+              }.
+  \labelEquation{users-of-function}
+\end{equation}
+
+A \gls{match}~$m$ makes use of a \gls{datum}~$d$ if and only if one of its
+\glspl{operand} are connected to $d$\hspace{-1pt}, which can be modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{using}[m \hspace{-1pt}, d]
+    \mEq
+    \mVar{alt}[p] = d \\
+    \forall d \in \mDataSet \!,
+    \forall m \in \mMatchSet,
+    \forall p \in \mUses(m).
+  \end{array}
+  \labelEquation{m-using-d}
+\end{equation}
+
+To model the rectangle packing problem, we use the \gls!{no-overlap constraint}
+(often also called the \gls!{diffn constraint}), which enforces that no two
+rectangles may overlap.
+%
+Formally, the \gls{constraint} is defined as follows.
+%
+\begin{definition}[No-Overlap Constraint]
+  For each rectangle~$i$, let \mbox{$\mVar{xl}_i, \mVar{xr}_i, \mVar{yl}_i,
+    \mVar{yu}_i \in \mNatNumSet$} be \glspl{variable} representing the
+  rectangle's left, right, lower, respectively upper boundary.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \begin{array}{c}
+      \mNoOverlap(
+        \mTuple{
+          \mVar{xl}_1 \hspace{-.8pt},
+          \mVar{xr}_1 \hspace{-.8pt},
+          \mVar{yl}_1 \hspace{-.8pt},
+          \mVar{yu}_1 \hspace{-.8pt}
+        } \hspace{-1pt},
+        \ldots,
+        \mTuple{
+          \mVar{xl}_k \hspace{-.8pt},
+          \mVar{xr}_k \hspace{-.8pt},
+          \mVar{yl}_k \hspace{-.8pt},
+          \mVar{yu}_k \hspace{-.8pt}
+        }
+      )
+      \equiv \mbox{} \\
+      \mSetBuilder*{%
+                     \left\langle
+                       \begin{array}{@{}c@{}}
+                         d_{\mVar{xl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xl}_k}
+                         \hspace{-.8pt},
+                         d_{\mVar{xr}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xr}_k}
+                         \hspace{-.8pt}, \\
+                         d_{\mVar{yl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yl}_k}
+                         \hspace{-.8pt},
+                         d_{\mVar{yu}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yu}_k}
+                       \end{array}
+                     \right\rangle
+                   }%
+                   {
+                     \begin{array}{@{}l@{}}
+                       \forall_{\! i} \: d_{\mVar{xl}_i} \in \mDomain(\mVar{xl}_i),
+                       \forall_{\! i} \: d_{\mVar{xr}_i} \in \mDomain(\mVar{xr}_i),
+                       \\
+                       \forall_{\! i} \: d_{\mVar{yl}_i} \in \mDomain(\mVar{yl}_i),
+                       \forall_{\! i} \: d_{\mVar{yu}_i} \in \mDomain(\mVar{yu}_i)
+                       \text{ \st} \\
+                       \begin{array}{@{}r@{\:}l@{}}
+                           \forall_{\! 1 \,\leq\, i \,<\, j \,\leq\, k}
+                         & \mVar{xr_i} \leq \mVar{xl_j} \mOr
+                           \mVar{xl_i} \geq \mVar{xr_j} \mOr \mbox{} \\
+                         & \mVar{yu_i} \leq \mVar{yl_j} \mOr
+                           \mVar{yl_i} \geq \mVar{yu_j}
+                       \end{array}
+                     \end{array}
+                   }\!.
+    \end{array}
+  \end{displaymath}
+  \labelDefinition{no-overlap}
+\end{definition}
+%
+Thus the rectangle packing problem can be modeled as
+%
+\begin{equation}
+  \mNoOverlap\!
+  \left(
+    \cup_{d \,\in\, \mDataSet}
+      \mTuple{
+         \mVar{start}[d],
+         \mVar{end}[d],
+         \mVar{loc}[d],
+         \mVar{loc}[d] + \mWidthOf(d)
+      }
+  \right)\!,
+  \labelEquation{rect-packing}
+\end{equation}
+%
+where \mbox{$\mWidthOf(d) \in \mNatNumSet$} denotes the number of
+\glspl{register} required for \gls{datum}~$d$\hspace{-1pt}.
 
 
 \subsection{Global Register Allocation}
