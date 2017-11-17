@@ -481,6 +481,61 @@ where \mbox{$\mWidthOf(d) \in \mNatNumSet$} denotes the number of
 
 \subsection{Global Register Allocation}
 
+The main problem of extending \gls{local.ra} \gls{register allocation} to
+\gls{global.ra} scope is that placements of \glspl{match} to \glspl{block} need
+to be taken into consideration.
+%
+Furthermore, the \glspl{live range} are no longer necessarily limited within a
+single \gls{block} but may span multiple \glspl{block}.
+%
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Scheduled instructions%
+                  \labelFigure{global-reg-alloc-example-ir}%
+                }%
+                [38mm]%
+                {%
+                  \figureFont\figureFontSize%
+                  \begin{tabular}{@{}c@{\hspace{.5em}}l@{}}
+                      \irBlock{A:}
+                    & \irAssign{\irVar{x}}{\ldots} \\
+                    & \irCondBr{\ldots}{B}{C} \\
+                      \irBlock{B:}
+                    & \ldots \\
+                    & \irBr{D} \\
+                      \irBlock{C:}
+                    & \ldots \\
+                    & \irBr{D} \\
+                      \irBlock{D:}
+                    & \ldots \\
+                    & \irAssign{\irVar{y}}{\ldots \irVar{x} \ldots}
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Live range of \irVar{x}%
+                  \labelFigure{global-reg-alloc-example-live-ranges}%
+                }%
+%                [42mm]%
+                {%
+                  \input{%
+                    figures/future-work/global-reg-alloc-example-live-ranges%
+                  }%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[TODO]%
+          {%
+            TODO%
+          }
+  \labelFigure{global-reg-alloc-example}
+\end{figure}
+%
+An example is shown in \refFigure{global-reg-alloc-example}.
+
 \todo{model the problem}
 
 

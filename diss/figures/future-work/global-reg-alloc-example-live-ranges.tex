@@ -1,0 +1,66 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\setlength{\opNodeDist}{6mm}%
+\newlength{\liveRangeWidth}%
+\setlength{\liveRangeWidth}{2mm}%
+\begin{tikzpicture}[
+    block node/.append style={
+      minimum height=9mm,
+      minimum width=15mm,
+    },
+    live range line/.style={
+      line width=\dataFlowLineWidth,
+    },
+    live range fill/.style={
+      fill=shade1,
+    },
+  ]
+
+  % Block nodes
+  \node [block node] (A) {};
+  \node [block node, below  left=\opNodeDist and .5\opNodeDist of A.south]
+        (B) {};
+  \node [block node, below right=\opNodeDist and .5\opNodeDist of A.south]
+        (C) {};
+  \node [block node, below=of $(B.south) !.5! (C.south)$] (D) {};
+
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (A) -- ($(B.north west) !.4! (B.north east)$);
+      \draw (A) -- ($(C.north west) !.6! (C.north east)$);
+      \draw ($(B.south west) !.4! (B.south east)$) -- (D);
+      \draw ($(C.south west) !.6! (C.south east)$) -- (D);
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Block labels
+  \foreach \b in {A, D} {
+    \node [block label, below left=0 and 0 of \b.north west, inner xsep=2pt]
+          {\b};
+  }
+  \node [block label, above right=0 and 0 of B.north west] {B};
+  \node [block label, above left=0 and 0 of C.north east] {C};
+
+  % Live ranges
+%  \begin{pgfonlayer}{background}
+    \begin{scope}[live range line]
+      \draw [live range fill]
+            ([xshift=-.5\liveRangeWidth] A.south)
+            --
+            ++(90:4mm)
+            --
+            ++(0:\liveRangeWidth)
+            --
+            ([xshift=.5\liveRangeWidth] A.south);
+    \end{scope}
+%  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%
