@@ -729,7 +729,17 @@ $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
 %
 Equations \refEquation*{global-live-range-end-def-and-int-blocks}
 and~\refEquation*{global-live-range-end-last-use-block} implicitly assume that
-\glspl{phi-match} are always scheduled first, which can be enforced by
+\glspl{phi-match} are always scheduled first,%
+%
+\footnote{%
+  This is because \glspl{datum} \gls{define.d}[d] and \gls{use.d}[d] within
+  loops must be live across the entire loop, meaning the \glspl{live range} must
+  start at the beginning of the \gls{block}.
+  %
+  Since the \glspl{phi-match} \gls{define.d} the \glspl{datum} to be
+  \gls{use.d}[d] within the loop, these must appear first in the schedule.
+}%
+which can be enforced by
 %
 \begin{equation}
   \mVar{cycles}[m] = 0
