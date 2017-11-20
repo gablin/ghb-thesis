@@ -327,9 +327,22 @@ In addition, the set of \glspl{variable} \mbox{$\mVar{alive}[d] \in \mSet{0,
 
 \subsubsection{Constraints}
 
-If a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live range}
-for a \gls{datum}~$d$ is determined by the \gls{match} \glsshort{define.d}[ing]
-$d$\hspace{-1pt}.
+First, we constrain the $\mVar{alive}$~\glspl{variable} according to the
+definition of what it means for \glspl{datum} to be \gls{killed.d}, which is
+modeled as
+%
+\begin{equation}
+  \mVar{alive}[d]
+  \mEq
+  \mVar{loc}[d] = \mKilledLocation
+  \mQuantSep
+  \forall d \in \mDataSet \!.
+  \labelEquation{alive}
+\end{equation}
+
+Now, if a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live
+  range} for a \gls{datum}~$d$ is determined by the \gls{match}
+\glsshort{define.d}[ing] $d$\hspace{-1pt}.
 %
 This can be modeled as
 %
