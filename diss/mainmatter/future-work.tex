@@ -7,10 +7,28 @@
 \chapter{Future Work}
 \labelChapter{future-work}
 
-\todo{add chapter outline}
+This chapter discusses future work on how to extend the \gls{constraint model}
+to incorporate other problems related to \gls{code generation}.
+%
+\RefSection{fw-isched} proposes an extension of the \gls{constraint model} for
+integrating \gls{instruction scheduling}.
+%
+Based on this idea, \RefSection{fw-reg-alloc} proposes an extension for
+integrating \gls{register allocation}.
 
 
 \section{Integrating Instruction Scheduling}
+\labelSection{fw-isched}
+
+As described in \refChapter{introduction}, apart from \gls{instruction
+  selection} the other two main problems of \gls{code generation} are
+\gls{instruction scheduling} and \gls{register allocation}.
+%
+More importantly, it is well known that these three problems interact with one
+another.
+%
+Hence, future work includes extending the \gls{constraint model} introduced in
+this dissertation to integrate these problems.
 
 In this context, the \gls{instruction scheduling} problem can be defined as
 follows.
@@ -202,6 +220,7 @@ $m$ is selected and placed in $b$, which can be modeled as
 
 
 \section{Integrating Register Allocation}
+\labelSection{fw-reg-alloc}
 
 In this context, \gls{register allocation} can be described as the problem of
 assigning a location to each \gls{datum}~$d$ such that the value in the location
@@ -305,6 +324,9 @@ width corresponds to the size of the value (that is, the number of
 For simplicity, let us assume for now that we only consider \glspl{function}
 containing a single \gls{block}, which removes the need of having to deal with
 \glspl{live range} spanning multiple \glspl{block}.
+%
+Also, since the \glspl{live range} depend on the schedule, we build upon the
+\gls{constraint model} proposed in \refSection{fw-isched}.
 
 
 \subsubsection{Variables}
