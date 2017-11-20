@@ -344,6 +344,8 @@ Now, if a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live
   range} for a \gls{datum}~$d$ is determined by the \gls{match}
 \glsshort{define.d}[ing] $d$\hspace{-1pt}.
 %
+Otherwise, the start is set to zero.
+%
 This can be modeled as
 %
 \begin{equation}
@@ -352,26 +354,39 @@ This can be modeled as
     \mImp
     \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]] \\
     \forall d \in \mDataSet \!,
-    \forall m \in \mMatchSet[d] \hspace{-.8pt}.
+    \forall m \in \mMatchSet[d] \hspace{-.8pt},
   \end{array}
   \labelEquation{live-range-start}
+\end{equation}
+%
+\begin{equation}
+  \neg\mVar{alive}[d]
+  \mImp
+  \mVar{start}[d] = 0
+  \mQuantSep
+  \forall d \in \mDataSet \!.
+  \labelEquation{killed-range-start}
 \end{equation}
 
 Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
 determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-1pt}.
 %
-This can be modeled as
+If there is no use of $d$, then $\mVar{end}[d]$ is set to $\mVar{start}[d]$ as
+to not affect \gls{register allocation} and \gls{instruction scheduling}.
+%
+This can jointly be modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{alive}[d]
-    \mImp
-    \mVar{end}[d] = \mMax(
-                           \cup_{m \,\in\, \mUsersOf(d)} \,
-                           \mVar{cycle}[m]
-                           \times
-                           \mVar{using}[m \hspace{-1pt}, d]
-                         ) \\
+    \mVar{end}[d] = \mMax\!
+                    \left(
+                      \cup_{m \,\in\, \mUsersOf(d)} \,
+                      \mVar{cycle}[m]
+                      \times
+                      \mVar{using}[m \hspace{-1pt}, d]
+                      \cup
+                      \mSet{\mVar{start}[d]}
+                    \right) \\
     \forall d \in \mDataSet \!.
   \end{array}
   \labelEquation{live-range-end}
@@ -391,14 +406,15 @@ where
   \labelEquation{users-of-function}
 \end{equation}
 
-A \gls{match}~$m$ makes use of a \gls{datum}~$d$ if and only if one of its
-\glspl{operand} are connected to $d$\hspace{-1pt}, which can be modeled as
+A \gls{match}~$m$ makes use of a \gls{datum}~$d$ if and only if $m$ is selected
+and one of its \glspl{operand} are connected to $d$\hspace{-1pt}, which can be
+modeled as
 %
 \begin{equation}
   \begin{array}{c}
     \mVar{using}[m \hspace{-1pt}, d]
     \mEq
-    \mVar{alt}[p] = d \\
+    \mVar{sel}[m] \mAnd \mVar{alt}[p] = d \\
     \forall d \in \mDataSet \!,
     \forall m \in \mMatchSet,
     \forall p \in \mUses(m).
