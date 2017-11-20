@@ -9,8 +9,6 @@
 
 \todo{add chapter outline}
 
-\todo{mention Robertos contribution}
-
 
 \section{Integrating Instruction Scheduling}
 
@@ -570,13 +568,22 @@ Consequently, \irVar{x} must be live to the end of \irBlock{A}, through all
 \glspl{block}~\irBlock{B} and~\irBlock{C}), and until the last use in
 \irBlock{D} (\refFigure{global-reg-alloc-example-live-ranges}).
 
-\todo{model the problem}
+We extend the \gls{constraint model} proposed for \gls{local.ra} \gls{register
+  allocation} by first creating $\mVar{start}$ and $\mVar{end}$~\glspl{variable}
+for each \gls{block} in the \gls{function} together with an additional set of
+\glspl{variable}, and then extending the \glspl{constraint} to handle multiple
+\glspl{block}.
 
 
 \subsubsection{Variables}
 
-The set of \glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-1pt}, b] \in
-  \mSet{0, 1}$} models, given a \gls{datum}~$d$ and a
+The two sets of \glspl{variable} \mbox{$\mVar{start}[d \hspace{-1pt}, b] \in
+  \mNatNumSet$} and \mbox{$\mVar{end}[d \hspace{-1pt}, b] \in \mNatNumSet$}
+models the start respectively end of the \gls{live range} for a \gls{datum}~$d$
+in \gls{block}~$b$\hspace{-1pt}.
+%
+In addition, the set of \glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-1pt},
+    b] \in \mSet{0, 1}$} models, given a \gls{datum}~$d$ and a
 \gls{block}~$b$\hspace{-1pt}, whether there exists some selected \gls{match}
 making use of $d$ in one of the \glspl{block} to which a branch from $b$ can
 occur.
@@ -584,8 +591,16 @@ occur.
 
 \subsubsection{Constraints}
 
-\todo{describe changes in constraints}
-
+Even with multiple \glspl{block}, the start of a \gls{live range} is still
+determined by the \gls{match} defining the \gls{datum}.
+%
+Morever, the \gls{constraint} that no two rectangles belonging to the same
+\gls{block} may overlap still apply.
+%
+Hence Eqs.\thinspace\refEquation*{local-live-range-start},
+\refEquation*{local-killed-range-start}, and~\refEquation*{local-rect-packing}
+are adjusted accordingly (the changes are highlighted in grey):
+%
 \begin{equation}
   \begin{array}{c}
     \hlDiff{(}
@@ -603,7 +618,7 @@ occur.
   \end{array}
   \labelEquation{global-live-range-start}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \hlDiff{(}
@@ -621,7 +636,7 @@ occur.
   \end{array}
   \labelEquation{global-killed-range-start}
 \end{equation}
-
+%
 \begin{equation}
   \begin{array}{c}
     \mNoOverlap\!
@@ -639,8 +654,13 @@ occur.
   \labelEquation{global-rect-packing}
 \end{equation}
 
-\todo{describe constraints}
-
+Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-1pt}, if $d$
+is used in some \gls{block}~$b'$ following $b$ (meaning there is a jump from $b$
+to $b'$), then the \gls{live range} of $d$ must extend until the end of the
+schedule for $b$\hspace{-1pt}.
+%
+This can be modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{useafter}[d \hspace{-1pt}, b]
@@ -656,6 +676,9 @@ occur.
   \end{array}
   \labelEquation{global-live-range-end-def-and-int-blocks}
 \end{equation}
+%
+For every other \glspl{block}~$b''\!$, either $d$ is not used in
+$b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -682,8 +705,9 @@ occur.
   \labelEquation{global-live-range-end-last-use-block}
 \end{equation}
 
-\todo{describe constraint}
-
+Lastly, we constrain the $\mVar{useafter}$~\glspl{variable} according to the
+definition above, which can be modeled as
+%
 \begin{equation}
   \begin{array}{c}
     \mVar{useafter}[d \hspace{-1pt}, b_1]
