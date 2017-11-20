@@ -697,7 +697,10 @@ occur.
     \forall d \in \mDataSet \!,
     \forall b_1, b_2 \in \mBlockSet
     \text{ \st }
-    b_2 \in \mBranches(b_1)
+    b_2 \in \mBranches(b_1),
   \end{array}
   \labelEquation{global-use-after-block}
 \end{equation}
+%
+where \mbox{$\mBranches(b) \subseteq \mBlockSet$} gives the set of \glspl{block}
+to which a branch from \gls{block}~$b$ can occur.
