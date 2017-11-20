@@ -726,6 +726,17 @@ $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
   \end{array}
   \labelEquation{global-live-range-end-last-use-block}
 \end{equation}
+%
+Equations \refEquation*{global-live-range-end-def-and-int-blocks}
+and~\refEquation*{global-live-range-end-last-use-block} implicitly assume that
+\glspl{phi-match} are always scheduled first, which can be enforced by
+%
+\begin{equation}
+  \mVar{cycles}[m] = 0
+  \mQuantSep
+  \forall m \in \mPhiMatchSet.
+  \labelEquation{schedule-phi-matches}
+\end{equation}
 
 Lastly, we constrain the $\mVar{useafter}$~\glspl{variable} according to the
 definition above, which can be modeled as
