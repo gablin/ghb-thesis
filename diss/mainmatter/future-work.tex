@@ -356,7 +356,7 @@ This can be modeled as
     \forall d \in \mDataSet \!,
     \forall m \in \mMatchSet[d] \hspace{-.8pt},
   \end{array}
-  \labelEquation{live-range-start}
+  \labelEquation{local-live-range-start}
 \end{equation}
 %
 \begin{equation}
@@ -365,7 +365,7 @@ This can be modeled as
   \mVar{start}[d] = 0
   \mQuantSep
   \forall d \in \mDataSet \!.
-  \labelEquation{killed-range-start}
+  \labelEquation{local-killed-range-start}
 \end{equation}
 
 Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
@@ -378,18 +378,19 @@ This can jointly be modeled as
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{end}[d] = \mMax\!
-                    \left(
-                      \cup_{m \,\in\, \mUsersOf(d)} \,
-                      \mVar{cycle}[m]
-                      \times
-                      \mVar{using}[m \hspace{-1pt}, d]
-                      \cup
-                      \mSet{\mVar{start}[d]}
-                    \right) \\
+    \mVar{end}[d] =
+    \mMax\!
+    \left(
+      \cup_{m \,\in\, \mUsersOf(d)} \,
+      \mVar{cycle}[m]
+      \times
+      \mVar{using}[m \hspace{-1pt}, d]
+      \cup
+      \mSet{\mVar{start}[d]}
+    \right) \\
     \forall d \in \mDataSet \!.
   \end{array}
-  \labelEquation{live-range-end}
+  \labelEquation{local-live-range-end}
 \end{equation}
 %
 where
@@ -419,7 +420,7 @@ modeled as
     \forall m \in \mMatchSet,
     \forall p \in \mUses(m).
   \end{array}
-  \labelEquation{m-using-d}
+  \labelEquation{local-m-using-d}
 \end{equation}
 
 To model the rectangle packing problem, we use the \gls!{no-overlap constraint}
@@ -501,7 +502,7 @@ Thus the rectangle packing problem can be modeled as
          \mVar{loc}[d] + \mWidthOf(d)
       }
   \right)\!,
-  \labelEquation{rect-packing}
+  \labelEquation{local-rect-packing}
 \end{equation}
 %
 where \mbox{$\mWidthOf(d) \in \mNatNumSet$} denotes the number of
@@ -559,15 +560,138 @@ single \gls{block} but may span multiple \glspl{block}.
 \end{figure}
 %
 An example is shown in \refFigure{global-reg-alloc-example}.
+%
+Assume a \gls{function} where a variable~\irVar{x} is defined in one
+\gls{block}~\irBlock{A} and used in another \gls{block}~\irBlock{D}
+(\refFigure{global-reg-alloc-example-ir}).
+%
+Consequently, \irVar{x} must be live to the end of \irBlock{A}, through all
+\glspl{block} between \irBlock{A} and \irBlock{D} (that is,
+\glspl{block}~\irBlock{B} and~\irBlock{C}), and until the last use in
+\irBlock{D} (\refFigure{global-reg-alloc-example-live-ranges}).
 
 \todo{model the problem}
 
 
 \subsubsection{Variables}
 
-\todo{add variables}
+\todo{introduce $\mVar{useafter}$ variables}
 
 
 \subsubsection{Constraints}
 
-\todo{add constraints}
+\todo{describe changes in constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \hlDiff{(}
+      \mVar{alive}[d]
+      \hlDiff{
+        \mbox{}
+        \mAnd
+        \mVar{dplace}[d] = b
+    )}
+    \mImp
+    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]] \\
+    \forall d \in \mDataSet \!,
+    \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} \,
+    \forall m \in \mMatchSet[d] \hspace{-.8pt},
+  \end{array}
+  \labelEquation{global-live-range-start}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \hlDiff{(}
+      \neg\mVar{alive}[d]
+      \hlDiff{
+        \mbox{}
+        \mOr
+        \mVar{dplace}[d] \neq b
+      }
+    \hlDiff{)}
+    \mImp
+    \mVar{start}[d \hlDiff{\hspace{-.4pt}, b}] = 0 \\
+    \forall d \in \mDataSet \hspace{-1pt},
+    \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},}
+  \end{array}
+  \labelEquation{global-killed-range-start}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{c}
+    \mNoOverlap\!
+    \left(
+      \cup_{d \,\in\, \mDataSet}
+        \mTuple{
+           \mVar{start}[d \hlDiff{\hspace{-.4pt}, b}],
+           \mVar{end}[d \hlDiff{\hspace{-.4pt}, b}],
+           \mVar{loc}[d],
+           \mVar{loc}[d] + \mWidthOf(d)
+        }
+    \right) \\
+    \hlDiff{\forall b \in \mBlockSet} \hspace{-1pt}.
+  \end{array}
+  \labelEquation{global-rect-packing}
+\end{equation}
+
+\todo{describe constraints}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useafter}[d \hspace{-1pt}, b]
+    \mImp
+    \mVar{end}[d \hspace{-1pt}, b]
+    =
+    \mMax(
+      \cup_{d' \,\in\, \mDataSet \text{ \st } d' \neq d} \,
+      \mVar{end}[d' \!\!, b]
+    ) \\
+    \forall d \in \mDataSet \!,
+    \forall b \in \mBlockSet \hspace{-1pt},
+  \end{array}
+  \labelEquation{global-live-range-end-def-and-int-blocks}
+\end{equation}
+%
+\begin{equation}
+  \begin{array}{c}
+    \neg\mVar{useafter}[d \hspace{-1pt}, b]
+    \mImp \mbox{} \\
+    \mVar{end}[d, b]
+    =
+    \mMax\!
+    \left(
+      \begin{array}{@{}c@{}}
+        \cup_{m \,\in\, \mUsersOf(d)} \,
+        \mVar{cycle}[m]
+        \times
+        \mVar{sched}[m \hspace{-1pt}, b]
+        \times
+        \mVar{using}[m \hspace{-1pt}, d] \\
+        \mbox{} \cup
+        \mSet{\mVar{start}[d, b]}
+      \end{array}
+    \right) \\
+    \forall d \in \mDataSet \!,
+    \forall b \in \mBlockSet \hspace{-1pt}.
+  \end{array}
+  \labelEquation{global-live-range-end-last-use-block}
+\end{equation}
+
+\todo{describe constraint}
+
+\begin{equation}
+  \begin{array}{c}
+    \mVar{useafter}[d \hspace{-1pt}, b]
+    \mEq
+    \exists m \in \mMatchSet
+    \text{ \st }
+    \mVar{using}[m \hspace{-1pt}, d]
+    \mAnd
+    \mVar{sched}[m \hspace{-1pt}, b] \neq b
+    \\
+    \forall d \in \mDataSet \!,
+    \forall b \in \mBlockSet \hspace{-1pt}.
+  \end{array}
+  \labelEquation{global-use-after-block}
+\end{equation}
