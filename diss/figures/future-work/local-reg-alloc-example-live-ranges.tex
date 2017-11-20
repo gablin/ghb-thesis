@@ -5,22 +5,9 @@
 % of the license).
 %
 \begingroup%
-\input{figures/future-work/local-reg-alloc-example-styles}%
+\input{figures/future-work/reg-alloc-example-styles}%
 \def\gridXSize{6mm}%
-\begin{tikzpicture}[%
-    live range/.style={
-      <->,
-      >=Bar,
-      line width=\dataFlowLineWidth,
-    },
-    range label/.style={
-      nothing,
-      outer sep=3pt,
-      auto,
-      swap,
-    },
-  ]
-
+\begin{tikzpicture}
   % Grid
   \foreach \y in {0, ..., 4} {
     \foreach \x in {0, ..., 4} {

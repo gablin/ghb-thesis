@@ -5,22 +5,26 @@
 % of the license).
 %
 \begingroup%
-\figureFont\figureFontSize%
+\input{figures/future-work/reg-alloc-example-styles}%
 \pgfdeclarelayer{background}%
-\pgfsetlayers{background,main}%
+\pgfdeclarelayer{foreground}%
+\pgfsetlayers{background,main,foreground}%
 \setlength{\opNodeDist}{6mm}%
 \newlength{\liveRangeWidth}%
 \setlength{\liveRangeWidth}{2mm}%
 \begin{tikzpicture}[
     block node/.append style={
+      draw=none,
       minimum height=9mm,
       minimum width=15mm,
     },
-    live range line/.style={
-      line width=\dataFlowLineWidth,
+    block node line/.append style={
+      line width=\controlFlowLineWidth,
     },
-    live range fill/.style={
-      fill=shade1,
+    live range between/.style={
+      live range,
+      -,
+      dashed,
     },
   ]
 
@@ -31,6 +35,20 @@
   \node [block node, below right=\opNodeDist and .5\opNodeDist of A.south]
         (C) {};
   \node [block node, below=of $(B.south) !.5! (C.south)$] (D) {};
+  \begin{pgfonlayer}{foreground}
+    \foreach \b in {A, B, C, D} {
+      \draw [block node line]
+            (\b.north west)
+            --
+            (\b.north east)
+            --
+            (\b.south east)
+            --
+            (\b.south west)
+            --
+            cycle;
+    }
+  \end{pgfonlayer}
 
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
@@ -49,18 +67,36 @@
   \node [block label, above right=0 and 0 of B.north west] {B};
   \node [block label, above left=0 and 0 of C.north east] {C};
 
-  % Live ranges
-%  \begin{pgfonlayer}{background}
-    \begin{scope}[live range line]
-      \draw [live range fill]
-            ([xshift=-.5\liveRangeWidth] A.south)
-            --
-            ++(90:4mm)
-            --
-            ++(0:\liveRangeWidth)
-            --
-            ([xshift=.5\liveRangeWidth] A.south);
-    \end{scope}
-%  \end{pgfonlayer}
+  % Live range
+  \begin{scope}[live range]
+    \draw [->]
+          (A.south)
+          -- coordinate [pos=0] (l-A south)
+             node [range label, swap] {\opVar{x}}
+          +(90:3mm);
+    \coordinate (l-B north) at ($(B.north) !.5! (B.north east)$);
+    \coordinate (l-B south) at ($(B.south) !.5! (B.south east)$);
+    \draw [-]
+          (l-B north)
+          -- node [range label] {\opVar{x}}
+          (l-B south);
+    \coordinate (l-C north) at ($(C.north) !.5! (C.north west)$);
+    \coordinate (l-C south) at ($(C.south) !.5! (C.south west)$);
+    \draw [-]
+          (l-C north)
+          -- node [range label, swap] {\opVar{x}}
+          (l-C south);
+    \draw [->]
+          (D.north)
+          -- coordinate [pos=0] (l-D north)
+             node [range label] {\opVar{x}}
+          +(-90:6mm);
+  \end{scope}
+  \begin{scope}[live range between]
+    \draw (l-A south) -- (l-B north);
+    \draw (l-A south) -- (l-C north);
+    \draw (l-B south) -- (l-D north);
+    \draw (l-C south) -- (l-D north);
+  \end{scope}
 \end{tikzpicture}%
 \endgroup%

@@ -232,7 +232,7 @@ We begin by discussing the \gls{local.ra} problem and then extend it into the
                 }%
                 [38mm]%
                 {%
-                  \input{figures/future-work/local-reg-alloc-example-styles}%
+                  \input{figures/future-work/reg-alloc-example-styles}%
                   \adjustbox{valign=M}{%
                     \rotatebox{90}{cycles}%
                   }%
@@ -515,11 +515,9 @@ single \gls{block} but may span multiple \glspl{block}.
                 }%
   \hfill%
   \subcaptionbox{%
-                  Live range of \irVar{x}%
+                  Live ranges of \irVar{x}%
                   \labelFigure{global-reg-alloc-example-live-ranges}%
-                }%
-%                [42mm]%
-                {%
+                }{%
                   \input{%
                     figures/future-work/global-reg-alloc-example-live-ranges%
                   }%
@@ -527,10 +525,7 @@ single \gls{block} but may span multiple \glspl{block}.
   \hfill%
   \mbox{}
 
-  \caption[TODO]%
-          {%
-            TODO%
-          }
+  \caption{Example of global register allocation}
   \labelFigure{global-reg-alloc-example}
 \end{figure}
 %

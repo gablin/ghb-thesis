@@ -21,6 +21,17 @@
     outer axis label,
     node distance=3pt,
   },
+  live range/.style={
+    <->,
+    >=Bar,
+    line width=\dataFlowLineWidth,
+  },
+  range label/.style={
+    nothing,
+    outer sep=3pt,
+    auto,
+    swap,
+  },
 }%
 \def\drawVdotsLabel#1{%
   \node [inner axis label, minimum width=5pt, #1] {\raisebox{7pt}{$\vdots$}};
