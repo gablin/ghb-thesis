@@ -575,7 +575,11 @@ Consequently, \irVar{x} must be live to the end of \irBlock{A}, through all
 
 \subsubsection{Variables}
 
-\todo{introduce $\mVar{useafter}$ variables}
+The set of \glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-1pt}, b] \in
+  \mSet{0, 1}$} models, given a \gls{datum}~$d$ and a
+\gls{block}~$b$\hspace{-1pt}, whether there exists some selected \gls{match}
+making use of $d$ in one of the \glspl{block} to which a branch from $b$ can
+occur.
 
 
 \subsubsection{Constraints}
@@ -682,16 +686,18 @@ Consequently, \irVar{x} must be live to the end of \irBlock{A}, through all
 
 \begin{equation}
   \begin{array}{c}
-    \mVar{useafter}[d \hspace{-1pt}, b]
+    \mVar{useafter}[d \hspace{-1pt}, b_1]
     \mEq
     \exists m \in \mMatchSet
     \text{ \st }
     \mVar{using}[m \hspace{-1pt}, d]
     \mAnd
-    \mVar{sched}[m \hspace{-1pt}, b] \neq b
+    \mVar{sched}[m \hspace{-1pt}, b_2]
     \\
     \forall d \in \mDataSet \!,
-    \forall b \in \mBlockSet \hspace{-1pt}.
+    \forall b_1, b_2 \in \mBlockSet
+    \text{ \st }
+    b_2 \in \mBranches(b_1)
   \end{array}
   \labelEquation{global-use-after-block}
 \end{equation}
