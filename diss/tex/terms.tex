@@ -7,11 +7,16 @@
 \makeglossaries
 
 \newterm{assembly code}
+\newterm{AST}%
+        [first={abstract syntax tree~(AST)},
+         firstplural={abstract syntax trees~(ASTs)}]
 \newterm{backend}
 \newterm{block ordering}
+\newterm{bootstrapping}
 \newterm{bundling}
 \newterm{code generation}
 \newterm[integrated.cg]{integrated}[parent={code generation}]
+\newterm[interpretative.cg]{interpretative}[parent={code generation}]
 \newterm{common subexpression elimination}
 \newterm{compiler}
 \newterm{compiler intrinsic}
@@ -232,7 +237,7 @@
 \newterm{fixpoint}
 \newterm{global cardinality constraint}
 \newterm{increasing constraint}
-\newterm[MiniZinc]{\toolFont{MiniZinc}}[sort={minizinc}]
+\newToolTerm{MiniZinc}
 \newterm{no-overlap constraint}[see={diffn constraint}]
 \newterm{objective function}
 \newterm{presolving}
@@ -329,9 +334,9 @@
 \newterm[rooted directed.t]{rooted directed}[parent={tree}]
 \newterm{vertex}[plural={vertices}, see={node}]
 
-\newterm[Glasgow]{\toolFont{Glasgow}}[sort={Glasgow}]
-\newterm[LAD]{\toolFont{LAD}}[sort={LAD}]
-\newterm[VF2]{\toolFont{VF2}}[sort={VF2}]
+\newToolTerm{Glasgow}
+\newToolTerm{LAD}
+\newToolTerm{VF2}
 
 \newterm{FRT}%
         [first=factorized register transfer (FRT),
@@ -368,3 +373,14 @@
 \newterm[interdependent.ic]%
         {interdependent}%
         [parent={instruction characteristic}]
+
+\newToolTerm{GCL}
+\newacronym{ICL}{Interpretive Coding Language}
+\newToolTerm{Pascal}
+\newToolTerm{PL/1}
+\newToolTerm{PL/C}
+\newToolTerm{Simcmp}
+\newterm[SLM instruction]%
+        {SLM~instruction}%
+        [first={source language machine (SLM) instruction}]
+\newacronym{TEL}{Template Language}

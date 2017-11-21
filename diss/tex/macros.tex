@@ -197,6 +197,135 @@
 \newlength{\betweensubfigures}
 \setlength{\betweensubfigures}{\baselineskip}
 
+% Declares a paragraph where a figure will be inlined with the text. Commands
+% for the figure itself must be as they would appear within a 'figure'
+% environment (however, do not explicitly declare such an environment as it will
+% taken care of by the macro.
+%
+% Attributes for controlling the position of the figure are 'l' (always on the
+% left), 'r' (always on the right), and 'p' (right if the page is odd and left
+% if the page is even).
+%
+% It might happen that the paragraph is split over two pages. In such cases it
+% is necessary to manually break the paragraph into two but allowing the last
+% line of the first paragraph to fill the entire width of the page. This is done
+% by appending
+%
+%      {\parfillskip=0pt\relax\par}
+%
+% to the first paragraph.
+%
+% Arguments:
+%    #1: Width of figure.
+%    #2: Positioning attribute: l, r, or p. Optional (default is p).
+%    #3: Number-of-lines offset from the top of the paragraph. Optional (default
+%        is 0).
+\newbool{isInsideInParFigure}
+\newtoggle{positionLeft}
+\newlength{\leftParOffset}
+\newlength{\rightParOffset}
+\newsavebox{\inParFigureBox}
+\newlength{\inParFigureHeight}
+\newcounter{totalArgs}
+\NewDocumentEnvironment{inParFigure}{mO{p}O{0}}{%
+  \inParFigureX{#1}{#2}{#3}%
+}{%
+  \endinParFigureX%
+}
+\NewEnviron{inParFigureX}[3]{%
+  % Check position attribute
+  \ifthenelse{\equal{#2}{l}}{%
+    \global\toggletrue{positionLeft}%
+  }{}%
+  \ifthenelse{\equal{#2}{r}}{%
+    \global\togglefalse{positionLeft}%
+  }{}%
+  \ifthenelse{\equal{#2}{p}}{%
+    \checkoddpage
+    \ifthenelse{\boolean{oddpage}}{%
+      \global\togglefalse{positionLeft}
+    }{%
+      \global\toggletrue{positionLeft}
+    }%
+  }{}%
+  \ifthenelse{\equal{#2}{l} \OR \equal{#2}{r} \OR \equal{#2}{p}}{}{%
+    \PackageError{}{Position argument must be either 'l', 'r', or 'p'!}%
+  }%
+
+  % Make minipage to contain figure
+  \savebox{\inParFigureBox}{%
+    \begin{minipage}{#1}%
+      \booltrue{isInsideInParFigure}%
+      \iftoggle{positionLeft}{}{%
+        \mbox{}\hfill%
+      }%
+      \parbox{\widthof{\BODY}}{\BODY}%
+      \boolfalse{isInsideInParFigure}%
+    \end{minipage}%
+  }%
+  \setlength{\inParFigureHeight}{\ht\inParFigureBox+\dp\inParFigureBox}%
+
+  % Put figure as a zero-width entity with depth such that it will be placed at
+  % desired position within paragraph
+  \setlength{\parindent}{0pt}%
+  \iftoggle{positionLeft}{}{%
+    \hfill%
+  }%
+  \adjustbox{%
+    raise={-\height+\inParFigureHeightTweak\baselineskip-#3\baselineskip}%
+          {0pt}%
+          {0pt}%
+  }{%
+    \usebox{\inParFigureBox}%
+  }%
+  \vspace{-\baselineskip}% Undo line skip
+  \par%
+
+  % Calculate height of minipage in number of text lines
+  \pgfmathtruncatemacro{\numLinesPGF}{ceil(\inParFigureHeight/\baselineskip)}%
+  \global\edef\numLines{\numLinesPGF}%
+
+  % Make paragraph shape to allow figure to be inlined
+  \gdef\makeParShape{%
+    \iftoggle{positionLeft}{%
+      \setlength{\leftParOffset}{#1+\inParFigureTextPadding}%
+      \setlength{\rightParOffset}{\textwidth-\leftParOffset}%
+    }{%
+      \setlength{\leftParOffset}{0pt}%
+      \setlength{\rightParOffset}{\textwidth-#1-\inParFigureTextPadding}%
+    }%
+    \setcounter{totalArgs}{#3+\numLines+1}%
+    \parshape = \value{totalArgs}%
+      \MyRepeat{#3}{0pt \textwidth}%
+      \MyRepeat{\numLines}{\leftParOffset \rightParOffset}%
+      0pt \textwidth%
+  }%
+}
+\AfterEndEnvironment{inParFigure}{%
+  \makeParShape%
+}
+\NewDocumentCommand{\inParFigureTextPadding}{}{1.5em}
+\NewDocumentCommand{\inParFigureHeightTweak}{}{0.55}
+
+% Command for repeating something n times.
+\makeatletter
+\newcommand{\MyRepeat}[1]{%
+  \expandafter\@MyRepeat\expandafter{\the\numexpr #1\relax}%
+}
+\def\@MyRepeat#1{%
+  \ifnum#1>0
+    \expandafter\@@MyRepeat\expandafter{%
+      \the\numexpr #1-1\expandafter\relax\expandafter%
+    }%
+  \else%
+    \expandafter\@gobble%
+  \fi%
+}
+\def\@@MyRepeat#1#2{%
+  \@MyRepeat{#1}{#2}#2%
+}
+\makeatother
+
 
 %========
 % TABLES
@@ -576,6 +705,9 @@
   }{%
     \oldnewacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
   }%
+}
+\NewDocumentCommand{\newToolTerm}{m}{%
+  \newterm[#1]{\toolFont{#1}}[sort={#1}]%
 }
 
 % Commands for referring to a short version of a term or acronym

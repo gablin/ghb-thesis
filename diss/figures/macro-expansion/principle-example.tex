@@ -1,0 +1,80 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize\relsize{-.5}%
+\def\braceSep{2mm}%
+\begin{tikzpicture}[%
+    code/.style={%
+      nothing,
+      node distance=0,
+      font=\strut\ttfamily,
+    },
+    asm/.style={%
+      code,
+    },
+    brace/.style={%
+      decorate,
+      decoration={brace},
+      line width=\normalLineWidth,
+    },
+    line/.style={%
+      -,
+      line width=\normalLineWidth,
+      shorten <=2pt,
+      shorten >=2pt,
+    },
+    label/.style={
+      nothing,
+      inner ysep=1mm,
+      node distance=0,
+      font=\relsize{-.5}\scshape\bfseries,
+    },
+  ]
+
+  % Function
+  \node [code]                               (c1) {int a = 1;};
+  \node [code, below right=1pt and 0 of c1.south west] (c2) {int b = a + 4;};
+  \node [code, below right=1pt and 0 of c2.south west] (c3) {p[4] = b;};
+
+  % Assembly code
+  \node [asm, right=12mm of c1.east -| c2.east] (a1) {mv \irTemp{1}, 1};
+  \node [asm, right=of c2.east -| a1.west] (a2) {add \irTemp{2}, \irTemp{1}, 4};
+  \node [asm, right=of c3.east -| a1.west] (a3) {mv \irTemp{3}, @p};
+  \node [asm, below right=of a3.south west] (a4)
+        {add \irTemp{4}, \irTemp{3}, 16};
+  \node [asm, below right=of a4.south west] (a5) {st 0(\irTemp{4}), \irTemp{2}};
+
+  % Expansion braces and lines
+  \coordinate (f-right) at ([xshift=.5*\braceSep] c2.east);
+  \foreach \i in {1, 2, 3} {
+    \draw [brace]
+          (f-right |- c\i.north east)
+          -- coordinate (cc\i)
+          (f-right |- c\i.south east);
+  }
+  \coordinate (a-left) at ([xshift=-\braceSep] a1.west);
+  \draw [brace]
+        (a-left |- a1.south west)
+        -- coordinate (ac1)
+        (a-left |- a1.north west);
+  \draw [brace]
+        (a-left |- a2.south west)
+        -- coordinate (ac2)
+        (a-left |- a2.north west);
+  \draw [brace, decoration={aspect=.835}]
+        (a-left |- a5.south west)
+        -- coordinate (ac3)
+        (a-left |- a3.north west);
+  \draw [line] (cc1) -- (ac1);
+  \draw [line] (cc2) -- (ac2);
+  \draw [line] (cc3) -- (ac3 |- cc3);
+
+  % Labels
+  \node [label, above right=of c1.north west] {function};
+  \node [label, above right=of c1.north -| a1.west] {assembly code};
+\end{tikzpicture}%
+\endgroup%
