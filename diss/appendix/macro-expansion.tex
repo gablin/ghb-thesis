@@ -286,140 +286,174 @@ automatically generate the lower-level \gls{ICL}~\glspl{macro} from the
 \gls{machine description}.
 
 
-%\subsection{Generating the Macros from a Machine Description}
-%\labelSection{separating-macros-and-machine-description}
+\subsection{Generating the Macros from a Machine Description}
+\labelSection{separating-macros-and-machine-description}
+
+As with \citeauthor{Wilcox:1971}'s design, many of the early
+\gls{macro}-expanding \glspl{instruction selector} depended on \glspl{macro}
+that were intricate and difficult to write.
 %
-%As with \citeauthor{Wilcox1971}'s design, many of the early
-%\gls{macro}-expanding \glspl{instruction selector} depended on \glspl{macro}
-%that were intricate and difficult to write. In addition, many \gls{compiler}
-%developers often incorporated \gls{register allocation} into these
-%\glspl{macro}, which further exacerbated the problem. For example, if the
-%\gls{target machine} exhibits multiple \glspl{register class} and has special
-%\glspl{instruction} to move data from one \gls{register class} to another, a
-%record must be kept of which \gls{program} values reside in which
-%\glspl{register}. Then, depending on the \gls{register} assignment, the
-%\gls{instruction selector} needs to emit the appropriate data-transfer
-%\glspl{instruction} in addition to the rest of the \gls{assembly code}. Due to
-%the exponential number of possible situations, the complexity that the macro
-%designer has to manage can be immense.
+In addition, many \gls{compiler} developers often incorporated \gls{register
+  allocation} into these \glspl{macro}, which further exacerbated the
+problem.
 %
+For example, if the \gls{target machine} exhibits multiple sets of
+\glspl{register}, called \glspl!{register class}, and has special
+\glspl{instruction} to move data from one \glsshort{register class} to another,
+a record must be kept of which value reside in which \gls{register}.
 %
-%\subsubsection{Automatically Inferring the Necessary Data Transfers}
+Then, depending on the \gls{register} assignment, the \gls{instruction selector}
+needs to emit the appropriate data-transfer \glspl{instruction} in addition to
+the rest of the \gls{assembly code}.
 %
-%The first attempt to address this problem was made by \textcite{Miller1971}. In
-%his master's thesis from~1971, \citeauthor{Miller1971} introduces a \gls{code
-%  generation} system called \gls{DMACS} that automatically infers the necessary
-%data transfers between memory and different \glspl{register class}. By
-%encapsulating this information in a separate \gls{machine description},
-%\gls{DMACS} was also the first system to allow the details of the \gls{target
-%  machine} to be declared separately instead of being implicitly embedded into
-%the \glspl{macro}.
+Due to the exponential number of possible situations, the complexity that the
+macro designer has to manage can be immense.
+
+
+\subsubsection{Automatically Inferring the Necessary Data Transfers}
+
+The first attempt to address this problem was made by \textcite{Miller:1971}.
 %
-%\gls{DMACS} relies on two proprietary languages: \gls{MIML}, which declares a
-%set of procedural two-argument commands that serves as the \tIRformat (see
-%\refFigure{miml-example} for an example); and a declarative language called
-%\gls{OMML} for implementing the \glspl{macro} that will transform each
-%\gls{MIML} command into \gls{assembly code}. So far this scheme is similar to
-%the one applied by \citeauthor{Wilcox1971}.
+In his master's thesis from~1971, \citeauthor{Miller:1971} introduces a \gls{code
+  generation} system called \gls!{Dmacs} that automatically infers the necessary
+data transfers between memory and different \glspl{register class}.
 %
-%When adding support for a new \gls{target machine}, a macro designer first
-%specifies the set of available \glspl{register class} (including memory) as well
-%as the permissible transfer paths between these classes. The macro designer then
-%defines the \gls{OMML} \glspl{macro} by providing, for each macro, a list of
-%\glspl{instruction} that implements the corresponding \gls{MIML} command on the
-%\gls{target machine}. If necessary, a sequence of \glspl{instruction} can be
-%given to emulate the effect of a single \gls{MIML} command. Lastly, constraints
-%are added that force the input and output data to reside in the locations
-%expected of the \gls{instruction}. \refFigure{omml-example} shows excerpts of an
-%\gls{OMML} specification for an \gls{IBM}~machine.
+By encapsulating this information in a separate \gls{machine description},
+\gls{Dmacs} was also the first system to allow the details of the \gls{target
+  machine} to be declared separately instead of being implicitly embedded into
+the \glspl{macro}.
+
+\gls{Dmacs} relies on two proprietary languages: \gls!{MIML}, which declares a
+set of procedural two-argument commands that serves as the \gls{IR} format (see
+\refFigure{miml-example} for an example);
 %
-%\begin{figure}[b]%
-%  \centering%
-%  \begin{minipage}{3.5cm}%
-%    \begin{plainCode}
-%1:    SS      C,J
-%2:    IMUL    1,D
-%3:    IADD    2,B
-%4:    SS      A,I
-%5:    ASSG    4,3
-%    \end{plainCode}
-%  \end{minipage}
-%  \hfill%
-%  \begin{minipage}{7.4cm}
-%    \figCaption[\glsentrytext{MIML} example]%
-%      {An example on how an arithmetic expression
-%        \dataTerm{A[I] = B + C[J] * D}
-%        can be represented as \glsentrytext{MIML} commands. The \dataTerm{SS}
-%        command is used
-%        for data referencing and the \dataTerm{ASSG} command assigns a value to
-%        a variable. The arguments to the \glsentrytext{MIML} commands are
-%        referred to either by a variable symbol or by line number}[Miller1971]
-%      \labelFigure{miml-example}
-%  \end{minipage}
-%\end{figure}
+\begin{filecontents*}{miml-example.c}
+1:    SS      C,J
+2:    IMUL    1,D
+3:    IADD    2,B
+4:    SS      A,I
+5:    ASSG    4,3
+\end{filecontents*}
 %
-%\begin{figure}[t]%
-%  \centering%
-%  \begin{minipage}{9cm}%
-%    \centering%
-%    \begin{plainCode}
-%rclass REG:r2,r3,r4,r5,r6
-%rclass FREG:fr0,fr2,fr4,fr6
-%...
-%rpath WORD->REG: L REG,WORD
-%rpath REG->WORD: ST REG,WORD
-%rpath FREG-WORD: LE FREG,WORD
-%rpath WORD->FREG: STE FREG,WORD
-%...
-%ISUB s1,s2
-%from REG(s1),REG(s2) emit SR s1,s2  result REG(s1)
-%from REG(s1),WORD(s2) emit S s1,s2  result REG(s2)
+\begin{figure}%
+  \centering%
+  \begin{minipage}{3cm}%
+    \lstinputlisting{miml-example.c}%
+  \end{minipage}
+
+  \caption[MIML example]%
+          {%
+            An example on how an arithmetic expression \irCode{A[I] = B + C[J] *
+              D} is represented using MIML commands.
+            %
+            %
+            The \irCode{SS} command is used for data referencing and the
+            \irCode{ASSG} command assigns a value to a variable.
+            %
+            The arguments to the MIML commands are referred to
+            either by a variable symbol or by line number \cite{Miller:1971}%
+          }
+          \labelFigure{miml-example}
+\end{figure}
 %
-%FMUL m1,m2 (commutative)
-%from FREG(m1),FREG(m2) emit MER m1,m2  result FREG(m1)
-%from FREG(m1),WORD(m2) emit ME m1,m2   result FREG(m1)
-%    \end{plainCode}
-%  \end{minipage}
+and a declarative language called \gls!{OMML} for implementing the \glspl{macro}
+that will transform each \gls{MIML} command into \gls{assembly code}.
 %
-%  \figCaption[\glsentrytext{OMML} example]%
-%    {Partial \glsentrytext{machine description} for \glsentrytext{IBM-360} in
-%      \glsentrytext{OMML}. The \dataTerm{rclass} command declares a
-%      \glsentrytext{register class}, and the \dataTerm{rpath} command declares a
-%      permissible transfer between a \glsentrytext{register class} and memory
-%      (or vice versa) along with the \glsentrytext{instruction} that
-%      implements the transfer}[Miller1971]
-%  \labelFigure{omml-example}
-%\end{figure}
+So far this scheme is similar to the one applied by \citeauthor{Wilcox:1971}.
+
+When adding support for a new \gls{target machine}, a macro designer first
+specifies the set of available \glspl{register class} (including memory) as well
+as the permissible transfer paths between these \glsplshort{register class}.
 %
-%\gls{DMACS} uses this information to generate a collection of \glspl{finite
-%  state automaton} (or \glspl{state machine}, as they are also called) to
-%determine how a given set of input values can be transferred into locations that
-%are permissible for a given \gls{OMML} \gls{macro}. Each \gls{state machine}
-%consists of a \gls{directed gr} \gls{graph} where a \gls{node} represents a
-%specific configuration of \glspl{register class} and memory, some of which are
-%marked as permissible. The edges indicate how to transition from one state to
-%another, and are labeled with the machine instruction that will enable the
-%transition when executed on a particular input value. During compilation the
-%\gls{instruction selector} consults the appropriate \gls{state machine} as it
-%traverses from one \gls{MIML} command to the next, using the input values of the
-%former to initialize the \gls{state machine}. As the \gls{state machine}
-%transitions from one state to another, the machine instructions appearing on the
-%edges are emitted until the \gls{state machine} reaches a permissible state.
+The macro designer then defines the \gls{OMML} \glspl{macro} by providing, for
+each macro, a list of \glspl{instruction} that implements the corresponding
+\gls{MIML} command on the \gls{target machine}.
 %
-%The work by \citeauthor{Miller1971} was pioneering but limited: \gls{DMACS} only
-%handled arithmetic expressions consisting of integer and floating-point values,
-%its addressing mode support was limited, and it could not model other
-%\gls{target machine} classes such as stack-based architectures. In his 1973
-%doctoral dissertation, \textcite{Donegan1973} extended \citeauthor{Miller1971}'s
-%ideas by proposing a new language called \gls{CGPL}. \citeauthor{Donegan1973}'s
-%proposal was put to the test in the 1978 master's thesis by
-%\textcite{Maltz1978}, and was later extended by \textcite{Donegan1979}. Similar
-%techniques have also been developed by \textcite{Tirrell1973} and
-%\textcite{Simoneaux1975}, and in their survey \textcite{Ganapathi1982a} describe
-%another \gls{state machine}-based \gls{compiler} called \gls{UGEN}, which was
-%derived from a virtual machine called \gls{Ucode}~\cite{Perkins1979}.
+If necessary, a sequence of \glspl{instruction} can be given to emulate the
+effect of a single \gls{MIML} command.
 %
+Lastly, constraints are added that force the input and output data to reside in
+the locations expected of the \gls{instruction}.
 %
+\RefFigure{omml-example} shows excerpts of an \gls{OMML} specification for an
+\gls{IBM}~machine.
+
+\begin{filecontents*}{omml-example.c}
+rclass REG:r2,r3,r4,r5,r6
+rclass FREG:fr0,fr2,fr4,fr6
+...
+rpath WORD->REG: L REG,WORD
+rpath REG->WORD: ST REG,WORD
+rpath FREG-WORD: LE FREG,WORD
+rpath WORD->FREG: STE FREG,WORD
+...
+ISUB s1,s2
+from REG(s1),REG(s2) emit SR s1,s2  result REG(s1)
+from REG(s1),WORD(s2) emit S s1,s2  result REG(s2)
+
+FMUL m1,m2 (commutative)
+from FREG(m1),FREG(m2) emit MER m1,m2  result FREG(m1)
+from FREG(m1),WORD(m2) emit ME m1,m2   result FREG(m1)
+\end{filecontents*}
+%
+\begin{figure}%
+  \centering%
+  \begin{minipage}{9.2cm}%
+    \lstinputlisting{omml-example.c}%
+  \end{minipage}
+
+  \caption[OMML example]%
+          {%
+            Partial machine description for IBM-360 in OMML.
+            %
+            The \irCode{rclass} command declares a register class, and the
+            \irCode{rpath} command declares a permissible transfer between a
+            register class and memory (or vice versa) along with the instruction
+            that implements the transfer~\cite{Miller:1971}%
+          }
+  \labelFigure{omml-example}
+\end{figure}
+
+\gls{Dmacs} uses this information to generate a collection of \glspl{finite
+  state automaton} (or \glspl{state machine}, as they are also called) to
+determine how a given set of input values can be transferred into locations that
+are permissible for a given \gls{OMML} \gls{macro}.
+%
+Each \gls{state machine} consists of a \gls{directed.g} \gls{graph} where a
+\gls{node} represents a specific configuration of \glspl{register class} and
+memory, some of which are marked as permissible.
+%
+The edges indicate how to transition from one state to another, and are labeled
+with the machine instruction that will enable the transition when executed on a
+particular input value.
+%
+During compilation the \gls{instruction selector} consults the appropriate
+\gls{state machine} as it traverses from one \gls{MIML} command to the next,
+using the input values of the former to initialize the \gls{state machine}.
+%
+As the \gls{state machine} transitions from one state to another, the machine
+instructions appearing on the edges are emitted until the \gls{state machine}
+reaches a permissible state.
+
+The work by \citeauthor{Miller:1971} was pioneering but limited: \gls{Dmacs}
+only handled arithmetic expressions consisting of integer and floating-point
+values, its addressing mode support was limited, and it could not model other
+\gls{target machine} classes such as stack-based architectures.
+%
+In his 1973 doctoral dissertation, \textcite{Donegan:1973} extended
+\citeauthor{Miller:1971}'s ideas by proposing a new language called \gls!{CGPL}.
+%
+\citeauthor{Donegan:1973}'s proposal was put to the test in the 1978 master's
+thesis by \textcite{Maltz:1978}, and was later extended by
+\textcite{Donegan:1979}.
+%
+Similar techniques have also been developed by \textcite{Tirrell:1973} and
+\textcite{Simoneaux:1975}, and in their survey
+\textcite{GanapathiEtAl:1982:Survey} describe another \gls{state machine}-based
+\gls{compiler} called \gls!{Ugen}, which was derived from a virtual machine
+called \gls!{Ucode}~\cite{PerkinsSites:1979}.
+
+
 %\subsubsection{Further Improvements}
 %
 %\glsunset{PCC}
@@ -427,13 +461,13 @@ automatically generate the lower-level \gls{ICL}~\glspl{macro} from the
 %In 1975, \textcite{Snyder1975} implemented one of the first fully operational
 %and portable \gls{C}~\glspl{compiler}, where the \gls{target machine}-dependent
 %parts could be automatically generated from a \gls{machine description}. The
-%design is similar to \citeauthor{Miller1971}'s in that the \gls{frontend} first
+%design is similar to \citeauthor{Miller:1971}'s in that the \gls{frontend} first
 %transforms the \gls{program} into an equivalent representation for an abstract
 %machine. In \citeauthor{Snyder1975}'s design this representation consists of
 %\glspl{AMOP}, which are then expanded into target-specific \glspl{instruction}
 %via \glspl{macro}. The abstract machine and \glspl{macro} are specified in a
 %\gls{machine description} language which is also similar to
-%\citeauthor{Miller1971}'s, but handles more complex data types, addressing
+%\citeauthor{Miller:1971}'s, but handles more complex data types, addressing
 %modes, alignment, as well as branching and function calls. If needed, more
 %complicated \glspl{macro} can be defined as customized \gls{C}~functions. We
 %mention \citeauthor{Snyder1975}'s work primarily because it was later adapted by
@@ -449,7 +483,7 @@ automatically generate the lower-level \gls{ICL}~\glspl{macro} from the
 %representation based on a \gls{programming language} called \gls{XL}, which is
 %akin to high-level \gls{assembly language}. For example, \gls{XL} provides
 %primitives for array accesses and \techTerm{for} loops. As in the cases of
-%\citeauthor{Miller1971} and \citeauthor{Snyder1975}, the \glspl{instruction} are
+%\citeauthor{Miller:1971} and \citeauthor{Snyder1975}, the \glspl{instruction} are
 %provided via a separate description that maps directly to a distinct
 %\gls{XL}~primitive. If some portion of the \gls{program} cannot be implemented
 %by any of the available \glspl{instruction}, the \gls{instruction selector} will
@@ -680,7 +714,7 @@ automatically generate the lower-level \gls{ICL}~\glspl{macro} from the
 %description. The technique is also described in a longer article by
 %\textcite{Davidson1980}.
 %
-%Like \citeauthor{Miller1971}, \citeauthor{Fraser1979} described the semantics of
+%Like \citeauthor{Miller:1971}, \citeauthor{Fraser1979} described the semantics of
 %the \glspl{instruction} separately in a symbolic \gls{machine description}. The
 %\gls{machine description} describes the observable effects that each
 %\gls{instruction} has on the \gls{target machine}'s \glspl{register}.
