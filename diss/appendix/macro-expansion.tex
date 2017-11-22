@@ -235,35 +235,37 @@ The \gls{instruction selector} then maps each \gls{SLM instruction} into one or
 more target-specific \glspl{instruction} using \glspl{macro} defined in a
 language called \gls!{ICL} (see \refFigure{icl-example} for an example).
 %
-%\begin{figure}[t]%
-%  \newcommand{\commentize}[1]{\textit{#1}}
-%  \centering%
+\newcommand{\commentize}[1]{\textit{\figureFont#1}}%
+\begin{filecontents*}{icl-example-macro.c}
+ADDB  BR   A,ADDB1      $\commentize{If A is in a register, jump to ADDB1}$
+      BR   B,ADDB2      $\commentize{If B is in a register, jump to ADDB2}$
+      LGPR A            $\commentize{Generate code to load A into register}$
+
+ADDB1 BR  B,ADDB3       $\commentize{If B is in a register, jump to ADDB3}$
+      GRX A,A,B         $\commentize{Generate A+B}$
+      B   ADDB4         $\commentize{Merge}$
+
+ADDB3 GRR  AR,A,B       $\commentize{Generate A+B}$
+ADDB4 FREE B            $\commentize{Release resources assigned to B}$
+ADDB5 POP  1            $\commentize{Remove B descriptor from stack}$
+      EXIT
+
+ADDB2 GRI  A,B,A        $\commentize{Generate A+B}$
+      FREE A            $\commentize{Release resources assigned to A}$
+      SET  A,B          $\commentize{A now designates result location}$
+      B    ADDB5        $\commentize{Merge}$
+\end{filecontents*}
 %
-%  \begin{minipage}{9.9cm}
-%    \lstset{escapechar=|}
-%    \begin{plainCode}
-%ADDB  BR   A,ADDB1      |\commentize{If A is in a register, jump to ADDB1}|
-%      BR   B,ADDB2      |\commentize{If B is in a register, jump to ADDB2}|
-%      LGPR A            |\commentize{Generate code to load A into register}|
-%
-%ADDB1 BR  B,ADDB3       |\commentize{If B is in a register, jump to ADDB3}|
-%      GRX A,A,B         |\commentize{Generate A+B}|
-%      B   ADDB4         |\commentize{Merge}|
-%
-%ADDB3 GRR  AR,A,B       |\commentize{Generate A+B}|
-%ADDB4 FREE B            |\commentize{Release resources assigned to B}|
-%ADDB5 POP  1            |\commentize{Remove B descriptor from stack}|
-%      EXIT
-%
-%ADDB2 GRI  A,B,A        |\commentize{Generate A+B}|
-%      FREE A            |\commentize{Release resources assigned to A}|
-%      SET  A,B          |\commentize{A now designates result location}|
-%      B    ADDB5        |\commentize{Merge}|
-%    \end{plainCode}
-%  \end{minipage}
-%
-%  \figCaption{A binary addition macro in \glsentrytext{ICL}}[Wilcox1971]
-%  \labelFigure{icl-example}
+\begin{figure}%
+  \centering%
+  \begin{minipage}{8.5cm}
+    \lstinputlisting[mathescape]{icl-example-macro.c}%
+  \end{minipage}
+
+  \caption[A binary addition macro in \glsentrytext{ICL}]%
+          {A binary addition macro in \glsentrytext{ICL} \cite{Wilcox:1971}]}
+  \labelFigure{icl-example}
+\end{figure}
 %
 In practice, these \glspl{macro} turned out to be tedious and difficult to
 write.
