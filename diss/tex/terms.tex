@@ -6,6 +6,10 @@
 
 \makeglossaries
 
+%================
+% COMPILER TERMS
+%================
+
 \newterm{assembly code}
 \newterm{AST}%
         [first={abstract syntax tree~(AST)},
@@ -70,6 +74,11 @@
 \newterm[phi-node]{$\mPhi$-node}
 \newterm{program}
 
+
+%===============
+% MACHINE TERMS
+%===============
+
 \newterm{ARM}
 \newacronym{ASIP}{application-specific instruction set processor}
 \newterm{AVX}[see={Intel}]
@@ -98,68 +107,67 @@
 \newacronym{VLIW}{very long instruction word}
 \newterm{X86}[see={Intel}]
 
-\newterm{context-free grammar}
-\newterm{grammar}[see={machine grammar}]
-\newterm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
-\newterm{machine grammar}[see={grammar}]
-\newterm{nonterminal}
-\newterm{production}
-\newterm{rule}
-\newterm[base.r]{base}[parent={rule}]
-\newterm[chain.r]{chain}[parent={rule}]
-\newterm[complex.r]{complex}[parent={rule}]
-\newterm[proxy.r]{proxy}[parent={rule}]
-\newterm[simple.r]{simple}[parent={rule}]
-\newterm[split.r]{split}[parent={rule}]
-\newterm{rule pattern}[user1={pattern}]
-\newterm{rule reduction}
-\newterm{rule result}[user1={result}]
-\newterm{state}
-\newterm{state table}
-\newterm{terminal}
 
-\newterm{block DAG}[user1={block}]
-\newterm{Click-Paleczny graph}
-\newterm{control-flow edge}[user1={control-flow}]
-\newterm{control-flow graph}[user1={control-flow}]
-\newterm{cover}
-\newterm[least-cost.c]{least-cost}[parent={cover}]
-\newterm{data-flow edge}[user1={data-flow}]
-\newterm{data-flow graph}[user1={data-flow}]
-\newterm{datum}[plural={data}]
-\newterm[available.d]{available}[parent={datum}]
-\newterm[copy-related.d]{copy-related}[parent={datum}]
-\newterm[define.d]{define}[parent={datum}, user1={defin}]
-\newterm[interchangeable.d]{interchangeable}[parent={datum}]
-\newterm[killed.d]{killed}[parent={datum}]
-\newterm[use.d]{use}[parent={datum}, user1={us}]
-\newterm{expression tree}
-\newterm{function graph}[user1={function}]
-\newterm{input datum}[plural={input data}]
-\newterm{interference graph}
-\newterm{match}[plural=matches]
-\newterm[complex.m]{complex}[parent={match}]
-\newterm[dominate.m]{dominate}[parent={match}, user1={domin}]
-\newterm[illegal.m]{illegal}[parent={match}]
-\newterm{match set}
-\newterm{matching}[see={pattern matching}]
-\newterm{operand}
-\newterm{operation}
-\newterm{overlap}
-\newterm{pattern}[see={pattern graph}]
-\newterm[complex.p]{complex}[parent={pattern}]
-\newterm[proxy.p]{proxy}[parent={pattern}]
-\newterm[simple.p]{simple}[parent={pattern}]
-\newterm{pattern DAG}[see={pattern}]
-\newterm{pattern graph}[see={pattern}]
-\newterm{pattern tree}[see={pattern}]
-\newterm{pattern matching}[user3={pattern-matching}, see={matching}]
-\newterm{pattern selection}[see={selection}]
-\newterm[optimal.ps]{optimal}[parent={pattern selection}]
-\newterm{pattern set}
-\newterm{sea-of-nodes IR}
-\newterm{selection}[see={pattern selection}]
-\newterm{SSA graph}
+%=============
+% GRAPH TERMS
+%=============
+
+\newterm{child}[see={node}]
+\newterm{cycle}
+\newacronym{DAG}{directed acyclic graph}
+\newterm{edge}
+\newterm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
+\newterm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
+\newterm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
+\newterm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
+\newterm{edge number}
+\newterm[inbound.en]{inbound}[parent={edge number}]
+\newterm[outbound.en]{outbound}[parent={edge number}]
+\newterm{edge splitting}[user1={split}]
+\newterm{forest}
+\newterm{graph}
+\newterm[connected.g]{connected}[parent={graph}]
+\newterm[directed.g]{directed}[parent={graph}]
+\newterm[ordered.g]{ordered}[parent={graph}]
+\newterm[simple.g]{simple}[parent={graph}]
+\newterm[strongly connected.g]{strongly connected}[parent={graph}]
+\newterm[undirected.g]{undirected}[parent={graph}]
+\newterm[weakly connected.g]{weakly connected}[parent={graph}]
+\newterm{graph homomorphism}
+\newterm{graph isomorphism}
+\newterm{independent set}
+\newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
+\newterm{leaf}[plural={leaves}, see={node}]
+\newterm{loop edge}[see={loop}]
+\newterm{loop}[see={loop edge}]
+\newterm{multigraph}
+\newterm{node}
+\newterm[adjacent.n]{adjacent}[parent={node}]
+\newterm[connected.n]{connected}[parent={node}]
+\newterm[fixed.n]{fixed}[parent={node}]
+\newterm{node duplication}[user1={duplicat}]% The short term is without the
+                                            % ending 'e' in order to be used in
+                                            % words like 'duplicate' and
+                                            % 'duplicating'.
+\newterm{parent}[see={node}]
+\newterm{path}
+\newterm{root}[see={node}]
+\newterm{source}
+\newterm{subgraph}
+\newterm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
+\newterm{subtree}[see={tree}]
+\newterm{super node}
+\newterm{target}
+\newterm{topological sort}
+\newterm{tree}
+\newterm[directed.t]{directed}[parent={tree}]
+\newterm[rooted directed.t]{rooted directed}[parent={tree}]
+\newterm{vertex}[plural={vertices}, see={node}]
+
+
+%========================
+% CONSTRAINT MODEL TERMS
+%========================
 
 \newterm{alternative value}[user1={alternative}]
 \newterm{block node}[user1={block}]
@@ -169,12 +177,20 @@
 \newterm{control node}[user1={control}]
 \newterm{copy match}[plural={copy matches}]
 \newterm{copy node}[user1={copy}]
+\newterm{datum}[plural={data}]
+\newterm[available.d]{available}[parent={datum}]
+\newterm[copy-related.d]{copy-related}[parent={datum}]
+\newterm[define.d]{define}[parent={datum}, user1={defin}]
+\newterm[interchangeable.d]{interchangeable}[parent={datum}]
+\newterm[killed.d]{killed}[parent={datum}]
+\newterm[use.d]{use}[parent={datum}, user1={us}]
 \newterm{definition edge}
 \newterm{dependency graph}
 \newterm{dual-target branch pattern}
 \newterm{extension node}[user1={extension}]
 \newterm{exterior value}[user1={exterior}]
 \newterm{intermediate value}[user1={intermediate}]
+\newterm{input datum}[plural={input data}]
 \newterm{kill match}[plural={kill matches}]
 \newterm{kill pattern}
 \newterm{match duplication}
@@ -184,6 +200,8 @@
 \newterm{null-extend pattern}
 \newterm{null-jump pattern}
 \newterm{null match}[plural={null matches}, user1={null}]
+\newterm{operand}
+\newterm{operation}
 \newterm[phi-match]{$\mPhi$-match}[plural={$\mPhi$-matches}]
 \newterm[phi-pattern]{$\mPhi$-pattern}
 \newterm{state node}[user1={state}, user2={states}]
@@ -194,14 +212,10 @@
 \newterm{UP graph}[first={universal pattern (UP) graph}, user1={UP}]
 \newterm{value node}[user1={value}]
 
-\newterm{BURS}%
-        [first=bottom-up rewriting system~(BURS)]
-\newterm{combinatorial approach}%
-        [user1={combinatorial}, plural={combinatorial approaches}]
-\newterm{Davidson-Fraser approach}
-\newterm{maximum munch}
-\newterm{traditional approach}%
-        [user1={traditional}, plural={traditional approaches}]
+
+%==========
+% CP TERMS
+%==========
 
 \newterm{decision variable}[see={variable}, user1={variable}, user2={variables}]
 \newterm{solver}
@@ -262,6 +276,11 @@
 
 \newterm{magic sequence problem}
 
+
+%===================
+% OP RESEARCH TERMS
+%===================
+
 \newterm{MIS}%
         [first={maximal independent set~(MIS)},
          firstplural={maximal independent sets~(MISs)}]
@@ -282,79 +301,47 @@
 \newterm{SAT}%
         [first={Boolean satisfiability~(SAT)}]
 
-\newterm{child}[see={node}]
-\newterm{cycle}
-\newacronym{DAG}{directed acyclic graph}
-\newterm{edge}
-\newterm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
-\newterm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
-\newterm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
-\newterm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
-\newterm{edge number}
-\newterm[inbound.en]{inbound}[parent={edge number}]
-\newterm[outbound.en]{outbound}[parent={edge number}]
-\newterm{edge splitting}[user1={split}]
-\newterm{forest}
-\newterm{graph}
-\newterm[connected.g]{connected}[parent={graph}]
-\newterm[directed.g]{directed}[parent={graph}]
-\newterm[ordered.g]{ordered}[parent={graph}]
-\newterm[simple.g]{simple}[parent={graph}]
-\newterm[strongly connected.g]{strongly connected}[parent={graph}]
-\newterm[undirected.g]{undirected}[parent={graph}]
-\newterm[weakly connected.g]{weakly connected}[parent={graph}]
-\newterm{graph homomorphism}
-\newterm{graph isomorphism}
-\newterm{independent set}
-\newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
-\newterm{leaf}[plural={leaves}, see={node}]
-\newterm{loop edge}[see={loop}]
-\newterm{loop}[see={loop edge}]
-\newterm{multigraph}
-\newterm{node}
-\newterm[adjacent.n]{adjacent}[parent={node}]
-\newterm[connected.n]{connected}[parent={node}]
-\newterm[fixed.n]{fixed}[parent={node}]
-\newterm{node duplication}[user1={duplicat}]% The short term is without the
-                                            % ending 'e' in order to be used in
-                                            % words like 'duplicate' and
-                                            % 'duplicating'.
-\newterm{parent}[see={node}]
-\newterm{path}
-\newterm{root}[see={node}]
-\newterm{source}
-\newterm{subgraph}
-\newterm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
-\newterm{subtree}[see={tree}]
-\newterm{super node}
-\newterm{target}
-\newterm{topological sort}
-\newterm{tree}
-\newterm[directed.t]{directed}[parent={tree}]
-\newterm[rooted directed.t]{rooted directed}[parent={tree}]
-\newterm{vertex}[plural={vertices}, see={node}]
 
-\newToolTerm{Glasgow}
-\newToolTerm{LAD}
-\newToolTerm{VF2}
+%===============
+% GRAMMAR TERMS
+%===============
 
-\newterm{FRT}%
-        [first=factorized register transfer (FRT),
-         firstplural=factorized register transfers (FRTs)]
+\newterm{context-free grammar}
+\newterm{grammar}[see={machine grammar}]
+\newterm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
+\newterm{machine grammar}[see={grammar}]
+\newterm{nonterminal}
+\newterm{production}
+\newterm{rule}
+\newterm[base.r]{base}[parent={rule}]
+\newterm[chain.r]{chain}[parent={rule}]
+\newterm[complex.r]{complex}[parent={rule}]
+\newterm[proxy.r]{proxy}[parent={rule}]
+\newterm[simple.r]{simple}[parent={rule}]
+\newterm[split.r]{split}[parent={rule}]
+\newterm{rule pattern}[user1={pattern}]
+\newterm{rule reduction}
+\newterm{rule result}[user1={result}]
+\newterm{state}
+\newterm{state table}
+\newterm{terminal}
+
+
+%====================
+% RELATED WORK TERMS
+%====================
+
+\newterm{combinatorial approach}%
+        [user1={combinatorial}, plural={combinatorial approaches}]
+\newterm{traditional approach}%
+        [user1={traditional}, plural={traditional approaches}]
 
 \newterm{principle}
-\newterm{macro}
-\newterm{macro expander}[user3={macro-expan}]% The short term is without the
-                                             % ending 'sion' in order to be used
-                                             % in words like 'expanding'.
 \newterm{macro expansion}
 \newterm[naive.me]{naive}[parent={macro expansion}]
 \newterm{tree covering}
 \newterm{DAG covering}
 \newterm{graph covering}
-
-\newterm{template}
-\newterm{expand procedure}
 
 \newterm{instruction characteristic}%
         [user1={characteristic}, user2={characteristics}]
@@ -374,8 +361,55 @@
         {interdependent}%
         [parent={instruction characteristic}]
 
+\newterm{block DAG}[user1={block}]
+\newterm{control-flow edge}[user1={control-flow}]
+\newterm{control-flow graph}[user1={control-flow}]
+\newterm{cover}
+\newterm[least-cost.c]{least-cost}[parent={cover}]
+\newterm{data-flow edge}[user1={data-flow}]
+\newterm{data-flow graph}[user1={data-flow}]
+\newterm{expression tree}
+\newterm{function graph}[user1={function}]
+\newterm{interference graph}
+\newterm{match}[plural=matches]
+\newterm[complex.m]{complex}[parent={match}]
+\newterm[dominate.m]{dominate}[parent={match}, user1={domin}]
+\newterm[illegal.m]{illegal}[parent={match}]
+\newterm{match set}
+\newterm{matching}[see={pattern matching}]
+\newterm{overlap}
+\newterm{pattern}[see={pattern graph}]
+\newterm[complex.p]{complex}[parent={pattern}]
+\newterm[proxy.p]{proxy}[parent={pattern}]
+\newterm[simple.p]{simple}[parent={pattern}]
+\newterm{pattern DAG}[see={pattern}]
+\newterm{pattern graph}[see={pattern}]
+\newterm{pattern tree}[see={pattern}]
+\newterm{pattern matching}[user3={pattern-matching}, see={matching}]
+\newterm{pattern selection}[see={selection}]
+\newterm[optimal.ps]{optimal}[parent={pattern selection}]
+\newterm{pattern set}
+\newterm{sea-of-nodes IR}
+\newterm{selection}[see={pattern selection}]
+\newterm{SSA graph}
+
+\newterm{BURS}%
+        [first=bottom-up rewriting system~(BURS)]
+\newterm{Click-Paleczny graph}
+\newterm{Davidson-Fraser approach}
+\newterm{expand procedure}
+\newterm{FRT}%
+        [first=factorized register transfer (FRT),
+         firstplural=factorized register transfers (FRTs)]
+\newToolTerm{Glasgow}
 \newToolTerm{GCL}
 \newacronym{ICL}{Interpretive Coding Language}
+\newToolTerm{LAD}
+\newterm{macro}
+\newterm{macro expander}[user3={macro-expan}]% The short term is without the
+                                             % ending 'sion' in order to be used
+                                             % in words like 'expanding'.
+\newterm{maximum munch}
 \newToolTerm{Pascal}
 \newToolTerm{PL/1}
 \newToolTerm{PL/C}
@@ -384,3 +418,5 @@
         {SLM~instruction}%
         [first={source language machine (SLM) instruction}]
 \newacronym{TEL}{Template Language}
+\newterm{template}
+\newToolTerm{VF2}
