@@ -867,7 +867,8 @@ as
 \end{equation}
 
 Likewise, we can always constrain the locations of a non-\glsshort{state node}
-\gls{datum}~$d$ to those locations where the users can access $d$.
+\gls{datum}~$d$ to those locations where the users can access $d$ (assuming
+there is always at least one \gls{match} making use of $d$).
 %
 This is modeled similarly as
 %
@@ -886,7 +887,9 @@ This is modeled similarly as
                       l \in \mStores(m, p)
                       \text{ \st }
                       d \in \mDataSet[p]
-                    }.
+                    }
+    \mAnd
+    S \neq \mEmptySet.
   \end{array}
   \labelEquation{constraint-def-locations}
 \end{equation}
