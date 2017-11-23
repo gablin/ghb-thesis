@@ -1436,6 +1436,8 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
                    \mIsExt(m, p)
                    \mAnd
+                   \mCupUseLocsOf(d) \neq \mEmptySet
+                   \mAnd \mbox{} \\
                    \mStores(m, p) \cap \mCupUseLocsOf(d) = \mEmptySet
                  \end{array}
                }\!,
@@ -1457,6 +1459,11 @@ where
     \mStores(m, p).
   \labelEquation{cup-use-locs-of-function}
 \end{equation}
+%
+Note that if \mbox{$\mCupUseLocsOf(d) = \mEmptySet$} holds then the
+\glspl{match} \glsshort{use.d}[ing] \gls{datum}~$d$ have themselves conflicting
+location requirements, and in such cases we cannot infer whether a \gls{match}
+\glsshort{define.d}[ing] $d$ is \gls{illegal.m}.
 
 Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
 \gls{datum}~$d$ from a location that cannot be written to by any of the
@@ -1471,8 +1478,9 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                  \begin{array}{@{}l@{}}
                    m \in \mKillMatchCompSet,
                    p \in \mUses(m) \setminus \mDefines(m),
-                   d \in \mDataSet[p] \hspace{-1pt} \\
-                   \text{\st }
+                   d \in \mDataSet[p] \hspace{-1pt} \text{ \st} \\
+                   \mCupDefLocsOf(d) \neq \mEmptySet
+                   \mAnd
                    \mStores(m, p) \cap \mCupDefLocsOf(d) = \mEmptySet
                  \end{array}
                } \!,
