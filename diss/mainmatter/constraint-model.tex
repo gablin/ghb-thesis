@@ -790,11 +790,13 @@ After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
 \irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v}
 (\refFigure{value-reuse-example-after-ce}).
 %
-We say \irVar{v}[1] and \irVar{v}[2] are \gls!{copy-related.d}.
+Assume that both $m_1$ and $m_2$ require its copy of \irVar{v} to reside in a
+location different from \irVar{v} -- \irVar{v} may reside on the stack, for
+instance -- which means that selection of $m_1$ or $m_2$ also entails emission
+of a copy \gls{instruction}.
 %
-Consequently, if both $m_1$ and $m_2$ require \irVar{v} to be copied -- assume
-for example that \irVar{v} resides on the stack -- then two copy
-\glspl{instruction} will be emitted
+With the \glsshort{constraint model} introduced thus far, two copy
+\glspl{instruction} will be emitted if both $m_1$ and $m_2$ are selected
 (\refFigure{value-reuse-example-redundant-copies}).
 %
 However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same location then
@@ -812,10 +814,18 @@ superior to the other.
 
 \subsection{Match Duplication}
 
-The idea is easily derived from its name: for each \gls{match}~$m$, create a new
-\gls{match} for each permutation of \glspl{datum} that are \gls{copy-related.d}
-to the \glspl{input datum} in $m$, where an \gls!{input datum} is a \gls{datum}
-\gls{use.d}[d] but not \gls{define.d}[d] by~$m$.
+The idea behind \gls!{match duplication} is to duplicating appropriate
+\glspl{match} in the \gls{match set} where \gls{value reuse} is possible.
+%
+We first say that two values~$v_1$ and~$v_2$ are \gls!{copy-related.d} if and
+only if they are copies of the same value and $v_1$ and $v_2$ have the same data
+type (the second clause is necessary as copies of constants may be of different
+data types and are therefore not interchangeable).
+%
+Then, for each \gls{match}~$m$, we create a new \gls{match} for each permutation
+of \glspl{datum} that are \gls{copy-related.d} to the \glspl{input datum} in
+$m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
+\gls{define.d}[d] by~$m$.
 %
 \begin{figure}
   \setlength{\opNodeDist}{12pt}%
@@ -878,6 +888,10 @@ decisions must be remade for each new \gls{match}, thereby enlarging the
 
 \subsection{Alternative Values}
 
+Instead of expanding the \gls{match set} (like in \gls{match duplication}), we
+can postpone the decision of which \gls{input datum} to use for a particular
+\gls{match} and integrate it as part of the \gls{constraint model}.
+%
 The idea is as follows.
 %
 For each \gls{match}~$m$, let every \glspl{input datum}~$d$ in $m$ be mapped to
