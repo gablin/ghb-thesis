@@ -33,7 +33,7 @@ Lastly, \refSection{st-summary} summarizes the chapter.
 The material presented in Sects.\thinspace\refSection*{st-model-refinements},
 \refSection*{st-branching-strategies}, \refSection*{st-impl-constraints},
 \refSection*{st-dom-breaking-constraints}, \refSection*{st-pre-dom-matches}, and
-\refSection*{st-canonizalized-locations} is based on ideas conceived by
+\refSection*{st-canonical-locations} is based on ideas conceived by
 Mats~Carlsson, which have then been improved by the author of this dissertation.
 %
 All other materials in this chapter, including the text and figures, are due
@@ -1593,10 +1593,60 @@ and~\refEquation*{cup-def-locs-of-function}), with the exception that
 from these sets.
 
 
-\subsection{Canonicalized Locations}
-\labelSection{st-canonizalized-locations}
+\subsection{Canonical Locations}
+\labelSection{st-canonical-locations}
 
-\todo{write}
+For most architectures, its \glspl{instruction} read from and write to the same
+set of \glspl{register}.
+%
+This gives rise to many symmetric \glspl{solution} as the exact \gls{location}
+assigned to a value often does not matter.
+%
+We can remove these symmetries by removing \glspl{location} which are considered
+symmetric to one another.
+
+\begin{algorithm}
+  \DeclFunction{CanonicalizeLocs}{location set $L$, match set~$M$}%
+  {%
+    $T$ \Assign vector with $\mCard{L}$ elements initialized to $\mEmptySet$\;
+    $t$ \Assign $1$\;
+    \For(\tcp*[f]{assign tags}){$m \in M$}{%
+      \For{$p \in \textrm{$\mUses$}(m) \cup \textrm{$\mDefines$}(m)$}{%
+        \For{$l \in \mStores(m, p)$}{%
+          $T[l]$ \Assign $T[l] \cup \mSet{t}$\;
+        }
+        $t$ \Assign $t$ $+$ $1$\;
+      }
+    }
+    $G$ \Assign $\mSetBuilder{T[l]}{l \in L}$\tcp*{find all groups of tags}
+    $L_{\textrm{\textsc{c}}}$ \Assign $\mEmptySet$\;
+    \For{$g \in G$}{%
+      $l_{\textrm{\textsc{c}}}$ \Assign
+      $\textrm{$\mMin$}(\mSetBuilder{l}{l \in L \text{ \st } T[l] = g})$
+      \tcp*{canonical location for this group of tags}
+      $L_{\textrm{\textsc{c}}}$ \Assign
+      $L_{\textrm{\textsc{c}}} \cup \mSet{l_{\textrm{\textsc{c}}}}$\;
+    }
+    \Return $L_{\textrm{\textsc{c}}}$\;
+  }
+
+  \caption[Algorithm for computing the set of canonical locations]%
+          {%
+            Computes the canonical locations from a given location set.
+            %
+            If location restrictions for some data are already enforced by
+            the function, then these are also assigned a tag and processed
+            accordingly%
+          }
+  \labelAlgorithm{canonical-locs-algorithm}
+\end{algorithm}
+
+The algorithm for computing the set of \gls{canonical.l} \glspl{location} is
+shown in \refAlgorithm{canonical-locs-algorithm}.
+%
+\todo{explain the intuition}
+
+\todo{give example}
 
 
 \section{Experimental Evaluation}
