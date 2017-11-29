@@ -503,34 +503,34 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
 \labelSection{modeling-data-copying}
 
 The cost of \gls{data copying} is taken into account by keeping track of the
-location requirements for the data used and produced by the selected
+storage requirements for the data used and produced by the selected
 \glspl{match}.
 %
 The idea is as follows.
 %
 For each value~$v$ in the \gls{UF graph}, let a \gls{variable}~$\mVar{x}$ decide
-in which location provided by the \gls{target machine} $v$ is stored.
+in which \gls{location} provided by the \gls{target machine} $v$ is stored.
+%
+In this context a \gls!{location} is an abstract representation, typically
+representing a \gls{register} but it could also indicate that the value is for
+example stored in memory.
 %
 A \gls{match}~$m$ that either \gls{use.d}[s] or \gls{define.d}[s] $v$ and
-requires $v$ to be in one of a set~$L$ of locations can then enforce, if
+requires $v$ to be in one of a set~$L$ of \glspl{location} can then enforce, if
 selected, that \mbox{$\mVar{x} \in L$}.
 
 
 \subsubsection{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{loc}[d] \in \mLocationSet \cup
-  \mSet{\mIntLocation}$} models in which location \gls{datum}~$d$ is available,
-where $\mLocationSet$ denotes the set of locations provided by the \gls{target
-  machine} and $\mIntLocation$ denotes a special location for values that
-cannot be reused across \glspl{instruction}.
+  \mSet{\mIntLocation}$} models in which \gls{location} \gls{datum}~$d$ is
+available, where $\mLocationSet$ denotes the set of \glspl{location} provided by
+the \gls{target machine} and $\mIntLocation$ denotes a special \gls{location}
+for values that cannot be reused across \glspl{instruction}.
 %
-In this context a location is an abstract representation, typically representing
-a \gls{register}, but it could also indicate that the value is for example
-stored in memory.
-%
-The special location is used for \glspl!{intermediate value}, which are values
-produced within an \gls{instruction} and can only be accessed by this very
-\gls{instruction}.
+The special \gls{location} is used for \glspl!{intermediate value}, which are
+values produced within an \gls{instruction} and can only be accessed by this
+very \gls{instruction}.
 %
 For example, the address computed by a memory load \gls{instruction} with a
 sophisticated addressing mode is produced within the pipeline and thus cannot be
@@ -542,13 +542,14 @@ A value which is not an \gls{intermediate value} is called an \gls!{exterior
 
 \subsubsection{Constraints}
 
-Every \gls{datum} must be made available in a location that is compatible for
-all selected \glspl{match}.
+Every \gls{datum} must be made available in a \gls{location} that is compatible
+for all selected \glspl{match}.
 %
 If \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mIntLocation}$}
-denotes the set of compatible locations (including the special location for
-intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
-\gls{use.d}[d] by a \gls{match}~$m$, then this \gls{constraint} is modeled as
+denotes the set of compatible \glspl{location} (including the special
+\gls{location} for intermediate values) for a \gls{datum}~$d$ which is either
+\gls{define.d}[d] or \gls{use.d}[d] by a \gls{match}~$m$, then this
+\gls{constraint} is modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -561,8 +562,8 @@ intermediate values) for a \gls{datum}~$d$ which is either \gls{define.d}[d] or
   \labelEquation{compatible-locations}
 \end{equation}
 
-As expected, \glspl{phi-match} require the locations of all its \glspl{datum} to
-be the same.
+As expected, \glspl{phi-match} require the \glspl{location} of all its
+\glspl{datum} to be the same.
 %
 This \gls{constraint} is modeled as
 %
@@ -588,13 +589,13 @@ general \glspl{instruction}.
 %
 In such situations, the \glspl{match} derived from the \gls{SIMD.instr}
 \glspl{instruction} and the \glspl{match} derived from the general
-\glspl{instruction} will have non-overlapping locations on the same
+\glspl{instruction} will have non-overlapping \glspl{location} on the same
 \glspl{datum} (that is, \mbox{$\mStores(m_1, d) \cap \mStores(m_2, d) =
   \mEmptySet$}), preventing selection of such \glspl{match}.
 
-Since non-overlapping locations entails the need for copy \glspl{instruction},
-we extend the \gls{UF graph} with \glspl!{copy node} through a process called
-\gls!{copy extension}.
+Since non-overlapping \glspl{location} entails the need for copy
+\glspl{instruction}, we extend the \gls{UF graph} with \glspl!{copy node}
+through a process called \gls!{copy extension}.
 %
 For each \gls{data-flow edge}~$\mEdge{v}{o}$, where $v$ is a \gls{value node}
 and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
@@ -684,8 +685,8 @@ The method for handling \gls{data copying} can also be used for handling calling
 conventions of the specific \gls{target machine}.
 %
 \Glspl{constraint} that callee arguments (that is, arguments to the
-\gls{function} under compilation) must reside in a specific location are modeled
-as
+\gls{function} under compilation) must reside in a specific \gls{location} are
+modeled as
 %
 \begin{equation}
   \mVar{loc}[d] \in \mArgLoc(d)
@@ -696,15 +697,15 @@ as
 %
 where \mbox{$\mArgSet \subseteq \mDataSet$} denotes the set of \gls{function}
 arguments in $\mUFGraph$ and \mbox{$\mArgLoc(d) \subseteq \mLocationSet$}
-denotes the set of locations in which argument~$d$ resides.
+denotes the set of \glspl{location} in which argument~$d$ resides.
 %
-Arguments residing on the stack can be signified using a special $\mMemLocation$
-location, thus requiring a memory load \gls{instruction} in order to be used by
-other \glspl{instruction}.
+Arguments residing on the stack can be signified by introducing another special
+\gls{location}, thus requiring a memory load \gls{instruction} in order to be
+used by other \glspl{instruction}.
 
-Locations for caller arguments (that is, arguments to \glspl{function} calls
-made from within the \gls{function} under compilation) can be enforced either
-through \refEquation{function-args} or through
+\Glspl{Location} for caller arguments (that is, arguments to \glspl{function}
+calls made from within the \gls{function} under compilation) can be enforced
+either through \refEquation{function-args} or through
 \refEquation{compatible-locations}.
 %
 If the calling convention depends on the \gls{instruction} selected then the
@@ -791,17 +792,18 @@ After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
 (\refFigure{value-reuse-example-after-ce}).
 %
 Assume that both $m_1$ and $m_2$ require its copy of \irVar{v} to reside in a
-location different from \irVar{v} -- \irVar{v} may reside on the stack, for
-instance -- which means that selection of $m_1$ or $m_2$ also entails emission
-of a copy \gls{instruction}.
+\gls{location} different from \irVar{v} -- \irVar{v} may reside on the stack,
+for instance -- which means that selection of $m_1$ or $m_2$ also entails
+emission of a copy \gls{instruction}.
 %
 With the \glsshort{constraint model} introduced thus far, two copy
 \glspl{instruction} will be emitted if both $m_1$ and $m_2$ are selected
 (\refFigure{value-reuse-example-redundant-copies}).
 %
-However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same location then
-either of the values could be reused by either \gls{match}, thus necessitating
-only one copy \gls{instruction} (\refFigure{value-reuse-example-one-copy}).
+However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same
+\gls{location} then either of the values could be reused by either \gls{match},
+thus necessitating only one copy \gls{instruction}
+(\refFigure{value-reuse-example-one-copy}).
 %
 We call this notion \gls!{value reuse}.
 
@@ -1094,10 +1096,10 @@ A \gls{datum} is said to be \gls!{killed.d} if and only if it is
 \gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are only
 allowed to make use of not \gls{killed.d} \glspl{datum}.
 
-To model whether a \gls{datum} is \gls{killed.d}, we extend the location set
-with a special location~$\mKilledLocation$ and require that a \gls{kill
-  match}~$m$ is selected if and only if the location of the \gls{datum}
-\gls{define.d}[d] by $m$ is $\mKilledLocation$.
+To model whether a \gls{datum} is \gls{killed.d}, we extend the \gls{location}
+set with a special \gls{location}~$\mKilledLocation$ and require that a
+\gls{kill match}~$m$ is selected if and only if the \gls{location} of the
+\gls{datum} \gls{define.d}[d] by $m$ is $\mKilledLocation$.
 %
 This is modeled as
 %

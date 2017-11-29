@@ -840,11 +840,11 @@ This is modeled as
 where \mbox{$\mIsExt(m, p)$} denotes whether an \gls{operand}~$p$ in a
 \gls{match}~$m$ represents an \gls{exterior value}.
 
-We can always constrain the locations of a non-\glsshort{state node}
-\gls{datum}~$d$ to those locations where the definers can put $d$.
+We can always constrain the \glspl{location} of a non-\glsshort{state node}
+\gls{datum}~$d$ to those \glspl{location} where the definers can put $d$.
 %
-The intuition here is to take the union of all those locations, which is modeled
-as
+The intuition here is to take the union of all those \glspl{location}, which is
+modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -866,9 +866,9 @@ as
   \labelEquation{constraint-use-locations}
 \end{equation}
 
-Likewise, we can always constrain the locations of a non-\glsshort{state node}
-\gls{datum}~$d$ to those locations where the users can access $d$ (assuming
-there is always at least one \gls{match} making use of $d$).
+Likewise, we can always constrain the \glspl{location} of a non-\glsshort{state
+  node} \gls{datum}~$d$ to those \glspl{location} where the users can access $d$
+(assuming there is always at least one \gls{match} making use of $d$).
 %
 This is modeled similarly as
 %
@@ -947,8 +947,8 @@ implicit dependencies between certain \gls{operation}, the assignment to these
 \glspl{variable} has no actual bearing on the \gls{solution}, thus giving rise
 to many symmetric \glspl{solution}.
 %
-Consequently, it makes sense to fix the location for each \gls{state node},
-which is modeled as
+Consequently, it makes sense to fix the \gls{location} for each \gls{state
+  node}, which is modeled as
 %
 \begin{equation}
   \mVar{loc}[d] = \mIntLocation
@@ -983,7 +983,7 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 The \gls{symmetry breaking.c} \gls{constraint} above also implies that if an
 \gls{operand} representing input with multiple \glspl{datum} does not take its
 minimum value, then the corresponding \gls{match} must be selected, which means
-that the corresponding \gls{datum} must be in a usable location.
+that the corresponding \gls{datum} must be in a usable \gls{location}.
 %
 This is modeled as
 \begin{equation}
@@ -1299,11 +1299,11 @@ A \gls{match}~$m_1$ is \gls{dominate.m}[d] if there exists another
   \item both have the same \glspl{entry block} (if any),
   \item both \gls{span.b} the same \glspl{block} (if any),
   \item both have the same \glspl{definition edge} (if any),
-  \item $m_1$ has at least as strong location requirements on its \glspl{datum}
-    as $m_2$ -- that is, $\forall p_1 \in \mUses(m_1) \cup \mDefines(m_1),
-    \exists p_2 \in \mUses(m_2) \cup \mDefines(m_2) \text{ \st } \mDataSet[p_1]
-    \subseteq \mDataSet[p_2] \mAnd \mStores(m_1, p_1) \subseteq \mStores(m_2,
-    p_2)$ -- and
+  \item $m_1$ has at least as strong \gls{location} requirements on its
+    \glspl{datum} as $m_2$ -- that is, $\forall p_1 \in \mUses(m_1) \cup
+    \mDefines(m_1), \exists p_2 \in \mUses(m_2) \cup \mDefines(m_2) \text{ \st }
+    \mDataSet[p_1] \subseteq \mDataSet[p_2] \mAnd \mStores(m_1, p_1) \subseteq
+    \mStores(m_2, p_2)$ -- and
   \item both apply the same auxiliary \glspl{constraint} (if any).
 \end{itemize}
 %
@@ -1424,7 +1424,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
 \end{equation}
 
 If a \gls{match}~$m$ is not a \gls{kill match} and \gls{define.d}[s] a
-\gls{datum}~$d$ in a location that cannot be accessed by any of the
+\gls{datum}~$d$ in a \gls{location} that cannot be accessed by any of the
 \glspl{match} making \gls{use.d} of $d$, then $m$ can never be selected and is
 thus \gls{illegal.m}.
 %
@@ -1465,11 +1465,11 @@ where
 %
 Note that if \mbox{$\mCupUseLocsOf(d) = \mEmptySet$} holds then the
 \glspl{match} \glsshort{use.d}[ing] \gls{datum}~$d$ have themselves conflicting
-location requirements, and in such cases we cannot infer whether a \gls{match}
-\glsshort{define.d}[ing] $d$ is \gls{illegal.m}.
+\gls{location} requirements, and in such cases we cannot infer whether a
+\gls{match} \glsshort{define.d}[ing] $d$ is \gls{illegal.m}.
 
 Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
-\gls{datum}~$d$ from a location that cannot be written to by any of the
+\gls{datum}~$d$ from a \gls{location} that cannot be written to by any of the
 \glspl{match} \glsshort{define.d}[ing]~$d$, then $m$ can never be selected and
 is thus \gls{illegal.m}.
 %
@@ -1543,8 +1543,8 @@ Another case concerns \glspl{match} that cover a \gls{copy node} and are not
 %
 For each copy chain \mbox{$\mEdge{v_1}{\mEdge{c}{v_2}}$}, where $c$ is a
 \gls{copy node} and $v_1$ and $v_2$ are \glspl{value node}, if every \gls{match}
-\glsshort{define.d}[ing] $v_1$ writes the value to a location that can be used
-by all \glspl{match} \glsshort{use.d}[ing]~$v_2$, then all non-\glspl{null
+\glsshort{define.d}[ing] $v_1$ writes the value to a \gls{location} that can be
+used by all \glspl{match} \glsshort{use.d}[ing]~$v_2$, then all non-\glspl{null
   match} covering $c$ are redundant since a \gls{null-copy match} can always be
 selected.
 %
@@ -1581,14 +1581,16 @@ where \mbox{$\mCopyMatchSet \subseteq \mMatchSet$} denotes the set of
 \glspl{copy match}, \mbox{$\mConstDataSet \subseteq \mDataSet$} denotes the set
 of \glspl{datum} representing constant values, and \mbox{$\mCapUseLocsOf(d)
   \subseteq \mLocationSet$} and \mbox{$\mCapDefLocsOf(d) \subseteq
-  \mLocationSet$} denote the intersection of all locations for all \gls{match}
-where a \gls{datum}~$d$ is \gls{use.d}[d] respectively \gls{define.d}[d].
+  \mLocationSet$} denote the intersection of all \glspl{location} for all
+\gls{match} where a \gls{datum}~$d$ is \gls{use.d}[d] respectively
+\gls{define.d}[d].
 %
 As can be deduced from their name, $\mCapUseLocsOf$ and $\mCapDefLocsOf$ are
 defined similarly to $\mCupUseLocsOf$ and $\mCupDefLocsOf$ (see
 Eqs.\thinspace\refEquation*{cup-use-locs-of-function}
-and~\refEquation*{cup-def-locs-of-function}), with the exception that locations
-known to violate \refEquation{phi-match-locations} are removed from these sets.
+and~\refEquation*{cup-def-locs-of-function}), with the exception that
+\glspl{location} known to violate \refEquation{phi-match-locations} are removed
+from these sets.
 
 
 \subsection{Canonicalized Locations}
