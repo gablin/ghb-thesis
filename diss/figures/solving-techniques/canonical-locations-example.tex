@@ -1,0 +1,111 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{foreground}%
+\pgfsetlayers{main,foreground}%
+\def\gridYSize{4mm}%
+\def\gridXSize{5mm}%
+\def\axisWidth{1pt}%
+\def\mkReg#1{\instrFont r$_{\text{#1}}$}
+\begin{tikzpicture}[%
+    y label/.style={
+      nothing,
+      node distance=6pt,
+    },
+    x label/.style={
+      nothing,
+      node distance=3pt,
+      font=\strut,
+    },
+    location range/.style={
+      nothing,
+      fill=shade1,
+      line width=\normalLineWidth,
+    },
+    location range line/.style={
+      draw,
+      line width=\normalLineWidth,
+    },
+    slice line/.style={
+      line width=\normalLineWidth,
+      dash pattern={on 1.8pt off 2.2pt},
+      draw=shade3,
+    }
+  ]
+
+  % Grid
+  \foreach \y in {0, ..., 4} {
+    \foreach \x in {0, ..., 10} {
+      \pgfmathtruncatemacro{\py}{\y - 1};
+      \pgfmathtruncatemacro{\px}{\x - 1};
+      \ifnum \x>0
+        \coordinate (\y-\x) at ([xshift=\gridXSize] \y-\px);
+      \else
+        \ifnum \y>0
+          \coordinate (\y-\x) at ([yshift=-\gridYSize] \py-\x);
+        \else
+          \coordinate (\y-\x);
+        \fi
+      \fi
+    }
+  }
+
+  % Location ranges
+  \node [location range, fit=(0-0) (1-6)] (lr1) {};
+  \node [location range, fit=(1-0) (2-4)] (lr2) {};
+  \node [location range, fit=(2-5) (3-8)] (lr3) {};
+  \node [location range, fit=(3-6) (4-9)] (lr4) {};
+  \begin{pgfonlayer}{foreground}
+    \begin{scope}[location range line]
+      \foreach \i in {1, ..., 4} {
+        \draw (lr\i.north west)
+              --
+              (lr\i.north east)
+              --
+              (lr\i.south east)
+              --
+              (lr\i.south west)
+              --
+              cycle;
+      }
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Labels
+  \foreach \i in {0, ..., 9} {
+    \pgfmathtruncatemacro{\ni}{\i + 1};
+    \node [x label, above=of $(0-\i) !.5! (0-\ni)$] (r\ni)
+          {\mkReg{\ni}};
+  }
+  \foreach \i in {1, 5, 6, 7, 9} {
+    \node [x label, below=of lr4.south -| r\i] (cr\i) {\mkReg{\i}};
+  }
+  \node [y label, left=of r1 -| lr1.west] {\strut locations};
+  \node [y label, left=of lr1] {$\textrm{$\mStores$}(m_1, p_1)$};
+  \node [y label, left=of lr2] {$\textrm{$\mStores$}(m_1, p_2)$};
+  \node [y label, left=of lr3 -| 0-0] {$\textrm{$\mStores$}(m_1, p_3)$};
+  \node [y label, left=of lr4 -| 0-0] {$\textrm{$\mStores$}(m_2, p_4)$};
+  \node [y label, left=of cr1 -| lr1.west] {\strut canonical locations};
+  \foreach \i in {1, ..., 4} {
+    \node [y label, right=of 0-10 |- lr\i.east] (t\i) {\i};
+  }
+  \node[y label, right=of $(t1.east) !.5! (t4.east)$, xshift=-2pt]
+       {\rotatebox{90}{tags}};
+
+  % Slices
+  \begin{scope}[slice line]
+    \foreach \x/\y in {0/0, 4/0, 5/0, 6/0, 8/2} {
+      \draw (\y-\x) -- (4-\x);
+    }
+  \end{scope}
+
+%  \foreach \i in {1, ..., 5} {
+%    \node [nothing] at (t\i) {$t_\i$};
+%  }
+\end{tikzpicture}%
+\endgroup%

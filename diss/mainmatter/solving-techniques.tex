@@ -1605,7 +1605,48 @@ assigned to a value often does not matter.
 We can remove these symmetries by removing \glspl{location} which are considered
 symmetric to one another.
 
-\begin{algorithm}
+The idea is to select a \gls{location} as a representative for each distinct
+intersection made by the storage requirements.
+%
+\begin{figure}
+  \centering%
+  \input{figures/solving-techniques/canonical-locations-example}
+
+  \caption[Example of canonical locations]%
+          {%
+            Example of canonical locations for a location set with ten
+            registers%
+          }
+  \labelFigure{canonical-locations-example}
+\end{figure}
+%
+See for example \refFigure{canonical-locations-example}.
+%
+For sake of discussion, each storage requirment has been labeled with a tag.
+%
+Given the \gls{location set} and storage requirements shown in the figure, they
+give rise to five intersections with respect to the locations:
+%
+\def\mReg#1{\text{\instrFont r$_{\text{#1}}$}}%
+%
+\mbox{$\mSet{\mReg{1}, \ldots, \mReg{4}}$} due to tags~1 and~2,
+%
+\mbox{$\mSet{\mReg{5}}$} due to tag~1,
+%
+$\mSet{\mReg{6}}$ due to tag~1 and~3,
+%
+\mbox{$\mSet{\mReg{7}, \mReg{8}}$} due to tags~3 and~4, and
+%
+$\mSet{\mReg{9}}$ due to tag~4.
+%
+From each of these intersections we select a representative, and the union of
+these representative \glspl{location} constitute the set of \gls!{canonical.l}[
+  \glspl{location}].
+%
+An algorithm for computing this set based on the intuition above is shown in
+\refAlgorithm{canonical-locs-algorithm}.
+%
+\begin{algorithm}[t]
   \DeclFunction{CanonicalizeLocs}{location set $L$, match set~$M$}%
   {%
     $T$ \Assign vector with $\mCard{L}$ elements initialized to $\mEmptySet$\;
@@ -1635,18 +1676,15 @@ symmetric to one another.
             Computes the canonical locations from a given location set.
             %
             If location restrictions for some data are already enforced by
-            the function, then these are also assigned a tag and processed
-            accordingly%
+            the function, then these are also tagged and processed accordingly%
           }
   \labelAlgorithm{canonical-locs-algorithm}
 \end{algorithm}
 
-The algorithm for computing the set of \gls{canonical.l} \glspl{location} is
-shown in \refAlgorithm{canonical-locs-algorithm}.
-%
-\todo{explain the intuition}
-
-\todo{give example}
+Once computed, we substitute all locations appearing in the storage requirements
+with their \gls{canonical.l} representative and then replace the original
+\gls{location set} with the \gls{canonical.l} set, thus shrinking the
+\glspl{domain} of the $\mVar{loc}$~\glspl{variable}.
 
 
 \section{Experimental Evaluation}
