@@ -1083,7 +1083,31 @@ appropriate.
 
 \subsection{Matching SIMD Instructions}
 
-\todo{describe matching process}
+Although \refAlgorithm{vf2-algorithm} supports matching of \glspl{pattern}
+derived from \gls{SIMD.instr} \glspl{instruction}, doing so directly will result
+in many redundant \glspl{match}.
+%
+For example, if a \gls{SIMD.instr} \gls{pattern} consists of $k$ identical
+\glspl{operation} and the function contains $n$ such \glspl{operation}, then
+this \gls{pattern} alone will result in \mbox{$n! / (n - k)!$} \glspl{match}.
+%
+However, since most -- if not all -- \gls{SIMD.instr} \glspl{instruction}
+consist of disjoint \glspl{pattern} that are symmetric to one another, the order
+in which the \gls{pattern} \glspl{node} are mapped to \gls{function}
+\glspl{node} does not matter and should therefore yield at most $\binom{n}{k}$
+\glspl{match}.
+
+To this end, instead of matching the full \gls{SIMD.instr} \gls{pattern} over
+the \gls{UF graph}, we do so only for one of the disjoint \glspl{subgraph} in
+the \gls{pattern}.
+%
+After having found all \glspl{match} for the \gls{subgraph}, we then compute all
+combinations of these \gls{match} and construct for each combination a
+\gls{match} of the full \gls{SIMD.instr} \gls{pattern}.
+%
+We also ignore combinations that will lead to cyclic data dependencies by
+applying a variant of the method to be described in
+\refSection{forbidding-cyclic-data-dependencies}.
 
 
 \section{Summary}
