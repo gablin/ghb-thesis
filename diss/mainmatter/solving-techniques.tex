@@ -1652,8 +1652,8 @@ An algorithm for computing this set based on the intuition above is shown in
     $T$ \Assign vector with $\mCard{L}$ elements initialized to $\mEmptySet$\;
     $t$ \Assign $1$\;
     \For(\tcp*[f]{assign tags}){$m \in M$}{%
-      \For{$p \in \textrm{$\mUses$}(m) \cup \textrm{$\mDefines$}(m)$}{%
-        \For{$l \in \textrm{$\mStores$}(m, p)$}{%
+      \For{$p \in \mUses(m) \cup \mDefines(m)$}{%
+        \For{$l \in \mStores(m, p)$}{%
           $T[l]$ \Assign $T[l] \cup \mSet{t}$\;
         }
         $t$ \Assign $t$ $+$ $1$\;
@@ -1663,7 +1663,7 @@ An algorithm for computing this set based on the intuition above is shown in
     $L_{\textrm{\textsc{c}}}$ \Assign $\mEmptySet$\;
     \For{$g \in G$}{%
       $l_{\textrm{\textsc{c}}}$ \Assign
-      $\textrm{$\mMin$}(\mSetBuilder{l}{l \in L \text{ \st } T[l] = g})$
+      $\mMin(\mSetBuilder{l}{l \in L \text{ \st } T[l] = g})$
       \tcp*{find representative for this group of tags}
       $L_{\textrm{\textsc{c}}}$ \Assign
       $L_{\textrm{\textsc{c}}} \cup \mSet{l_{\textrm{\textsc{c}}}}$\;
