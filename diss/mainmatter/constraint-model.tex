@@ -228,6 +228,9 @@ We detect such combinations -- which could involve more than two \glspl{match}
 represents a \gls{match} and each \gls{edge}~$\mEdge{n}{m}$ indicates
 that \gls{match}~$m$ \gls{use.d}[s] \glspl{datum} produced by \gls{match}~$n$.
 %
+\Glspl{phi-match} are not taken into consideration as they always yield a
+\gls{cycle} but is not a true data dependency.
+%
 A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
 which will lead to a cyclic data dependency if all \glspl{match} are selected.
 %
