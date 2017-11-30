@@ -1653,7 +1653,7 @@ An algorithm for computing this set based on the intuition above is shown in
     $t$ \Assign $1$\;
     \For(\tcp*[f]{assign tags}){$m \in M$}{%
       \For{$p \in \textrm{$\mUses$}(m) \cup \textrm{$\mDefines$}(m)$}{%
-        \For{$l \in \mStores(m, p)$}{%
+        \For{$l \in \textrm{$\mStores$}(m, p)$}{%
           $T[l]$ \Assign $T[l] \cup \mSet{t}$\;
         }
         $t$ \Assign $t$ $+$ $1$\;
