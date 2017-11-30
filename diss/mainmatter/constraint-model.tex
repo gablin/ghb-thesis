@@ -524,9 +524,9 @@ selected, that \mbox{$\mVar{x} \in L$}.
 
 The set of \glspl{variable} \mbox{$\mVar{loc}[d] \in \mLocationSet \cup
   \mSet{\mIntLocation}$} models in which \gls{location} \gls{datum}~$d$ is
-available, where $\mLocationSet$ denotes the set of \glspl{location} provided by
-the \gls{target machine} and $\mIntLocation$ denotes a special \gls{location}
-for values that cannot be reused across \glspl{instruction}.
+available, where $\mLocationSet$ denotes the \gls!{location set} provided by the
+\gls{target machine} and $\mIntLocation$ denotes a special \gls{location} for
+values that cannot be reused across \glspl{instruction}.
 %
 The special \gls{location} is used for \glspl!{intermediate value}, which are
 values produced within an \gls{instruction} and can only be accessed by this
@@ -1096,8 +1096,8 @@ A \gls{datum} is said to be \gls!{killed.d} if and only if it is
 \gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are only
 allowed to make use of not \gls{killed.d} \glspl{datum}.
 
-To model whether a \gls{datum} is \gls{killed.d}, we extend the \gls{location}
-set with a special \gls{location}~$\mKilledLocation$ and require that a
+To model whether a \gls{datum} is \gls{killed.d}, we extend the \gls{location
+  set} with a special \gls{location}~$\mKilledLocation$ and require that a
 \gls{kill match}~$m$ is selected if and only if the \gls{location} of the
 \gls{datum} \gls{define.d}[d] by $m$ is $\mKilledLocation$.
 %
