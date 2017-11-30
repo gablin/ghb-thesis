@@ -1660,15 +1660,15 @@ An algorithm for computing this set based on the intuition above is shown in
       }
     }
     $G$ \Assign $\mSetBuilder{T[l]}{l \in L}$\tcp*{find all groups of tags}
-    $L_{\textrm{\textsc{c}}}$ \Assign $\mEmptySet$\;
+    $L_{\mathsc{c}}$ \Assign $\mEmptySet$\;
     \For{$g \in G$}{%
-      $l_{\textrm{\textsc{c}}}$ \Assign
+      $l_{\mathsc{c}}$ \Assign
       $\mMin(\mSetBuilder{l}{l \in L \text{ \st } T[l] = g})$
       \tcp*{find representative for this group of tags}
-      $L_{\textrm{\textsc{c}}}$ \Assign
-      $L_{\textrm{\textsc{c}}} \cup \mSet{l_{\textrm{\textsc{c}}}}$\;
+      $L_{\mathsc{c}}$ \Assign
+      $L_{\mathsc{c}} \cup \mSet{l_{\mathsc{c}}}$\;
     }
-    \Return $L_{\textrm{\textsc{c}}}$\;
+    \Return $L_{\mathsc{c}}$\;
   }
 
   \caption[Algorithm for computing the set of canonical locations]%

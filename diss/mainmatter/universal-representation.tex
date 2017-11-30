@@ -813,19 +813,19 @@ We proceed with a description of this algorithm.
 
 \subsection{The VF2 Algorithm}
 
-\def\fG{G_{\textrm{\textsc{f}}}}%
-\def\pG{G_{\textrm{\textsc{p}}}}%
-\def\fN{N_{\textrm{\textsc{f}}}}%
-\def\fE{E_{\textrm{\textsc{f}}}}%
-\def\pN{N_{\textrm{\textsc{p}}}}%
-\def\pE{E_{\textrm{\textsc{p}}}}%
+\def\fG{G_{\mathsc{f}}}%
+\def\pG{G_{\mathsc{p}}}%
+\def\fN{N_{\mathsc{f}}}%
+\def\fE{E_{\mathsc{f}}}%
+\def\pN{N_{\mathsc{p}}}%
+\def\pE{E_{\mathsc{p}}}%
 \def\mCandSet{P(s)}%
-\def\mSynRuleCheck{F_{\textrm{\textsc{syn}}}}%
-\def\mSemRuleCheck{F_{\textrm{\textsc{sem}}}}%
-\def\fTout{T_{\!\textrm{\textsc{f}}}^{\hspace{.5pt}\textrm{\textsc{out}}}}%
-\def\pTout{T_{\!\textrm{\textsc{p}}}^{\hspace{.5pt}\textrm{\textsc{out}}}}%
-\def\fTin{T_{\!\textrm{\textsc{f}}}^{\textrm{\textsc{in}}}}%
-\def\pTin{T_{\!\textrm{\textsc{p}}}^{\textrm{\textsc{in}}}}%
+\def\mSynRuleCheck{F_{\mathsc{syn}}}%
+\def\mSemRuleCheck{F_{\mathsc{sem}}}%
+\def\fTout{T_{\!\mathsc{f}}^{\hspace{.5pt}\mathsc{out}}}%
+\def\pTout{T_{\!\mathsc{p}}^{\hspace{.5pt}\mathsc{out}}}%
+\def\fTin{T_{\!\mathsc{f}}^{\mathsc{in}}}%
+\def\pTin{T_{\!\mathsc{p}}^{\mathsc{in}}}%
 \begin{algorithm}[t]
   \DeclFunction{FindMatches}{function graph $\fG = \mPair{\fN}{\fE}$,
                              pattern graph $\pG = \mPair{\pN}{\pE}$}%
@@ -917,11 +917,11 @@ The last clause is needed when $\fG$ or $\pG$ consists of disconnected
 
 \subsubsection{Syntactic Rules}
 
-\def\mSynPredRule{R_{\textrm{\textsc{pred}}}}
-\def\mSynSuccRule{R_{\textrm{\textsc{succ}}}}
-\def\mSynInRule{R_{\textrm{\textsc{in}}}}
-\def\mSynOutRule{R_{\textrm{\textsc{out}}}}
-\def\mSynNewRule{R_{\textrm{\textsc{new}}}}
+\def\mSynPredRule{R_{\mathsc{pred}}}
+\def\mSynSuccRule{R_{\mathsc{succ}}}
+\def\mSynInRule{R_{\mathsc{in}}}
+\def\mSynOutRule{R_{\mathsc{out}}}
+\def\mSynNewRule{R_\mathsc{new}}
 
 The syntactic rule check $\mSynRuleCheck$ consists of five rules:
 %
@@ -962,10 +962,10 @@ but perform a 2-look-ahead check.
 Formally, the rules are defined as follows.
 %
 \begin{definition}[Syntactic rules]
-  \def\fT{T_{\!\textrm{\textsc{f}}}}%
-  \def\pT{T_{\!\textrm{\textsc{p}}}}%
-  \def\fNegN{\mkern2mu\overline{\mkern-2mu N}_{\textrm{\textsc{f}}}}%
-  \def\pNegN{\mkern2mu\overline{\mkern-2mu N}_{\textrm{\textsc{p}}}}%
+  \def\fT{T_{\!\mathsc{f}}}%
+  \def\pT{T_{\!\mathsc{p}}}%
+  \def\fNegN{\mkern2mu\overline{\mkern-2mu N}_{\mathsc{f}}}%
+  \def\pNegN{\mkern2mu\overline{\mkern-2mu N}_{\mathsc{p}}}%
 
   Let $\mPred(G, n)$ and $\mSucc(G, n)$ denote the sets of predecessor and
   successor \glspl{node}, respectively, to \gls{node}~$n$ in \gls{graph}~$G$.
@@ -1013,8 +1013,8 @@ Formally, the rules are defined as follows.
 \subsubsection{Semantic Rules}
 
 \def\mAttrCmp{\backsimeq}%
-\def\mSemNodeRule{R_{\textrm{\textsc{node}}}}
-\def\mSemEdgeRule{R_{\textrm{\textsc{edge}}}}
+\def\mSemNodeRule{R_{\mathsc{node}}}
+\def\mSemEdgeRule{R_{\mathsc{edge}}}
 
 The semantic rules check two properties:
 %
