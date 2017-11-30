@@ -127,7 +127,7 @@
 \undef{\@author}
 \NewDocumentCommand{\kthLogo}{m}{%
   \def\@kthLogo{%
-    \adjustbox{max width=.2\textwidth, max height=.14\textheight}{#1}%
+    \adjustbox{max width=2.2cm, max height=2.2cm}{#1}%
   }%
 }
 \@mkFieldCommand{subtitle}
@@ -254,7 +254,7 @@
 \fi
 
 \newcommand{\@titleFont}{%
-  \LARGE\bfseries%
+  \Huge\bfseries%
 }
 \newcommand{\@subtitleFont}{%
   \Large%
@@ -263,9 +263,8 @@
   \newpage
   \thispagestyle{empty}
   \begin{center}%
-    \@getField{kthLogo}\par
-    \vfill
-    \vskip 2em
+    \mbox{}
+    \vfill\vfill
     {\@titleFont\@getField{title}\par}
     \@ifHasField{subtitle}{%
       \vskip .75em
@@ -284,6 +283,8 @@
     \vskip 1em
     \@printMonthSubmitted{english} \@getField{tritaYear}\par
     \vfill\vfill\vfill
+    \@getField{kthLogo}\par
+    \vskip 2em
     \begin{tabular}{c}
       School of Information and Communication Technology\\
       KTH Royal Institute of Technology\\
