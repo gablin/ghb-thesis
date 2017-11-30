@@ -55,7 +55,7 @@ In this section, we fix these problems by refining the \glsshort{constraint
 
 When describing the \gls{constraint} that all \glspl{datum} must be
 \gls{define.d}[d] before \gls{use.d}[d], a simple but naive implementation was
-used (\refEquation{dom-alt}).
+used (\refEquation{naive-dom-alt}).
 %
 First, it requires use of set~\glspl{variable},\!%
 %
@@ -190,6 +190,7 @@ We therefore fix the assignment in such cases, which is modeled as
 
 
 \subsection{Refining the Objective Function}
+\labelSection{st-refined-objective-function}
 
 The straightforward implementation of the \gls{objective function}
 (\refEquation{naive-objective-function}) is naive because it fails to reason on

@@ -463,10 +463,10 @@ Duplicated constants may either be represented using individual \glspl{value
 The former is simpler from a \gls{code generation} perspective, but may result
 in redundant \glspl{instruction} where the same constant is needlessly reloaded.
 %
-This can be avoided by using the latter together with a technique which is
-described in \refChapter{modeling-value-reuse}, but this also necessitates the
-\gls{UF graph} to be transformed and extended with additional \glspl{operation}
-in order to guarantee correctness.
+This can be avoided by using the latter together with a technique to be
+described in \refSection{modeling-value-reuse} in the next chapter, but this
+also necessitates the \gls{UF graph} to be transformed and extended with
+additional \glspl{operation} in order to guarantee correctness.
 %
 For example, assume a \gls{function} containing two \glspl{phi-function}
 \mbox{\irFont \irPhi{$\ldots$, 1:\irBlock{a}, $\ldots$}} and \mbox{\irFont
@@ -624,7 +624,7 @@ During \gls{graph} construction, every \gls{edge} is given two \glspl!{edge
 \gls{node}.
 %
 This is needed for \gls{pattern matching}, which will be described in
-\refChapter{pattern-matching}.
+\refSection{uni-rep-pattern-matching}.
 %
 For a given \gls{edge}~\mbox{$e = \mEdge{n}{m}$} of type~$t$, the
 \gls!{inbound.en} \gls{edge number}, denoted \mbox{$\mInEdgeNr(e)$}, indicates
