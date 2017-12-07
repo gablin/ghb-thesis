@@ -16,8 +16,7 @@ DEPS_DIR := .deps
 $(DEPS_DIR):
 	mkdir $@
 
-$(SRCPDF): check-environment
-	if [ ! -e $(DEPS_DIR) ];then mkdir $(DEPS_DIR); fi
+$(SRCPDF): check-environment $(DEPS_DIR)
 	$(LATEXMK) -pdf -deps-out=$(DEPS_DIR)/$(SRCTEX).d $(SRCTEX)
 
 .PHONY: clean
@@ -32,7 +31,7 @@ clean:
 .PHONY: distclean
 distclean: clean
 	$(LATEXMK) -C $(SRCTEX)
-	$(RM) -rf $(DEPS_DIR)
+	$(RM) -r $(DEPS_DIR)
 
 .PHONY: check-environment
 check-environment:
