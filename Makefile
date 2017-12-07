@@ -4,7 +4,7 @@
 # LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 # of the license).
 
-SRCTEX   := dissertation.tex
+SRCTEX   := ghb-thesis.tex
 SRCPDF   := $(SRCTEX:.tex=.pdf)
 LATEX    := latex
 LATEXMK  := latexmk -recorder -use-make -deps
