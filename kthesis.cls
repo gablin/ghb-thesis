@@ -7,7 +7,7 @@
 % Based on the 'kthesis' class by Lars Engebretsen.
 
 \NeedsTeXFormat{LaTeX2e}[2001/01/01]
-\ProvidesClass{kthdiss}%
+\ProvidesClass{kthesis}%
               [2017/10/10 v0.1 Document class for KTH ICT dissertations]
 
 %=========
@@ -15,34 +15,34 @@
 %=========
 
 % Declare options
-\newif\if@kthdiff@electronic \@kthdiff@electronicfalse
-\DeclareOption{electronic}{\@kthdiff@electronictrue}
-\DeclareOption{g5paper}{\def\kthdiff@trimmedsize{gfive}}
-\DeclareOption{a3paper}{\ClassError{kthdiff}{'a3paper' format not supported}}
-\DeclareOption{a4paper}{\def\kthdiff@trimmedsize{afour}}
-\DeclareOption{a5paper}{\ClassError{kthdiff}{'a5paper' format not supported}}
-\DeclareOption{a6paper}{\ClassError{kthdiff}{'a6paper' format not supported}}
-\DeclareOption{b3paper}{\ClassError{kthdiff}{'b3paper' format not supported}}
-\DeclareOption{b4paper}{\ClassError{kthdiff}{'b4paper' format not supported}}
-\DeclareOption{b5paper}{\ClassError{kthdiff}{'b5paper' format not supported}}
-\DeclareOption{b6paper}{\ClassError{kthdiff}{'b6paper' format not supported}}
+\newif\if@kthesis@electronic \@kthesis@electronicfalse
+\DeclareOption{electronic}{\@kthesis@electronictrue}
+\DeclareOption{g5paper}{\def\kthesis@trimmedsize{gfive}}
+\DeclareOption{a3paper}{\ClassError{kthesis}{'a3paper' format not supported}}
+\DeclareOption{a4paper}{\def\kthesis@trimmedsize{afour}}
+\DeclareOption{a5paper}{\ClassError{kthesis}{'a5paper' format not supported}}
+\DeclareOption{a6paper}{\ClassError{kthesis}{'a6paper' format not supported}}
+\DeclareOption{b3paper}{\ClassError{kthesis}{'b3paper' format not supported}}
+\DeclareOption{b4paper}{\ClassError{kthesis}{'b4paper' format not supported}}
+\DeclareOption{b5paper}{\ClassError{kthesis}{'b5paper' format not supported}}
+\DeclareOption{b6paper}{\ClassError{kthesis}{'b6paper' format not supported}}
 \DeclareOption{letterpaper}{%
-  \ClassError{kthdiff}{'letterpaper' format not supported}%
+  \ClassError{kthesis}{'letterpaper' format not supported}%
 }
 \DeclareOption{legalpaper}{%
-  \ClassError{kthdiff}{'legalpaper' format not supported}%
+  \ClassError{kthesis}{'legalpaper' format not supported}%
 }
 \DeclareOption{executivepaper}{%
-  \ClassError{kthdiff}{'executivepaper' format not supported}%
+  \ClassError{kthesis}{'executivepaper' format not supported}%
 }
-\DeclareOption{ebook}{\ClassError{kthdiff}{'ebook' format not supported}}
+\DeclareOption{ebook}{\ClassError{kthesis}{'ebook' format not supported}}
 \DeclareOption{landscape}{%
-  \ClassError{kthdiff}{'landscape' format not supported}%
+  \ClassError{kthesis}{'landscape' format not supported}%
 }
-\newif\if@kthdiff@phd \@kthdiff@phdfalse
-\newif\if@kthdiff@lic \@kthdiff@licfalse
-\DeclareOption{phd}{\@kthdiff@phdtrue}
-\DeclareOption{lic}{\@kthdiff@lictrue}
+\newif\if@kthesis@phd \@kthesis@phdfalse
+\newif\if@kthesis@lic \@kthesis@licfalse
+\DeclareOption{phd}{\@kthesis@phdtrue}
+\DeclareOption{lic}{\@kthesis@lictrue}
 
 % Pass on undeclared options to memoir class
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
@@ -55,20 +55,20 @@
 \LoadClass{memoir}
 
 % Set margins
-\def\@kthdiff@setpapersize@afour{%
+\def\@kthesis@setpapersize@afour{%
   \setstocksize{297mm}{210mm}
   \settrimmedsize{297mm}{210mm}{*}
   \settypeblocksize{49pc}{33pc}{*}
 }
-\def\@kthdiff@setpapersize@gfive{%
-  \if@kthdiff@electronic
+\def\@kthesis@setpapersize@gfive{%
+  \if@kthesis@electronic
     \setstocksize{239mm}{169mm}
   \else
     % Set stock size to A4 format
     \setstocksize{297mm}{210mm}
   \fi
   \settrimmedsize{239mm}{169mm}{*}
-  \if@kthdiff@electronic
+  \if@kthesis@electronic
   \else
     \setlength{\trimtop}{\stockheight}
     \addtolength{\trimtop}{-\paperheight}
@@ -78,7 +78,7 @@
   \fi
   \settypeblocksize{43pc}{30pc}{*}
 }
-\@nameuse{@kthdiff@setpapersize@\kthdiff@trimmedsize}
+\@nameuse{@kthesis@setpapersize@\kthesis@trimmedsize}
 \setlrmargins{*}{*}{*}
 \setulmargins{*}{*}{*}
 \checkandfixthelayout
@@ -236,19 +236,19 @@
 }
 
 % Set degree fields
-\if@kthdiff@phd
+\if@kthesis@phd
 \else
-  \if@kthdiff@lic
+  \if@kthesis@lic
   \else
-    \ClassError{kthdiss}{Either 'phd' or 'lic' must be provided}
+    \ClassError{kthesis}{Either 'phd' or 'lic' must be provided}
   \fi
 \fi
 
-\if@kthdiff@phd
+\if@kthesis@phd
   \degreeEng{doctor of philosophy}
   \degreeSwe{teknologie doktorsexamen}
 \fi
-\if@kthdiff@lic
+\if@kthesis@lic
   \degreeEng{licentiate of engineering}
   \degreeSwe{teknologie licentiatexamen}
 \fi
