@@ -1136,9 +1136,37 @@ These \glspl{constraint} are then modeled as
 
 \subsection{Experimental Evaluation}
 
-\todo{insert data}
+\todo{discuss experiment setup}
 
-\todo{discuss data}
+\todo{describe function for computing speedup (give example)}
+
+\todo{match dup is worse than alt values (as expected}
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.plot}%
+    }%
+  }
+
+  \caption{TODO}
+  \labelFigure{TODO}
+\end{figure}
+
+\todo{value reuse matters (as expected)}
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/alt-values-vs-without-cycles-speedup.plot}%
+    }%
+  }
+
+  \caption{TODO}
+  \labelFigure{TODO}
+\end{figure}
 
 
 \section{Modeling Block Ordering}
@@ -1447,9 +1475,20 @@ which results in a significantly \gls{search space}.
 
 \subsection{Experimental Evaluation}
 
-\todo{insert data}
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.plot}%
+    }%
+  }
 
-\todo{discuss data}
+  \caption{TODO}
+  \labelFigure{TODO}
+\end{figure}
+
+\todo{results match our expected results (branch extension is worse)}
+
 
 
 \section{Objective Function}
