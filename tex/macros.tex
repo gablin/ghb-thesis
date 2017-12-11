@@ -1042,13 +1042,53 @@
 \makeatother
 
 
+%==================
+% EXPERIMENT PLOTS
+%==================
+
+\newcommand{\expDir}{experiments/20171206-175336}
+
+\newcommand{\functionName}[1]{{\Large\path{#1}}}
+\newcommand{\plotPercentage}[1]{{\LARGE$#1$\%}}
+\newcommand{\speedupValue}[1]{%
+  \pgfmathparse{#1}%
+  \pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}%
+}
+\newcommand{\plotSpeedupTics}[1]{%
+  {\LARGE$\speedupValue{#1}\times$}%
+}
+\newcommand{\plotSeconds}[1]{{\large$#1$\thinspace{}s}}
+\newcommand{\barValueFont}{\scriptsize}
+\newcommand{\plotBarValue}[1]{%
+  {\barValueFont\speedupValue{#1}}%
+}
+\newcommand{\barValueNotOptimal}{$*$}
+\newcommand{\plotBarValueNotOptimal}{%
+  {\barValueFont\barValueNotOptimal}%
+}
+\newcommand{\barValueNoBaselineSolution}{$**$}
+\newcommand{\plotBarValueNoBaselineSolution}{%
+  {\barValueFont\barValueNoBaselineSolution}%
+}
+\newcommand{\barValueNoSolution}{$***$}
+\newcommand{\plotBarValueNoSolution}{%
+  {\barValueFont\barValueNoSolution}%
+}
+\newcommand{\plotSubOptSymbol}{%
+  \huge\bfseries%
+  \hspace*{3.5pt}%
+  \raisebox{6pt}{$\colon$}%
+}
+
+\newcommand{\trimBarchartPlot}[1]{\trimbox{6pt 12pt 8pt 7pt}{#1}}
+
+
+
 %======
 % MISC
 %======
 
-\newcommand{\supportNo}{%
-  $\cdot$%
-}
+\newcommand{\supportNo}{$\cdot$}
 \newcommand{\supportYes}{%
   \begin{tikzpicture}
     \draw [line width=1.5pt] (0,0) -- ++(-45:4pt) -- ++(45:7.5pt);
