@@ -1343,6 +1343,23 @@ To prevent emission of such jump \glspl{instruction}, we extend the \gls{pattern
 \mbox{$\mEdge{b}{\mEdge{c}{b'}}$}, that covers a \gls{control node}~$c$ at zero
 cost provided that \mbox{$\mVar{succ}[b] = b'$}.
 
+\Glspl{fall-through} to or via the \gls{function}'s \gls{entry block} is never
+allowed since that \gls{block} must always be placed first in the \gls{block}
+sequence.
+%
+If $\mFunctionEntryBlock$ denotes the \gls{function}'s \gls{entry block}, then
+this \gls{constraint} is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{succ}[\mEntry(m)] \neq \mFunctionEntryBlock \\
+    \forall \mPair{m}{\_} \in \mFallThroughSet.
+  \end{array}
+  \labelEquation{no-fall-through-to-fun-entry}
+\end{equation}
+
 
 \subsection{Branch Extension}
 
