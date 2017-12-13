@@ -2168,14 +2168,12 @@ Although mostly known for their work in \gls!{integrated.cg}[ \gls{code
 %
 Their design performs \gls{global.is} \gls{instruction selection} on a
 \gls{function graph} that has been augmented with additional copy
-\glspl{operation} to represent potential \gls!{register spilling}.\!%
+\glspl{operation} to represent potential \gls{register}
+\glsplshort{spilling.r}.\!%
 %
 \footnote{%
-  If there are not enough \glspl{register} to allocate for all \gls{program}
-  \glspl{variable}, then one or more \glspl{register} must be freed.
-  %
-  This is done by spilling their values to memory, which must then be copied
-  back before use.%
+  \Gls!{spilling.r} is the act of temporarily storing a \gls{register} value to
+  memory in order to free up the \gls{register}.%
 }
 %
 In most cases, not all copies are needed and therefore not all \glspl{operation}
