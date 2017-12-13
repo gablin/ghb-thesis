@@ -632,7 +632,7 @@ This is modeled as
                     \mEntry(m) = \mSet{b}
                   }.
   \end{array}
-  \labelEquation{impl-cons-place-ops-same-as-entry-blocks}
+  \labelEquation{impl-cons-identical-entry-blocks}
 \end{equation}
 
 Furthermore, we can infer that if the \glspl{match} covering the same
@@ -682,7 +682,7 @@ This is modeled as
                     \end{array}
                   }.
   \end{array}
-  \labelEquation{impl-cons-place-phi-ops-same-as-def-edge}
+  \labelEquation{impl-cons-place-phi-ops-same-as-def-edges}
 \end{equation}
 %
 It is assumed that the \glspl{edge} in $\mFunctionDefEdgeSet$ have been
@@ -769,7 +769,7 @@ This is modeled as
     \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
     \text{\st } p_1 < p_2.
   \end{array}
-  \labelEquation{impl-cons-spanning-uses}
+  \labelEquation{impl-cons-spanned-input}
 \end{equation}
 
 
@@ -864,7 +864,7 @@ modeled as
                       d \in \mDataSet[p]
                     },
   \end{array}
-  \labelEquation{impl-cons-constrain-use-locs}
+  \labelEquation{impl-cons-locs-of-uses}
 \end{equation}
 
 Likewise, we can always constrain the \glspl{location} of a non-\glsshort{state
@@ -892,7 +892,7 @@ This is modeled similarly as
     \mAnd
     S \neq \mEmptySet.
   \end{array}
-  \labelEquation{impl-cons-constrain-def-locs}
+  \labelEquation{impl-cons-locs-of-defs}
 \end{equation}
 
 
@@ -919,7 +919,7 @@ This is modeled as
                   \mEntry(m) = \mSet{b_1}%
                 } = \mSet{b_2}.
   \end{array}
-  \labelEquation{impl-cons-fix-fall-through}
+  \labelEquation{impl-cons-fix-fall-throughs}
 \end{equation}
 
 
@@ -955,7 +955,7 @@ Consequently, it makes sense to fix the \gls{location} for each \gls{state
   \mVar{loc}[d] = \mIntLocation
   \mQuantSep
   \forall d \in \mStateDataSet,
-  \labelEquation{dom-cons-loc-of-states}
+  \labelEquation{dom-cons-locs-of-states}
 \end{equation}
 %
 where \mbox{$\mStateDataSet \subseteq \mDataSet$} denotes the set of
@@ -997,7 +997,7 @@ This is modeled as
     \text{ \st }
     \mCard{\mDataSet[p]} > 1.
   \end{array}
-  \labelEquation{dom-cons-input-operands-not-taking-min-value}
+  \labelEquation{impl-cons-input-operands-not-taking-min-value}
 \end{equation}
 
 
@@ -1382,7 +1382,7 @@ Hence this set of \gls{illegal.m} \glspl{match} is computed as
                 \mAnd
                 m \in \mMatchSet[o_2]
               }.
-  \labelEquation{pre-solv-illegal-matches-uncovered-ops}
+  \labelEquation{illegal-matches-uncovered-ops}
 \end{equation}
 
 Likewise, a \gls{match} is \gls{illegal.m} if selecting it would
@@ -1400,7 +1400,7 @@ With similar reasoning, this set of \gls{illegal.m} \glspl{match} is computed as
                 \mAnd
                 m \in \mMatchSet[d_2]
               }.
-  \labelEquation{pre-solv-illegal-matches-undefined-data}
+  \labelEquation{illegal-matches-undefined-data}
 \end{equation}
 
 If a \gls{kill match}~$m$ \gls{define.d}[s] a \gls{datum}~$d$ and every other
@@ -1421,7 +1421,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    d \in \mDataSet[p_2] \mImp \mDataSet[p_2] = \mSet{d}
                  \end{array}
                }\!.
-  \labelEquation{pre-solv-illegal-matches-kills}
+  \labelEquation{illegal-matches-kills}
 \end{equation}
 
 If a \gls{match}~$m$ is not a \gls{kill match} and \gls{define.d}[s] a
@@ -1445,7 +1445,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    \mStores(m, p) \cap \mCupUseLocsOf(d) = \mEmptySet
                  \end{array}
                }\!,
-  \labelEquation{pre-solv-illegal-matches-def-locs}
+  \labelEquation{illegal-matches-def-locs}
 \end{equation}
 %
 where
@@ -1461,7 +1461,7 @@ where
                   }}
     \hspace{-2.5em}
     \mStores(m, p).
-  \labelEquation{pre-solv-cup-use-locs-of-function}
+  \labelEquation{cup-use-locs-of-function}
 \end{equation}
 %
 Note that if \mbox{$\mCupUseLocsOf(d) = \mEmptySet$} holds then the
@@ -1488,7 +1488,7 @@ This set of \gls{illegal.m} \glspl{match} is computed as
                    \mStores(m, p) \cap \mCupDefLocsOf(d) = \mEmptySet
                  \end{array}
                } \!,
-  \labelEquation{pre-solv-illegal-matches-use-locs}
+  \labelEquation{illegal-matches-use-locs}
 \end{equation}
 %
 where
@@ -1504,7 +1504,7 @@ where
                   }}
     \hspace{-2.5em}
     \mStores(m, p).
-  \labelEquation{pre-solv-cup-def-locs-of-function}
+  \labelEquation{cup-def-locs-of-function}
 \end{equation}
 
 
@@ -1536,7 +1536,7 @@ Hence this set of redundant \glspl{match} is computed as
                 \text{ \st }
                 \mMatchSet[o] \cap \mNullCopyMatchSet \neq \mEmptySet
               }.
-  \labelEquation{pre-solv-redun-kills}
+  \labelEquation{redun-kills}
 \end{equation}
 
 Another case concerns \glspl{match} that cover a \gls{copy node} and are not
@@ -1575,7 +1575,7 @@ Hence this set of redundant \glspl{match} is computed as
                    \mCapUseLocsOf(d_1) \cap \mCapDefLocsOf(d_2) \neq \mEmptySet
                  \end{array}
                }\!,
-  \labelEquation{pre-solv-redun-non-null-copy-matches}
+  \labelEquation{redun-non-null-copy-matches}
 \end{equation}
 %
 where \mbox{$\mCopyMatchSet \subseteq \mMatchSet$} denotes the set of
@@ -1728,22 +1728,26 @@ with their \gls{canonical.l} representative and then replace the original
 
 \NewDocumentCommand{\insertSolvTechSpeedupPlot}{mm}{%
   \insertSpeedupPlot{%
-    \expDir/solv-tech-#1-pre+solving-time-speedup.plot%
+    \expDir/solv-tech-disable-#1-pre+solving-time-speedup.plot%
   }{#2}
 }
 
-\NewDocumentCommand{\mkSolvTechSubfigure}{om}{%
-  \subcaptionbox{%
-                  \IfBooleanTF{#1}{#1}{\refEquation{#2}}%
-                  \labelFigure{solv-tech-disable-#2}%
-                }{%
-%                  \insertSolvTechSpeedupPlot{#2}{.49}%
-                }%
+\NewDocumentCommand{\mkSolvTechSubfigure}{som}{%
+  \IfBooleanTF{#1}{%
+    \insertSolvTechSpeedupPlot{#3}{.49}%
+  }{%
+    \subcaptionbox{%
+                    \IfBooleanTF{#2}{#2}{\refEquation{#3}}%
+                    \labelFigure{solv-tech-disable-#3}%
+                  }{%
+                    \insertSolvTechSpeedupPlot{#3}{.49}%
+                  }%
+  }%
 }
 
 \begin{figure}
   \centering%
-  \insertSolvTechSpeedupPlot{disable-all}{1}
+  \insertSolvTechSpeedupPlot{all}{1}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1756,11 +1760,11 @@ with their \gls{canonical.l} representative and then replace the original
   \hfill%
   \mkSolvTechSubfigure{impl-cons-defs-in-spanned-blocks}
 
-  \mkSolvTechSubfigure{impl-cons-place-ops-same-as-entry-blocks}%
+  \mkSolvTechSubfigure{impl-cons-identical-entry-blocks}%
   \hfill%
   \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}
 
-  \mkSolvTechSubfigure{impl-cons-place-phi-ops-same-as-def-edge}
+  \mkSolvTechSubfigure{impl-cons-place-phi-ops-same-as-def-edges}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1775,7 +1779,7 @@ with their \gls{canonical.l} representative and then replace the original
 
   \mkSolvTechSubfigure{impl-cons-no-span-use-defs}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-spanning-uses}
+  \mkSolvTechSubfigure{impl-cons-spanned-input}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1788,9 +1792,9 @@ with their \gls{canonical.l} representative and then replace the original
   \hfill%
   \mkSolvTechSubfigure{impl-cons-exterior-data-must-be-available}
 
-  \mkSolvTechSubfigure{impl-cons-constrain-use-locs}%
+  \mkSolvTechSubfigure{impl-cons-locs-of-uses}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-constrain-def-locs}
+  \mkSolvTechSubfigure{impl-cons-locs-of-defs}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1798,7 +1802,7 @@ with their \gls{canonical.l} representative and then replace the original
 
 \begin{figure}
   \centering%
-  \mkSolvTechSubfigure{impl-cons-fix-fall-through}
+  \mkSolvTechSubfigure*{impl-cons-fix-fall-throughs}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1807,11 +1811,11 @@ with their \gls{canonical.l} representative and then replace the original
 \begin{figure}
   \centering
 
-  \mkSolvTechSubfigure{dom-cons-loc-of-stats}%
+  \mkSolvTechSubfigure{dom-cons-locs-of-states}%
   \hfill%
   \mkSolvTechSubfigure{dom-cons-operands-of-non-selected-matches}
 
-  \mkSolvTechSubfigure{dom-cons-input-operands-not-taking-min-value}%
+  \mkSolvTechSubfigure{impl-cons-input-operands-not-taking-min-value}%
   \hfill%
   \mkSolvTechSubfigure{dom-cons-interch-data-chains}
 
@@ -1825,7 +1829,7 @@ with their \gls{canonical.l} representative and then replace the original
 
 \begin{figure}
   \centering%
-  \mkSolvTechSubfigure[Dominated matches]{pre-solv-dom-matches}
+  \mkSolvTechSubfigure*[Dominated matches]{dom-matches}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1834,15 +1838,15 @@ with their \gls{canonical.l} representative and then replace the original
 \begin{figure}
   \centering
 
-  \mkSolvTechSubfigure{pre-solv-illegal-matches-uncovered-ops}%
+  \mkSolvTechSubfigure{illegal-matches-uncovered-ops}%
   \hfill%
-  \mkSolvTechSubfigure{pre-solv-illegal-matches-undefined-data}
+  \mkSolvTechSubfigure{illegal-matches-undefined-data}
 
-  \mkSolvTechSubfigure{pre-solv-illegal-matches-kills}%
+  \mkSolvTechSubfigure{illegal-matches-kills}%
   \hfill%
-  \mkSolvTechSubfigure{pre-solv-illegal-matches-def-locs}
+  \mkSolvTechSubfigure{illegal-matches-def-locs}
 
-  \mkSolvTechSubfigure{pre-solv-illegal-matches-use-locs}
+  \mkSolvTechSubfigure{illegal-matches-use-locs}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1851,9 +1855,9 @@ with their \gls{canonical.l} representative and then replace the original
 \begin{figure}
   \centering
 
-  \mkSolvTechSubfigure{pre-solv-redun-kills}%
+  \mkSolvTechSubfigure{redun-kills}%
   \hfill%
-  \mkSolvTechSubfigure{pre-solv-redun-non-null-copy-matches}
+  \mkSolvTechSubfigure{redun-non-null-copy-matches}
 
   \caption{TODO}
   \labelFigure{TODO}
@@ -1861,7 +1865,7 @@ with their \gls{canonical.l} representative and then replace the original
 
 \begin{figure}
   \centering%
-  \mkSolvTechSubfigure[Canonical locations]{pre-solv-canonical-locs}
+  \mkSolvTechSubfigure*[Canonical locations]{canonical-locs}
 
   \caption{TODO}
   \labelFigure{TODO}
