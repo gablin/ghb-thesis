@@ -27,6 +27,17 @@ As described in \refChapter{introduction}, apart from \gls{instruction
 More importantly, it is well known that these three problems interact with one
 another.
 %
+For example, when discussing the experiments in \refChapter{solving-techniques}
+we observed that the \gls{constraint model} pushes loading of constants into
+\glspl{block} with low execution frequencies, thus resulting in less cost.
+%
+Such moves, however, may result in code where the definition and uses of a value
+are spread far apart, resulting in high \gls{register} pressure.
+%
+This in turn could force the \gls{register allocator} to perform lots of
+\gls{spilling.r}, which is potentially much more expensive than the cost saved
+by the moving the loads.
+%
 Hence, future work includes extending the \gls{constraint model} introduced in
 this dissertation to integrate these problems.
 
