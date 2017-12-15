@@ -605,6 +605,8 @@ and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
 \gls{copy node}~$c$, \gls{value node}~$v'$, and \glspl{data-flow edge} such that
 \mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}.
 %
+\Glspl{match} covering exactly a \gls{copy node} are called \glspl!{copy match}.
+%
 If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
 connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.en}
 \gls{edge number} as the \gls{data-flow edge} -- is also moved to $v'$.
@@ -623,12 +625,8 @@ these \glspl!{null-copy match} -- emit nothing if selected.
 If the \gls{null-copy match} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
-%
-\Glspl{match} covering exactly a \gls{copy node} are called \glspl!{copy match}.
 
 \todo{explain why phi arguments need to be copy-extended again}
-
-\todo{add constraint for resolving phi functions}
 
 In order to retain matching of \glspl{pattern}, we also need to perform
 \gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
@@ -684,6 +682,43 @@ separate copy \gls{instruction} to be used by the \gls{pattern}.
 %
 The resulting \gls{UP graph} will now yield the same \glspl{match} as before
 \gls{copy extension} (\refFigure{copy-extending-pattern-example-after}).
+
+
+\subsubsection{Constraints}
+
+Intuitively, selecting a \gls{null-copy match} that \gls{use.d}[s] a
+\gls{datum}~$d_1$ to \gls{define.d} another \gls{datum}~$d_2$ means that $d_1$
+and $d_2$ are \gls{define.d}[d] in the same \gls{block}.
+%
+This matters when \glspl{datum} are \gls{use.d} by \glspl{phi-function}.
+%
+For example, assume a \gls{datum}~$d_1$ \gls{define.d} in some \gls{block} $b_1$
+and that there is another \gls{datum}~$d_2$ which is a copy of $d_1$ and has a
+\gls{definition edge} requiring $d_2$ to be \gls{define.d} in \gls{block}~$b_2$.
+%
+If $d_2$ is \gls{define.d}[d] by a \gls{null-copy match}~$m$, then $m$ must be
+placed in $b_2$ in order for $d_2$ to be \gls{define.d} in $b_2$.
+%
+Since $m$ is a \gls{null match}, meaning it will not emit any
+\glspl{instruction}, any uses $d_2$ must be replaced by $d_1$.
+%
+But this violates the \glspl{constraint} implied by the \glspl{phi-function}
+because $d_1$ is \gls{define.d}[d] in $b_1$ and not $b_2$.
+
+If \mbox{$\mNullCopyMatchSet \subseteq \mMatchSet$} denotes the set of
+\glspl{null-copy match}, then the \gls{constraint} above is modeled as
+%
+\begin{equation}
+  \begin{array}{c}
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[d_1] = \mVar{dplace}[d_2] \\
+    \forall m \in \mNullCopyMatchSet \hspace{-.8pt},
+    \forall d_1 \in \mUses(m),
+    \forall d_2 \in \mDefines(m).
+  \end{array}
+  \labelEquation{same-dplace-for-null-copy-matches}
+\end{equation}
 
 
 \subsection{Handling Calling Conventions}
