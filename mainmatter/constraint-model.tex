@@ -1056,8 +1056,8 @@ Consequently, instead of \glsshort{define.d}[ing] and \glsshort{use.d}[ing]
 %
 Hence the set of \glspl{variable} \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models
 to which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
-\mbox{$\mDataSet[p] \subseteq \mDataSet$} denotes the set of alternative values
-for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
+\mbox{$\mDataSet[p] \subseteq \mDataSet$} denotes the set of \glspl{alternative
+  value} for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
 by~$\mMatchSet$.
 
 
@@ -1173,6 +1173,31 @@ These \glspl{constraint} are then modeled as
 
 
 \subsection{Experimental Evaluation}
+
+We compare the two methods of \gls{value reuse} by evaluating the solving time
+and the quality of the code produced by two versions of the \gls{constraint
+  model}: one based on \gls{match duplication} and another based on
+\glspl{alternative value}.
+%
+Both versions are implemented in \mbox{\gls{MiniZinc}
+  2.1.6}~\cite{NethercoteEtAl:2007} -- a high-level \gls{constraint} modeling
+language -- and solved using \gls{Chuffed}~\cite{Chu:2011} -- a \gls{lazy clause
+  learning} \glsshort{constraint solver}, which is included in \gls{MiniZinc} --
+on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
+\SI{16}{\giga\byte} main memory.
+%
+All instances are solved to optimality.
+
+As input, we use a subset of the \glspl{function} in
+\gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
+-- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
+\gls{instruction set}.
+%
+The \glspl{function} are compiled into LLVM \gls{IR} code -- the intermediate
+format used by \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization
+flag~\texttt{-O3}.
+%
+Out of the initial pool of \num{6313}~\glspl{function}, we remove those ...
 
 \todo{discuss experiment setup}
 
