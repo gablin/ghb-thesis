@@ -605,7 +605,8 @@ and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
 \gls{copy node}~$c$, \gls{value node}~$v'$, and \glspl{data-flow edge} such that
 \mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}.
 %
-\Glspl{match} covering exactly a \gls{copy node} are called \glspl!{copy match}.
+\Glspl{match} covering exactly one \gls{copy node} are called \glspl!{copy
+  match}.
 %
 If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
 connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.en}
@@ -625,8 +626,6 @@ these \glspl!{null-copy match} -- emit nothing if selected.
 If the \gls{null-copy match} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
-
-\todo{explain why phi arguments need to be copy-extended again}
 
 In order to retain matching of \glspl{pattern}, we also need to perform
 \gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
