@@ -1174,48 +1174,82 @@ These \glspl{constraint} are then modeled as
 
 \subsection{Experimental Evaluation}
 
-We compare the two methods of \gls{value reuse} by evaluating the solving time
-and the quality of the code produced by two versions of the \gls{constraint
-  model}: one based on \gls{match duplication} and another based on
-\glspl{alternative value}.
+We evaluate the two methods of \gls{value reuse} by comparing the time it takes
+to solve two versions of the \gls{constraint model} -- one based on \gls{match
+  duplication} and another based on \glspl{alternative value} -- over a set of
+\glspl{function}.
 %
-Both versions are implemented in \mbox{\gls{MiniZinc}
+To evalute the impact of \gls{value reuse}, we compare the quality of the code
+produced by one of the \glsplshort{constraint model} above (since both methods
+are \gls{solution}-preserving, it does not matter which is selected) with the
+quality of the code produced by a \gls{constraint model} without \gls{value
+  reuse}.
+
+
+\subsubsection{Setup}
+
+Each \gls{constraint model} is implemented in \mbox{\gls{MiniZinc}
   2.1.6}~\cite{NethercoteEtAl:2007} -- a high-level \gls{constraint} modeling
 language -- and solved using \gls{Chuffed}~\cite{Chu:2011} -- a \gls{lazy clause
   learning} \glsshort{constraint solver}, which is included in \gls{MiniZinc} --
 on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
 \SI{16}{\giga\byte} main memory.
 %
-All instances are solved to optimality.
+All problem instances are solved to optimality.
 
 As input, we use a subset of the \glspl{function} in
 \gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
 -- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
 \gls{instruction set}.
 %
-The \glspl{function} are compiled into LLVM \gls{IR} code -- the intermediate
-format used by \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization
-flag~\texttt{-O3}.
+The \glspl{function} are compiled into \gls{LLVM} \gls{IR} code -- the
+intermediate format used by \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with
+optimization flag~\texttt{-O3}.
 %
-Out of the initial pool of \num{6313}~\glspl{function}, we remove those ...
+Out of the initial pool of \num{6313}~\glspl{function}, we remove those that
+operate on non-integer data types (such as floating point and vector data types)
+as these are not yet supported by the current toolchain.
+%
+We also remove all \glspl{function} that have less than less than ten~\gls{LLVM}
+\gls{IR} \glspl{instruction} -- anything smaller will most likely not be
+benefitted by \gls{value reuse} -- and greater than fifty~\glspl{instruction} --
+anything larger will lead to unreasonably long solving times.
+%
+This leaves a pool of \num{453}~\glspl{function}, which will lead to untractable
+experiment runtimes if all are included.
+%
+We therefore draw a limited number of samples from this pool.
+%
+To get a diverse set of samples, we apply \gls{k-means
+  clustering}~\cite{PhansalkarEtAl:2005} to divide the \glspl{function} into
+twenty clusters based on the application from which the \gls{function} is
+derived (intuitively, \glspl{function} from different applications should
+exhibit different characteristics), its size in number of \gls{LLVM} \gls{IR}
+\glspl{instruction} (to evaluate how the methods behave as the \glspl{function}
+grow larger), and its number of memory \glspl{instruction} (due to its many
+addressing modes, these constitute a large part of the complex
+\glspl{instruction} in the \gls{instruction set}).
+%
+Then, from each cluster one \gls{function} is randomly selected, giving a total
+of twenty \glspl{function}.
+%
+Since we are measuring solving time, which could be affected by other factors,
+we run each experiment ten times and then take the arithmetic average.
+%
+When summarizing ratios such as speedup -- we take the geometric
+mean~\cite{FlemingWallace:1986}.
 
-\todo{discuss experiment setup}
+
+\subsubsection{Computing Speedup}
+
+\todo{describe how we compute speedup}
 
 \todo{describe function for computing speedup (give example)}
 
-\todo{match dup is worse than alt values (as expected}
 
-\begin{figure}
-  \centering%
-  \maxsizebox{\textwidth}{!}{%
-    \trimBarchartPlot{%
-      \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.plot}%
-    }%
-  }
+\subsubsection{Impact of Value Reuse}
 
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
+\todo{describe setup}
 
 \todo{value reuse matters (as expected)}
 
@@ -1224,6 +1258,28 @@ Out of the initial pool of \num{6313}~\glspl{function}, we remove those ...
   \maxsizebox{\textwidth}{!}{%
     \trimBarchartPlot{%
       \input{\expDir/alt-values-vs-without-cycles-speedup.plot}%
+    }%
+  }
+
+  \caption{TODO}
+  \labelFigure{TODO}
+\end{figure}
+
+
+\subsubsection{Match Duplication vs. Alternative Values}
+
+We compare the two methods of \gls{value reuse} by evaluating the solving time
+and the quality of the code produced by two versions of the \gls{constraint
+  model}: one based on \gls{match duplication} and another based on
+\glspl{alternative value}.
+
+\todo{match dup is worse than alt values (as expected}
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.plot}%
     }%
   }
 
