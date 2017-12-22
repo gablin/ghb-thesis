@@ -1255,14 +1255,14 @@ The \gls{speedup} attained by \glsshort{constraint model}~$a$ over another
 \end{equation}
 %
 where $t_a$ and $t_b$ denotes the solving times exhibited by $a$ and~$b$,
-respectively.
+respectively, for a given problem instance.
 %
 A value greater than $1$ means $a$ is faster than $b$, a value less than $1$
 means $b$ is faster than $a$, and a value of exactly $1$ means $a$ and $b$ take
 the same time to solve a given \gls{function}.
 %
 Since the \gls{speedup} values are centered around $1$, then intuitively the
-value produced when $a$ is twice as fast as $b$ should be equally far away from
+value computed when $a$ is twice as fast as $b$ should be equally far away from
 $1$ as the value when $b$ is twice as fast as $a$.
 %
 With \refEquation{traditional-speedup}, however, this is not the case.
@@ -1285,21 +1285,21 @@ where $b$ is twice as fast as $a$.
   }%
 
   \subcaptionbox{%
-                  Speedup values attained from
+                  Speedup values computed with
                   \refEquation{traditional-speedup}%
                   \labelFigure{speedup-comparison-traditional}%
                 }%
-                [58mm]%
+                [60mm]%
                 {%
                   \insertSpeedupExamplePlot{traditional}%
                 }%
   \hfill%
   \subcaptionbox{%
-                  Speedup values attained from
+                  Speedup values computed with
                   \refEquation{normalized-speedup}%
                   \labelFigure{speedup-comparison-normalized}%
                 }%
-                [58mm]%
+                [60mm]%
                 {%
                   \insertSpeedupExamplePlot{normalized}%
                 }
@@ -1329,7 +1329,7 @@ We therefore instead compute the \gls{speedup} as
 %
 which, as seen in \refFigure{speedup-comparison-normalized}, results in
 \gls{speedup} values that are centered around $0$ and for which the values
-produced in cases \speedupCase{i} and \speedupCase{ii} are equally far apart.
+computed in cases \speedupCase{i} and \speedupCase{ii} are equally far apart.
 
 
 \subsubsection{Impact of Value Reuse}
