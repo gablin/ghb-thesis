@@ -1049,16 +1049,20 @@
 
 \newcommand{\expDir}{experiments/20171212-105301}
 
-\newcommand{\functionName}[1]{{\Large\path{#1}}}
-\newcommand{\plotPercentage}[1]{{\Large$#1$\%}}
+\newcommand{\functionNameFont}{\Large}
+\newcommand{\functionName}[1]{{\functionNameFont\path{#1}}}
+\newcommand{\plotPercentageFont}{\Large}
+\newcommand{\plotPercentage}[1]{{\plotPercentageFont$#1$\%}}
 \newcommand{\speedupValue}[1]{%
   \pgfmathparse{#1}%
   \pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}%
 }
+\newcommand{\plotSpeedupTicsFont}{\LARGE}
 \newcommand{\plotSpeedupTics}[1]{%
-  {\LARGE$\speedupValue{#1}\times$}%
+  {\plotSpeedupTicsFont$\speedupValue{#1}\times$}%
 }
-\newcommand{\plotSeconds}[1]{{\large$#1$\thinspace{}s}}
+\newcommand{\plotSecondsFont}{\large}
+\newcommand{\plotSeconds}[1]{{\plotSecondsFont$#1$\thinspace{}s}}
 \newcommand{\barValueFont}{\scriptsize}
 \newcommand{\plotBarValue}[1]{%
   {\barValueFont\speedupValue{#1}}%
