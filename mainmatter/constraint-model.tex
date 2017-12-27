@@ -1352,11 +1352,14 @@ code yielded by the \glspl{solution}.
 
 \subsubsection{Match Duplication vs. Alternative Values}
 
-We compare the two methods of \gls{value reuse} by comparing the solving time
+We evaluate the two methods of \gls{value reuse} by comparing the solving time
 exhibited by a \gls{constraint model} based on \gls{match duplication} and
-another \glsshort{constraint model} based on \glspl{alternative value}.
-
-\todo{describe hypothesis}
+another \glsshort{constraint model} based on \glspl{alternative value} for the
+set of \glspl{function} selected from \gls{MediaBench}.
+%
+Since \gls{match duplication} yields an exponential increase in number of
+\glspl{match} compared to \glspl{alternative value}, we expect the latter to
+lead to shorter solving times.
 
 \begin{figure}
   \centering%
@@ -1366,11 +1369,42 @@ another \glsshort{constraint model} based on \glspl{alternative value}.
     }%
   }
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \caption[%
+            Comparing solving times for two constraint models supporting value
+            reuse%
+          ]%
+          {%
+            Relative solving times for two constraint models, one based on
+            match duplication (baseline) and another on alternative values%
+          }
+  \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
 
-\todo{match dup is worse than alt values (as expected)}
+\input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
+
+\RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
+solving times (including presolving) for the two \glspl{constraint model}
+described above, with the \glsshort{constraint model} based on \gls{match
+  duplication} serving as \gls{baseline}.
+%
+All \glspl{function} are solved to optimality.
+%
+For the \gls{baseline}, the solving times range from
+\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
+to
+\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s}.
+%
+As can be clearly seen from the data, \glsplshort{constraint model} based on
+\glspl{alternative value} perform considerably better than those based on
+\gls{match duplication}.
+%
+In one case ({\codeFont reg2rsaref}), for example, the solving time differs by a
+factor of $45$, which is due to a high rate of \gls{copy-related.d} values for
+which \glspl{alternative value} yield \num{162}~\glspl{match} and \gls{match
+  duplication} yields \num{606}~\glspl{match}.
+%
+Hence, when implementing \gls{value reuse} \glspl{alternative value} is a better
+design choice over \gls{match duplication}.
 
 
 \subsubsection{Impact of Value Reuse}
