@@ -1173,6 +1173,7 @@ These \glspl{constraint} are then modeled as
 
 
 \subsection{Experimental Evaluation}
+\labelSection{cm-alt-values-experimental-evaluation}
 
 We evaluate the two methods for \gls{value reuse} by comparing the time it takes
 to solve two versions of the \gls{constraint model} -- one based on \gls{match
@@ -1210,8 +1211,8 @@ as these are not yet supported by the current toolchain.
 %
 We also remove all \glspl{function} that have less than less than ten~\gls{LLVM}
 \gls{IR} \glspl{instruction} -- anything smaller will most likely not be
-benefitted by \gls{value reuse} -- and greater than fifty~\glspl{instruction} --
-anything larger will lead to unreasonably long solving times.
+benefitted by \gls{value reuse} -- and greater than \num{50}~\glspl{instruction}
+-- anything larger will lead to unreasonably long solving times.
 %
 This leaves a pool of \num{453}~\glspl{function}, which will lead to untractable
 experiment runtimes if all are included.
@@ -1373,8 +1374,9 @@ lead to shorter solving times.
             reuse%
           ]%
           {%
-            Relative solving times for two constraint models, one based on
-            match duplication (baseline) and another on alternative values%
+            Relative solving times for two constraint models that supports
+            value reuse, one based on match duplication (baseline) and another
+            based on alternative values%
           }
   \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
@@ -1394,16 +1396,16 @@ to
 \SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s}.
 %
 As can be clearly seen from the data, \glsplshort{constraint model} based on
-\glspl{alternative value} perform considerably better than those based on
-\gls{match duplication}.
+\glspl{alternative value} yield significantly lower solving times than those
+based on \gls{match duplication}.
 %
 In one case ({\codeFont reg2rsaref}), for example, the solving time differs by a
 factor of $45$, which is due to a high rate of \gls{copy-related.d} values for
 which \glspl{alternative value} yield \num{162}~\glspl{match} and \gls{match
   duplication} yields \num{606}~\glspl{match}.
 %
-Hence, when implementing \gls{value reuse} \glspl{alternative value} is a better
-design choice over \gls{match duplication}.
+Hence, when implementing \gls{value reuse}, \glspl{alternative value} is a
+better design choice over \gls{match duplication}.
 
 
 \subsubsection{Impact of Value Reuse}
@@ -1427,8 +1429,8 @@ we expect the former to lead to lower cost.
   }
 
   \caption[%
-            Comparing optimal costs for constraint models with and without value
-            reuse%
+            Comparing optimal costs for two constraint models with and without
+            value reuse%
           ]%
           {%
             Relative optimal costs for two constraint models, one with value
@@ -1453,7 +1455,7 @@ For the \gls{baseline}, the costs range from \mbox{%
   cycles%
 }.
 %
-As can be clearly seen from the data, \glsplshort{constraint model} supporting
+As can be clearly seen from the plots, \glsplshort{constraint model} supporting
 \gls{value reuse} leads to considerably lower cost than those without.
 %
 In one case ({\codeFont putseqdispext}), for example, where two constants are
@@ -1785,10 +1787,62 @@ $\mBigO(nk)$~\glspl{match}.
 %
 Unlike \gls{branch extension}, however, the \gls{UF graph} does not need to be
 extended with additional \glspl{block} wherein \glspl{operation} may be placed,
-which results in a significantly \gls{search space}.
+which results in a significantly smaller \gls{search space}.
 
 
 \subsection{Experimental Evaluation}
+
+We evaluate the two methods for inserting jump \glspl{instruction} by comparing
+the solving times exhibited and the cost of the optimal \glspl{solution}
+produced by two versions of the \gls{constraint model} -- one based on
+\gls{branch extension} and another based on \glspl{dual-target branch pattern}
+-- over a set of \glspl{function}.
+
+The experiment setup is the same as in
+\refSection{cm-alt-values-experimental-evaluation} with a few exceptions.
+%
+When filtering, we remove all \glspl{function} that have less than less than
+\num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
+likely not require any additional jump \glspl{instruction} -- and greater than
+\num{100}~\glspl{instruction} -- anything larger will lead to needlessly long
+experiment runtimes.
+%
+This leaves a pool of \num{413}~\glspl{function}, from which
+\num{20}~\glspl{function} are sampled using the same method.
+%
+When clustering, however, the \glspl{function} are grouped according to number
+of \glspl{block} instead of number of memory \glspl{instruction} (to evaluate
+how the methods behave as the number of blocks grow larger).
+
+Since \gls{branch extension} yields a larger number of \glspl{block} compared to
+\glspl{dual-target branch pattern}, many of which will be empty and thereby
+causing emission of redundant jump \glspl{instruction}, we expect the latter to
+lead to both shorter solving times and better code quality.
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{%
+        \expDir/%
+        dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.plot%
+      }%
+    }%
+  }
+
+  \caption[%
+            Comparing solving times for two constraint models supporting
+            jump instruction insertion%
+          ]%
+          {%
+            Relative solving times for two constraint models that supports jump
+            insertion, one based on branch extension (baseline) and another
+            based on dual-target branch patterns%
+          }
+  \labelFigure{%
+    dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
+  }
+\end{figure}
 
 \begin{figure}
   \centering%
@@ -1798,12 +1852,62 @@ which results in a significantly \gls{search space}.
     }%
   }
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \caption[%
+            Comparing optimal costs for two constraint models supporing
+            jump instruction insertion%
+          ]%
+          {%
+            Relative optimal costs for two constraint models that supports jump
+            insertion, one based on branch extension (baseline) and another
+            based on dual-target branch patterns%
+          }
+  \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
 
-\todo{results match our expected results (branch extension is worse)}
+\input{%
+  \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
+}
 
+\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
+
+Figures~\refFigure*{%
+  dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
+and~\refFigure*{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
+shows the normalized solving times (including presolving) and \gls{solution}
+costs, respectively, for the two \glspl{constraint model} described above, with
+the \glsshort{constraint model} based on \gls{branch extension} serving as
+\gls{baseline}.
+%
+All \glspl{function} are solved to optimality and arranged in increasing order
+of number of conditional branch \glspl{instruction}.
+%
+For the \gls{baseline}, the solving times range from
+\SI{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
+to
+\SI[round-precision=0]{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s},
+and the costs range from \num[round-precision=0]{%
+  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin}~cycles to
+\num[round-precision=0]{%
+  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax}~cycles.
+%
+As can be clearly seen from the plots, \glsplshort{constraint model} based on
+\glspl{dual-target branch pattern} yield significantly lower solving times than
+those based on \gls{branch extension}.
+%
+Cases where \glspl{dual-target branch pattern} result in longer solving times
+(\todo{select functions}) are \glspl{function} consisting of few \glspl{block}
+for which \gls{branch extension} yields a smaller \gls{search space}.
+%
+When the number of conditional branch \glspl{instruction} increases -- up to
+\num{13}, in the case of {\codeFont nextkeypacket} -- the \gls{search space} for
+\gls{branch extension} grows faster than for \glspl{dual-target branch pattern}.
+%
+In addition, in some cases \glspl{dual-target branch pattern} result in optimal
+\glspl{solution} with slightly lower cost compared with \gls{branch extension}.
+%
+Hence, when implementing insertion of jump \glspl{instruction},
+\glspl{dual-target branch pattern} is a better design choice over \gls{branch
+  extension}.
 
 
 \section{Objective Function}
