@@ -1546,8 +1546,8 @@ must be inserted after the control-flow \gls{instruction} in either \irBlock{A}
 or~\irBlock{B} (\refFigure{jump-insert-example-solutions}).
 
 In this dissertation, we discuss two methods for inserting jump
-\glspl{instruction} when required: \gls{branch extension} and \glspl{dual-target
-  branch pattern}.
+\glspl{instruction} when required: \gls{branch extension} and \glspllong{DTB
+  pattern}.
 %
 We first introduce the \glspl{variable} and \glspl{constraint} for modeling
 \gls{block ordering} before introducing each method in turn, and then present
@@ -1703,8 +1703,10 @@ that would not have been emitted had \gls{branch extension} not been performed.
 
 \def\jmpPattern{p_{\textsc{jmp}}}%
 
-Another method is to extend the \gls{pattern set} with so-called
-\glspl!{dual-target branch pattern}.
+\glsreset{DTB pattern}
+
+Another method is to extend the \gls{pattern set} with so-called \glspl!{DTB
+  pattern}.
 %
 Given a \gls{pattern set}~$S$, first find the \gls{pattern}~\mbox{$\jmpPattern
   \in S$} which corresponds to a unconditional jump \gls{instruction} that
@@ -1769,21 +1771,20 @@ cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
                   \end{tabular}%
                 }
 
-  \caption{Example of creating dual-target branch pattern}%
+  \caption{Example of creating a DTB pattern}%
   \labelFigure{dual-target-branch-pattern-example}
 \end{figure}
 %
 An example is shown in \refFigure{dual-target-branch-pattern-example}.
 %
-Because a \gls{dual-target branch pattern} has no \gls{fall-through}
-\gls{constraint}, it essentially models a conditional jump \gls{instruction}
-capable of directly branching to two \glspl{block} (hence the name).
+Because a \gls{DTB pattern} has no \gls{fall-through} \gls{constraint}, it
+essentially models a conditional jump \gls{instruction} capable of directly
+branching to two \glspl{block} (hence the name).
 
 Consequently, if a \gls{pattern set} contains $k$~\glspl{pattern} with
 \gls{fall-through} \glspl{constraint} and a \gls{UF graph} contains
-$n$~\glspl{control node} representing conditional jumps, then using
-\glspl{dual-target branch pattern} will enlarge the \gls{match set} by
-$\mBigO(nk)$~\glspl{match}.
+$n$~\glspl{control node} representing conditional jumps, then using \glspl{DTB
+  pattern} will enlarge the \gls{match set} by $\mBigO(nk)$~\glspl{match}.
 %
 Unlike \gls{branch extension}, however, the \gls{UF graph} does not need to be
 extended with additional \glspl{block} wherein \glspl{operation} may be placed,
@@ -1795,7 +1796,7 @@ which results in a significantly smaller \gls{search space}.
 We evaluate the two methods for inserting jump \glspl{instruction} by comparing
 the solving times exhibited and the cost of the optimal \glspl{solution}
 produced by two versions of the \gls{constraint model} -- one based on
-\gls{branch extension} and another based on \glspl{dual-target branch pattern}
+\gls{branch extension} and another based on \glspl{DTB pattern}
 -- over a set of \glspl{function}.
 
 The experiment setup is the same as in
@@ -1815,7 +1816,7 @@ of \glspl{block} instead of number of memory \glspl{instruction} (to evaluate
 how the methods behave as the number of blocks grow larger).
 
 Since \gls{branch extension} yields a larger number of \glspl{block} compared to
-\glspl{dual-target branch pattern}, many of which will be empty and thereby
+\glspl{DTB pattern}, many of which will be empty and thereby
 causing emission of redundant jump \glspl{instruction}, we expect the latter to
 lead to both shorter solving times and better code quality.
 
@@ -1837,7 +1838,7 @@ lead to both shorter solving times and better code quality.
           {%
             Relative solving times for two constraint models that supports jump
             insertion, one based on branch extension (baseline) and another
-            based on dual-target branch patterns%
+            based on DTB patterns%
           }
   \labelFigure{%
     dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
@@ -1859,7 +1860,7 @@ lead to both shorter solving times and better code quality.
           {%
             Relative optimal costs for two constraint models that supports jump
             insertion, one based on branch extension (baseline) and another
-            based on dual-target branch patterns%
+            based on DTB patterns%
           }
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
@@ -1891,21 +1892,20 @@ and the costs range from \num[round-precision=0]{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax}~cycles.
 %
 As can be clearly seen from the plots, \glsplshort{constraint model} based on
-\glspl{dual-target branch pattern} yield significantly lower solving times than
-those based on \gls{branch extension}.
+\glspl{DTB pattern} yield significantly lower solving times than those based on
+\gls{branch extension}.
 %
 With the exception of one \gls{function} ({\codeFont internal\_transp}) that has
 more than one conditional branch \gls{instruction}, when the number of
 conditional branch \glspl{instruction} increases -- up to \num{13}, in the case
 of {\codeFont nextkeypacket} -- the \gls{search space} for \gls{branch
-  extension} grows faster than for \glspl{dual-target branch pattern}.
+  extension} grows faster than for \glspl{DTB pattern}.
 %
-In addition, in some cases \glspl{dual-target branch pattern} result in optimal
+In addition, in some cases \glspl{DTB pattern} result in optimal
 \glspl{solution} with slightly lower cost compared with \gls{branch extension}.
 %
-Hence, when implementing insertion of jump \glspl{instruction},
-\glspl{dual-target branch pattern} is a better design choice over \gls{branch
-  extension}.
+Hence, when implementing insertion of jump \glspl{instruction}, \glspl{DTB
+  pattern} is a better design choice over \gls{branch extension}.
 
 
 \section{Objective Function}
