@@ -1894,13 +1894,11 @@ As can be clearly seen from the plots, \glsplshort{constraint model} based on
 \glspl{dual-target branch pattern} yield significantly lower solving times than
 those based on \gls{branch extension}.
 %
-Cases where \glspl{dual-target branch pattern} result in longer solving times
-(\todo{select functions}) are \glspl{function} consisting of few \glspl{block}
-for which \gls{branch extension} yields a smaller \gls{search space}.
-%
-When the number of conditional branch \glspl{instruction} increases -- up to
-\num{13}, in the case of {\codeFont nextkeypacket} -- the \gls{search space} for
-\gls{branch extension} grows faster than for \glspl{dual-target branch pattern}.
+With the exception of one \gls{function} ({\codeFont internal\_transp}) that has
+more than one conditional branch \gls{instruction}, when the number of
+conditional branch \glspl{instruction} increases -- up to \num{13}, in the case
+of {\codeFont nextkeypacket} -- the \gls{search space} for \gls{branch
+  extension} grows faster than for \glspl{dual-target branch pattern}.
 %
 In addition, in some cases \glspl{dual-target branch pattern} result in optimal
 \glspl{solution} with slightly lower cost compared with \gls{branch extension}.
