@@ -1409,9 +1409,15 @@ design choice over \gls{match duplication}.
 
 \subsubsection{Impact of Value Reuse}
 
-\todo{describe setup}
-
-\todo{describe hypothesis}
+We evaluate the impact of \gls{value reuse} by comparing the cost (that is, the
+total number of cycles, as described in \refSection{cm-objective-function}) of
+the optimal \glspl{solution} produced by a \gls{constraint model} with
+\gls{value reuse} support (based on \glspl{alternative value}) and another
+without this support for the set of \glspl{function} selected from
+\gls{MediaBench}.
+%
+Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
+we expect the former to lead to lower cost.
 
 \begin{figure}
   \centering%
@@ -1421,11 +1427,43 @@ design choice over \gls{match duplication}.
     }%
   }
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \caption[%
+            Comparing optimal costs for constraint models with and without value
+            reuse%
+          ]%
+          {%
+            Relative optimal costs for two constraint models, one with value
+            reuse support and another without%
+          }
+  \labelFigure{alt-values-vs-without-cycles-plot}
 \end{figure}
 
-\todo{value reuse matters (as expected)}
+\input{\expDir/alt-values-vs-without-cycles-speedup.stats}
+
+\RefFigure{alt-values-vs-without-cycles-plot} shows the normalized costs for the
+two \glspl{constraint model} describe above, with the \glsshort{constraint
+  model} without \gls{value reuse} support serving as \gls{baseline}.
+%
+All \glspl{function} are solved to optimality.
+%
+For the \gls{baseline}, the costs range from \mbox{%
+  \num[round-precision=0]{\AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMin}
+  cycles%
+} to \mbox{%
+  \num[round-precision=0]{\AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax}
+  cycles%
+}.
+%
+As can be clearly seen from the data, \glsplshort{constraint model} supporting
+\gls{value reuse} leads to considerably lower cost than those without.
+%
+In one case ({\codeFont putseqdispext}), for example, where two constants are
+frequently used as arguments to \gls{function} call \glspl{instruction} and thus
+cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
+to \num{208}~cycles.
+%
+Hence, the impact of \gls{value reuse} is significant in reducing the number of
+copy \glspl{instruction} and, subsequently, lowering cost.
 
 
 \section{Modeling Block Ordering}
