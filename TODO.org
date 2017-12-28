@@ -1,5 +1,6 @@
 * BEFORE SUBMISSION
 ** TODO Remove misuse of glossary terms "variable" and "operation"
+** TODO Add labels to optimal-solutions-over-time plot
 ** TODO Add minizinc model as appendix
 ** TODO Add references in the model to refer to the corresponding Eq in the dissertation
 ** TODO Fix bad page breaks
