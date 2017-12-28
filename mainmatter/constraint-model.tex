@@ -1956,7 +1956,17 @@ can be modeled as
 %
 where \mbox{$\mCost(m) \in \mNatNumSet$} denotes the cost of \gls{match}~$m$,
 \mbox{$\mFreq(b) \in \mNatNumSet$} denotes the execution frequency of
-block~$b$\!, and
+block~$b$\!,\hspace{-1pt}%
+%
+\footnote{%
+  In order to contain the size of the \gls{domain} of the \gls{cost variable},
+  the execution frequencies must often be scaled down.
+  %
+  In our experiments, limiting the execution frequencies to \num{1000} proved
+  sufficient.
+}
+%
+and
 %
 \begin{equation}
   \mBlockOf(m)
