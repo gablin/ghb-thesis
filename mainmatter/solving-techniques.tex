@@ -52,6 +52,7 @@ In this section, we fix these problems by refining the \glsshort{constraint
 
 
 \subsection{Refining the Define-Before-Use Constraint}
+\labelSection{st-refining-define-before-use constraint}
 
 When describing the \gls{constraint} that all \glspl{datum} must be
 \gls{define.d}[d] before \gls{use.d}[d], a simple but naive implementation was
@@ -294,33 +295,23 @@ The idea is as follows.
 First, for each \gls{match}~$m$, evenly divide the cost of $m$ over each
 \gls{operation}~$o$ covered by $m$.
 %
-Let \mbox{$\mOpCost(m, o) \in \mNatNumSet$} denote this cost such that
-\mbox{$\sum_{o \in \mCovers(m)} \mOpCost(m, o) = \mCost(m)$} holds for every
-\gls{match}~$m$.\!%
+If a strict partial order $<$ exists over the set of \glspl{operation}, and
+$\mCovers(m)$ returns an ordered, 1-indexed list for which \mbox{$o_1 < o_2 <
+  \cdots < o_k$} holds, then the cost can be divided as follows.
 %
-\footnote{%
-  \setlength{\abovedisplayskip}{1ex}%
-  \setlength{\belowdisplayskip}{1ex}%
-  %
-  If a strict partial order $<$ exists over the set of \glspl{operation}, and
-  $\mCovers(m)$ returns an ordered, 1-indexed list for which \mbox{$o_1 < o_2 <
-    \cdots < o_k$} holds, then the cost can be divided as follows.
-  %
-  Given a match~$m$, let \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)}
-    \rfloor$} and \mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \mOpCost(m, o) =
-    \left\{
-    \begin{array}{ll}
-      q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
-      q     & \text{otherwise}. \\
-    \end{array}
-    \right.
-  \end{displaymath}
-}
+Given a match~$m$, if \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)}
+  \rfloor$} and \mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}, then
+%
+\begin{equation}
+  \mOpCost(m, o) =
+  \left\{
+  \begin{array}{ll}
+    q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
+    q     & \text{otherwise}. \\
+  \end{array}
+  \right.
+  \labelEquation{op-cost-function}
+\end{equation}
 %
 Then, for each \gls{block}~$b$, weigh \mbox{$\mOpCost(m, o)$} with the execution
 frequency of~$b$.
@@ -348,28 +339,33 @@ much tighter bound compared to that achieved using the naive \gls{objective
   function}.
 %
 This in turn has a tremendous impact on solving time, for reasons that will
-become clear in \refSection{st-cost-bounds}.\!%
+become clear in \refSection{st-cost-bounds}.
+
+Instead of first evenly dividing the \gls{match} cost over the covered
+\glspl{operation} and then multiplying each \gls{operation} cost with the
+execution frequency, an alternative method is to first multiply the \gls{match}
+cost with the execution frequency and then evenly divide the product over the
+covered \glspl{operation}.
 %
-\footnote{%
-  For the experiments in \cite{HjortBlindellEtAl:2017:CASES}, the refined
-  \gls{objective function} was actually implemented as \emph{first} multiply the
-  \gls{match} cost with the execution frequency, and \emph{then} evenly divide
-  the product over the covered \glspl{operation}.
-  %
-  While this scheme also greatly reduces solving time compared to the naive
-  \gls{objective function}, it proves to be significantly inferior to dividing
-  the cost as in \refEquation{cost-matrix}.
-  %
-  One possible explanation is that it may result in weaker bounds -- for the
-  example given in \refFigure{cost-example}, using this scheme bounds the total
-  cost as \mbox{$4 < \mVar{cost} < 65$} -- but this does not apply for every
-  case.
-  %
-  Hence the intuition behind why it is better to first divide the \gls{match}
-  cost and then multiply the execution frequency remains unclear, thus
-  underscoring the fact that seemingly trivial changes to a \gls{constraint
-    model} may have considerable impact.%
-}
+We call the first method the \gls!{divide-then-multiply method}, and the second
+method the \gls!{multiply-then-divide method}.
+%
+At first glace this design decision would appear to make no difference, but as
+will be seen later in the experimental evaluation, they unexpectedly exhibit
+significantly different solving time characteristics.
+%
+One possible explanation is that they may yield different bounds.
+%
+For instance, for the example given in \refFigure{cost-example} the
+\gls{multiply-then-divide method} bounds the total cost as \mbox{$4 <
+  \mVar{cost} < 65$}, whereas the \gls{divide-then-multiply method} bounds it to
+\mbox{$4 < \mVar{cost} < 60$}.
+%
+Another possible explanation is that the \gls{divide-then-multiply method}
+results in \gls{operation} costs that are even multiples of the execution
+frequencies, whereas the \gls{multiply-then-divide method} potentially results
+in arbitrary cost values and consequently leads to larger \glspl{domain} for the
+\gls{cost variable}.
 
 
 \subsubsection{Variables}
@@ -1698,7 +1694,122 @@ with their \gls{canonical.l} representative and then replace the original
 \section{Experimental Evaluation}
 \labelSection{st-experimental-evaluation}
 
-\todo{refined objective function is better (as expected}
+Excluding the refinement described in \refSection{st-refining-define-before-use
+  constraint}, whose naive equivalence cannot be implemented on this
+experimental setup and therefore not be evaluated, we now evaluate the impact of
+each solving technique introduced in this chapter.
+
+For all experiments, the setup is the same as in
+\refSection{cm-alt-values-experimental-evaluation} with two exceptions.
+%
+First, when filtering we remove all \glspl{function} that have less than less
+than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will
+most likely not show the impact of the given solving technique -- and greater
+than \num{150}~\glspl{instruction} -- anything larger will lead to unreasonably
+long experiment runtimes.
+%
+This leaves a pool of \num{284}~\glspl{function}, from which
+\num{20}~\glspl{function} are sampled using the same method.
+%
+Second, when solving we apply time limit of \SI{600}{\s} to the \gls{constraint
+  solver}.
+%
+For any given \gls{function}, the last \gls{solution} found is considered
+optimal if and only if the \glsshort{constraint solver} has finished its
+execution within the time limit.
+
+When using an upper bound for a given \gls{function}, we take the cost for the
+\gls{solution} computed by \mbox{\gls{LLVM} 3.8}.
+
+
+\subsubsection{Objective Function Refinements and Cost Bounding}
+
+We first evaluate the two methods for computing the cost matrix by comparing the
+solving times exhibited by two versions of the \gls{constraint model} -- one
+based on the \gls{divide-then-multiply method} and another based on
+\glspl{multiply-then-divide method} -- for the set of sampled \glspl{function}.
+%
+Using the same set of \glspl{function}, we then use the superior method to
+evaluate the impact of the \gls{objective function} refinement and cost bounding
+by comparing the number of \glspl{function} that can be solved optimally by five
+versions of the \gls{constraint model}: two based on the naive implementation of
+the \gls{objective function} (\refEquation{naive-objective-function}), one with
+cost bounds and one without; and three based on the refined implementation
+(Eqs.\thinspace\refEquation*{omatch-oplace-ocost-connection}
+and~\refEquation*{total-cost}), one without cost bounds, one with only the upper
+bound, and one with both lower and upper bound.
+%
+We also evaluate the impact on code quality by comparing the cost of the best
+\gls{solution} found by two versions of the \gls{constraint model} -- one based
+on the naive implementation with upper bound and another based on the refined
+implementation with upper bound -- for the same set of \glspl{function}.
+
+Since the refined \gls{objective function} enables tighter bounds to be derived
+for the \gls{cost variable}, we expect the \glsplshort{constraint model} based
+on the refined implementation to find a greater number of optimal
+\glspl{solution} than those based on the naive implementation.
+%
+Moreover, we expect the \glsplshort{constraint model} with an upper cost bound
+to perform better than those with no bounds, and those with both cost bounds to
+perform better than those with only one or no bounds.
+%
+No hypothesis is given for the evaluation of the two methods for computing the
+cost matrix.
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.plot}%
+    }%
+  }
+
+  \caption[%
+            Plot comparing solving times for two constraint models implementing
+            the refined objective function%
+          ]%
+          {%
+            Normalized solving times for two constraint models implementing the
+            refined objective function, one based on the multiply-then-divide
+            method (baseline) and another based on the divide-then-multiply
+            method (subject).
+            %
+            \Glspl{function} marked with \barValueNotOptimal{} cannot be solved
+            optimally within the time limit%
+          }
+  \labelFigure{new-op-cost-fun-vs-old-plot}
+\end{figure}
+
+\input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
+
+\RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
+(including presolving) for the two \glspl{constraint model} described above,
+with the \glsshort{constraint model} based on the \gls{multiply-then-divide
+  method} serving as \gls{baseline} and the \glsshort{constraint model} based on
+the \gls{divide-then-multiply method} serving as \gls{subject}.
+%
+\Glspl{function} marked with \barValueNotOptimal{} cannot be solved optimally
+within the time limit; all other \glspl{function} are solved to optimality.
+%
+For the solving times, the maximum coefficient of variation is
+\getMaxCoefVarOf{%
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
+}.
+%
+Except for two \glspl{function} ({\codeFont alloc\_name\_is\_s} and {\codeFont
+  debug\_dump\_byte}), the \gls{divide-then-multiply method} yields
+significantly lower solving times than the other method.
+%
+In one case ({\codeFont checksum}), the solving time is more than an order of
+magnitude less.
+%
+Hence, when implementing the refined \gls{objective function}, the
+\glspl{divide-then-multiply method} is a better design choice over the
+\gls{multiply-then-divide method}.
+%
+This observation also underscores the fact that seemingly trivial changes to a
+\gls{constraint model} may have considerable impact on solving time.
 
 \begin{figure}
   \renewcommand{\plotPercentageFont}{\large}
@@ -1710,9 +1821,59 @@ with their \gls{canonical.l} representative and then replace the original
     }%
   }
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \caption[%
+            Plot comparing percentage of optimal solutions found over time for
+            five constraint models implementing the naive and refined objective
+            function%
+          ]%
+          {%
+            Percentage of optimal solutions found over time for five constraint
+            models implementing the naive and refined objective function, with
+            and without bounds%
+          }
+  \labelFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot}
 \end{figure}
+
+\input{\expDir/obj-fun-refined-vs-naive-opt-proofs-over-time.stats}
+
+\RefFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot} shows the
+percentage of optimal \glspl{solution} found over time for the five
+\glspl{constraint model} described above.
+%
+For the solving times, the maximum coefficient of variation is
+\getMaxCoefVarOf{%
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeCvMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeCvMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeCvMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWUbSolvingTimeCvMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeCvMax
+}.
+%
+We see clearly that the \glsplshort{constraint model} based on the refined
+\gls{objective function} outperforms those based on the naive implementation.
+%
+We see also that applying an upper bound has a positive effect for both
+\glsplshort{constraint model}.
+%
+This gain is due to the fact that, for some \glspl{function}, the \gls{solution}
+computed by \gls{LLVM} is already optimal with respect to the
+\glsshort{constraint model}.
+%
+Consequently, the \glsshort{constraint solver} need only prove that there exist
+no better \gls{solution} instead of exploring the entire \gls{search space}.
+%
+Hence, the refined \gls{objective function} coupled with an upper cost bound is
+crucial for scalability.
+
+Applying a lower bound, however, does not appear to be equally beneficial; in
+fact, it even appears to be degrade solving time as the \glsshort{constraint
+  model} with both bounds fails to find the optimal \gls{solution} for one
+\gls{function} whereas the \glsshort{constraint model} with only the upper bound
+manages to find the optimal \gls{solution} for all \glspl{function}.
+%
+A possible explanation is that the lower bound computed by the relaxed
+\gls{constraint model} is too weak to be of any use and instead only interferes
+with \gls{Chuffed}'s \gls{lazy clause learning} engine.
 
 \begin{figure}
   \centering%
@@ -1722,9 +1883,65 @@ with their \gls{canonical.l} representative and then replace the original
     }%
   }
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \caption[%
+            Plot comparing solution costs for two constraint models implementing
+            the naive and refined objective function%
+          ]%
+          {%
+            Normalized optimal solution costs for two constraint models, one
+            implementing the naive objective function (baseline) and another
+            implementing the refined objective function (subject).
+            %
+            \Glspl{function} marked with \barValueNoBaselineSolution{} are
+            those for which the naive objective function fails to produce any
+            solution, and \glspl{function} marked with \barValueNoSolution{} are
+            those where the solution produced by \gls{LLVM} is already optimal
+            \wrt the model.
+            %
+            \Glspl{function} whose bars are marked with two dots are those
+            for which the \gls{subject} fails to find the optimal solution%
+          }
+  \labelFigure{obj-fun-refined-vs-naive-cycles-speedup-plot}
 \end{figure}
+
+\input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
+
+\RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
+\gls{solution} costs for two \glspl{constraint model}: one based on the naive
+\gls{objective function} with upper, serving as \gls{baseline}; and another and
+based on the refined \gls{objective function} with upper bound, serving as
+\gls{subject}.
+%
+\Glspl{function} marked with \barValueNoBaselineSolution{} are those for which
+the \gls{baseline} fails to produce any \gls{solution}, and \glspl{function}
+marked with \barValueNoSolution{} are those where the \gls{solution} produced by
+\gls{LLVM} is already optimal with respect to the \glsshort{constraint model}.
+%
+\Glspl{function} whose bars are marked with two dots are those for which the
+\gls{subject} fails to find the optimal solution.
+%
+For the \gls{baseline}, the costs range from \mbox{%
+  \num[round-precision=0]{%
+    \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMin%
+  }
+  cycles%
+} to \mbox{%
+  \num[round-precision=0]{%
+    \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMax%
+  }
+  cycles%
+}, with a maximum coefficient of variation of
+\printCoefVar{\ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesCvMax}.
+%
+We see clearly that the \glsshort{constraint model} based on the refined
+\gls{objective function} yields better code quality than the
+\glsshort{constraint model} based on the naive \gls{objective function},
+indicating that there is a significant difference between the optimal
+\gls{solution} and a \gls{solution} found using inferior solving techniques.
+%
+Hence, the refined \gls{objective function} coupled with an upper cost bound is
+crucial for code quality.
+
 
 \NewDocumentCommand{\insertSpeedupPlot}{mm}{%
   \maxsizebox{#2\textwidth}{!}{%
