@@ -1068,20 +1068,21 @@
 \newcommand{\plotSecondsFont}{\Large}
 \newcommand{\plotSeconds}[1]{{\plotSecondsFont$#1$\thinspace{}s}}
 \newcommand{\barValueFont}{}
+\newcommand{\barSymbolFont}{\LARGE}
 \newcommand{\plotBarValue}[1]{%
   {\barValueFont\speedupValue{#1}}%
 }
 \newcommand{\barValueNotOptimal}{$*$}
 \newcommand{\plotBarValueNotOptimal}{%
-  {\barValueFont\barValueNotOptimal}%
+  {\barSymbolFont\barValueNotOptimal}%
 }
 \newcommand{\barValueNoBaselineSolution}{$**$}
 \newcommand{\plotBarValueNoBaselineSolution}{%
-  {\barValueFont\barValueNoBaselineSolution}%
+  {\barSymbolFont\barValueNoBaselineSolution}%
 }
 \newcommand{\barValueNoSolution}{$***$}
 \newcommand{\plotBarValueNoSolution}{%
-  {\barValueFont\barValueNoSolution}%
+  {\barSymbolFont\barValueNoSolution}%
 }
 \newcommand{\plotSubOptSymbol}{%
   \huge\bfseries%
