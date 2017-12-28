@@ -65,7 +65,14 @@ First, it requires use of set~\glspl{variable},\!%
   $\mVar{oplace}$~\glspl{variable} are used as indices.%
 }
 %
-which are expensive and typically results in poor \gls{propagation}.
+which are expensive to use and typically results in poor \gls{propagation}.
+%
+Moreover, set \glspl{variable} are not supported by all \glspl{constraint
+  solver}.
+%
+This is for example the case of \gls{Chuffed}, which is used in the experimental
+setup applied in this dissertation, thus preventing us from evaluating the
+impact of the naive implementation.
 %
 Second, many \gls{implied.c} \glspl{constraint} can be applied by introducing
 the notion of in which \glspl{block} \glspl{datum} are \gls{use.d}[d].
@@ -1718,9 +1725,6 @@ with their \gls{canonical.l} representative and then replace the original
   \caption{TODO}
   \labelFigure{TODO}
 \end{figure}
-
-\todo{could not run experiments for other model refinements because Chuffed does
-  not support set variables}
 
 \NewDocumentCommand{\insertSpeedupPlot}{mm}{%
   \maxsizebox{#2\textwidth}{!}{%
