@@ -1109,6 +1109,11 @@
 % MISC
 %======
 
+\newcommand{\getMaxCoefVarOf}[2]{%
+  \pgfmathmax{#1}{#2}%
+  \pgfmathprintnumber[fixed,precision=2]{\pgfmathresult}%
+}
+
 \newcommand{\supportNo}{$\cdot$}
 \newcommand{\supportYes}{%
   \begin{tikzpicture}

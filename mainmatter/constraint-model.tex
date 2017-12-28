@@ -1394,7 +1394,13 @@ All \glspl{function} are solved to optimality.
 For the \gls{baseline}, the solving times range from
 \SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
 to
-\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s}.
+\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s},
+with a maximum coefficient of variation of
+\getMaxCoefVarOf{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax%
+}{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax%
+}.
 %
 As can be clearly seen from the data, \glsplshort{constraint model} based on
 \glspl{alternative value} yield significantly lower solving times than those
@@ -1886,8 +1892,13 @@ of number of conditional branch \glspl{instruction}.
 For the \gls{baseline}, the solving times range from
 \SI{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
 to
-\SI[round-precision=0]{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s},
-and the costs range from \num[round-precision=0]{%
+\SI[round-precision=0]{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s}
+with a maximum coefficient of variation of
+\getMaxCoefVarOf{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax%
+}{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax%
+}, and the costs range from \num[round-precision=0]{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin}~cycles to
 \num[round-precision=0]{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax}~cycles.
