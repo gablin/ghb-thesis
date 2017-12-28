@@ -1109,9 +1109,13 @@
 % MISC
 %======
 
+\newcommand{\printCoefVar}[1]{%
+  \pgfmathprintnumber[fixed,precision=2]{#1}%
+}
+
 \newcommand{\getMaxCoefVarOf}[1]{%
   \pgfmathmax{#1}{}%
-  \pgfmathprintnumber[fixed,precision=2]{\pgfmathresult}%
+  \printCoefVar{\pgfmathresult}%
 }
 
 \newcommand{\supportNo}{$\cdot$}
