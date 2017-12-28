@@ -1377,7 +1377,7 @@ lead to shorter solving times.
           {%
             Normalized solving times for two constraint models that supports
             value reuse, one based on match duplication (baseline) and another
-            based on alternative values%
+            based on alternative values (subject)%
           }
   \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
@@ -1387,7 +1387,8 @@ lead to shorter solving times.
 \RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
 solving times (including presolving) for the two \glspl{constraint model}
 described above, with the \glsshort{constraint model} based on \gls{match
-  duplication} serving as \gls{baseline}.
+  duplication} serving as \gls{baseline} and the \glsshort{constraint model}
+based on \glspl{alternative values} serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1440,7 +1441,7 @@ we expect the former to lead to lower cost.
           ]%
           {%
             Normalized optimal solution costs for two constraint models, one
-            with value reuse support and another without (baseline)%
+            with value reuse support (subject) and another without (baseline)%
           }
   \labelFigure{alt-values-vs-without-cycles-plot}
 \end{figure}
@@ -1450,7 +1451,8 @@ we expect the former to lead to lower cost.
 \RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
 \gls{solution} costs for the two \glspl{constraint model} describe above, with
 the \glsshort{constraint model} without \gls{value reuse} support serving as
-\gls{baseline}.
+\gls{baseline} and the \glsshort{constraint model} with \gls{value reuse}
+support serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1845,7 +1847,7 @@ lead to both shorter solving times and better code quality.
           {%
             Normalized solving times for two constraint models that supports
             jump insertion, one based on branch extension (baseline) and another
-            based on DTB patterns%
+            based on DTB patterns (subject)%
           }
   \labelFigure{%
     dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
@@ -1867,7 +1869,7 @@ lead to both shorter solving times and better code quality.
           {%
             Normalized optimal solution costs for two constraint models that
             supports jump insertion, one based on branch extension (baseline)
-            and another based on DTB patterns%
+            and another based on DTB patterns (subject)%
           }
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
@@ -1884,7 +1886,8 @@ and~\refFigure*{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 shows the normalized solving times (including presolving) and \gls{solution}
 costs, respectively, for the two \glspl{constraint model} described above, with
 the \glsshort{constraint model} based on \gls{branch extension} serving as
-\gls{baseline}.
+\gls{baseline} and the \glsshort{constraint model} based on \glspl{DTB pattern}
+serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
