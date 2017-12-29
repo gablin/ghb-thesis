@@ -2217,38 +2217,39 @@ with a maximum coefficient of variation of
 \begin{table}
   \centering%
   \figureFontSize%
-  \begin{tabular}{cc}
+  \begin{tabular}{p{8mm}*{14}{@{\hspace{.37em}}c@{\hspace{.37em}}}}
     \toprule
-        \tabhead equation
-      & \tabhead geom.\ mean impr. \\
+      & \multicolumn{14}{c}{\tabhead equation} \\
+    \cmidrule{2-15}%
+      & \tabhead\refEquation*{impl-cons-defs-dominate-defs}
+      & \tabhead\refEquation*{impl-cons-defs-in-spanned-blocks}
+      & \tabhead\refEquation*{impl-cons-identical-entry-blocks}
+      & \tabhead\refEquation*{impl-cons-defs-dominate-entry-blocks}
+      & \tabhead\refEquation*{impl-cons-place-phi-ops-same-as-def-edges}
+      & \tabhead\refEquation*{impl-cons-no-span-uses}
+      & \tabhead\refEquation*{impl-cons-no-span-defs}
+      & \tabhead\refEquation*{impl-cons-no-span-use-defs}
+      & \tabhead\refEquation*{impl-cons-spanned-input}
+      & \tabhead\refEquation*{impl-cons-used-data-must-be-available}
+      & \tabhead\refEquation*{impl-cons-exterior-data-must-be-available}
+      & \tabhead\refEquation*{impl-cons-locs-of-uses}
+      & \tabhead\refEquation*{impl-cons-locs-of-defs}
+      & \tabhead\refEquation*{impl-cons-fix-fall-throughs} \\
     \midrule
-        \refEquation*{impl-cons-defs-dominate-defs}
-      & \num{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-defs-in-spanned-blocks}
-      & \num{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-identical-entry-blocks}
-      & \num{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-defs-dominate-entry-blocks}
-      & \num{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-place-phi-ops-same-as-def-edges}
-      & \num{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-no-span-uses}
-      & \num{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-no-span-defs}
-      & \num{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-no-span-use-defs}
-      & \num{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-spanned-input}
-      & \num{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-used-data-must-be-available}
-      & \num{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-exterior-data-must-be-available}
-      & \num{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-locs-of-uses}
-      & \num{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-locs-of-defs}
-      & \num{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \refEquation*{impl-cons-fix-fall-throughs}
+        \tabhead GMI
+      & \num{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \num{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
     \bottomrule
   \end{tabular}
