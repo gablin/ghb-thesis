@@ -1792,8 +1792,17 @@ serving as \gls{subject}.
 \Glspl{function} marked with \barValueNotOptimal{} cannot be solved optimally
 within the time limit; all other \glspl{function} are solved to optimality.
 %
-For the solving times, the maximum coefficient of variation is
-\getMaxCoefVarOf{%
+The solving times range from
+\SIMinOf{
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMin
+}{\s} to
+\SIMaxOf[round-precision=0]{
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMax
+}{\s},
+with a maximum coefficient of variation of
+\numMaxOf{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
@@ -1841,8 +1850,23 @@ This observation also underscores the fact that seemingly trivial changes to a
 percentage of optimal \glspl{solution} found over time for the five
 \glspl{constraint model} described above.
 %
-For the solving times, the maximum coefficient of variation is
-\getMaxCoefVarOf{%
+The solving times range from
+\SIMinOf{
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeAvgMin,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeAvgMin,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeAvgMin,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWUbSolvingTimeAvgMin,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeAvgMin
+}{\s} to
+\SIMaxOf[round-precision=0]{
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeAvgMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeAvgMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeAvgMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWUbSolvingTimeAvgMax,
+  \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeAvgMax
+}{\s},
+with a maximum coefficient of variation of
+\numMaxOf{
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeCvMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeCvMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeCvMax,
@@ -1921,18 +1945,19 @@ marked with \barValueNoSolution{} are those where the \gls{solution} produced by
 \Glspl{function} whose bars are marked with two dots are those for which the
 \gls{subject} fails to find the optimal solution.
 %
-For the \gls{baseline}, the costs range from \mbox{%
-  \num[round-precision=0]{%
-    \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMin%
-  }
-  cycles%
-} to \mbox{%
-  \num[round-precision=0]{%
-    \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMax%
-  }
-  cycles%
-}, with a maximum coefficient of variation of
-\printCoefVar{\ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesCvMax}.
+The costs range from
+\numMinOf{
+  \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMin,
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesAvgMin
+}~cycles to
+\numMaxOf{
+  \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMax,
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesAvgMax
+}~cycles, with a maximum coefficient of variation of
+\numMaxOf{
+  \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesCvMax,
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
+}.
 %
 We see clearly that the \glsshort{constraint model} based on the refined
 \gls{objective function} yields better code quality than the

@@ -1397,14 +1397,20 @@ solving times (including the time for presolving) for the two \glspl{constraint
 %
 All \glspl{function} are solved to optimality.
 %
-For the \gls{baseline}, the solving times range from
-\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
+The solving times range from
+\SIMinOf{
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
+}{\s}
 to
-\SI{\AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s},
+\SIMinOf{
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
+}{\s},
 with a maximum coefficient of variation of
-\getMaxCoefVarOf{%
+\numMaxOf{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
-  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax%
 }.
 %
 From the plot, we see clearly that the \glsplshort{constraint model} based on
@@ -1458,13 +1464,15 @@ support serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
-For the \gls{baseline}, the costs range from \mbox{%
-  \num[round-precision=0]{\AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMin}
-  cycles%
-} to \mbox{%
-  \num[round-precision=0]{\AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax}
-  cycles%
-}.
+The costs range from
+\numMinOf[round-precision=0]{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesAvgMin,
+  \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMin
+}~cycles to
+\numMaxOf[round-precision=0]{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesAvgMax,
+  \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
+}~cycles.
 %
 From the plot, we see clearly that \glsplshort{constraint model} supporting
 \gls{value reuse} produce \glspl{solution} with considerably lower cost than
@@ -1895,18 +1903,29 @@ on \glspl{DTB pattern} serving as \gls{subject}.
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
 %
-For the \gls{baseline}, the solving times range from
-\SI{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin}{\s}
+The solving times range from
+\SIMinOf{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
+}{\s}
 to
-\SI[round-precision=0]{\DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax}{\s}
+\SIMaxOf{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
+}{\s}
 with a maximum coefficient of variation of
-\getMaxCoefVarOf{%
+\numMaxOf{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax
-}, and the costs range from \num[round-precision=0]{%
-  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin}~cycles to
-\num[round-precision=0]{%
-  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax}~cycles.
+}, and the costs range from
+\numMinOf[round-precision=0]{
+  \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMin,
+  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin
+}~cycles to
+\numMaxOf[round-precision=0]{
+  \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMax,
+  \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
+}~cycles.
 %
 From the plot, we see clearly that the \glsplshort{constraint model} based on
 \glspl{DTB pattern} yield significantly lower solving times than those based on

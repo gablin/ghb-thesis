@@ -1100,22 +1100,48 @@
 
 \sisetup{
   round-mode = places,
-  round-precision = 3,
+  round-precision = 2,
 }
-
 
 
 %======
 % MISC
 %======
 
-\newcommand{\printCoefVar}[1]{%
-  \pgfmathprintnumber[fixed,precision=2]{#1}%
+\usepgflibrary{fpu}
+
+\NewDocumentCommand{\minOf}{m}{%
+  \pgfkeys{/pgf/fpu}% Enable large values
+  \pgfkeys{/pgf/fpu/output format=fixed}%
+  \pgfmathparse{min(#1)}%
+  \pgfkeys{/pgf/fpu=false}% Restore
 }
 
-\newcommand{\getMaxCoefVarOf}[1]{%
-  \pgfmathmax{#1}{}%
-  \printCoefVar{\pgfmathresult}%
+\NewDocumentCommand{\maxOf}{m}{%
+  \pgfkeys{/pgf/fpu}% Enable large values
+  \pgfkeys{/pgf/fpu/output format=fixed}%
+  \pgfmathparse{max(#1)}%
+  \pgfkeys{/pgf/fpu=false}% Restore
+}
+
+\NewDocumentCommand{\numMinOf}{O{}m}{%
+  \minOf{#2}%
+  \num[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\numMaxOf}{O{}m}{%
+  \maxOf{#2}%
+  \num[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\SIMinOf}{O{}mm}{%
+  \minOf{#2}%
+  \SI[#1]{\pgfmathresult}{#3}%
+}
+
+\NewDocumentCommand{\SIMaxOf}{O{}mm}{%
+  \maxOf{#2}%
+  \SI[#1]{\pgfmathresult}{#3}%
 }
 
 \newcommand{\supportNo}{$\cdot$}
