@@ -1357,10 +1357,10 @@ code yielded by the \glspl{solution} (our current implementation is not yet able
 to hook back into \gls{LLVM} in order to generate executable code).
 
 When summarizing normalized values, however, we do not use \gls{zero-centered
-  normalization} as the geometric mean cannot be computed from such values.
+  normalization} as the geometric mean cannot be computed for such values.
 %
 In such cases, we instead use the values normalized using the \gls{speedup}
-method.
+method as the geometric mean can be computed for such values.
 
 
 \subsubsection{Match Duplication vs. Alternative Values}
