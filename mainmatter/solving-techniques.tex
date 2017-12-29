@@ -1797,12 +1797,13 @@ For the solving times, the maximum coefficient of variation is
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-Except for two \glspl{function} ({\codeFont alloc\_name\_is\_s} and {\codeFont
-  debug\_dump\_byte}), the \gls{divide-then-multiply method} yields
-significantly lower solving times than the other method.
+Except for three \glspl{function} ({\codeFont alloc\_name\_is\_s}, {\codeFont
+  debug\_dump\_byte}, and {\codeFont write\_file\_trai}), the
+\gls{divide-then-multiply method} yields significantly lower solving times than
+the other method.
 %
-In one case ({\codeFont checksum}), the solving time is more than an order of
-magnitude less.
+In three cases ({\codeFont checksum}, {\codeFont gl\_swap4}, and {\codeFont
+  jinit\_forward\_d}), the solving time is more than five times shorter.
 %
 Hence, when implementing the refined \gls{objective function}, the
 \glspl{divide-then-multiply method} is a better design choice over the
