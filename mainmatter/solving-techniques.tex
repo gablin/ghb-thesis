@@ -1753,6 +1753,9 @@ Moreover, we expect the \glsplshort{constraint model} with an upper cost bound
 to perform better than those with no bounds, and those with both cost bounds to
 perform better than those with only one or no bounds.
 %
+Hence, in this case the \gls{geometric mean improvement} should be greater
+than~\num{1}.
+%
 No hypothesis is given for the evaluation of the two methods for computing the
 cost matrix.
 
@@ -1801,27 +1804,31 @@ The solving times range from
 \SIMaxOf[round-precision=0]{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+}{\s} with a maximum coefficient of variation of
 \numMaxOf{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-Except for three \glspl{function} ({\codeFont alloc\_name\_is\_s}, {\codeFont
-  debug\_dump\_byte}, and {\codeFont write\_file\_trai}), the
-\gls{divide-then-multiply method} yields significantly lower solving times than
-the other method.
+Since the geometric mean speedup is \num{%
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, we conclude that the \gls{divide-then-multiply method} yields significantly
+lower solving times than the other method.
 %
 In three cases ({\codeFont checksum}, {\codeFont gl\_swap4}, and {\codeFont
-  jinit\_forward\_d}), the solving time is more than five times shorter.
+  jinit\_forward\_d}), for example, the method reduces the solving time by more
+than five times.
 %
-Hence, when implementing the refined \gls{objective function}, the
-\glspl{divide-then-multiply method} is a better design choice over the
-\gls{multiply-then-divide method}.
+However, in three other cases ({\codeFont alloc\_name\_is\_s}, {\codeFont
+  debug\_dump\_byte}, and {\codeFont write\_file\_trai}), the solving time is
+significantly less for the other method.
+%
+Hence both methods are applicable for different \glspl{function}, which could be
+exploited by applying a portfolio of \gls{search} methods in parallel.
 %
 This observation also underscores the fact that seemingly trivial changes to a
 \gls{constraint model} may have considerable impact on solving time.
+
 
 \begin{figure}
   \renewcommand{\plotPercentageFont}{\large}
@@ -1960,10 +1967,13 @@ The costs range from
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
 }.
 %
-We see clearly that the \glsshort{constraint model} based on the refined
-\gls{objective function} yields better code quality than the
-\glsshort{constraint model} based on the naive \gls{objective function},
-indicating that there is a significant difference between the optimal
+The geometric mean speedup is \num{%
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
+}, thus defending our claim that \glsplshort{constraint model} based on the
+refined \gls{objective function} yield better code quality than those based on
+the naive \gls{objective function}.
+%
+This also shows that there is a significant difference between the optimal
 \gls{solution} and a \gls{solution} found using inferior solving techniques.
 %
 Hence, the refined \gls{objective function} coupled with an upper cost bound is

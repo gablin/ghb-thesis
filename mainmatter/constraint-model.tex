@@ -1360,7 +1360,8 @@ When summarizing normalized values, however, we do not use \gls{zero-centered
   normalization} as the geometric mean cannot be computed for such values.
 %
 In such cases, we instead use the values normalized using the \gls{speedup}
-method as the geometric mean can be computed for such values.
+method as the geometric mean can be computed for such values, which we call the
+\gls!{geometric mean improvement}.
 
 
 \subsubsection{Match Duplication vs. Alternative Values}
@@ -1372,7 +1373,9 @@ set of \glspl{function} selected from \gls{MediaBench}.
 %
 Since \gls{match duplication} yields an exponential increase in number of
 \glspl{match} compared to \glspl{alternative value}, we expect the latter to
-lead to shorter solving times.
+lead to an overall reducation in solving time.
+%
+Hence the \gls{geometric mean improvement} should be greater than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1418,10 +1421,12 @@ to
 with a maximum coefficient of variation of
 \numMaxOf{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
-  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-From the plot, we see clearly that the \glsplshort{constraint model} based on
+The \gls{geometric mean improvement} is \num{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, thus defending our claim that \glsplshort{constraint model} based on
 \glspl{alternative value} yield significantly lower solving times than those
 based on \gls{match duplication}.
 %
@@ -1444,7 +1449,9 @@ without this support for the set of \glspl{function} selected from
 \gls{MediaBench}.
 %
 Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
-we expect the former to lead to lower cost.
+we expect the former to lead to an overall reduction in cost.
+%
+Hence the \gls{geometric mean improvement} should be greater than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1482,7 +1489,9 @@ The costs range from
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
 }~cycles.
 %
-From the plot, we see clearly that \glsplshort{constraint model} supporting
+The \gls{geometric mean improvement} is \num{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+}, thus defending our claim that \glsplshort{constraint model} supporting
 \gls{value reuse} produce \glspl{solution} with considerably lower cost than
 those without.
 %
@@ -1847,6 +1856,9 @@ Since \gls{branch extension} yields a larger number of \glspl{block} compared to
 \glspl{DTB pattern}, many of which will be empty and thereby
 causing emission of redundant jump \glspl{instruction}, we expect the latter to
 lead to both shorter solving times and better code quality.
+%
+Hence the \gls{geometric mean improvement} for both should be greater
+than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1935,18 +1947,22 @@ with a maximum coefficient of variation of
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
 }~cycles.
 %
-From the plot, we see clearly that the \glsplshort{constraint model} based on
+The \gls{geometric mean improvement} for solving time is \num{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, thus defending our claim that \glsplshort{constraint model} based on
 \glspl{DTB pattern} yield significantly lower solving times than those based on
 \gls{branch extension}.
 %
-With the exception of one \gls{function} ({\codeFont internal\_transp}) that has
-more than one conditional branch \gls{instruction}, when the number of
-conditional branch \glspl{instruction} increases -- up to \num{13}, in the case
-of {\codeFont nextkeypacket} -- the \gls{search space} for \gls{branch
-  extension} grows faster than for \glspl{DTB pattern}.
+We also see clearly from the plot that when the number of conditional branch
+\glspl{instruction} increases -- up to \num{13}, in the case of {\codeFont
+  nextkeypacket} -- the \gls{search space} for \gls{branch extension} grows
+faster than for \glspl{DTB pattern}.
 %
-In addition, in some cases \glspl{DTB pattern} result in optimal
-\glspl{solution} with slightly lower cost compared with \gls{branch extension}.
+In addition, the \gls{geometric mean improvement} for cost is \num{%
+  \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
+}, thus defending our claim that, in some cases, \glspl{DTB pattern} result in
+optimal \glspl{solution} with slightly lower cost compared with \gls{branch
+  extension}.
 %
 Hence, when implementing insertion of jump \glspl{instruction}, \glspl{DTB
   pattern} is a better design choice over \gls{branch extension}.
