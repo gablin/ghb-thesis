@@ -2004,6 +2004,43 @@ crucial for code quality.
 
 \subsubsection{Implied Constraints}
 
+We evaluate the impact of each \gls{implied.c} \gls{constraint}
+(\refEquationRange{%
+  impl-cons-defs-dominate-defs%
+}{%
+  impl-cons-fix-fall-throughs%
+}) by comparing the solving times exhibited by two versions of the
+\gls{constraint model} -- one with the \gls{constraint} and another without --
+for the set of sampled \glspl{function}.
+%
+We expect all \glspl{constraint} except
+Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refEquation*{impl-cons-spanned-input} to lead to an overall reduction in
+solving time.
+%
+Hence, in these cases the \gls{geometric mean improvement} should be greater
+than~\num{1}.
+%
+Because the \gls{pattern set} used in these experiments contains only
+\glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
+Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refEquation*{impl-cons-spanned-input} to have no impact on solving time.
+%
+Hence, in these cases the \gls{geometric mean improvement} should be equal
+to~\num{1}.
+
+\def\mkFigureCaption{%
+  \caption[%
+            Set of plots for evaluating each implied constraint's impact on
+            solving time%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for two
+            constraint models: one with a given implied constraint (subject) and
+            another without (baseline)%
+          }
+}
+
 \begin{figure}
   \centering
 
@@ -2061,11 +2098,184 @@ crucial for code quality.
 
 \renewcommand{\thefigure}{\oldthefigure}
 
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-defs-dominate-defs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-defs-in-spanned-blocks-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-identical-entry-blocks-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-defs-dominate-entry-blocks-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-place-phi-ops-same-as-def-edges-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-no-span-uses-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-no-span-defs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-no-span-use-defs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-spanned-input-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-used-data-must-be-available-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-exterior-data-must-be-available-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-locs-of-uses-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-locs-of-defs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-fix-fall-throughs-pre+solving-time-speedup.stats%
+}
+
 \RefFigure{impl-cons-vs-no-cons-solving-time-plots} shows the normalized solving
-times (including presolving time) for two \glspl{constraint model}: one based on
-the naive \gls{objective function} with upper, serving as \gls{baseline}; and
-another and based on the refined \gls{objective function} with upper bound,
-serving as \gls{subject}.
+times (including presolving time) for two \glspl{constraint model}: one with a
+given \gls{implied.c} \gls{constraint}, serving as \gls{subject}; and another
+without the \gls{constraint}, serving as \gls{baseline}.
+%
+The solving times range from
+\SIMinOf{
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+}{\s} to
+\SIMaxOf[round-precision=0]{
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+}{\s}
+with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+\begin{table}
+  \centering%
+  \figureFontSize%
+  \begin{tabular}{cc}
+    \toprule
+        \tabhead equation
+      & \tabhead geom.\ mean impr. \\
+    \midrule
+        \refEquation*{impl-cons-defs-dominate-defs}
+      & \num{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-defs-in-spanned-blocks}
+      & \num{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-identical-entry-blocks}
+      & \num{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-defs-dominate-entry-blocks}
+      & \num{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-place-phi-ops-same-as-def-edges}
+      & \num{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-no-span-uses}
+      & \num{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-no-span-defs}
+      & \num{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-no-span-use-defs}
+      & \num{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-spanned-input}
+      & \num{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-used-data-must-be-available}
+      & \num{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-exterior-data-must-be-available}
+      & \num{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-locs-of-uses}
+      & \num{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-locs-of-defs}
+      & \num{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \refEquation*{impl-cons-fix-fall-throughs}
+      & \num{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+    \bottomrule
+  \end{tabular}
+
+  \caption{TODO}
+  \labelTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}
+\end{table}
+%
+The \glspl{geometric mean improvement}, given in
+\refTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}, defend our
+claim that Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
+\refEquation*{impl-cons-identical-entry-blocks},
+\refEquation*{impl-cons-no-span-defs},
+\refEquation*{impl-cons-used-data-must-be-available},
+\refEquation*{impl-cons-exterior-data-must-be-available}, and
+\refEquation*{impl-cons-fix-fall-throughs} lead to a reduction in solving time
+and that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refEquation*{impl-cons-spanned-input} have no impact on solving time.
+%
+However, \refEquation{impl-cons-place-phi-ops-same-as-def-edges} appears to have
+no impact on solving time, and
+Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks},
+\refEquation*{impl-cons-no-span-uses},
+\refEquation*{impl-cons-no-span-use-defs},
+\refEquation*{impl-cons-locs-of-uses}, and \refEquation*{impl-cons-locs-of-defs}
+appear to have a negative impact on solving time.
+
 
 
 \subsubsection{Symmetry and Dominance Breaking Constraints}
