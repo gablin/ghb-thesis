@@ -1375,13 +1375,14 @@ lead to shorter solving times.
   }
 
   \caption[%
-            Plot comparing solving times for two constraint models supporting
-            value reuse%
+            Plot for evaluating match duplication's and alternative values'
+            impact on solving time%
           ]%
           {%
-            Normalized solving times for two constraint models that supports
-            value reuse, one based on match duplication (baseline) and another
-            based on alternative values (subject)%
+            Normalized solving times (including the time for presolving) for two
+            constraint models that supports value reuse, one based on match
+            duplication (baseline) and another based on alternative values
+            (subject)%
           }
   \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
@@ -1389,10 +1390,10 @@ lead to shorter solving times.
 \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
 
 \RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
-solving times (including presolving) for the two \glspl{constraint model}
-described above, with the \glsshort{constraint model} based on \gls{match
-  duplication} serving as \gls{baseline} and the \glsshort{constraint model}
-based on \glspl{alternative value} serving as \gls{subject}.
+solving times (including the time for presolving) for the two \glspl{constraint
+  model} described above, with the \glsshort{constraint model} based on
+\gls{match duplication} serving as \gls{baseline} and the \glsshort{constraint
+  model} based on \glspl{alternative value} serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1406,7 +1407,7 @@ with a maximum coefficient of variation of
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-We see clearly that the \glsplshort{constraint model} based on
+From the plot, we see clearly that the \glsplshort{constraint model} based on
 \glspl{alternative value} yield significantly lower solving times than those
 based on \gls{match duplication}.
 %
@@ -1439,10 +1440,7 @@ we expect the former to lead to lower cost.
     }%
   }
 
-  \caption[%
-            Plot comparing optimal solution costs for two constraint models with
-            and without value reuse%
-          ]%
+  \caption[Plot for evaluating value reuse's impact on code quality]%
           {%
             Normalized optimal solution costs for two constraint models, one
             with value reuse support (subject) and another without (baseline)%
@@ -1468,8 +1466,9 @@ For the \gls{baseline}, the costs range from \mbox{%
   cycles%
 }.
 %
-We see clearly that \glsplshort{constraint model} supporting \gls{value reuse}
-produce \glspl{solution} with considerably lower cost than those without.
+From the plot, we see clearly that \glsplshort{constraint model} supporting
+\gls{value reuse} produce \glspl{solution} with considerably lower cost than
+those without.
 %
 In one case ({\codeFont putseqdispext}), for example, where two constants are
 frequently used as arguments to \gls{function} call \glspl{instruction} and thus
@@ -1849,9 +1848,9 @@ lead to both shorter solving times and better code quality.
             jump instruction insertion%
           ]%
           {%
-            Normalized solving times for two constraint models that supports
-            jump insertion, one based on branch extension (baseline) and another
-            based on DTB patterns (subject)%
+            Normalized solving times (including the time for presolving) for two
+            constraint models that supports jump insertion, one based on branch
+            extension (baseline) and another based on DTB patterns (subject)%
           }
   \labelFigure{%
     dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
@@ -1887,11 +1886,11 @@ lead to both shorter solving times and better code quality.
 Figures~\refFigure*{%
   dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
 and~\refFigure*{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
-shows the normalized solving times (including presolving) and \gls{solution}
-costs, respectively, for the two \glspl{constraint model} described above, with
-the \glsshort{constraint model} based on \gls{branch extension} serving as
-\gls{baseline} and the \glsshort{constraint model} based on \glspl{DTB pattern}
-serving as \gls{subject}.
+shows the normalized solving times (including the time for presolving) and
+\gls{solution} costs, respectively, for the two \glspl{constraint model}
+described above, with the \glsshort{constraint model} based on \gls{branch
+  extension} serving as \gls{baseline} and the \glsshort{constraint model} based
+on \glspl{DTB pattern} serving as \gls{subject}.
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
@@ -1909,8 +1908,8 @@ with a maximum coefficient of variation of
 \num[round-precision=0]{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax}~cycles.
 %
-We see clearly that the \glsplshort{constraint model} based on \glspl{DTB
-  pattern} yield significantly lower solving times than those based on
+From the plot, we see clearly that the \glsplshort{constraint model} based on
+\glspl{DTB pattern} yield significantly lower solving times than those based on
 \gls{branch extension}.
 %
 With the exception of one \gls{function} ({\codeFont internal\_transp}) that has

@@ -1765,14 +1765,14 @@ cost matrix.
   }
 
   \caption[%
-            Plot comparing solving times for two constraint models implementing
-            the refined objective function%
+            Plot for evaluating the refined objective function's impact on
+            solving time%
           ]%
           {%
-            Normalized solving times for two constraint models implementing the
-            refined objective function, one based on the multiply-then-divide
-            method (baseline) and another based on the divide-then-multiply
-            method (subject).
+            Normalized solving times (including the time for presolving) for two
+            constraint models implementing the refined objective function, one
+            based on the multiply-then-divide method (baseline) and another
+            based on the divide-then-multiply method (subject).
             %
             \Glspl{function} marked with \barValueNotOptimal{} cannot be solved
             optimally within the time limit%
@@ -1783,10 +1783,11 @@ cost matrix.
 \input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
 
 \RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
-(including presolving) for the two \glspl{constraint model} described above,
-with the \glsshort{constraint model} based on the \gls{multiply-then-divide
-  method} serving as \gls{baseline} and the \glsshort{constraint model} based on
-the \gls{divide-then-multiply method} serving as \gls{subject}.
+(including the time for presolving) for the two \glspl{constraint model}
+described above, with the \glsshort{constraint model} based on the
+\gls{multiply-then-divide method} serving as \gls{baseline} and the
+\glsshort{constraint model} based on the \gls{divide-then-multiply method}
+serving as \gls{subject}.
 %
 \Glspl{function} marked with \barValueNotOptimal{} cannot be solved optimally
 within the time limit; all other \glspl{function} are solved to optimality.
@@ -1823,9 +1824,8 @@ This observation also underscores the fact that seemingly trivial changes to a
   }
 
   \caption[%
-            Plot comparing percentage of optimal solutions found over time for
-            five constraint models implementing the naive and refined objective
-            function%
+            Plot for evaluating the refined objective function's impact on
+            finding optimal solutions%
           ]%
           {%
             Percentage of optimal solutions found over time for five constraint
@@ -1885,8 +1885,8 @@ with \gls{Chuffed}'s \gls{lazy clause learning} engine.
   }
 
   \caption[%
-            Plot comparing solution costs for two constraint models implementing
-            the naive and refined objective function%
+            Plot for evaluating the refined objective function's impact on
+            code quality%
           ]%
           {%
             Normalized optimal solution costs for two constraint models, one
