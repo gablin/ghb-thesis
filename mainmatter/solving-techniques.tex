@@ -1982,17 +1982,13 @@ crucial for code quality.
   }{#2}
 }
 
-\NewDocumentCommand{\mkSolvTechSubfigure}{som}{%
-  \IfBooleanTF{#1}{%
-    \insertSolvTechSpeedupPlot{#3}{.49}%
-  }{%
-    \subcaptionbox{%
-                    \IfBooleanTF{#2}{#2}{\refEquation{#3}}%
-                    \labelFigure{solv-tech-disable-#3}%
-                  }{%
-                    \insertSolvTechSpeedupPlot{#3}{.49}%
-                  }%
-  }%
+\NewDocumentCommand{\mkSolvTechSubfigure}{om}{%
+  \subcaptionbox{%
+                  \IfValueTF{#1}{#1}{\refEquation{#2}}%
+                  \labelFigure{solv-tech-disable-#2}%
+                }{%
+                  \insertSolvTechSpeedupPlot{#2}{.49}%
+                }%
 }
 
 
@@ -2005,53 +2001,61 @@ crucial for code quality.
   \hfill%
   \mkSolvTechSubfigure{impl-cons-defs-in-spanned-blocks}
 
+  \vspace{\betweensubfigures}
+
   \mkSolvTechSubfigure{impl-cons-identical-entry-blocks}%
   \hfill%
   \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}
 
-  \mkSolvTechSubfigure{impl-cons-place-phi-ops-same-as-def-edges}
+  \vspace{\betweensubfigures}
 
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
-
-\begin{figure}
-  \centering
-
+  \mkSolvTechSubfigure{impl-cons-place-phi-ops-same-as-def-edges}%
+  \hfill%
   \mkSolvTechSubfigure{impl-cons-no-span-uses}%
-  \hfill%
-  \mkSolvTechSubfigure{impl-cons-no-span-defs}
 
-  \mkSolvTechSubfigure{impl-cons-no-span-use-defs}%
-  \hfill%
-  \mkSolvTechSubfigure{impl-cons-spanned-input}
+  \vspace{\betweensubfigures}
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \mkSolvTechSubfigure{impl-cons-no-span-defs}%
+  \hfill%
+  \mkSolvTechSubfigure{impl-cons-no-span-use-defs}
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{impl-cons-spanned-input}%
+  \hfill%
+  \mkSolvTechSubfigure{impl-cons-used-data-must-be-available}
+
+  \mkFigureCaption
+  \labelFigure{impl-cons-vs-no-cons-solving-time-plots}
 \end{figure}
 
+\let\oldthefigure\thefigure
+\renewcommand{\thefigure}{\oldthefigure{} (cont.)}
+
 \begin{figure}
+  \ContinuedFloat
   \centering
 
-  \mkSolvTechSubfigure{impl-cons-used-data-must-be-available}%
+  \mkSolvTechSubfigure{impl-cons-exterior-data-must-be-available}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-exterior-data-must-be-available}
+  \mkSolvTechSubfigure{impl-cons-locs-of-uses}
 
-  \mkSolvTechSubfigure{impl-cons-locs-of-uses}%
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{impl-cons-locs-of-defs}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-locs-of-defs}
+  \mkSolvTechSubfigure{impl-cons-fix-fall-throughs}
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \mkFigureCaption
 \end{figure}
 
-\begin{figure}
-  \centering%
-  \mkSolvTechSubfigure*{impl-cons-fix-fall-throughs}
+\renewcommand{\thefigure}{\oldthefigure}
 
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
+\RefFigure{impl-cons-vs-no-cons-solving-time-plots} shows the normalized solving
+times (including presolving time) for two \glspl{constraint model}: one based on
+the naive \gls{objective function} with upper, serving as \gls{baseline}; and
+another and based on the refined \gls{objective function} with upper bound,
+serving as \gls{subject}.
 
 
 \subsubsection{Symmetry and Dominance Breaking Constraints}
@@ -2063,9 +2067,13 @@ crucial for code quality.
   \hfill%
   \mkSolvTechSubfigure{dom-cons-operands-of-non-selected-matches}
 
+  \vspace{\betweensubfigures}
+
   \mkSolvTechSubfigure{impl-cons-input-operands-not-taking-min-value}%
   \hfill%
   \mkSolvTechSubfigure{dom-cons-interch-data-chains}
+
+  \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{dom-cons-null-copy-match-selection}%
   \hfill%
@@ -2079,44 +2087,33 @@ crucial for code quality.
 \subsubsection{Presolving}
 
 \begin{figure}
-  \centering%
-  \mkSolvTechSubfigure*[Dominated matches]{dom-matches}
-
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
-
-\begin{figure}
   \centering
 
+  \mkSolvTechSubfigure[Dominated matches]{dom-matches}%
+  \hfill%
   \mkSolvTechSubfigure{illegal-matches-uncovered-ops}%
-  \hfill%
-  \mkSolvTechSubfigure{illegal-matches-undefined-data}
 
-  \mkSolvTechSubfigure{illegal-matches-kills}%
-  \hfill%
-  \mkSolvTechSubfigure{illegal-matches-def-locs}
+  \vspace{\betweensubfigures}
 
+  \mkSolvTechSubfigure{illegal-matches-undefined-data}%
+  \hfill%
+  \mkSolvTechSubfigure{illegal-matches-kills}
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{illegal-matches-def-locs}%
+  \hfill%
   \mkSolvTechSubfigure{illegal-matches-use-locs}
 
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
-
-\begin{figure}
-  \centering
+  \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{redun-kills}%
   \hfill%
   \mkSolvTechSubfigure{redun-non-null-copy-matches}
 
-  \caption{TODO}
-  \labelFigure{TODO}
-\end{figure}
+  \vspace{\betweensubfigures}
 
-\begin{figure}
-  \centering%
-  \mkSolvTechSubfigure*[Canonical locations]{canonical-locs}
+  \mkSolvTechSubfigure[Canonical locations]{canonical-locs}
 
   \caption{TODO}
   \labelFigure{TODO}
