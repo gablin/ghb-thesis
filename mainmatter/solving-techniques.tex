@@ -2004,7 +2004,7 @@ crucial for code quality.
 
 \subsubsection{Implied Constraints}
 
-We evaluate the impact of each \gls{implied.c} \gls{constraint}
+First, we evaluate the impact of each \gls{implied.c} \gls{constraint}
 (\refEquationRange{%
   impl-cons-defs-dominate-defs%
 }{%
@@ -2013,14 +2013,6 @@ We evaluate the impact of each \gls{implied.c} \gls{constraint}
 \gls{constraint model} -- one with the \gls{constraint} and another without --
 for the set of sampled \glspl{function}.
 %
-We expect all \glspl{constraint} except
-Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
-\refEquation*{impl-cons-spanned-input} to lead to an overall reduction in
-solving time.
-%
-Hence, in these cases the \gls{geometric mean improvement} should be greater
-than~\num{1}.
-%
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
 Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
@@ -2028,6 +2020,21 @@ Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 %
 Hence, in these cases the \gls{geometric mean improvement} should be equal
 to~\num{1}.
+%
+For the rest, we expect some \glspl{constraint} to lead to an overall reduction
+in solving time -- hence the \gls{geometric mean improvement} should be greater
+than~\num{1} -- while others may degrade solving time -- hence the
+\gls{geometric mean improvement} should be less than~\num{1}.
+%
+This is because some \glspl{constraint} may be too expensive to execute compared
+with the amount of \gls{propagation} they provide, as described in
+\refChapter{constraint-programming}.
+%
+Second, we evaluate synergy effects among the \gls{implied.c} \glspl{constraint}
+by comparing the solving times exhibited by two versions of the
+\glsshort{constraint model} -- one using all \gls{implied.c} \glspl{constraint}
+and another using only those who individually have a non-negative effect on
+solving time -- for the set of sampled \glspl{function}.
 
 \def\mkFigureCaption{%
   \caption[%
@@ -2254,29 +2261,41 @@ with a maximum coefficient of variation of
     \bottomrule
   \end{tabular}
 
-  \caption{TODO}
+  \caption[%
+            Geometric mean improvement on solving time attained by a given
+            implied constraint%
+          ]%
+          {%
+            Geometric mean improvement (GMI) on the solving time attained by a
+            given implied constraint.
+            %
+            See also \refFigure{impl-cons-vs-no-cons-solving-time-plots}%
+          }
   \labelTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}
 \end{table}
 %
 The \glspl{geometric mean improvement}, given in
 \refTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}, defend our
-claim that Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
+claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refEquation*{impl-cons-spanned-input} have no impact on solving time and that
+some of the \gls{implied.c} \glspl{constraint}
+(Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
 \refEquation*{impl-cons-identical-entry-blocks},
 \refEquation*{impl-cons-no-span-defs},
 \refEquation*{impl-cons-used-data-must-be-available},
 \refEquation*{impl-cons-exterior-data-must-be-available}, and
-\refEquation*{impl-cons-fix-fall-throughs} lead to a reduction in solving time
-and that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
-\refEquation*{impl-cons-spanned-input} have no impact on solving time.
-%
-However, \refEquation{impl-cons-place-phi-ops-same-as-def-edges} appears to have
-no impact on solving time, and
-Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks},
+\refEquation*{impl-cons-fix-fall-throughs}) lead to a reduction in solving time
+while others have a negative effect
+(Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks},
 \refEquation*{impl-cons-no-span-uses},
 \refEquation*{impl-cons-no-span-use-defs},
-\refEquation*{impl-cons-locs-of-uses}, and \refEquation*{impl-cons-locs-of-defs}
-appear to have negative impact on solving time.
+\refEquation*{impl-cons-locs-of-uses}, and
+\refEquation*{impl-cons-locs-of-defs}).
+%
+\refEquation{impl-cons-place-phi-ops-same-as-def-edges} appears to have no
+impact on solving time.
 
+\todo{insert experiment}
 
 
 \subsubsection{Symmetry and Dominance Breaking Constraints}
