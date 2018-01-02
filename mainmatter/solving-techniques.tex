@@ -2320,8 +2320,70 @@ impact on solving time.
   \mkSolvTechSubfigure{dom-cons-kill-match-selection}%
 
   \caption{TODO}
-  \labelFigure{TODO}
+  \labelFigure{dom-cons-vs-no-cons-solving-time-plots}
 \end{figure}
+
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-cons-locs-of-states-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-cons-operands-of-non-selected-matches-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-impl-cons-input-operands-not-taking-min-value-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-cons-interch-data-chains-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-cons-null-copy-match-selection-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-cons-kill-match-selection-pre+solving-time-speedup.stats%
+}
+
+\begin{table}
+  \centering%
+  \figureFontSize%
+  \begin{tabular}{p{8mm}*{6}{@{\hspace{.37em}}c@{\hspace{.37em}}}}
+    \toprule
+      & \multicolumn{6}{c}{\tabhead equation} \\
+    \cmidrule{2-7}%
+      & \tabhead\refEquation*{dom-cons-locs-of-states}
+      & \tabhead\refEquation*{dom-cons-operands-of-non-selected-matches}
+      & \tabhead\refEquation*{impl-cons-input-operands-not-taking-min-value}
+      & \tabhead\refEquation*{dom-cons-interch-data-chains}
+      & \tabhead\refEquation*{dom-cons-null-copy-match-selection}
+      & \tabhead\refEquation*{dom-cons-kill-match-selection} \\
+    \midrule
+        \tabhead GMI
+      & \num{\SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+    \bottomrule
+  \end{tabular}
+
+  \caption[%
+            Geometric mean improvement on solving time attained by a given
+            symmetry or dominance breaking constraint%
+          ]%
+          {%
+            Geometric mean improvement (GMI) on the solving time attained by a
+            given symmetry or dominance breaking constraint.
+            %
+            See also \refFigure{dom-cons-vs-no-cons-solving-time-plots}%
+          }
+  \labelTable{dom-cons-vs-no-cons-solving-time-geom-mean-improvements}
+\end{table}
 
 
 \subsubsection{Presolving}
@@ -2356,8 +2418,94 @@ impact on solving time.
   \mkSolvTechSubfigure[Canonical locations]{canonical-locs}
 
   \caption{TODO}
-  \labelFigure{TODO}
+  \labelFigure{presolving-vs-no-pre-solving-time-plots}
 \end{figure}
+
+\input{%
+  \expDir/%
+  solv-tech-disable-dom-matches-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-illegal-matches-uncovered-ops-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-illegal-matches-undefined-data-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-illegal-matches-kills-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-illegal-matches-def-locs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-illegal-matches-use-locs-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-redun-kills-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-redun-non-null-copy-matches-pre+solving-time-speedup.stats%
+}
+\input{%
+  \expDir/%
+  solv-tech-disable-canonical-locs-pre+solving-time-speedup.stats%
+}
+
+\begin{table}
+  \centering%
+  \figureFontSize%
+  \begin{tabular}{p{8mm}*{9}{@{\hspace{.37em}}c@{\hspace{.37em}}}}
+    \toprule
+      & \multirow{2}{15mm}{%
+          \centering\tabhead dominated matches%
+        }
+      & \multicolumn{7}{c}{\tabhead equation}
+      & \multirow{2}{15mm}{%
+          \centering\tabhead canonical locations%
+        } \\
+    \cmidrule(r){3-9}%
+      &
+      & \tabhead\refEquation*{illegal-matches-uncovered-ops}
+      & \tabhead\refEquation*{illegal-matches-undefined-data}
+      & \tabhead\refEquation*{illegal-matches-kills}
+      & \tabhead\refEquation*{illegal-matches-def-locs}
+      & \tabhead\refEquation*{illegal-matches-use-locs}
+      & \tabhead\refEquation*{redun-kills}
+      & \tabhead\refEquation*{redun-non-null-copy-matches}
+      & \\
+    \midrule
+        \tabhead GMI
+      & \num{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \num{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+    \bottomrule
+  \end{tabular}
+
+  \caption[%
+            Geometric mean improvement on solving time attained by a given
+            presolving technique%
+          ]%
+          {%
+            Geometric mean improvement (GMI) on the solving time attained by a
+            given presolving technique.
+            %
+            See also \refFigure{presolving-vs-no-pre-solving-time-plots}%
+          }
+  \labelTable{presolving-vs-no-pre-solving-time-geom-mean-improvements}
+\end{table}
 
 
 \subsubsection{Impact of All Solving Techniques}
