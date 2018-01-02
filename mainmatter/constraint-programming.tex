@@ -729,6 +729,24 @@ certain distance away from the edge of the enclosing square such that the
 \mbox{$k \times k$} square and the edge forms a rectangle wherein all smaller
 squares can be packed.
 
+The benefit of a given \gls{implied.c}, \gls{symmetry breaking.c}, or
+\gls{dominance breaking.c} \gls{constraint} depends on the amount of \gls{search
+  space} it prunes and the cost of propagating the \gls{constraint}.
+%
+For example, if a \gls{constraint} is expensive to run and only has marginal
+effect on the \gls{variable} \gls{domain}, then adding it to a
+\glsshort{constraint model} will \emph{increase} solving time instead of
+decreasing it.
+%
+In addition, it is well known that such \glspl{constraint} often have synergy
+effects among each other, meaning a \gls{constraint} may not be useful on its
+own but may have a positive effect when combined with another \gls{constraint}.
+%
+Consequently, the decision of whether to add a \gls{implied.c}, \gls{symmetry
+  breaking.c}, or \gls{dominance breaking.c} \gls{constraint} to a
+\glsshort{constraint model} must be based on careful and thorough experimental
+evaluation.
+
 
 \subsubsection{Presolving}
 
