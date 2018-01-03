@@ -1373,11 +1373,11 @@ greater than~\num{1}.
 If the \gls{GMI} is close to~\num{1}, it may not be clear whether the result is
 statistically significant.
 %
-In such cases, we compute the \SI{95}{\%} \gls{CI} for the \gls{GMI} using the
-bootstrapping resampling method with \num{10000} iterations.
+In such cases, we compute the \num{95}\textsuperscript{th} \gls{CI} for the
+\gls{GMI} using percentile bootstrapping with \num{100000} iterations.
 %
-If the confidence interval contains~\num{1}, then we cannot statistically
-conclude whether the result is positive or negative.
+If the \gls{CI} contains~\num{1}, then we cannot statistically conclude whether
+the result is positive or negative.
 
 
 \subsubsection{Match Duplication vs. Alternative Values}

@@ -1811,6 +1811,10 @@ The solving times range from
 %
 Since the \gls{GMI} is \printGMI{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, we conclude that the \gls{divide-then-multiply method} yields significantly
 lower solving times than the other method.
 %
@@ -1968,6 +1972,10 @@ The costs range from
 %
 The \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMin%
+}{%
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMax%
 }, thus defending our claim that \glsplshort{constraint model} based on the
 refined \gls{objective function} yield better code quality than those based on
 the naive \gls{objective function}.
@@ -2088,6 +2096,10 @@ with a maximum coefficient of variation of
 %
 The \gls{GMI} is \printGMI{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, thus defending our claim that \glsplshort{constraint model} with the
 \gls{implied.c} \glspl{constraint} yield significantly lower solving times than
 those without such \glspl{constraint}.
@@ -2281,18 +2293,64 @@ with a maximum coefficient of variation of
 %
 \begin{table}
   \centering%
-  \figureFontSize%
-  \begin{tabular}{p{8mm}*{14}{@{\colsep}c@{\colsep}}}
+  \figureFontSize\smaller%
+  \begin{tabular}{p{8mm}*{7}{@{\colsep}c@{\colsep}}}
     \toprule
-      & \multicolumn{14}{c}{\tabhead equation} \\
-    \cmidrule{2-15}%
+      & \multicolumn{7}{c}{\tabhead equation} \\
+    \cmidrule{2-8}%
       & \tabhead\refEquation*{impl-cons-defs-dominate-defs}
       & \tabhead\refEquation*{impl-cons-defs-in-spanned-blocks}
       & \tabhead\refEquation*{impl-cons-identical-entry-blocks}
       & \tabhead\refEquation*{impl-cons-defs-dominate-entry-blocks}
       & \tabhead\refEquation*{impl-cons-place-phi-ops-same-as-def-edges}
       & \tabhead\refEquation*{impl-cons-no-span-uses}
-      & \tabhead\refEquation*{impl-cons-no-span-defs}
+      & \tabhead\refEquation*{impl-cons-no-span-defs} \\
+    \midrule
+        \tabhead GMI
+      & \printGMI{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \tabhead CI
+      & \printGMICI{%
+          \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        } \\
+    \midrule
       & \tabhead\refEquation*{impl-cons-no-span-use-defs}
       & \tabhead\refEquation*{impl-cons-spanned-input}
       & \tabhead\refEquation*{impl-cons-used-data-must-be-available}
@@ -2302,13 +2360,6 @@ with a maximum coefficient of variation of
       & \tabhead\refEquation*{impl-cons-fix-fall-throughs} \\
     \midrule
         \tabhead GMI
-      & \printGMI{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
@@ -2316,6 +2367,42 @@ with a maximum coefficient of variation of
       & \printGMI{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \tabhead CI
+      & \printGMICI{%
+          \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        } \\
     \bottomrule
   \end{tabular}
 
@@ -2324,14 +2411,12 @@ with a maximum coefficient of variation of
             implied constraint%
           ]%
           {%
-            GMIs on the solving time attained by a given implied constraint.
-            %
-            See also \refFigure{single-impl-con-vs-no-con-solving-time-plots}%
+            GMIs on the solving time attained by a given implied constraint%
           }
   \labelTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}
 \end{table}
 %
-The \glspl{GMI}, given in
+Due to the \glspl{GMI} and \glspl{CI} given in
 \refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, defend
 our claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} have no impact on solving time and that
