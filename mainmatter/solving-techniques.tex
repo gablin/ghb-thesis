@@ -2290,7 +2290,7 @@ with a maximum coefficient of variation of
   \begin{tabular}{p{8mm}*{7}{@{\colsep}c@{\colsep}}}
     \toprule
       & \multicolumn{7}{c}{\tabhead equation} \\
-    \cmidrule{2-8}%
+    \cmidrule(lr){2-8}%
       & \tabhead\refEquation*{impl-cons-defs-dominate-defs}
       & \tabhead\refEquation*{impl-cons-defs-in-spanned-blocks}
       & \tabhead\refEquation*{impl-cons-identical-entry-blocks}
@@ -2530,11 +2530,11 @@ The \gls{GMI} is \printGMI{%
 
 \begin{table}
   \centering%
-  \figureFontSize%
+  \figureFontSize\smaller%
   \begin{tabular}{p{8mm}*{6}{@{\colsep}c@{\colsep}}}
     \toprule
       & \multicolumn{6}{c}{\tabhead equation} \\
-    \cmidrule{2-7}%
+    \cmidrule(lr){2-7}%
       & \tabhead\refEquation*{dom-cons-locs-of-states}
       & \tabhead\refEquation*{dom-cons-operands-of-non-selected-matches}
       & \tabhead\refEquation*{impl-cons-input-operands-not-taking-min-value}
@@ -2549,6 +2549,37 @@ The \gls{GMI} is \printGMI{%
       & \printGMI{\SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \tabhead CI
+      & \printGMICI{%
+          \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        } \\
     \bottomrule
   \end{tabular}
 
@@ -2638,37 +2669,95 @@ The \gls{GMI} is \printGMI{%
 
 \begin{table}
   \centering%
-  \figureFontSize%
-  \begin{tabular}{p{8mm}*{9}{@{\colsep}c@{\colsep}}}
+  \figureFontSize\smaller%
+  \begin{tabular}{p{8mm}*{7}{@{\colsep}c@{\colsep}}}
     \toprule
-      & \multirow{2}{15mm}{%
-          \centering\tabhead dominated matches%
-        }
-      & \multicolumn{7}{c}{\tabhead equation}
-      & \multirow{2}{15mm}{%
-          \centering\tabhead canonical locations%
-        } \\
-    \cmidrule(r){3-9}%
-      &
+      & \multicolumn{7}{c}{\tabhead equation} \\
+    \cmidrule(r){2-8}%
       & \tabhead\refEquation*{illegal-matches-uncovered-ops}
       & \tabhead\refEquation*{illegal-matches-undefined-data}
       & \tabhead\refEquation*{illegal-matches-kills}
       & \tabhead\refEquation*{illegal-matches-def-locs}
       & \tabhead\refEquation*{illegal-matches-use-locs}
       & \tabhead\refEquation*{redun-kills}
-      & \tabhead\refEquation*{redun-non-null-copy-matches}
-      & \\
+      & \tabhead\refEquation*{redun-non-null-copy-matches} \\
     \midrule
         \tabhead GMI
-      & \printGMI{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
       & \printGMI{\SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+      & \printGMI{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+        \tabhead CI
+      & \printGMICI{%
+          \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        }
+      & \printGMICI{%
+          \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+        }{%
+          \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+        } \\
+    \midrule
+      & \multicolumn{3}{c}{%
+          \tabhead dominated matches
+        }
+      &
+      & \multicolumn{3}{c}{%
+          \tabhead canonical locations
+        } \\
+    \midrule
+        \tabhead GMI
+      & \multicolumn{3}{c}{%
+          \printGMI{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}%
+        }
+      & \tabhead CI
+      & \multicolumn{3}{c}{%
+          \printGMI{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}%
+        } \\
+      & \multicolumn{3}{c}{%
+          \printGMICI{%
+            \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+          }{%
+            \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+          }%
+        }
+      &
+      & \multicolumn{3}{c}{%
+          \printGMICI{%
+            \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+          }{%
+            \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+          }%
+        } \\
     \bottomrule
   \end{tabular}
 
