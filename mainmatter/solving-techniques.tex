@@ -1725,16 +1725,17 @@ When using an upper bound for a given \gls{function}, we take the cost for the
 \subsection{Objective Function Refinements and Cost Bounding}
 
 We first evaluate the two methods for computing the cost matrix by comparing the
-solving times exhibited by two versions of the \gls{constraint model} -- one
-based on the \gls{divide-then-multiply method} and another based on
-\glspl{multiply-then-divide method} -- for the set of sampled \glspl{function}.
+solving times exhibited by two versions of the \gls{constraint model}: one based
+on the \gls{divide-then-multiply method}, and another based on
+\glspl{multiply-then-divide method}.
 %
-Using the same set of \glspl{function}, we then use the superior method to
-evaluate the impact of the \gls{objective function} refinement and cost bounding
-by comparing the number of \glspl{function} that can be solved optimally by five
-versions of the \gls{constraint model}: two based on the naive implementation of
-the \gls{objective function} (\refEquation{naive-objective-function}), one with
-cost bounds and one without; and three based on the refined implementation
+Based on the results for the experiment above, we then use the superior method
+to evaluate the impact of the \gls{objective function} refinement and cost
+bounding by comparing the number of \glspl{function} that can be solved
+optimally by five versions of the \gls{constraint model}: two based on the naive
+implementation of the \gls{objective function}
+(\refEquation{naive-objective-function}), one with cost bounds and one without;
+and three based on the refined implementation
 (Eqs.\thinspace\refEquation*{omatch-oplace-ocost-connection}
 and~\refEquation*{total-cost}), one without cost bounds, one with only the upper
 bound, and one with both lower and upper bound.

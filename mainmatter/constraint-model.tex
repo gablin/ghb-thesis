@@ -1175,16 +1175,15 @@ These \glspl{constraint} are then modeled as
 \subsection{Experimental Evaluation}
 \labelSection{cm-alt-values-experimental-evaluation}
 
-We evaluate the two methods for \gls{value reuse} by comparing the time it takes
-to solve two versions of the \gls{constraint model} -- one based on \gls{match
-  duplication} and another based on \glspl{alternative value} -- for the set of
-sampled \glspl{function}.
+We first evaluate the two methods for \gls{value reuse} by comparing the solving
+time exhibited by two versions of the \gls{constraint model}: one based on
+\gls{match duplication}, and another based on \glspl{alternative value}.
 %
-To evalute the impact of \gls{value reuse}, we compare the cost of the optimal
-\gls{solution} produced by one of the \glsplshort{constraint model} above (since
-both methods are \gls{solution}-preserving, it does not matter which is
-selected) with the cost of the optimal \gls{solution} produced by a
-\gls{constraint model} without \gls{value reuse}.
+Based on the results for the experiment above, we then evaluate the impact of
+\gls{value reuse} by comparing the cost of the optimal \gls{solution} produced
+by the better of the \glsplshort{constraint model} above with the cost of the
+optimal \gls{solution} produced by a \gls{constraint model} without \gls{value
+  reuse}.
 
 
 \subsubsection{Setup}
@@ -1196,7 +1195,7 @@ language -- and solved using \gls{Chuffed}~\cite{Chu:2011} -- a \gls{lazy clause
 on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
 \SI{16}{\giga\byte} main memory.
 
-As input, we use a subset of the \glspl{function} in
+As problem instances, we take a subset of the \glspl{function} in
 \gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
 -- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
 \gls{instruction set}.
@@ -1384,8 +1383,7 @@ the result is positive or negative.
 
 We evaluate the two methods of \gls{value reuse} by comparing the solving time
 exhibited by a \gls{constraint model} based on \gls{match duplication} and
-another \glsshort{constraint model} based on \glspl{alternative value} for the
-set of \glspl{function} selected from \gls{MediaBench}.
+another \glsshort{constraint model} based on \glspl{alternative value}
 %
 Since \gls{match duplication} yields an exponential increase in number of
 \glspl{match} compared to \glspl{alternative value}, we expect the latter to
@@ -1465,8 +1463,7 @@ We evaluate the impact of \gls{value reuse} by comparing the cost (that is, the
 total number of cycles, as described in \refSection{cm-objective-function}) of
 the optimal \glspl{solution} produced by a \gls{constraint model} with
 \gls{value reuse} support (based on \glspl{alternative value}) and another
-without this support for the set of \glspl{function} selected from
-\gls{MediaBench}.
+without this support.
 %
 Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
 we expect the former to lead to an overall reduction in cost.
@@ -1856,9 +1853,8 @@ which results in a significantly smaller \gls{search space}.
 
 We evaluate the two methods for inserting jump \glspl{instruction} by comparing
 the solving times exhibited and the cost of the optimal \glspl{solution}
-produced by two versions of the \gls{constraint model} -- one based on
-\gls{branch extension} and another based on \glspl{DTB pattern} -- for the set
-of sampled \glspl{function}.
+produced by two versions of the \gls{constraint model}: one based on \gls{branch
+  extension}, and another based on \glspl{DTB pattern}.
 
 The experiment setup is the same as in
 \refSection{cm-alt-values-experimental-evaluation} with a few exceptions.
