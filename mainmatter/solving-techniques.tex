@@ -1963,15 +1963,15 @@ The costs range from
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
 }.
 %
-The \gls{GMI} is \printGMI{%
+As the \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMin%
 }{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMax%
-}, thus defending our claim that \glsplshort{constraint model} based on the
-refined \gls{objective function} yield better code quality than those based on
-the naive \gls{objective function}.
+}, we conclude that \glsplshort{constraint model} based on the refined
+\gls{objective function} yield better code quality than those based on the naive
+\gls{objective function}.
 %
 This also shows that there is a significant difference between the optimal
 \gls{solution} and a \gls{solution} found using inferior solving techniques.
@@ -2087,15 +2087,15 @@ with a maximum coefficient of variation of
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 %
-The \gls{GMI} is \printGMI{%
+As the \gls{GMI} is \printGMI{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, thus defending our claim that \glsplshort{constraint model} with the
-\gls{implied.c} \glspl{constraint} yield significantly lower solving times than
-those without such \glspl{constraint}.
+}, we conclude that \glsplshort{constraint model} with the \gls{implied.c}
+\glspl{constraint} yield significantly lower solving times than those without
+such \glspl{constraint}.
 
 \def\mkFigureCaption{%
   \caption[%
@@ -2410,8 +2410,8 @@ with a maximum coefficient of variation of
 \end{table}
 %
 Due to the \glspl{GMI} and \glspl{CI} given in
-\refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, defend
-our claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, we
+conclude that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} have no impact on solving time and that
 some of the \gls{implied.c} \glspl{constraint}
 (Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
