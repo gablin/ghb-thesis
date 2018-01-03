@@ -1753,8 +1753,7 @@ Moreover, we expect the \glsplshort{constraint model} with an upper cost bound
 to perform better than those with no bounds, and those with both cost bounds to
 perform better than those with only one or no bounds.
 %
-Hence, in this case the \gls{geometric mean improvement} should be greater
-than~\num{1}.
+Hence, in this case the \gls{GMI} should be greater than~\num{1}.
 %
 No hypothesis is given for the evaluation of the two methods for computing the
 cost matrix.
@@ -1810,7 +1809,7 @@ The solving times range from
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-Since the geometric mean speedup is \num{%
+Since the \gls{GMI} is \printGMI{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 }, we conclude that the \gls{divide-then-multiply method} yields significantly
 lower solving times than the other method.
@@ -1967,7 +1966,7 @@ The costs range from
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
 }.
 %
-The geometric mean speedup is \num{%
+The \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
 }, thus defending our claim that \glsplshort{constraint model} based on the
 refined \gls{objective function} yield better code quality than those based on
@@ -2014,8 +2013,8 @@ First, we evalute the impact of all \gls{implied.c} \gls{constraint}
 another without -- for the set of sampled \glspl{function}.
 %
 We expect the collection of \gls{implied.c} \glspl{constraint} to lead to an
-overall reduction in solving time -- hence the \gls{geometric mean improvement}
-should be greater than~\num{1}.
+overall reduction in solving time -- hence the \gls{GMI} should be greater
+than~\num{1}.
 %
 Second, we evaluate the impact of each \gls{implied.c} \gls{constraint} by
 comparing the solving times exhibited by two versions of the \gls{constraint
@@ -2027,13 +2026,12 @@ Because the \gls{pattern set} used in these experiments contains only
 Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} to have no impact on solving time.
 %
-Hence, in these cases the \gls{geometric mean improvement} should be equal
-to~\num{1}.
+Hence, in these cases the \gls{GMI} should be equal to~\num{1}.
 %
 For the rest, we expect some \glspl{constraint} to lead to an overall reduction
-in solving time -- hence the \gls{geometric mean improvement} should be greater
-than~\num{1} -- while others may degrade solving time -- hence the
-\gls{geometric mean improvement} should be less than~\num{1}.
+in solving time -- hence the \gls{GMI} should be greater than~\num{1} -- while
+others may degrade solving time -- hence the \gls{GMI} should be less
+than~\num{1}.
 %
 This is because some \glspl{constraint} may be too expensive to execute compared
 with the amount of \gls{propagation} they provide, as described in
@@ -2044,6 +2042,8 @@ by comparing the solving times exhibited by two versions of the
 \glsshort{constraint model} -- one with all \gls{implied.c} \glspl{constraint}
 and another with only those who individually have a non-negative effect on
 solving time -- for the set of sampled \glspl{function}.
+%
+No hypothesis is given for this evaluation.
 
 \begin{figure}
   \centering%
@@ -2086,7 +2086,7 @@ with a maximum coefficient of variation of
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 %
-The \gls{geometric mean improvement} is \num{%
+The \gls{GMI} is \printGMI{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 }, thus defending our claim that \glsplshort{constraint model} with the
 \gls{implied.c} \glspl{constraint} yield significantly lower solving times than
@@ -2302,37 +2302,36 @@ with a maximum coefficient of variation of
       & \tabhead\refEquation*{impl-cons-fix-fall-throughs} \\
     \midrule
         \tabhead GMI
-      & \num{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+      & \printGMI{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
     \bottomrule
   \end{tabular}
 
   \caption[%
-            Geometric mean improvement on solving time attained by a given
+            Geometric mean improvements on solving time attained by a given
             implied constraint%
           ]%
           {%
-            Geometric mean improvement (GMI) on the solving time attained by a
-            given implied constraint.
+            GMIs on the solving time attained by a given implied constraint.
             %
             See also \refFigure{single-impl-con-vs-no-con-solving-time-plots}%
           }
   \labelTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}
 \end{table}
 %
-The \glspl{geometric mean improvement}, given in
+The \glspl{GMI}, given in
 \refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, defend
 our claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} have no impact on solving time and that
@@ -2353,7 +2352,52 @@ while others have a negative effect
 \refEquation{impl-cons-place-phi-ops-same-as-def-edges} appears to have no
 impact on solving time.
 
-\todo{insert experiment}
+\begin{figure}
+  \centering%
+  \insertSolvTechSpeedupPlot{bad-implied-cons}{1}
+
+  \caption[%
+            Plot for evaluating ?? impact on
+            solving time%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for two constraint
+            models: one with all implied constraints (baseline) and another with
+            only the constraints who individually have a non-negative effect on
+            solving time (subject)%
+          }
+  \labelFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot}
+\end{figure}
+
+\input{%
+  \expDir/solv-tech-disable-bad-implied-cons-pre+solving-time-speedup.stats%
+}
+
+\RefFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot} shows the normalized
+solving times (including presolving time) for two \glspl{constraint model}: one
+with all \gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and
+another with only the \glspl{constraint} who individually have a non-negative
+effect on solving time, serving as \gls{subject}.
+%
+The solving times range from
+\SIMinOf{
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+}{\s}
+to
+\SIMinOf{
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+}{\s}
+with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+The \gls{GMI} is \printGMI{%
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, ...
 
 
 \subsubsection{Symmetry and Dominance Breaking Constraints}
@@ -2421,22 +2465,22 @@ impact on solving time.
       & \tabhead\refEquation*{dom-cons-kill-match-selection} \\
     \midrule
         \tabhead GMI
-      & \num{\SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+      & \printGMI{\SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
     \bottomrule
   \end{tabular}
 
   \caption[%
-            Geometric mean improvement on solving time attained by a given
+            Geometric mean improvements on solving time attained by a given
             symmetry or dominance breaking constraint%
           ]%
           {%
-            Geometric mean improvement (GMI) on the solving time attained by a
-            given symmetry or dominance breaking constraint.
+            GMIs on the solving time attained by a given symmetry or dominance
+            breaking constraint.
             %
             See also \refFigure{dom-cons-vs-no-cons-solving-time-plots}%
           }
@@ -2540,25 +2584,24 @@ impact on solving time.
       & \\
     \midrule
         \tabhead GMI
-      & \num{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \num{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
+      & \printGMI{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
+      & \printGMI{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
     \bottomrule
   \end{tabular}
 
   \caption[%
-            Geometric mean improvement on solving time attained by a given
+            Geometric mean improvements on solving time attained by a given
             presolving technique%
           ]%
           {%
-            Geometric mean improvement (GMI) on the solving time attained by a
-            given presolving technique.
+            GMIs on the solving time attained by a given presolving technique.
             %
             See also \refFigure{presolving-vs-no-pre-solving-time-plots}%
           }

@@ -1144,6 +1144,19 @@
   \SI[#1]{\pgfmathresult}{#3}%
 }
 
+\NewDocumentCommand{\printGMI}{m}{%
+  \pgfmathparse{or(#1 <= 0.9, #1 >= 1.1) ? 1 : 0}%
+  \ifthenelse{\pgfmathresult>0}{%
+    \num{#1}%
+  }{%
+    \num[round-precision=3]{#1}%
+  }%
+}
+
+\NewDocumentCommand{\printGMICI}{mm}{%
+  \mbox{$[\printGMI{#1}, \printGMI{#2}]$}%
+}
+
 \newcommand{\supportNo}{$\cdot$}
 \newcommand{\supportYes}{%
   \begin{tikzpicture}

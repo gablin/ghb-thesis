@@ -1236,8 +1236,8 @@ of twenty \glspl{function}.
 Since we are measuring solving time, which could be affected by other factors,
 we run each experiment ten times and then take the arithmetic average.
 %
-When summarizing ratios, we instead take the geometric
-mean~\cite{FlemingWallace:1986}.
+When summarizing ratios, we instead take the geometric mean as it is more
+appropriate in such cases~\cite{FlemingWallace:1986}.
 
 
 \subsubsection{Normalizing Measurements}
@@ -1361,7 +1361,23 @@ When summarizing normalized values, however, we do not use \gls{zero-centered
 %
 In such cases, we instead use the values normalized using the \gls{speedup}
 method as the geometric mean can be computed for such values, which we call the
-\gls!{geometric mean improvement}.
+\gls!{GMI}.
+%
+A result is considered positive or negative if the \gls{GMI} is greater than
+respectively less than~\num{1}.
+%
+In terms of solving time, for example, a \gls{subject} method~$a$ leads to an
+overall reduction over another \gls{baseline} method~$b$ if the \gls{GMI} is
+greater than~\num{1}.
+%
+If the \gls{GMI} is close to~\num{1}, it may not be clear whether the result is
+statistically significant.
+%
+In such cases, we compute the \SI{95}{\%} \gls{CI} for the \gls{GMI} using the
+bootstrapping resampling method with \num{10000} iterations.
+%
+If the confidence interval contains~\num{1}, then we cannot statistically
+conclude whether the result is positive or negative.
 
 
 \subsubsection{Match Duplication vs. Alternative Values}
@@ -1375,7 +1391,7 @@ Since \gls{match duplication} yields an exponential increase in number of
 \glspl{match} compared to \glspl{alternative value}, we expect the latter to
 lead to an overall reducation in solving time.
 %
-Hence the \gls{geometric mean improvement} should be greater than~\num{1}.
+Hence the \gls{GMI} should be greater than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1424,8 +1440,12 @@ with a maximum coefficient of variation of
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-The \gls{geometric mean improvement} is \num{%
+The \gls{GMI} is \printGMI{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, thus defending our claim that \glsplshort{constraint model} based on
 \glspl{alternative value} yield significantly lower solving times than those
 based on \gls{match duplication}.
@@ -1451,7 +1471,7 @@ without this support for the set of \glspl{function} selected from
 Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
 we expect the former to lead to an overall reduction in cost.
 %
-Hence the \gls{geometric mean improvement} should be greater than~\num{1}.
+Hence the \gls{GMI} should be greater than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1489,8 +1509,12 @@ The costs range from
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
 }~cycles.
 %
-The \gls{geometric mean improvement} is \num{%
+The \gls{GMI} is \printGMI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
+}{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
 }, thus defending our claim that \glsplshort{constraint model} supporting
 \gls{value reuse} produce \glspl{solution} with considerably lower cost than
 those without.
@@ -1857,8 +1881,7 @@ Since \gls{branch extension} yields a larger number of \glspl{block} compared to
 causing emission of redundant jump \glspl{instruction}, we expect the latter to
 lead to both shorter solving times and better code quality.
 %
-Hence the \gls{geometric mean improvement} for both should be greater
-than~\num{1}.
+Hence the \gls{GMI} for both should be greater than~\num{1}.
 
 \begin{figure}
   \centering%
@@ -1947,8 +1970,12 @@ with a maximum coefficient of variation of
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
 }~cycles.
 %
-The \gls{geometric mean improvement} for solving time is \num{%
+The \gls{GMI} for solving time is \printGMI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, thus defending our claim that \glsplshort{constraint model} based on
 \glspl{DTB pattern} yield significantly lower solving times than those based on
 \gls{branch extension}.
@@ -1958,8 +1985,12 @@ We also see clearly from the plot that when the number of conditional branch
   nextkeypacket} -- the \gls{search space} for \gls{branch extension} grows
 faster than for \glspl{DTB pattern}.
 %
-In addition, the \gls{geometric mean improvement} for cost is \num{%
+In addition, the \gls{GMI} for cost is \printGMI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
+}{%
+    \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
 }, thus defending our claim that, in some cases, \glspl{DTB pattern} result in
 optimal \glspl{solution} with slightly lower cost compared with \gls{branch
   extension}.
