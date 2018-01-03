@@ -1774,11 +1774,7 @@ cost matrix.
             Normalized solving times (including the time for presolving) for two
             constraint models implementing the refined objective function, one
             based on the multiply-then-divide method (baseline) and another
-            based on the divide-then-multiply method (subject).
-            %
-            \Glspl{function} marked with \barValueNotOptimal{} cannot be solved
-            optimally by either the baseline or the subject within the time
-            limit%
+            based on the divide-then-multiply method (subject)%
           }
   \labelFigure{new-op-cost-fun-vs-old-plot}
 \end{figure}
@@ -1791,9 +1787,6 @@ described above, with the \glsshort{constraint model} based on the
 \gls{multiply-then-divide method} serving as \gls{baseline} and the
 \glsshort{constraint model} based on the \gls{divide-then-multiply method}
 serving as \gls{subject}.
-%
-\Glspl{function} marked with \barValueNotOptimal{} cannot be solved optimally
-within the time limit; all other \glspl{function} are solved to optimality.
 %
 The solving times range from
 \SIMinOf{
@@ -2565,9 +2558,7 @@ The \gls{GMI} is \printGMI{%
           ]%
           {%
             GMIs on the solving time attained by a given symmetry or dominance
-            breaking constraint.
-            %
-            See also \refFigure{dom-cons-vs-no-cons-solving-time-plots}%
+            breaking constraint%
           }
   \labelTable{dom-cons-vs-no-cons-solving-time-geom-mean-improvements}
 \end{table}
@@ -2686,9 +2677,7 @@ The \gls{GMI} is \printGMI{%
             presolving technique%
           ]%
           {%
-            GMIs on the solving time attained by a given presolving technique.
-            %
-            See also \refFigure{presolving-vs-no-pre-solving-time-plots}%
+            GMIs on the solving time attained by a given presolving technique%
           }
   \labelTable{presolving-vs-no-pre-solving-time-geom-mean-improvements}
 \end{table}
