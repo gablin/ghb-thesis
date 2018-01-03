@@ -2004,14 +2004,23 @@ crucial for code quality.
 
 \subsubsection{Implied Constraints}
 
-First, we evaluate the impact of each \gls{implied.c} \gls{constraint}
+First, we evalute the impact of all \gls{implied.c} \gls{constraint}
 (\refEquationRange{%
   impl-cons-defs-dominate-defs%
 }{%
   impl-cons-fix-fall-throughs%
 }) by comparing the solving times exhibited by two versions of the
-\gls{constraint model} -- one with the \gls{constraint} and another without --
-for the set of sampled \glspl{function}.
+\gls{constraint model} -- one with all \gls{implied.c} \glspl{constraint} and
+another without -- for the set of sampled \glspl{function}.
+%
+We expect the collection of \gls{implied.c} \glspl{constraint} to lead to an
+overall reduction in solving time -- hence the \gls{geometric mean improvement}
+should be greater than~\num{1}.
+%
+Second, we evaluate the impact of each \gls{implied.c} \gls{constraint} by
+comparing the solving times exhibited by two versions of the \gls{constraint
+  model} -- one with a given \gls{implied.c} \gls{constraint} and another
+without the \gls{constraint} -- for the set of sampled \glspl{function}.
 %
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
@@ -2030,11 +2039,58 @@ This is because some \glspl{constraint} may be too expensive to execute compared
 with the amount of \gls{propagation} they provide, as described in
 \refChapter{constraint-programming}.
 %
-Second, we evaluate synergy effects among the \gls{implied.c} \glspl{constraint}
+Third, we evaluate synergy effects among the \gls{implied.c} \glspl{constraint}
 by comparing the solving times exhibited by two versions of the
-\glsshort{constraint model} -- one using all \gls{implied.c} \glspl{constraint}
-and another using only those who individually have a non-negative effect on
+\glsshort{constraint model} -- one with all \gls{implied.c} \glspl{constraint}
+and another with only those who individually have a non-negative effect on
 solving time -- for the set of sampled \glspl{function}.
+
+\begin{figure}
+  \centering%
+  \insertSolvTechSpeedupPlot{all-implied-cons}{1}
+
+  \caption[%
+            Plot for evaluating the implied constraints' impact on
+            solving time%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for two
+            constraint models: one with all implied constraints (subject) and
+            another with no such constraints (baseline)%
+          }
+  \labelFigure{impl-cons-vs-no-cons-solving-time-plot}
+\end{figure}
+
+\input{%
+  \expDir/solv-tech-disable-all-implied-cons-pre+solving-time-speedup.stats%
+}
+
+\RefFigure{impl-cons-vs-no-cons-solving-time-plot} shows the normalized solving
+times (including presolving time) for two \glspl{constraint model}: one with all
+\gls{implied.c} \glspl{constraint}, serving as \gls{subject}; and another with
+no such \glspl{constraint}, serving as \gls{baseline}.
+%
+The solving times range from
+\SIMinOf{
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+}{\s}
+to
+\SIMinOf{
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+}{\s}
+with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+The \gls{geometric mean improvement} is \num{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, thus defending our claim that \glsplshort{constraint model} with the
+\gls{implied.c} \glspl{constraint} yield significantly lower solving times than
+those without such \glspl{constraint}.
 
 \def\mkFigureCaption{%
   \caption[%
@@ -2067,7 +2123,16 @@ solving time -- for the set of sampled \glspl{function}.
   \hfill%
   \mkSolvTechSubfigure{impl-cons-no-span-uses}%
 
-  \vspace{\betweensubfigures}
+  \mkFigureCaption
+  \labelFigure{single-impl-con-vs-no-con-solving-time-plots}
+\end{figure}
+
+\let\oldthefigure\thefigure
+\renewcommand{\thefigure}{\oldthefigure{} (cont.)}
+
+\begin{figure}
+  \ContinuedFloat
+  \centering
 
   \mkSolvTechSubfigure{impl-cons-no-span-defs}%
   \hfill%
@@ -2079,16 +2144,7 @@ solving time -- for the set of sampled \glspl{function}.
   \hfill%
   \mkSolvTechSubfigure{impl-cons-used-data-must-be-available}
 
-  \mkFigureCaption
-  \labelFigure{impl-cons-vs-no-cons-solving-time-plots}
-\end{figure}
-
-\let\oldthefigure\thefigure
-\renewcommand{\thefigure}{\oldthefigure{} (cont.)}
-
-\begin{figure}
-  \ContinuedFloat
-  \centering
+  \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{impl-cons-exterior-data-must-be-available}%
   \hfill%
@@ -2162,10 +2218,10 @@ solving time -- for the set of sampled \glspl{function}.
   solv-tech-disable-impl-cons-fix-fall-throughs-pre+solving-time-speedup.stats%
 }
 
-\RefFigure{impl-cons-vs-no-cons-solving-time-plots} shows the normalized solving
-times (including presolving time) for two \glspl{constraint model}: one with a
-given \gls{implied.c} \gls{constraint}, serving as \gls{subject}; and another
-without the \gls{constraint}, serving as \gls{baseline}.
+\RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
+solving times (including presolving time) for two \glspl{constraint model}: one
+with a given \gls{implied.c} \gls{constraint}, serving as \gls{subject}; and
+another without the \gls{constraint}, serving as \gls{baseline}.
 %
 The solving times range from
 \SIMinOf{
@@ -2269,14 +2325,14 @@ with a maximum coefficient of variation of
             Geometric mean improvement (GMI) on the solving time attained by a
             given implied constraint.
             %
-            See also \refFigure{impl-cons-vs-no-cons-solving-time-plots}%
+            See also \refFigure{single-impl-con-vs-no-con-solving-time-plots}%
           }
-  \labelTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}
+  \labelTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}
 \end{table}
 %
 The \glspl{geometric mean improvement}, given in
-\refTable{impl-cons-vs-no-cons-solving-time-geom-mean-improvements}, defend our
-claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
+\refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, defend
+our claim that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} have no impact on solving time and that
 some of the \gls{implied.c} \glspl{constraint}
 (Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
