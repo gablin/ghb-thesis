@@ -2056,8 +2056,8 @@ No hypothesis is given for this evaluation.
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models: one with all implied constraints (subject) and
-            another with no such constraints (baseline)%
+            constraint models: one with no implied constraints (baseline) and
+            another with all such constraints (subject)%
           }
   \labelFigure{impl-cons-vs-no-cons-solving-time-plot}
 \end{figure}
@@ -2067,9 +2067,9 @@ No hypothesis is given for this evaluation.
 }
 
 \RefFigure{impl-cons-vs-no-cons-solving-time-plot} shows the normalized solving
-times (including presolving time) for two \glspl{constraint model}: one with all
-\gls{implied.c} \glspl{constraint}, serving as \gls{subject}; and another with
-no such \glspl{constraint}, serving as \gls{baseline}.
+times (including presolving time) for two \glspl{constraint model}: one with no
+\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and another with
+all such \glspl{constraint}, serving as \gls{subject}.
 %
 The solving times range from
 \SIMinOf{
@@ -2104,8 +2104,8 @@ such \glspl{constraint}.
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models: one with a given implied constraint (subject) and
-            another without the constraint (baseline)%
+            constraint models: one without a particular implied constraint
+            (baseline) and another with the constraint (subject)%
           }
 }
 
@@ -2225,8 +2225,8 @@ such \glspl{constraint}.
 
 \RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
 solving times (including presolving time) for two \glspl{constraint model}: one
-with a given \gls{implied.c} \gls{constraint}, serving as \gls{subject}; and
-another without the \gls{constraint}, serving as \gls{baseline}.
+without a particular \gls{implied.c} \gls{constraint}, serving as
+\gls{baseline}; and another with the \gls{constraint}, serving as \gls{subject}.
 %
 The solving times range from
 \SIMinOf{
@@ -2440,8 +2440,8 @@ impact on solving time.
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two constraint
-            models: one with all implied constraints (baseline) and another with
-            only the constraints who individually have a non-negative effect on
+            models: one with all implied constraints (baseline) and another
+            without the constraints who individually have a negative effect on
             solving time (subject)%
           }
   \labelFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot}
@@ -2454,8 +2454,8 @@ impact on solving time.
 \RefFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot} shows the normalized
 solving times (including presolving time) for two \glspl{constraint model}: one
 with all \gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and
-another with only the \glspl{constraint} who individually have a non-negative
-effect on solving time, serving as \gls{subject}.
+another without the \glspl{constraint} who individually have a negative effect
+on solving time, serving as \gls{subject}.
 %
 The solving times range from
 \SIMinOf{
