@@ -2293,7 +2293,7 @@ For \refEquationList{impl-cons-defs-dominate-defs,
             with only such constraints that individually have a positive impact
             on solving time (subject), one without such constraints that
             individually have a negative impact on solving time (subject), and
-            another with all implied constraints (subject)%
+            another with all such constraints (subject)%
           }
   \labelFigure{diff-impl-cons-conf-solving-time-plot}
 \end{figure}
@@ -2309,8 +2309,8 @@ times (including presolving time) for four \glspl{constraint model}: one with no
 such \glspl{constraint} that individually have a positive impact on solving
 time, serving as \gls{subject}; one without such \glspl{constraint} that
 individually have a negative impact on solving time, also serving as
-\gls{subject}; and another with all \gls{implied.c} \glspl{constraint}, also
-serving as \gls{subject}.
+\gls{subject}; and another with all such \glspl{constraint}, also serving as
+\gls{subject}.
 %
 For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
 \modelB, \modelC, and \modelD, respectively.
@@ -2337,7 +2337,7 @@ with a maximum coefficient of variation of
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 
-To begin with, we observe that with the \gls{GMI} for \glsshort{constraint
+To begin with, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\modelB{} over \glsshort{constraint model}~\modelA{}
 (\refFigure{solv-tech-enable-only-good-implied-cons}) is \printGMI{%
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
@@ -2385,8 +2385,8 @@ that there are synergy effects between the \gls{implied.c} \glspl{constraint}
 whose collective positive impact on solving time is greater than the sum of its
 parts.
 %
-Hence we conclude that the \gls{implied.c} \glspl{constraint} jointly lead to an
-overall reduction in solving time.
+Hence we conclude that using all \gls{implied.c} \glspl{constraint} jointly lead
+to an overall reduction in solving time.
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
