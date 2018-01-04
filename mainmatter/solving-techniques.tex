@@ -443,7 +443,7 @@ A decent lower bound be computed by solving a relaxed version of the
   selection} and \gls{block ordering} problems, which obviously is simpler to
 solve than the complete \glsshort{constraint model}.
 %
-Hence, the relaxed \glsshort{constraint model} consists of only the
+Hence the relaxed \glsshort{constraint model} consists of only the
 $\mVar{omatch}$, $\mVar{opcosts}$, $\mVar{sel}$, $\mVar{succ}$, and
 $\mVar{cost}$ variables, \refEquation{operation-coverage}, relaxed versions of
 Eqs.\thinspace\refEquation*{block-order} and \refEquation*{fall-through} that
@@ -1754,7 +1754,7 @@ Moreover, we expect the \glsplshort{constraint model} with an upper cost bound
 to perform better than those with no bounds, and those with both cost bounds to
 perform better than those with only one or no bounds.
 %
-Hence, in this case the \gls{GMI} should be greater than~\num{1}.
+Hence in this case the \gls{GMI} should be greater than~\num{1}.
 %
 No hypothesis is given for the evaluation of the two methods for computing the
 cost matrix.
@@ -1901,7 +1901,7 @@ computed by \gls{LLVM} is already optimal with respect to the
 Consequently, the \glsshort{constraint solver} need only prove that there exist
 no better \gls{solution} instead of exploring the entire \gls{search space}.
 %
-Hence, the refined \gls{objective function} coupled with an upper cost bound is
+Hence the refined \gls{objective function} coupled with an upper cost bound is
 crucial for scalability.
 
 Applying a lower bound, however, does not appear to be equally beneficial; in
@@ -1987,7 +1987,7 @@ As the \gls{GMI} is \printGMI{%
 This also shows that there is a significant difference between the optimal
 \gls{solution} and a \gls{solution} found using inferior solving techniques.
 %
-Hence, the refined \gls{objective function} coupled with an upper cost bound is
+Hence the refined \gls{objective function} coupled with an upper cost bound is
 crucial for code quality.
 
 
@@ -2063,7 +2063,7 @@ Because the \gls{pattern set} used in these experiments contains only
 Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
 \refEquation*{impl-cons-spanned-input} to have no impact on solving time.
 %
-Hence, in these cases the \gls{GMI} should be equal to~\num{1}.
+Hence in these cases the \gls{GMI} should be equal to~\num{1}.
 %
 For the rest, we expect some \glspl{constraint} to lead to an overall reduction
 in solving time -- hence the \gls{GMI} should be greater than~\num{1} -- while
@@ -2086,7 +2086,7 @@ We expect the \glsplshort{constraint model} with some degree of \gls{implied.c}
 \glspl{constraint} to perform better than the \glsshort{constraint model} with
 no \gls{implied.c} \glspl{constraint}.
 %
-Hence, the \gls{GMI} should be greater than~\num{1}.
+Hence the \gls{GMI} should be greater than~\num{1}.
 
 \includeSolvTechStats{impl-cons-defs-dominate-defs}
 \includeSolvTechStats{impl-cons-defs-in-spanned-blocks}
