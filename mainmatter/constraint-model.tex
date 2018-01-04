@@ -1392,6 +1392,8 @@ lead to an overall reducation in solving time.
 %
 Hence the \gls{GMI} should be greater than~\num{1}.
 
+\input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1408,12 +1410,19 @@ Hence the \gls{GMI} should be greater than~\num{1}.
             Normalized solving times (incl.\ presolving time) for two
             constraint models that supports value reuse, one based on match
             duplication (baseline) and another based on alternative values
-            (subject)%
+            (subject).
+            %
+            GMI:~\printGMI{%
+              \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+            },
+            CI~\printGMICI{%
+              \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+            }{%
+              \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+            }%
           }
   \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
-
-\input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
 
 \RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
 solving times (including presolving time) for the two \glspl{constraint
@@ -1471,6 +1480,8 @@ we expect the former to lead to an overall reduction in cost.
 %
 Hence the \gls{GMI} should be greater than~\num{1}.
 
+\input{\expDir/alt-values-vs-without-cycles-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1483,12 +1494,19 @@ Hence the \gls{GMI} should be greater than~\num{1}.
           {%
             Normalized optimal solution costs for two constraint models, one
             without value reuse support (baseline) and another with such support
-            (subject)%
+            (subject).
+            %
+            GMI:~\printGMI{%
+              \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+            },
+            CI:~\printGMICI{%
+              \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
+            }{%
+              \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
+            }%
           }
   \labelFigure{alt-values-vs-without-cycles-plot}
 \end{figure}
-
-\input{\expDir/alt-values-vs-without-cycles-speedup.stats}
 
 \RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
 \gls{solution} costs for the two \glspl{constraint model} describe above, with
@@ -1880,6 +1898,11 @@ lead to both shorter solving times and better code quality.
 %
 Hence the \gls{GMI} for both should be greater than~\num{1}.
 
+\input{%
+  \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
+}
+\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1898,7 +1921,16 @@ Hence the \gls{GMI} for both should be greater than~\num{1}.
           {%
             Normalized solving times (incl.\ presolving time) for two
             constraint models that supports jump insertion, one based on branch
-            extension (baseline) and another based on DTB patterns (subject)%
+            extension (baseline) and another based on DTB patterns (subject).
+            %
+            GMI:~\printGMI{%
+              \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+            },
+            CI~\printGMICI{%
+              \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+            }{%
+              \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+            }%
           }
   \labelFigure{%
     dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
@@ -1920,16 +1952,19 @@ Hence the \gls{GMI} for both should be greater than~\num{1}.
           {%
             Normalized optimal solution costs for two constraint models that
             supports jump insertion, one based on branch extension (baseline)
-            and another based on DTB patterns (subject)%
+            and another based on DTB patterns (subject).
+            %
+            GMI:~\printGMI{%
+              \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
+            },
+            CI~\printGMICI{%
+              \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
+            }{%
+              \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
+            }%
           }
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
-
-\input{%
-  \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
-}
-
-\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
 
 Figures~\refFigure*{%
   dual-target-branch-patterns-vs-branch-extension-solving-time-plot}

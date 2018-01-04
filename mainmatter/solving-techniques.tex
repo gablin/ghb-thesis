@@ -1759,6 +1759,8 @@ Hence, in this case the \gls{GMI} should be greater than~\num{1}.
 No hypothesis is given for the evaluation of the two methods for computing the
 cost matrix.
 
+\input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1768,19 +1770,26 @@ cost matrix.
   }
 
   \caption[%
-            Plot for evaluating the refined objective function's impact on
+            Plot for evaluating the operation cost function's impact on
             solving time%
           ]%
           {%
             Normalized solving times (including the time for presolving) for two
-            constraint models implementing the refined objective function, one
-            based on the multiply-then-divide method (baseline) and another
-            based on the divide-then-multiply method (subject)%
+            constraint models using different operation cost functions: one
+            based on the multiply-then-divide method (baseline), and another
+            based on the divide-then-multiply method (subject).
+            %
+            GMI:~\printGMI{%
+              \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+            },
+            CI~\printGMICI{%
+              \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+            }{%
+              \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+            }%
           }
   \labelFigure{new-op-cost-fun-vs-old-plot}
 \end{figure}
-
-\input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
 
 \RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
 (including the time for presolving) for the two \glspl{constraint model}
@@ -1905,6 +1914,8 @@ A possible explanation is that the lower bound computed by the relaxed
 \gls{constraint model} is too weak to be of any use and instead only interferes
 with \gls{Chuffed}'s \gls{lazy clause learning} engine.
 
+\input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1922,6 +1933,15 @@ with \gls{Chuffed}'s \gls{lazy clause learning} engine.
             implementing the naive objective function (baseline) and another
             implementing the refined objective function (subject).
             %
+            GMI:~\printGMI{%
+              \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
+            },
+            CI~\printGMICI{%
+              \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMin%
+            }{%
+              \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMax%
+            }.
+            %
             \Glspl{function} marked with \barValueNoBaselineSolution{} are
             those for which the naive objective function fails to produce any
             solution, and \glspl{function} marked with \barValueNoSolution{} are
@@ -1933,8 +1953,6 @@ with \gls{Chuffed}'s \gls{lazy clause learning} engine.
           }
   \labelFigure{obj-fun-refined-vs-naive-cycles-speedup-plot}
 \end{figure}
-
-\input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
 
 \RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
 \gls{solution} costs for two \glspl{constraint model}: one based on the naive
@@ -1987,41 +2005,50 @@ crucial for code quality.
   }%
 }
 
-\NewDocumentCommand{\insertSolvTechSpeedupPlot}{mm}{%
+\NewDocumentCommand{\insertSolvTechSpeedupPlot}{O{disable}mm}{%
   \insertSpeedupPlot{%
-    \expDir/solv-tech-disable-#1-pre+solving-time-speedup.plot%
-  }{#2}
+    \expDir/solv-tech-#1-#2-pre+solving-time-speedup.plot%
+  }{#3}
 }
 
-\NewDocumentCommand{\mkSolvTechSubfigure}{om}{%
+\NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}momo}{%
+  \IfStrEq{#1}{disable}{\def\argUC{Disable}}{}%
+  \IfStrEq{#1}{enable}{\def\argUC{Enable}}{}%
+  \edef\statsPartName{%
+    SolvTech%
+    \argUC%
+    #4%
+    PrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedup%
+  }%
+  \edef\gmi{\csname\statsPartName Gmean\endcsname}%
+  \edef\cimin{\csname\statsPartName CiMin\endcsname}%
+  \edef\cimax{\csname\statsPartName CiMax\endcsname}%
   \subcaptionbox{%
-                  \IfValueTF{#1}{#1}{\refEquation{#2}}%
-                  \labelFigure{solv-tech-disable-#2}%
+                  \IfValueTF{#3}{#3}{\refEquation{#2}}.
+                  %
+                  GMI:~\printGMI{\gmi},
+                  CI:~\printGMICI{\cimin}{\cimax}%
+                  \labelFigure{solv-tech-#1-#2}%
                 }{%
-                  \insertSolvTechSpeedupPlot{#2}{.49}%
+                  \insertSolvTechSpeedupPlot[#1]{#2}{.49}%
                 }%
+}
+
+\NewDocumentCommand{\includeSolvTechStats}{O{disable}m}{%
+  \input{\expDir/solv-tech-#1-#2-pre+solving-time-speedup.stats}%
 }
 
 
 \subsection{Implied Constraints}
 
-First, we evalute the impact of all \gls{implied.c} \gls{constraint}
+We first evaluate the impact of each \gls{implied.c} \gls{constraint}
 (\refEquationRange{%
   impl-cons-defs-dominate-defs%
 }{%
   impl-cons-fix-fall-throughs%
 }) by comparing the solving times exhibited by two versions of the
-\gls{constraint model} -- one with all \gls{implied.c} \glspl{constraint} and
-another without -- for the set of sampled \glspl{function}.
-%
-We expect the collection of \gls{implied.c} \glspl{constraint} to lead to an
-overall reduction in solving time -- hence the \gls{GMI} should be greater
-than~\num{1}.
-%
-Second, we evaluate the impact of each \gls{implied.c} \gls{constraint} by
-comparing the solving times exhibited by two versions of the \gls{constraint
-  model} -- one with a given \gls{implied.c} \gls{constraint} and another
-without the \gls{constraint} -- for the set of sampled \glspl{function}.
+\gls{constraint model}: one with a given \gls{implied.c} \gls{constraint}, and
+another without the \gls{constraint}.
 %
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
@@ -2038,65 +2065,35 @@ than~\num{1}.
 This is because some \glspl{constraint} may be too expensive to execute compared
 with the amount of \gls{propagation} they provide, as described in
 \refChapter{constraint-programming}.
-%
-Third, we evaluate synergy effects among the \gls{implied.c} \glspl{constraint}
-by comparing the solving times exhibited by two versions of the
-\glsshort{constraint model} -- one with all \gls{implied.c} \glspl{constraint}
-and another with only those who individually have a non-negative effect on
-solving time -- for the set of sampled \glspl{function}.
-%
-No hypothesis is given for this evaluation.
 
-\begin{figure}
-  \centering%
-  \insertSolvTechSpeedupPlot{all-implied-cons}{1}
-
-  \caption[%
-            Plot for evaluating the implied constraints' impact on
-            solving time%
-          ]%
-          {%
-            Normalized solving times (incl.\ presolving time) for two
-            constraint models: one with no implied constraints (baseline) and
-            another with all such constraints (subject)%
-          }
-  \labelFigure{impl-cons-vs-no-cons-solving-time-plot}
-\end{figure}
-
-\input{%
-  \expDir/solv-tech-disable-all-implied-cons-pre+solving-time-speedup.stats%
-}
-
-\RefFigure{impl-cons-vs-no-cons-solving-time-plot} shows the normalized solving
-times (including presolving time) for two \glspl{constraint model}: one with no
-\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and another with
-all such \glspl{constraint}, serving as \gls{subject}.
+Based on the results for the experiment above, we then evaluate synergy effects
+among the \gls{implied.c} \glspl{constraint} by comparing the solving times
+exhibited by four versions of the \glsshort{constraint model}: one with no
+\gls{implied.c} \glspl{constraint} whatsoever, one with all \glspl{constraint},
+one with only those who individually lead to an overall reduction in solving
+time, and another without those who individually lead to an overall increase in
+solving time.
 %
-The solving times range from
-\SIMinOf{
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
-}{\s}
-to
-\SIMinOf{
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
-\numMaxOf{
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
-}.
+We expect the \glsplshort{constraint model} with some degree of \gls{implied.c}
+\glspl{constraint} to perform better than the \glsshort{constraint model} with
+no \gls{implied.c} \glspl{constraint}.
 %
-As the \gls{GMI} is \printGMI{%
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-}{%
-  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we conclude that \glsplshort{constraint model} with the \gls{implied.c}
-\glspl{constraint} yield significantly lower solving times than those without
-such \glspl{constraint}.
+Hence, the \gls{GMI} should be greater than~\num{1}.
+
+\includeSolvTechStats{impl-cons-defs-dominate-defs}
+\includeSolvTechStats{impl-cons-defs-in-spanned-blocks}
+\includeSolvTechStats{impl-cons-identical-entry-blocks}
+\includeSolvTechStats{impl-cons-defs-dominate-entry-blocks}
+\includeSolvTechStats{impl-cons-place-phi-ops-same-as-def-edges}
+\includeSolvTechStats{impl-cons-no-span-uses}
+\includeSolvTechStats{impl-cons-no-span-defs}
+\includeSolvTechStats{impl-cons-no-span-use-defs}
+\includeSolvTechStats{impl-cons-spanned-input}
+\includeSolvTechStats{impl-cons-used-data-must-be-available}
+\includeSolvTechStats{impl-cons-exterior-data-must-be-available}
+\includeSolvTechStats{impl-cons-locs-of-uses}
+\includeSolvTechStats{impl-cons-locs-of-defs}
+\includeSolvTechStats{impl-cons-fix-fall-throughs}
 
 \def\mkFigureCaption{%
   \caption[%
@@ -2114,20 +2111,42 @@ such \glspl{constraint}.
   \centering
 
   \mkSolvTechSubfigure{impl-cons-defs-dominate-defs}%
+                      {ImplConsDefsDominateDefs}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-defs-in-spanned-blocks}
+  \mkSolvTechSubfigure{impl-cons-defs-in-spanned-blocks}%
+                      {ImplConsDefsInSpannedBlocks}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{impl-cons-identical-entry-blocks}%
+                      {ImplConsIdenticalEntryBlocks}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}
+  \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}%
+                      {ImplConsDefsDominateEntryBlocks}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{impl-cons-place-phi-ops-same-as-def-edges}%
+                      {ImplConsPlacePhiOpsSameAsDefEdges}%
   \hfill%
   \mkSolvTechSubfigure{impl-cons-no-span-uses}%
+                      {ImplConsNoSpanUses}
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{impl-cons-no-span-defs}%
+                      {ImplConsNoSpanDefs}%
+  \hfill%
+  \mkSolvTechSubfigure{impl-cons-no-span-use-defs}%
+                      {ImplConsNoSpanUseDefs}
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{impl-cons-spanned-input}%
+                      {ImplConsSpannedInput}%
+  \hfill%
+  \mkSolvTechSubfigure{impl-cons-used-data-must-be-available}%
+                      {ImplConsUsedDataMustBeAvailable}
 
   \mkFigureCaption
   \labelFigure{single-impl-con-vs-no-con-solving-time-plots}
@@ -2140,89 +2159,24 @@ such \glspl{constraint}.
   \ContinuedFloat
   \centering
 
-  \mkSolvTechSubfigure{impl-cons-no-span-defs}%
-  \hfill%
-  \mkSolvTechSubfigure{impl-cons-no-span-use-defs}
-
-  \vspace{\betweensubfigures}
-
-  \mkSolvTechSubfigure{impl-cons-spanned-input}%
-  \hfill%
-  \mkSolvTechSubfigure{impl-cons-used-data-must-be-available}
-
-  \vspace{\betweensubfigures}
-
   \mkSolvTechSubfigure{impl-cons-exterior-data-must-be-available}%
+                      {ImplConsExteriorDataMustBeAvailable}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-locs-of-uses}
+  \mkSolvTechSubfigure{impl-cons-locs-of-uses}%
+                      {ImplConsLocsOfUses}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{impl-cons-locs-of-defs}%
+                      {ImplConsLocsOfDefs}%
   \hfill%
-  \mkSolvTechSubfigure{impl-cons-fix-fall-throughs}
+  \mkSolvTechSubfigure{impl-cons-fix-fall-throughs}%
+                      {ImplConsFixFallThroughs}
 
   \mkFigureCaption
 \end{figure}
 
 \renewcommand{\thefigure}{\oldthefigure}
-
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-defs-dominate-defs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-defs-in-spanned-blocks-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-identical-entry-blocks-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-defs-dominate-entry-blocks-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-place-phi-ops-same-as-def-edges-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-no-span-uses-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-no-span-defs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-no-span-use-defs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-spanned-input-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-used-data-must-be-available-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-exterior-data-must-be-available-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-locs-of-uses-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-locs-of-defs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-fix-fall-throughs-pre+solving-time-speedup.stats%
-}
 
 \RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
 solving times (including presolving time) for two \glspl{constraint model}: one
@@ -2283,495 +2237,192 @@ with a maximum coefficient of variation of
   \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 %
-\def\colsep{\hspace{.37em}}%
+From the \glspl{GMI} and \glspl{CI}, also given in
+\refFigure{single-impl-con-vs-no-con-solving-time-plots}, we conclude that
+\refEquation{impl-cons-fix-fall-throughs} leads to an overall reduction in
+solving time, that
+Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks} and
+\refEquation*{impl-cons-no-span-use-defs} lead to an overall increase in solving
+time, and that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks},
+\refEquation*{impl-cons-spanned-input}, and
+\refEquation*{impl-cons-place-phi-ops-same-as-def-edges} has no impact on
+solving time.
 %
-\begin{table}
-  \centering%
-  \figureFontSize\smaller%
-  \begin{tabular}{p{8mm}*{7}{@{\colsep}c@{\colsep}}}
-    \toprule
-      & \multicolumn{7}{c}{\tabhead equation} \\
-    \cmidrule(lr){2-8}%
-      & \tabhead\refEquation*{impl-cons-defs-dominate-defs}
-      & \tabhead\refEquation*{impl-cons-defs-in-spanned-blocks}
-      & \tabhead\refEquation*{impl-cons-identical-entry-blocks}
-      & \tabhead\refEquation*{impl-cons-defs-dominate-entry-blocks}
-      & \tabhead\refEquation*{impl-cons-place-phi-ops-same-as-def-edges}
-      & \tabhead\refEquation*{impl-cons-no-span-uses}
-      & \tabhead\refEquation*{impl-cons-no-span-defs} \\
-    \midrule
-        \tabhead GMI
-      & \printGMI{\SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \tabhead CI
-      & \printGMICI{%
-          \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsIdenticalEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsDefsDominateEntryBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsPlacePhiOpsSameAsDefEdgesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsNoSpanUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsNoSpanDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        } \\
-    \midrule
-      & \tabhead\refEquation*{impl-cons-no-span-use-defs}
-      & \tabhead\refEquation*{impl-cons-spanned-input}
-      & \tabhead\refEquation*{impl-cons-used-data-must-be-available}
-      & \tabhead\refEquation*{impl-cons-exterior-data-must-be-available}
-      & \tabhead\refEquation*{impl-cons-locs-of-uses}
-      & \tabhead\refEquation*{impl-cons-locs-of-defs}
-      & \tabhead\refEquation*{impl-cons-fix-fall-throughs} \\
-    \midrule
-        \tabhead GMI
-      & \printGMI{\SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \tabhead CI
-      & \printGMICI{%
-          \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsNoSpanUseDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsSpannedInputPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsUsedDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsExteriorDataMustBeAvailablePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        } \\
-    \bottomrule
-  \end{tabular}
-
-  \caption[%
-            Geometric mean improvements on solving time attained by a given
-            implied constraint%
-          ]%
-          {%
-            GMIs on the solving time attained by a given implied constraint%
-          }
-  \labelTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}
-\end{table}
-%
-Due to the \glspl{GMI} and \glspl{CI} given in
-\refTable{single-impl-con-vs-no-con-solving-time-geom-mean-improvements}, we
-conclude that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
-\refEquation*{impl-cons-spanned-input} have no impact on solving time and that
-some of the \gls{implied.c} \glspl{constraint}
-(Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
+For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
 \refEquation*{impl-cons-identical-entry-blocks},
-\refEquation*{impl-cons-no-span-defs},
+\refEquation*{impl-cons-no-span-uses}, \refEquation*{impl-cons-no-span-defs},
 \refEquation*{impl-cons-used-data-must-be-available},
-\refEquation*{impl-cons-exterior-data-must-be-available}, and
-\refEquation*{impl-cons-fix-fall-throughs}) lead to a reduction in solving time
-while others have a negative effect
-(Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks},
-\refEquation*{impl-cons-no-span-uses},
-\refEquation*{impl-cons-no-span-use-defs},
+\refEquation*{impl-cons-exterior-data-must-be-available},
 \refEquation*{impl-cons-locs-of-uses}, and
-\refEquation*{impl-cons-locs-of-defs}).
-%
-\refEquation{impl-cons-place-phi-ops-same-as-def-edges} appears to have no
-impact on solving time.
+\refEquation*{impl-cons-locs-of-defs}, the results are inconclusive.
+
+\todo{rewrite}
+
+\includeSolvTechStats[enable]{only-good-implied-cons}
+\includeSolvTechStats{bad-implied-cons}
+\includeSolvTechStats{all-implied-cons}
 
 \begin{figure}
   \centering%
-  \insertSolvTechSpeedupPlot{bad-implied-cons}{1}
+
+  \mkSolvTechSubfigure[enable]%
+                      {only-good-implied-cons}%
+                      [Only \refEquation{impl-cons-fix-fall-throughs}]
+                      {OnlyGoodImpliedCons}%
+  \hfill%
+  \mkSolvTechSubfigure{bad-implied-cons}%
+                      [%
+                        Without Eqs.\thinspace%
+                        \refEquation*{impl-cons-defs-dominate-entry-blocks} and
+                        \refEquation*{impl-cons-no-span-use-defs}%
+                      ]%
+                      {BadImpliedCons}
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{all-implied-cons}%
+                      [All implied constraints]%
+                      {AllImpliedCons}
 
   \caption[%
-            Plot for evaluating ?? impact on
-            solving time%
+            Plot for evaluating the impact on solving time made by different
+            configurations of implied constraints%
           ]%
           {%
-            Normalized solving times (incl.\ presolving time) for two constraint
-            models: one with all implied constraints (baseline) and another
-            without the constraints who individually have a negative effect on
-            solving time (subject)%
+            Normalized solving times (incl.\ presolving time) for four
+            constraint models: one with no implied constraints (baseline), one
+            with only such constraints that have a positive impact on solving
+            time (subject), one without such constraints that have a negative
+            impact on solving time (subject), and another with all implied
+            constraints (subject)%
           }
-  \labelFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot}
+  \labelFigure{diff-impl-cons-conf-solving-time-plot}
 \end{figure}
 
-\input{%
-  \expDir/solv-tech-disable-bad-implied-cons-pre+solving-time-speedup.stats%
-}
-
-\RefFigure{no-bad-impl-cons-vs-all-cons-solving-time-plot} shows the normalized
-solving times (including presolving time) for two \glspl{constraint model}: one
-with all \gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and
-another without the \glspl{constraint} who individually have a negative effect
-on solving time, serving as \gls{subject}.
+\RefFigure{impl-cons-vs-no-cons-solving-time-plot} shows the normalized solving
+times (including presolving time) for two \glspl{constraint model}: one with no
+\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and another with
+all such \glspl{constraint}, serving as \gls{subject}.
 %
 The solving times range from
 \SIMinOf{
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
 }{\s}
 to
 \SIMinOf{
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
 }{\s}
 with a maximum coefficient of variation of
 \numMaxOf{
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 %
-The \gls{GMI} is \printGMI{%
-  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
-}, ...
+\todo{write conclusion}
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
+
+\includeSolvTechStats{dom-cons-locs-of-states}
+\includeSolvTechStats{dom-cons-operands-of-non-selected-matches}
+\includeSolvTechStats{impl-cons-input-operands-not-taking-min-value}
+\includeSolvTechStats{dom-cons-interch-data-chains}
+\includeSolvTechStats{dom-cons-null-copy-match-selection}
+\includeSolvTechStats{dom-cons-kill-match-selection}
 
 \begin{figure}
   \centering
 
   \mkSolvTechSubfigure{dom-cons-locs-of-states}%
+                      {DomConsLocsOfStates}%
   \hfill%
-  \mkSolvTechSubfigure{dom-cons-operands-of-non-selected-matches}
+  \mkSolvTechSubfigure{dom-cons-operands-of-non-selected-matches}%
+                      {DomConsOperandsOfNonSelectedMatches}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{impl-cons-input-operands-not-taking-min-value}%
+                      {ImplConsInputOperandsNotTakingMinValue}%
   \hfill%
-  \mkSolvTechSubfigure{dom-cons-interch-data-chains}
+  \mkSolvTechSubfigure{dom-cons-interch-data-chains}%
+                      {DomConsInterchDataChains}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{dom-cons-null-copy-match-selection}%
+                      {DomConsNullCopyMatchSelection}%
   \hfill%
   \mkSolvTechSubfigure{dom-cons-kill-match-selection}%
+                      {DomConsKillMatchSelection}
 
   \caption{TODO}
   \labelFigure{dom-cons-vs-no-cons-solving-time-plots}
 \end{figure}
 
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-cons-locs-of-states-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-cons-operands-of-non-selected-matches-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-impl-cons-input-operands-not-taking-min-value-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-cons-interch-data-chains-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-cons-null-copy-match-selection-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-cons-kill-match-selection-pre+solving-time-speedup.stats%
-}
-
-\begin{table}
-  \centering%
-  \figureFontSize\smaller%
-  \begin{tabular}{p{8mm}*{6}{@{\colsep}c@{\colsep}}}
-    \toprule
-      & \multicolumn{6}{c}{\tabhead equation} \\
-    \cmidrule(lr){2-7}%
-      & \tabhead\refEquation*{dom-cons-locs-of-states}
-      & \tabhead\refEquation*{dom-cons-operands-of-non-selected-matches}
-      & \tabhead\refEquation*{impl-cons-input-operands-not-taking-min-value}
-      & \tabhead\refEquation*{dom-cons-interch-data-chains}
-      & \tabhead\refEquation*{dom-cons-null-copy-match-selection}
-      & \tabhead\refEquation*{dom-cons-kill-match-selection} \\
-    \midrule
-        \tabhead GMI
-      & \printGMI{\SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \tabhead CI
-      & \printGMICI{%
-          \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        } \\
-    \bottomrule
-  \end{tabular}
-
-  \caption[%
-            Geometric mean improvements on solving time attained by a particular
-            symmetry or dominance breaking constraint%
-          ]%
-          {%
-            GMIs on the solving time attained by a particular symmetry or
-            dominance breaking constraint%
-          }
-  \labelTable{dom-cons-vs-no-cons-solving-time-geom-mean-improvements}
-\end{table}
-
 
 \subsection{Presolving}
+
+\includeSolvTechStats{dom-matches}
+\includeSolvTechStats{illegal-matches-uncovered-ops}
+\includeSolvTechStats{illegal-matches-undefined-data}
+\includeSolvTechStats{illegal-matches-kills}
+\includeSolvTechStats{illegal-matches-def-locs}
+\includeSolvTechStats{illegal-matches-use-locs}
+\includeSolvTechStats{redun-kills}
+\includeSolvTechStats{redun-non-null-copy-matches}
+\includeSolvTechStats{canonical-locs}
 
 \begin{figure}
   \centering
 
-  \mkSolvTechSubfigure[Dominated matches]{dom-matches}%
+  \mkSolvTechSubfigure{dom-matches}%
+                      [Dominated matches]%
+                      {DomMatches}%
   \hfill%
   \mkSolvTechSubfigure{illegal-matches-uncovered-ops}%
+                      {IllegalMatchesUncoveredOps}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{illegal-matches-undefined-data}%
+                      {IllegalMatchesUndefinedData}%
   \hfill%
-  \mkSolvTechSubfigure{illegal-matches-kills}
+  \mkSolvTechSubfigure{illegal-matches-kills}%
+                      {IllegalMatchesKills}%
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{illegal-matches-def-locs}%
+                      {IllegalMatchesDefLocs}%
   \hfill%
-  \mkSolvTechSubfigure{illegal-matches-use-locs}
+  \mkSolvTechSubfigure{illegal-matches-use-locs}%
+                      {IllegalMatchesUseLocs}
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{redun-kills}%
+                      {RedunKills}%
   \hfill%
-  \mkSolvTechSubfigure{redun-non-null-copy-matches}
+  \mkSolvTechSubfigure{redun-non-null-copy-matches}%
+                      {RedunNonNullCopyMatches}
 
   \vspace{\betweensubfigures}
 
-  \mkSolvTechSubfigure[Canonical locations]{canonical-locs}
+  \mkSolvTechSubfigure{canonical-locs}%
+                      [Canonical locations]%
+                      {CanonicalLocs}
 
   \caption{TODO}
   \labelFigure{presolving-vs-no-pre-solving-time-plots}
 \end{figure}
-
-\input{%
-  \expDir/%
-  solv-tech-disable-dom-matches-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-illegal-matches-uncovered-ops-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-illegal-matches-undefined-data-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-illegal-matches-kills-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-illegal-matches-def-locs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-illegal-matches-use-locs-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-redun-kills-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-redun-non-null-copy-matches-pre+solving-time-speedup.stats%
-}
-\input{%
-  \expDir/%
-  solv-tech-disable-canonical-locs-pre+solving-time-speedup.stats%
-}
-
-\begin{table}
-  \centering%
-  \figureFontSize\smaller%
-  \begin{tabular}{p{8mm}*{7}{@{\colsep}c@{\colsep}}}
-    \toprule
-      & \multicolumn{7}{c}{\tabhead equation} \\
-    \cmidrule(r){2-8}%
-      & \tabhead\refEquation*{illegal-matches-uncovered-ops}
-      & \tabhead\refEquation*{illegal-matches-undefined-data}
-      & \tabhead\refEquation*{illegal-matches-kills}
-      & \tabhead\refEquation*{illegal-matches-def-locs}
-      & \tabhead\refEquation*{illegal-matches-use-locs}
-      & \tabhead\refEquation*{redun-kills}
-      & \tabhead\refEquation*{redun-non-null-copy-matches} \\
-    \midrule
-        \tabhead GMI
-      & \printGMI{\SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}
-      & \printGMI{\SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean} \\
-        \tabhead CI
-      & \printGMICI{%
-          \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        }
-      & \printGMICI{%
-          \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-        }{%
-          \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-        } \\
-    \midrule
-      & \multicolumn{3}{c}{%
-          \tabhead dominated matches
-        }
-      &
-      & \multicolumn{3}{c}{%
-          \tabhead canonical locations
-        } \\
-    \midrule
-        \tabhead GMI
-      & \multicolumn{3}{c}{%
-          \printGMI{\SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}%
-        }
-      & \tabhead CI
-      & \multicolumn{3}{c}{%
-          \printGMI{\SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean}%
-        } \\
-      & \multicolumn{3}{c}{%
-          \printGMICI{%
-            \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-          }{%
-            \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-          }%
-        }
-      &
-      & \multicolumn{3}{c}{%
-          \printGMICI{%
-            \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-          }{%
-            \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-          }%
-        } \\
-    \bottomrule
-  \end{tabular}
-
-  \caption[%
-            Geometric mean improvements on solving time attained by a particular
-            presolving technique%
-          ]%
-          {%
-            GMIs on the solving time attained by a particular presolving
-            technique%
-          }
-  \labelTable{presolving-vs-no-pre-solving-time-geom-mean-improvements}
-\end{table}
 
 
 \subsection{Impact of All Solving Techniques}
