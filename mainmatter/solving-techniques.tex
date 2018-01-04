@@ -2003,27 +2003,43 @@ crucial for code quality.
   }{#3}
 }
 
-\NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}momo}{%
+\newsavebox{\solvTechPlot}
+\newlength{\solvTechPlotW}
+\newlength{\solvTechSubfigW}
+\NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}moom}{%
   \IfStrEq{#1}{disable}{\def\argUC{Disable}}{}%
   \IfStrEq{#1}{enable}{\def\argUC{Enable}}{}%
   \edef\statsPartName{%
     SolvTech%
     \argUC%
-    #4%
+    #5%
     PrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedup%
   }%
   \edef\gmi{\csname\statsPartName Gmean\endcsname}%
   \edef\cimin{\csname\statsPartName CiMin\endcsname}%
   \edef\cimax{\csname\statsPartName CiMax\endcsname}%
-  \subcaptionbox{%
-                  \IfValueTF{#3}{#3}{\refEquation{#2}}.
-                  %
-                  GMI:~\printGMI{\gmi},
-                  CI:~\printGMICI{\cimin}{\cimax}%
-                  \labelFigure{solv-tech-#1-#2}%
-                }{%
-                  \insertSolvTechSpeedupPlot[#1]{#2}{.49}%
+  \savebox{\solvTechPlot}{\insertSolvTechSpeedupPlot[#1]{#2}{.49}}%
+  \settowidth{\solvTechPlotW}{\usebox{\solvTechPlot}}%
+  \IfValueTF{#4}
+            {%
+              \pgfmathsetlength{\solvTechSubfigW}%
+                               {max(\solvTechPlotW, #4)}%
+            }%
+            {\setlength{\solvTechSubfigW}{\solvTechPlotW}}%
+  \begin{minipage}[t]{\solvTechSubfigW}%
+    \captionsetup[sub]{justification=centerlast}%
+    \IfValueTF{#4}{\captionsetup[sub]{width=#4}}{}%
+    \centering%
+    \usebox{\solvTechPlot}
+    \subcaption{%
+                 \IfValueTF{#3}{#3}{\refEquation{#2}}.
+                 %
+                 GMI:~\printGMI{\gmi},
+                 CI:~\printGMICI{\cimin}{\cimax}%
+                 \labelFigure{solv-tech-#1-#2}%
                 }%
+    \vspace{0pt}% Force \belowcaptionspace to be applied
+  \end{minipage}%
 }
 
 \NewDocumentCommand{\includeSolvTechStats}{O{disable}m}{%
@@ -2268,13 +2284,15 @@ For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
                         \refEquation*{impl-cons-defs-dominate-entry-blocks} and
                         \refEquation*{impl-cons-no-span-use-defs}%
                       ]%
-                      {BadImpliedCons}
+                      [4.3cm]%
+                      {BadImpliedCons}%
 
   \vspace{\betweensubfigures}
 
   \mkSolvTechSubfigure{all-implied-cons}%
                       [All implied constraints]%
-                      {AllImpliedCons}
+                      [\linewidth]%
+                      {AllImpliedCons}%
 
   \caption[%
             Plot for evaluating the impact on solving time made by different
@@ -2377,6 +2395,7 @@ with a maximum coefficient of variation of
 
   \mkSolvTechSubfigure{dom-matches}%
                       [Dominated matches]%
+                      [3.5cm]%
                       {DomMatches}%
   \hfill%
   \mkSolvTechSubfigure{illegal-matches-uncovered-ops}%
@@ -2410,6 +2429,7 @@ with a maximum coefficient of variation of
 
   \mkSolvTechSubfigure{canonical-locs}%
                       [Canonical locations]%
+                      [\linewidth]%
                       {CanonicalLocs}
 
   \caption{TODO}
