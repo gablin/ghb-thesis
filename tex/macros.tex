@@ -18,10 +18,8 @@
 \NewDocumentCommand{\buildLabelRefCommands}{mom}{%
   \expandafter\newcommand\csname label#1\endcsname[1]{\label{#1:##1}}%
   \expandafter\NewDocumentCommand\csname @ref#1\endcsname{smm}{%
-    \mbox{%
-      \IfBooleanF{##1}{##3}%
-      \ref{#1:##2}%
-    }%
+    \IfBooleanF{##1}{##3}%
+    \ref{#1:##2}%
   }%
   \expandafter\NewDocumentCommand\csname ref#1\endcsname{sm}{%
     \def\refcmd{\csname @ref#1\endcsname}%
@@ -36,30 +34,28 @@
                      {\refcmd{##2}{\prefix}}%
   }%
   \expandafter\NewDocumentCommand\csname @ref#1List\endcsname{smm}{%
-    \mbox{%
-      \setcounter{refListLength}{0}%
-      \foreach \r in {##2} {\stepcounter{refListLength}}%
-      \edef\numRefs{\arabic{refListLength}}%
-      \IfBooleanF{##1}{##3}%
-      \foreach \r [count=\ri] in {##2} {%
-        \ifnum \ri=\numRefs
-          \ifnum \numRefs>1
-            and~%
-          \fi%
+    \setcounter{refListLength}{0}%
+    \foreach \r in {##2} {\stepcounter{refListLength}}%
+    \edef\numRefs{\arabic{refListLength}}%
+    \IfBooleanF{##1}{##3}%
+    \foreach \r [count=\ri] in {##2} {%
+      \ifnum \ri=\numRefs
+        \ifnum \numRefs>1
+          and~%
         \fi%
-        \ref{#1:\r}%
-        \ifnum \ri<\numRefs
-          \ifnum \numRefs>2
-            ,%
-          \fi%
-          \ %
-        \fi%
-      }%
+      \fi%
+      \ref{#1:\r}%
+      \ifnum \ri<\numRefs
+        \ifnum \numRefs>2
+          ,%
+        \fi
+        \ %
+      \fi%
     }%
   }%
   \expandafter\NewDocumentCommand\csname ref#1List\endcsname{sm}{%
     \def\refcmd{\csname @ref#1List\endcsname}%
-    \def\prefix{#3.\thinspace}%
+    \def\prefix{#3s.\thinspace}%
     \IfBooleanTF{##1}{\refcmd*{##2}{\prefix}}%
                      {\refcmd{##2}{\prefix}}%
   }%
@@ -70,10 +66,8 @@
                      {\refcmd{##2}{\prefix}}%
   }%
   \expandafter\NewDocumentCommand\csname @ref#1Range\endcsname{smmm}{%
-    \mbox{%
-      \IfBooleanF{##1}{##4}%
-      \ref{#1:##2}--\ref{#1:##3}%
-    }%
+    \IfBooleanF{##1}{##4}%
+    \mbox{\ref{#1:##2}--\ref{#1:##3}}%
   }%
   \expandafter\NewDocumentCommand\csname ref#1Range\endcsname{smm}{%
     \def\refcmd{\csname @ref#1Range\endcsname}%
@@ -88,10 +82,8 @@
                      {\refcmd{##2}{##3}{\prefix}}%
   }%
   \expandafter\NewDocumentCommand\csname @refPageOf#1\endcsname{smm}{%
-    \mbox{%
-      \IfBooleanF{##1}{##3}%
-      \pageref{#1:##2}%
-    }%
+    \IfBooleanF{##1}{##3}%
+    \pageref{#1:##2}%
   }%
   \expandafter\NewDocumentCommand\csname refPageOf#1\endcsname{sm}{%
     \def\refcmd{\csname @refPageOf#1\endcsname}%
