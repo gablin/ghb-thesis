@@ -1145,7 +1145,7 @@
 }
 
 \NewDocumentCommand{\printGMI}{m}{%
-  \pgfmathparse{or(#1 <= 0.9, #1 >= 1.1) ? 1 : 0}%
+  \pgfmathparse{or(#1 <= 0.99, #1 >= 1.01) ? 1 : 0}%
   \ifthenelse{\pgfmathresult>0}{%
     \num{#1}%
   }{%
