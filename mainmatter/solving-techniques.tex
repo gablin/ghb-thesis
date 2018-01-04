@@ -2055,8 +2055,8 @@ We first evaluate the impact of each \gls{implied.c} \gls{constraint}
 }{%
   impl-cons-fix-fall-throughs%
 }) by comparing the solving times exhibited by two versions of the
-\gls{constraint model}: one with a given \gls{implied.c} \gls{constraint}, and
-another without the \gls{constraint}.
+\gls{constraint model}: one without a particular \gls{implied.c}
+\gls{constraint}, and another with all such \glspl{constraint}.
 %
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
@@ -2075,16 +2075,15 @@ with the amount of \gls{propagation} they provide, as described in
 \refChapter{constraint-programming}.
 
 Based on the results for the experiment above, we then evaluate synergy effects
-among the \gls{implied.c} \glspl{constraint} by comparing the solving times
-exhibited by four versions of the \glsshort{constraint model}: one with no
-\gls{implied.c} \glspl{constraint} whatsoever, one with all \glspl{constraint},
-one with only those who individually lead to an overall reduction in solving
-time, and another without those who individually lead to an overall increase in
-solving time.
+among these \glspl{constraint} by comparing the solving times exhibited by four
+versions of the \glsshort{constraint model}: one with no \gls{implied.c}
+\glspl{constraint}, one with only those who individually lead to an overall
+reduction in solving time, one without those who individually lead to an overall
+increase in solving time, and another with all such \glspl{constraint}.
 %
 We expect the \glsplshort{constraint model} with some degree of \gls{implied.c}
 \glspl{constraint} to perform better than the \glsshort{constraint model} with
-no \gls{implied.c} \glspl{constraint}.
+no such \glspl{constraint}.
 %
 Hence the \gls{GMI} should be greater than~\num{1}.
 
