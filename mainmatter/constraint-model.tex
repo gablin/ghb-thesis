@@ -1071,9 +1071,9 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 (instead of \glspl{datum}) \gls{define.d}[d] respectively \gls{use.d}[d] by
 \gls{match}~$m$.
 %
-With these new definitions, Eqs.\thinspace\refEquation*{naive-dom},
-\refEquation*{spanning}, and~\refEquation*{compatible-locations} are adjusted
-accordingly (the changes are highlighted in grey):
+With these new definitions, \refEquationList{naive-dom, spanning,
+  compatible-locations} are adjusted accordingly (the changes are highlighted in
+grey):
 %
 \begin{equation}
   \begin{array}{c}
@@ -1966,10 +1966,10 @@ Hence the \gls{GMI} for both should be greater than~\num{1}.
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
 
-Figures~\refFigure*{%
-  dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
-and~\refFigure*{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
-shows the normalized solving times (including presolving time) and
+\RefFigureList{%
+  dual-target-branch-patterns-vs-branch-extension-solving-time-plot,
+  dual-target-branch-patterns-vs-branch-extension-cycles-plot%
+} show the normalized solving times (including presolving time) and
 \gls{solution} costs, respectively, for the two \glspl{constraint model}
 described above, with the \glsshort{constraint model} based on \gls{branch
   extension} serving as \gls{baseline} and the \glsshort{constraint model} based
@@ -2172,10 +2172,10 @@ In the context of \gls{instruction selection}, this means letting the
 \gls{operation} representing the addition to be covered by more than one
 \gls{match} (\refFigure{recomputation-example-graph}).
 %
-However, Eqs.\thinspace\refEquation*{operation-coverage}
-and~\refEquation*{data-definitions} require that every \gls{operation} and
-\gls{datum} must be covered respectively \gls{define.d}[d] by exactly one
-selected \gls{match}, thus forbidding such \glspl{solution}.
+However, \refEquationList{operation-coverage, data-definitions} require that
+every \gls{operation} and \gls{datum} must be covered respectively
+\gls{define.d}[d] by exactly one selected \gls{match}, thus forbidding such
+\glspl{solution}.
 %
 Although these \glspl{constraint} can be relaxed to allow \glspl{operation} and
 \glspl{datum} to be covered respectively \gls{define.d}[d] by at least one
@@ -2278,8 +2278,7 @@ the corresponding \gls{UF graph} (\refFigure{if-conversions-example-graph}).
 %
 However, since $m_1$ and $m_2$ both cover the same \glspl{control node}, only
 one of the \glspl{match} can be selected (due to
-Eqs.\thinspace\refEquation*{operation-coverage}
-and~\refEquation*{data-definitions}).
+\refEquationList{operation-coverage, data-definitions}).
 %
 In addition, because both \glspl{match} \gls{consume.b} the \irBlock{body}
 \gls{block}, no other \glspl{operation} may be placed in \irBlock{body} if

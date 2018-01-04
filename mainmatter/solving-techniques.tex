@@ -18,10 +18,9 @@ refinements to strenghten \gls{propagation}.
 %
 \RefSection{st-branching-strategies} introduces \glspl{branching strategy}.
 %
-Sections\thinspace\refSection*{st-branching-strategies}
-and~\refSection*{st-impl-constraints} introduce \gls{implied.c} respectively
-\glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
-\glspl{constraint}.
+\RefSectionList{st-branching-strategies, st-impl-constraints} introduce
+\gls{implied.c} respectively \glsshort{symmetry breaking.c} and \gls{dominance
+  breaking.c} \glspl{constraint}.
 %
 \RefSection{st-presolving} introduces \gls{presolving} techniques.
 %
@@ -30,10 +29,9 @@ the above techniques.
 %
 Lastly, \refSection{st-summary} summarizes the chapter.
 
-The material presented in Sects.\thinspace\refSection*{st-model-refinements},
-\refSection*{st-branching-strategies}, \refSection*{st-impl-constraints},
-\refSection*{st-dom-breaking-constraints}, \refSection*{st-pre-dom-matches}, and
-\refSection*{st-canonical-locations} is based on ideas conceived by
+The material presented in \refSection{st-model-refinements,
+  st-branching-strategies, st-impl-constraints, st-dom-breaking-constraints,
+  st-pre-dom-matches, st-canonical-locations} is based on ideas conceived by
 Mats~Carlsson, which have then been improved by the author of this dissertation.
 %
 All other materials in this chapter, including the text and figures, are due
@@ -446,10 +444,10 @@ solve than the complete \glsshort{constraint model}.
 Hence the relaxed \glsshort{constraint model} consists of only the
 $\mVar{omatch}$, $\mVar{opcosts}$, $\mVar{sel}$, $\mVar{succ}$, and
 $\mVar{cost}$ variables, \refEquation{operation-coverage}, relaxed versions of
-Eqs.\thinspace\refEquation*{block-order} and \refEquation*{fall-through} that
-allow fall-throughs via non-empty \glspl{block}, and modified versions of
-Eqs.\thinspace\refEquation*{cost-matrix}--\refEquation*{total-cost} that do not
-take the execution frequencies into account.
+\refEquationList{block-order, fall-through} that allow fall-throughs via
+non-empty \glspl{block}, and modified versions of
+\refEquationRange{cost-matrix}{total-cost} that do not take the execution
+frequencies into account.
 
 If $\mRelaxedCost$ and $\mHeuristicCost$ denote the cost computed from the
 relaxation and by the heuristic, respectively, then the \gls{cost variable} is
@@ -1591,10 +1589,9 @@ of \glspl{datum} representing constant values, and \mbox{$\mCapUseLocsOf(d)
 %
 As can be deduced from their name, $\mCapUseLocsOf$ and $\mCapDefLocsOf$ are
 defined similarly to $\mCupUseLocsOf$ and $\mCupDefLocsOf$ (see
-Eqs.\thinspace\refEquation*{cup-use-locs-of-function}
-and~\refEquation*{cup-def-locs-of-function}), with the exception that
-\glspl{location} known to violate \refEquation{phi-match-locations} are removed
-from these sets.
+\refEquationList{cup-use-locs-of-function, cup-def-locs-of-function}), with the
+exception that \glspl{location} known to violate
+\refEquation{phi-match-locations} are removed from these sets.
 
 
 \subsection{Canonical Locations}
@@ -1736,9 +1733,8 @@ optimally by five versions of the \gls{constraint model}: two based on the naive
 implementation of the \gls{objective function}
 (\refEquation{naive-objective-function}), one with cost bounds and one without;
 and three based on the refined implementation
-(Eqs.\thinspace\refEquation*{omatch-oplace-ocost-connection}
-and~\refEquation*{total-cost}), one without cost bounds, one with only the upper
-bound, and one with both lower and upper bound.
+(\refEquationList{omatch-oplace-ocost-connection, total-cost}), one without cost
+bounds, one with only the upper bound, and one with both lower and upper bound.
 %
 We also evaluate the impact on code quality by comparing the cost of the best
 \gls{solution} found by two versions of the \gls{constraint model} -- one based
@@ -2060,8 +2056,8 @@ We first evaluate the impact of each \gls{implied.c} \gls{constraint}
 %
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
-Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks} and
-\refEquation*{impl-cons-spanned-input} to have no impact on solving time.
+\refEquationList{impl-cons-defs-in-spanned-blocks, impl-cons-spanned-input} to
+have no impact on solving time.
 %
 Hence in these cases the \gls{GMI} should be equal to~\num{1}.
 %
@@ -2248,21 +2244,16 @@ with a maximum coefficient of variation of
 From the \glspl{GMI} and \glspl{CI}, also given in
 \refFigure{single-impl-con-vs-no-con-solving-time-plots}, we conclude that
 \refEquation{impl-cons-fix-fall-throughs} leads to an overall reduction in
-solving time, that
-Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-entry-blocks} and
-\refEquation*{impl-cons-no-span-use-defs} lead to an overall increase in solving
-time, and that Eqs.\thinspace\refEquation*{impl-cons-defs-in-spanned-blocks},
-\refEquation*{impl-cons-spanned-input}, and
-\refEquation*{impl-cons-place-phi-ops-same-as-def-edges} have no impact on
-solving time.
+solving time, that \refEquationList{impl-cons-defs-dominate-entry-blocks,
+  impl-cons-no-span-use-defs} lead to an overall increase in solving time, and
+that \refEquationList{impl-cons-defs-in-spanned-blocks, impl-cons-spanned-input,
+  impl-cons-place-phi-ops-same-as-def-edges} have no impact on solving time.
 %
-For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
-\refEquation*{impl-cons-identical-entry-blocks},
-\refEquation*{impl-cons-no-span-uses}, \refEquation*{impl-cons-no-span-defs},
-\refEquation*{impl-cons-used-data-must-be-available},
-\refEquation*{impl-cons-exterior-data-must-be-available},
-\refEquation*{impl-cons-locs-of-uses}, and
-\refEquation*{impl-cons-locs-of-defs}, the results are inconclusive.
+For \refEquationList{impl-cons-defs-dominate-defs,
+  impl-cons-identical-entry-blocks, impl-cons-no-span-uses,
+  impl-cons-no-span-defs, impl-cons-used-data-must-be-available,
+  impl-cons-exterior-data-must-be-available, impl-cons-locs-of-uses,
+  impl-cons-locs-of-defs}, the results are inconclusive.
 
 \includeSolvTechStats[enable]{only-good-implied-cons}
 \includeSolvTechStats{bad-implied-cons}
@@ -2278,9 +2269,9 @@ For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
   \hfill%
   \mkSolvTechSubfigure{bad-implied-cons}%
                       [%
-                        Without Eqs.\thinspace%
-                        \refEquation*{impl-cons-defs-dominate-entry-blocks} and
-                        \refEquation*{impl-cons-no-span-use-defs}%
+                        Without
+                        \refEquationList{impl-cons-defs-dominate-entry-blocks,
+                          impl-cons-no-span-use-defs}%
                       ]%
                       [4.3cm]%
                       {BadImpliedCons}%
