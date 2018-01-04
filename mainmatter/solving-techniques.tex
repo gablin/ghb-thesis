@@ -2265,8 +2265,6 @@ For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
 \refEquation*{impl-cons-locs-of-uses}, and
 \refEquation*{impl-cons-locs-of-defs}, the results are inconclusive.
 
-\todo{rewrite}
-
 \includeSolvTechStats[enable]{only-good-implied-cons}
 \includeSolvTechStats{bad-implied-cons}
 \includeSolvTechStats{all-implied-cons}
@@ -2302,18 +2300,30 @@ For Eqs.\thinspace\refEquation*{impl-cons-defs-dominate-defs},
           {%
             Normalized solving times (incl.\ presolving time) for four
             constraint models: one with no implied constraints (baseline), one
-            with only such constraints that have a positive impact on solving
-            time (subject), one without such constraints that have a negative
-            impact on solving time (subject), and another with all implied
-            constraints (subject)%
+            with only such constraints that individually have a positive impact
+            on solving time (subject), one without such constraints that
+            individually have a negative impact on solving time (subject), and
+            another with all implied constraints (subject)%
           }
   \labelFigure{diff-impl-cons-conf-solving-time-plot}
 \end{figure}
 
-\RefFigure{impl-cons-vs-no-cons-solving-time-plot} shows the normalized solving
-times (including presolving time) for two \glspl{constraint model}: one with no
-\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; and another with
-all such \glspl{constraint}, serving as \gls{subject}.
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+
+\RefFigure{diff-impl-cons-conf-solving-time-plot} shows the normalized solving
+times (including presolving time) for four \glspl{constraint model}: one with no
+\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; one with only
+such \glspl{constraint} that individually have a positive impact on solving
+time, serving as \gls{subject}; one without such \glspl{constraint} that
+individually have a negative impact on solving time, also serving as
+\gls{subject}; and another with all \gls{implied.c} \glspl{constraint}, also
+serving as \gls{subject}.
+%
+For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
+\modelB, \modelC, and \modelD, respectively.
 %
 The solving times range from
 \SIMinOf{
@@ -2336,8 +2346,57 @@ with a maximum coefficient of variation of
   \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
+
+To begin with, we observe that with the \gls{GMI} for \glsshort{constraint
+  model}~\modelB{} over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-enable-only-good-implied-cons}) is \printGMI{%
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}.
 %
-\todo{write conclusion}
+This means that adding an \gls{implied.c} \gls{constraint} to a
+\glsshort{constraint model} with other \gls{implied.c} \glspl{constraint} is
+more beneficial than adding an \gls{implied.c} \gls{constraint} to a
+\glsshort{constraint model} with no such \glspl{constraint}.
+%
+In comparison, we observe that the \gls{GMI} for \glsshort{constraint
+  model}~\modelC{} over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-disable-bad-implied-cons}) is \printGMI{%
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}.
+%
+Although the result is statistically not conclusive, this suggests that also
+adding \gls{implied.c} \glspl{constraint} whose individual impact on solving
+time is inconclusive is more beneficial than only including \gls{implied.c}
+\glspl{constraint} whose individual positive impact on solving time is
+statistically significant.
+%
+Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelD{}
+over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-disable-all-implied-cons}) is \printGMI{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}.
+%
+Since \glsshort{constraint model}~\modelD{} contains \gls{implied.c}
+\glspl{constraint} whose individual impact on solving time is statistically
+negative yet still outperforms \glsshort{constraint model}~\modelC, this means
+that there are synergy effects between the \gls{implied.c} \glspl{constraint}
+whose collective positive impact on solving time is greater than the sum of its
+parts.
+%
+Hence we conclude that the \gls{implied.c} \glspl{constraint} jointly lead to an
+overall reduction in solving time.
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
