@@ -2044,6 +2044,7 @@ crucial for code quality.
 
 
 \subsection{Implied Constraints}
+\labelSection{st-exp-evaluation-implied-constraints}
 
 We first evaluate the impact of each \gls{implied.c} \gls{constraint}
 (\refEquationRange{%
@@ -2392,6 +2393,38 @@ Hence we conclude that it is beneficial to include all \gls{implied.c}
 
 \subsection{Symmetry and Dominance Breaking Constraints}
 
+Like in \refSection{st-exp-evaluation-implied-constraints}, we first evaluate
+the impact of each \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
+\gls{constraint}
+(\refEquationRange{%
+  dom-cons-locs-of-states%
+}{%
+  dom-cons-kill-match-selection%
+}) by comparing the solving times exhibited by two versions of the
+\gls{constraint model}: one without a particular \glsshort{symmetry breaking.c}
+or \gls{dominance breaking.c} \gls{constraint}, and another with all such
+\glspl{constraint}.
+%
+For the same reason as with the \gls{implied.c} \glspl{constraint}, we expect
+some \glspl{constraint} to lead to an overall reduction in solving time -- hence
+the \gls{GMI} should be greater than~\num{1} -- while others may degrade solving
+time -- hence the \gls{GMI} should be less than~\num{1}.
+
+Based on the results for the experiment above, we then evaluate synergy effects
+among these \glspl{constraint} by comparing the solving times exhibited by four
+versions of the \glsshort{constraint model}: one with no \glsshort{symmetry
+  breaking.c} or \gls{dominance breaking.c} \glspl{constraint}, one with only
+those who individually lead to an overall reduction in solving time, one without
+those who individually lead to an overall increase in solving time, and another
+one with all such \glspl{constraint}.
+%
+We expect the \glsplshort{constraint model} with some degree of
+\glsshort{symmetry breaking.c} and \gls{dominance breaking.c} \glspl{constraint}
+to perform better than the \glsshort{constraint model} with no such
+\glspl{constraint}.
+%
+Hence the \gls{GMI} should be greater than~\num{1}.
+
 \includeSolvTechStats{dom-cons-locs-of-states}
 \includeSolvTechStats{dom-cons-operands-of-non-selected-matches}
 \includeSolvTechStats{impl-cons-input-operands-not-taking-min-value}
@@ -2424,9 +2457,177 @@ Hence we conclude that it is beneficial to include all \gls{implied.c}
   \mkSolvTechSubfigure{dom-cons-kill-match-selection}%
                       {DomConsKillMatchSelection}
 
-  \caption{TODO}
-  \labelFigure{dom-cons-vs-no-cons-solving-time-plots}
+  \caption[%
+            Set of plots for evaluating each symmetry or dominance breaking
+            constraint's impact on solving time%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for two
+            constraint models: one without a particular symmetry or dominance
+            breaking constraint (baseline) and another with all such
+            constraints (subject)%
+          }
+  \labelFigure{single-dom-con-vs-no-con-solving-time-plots}
 \end{figure}
+
+\RefFigure{single-dom-con-vs-no-con-solving-time-plots} shows the normalized
+solving times (including presolving time) for two \glspl{constraint model}: one
+without a particular \glsshort{symmetry breaking.c} or \gls{dominance
+  breaking.c} \gls{constraint}, serving as \gls{baseline}; and another with all
+such \glspl{constraint}, serving as \gls{subject}.
+%
+The solving times range from
+\SIMinOf{
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+}{\s} to
+\SIMaxOf[round-precision=0]{
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+}{\s}
+with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableImplConsInputOperandsNotTakingMinValuePrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+From the \glspl{GMI} and \glspl{CI}, also given in
+\refFigure{single-dom-con-vs-no-con-solving-time-plots}, we conclude that
+\refEquationList{dom-cons-null-copy-match-selection,
+  dom-cons-kill-match-selection} lead to an overall reduction in solving time
+and that \refEquation{impl-cons-input-operands-not-taking-min-value} has no
+impact on solving time.
+%
+For \refEquationList{dom-cons-locs-of-states,
+  dom-cons-operands-of-non-selected-matches, dom-cons-interch-data-chains}, the
+results are inconclusive.
+
+\includeSolvTechStats[enable]{only-good-dom-cons}
+\includeSolvTechStats{all-dom-cons}
+
+\begin{figure}
+  \centering%
+
+  \mkSolvTechSubfigure[enable]%
+                      {only-good-dom-cons}%
+                      [%
+                        Only
+                        \refEquationList{dom-cons-null-copy-match-selection,
+                          dom-cons-kill-match-selection}%
+                      ]%
+                      [4cm]%
+                      {OnlyGoodDomCons}%
+  \hfill%
+  \mkSolvTechSubfigure{all-dom-cons}%
+                      [All symmetry and dominance breaking constraints]%
+                      {AllDomCons}%
+
+  \caption[%
+            Plot for evaluating the impact on solving time made by different
+            configurations of symmetry and dominance breaking constraints%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for three
+            constraint models: one with no symmetry or dominance breaking
+            constraints (baseline), one with only such constraints that
+            individually have a positive impact on solving time (subject), and
+            another with all such constraints (subject)%
+          }
+  \labelFigure{diff-dom-cons-conf-solving-time-plot}
+\end{figure}
+
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+\def\modelC{\textsc{iii}}
+
+\RefFigure{diff-dom-cons-conf-solving-time-plot} shows the normalized solving
+times (including presolving time) for three \glspl{constraint model}: one with
+no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
+\glspl{constraint}, serving as \gls{baseline}; one with only such
+\glspl{constraint} that individually have a positive impact on solving time,
+serving as \gls{subject}; and another with all such \glspl{constraint}, also
+serving as \gls{subject} (since there are no \glspl{constraint} that
+individually have a negative impact on solving time, we do not evaluate a
+\glsshort{constraint model} with only such \glspl{constraint}).
+%
+For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
+\modelB, and \modelC, respectively.
+%
+The solving times range from
+\SIMinOf{
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+}{\s}
+to
+\SIMinOf{
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+}{\s}
+with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+
+We observe that the \gls{GMI} for \glsshort{constraint model}~\modelB{}
+over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-enable-only-good-dom-cons}) is \printGMI{%
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, thus the solving time improvement is statically significant.
+%
+This means, unlike with \gls{implied.c} \glspl{constraint}, adding a
+\glsshort{symmetry breaking.c} or \gls{dominance breaking.c} \gls{constraint} to
+a \glsshort{constraint model} with no such \glspl{constraint} may be equally or
+more beneficial as adding a \gls{constraint} to a \glsshort{constraint model}
+with other such \glspl{constraint}.
+%
+Note also that these two \glspl{constraint} yield considerable reduction in
+solving time for two \gls{function} that were only marginally impacted by each
+\gls{constraint} individually.
+%
+Hence there are strong synergy effects between
+\refEquationList{dom-cons-null-copy-match-selection,
+  dom-cons-kill-match-selection}.
+
+In comparison, we see that \glsshort{constraint model}~\modelC{} yields a
+greater reduction in solving time for a larger number of \glspl{function} than
+\glsshort{constraint model}~\modelB{} but also a considerable increase in
+solving time for several \glspl{function}.
+%
+Despite a \gls{GMI} of \printGMI{%
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, the \gls{CI} of \printGMICI{%
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+} means it is not worthwhile to include all \glsshort{symmetry breaking.c} and
+\gls{dominance breaking.c} \glspl{constraint}.
+%
+Hence we conclude that it is beneficial to only include
+\refEquationList{dom-cons-null-copy-match-selection,
+  dom-cons-kill-match-selection} in the \glsshort{constraint model}.
 
 
 \subsection{Presolving}
