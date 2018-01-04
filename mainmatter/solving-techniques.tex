@@ -2347,10 +2347,11 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }.
 %
-This means that adding an \gls{implied.c} \gls{constraint} to a
-\glsshort{constraint model} with other \gls{implied.c} \glspl{constraint} is
-more beneficial than adding an \gls{implied.c} \gls{constraint} to a
-\glsshort{constraint model} with no such \glspl{constraint}.
+Since we no longer achieve an overall reduction in solving time, it means that
+adding an \gls{implied.c} \gls{constraint} to a \glsshort{constraint model} with
+other \gls{implied.c} \glspl{constraint} is more beneficial than adding an
+\gls{implied.c} \gls{constraint} to a \glsshort{constraint model} with no such
+\glspl{constraint}.
 %
 In comparison, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\modelC{} over \glsshort{constraint model}~\modelA{}
@@ -2385,8 +2386,8 @@ that there are synergy effects between the \gls{implied.c} \glspl{constraint}
 whose collective positive impact on solving time is greater than the sum of its
 parts.
 %
-Hence we conclude that using all \gls{implied.c} \glspl{constraint} jointly lead
-to an overall reduction in solving time.
+Hence we conclude that it is beneficial to include all \gls{implied.c}
+\glspl{constraint} in the \glsshort{constraint model}.
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
