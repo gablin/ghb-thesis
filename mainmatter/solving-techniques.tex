@@ -2098,16 +2098,21 @@ Hence the \gls{GMI} should be greater than~\num{1}.
 \includeSolvTechStats{impl-cons-locs-of-defs}
 \includeSolvTechStats{impl-cons-fix-fall-throughs}
 
-\def\mkFigureCaption{%
-  \caption[%
-            Set of plots for evaluating each implied constraint's impact on
-            solving time%
-          ]%
-          {%
-            Normalized solving times (incl.\ presolving time) for two
-            constraint models: one without a particular implied constraint
-            (baseline) and another with all such constraints (subject)%
-          }
+\NewDocumentCommand{\mkFigureCaption}{s}{%
+  \def\capToCText{%
+    Set of plots for evaluating each implied constraint's impact on solving
+    time%
+  }%
+  \def\capText{%
+    Normalized solving times (incl.\ presolving time) for two constraint models:
+    one without a particular implied constraint (baseline) and another with all
+    such constraints (subject)%
+  }%
+  \IfBooleanTF{#1}{%
+    \caption*{\capText}%
+  }{%
+    \caption[\capToCText]{\capText}%
+  }%
 }
 
 \begin{figure}
@@ -2176,7 +2181,7 @@ Hence the \gls{GMI} should be greater than~\num{1}.
   \mkSolvTechSubfigure{impl-cons-fix-fall-throughs}%
                       {ImplConsFixFallThroughs}
 
-  \mkFigureCaption
+  \mkFigureCaption*
 \end{figure}
 
 \renewcommand{\thefigure}{\oldthefigure}
