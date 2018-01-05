@@ -1721,14 +1721,28 @@ When using an upper bound for a given \gls{function}, we take the cost for the
 
 \subsection{Objective Function Refinements and Cost Bounding}
 
-We first evaluate the two methods for computing the cost matrix by comparing the
-solving times exhibited by two versions of the \gls{constraint model}: one based
-on the \gls{divide-then-multiply method}, and another based on
-\glspl{multiply-then-divide method}.
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+
+First, we evaluate the different methods for computing the cost matrix by
+comparing the solving times exhibited by two versions of the \gls{constraint
+  model}: one based on the \gls{multiply-then-divide method}, and another based
+on \glspl{divide-then-multiply method}.
 %
-Based on the results for the experiment above, we then use the superior method
-to evaluate the impact of the \gls{objective function} refinement and cost
-bounding by comparing the number of \glspl{function} that can be solved
+We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
+respectively.
+%
+No hypothesis is attempted on which \glsshort{constraint model} is better.
+
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+\def\modelE{\textsc{v}}
+\def\modelF{\textsc{vi}}
+\def\modelG{\textsc{vii}}
+
+Second, based on the results for the experiment above we then use the superior
+method to evaluate the impact of the \gls{objective function} refinement and
+cost bounding by comparing the number of \glspl{function} that can be solved
 optimally by five versions of the \gls{constraint model}: two based on the naive
 implementation of the \gls{objective function}
 (\refEquation{naive-objective-function}), one with cost bounds and one without;
@@ -1736,24 +1750,35 @@ and three based on the refined implementation
 (\refEquationList{omatch-oplace-ocost-connection, total-cost}), one without cost
 bounds, one with only the upper bound, and one with both lower and upper bound.
 %
-We also evaluate the impact on code quality by comparing the cost of the best
-\gls{solution} found by two versions of the \gls{constraint model} -- one based
-on the naive implementation with upper bound and another based on the refined
-implementation with upper bound -- for the same set of \glspl{function}.
-
+We refer to these \glsplshort{constraint model} as \modelC, \modelD, \modelE,
+\modelF, and \modelG, respectively.
+%
 Since the refined \gls{objective function} enables tighter bounds to be derived
-for the \gls{cost variable}, we expect the \glsplshort{constraint model} based
-on the refined implementation to find a greater number of optimal
-\glspl{solution} than those based on the naive implementation.
+for the \gls{cost variable}, we expect \glsplshort{constraint model}~\modelE,
+\modelF, and~\modelG{} to find a greater number of optimal \glspl{solution}
+compared with \glsplshort{constraint model}~\modelC{} and~\modelD.
 %
-Moreover, we expect the \glsplshort{constraint model} with an upper cost bound
-to perform better than those with no bounds, and those with both cost bounds to
-perform better than those with only one or no bounds.
+Due to further tightening of the cost bounds, we expect \glsshort{constraint
+  model}~\modelD{} to outperform \glsshort{constraint model}~\modelC{},
+\glsplshort{constraint model}~\modelF{} and~\modelG{} to outperform
+\glsshort{constraint model}~\modelE, and \glsshort{constraint model}~\modelG{}
+to outperform \glsshort{constraint model}~\modelF.
+
+\def\modelH{\textsc{viii}}
+\def\modelI{\textsc{ix}}
+
+Third, we evaluate the impact on code quality by comparing the cost of the best
+\gls{solution} found within the time limit by two versions of the
+\gls{constraint model}: one based on the naive implementation with upper bound,
+and another based on the refined implementation with upper bound.
 %
-Hence in this case the \gls{GMI} should be greater than~\num{1}.
+We refer to these \glsplshort{constraint model} as \modelH{} and \modelI,
+respectively.
 %
-No hypothesis is given for the evaluation of the two methods for computing the
-cost matrix.
+For the same reason as with the second experiment, we expect the
+\glspl{solution} produced by \glsshort{constraint model}~\modelI{} to be of
+significantly better quality compared with those produced by
+\glsshort{constraint model}~\modelH.
 
 \input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
 
@@ -1789,10 +1814,9 @@ cost matrix.
 
 \RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
 (including the time for presolving) for the two \glspl{constraint model}
-described above, with the \glsshort{constraint model} based on the
-\gls{multiply-then-divide method} serving as \gls{baseline} and the
-\glsshort{constraint model} based on the \gls{divide-then-multiply method}
-serving as \gls{subject}.
+described above in the first experiment, with \glsshort{constraint
+  model}~\modelA{} as \gls{baseline} and \glsshort{constraint model}~\modelB{}
+as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -1814,25 +1838,34 @@ As the \gls{GMI} is \printGMI{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we conclude that the \gls{divide-then-multiply method} yields significantly
-lower solving times than the other method.
+}, we see that \glsshort{constraint model}~\modelB{} results in significantly
+shorter solving times than \glsshort{constraint model}~\modelA.
 %
-In three cases ({\codeFont checksum}, {\codeFont gl\_swap4}, and {\codeFont
-  jinit\_forward\_d}), for example, the method reduces the solving time by more
-than five times.
+In one case (checksum{\codeFont build\_ycc\_rgb\_t}), for example, the solving
+time is two orders of magnitude shorter, and in three cases ({\codeFont
+  alloc\_save\_spac}, {\codeFont gpk\_open}, and {\codeFont trueRandAccum}) the
+solving time is more than one order of magnitude shorter.
 %
-However, in three other cases ({\codeFont alloc\_name\_is\_s}, {\codeFont
-  debug\_dump\_byte}, and {\codeFont write\_file\_trai}), the solving time is
-significantly less for the other method.
+Although \glsshort{constraint model}~\modelA{} outperforms \glsshort{constraint
+  model}~\modelB{} in three other cases ({\codeFont alloc\_name\_is\_s},
+{\codeFont debug\_dump\_byte}, and {\codeFont write\_file\_trai}) -- this
+observation also underscores the fact that seemingly trivial changes to a
+\gls{constraint model} may have considerable impact on solving time -- the loss
+in performance for these \glspl{function} is overshadowed by the gain in
+performance for other \glspl{function}.
 %
-Hence both methods are applicable for different \glspl{function}, which could be
-exploited by applying a portfolio of \gls{search} methods in parallel.
-%
-This observation also underscores the fact that seemingly trivial changes to a
-\gls{constraint model} may have considerable impact on solving time.
-
+Hence we conclude that, when implementing the refined \gls{objective function},
+the \gls{divide-then-multiply method} is a better design choice over
+\gls{multiply-then-divide method}.
 
 \begin{figure}
+  \def\modelFont#1{{\small\textsf{#1}}}
+  \def\modelA{\modelFont{a}}
+  \def\modelB{\modelFont{b}}
+  \def\modelC{\modelFont{c}}
+  \def\modelD{\modelFont{d}}
+  \def\modelE{\modelFont{e}}
+
   \renewcommand{\plotPercentageFont}{\large}
   \renewcommand{\plotSecondsFont}{\large}
   \centering%
@@ -1858,7 +1891,7 @@ This observation also underscores the fact that seemingly trivial changes to a
 
 \RefFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot} shows the
 percentage of optimal \glspl{solution} found over time for the five
-\glspl{constraint model} described above.
+\glspl{constraint model} described above in the second experiment.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -1883,11 +1916,12 @@ The solving times range from
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeCvMax
 }.
 %
-We see clearly that the \glsplshort{constraint model} based on the refined
-\gls{objective function} outperforms those based on the naive implementation.
+We see that \glsplshort{constraint model}~\modelE, \modelF, and~\modelG{}
+clearly outperforms \glsplshort{constraint model}~\modelC{} and~\modelD.
 %
 We see also that applying an upper bound has a positive effect for both
-\glsplshort{constraint model}.
+\gls{objective function}, although the benefit is greater for the refined
+\gls{objective function}.
 %
 This gain is due to the fact that, for some \glspl{function}, the \gls{solution}
 computed by \gls{LLVM} is already optimal with respect to the
@@ -1896,18 +1930,20 @@ computed by \gls{LLVM} is already optimal with respect to the
 Consequently, the \glsshort{constraint solver} need only prove that there exist
 no better \gls{solution} instead of exploring the entire \gls{search space}.
 %
-Hence the refined \gls{objective function} coupled with an upper cost bound is
-crucial for scalability.
-
 Applying a lower bound, however, does not appear to be equally beneficial; in
-fact, it even appears to be degrade solving time as the \glsshort{constraint
-  model} with both bounds fails to find the optimal \gls{solution} for one
-\gls{function} whereas the \glsshort{constraint model} with only the upper bound
-manages to find the optimal \gls{solution} for all \glspl{function}.
+fact, \glsshort{constraint model}~\modelG{} fails to find the optimal
+\gls{solution} for one \gls{function} whereas \glsshort{constraint
+  model}~\modelF{} manages to find the optimal \gls{solution} for all
+\glspl{function}.
 %
 A possible explanation is that the lower bound computed by the relaxed
-\gls{constraint model} is too weak to be of any use and instead only interferes
-with \gls{Chuffed}'s \gls{lazy clause learning} engine.
+\gls{constraint model} is too weak to be lead to any \gls{propagation} and
+instead only interferes with \gls{Chuffed}'s \gls{lazy clause learning} engine.
+%
+Hence we conclude that, when implementing the \gls{objective function}, in terms
+of solving time the refined version coupled with an upper cost bound is a better
+design choice over naive version, and that this decision is crucial for
+scalability.
 
 \input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
 
@@ -1952,10 +1988,9 @@ with \gls{Chuffed}'s \gls{lazy clause learning} engine.
 \end{figure}
 
 \RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
-\gls{solution} costs for two \glspl{constraint model}: one based on the naive
-\gls{objective function} with upper, serving as \gls{baseline}; and another and
-based on the refined \gls{objective function} with upper bound, serving as
-\gls{subject}.
+\gls{solution} costs for the two \glspl{constraint model} described above in the
+third experiment, with \glsshort{constraint model}~\modelH{} as \gls{baseline}
+and \glsshort{constraint model}~\modelI{} as \gls{subject}.
 %
 The costs range from
 \printMinCycles{
@@ -1984,9 +2019,13 @@ As the \gls{GMI} is \printGMI{%
 This also shows that there is a significant difference between the optimal
 \gls{solution} and a \gls{solution} found using inferior solving techniques.
 %
-Hence the refined \gls{objective function} coupled with an upper cost bound is
-crucial for code quality.
+Hence we conclude that, when implementing the \gls{objective function}, in terms
+of code quality the refined version coupled with an upper cost bound is a better
+design choice over naive version.
 
+
+\subsection{Implied Constraints}
+\labelSection{st-exp-evaluation-implied-constraints}
 
 \NewDocumentCommand{\insertSpeedupPlot}{mm}{%
   \maxsizebox{#2\textwidth}{!}{%
@@ -2043,11 +2082,10 @@ crucial for code quality.
   \input{\expDir/solv-tech-#1-#2-pre+solving-time-speedup.stats}%
 }
 
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
 
-\subsection{Implied Constraints}
-\labelSection{st-exp-evaluation-implied-constraints}
-
-We first evaluate the impact of each \gls{implied.c} \gls{constraint}
+First, we evaluate the impact of each \gls{implied.c} \gls{constraint}
 (\refEquationRange{%
   impl-cons-defs-dominate-defs%
 }{%
@@ -2056,34 +2094,41 @@ We first evaluate the impact of each \gls{implied.c} \gls{constraint}
 \gls{constraint model}: one without a particular \gls{implied.c}
 \gls{constraint}, and another with all such \glspl{constraint}.
 %
+We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
+respectively.
+%
 Because the \gls{pattern set} used in these experiments contains only
 \glspl{pattern} that do not \gls{span.b} any \glspl{block}, we expect
 \refEquationList{impl-cons-defs-in-spanned-blocks, impl-cons-spanned-input} to
 have no impact on solving time.
 %
-Hence in these cases the \gls{GMI} should be equal to~\num{1}.
-%
 For the rest, we expect some \glspl{constraint} to lead to an overall reduction
-in solving time -- hence the \gls{GMI} should be greater than~\num{1} -- while
-others may degrade solving time -- hence the \gls{GMI} should be less
-than~\num{1}.
+in solving time while others may degrade solving time.
 %
 This is because some \glspl{constraint} may be too expensive to execute compared
 with the amount of \gls{propagation} they provide, as described in
 \refChapter{constraint-programming}.
 
-Based on the results for the experiment above, we then evaluate synergy effects
-among these \glspl{constraint} by comparing the solving times exhibited by four
-versions of the \glsshort{constraint model}: one with no \gls{implied.c}
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+\def\modelE{\textsc{v}}
+\def\modelF{\textsc{vi}}
+
+Second, based on the results for the experiment above, we then evaluate synergy
+effects among these \glspl{constraint} by comparing the solving times exhibited
+by four versions of the \glsshort{constraint model}: one with no \gls{implied.c}
 \glspl{constraint}, one with only those who individually lead to an overall
 reduction in solving time, one without those who individually lead to an overall
 increase in solving time, and another with all such \glspl{constraint}.
 %
-We expect the \glsplshort{constraint model} with some degree of \gls{implied.c}
-\glspl{constraint} to perform better than the \glsshort{constraint model} with
-no such \glspl{constraint} whatsoever.
+We refer to these \glsplshort{constraint model} as \modelC, \modelD, \modelE,
+and \modelF, respectively.
 %
-Hence the \gls{GMI} should be greater than~\num{1}.
+We expect \glsplshort{constraint model}~\modelD, \modelE, and~\modelF{}
+to all perform better than \glsplshort{constraint model}~\modelC.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\modelD, \modelE, and~\modelF.
 
 \includeSolvTechStats{impl-cons-defs-dominate-defs}
 \includeSolvTechStats{impl-cons-defs-in-spanned-blocks}
@@ -2189,10 +2234,10 @@ Hence the \gls{GMI} should be greater than~\num{1}.
 \renewcommand{\thefigure}{\oldthefigure}
 
 \RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
-solving times (including presolving time) for two \glspl{constraint model}: one
-without a particular \gls{implied.c} \gls{constraint}, serving as
-\gls{baseline}; and another with all such \glspl{constraint}, serving as
-\gls{subject}.
+solving times (including presolving time) for the two \glspl{constraint model}
+described above in the first experiment, with \glsshort{constraint
+  model}~\modelA{} as \gls{baseline} and \glsshort{constraint model}~\modelB{}
+as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2248,7 +2293,7 @@ The solving times range from
 }.
 %
 From the \glspl{GMI} and \glspl{CI}, also given in
-\refFigure{single-impl-con-vs-no-con-solving-time-plots}, we conclude that
+\refFigure{single-impl-con-vs-no-con-solving-time-plots}, we see that
 \refEquation{impl-cons-fix-fall-throughs} leads to an overall reduction in
 solving time, that \refEquationList{impl-cons-defs-dominate-entry-blocks,
   impl-cons-no-span-use-defs} lead to an overall increase in solving time, and
@@ -2304,22 +2349,11 @@ For \refEquationList{impl-cons-defs-dominate-defs,
   \labelFigure{diff-impl-cons-comb-solving-time-plot}
 \end{figure}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-\def\modelC{\textsc{iii}}
-\def\modelD{\textsc{iv}}
-
 \RefFigure{diff-impl-cons-comb-solving-time-plot} shows the normalized solving
-times (including presolving time) for four \glspl{constraint model}: one with no
-\gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; one with only
-such \glspl{constraint} that individually have a positive impact on solving
-time, serving as \gls{subject}; one without such \glspl{constraint} that
-individually have a negative impact on solving time, also serving as
-\gls{subject}; and another with all such \glspl{constraint}, also serving as
-\gls{subject}.
-%
-For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
-\modelB, \modelC, and \modelD, respectively.
+times (including presolving time) for the four \glspl{constraint model}
+described above in the second experiment, with \glsshort{constraint
+  model}~\modelC{} as \gls{baseline} and \glsplshort{constraint model}~\modelD,
+\modelE, and~\modelF{} as \glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2342,7 +2376,7 @@ The solving times range from
 }.
 
 To begin with, we observe that the \gls{GMI} for \glsshort{constraint
-  model}~\modelB{} over \glsshort{constraint model}~\modelA{}
+  model}~\modelD{} over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-enable-only-good-implied-cons}) is \printGMI{%
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2358,7 +2392,7 @@ other \gls{implied.c} \glspl{constraint} is more beneficial than adding an
 \glspl{constraint}.
 %
 In comparison, we observe that the \gls{GMI} for \glsshort{constraint
-  model}~\modelC{} over \glsshort{constraint model}~\modelA{}
+  model}~\modelE{} over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-disable-bad-implied-cons}) is \printGMI{%
   \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2373,8 +2407,8 @@ time is inconclusive is more beneficial than only including \gls{implied.c}
 \glspl{constraint} whose individual positive impact on solving time is
 statistically significant.
 %
-Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelD{}
-over \glsshort{constraint model}~\modelA{}
+Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelF{}
+over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-disable-all-implied-cons}) is \printGMI{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2383,9 +2417,9 @@ over \glsshort{constraint model}~\modelA{}
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }.
 %
-Since \glsshort{constraint model}~\modelD{} contains \gls{implied.c}
+Since \glsshort{constraint model}~\modelF{} contains \gls{implied.c}
 \glspl{constraint} whose individual impact on solving time is statistically
-negative yet still outperforms \glsshort{constraint model}~\modelC, this means
+negative yet still outperforms \glsshort{constraint model}~\modelE, this means
 that there are synergy effects between the \gls{implied.c} \glspl{constraint}
 whose collective positive impact on solving time is greater than the sum of its
 parts.
@@ -2397,7 +2431,10 @@ Hence we conclude that it is beneficial to include all \gls{implied.c}
 \subsection{Symmetry and Dominance Breaking Constraints}
 \labelSection{st-exp-evaluation-dom-constraints}
 
-Like in \refSection{st-exp-evaluation-implied-constraints}, we first evaluate
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+
+First, like in \refSection{st-exp-evaluation-implied-constraints} we evaluate
 the impact of each \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
 \gls{constraint}
 (\refEquationRange{%
@@ -2409,25 +2446,34 @@ the impact of each \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
 or \gls{dominance breaking.c} \gls{constraint}, and another with all such
 \glspl{constraint}.
 %
+We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
+respectively.
+%
 For the same reason as with the \gls{implied.c} \glspl{constraint}, we expect
-some \glspl{constraint} to lead to an overall reduction in solving time -- hence
-the \gls{GMI} should be greater than~\num{1} -- while others may degrade solving
-time -- hence the \gls{GMI} should be less than~\num{1}.
+some \glspl{constraint} to lead to an overall reduction in solving time while
+others may degrade solving time.
 
-Based on the results for the experiment above, we then evaluate synergy effects
-among these \glspl{constraint} by comparing the solving times exhibited by four
-versions of the \glsshort{constraint model}: one with no \glsshort{symmetry
-  breaking.c} or \gls{dominance breaking.c} \glspl{constraint}, one with only
-those who individually lead to an overall reduction in solving time, one without
-those who individually lead to an overall increase in solving time, and another
-one with all such \glspl{constraint}.
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+\def\modelE{\textsc{v}}
+\def\modelF{\textsc{vi}}
+
+Second, based on the results for the experiment above, we then evaluate synergy
+effects among these \glspl{constraint} by comparing the solving times exhibited
+by four versions of the \glsshort{constraint model}: one with no
+\glsshort{symmetry breaking.c} or \gls{dominance breaking.c} \glspl{constraint},
+one with only those who individually lead to an overall reduction in solving
+time, one without those who individually lead to an overall increase in solving
+time, and another one with all such \glspl{constraint}.
 %
-We expect the \glsplshort{constraint model} with some degree of
-\glsshort{symmetry breaking.c} and \gls{dominance breaking.c} \glspl{constraint}
-to perform better than the \glsshort{constraint model} with no such
-\glspl{constraint} whatsoever.
+We refer to these \glsplshort{constraint model} as \modelC, \modelD, \modelE,
+and \modelF, respectively.
 %
-Hence the \gls{GMI} should be greater than~\num{1}.
+We expect \glsplshort{constraint model}~\modelD, \modelE, and~\modelF{} to all
+perform better than \glsplshort{constraint model}~\modelC.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\modelD, \modelE, and~\modelF.
 
 \includeSolvTechStats{dom-cons-locs-of-states}
 \includeSolvTechStats{dom-cons-operands-of-non-selected-matches}
@@ -2475,10 +2521,10 @@ Hence the \gls{GMI} should be greater than~\num{1}.
 \end{figure}
 
 \RefFigure{single-dom-con-vs-no-con-solving-time-plots} shows the normalized
-solving times (including presolving time) for two \glspl{constraint model}: one
-without a particular \glsshort{symmetry breaking.c} or \gls{dominance
-  breaking.c} \gls{constraint}, serving as \gls{baseline}; and another with all
-such \glspl{constraint}, serving as \gls{subject}.
+solving times (including presolving time) for two \glspl{constraint model}
+described above in the first experiment, with \glsshort{constraint
+  model}~\modelA{} as \gls{baseline} and \glsshort{constraint model}~\modelB{}
+as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2554,22 +2600,14 @@ results are inconclusive.
   \labelFigure{diff-dom-cons-comb-solving-time-plot}
 \end{figure}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-\def\modelC{\textsc{iii}}
-
 \RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
-times (including presolving time) for three \glspl{constraint model}: one with
-no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
-\glspl{constraint}, serving as \gls{baseline}; one with only such
-\glspl{constraint} that individually have a positive impact on solving time,
-serving as \gls{subject}; and another with all such \glspl{constraint}, also
-serving as \gls{subject} (since there are no \glspl{constraint} that
-individually have a negative impact on solving time, we do not evaluate a
-\glsshort{constraint model} with only such \glspl{constraint}).
-%
-For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
-\modelB, and \modelC, respectively.
+times (including presolving time) for three of the \glspl{constraint model}
+described above in the second experiment, with \glsshort{constraint
+  model}~\modelC{} as \gls{baseline} and \glsplshort{constraint model}~\modelD{}
+and~\modelF{} as \glspl{subject} (\glsshort{constraint model}~\modelE{} is not
+evaluated since no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
+\glspl{constraint} appear to individually have a negative impact on solving
+time).
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2588,8 +2626,8 @@ The solving times range from
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 
-We observe that the \gls{GMI} for \glsshort{constraint model}~\modelB{}
-over \glsshort{constraint model}~\modelA{}
+We observe that the \gls{GMI} for \glsshort{constraint model}~\modelD{}
+over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-enable-only-good-dom-cons}) is \printGMI{%
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2598,7 +2636,7 @@ over \glsshort{constraint model}~\modelA{}
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, thus the solving time improvement is statically significant.
 %
-This means, unlike with \gls{implied.c} \glspl{constraint}, adding a
+This means that, unlike with \gls{implied.c} \glspl{constraint}, adding a
 \glsshort{symmetry breaking.c} or \gls{dominance breaking.c} \gls{constraint} to
 a \glsshort{constraint model} with no such \glspl{constraint} may be equally or
 more beneficial as adding a \gls{constraint} to a \glsshort{constraint model}
@@ -2613,9 +2651,9 @@ Hence there are strong synergy effects between
   dom-cons-kill-match-selection}, which most likely also interacts with other
 \glspl{constraint}.
 
-In comparison, we see that \glsshort{constraint model}~\modelC{} yields a
+In comparison, we see that \glsshort{constraint model}~\modelF{} yields a
 greater reduction in solving time for a larger number of \glspl{function} than
-\glsshort{constraint model}~\modelB{} but also a considerable increase in
+\glsshort{constraint model}~\modelD{} but also a considerable increase in
 solving time for several \glspl{function}.
 %
 Despite a \gls{GMI} of \printGMI{%
@@ -2627,12 +2665,15 @@ Despite a \gls{GMI} of \printGMI{%
 } means it is not worthwhile to include all \glsshort{symmetry breaking.c} and
 \gls{dominance breaking.c} \glspl{constraint}.
 %
-Hence we conclude that it is beneficial to only include
+Hence we conclude that it is most beneficial to only include
 \refEquationList{dom-cons-null-copy-match-selection,
   dom-cons-kill-match-selection} in the \glsshort{constraint model}.
 
 
 \subsection{Presolving}
+
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
 
 Like in \refSectionList{st-exp-evaluation-implied-constraints,
   st-exp-evaluation-dom-constraints}, we first evaluate the impact of each
@@ -2642,24 +2683,33 @@ and \refSection{st-canonical-locations}) by comparing the solving times
 exhibited by two versions of the \gls{constraint model}: one without a
 particular \gls{presolving} technique, and another with all such techniques.
 %
+We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
+respectively.
+%
 For the same reason as with the \gls{implied.c}, \gls{symmetry breaking.c},
 \gls{dominance breaking.c} \glspl{constraint}, we expect some techniques to lead
-to an overall reduction in solving time -- hence the \gls{GMI} should be greater
-than~\num{1} -- while others may degrade solving time -- hence the \gls{GMI}
-should be less than~\num{1}.
+to an overall reduction in solving time while others may degrade solving time.
 
-Based on the results for the experiment above, we then evaluate synergy effects
-among these techniques by comparing the solving times exhibited by four versions
-of the \glsshort{constraint model}: one with no \gls{presolving} techniques, one
-with only those who individually lead to an overall reduction in solving time,
-one without those who individually lead to an overall increase in solving time,
-and another one with all such techniques.
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+\def\modelE{\textsc{v}}
+\def\modelF{\textsc{vi}}
+
+Second, based on the results for the experiment above, we then evaluate synergy
+effects among these techniques by comparing the solving times exhibited by four
+versions of the \glsshort{constraint model}: one with no \gls{presolving}
+techniques, one with only those who individually lead to an overall reduction in
+solving time, one without those who individually lead to an overall increase in
+solving time, and another one with all such techniques.
 %
-We expect the \glsplshort{constraint model} with some degree of \gls{presolving}
-techniques to perform better than the \glsshort{constraint model} with no such
-techniques whatsoever.
+We refer to these \glsplshort{constraint model} as \modelC, \modelD, \modelE,
+and \modelF, respectively.
 %
-Hence the \gls{GMI} should be greater than~\num{1}.
+We expect \glsplshort{constraint model}~\modelD, \modelE, and~\modelF{} to all
+perform better than \glsplshort{constraint model}~\modelC.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\modelD, \modelE, and~\modelF.
 
 \includeSolvTechStats{dom-matches}
 \includeSolvTechStats{illegal-matches-uncovered-ops}
@@ -2726,9 +2776,10 @@ Hence the \gls{GMI} should be greater than~\num{1}.
 \end{figure}
 
 \RefFigure{single-presolving-vs-no-presolving-solving-time-plots} shows the
-normalized solving times (including presolving time) for two \glspl{constraint
-  model}: one without a particular \gls{presolving} technique, serving as
-\gls{baseline}; and another with all such techniques, serving as \gls{subject}.
+normalized solving times (including presolving time) for the two
+\glspl{constraint model} described above in the first experiment, with
+\glsshort{constraint model}~\modelA{} as \gls{baseline} and \glsshort{constraint
+  model}~\modelB{} as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2826,21 +2877,11 @@ and \gls{canonical.l} \glspl{location}, the results are inconclusive.
   \labelFigure{diff-presolving-comb-solving-time-plot}
 \end{figure}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-\def\modelC{\textsc{iii}}
-\def\modelD{\textsc{iv}}
-
 \RefFigure{diff-presolving-comb-solving-time-plot} shows the normalized solving
-times (including presolving time) for three \glspl{constraint model}: one with
-no \gls{presolving} techniques, serving as \gls{baseline}; one with only such
-techniques that individually have a positive impact on solving time, serving as
-\gls{subject}; one without such techniques that individually have a negative
-impact on solving time, also serving as \gls{subject}; and another with all such
-techniques, also serving as \gls{subject}.
-%
-For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
-\modelB, \modelC, and \modelD, respectively.
+times (including presolving time) for the four \glspl{constraint model}
+described above in the second experiment, with \glsshort{constraint
+  model}~\modelC{} as \gls{baseline} and \glsplshort{constraint model}~\modelD,
+\modelE, and~\modelF{} as \glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2863,7 +2904,7 @@ The solving times range from
 }.
 
 To begin with, we observe that the \gls{GMI} for \glsshort{constraint
-  model}~\modelB{} over \glsshort{constraint model}~\modelA{}
+  model}~\modelD{} over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-enable-only-good-presolving}) is \printGMI{%
   \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2886,8 +2927,8 @@ Hence there are strong synergy effects between \refEquationList{redun-kills,
   redun-non-null-copy-matches}, which most likely also interacts with other
 parts of the \glsshort{constraint model}.
 
-Next, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelC{}
-over \glsshort{constraint model}~\modelA{}
+Next, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelE{}
+over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-disable-bad-presolving}) is \printGMI{%
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
@@ -2895,7 +2936,7 @@ over \glsshort{constraint model}~\modelA{}
 }{%
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, which is a greater reduction in solving time compared to \glsshort{constraint
-  model}~\modelB.
+  model}~\modelD.
 %
 Note also that for no \glspl{function} does this \glsshort{constraint model}
 degrade solving time, which means that the \gls{presolving} techniques that
@@ -2905,22 +2946,22 @@ Many of these \gls{presolving} techniques also require computations that are
 expensive to execute but whose result can be shared among the techniques,
 allowing this cost to be amortized when the techniques are executed in unison.
 
-Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelD{}
-over \glsshort{constraint model}~\modelA{}
+Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelF{}
+over \glsshort{constraint model}~\modelC{}
 (\refFigure{solv-tech-disable-all-presolving}) is \printGMI{%
   \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, which is still better than \glsshort{constraint model}~\modelB but worse than
-\glsshort{constraint model}~\modelC.
+}, which is still better than \glsshort{constraint model}~\modelD but worse than
+\glsshort{constraint model}~\modelE.
 %
 Looking at the \gls{CI}, we see that the spread of improvement for each
 \gls{function} is wider.
 %
-In other words, while \glsshort{constraint model}~\modelD{} improves solving
-time for some \glspl{function} over \glsshort{constraint model}~\modelC, it
+In other words, while \glsshort{constraint model}~\modelF{} improves solving
+time for some \glspl{function} over \glsshort{constraint model}~\modelE, it
 degrades solving time for a larger set of \glspl{function}, which is reflected
 in the \gls{GMI}.
 %
