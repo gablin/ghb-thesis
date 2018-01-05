@@ -2388,6 +2388,7 @@ Hence we conclude that it is beneficial to include all \gls{implied.c}
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
+\labelSection{st-exp-evaluation-dom-constraints}
 
 Like in \refSection{st-exp-evaluation-implied-constraints}, we first evaluate
 the impact of each \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
@@ -2625,6 +2626,33 @@ Hence we conclude that it is beneficial to only include
 
 \subsection{Presolving}
 
+Like in \refSectionList{st-exp-evaluation-implied-constraints,
+  st-exp-evaluation-dom-constraints}, we first evaluate the impact of each
+\gls{presolving} technique (\refSection{st-pre-dom-matches},
+\refEquationRange{illegal-matches-uncovered-ops}{redun-non-null-copy-matches},
+and \refSection{st-canonical-locations}) by comparing the solving times
+exhibited by two versions of the \gls{constraint model}: one without a
+particular \gls{presolving} technique, and another with all such techniques.
+%
+For the same reason as with the \gls{implied.c}, \gls{symmetry breaking.c},
+\gls{dominance breaking.c} \glspl{constraint}, we expect some techniques to lead
+to an overall reduction in solving time -- hence the \gls{GMI} should be greater
+than~\num{1} -- while others may degrade solving time -- hence the \gls{GMI}
+should be less than~\num{1}.
+
+Based on the results for the experiment above, we then evaluate synergy effects
+among these techniques by comparing the solving times exhibited by four versions
+of the \glsshort{constraint model}: one with no \gls{presolving} techniques, one
+with only those who individually lead to an overall reduction in solving time,
+one without those who individually lead to an overall increase in solving time,
+and another one with all such techniques.
+%
+We expect the \glsplshort{constraint model} with some degree of \gls{presolving}
+techniques to perform better than the \glsshort{constraint model} with no such
+techniques.
+%
+Hence the \gls{GMI} should be greater than~\num{1}.
+
 \includeSolvTechStats{dom-matches}
 \includeSolvTechStats{illegal-matches-uncovered-ops}
 \includeSolvTechStats{illegal-matches-undefined-data}
@@ -2677,9 +2705,220 @@ Hence we conclude that it is beneficial to only include
                       [\linewidth]%
                       {CanonicalLocs}
 
-  \caption{TODO}
-  \labelFigure{presolving-vs-no-pre-solving-time-plots}
+  \caption[%
+            Set of plots for evaluating each presolving technique's impact on
+            solving time%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for two
+            constraint models: one without a particular presolving technique
+            (baseline) and another with all such techniques (subject)%
+          }
+  \labelFigure{single-presolving-vs-no-presolving-solving-time-plots}
 \end{figure}
+
+\RefFigure{single-presolving-vs-no-presolving-solving-time-plots} shows the
+normalized solving times (including presolving time) for two \glspl{constraint
+  model}: one without a particular \gls{presolving} technique, serving as
+\gls{baseline}; and another with all such techniques, serving as \gls{subject}.
+%
+The solving times range from
+\printMinSolvingTime{
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+} to
+\printMaxSolvingTime{
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+} with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
+  \SolvTechDisableDomMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableIllegalMatchesUncoveredOpsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableIllegalMatchesUndefinedDataPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableIllegalMatchesKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableIllegalMatchesDefLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableIllegalMatchesUseLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableRedunKillsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+From the \glspl{GMI} and \glspl{CI}, also given in
+\refFigure{single-presolving-vs-no-presolving-solving-time-plots}, we conclude
+that \refEquationList{redun-kills, redun-non-null-copy-matches} lead to an
+overall reduction in solving time, that
+\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} lead to an
+overall increase in solving time, and that
+\refEquation{illegal-matches-uncovered-ops} has no impact on solving time.
+%
+For \gls{dominate.m}[d] \glspl{match},
+\refEquationList{illegal-matches-uncovered-ops, illegal-matches-undefined-data},
+and \gls{canonical.l} \glspl{location}, the results are inconclusive.
+
+\includeSolvTechStats[enable]{only-good-presolving}
+\includeSolvTechStats{bad-presolving}
+\includeSolvTechStats{all-presolving}
+
+\begin{figure}
+  \centering%
+
+  \mkSolvTechSubfigure[enable]%
+                      {only-good-presolving}%
+                      [%
+                        Only \refEquationList{redun-kills,
+                          redun-non-null-copy-matches}%
+                      ]%
+                      [3.6cm]%
+                      {OnlyGoodPresolving}%
+  \hfill%
+  \mkSolvTechSubfigure{bad-presolving}%
+                      [%
+                        Without \refEquationList{illegal-matches-def-locs,
+                          illegal-matches-use-locs}%
+                      ]%
+                      [4.3cm]%
+                      {BadPresolving}%
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{all-presolving}%
+                      [All presolving techniques]%
+                      [\linewidth]%
+                      {AllPresolving}%
+
+  \caption[%
+            Plot for evaluating the impact on solving time made by different
+            configurations of presolving techniques%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for four
+            constraint models: one with no presolving techniques (baseline), one
+            with only such techniques that individually have a positive impact
+            on solving time (subject), one without such techniques that
+            individually have a negative impact on solving time (subject), and
+            another with all such techniques (subject)%
+          }
+  \labelFigure{diff-presolving-conf-solving-time-plot}
+\end{figure}
+
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+
+\RefFigure{diff-presolving-conf-solving-time-plot} shows the normalized solving
+times (including presolving time) for three \glspl{constraint model}: one with
+no \gls{presolving} techniques, serving as \gls{baseline}; one with only such
+techniques that individually have a positive impact on solving time, serving as
+\gls{subject}; one without such techniques that individually have a negative
+impact on solving time, also serving as \gls{subject}; and another with all such
+techniques, also serving as \gls{subject}.
+%
+For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
+\modelB, \modelC, and \modelD, respectively.
+%
+The solving times range from
+\printMinSolvingTime{
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+} to
+\printMaxSolvingTime{
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+} with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+
+To begin with, we observe that the \gls{GMI} for \glsshort{constraint
+  model}~\modelB{} over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-enable-only-good-presolving}) is \printGMI{%
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, thus the solving time improvement is statically significant.
+%
+This means, like with \glsshort{symmetry breaking.c} and \gls{dominance
+  breaking.c} \glspl{constraint}, adding a \gls{presolving} technique to a
+\glsshort{constraint model} with no such techniques may be equally or more
+beneficial as adding a technique to a \glsshort{constraint model} with other
+such techniques.
+%
+Note also that these two \glspl{constraint} yield considerable reduction in
+solving time for two \gls{function} that were only marginally impacted by each
+\gls{constraint} individually.
+%
+Hence there are strong synergy effects between \refEquationList{redun-kills,
+  redun-non-null-copy-matches}, which most likely also interacts with other
+parts of the \glsshort{constraint model}.
+
+Next, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelC{}
+over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-disable-bad-presolving}) is \printGMI{%
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, which is a greater reduction in solving time compared to \glsshort{constraint
+  model}~\modelB.
+%
+Note also that for no \glspl{function} does this \glsshort{constraint model}
+degrade solving time, which means that the \gls{presolving} techniques that
+individually had a negative impact on solving time have strong synergy effects.
+%
+Many of these \gls{presolving} techniques also require computations that are
+expensive to execute but whose result can be shared among the techniques,
+allowing this cost to be amortized when the techniques are executed in unison.
+
+Lastly, we observe that the \gls{GMI} for \glsshort{constraint model}~\modelD{}
+over \glsshort{constraint model}~\modelA{}
+(\refFigure{solv-tech-disable-all-presolving}) is \printGMI{%
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, which is still better than \glsshort{constraint model}~\modelB but worse than
+\glsshort{constraint model}~\modelC.
+%
+Looking at the \gls{CI}, we see that the spread of improvement for each
+\gls{function} is wider.
+%
+In other words, while \glsshort{constraint model}~\modelD{} improves solving
+time for some \glspl{function} over \glsshort{constraint model}~\modelC, it
+degrades solving time for a larger set of \glspl{function}, which is reflected
+in the \gls{GMI}.
+%
+Hence we conclude that it is most beneficial to exclude
+\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} from the
+\glsshort{constraint model}.
 
 
 \subsection{Impact of All Solving Techniques}
