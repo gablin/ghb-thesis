@@ -1272,7 +1272,7 @@ from $1$ as the normalized value when $b$ is twice as fast as $a$.
 %
 With \refEquation{speedup-normalization}, however, this is not the case.
 %
-See for example \refFigure{speedup-comparison-traditional}, illustrating two
+See for example \refFigure{speedup-comparison-regular}, illustrating two
 cases: \speedupCase{i}, where $a$ is twice as fast as $b$; and \speedupCase{ii},
 where $b$ is twice as fast as $a$.
 %
@@ -1294,17 +1294,17 @@ where $b$ is twice as fast as $a$.
   \subcaptionbox{%
                   Values normalized using speedup
                   (\refEquation{speedup-normalization})%
-                  \labelFigure{speedup-comparison-traditional}%
+                  \labelFigure{speedup-comparison-regular}%
                 }%
                 [40mm]%
                 {%
-                  \insertSpeedupExamplePlot{traditional}%
+                  \insertSpeedupExamplePlot{regular}%
                 }%
   \hfill%
   \subcaptionbox{%
                   Values normalized using zero-centered normalization
                   (\refEquation{zero-centered-normalization})%
-                  \labelFigure{speedup-comparison-normalized}%
+                  \labelFigure{speedup-comparison-zero-centered}%
                 }%
                 [50mm]%
                 {%
@@ -1342,7 +1342,7 @@ which is computed as
   \labelEquation{zero-centered-normalization}
 \end{equation}
 %
-As seen in \refFigure{speedup-comparison-normalized}, this method results in
+As seen in \refFigure{speedup-comparison-zero-centered}, this method results in
 normalized values that are centered around $0$ (hence its name) and, unlike the
 \gls{speedup} method, are equally far apart in the case of \speedupCase{i} and
 \speedupCase{ii}.
