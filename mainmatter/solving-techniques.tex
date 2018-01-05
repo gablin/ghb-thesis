@@ -2284,7 +2284,7 @@ For \refEquationList{impl-cons-defs-dominate-defs,
 
   \caption[%
             Plot for evaluating the impact on solving time made by different
-            configurations of implied constraints%
+            combinations of implied constraints%
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for four
@@ -2294,7 +2294,7 @@ For \refEquationList{impl-cons-defs-dominate-defs,
             individually have a negative impact on solving time (subject), and
             another with all such constraints (subject)%
           }
-  \labelFigure{diff-impl-cons-conf-solving-time-plot}
+  \labelFigure{diff-impl-cons-comb-solving-time-plot}
 \end{figure}
 
 \def\modelA{\textsc{i}}
@@ -2302,7 +2302,7 @@ For \refEquationList{impl-cons-defs-dominate-defs,
 \def\modelC{\textsc{iii}}
 \def\modelD{\textsc{iv}}
 
-\RefFigure{diff-impl-cons-conf-solving-time-plot} shows the normalized solving
+\RefFigure{diff-impl-cons-comb-solving-time-plot} shows the normalized solving
 times (including presolving time) for four \glspl{constraint model}: one with no
 \gls{implied.c} \glspl{constraint}, serving as \gls{baseline}; one with only
 such \glspl{constraint} that individually have a positive impact on solving
@@ -2535,7 +2535,7 @@ results are inconclusive.
 
   \caption[%
             Plot for evaluating the impact on solving time made by different
-            configurations of symmetry and dominance breaking constraints%
+            combinations of symmetry and dominance breaking constraints%
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for three
@@ -2544,14 +2544,14 @@ results are inconclusive.
             individually have a positive impact on solving time (subject), and
             another with all such constraints (subject)%
           }
-  \labelFigure{diff-dom-cons-conf-solving-time-plot}
+  \labelFigure{diff-dom-cons-comb-solving-time-plot}
 \end{figure}
 
 \def\modelA{\textsc{i}}
 \def\modelB{\textsc{ii}}
 \def\modelC{\textsc{iii}}
 
-\RefFigure{diff-dom-cons-conf-solving-time-plot} shows the normalized solving
+\RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
 times (including presolving time) for three \glspl{constraint model}: one with
 no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
 \glspl{constraint}, serving as \gls{baseline}; one with only such
@@ -2806,7 +2806,7 @@ and \gls{canonical.l} \glspl{location}, the results are inconclusive.
 
   \caption[%
             Plot for evaluating the impact on solving time made by different
-            configurations of presolving techniques%
+            combinations of presolving techniques%
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for four
@@ -2816,7 +2816,7 @@ and \gls{canonical.l} \glspl{location}, the results are inconclusive.
             individually have a negative impact on solving time (subject), and
             another with all such techniques (subject)%
           }
-  \labelFigure{diff-presolving-conf-solving-time-plot}
+  \labelFigure{diff-presolving-comb-solving-time-plot}
 \end{figure}
 
 \def\modelA{\textsc{i}}
@@ -2824,7 +2824,7 @@ and \gls{canonical.l} \glspl{location}, the results are inconclusive.
 \def\modelC{\textsc{iii}}
 \def\modelD{\textsc{iv}}
 
-\RefFigure{diff-presolving-conf-solving-time-plot} shows the normalized solving
+\RefFigure{diff-presolving-comb-solving-time-plot} shows the normalized solving
 times (including presolving time) for three \glspl{constraint model}: one with
 no \gls{presolving} techniques, serving as \gls{baseline}; one with only such
 techniques that individually have a positive impact on solving time, serving as
