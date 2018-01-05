@@ -2057,6 +2057,7 @@ design choice over naive version.
 \NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}moom}{%
   \IfStrEq{#1}{disable}{\def\argUC{Disable}}{}%
   \IfStrEq{#1}{enable}{\def\argUC{Enable}}{}%
+  \IfStrEq{#1}{best}{\def\argUC{Best}}{}%
   \edef\statsPartName{%
     SolvTech%
     \argUC%
@@ -2984,13 +2985,188 @@ Hence we conclude that it is most beneficial to exclude
 
 \subsection{Impact of All Solving Techniques}
 
+\def\modelA{\textsc{i}}
+\def\modelB{\textsc{ii}}
+\def\modelC{\textsc{iii}}
+\def\modelD{\textsc{iv}}
+\def\modelE{\textsc{v}}
+
+We now evaluate the impact on solving time made by different collections of
+solving techniques by comparing the solving times exhibited by five versions of
+the \gls{constraint model}: one with no solving techniques, one with only those
+who individually lead to an overall reduction in solving time, one without those
+who individually lead to an overall increase in solving time, one with all such
+techniques, and another with with the \gls{implied.c}, \glsshort{symmetry
+  breaking.c} and \gls{dominance breaking.c} \glspl{constraint} and
+\gls{presolving} techniques that were performed best in previous experiments.
+%
+We refer to these \glsplshort{constraint model} as \modelA, \modelB, \modelC,
+\modelD, and \modelE, respectively.
+%
+We expect \glsplshort{constraint model}~\modelB, \modelC, \modelD, and~\modelE{}
+to all perform better than \glsplshort{constraint model}~\modelA.
+%
+We also expect \glsshort{constraint model}~\modelE{} to outperform
+\glsplshort{constraint model}~\modelB, \modelC, and~\modelD{} as it contains the
+solving techniques that performed best in the previous experiments.
+
+\includeSolvTechStats[enable]{only-all-good}
+\includeSolvTechStats{all-bad}
+\includeSolvTechStats{all}
+\includeSolvTechStats[best]{combos}
+
 \begin{figure}
   \centering%
-  \insertSolvTechSpeedupPlot{all}{1}
 
-  \caption{TODO}
-  \labelFigure{TODO}
+  \mkSolvTechSubfigure[enable]%
+                      {only-all-good}%
+                      [%
+                        Only \refEquationList{impl-cons-fix-fall-throughs,
+                          dom-cons-null-copy-match-selection,
+                          dom-cons-kill-match-selection, redun-kills,
+                          redun-non-null-copy-matches}%
+                      ]%
+                      [6cm]%
+                      {OnlyAllGood}%
+  \hfill%
+  \mkSolvTechSubfigure{all-bad}%
+                      [%
+                        Without
+                        \refEquationList{impl-cons-defs-dominate-entry-blocks,
+                          impl-cons-no-span-use-defs, illegal-matches-def-locs,
+                          illegal-matches-use-locs}%
+                      ]%
+                      [6cm]%
+                      {AllBad}%
+
+  \vspace{\betweensubfigures}
+
+  \mkSolvTechSubfigure{all}%
+                      [All solving techniques]%
+                      [3.8cm]%
+                      {All}%
+  \hfill%
+  \mkSolvTechSubfigure[best]{combos}%
+                      [%
+                        Eqs.\thinspace\refEquationRange*{%
+                          impl-cons-defs-dominate-defs%
+                        }{%
+                          impl-cons-fix-fall-throughs%
+                        },
+                        \refEquationList*{dom-cons-null-copy-match-selection,
+                          dom-cons-kill-match-selection,
+                          illegal-matches-uncovered-ops,
+                          illegal-matches-undefined-data, illegal-matches-kills,
+                          redun-kills, redun-non-null-copy-matches},
+                        dominated matches, and canonical locations%
+                      ]%
+                      {Combos}
+
+  \caption[%
+            Plot for evaluating the impact on solving time made by different
+            combinations of solving techniques%
+          ]%
+          {%
+            Normalized solving times (incl.\ presolving time) for five
+            constraint models: one with no solving techniques (baseline), one
+            with only such techniques that individually have a positive impact
+            on solving time (subject), one without such techniques that
+            individually have a negative impact on solving time (subject), one
+            with all such techniques (subject), and another with the
+            implied, symmetry and dominance breaking constraints
+            and presolving techniques that were performed best in previous
+            experiments (subject)%
+          }
+  \labelFigure{diff-solv-tech-comb-solving-time-plot}
 \end{figure}
+
+\RefFigure{diff-solv-tech-comb-solving-time-plot} shows the normalized solving
+times (including \gls{presolving} time) for the five \glspl{constraint model}
+described above, with \glsshort{constraint model}~\modelA{} as \gls{baseline}
+and \glsplshort{constraint model}~\modelB, \modelC, \modelD, and~\modelE{} as
+\glspl{subject}.
+%
+The solving times range from
+\printMinSolvingTime{
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
+  \SolvTechBestCombosPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
+} to
+\printMaxSolvingTime{
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
+  \SolvTechBestCombosPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
+} with a maximum coefficient of variation of
+\numMaxOf{
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
+  \SolvTechBestCombosPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
+}.
+%
+From the \glspl{GMI} and \glspl{CI}, also given in
+\refFigure{diff-solv-tech-comb-solving-time-plot}, we observe that all
+\glsplshort{constraint model} significantly improve solving time over
+\glsshort{constraint model}~\modelA.
+%
+Hence we conclude that the solving techniques are crucial for being able to
+solve anything larger than the smallest of \glspl{function}.
+
+We also observe that, counter to our expectation, \glsshort{constraint
+  model}~\modelC{} (\refFigure{solv-tech-disable-all-bad}) yields the largest
+improvement over \glsshort{constraint model}~\modelA, closely followed by
+\glsplshort{constraint model}~\modelD{} (\refFigure{solv-tech-disable-all}) and
+\modelE{} (\refFigure{solv-tech-best-combos}), which in turn both considerably
+outperform \glsshort{constraint model}~\modelB{}
+(\refFigure{solv-tech-enable-only-all-good}).
+%
+Hence we conclude that only picking solving techniques that have a statistically
+positive effect on solving time when evaluated individually is too conservative.
+
+Moreover, because \glsshort{constraint model}~\modelE{} performs worse than both
+\glsplshort{constraint model}~\modelC and~\modelD, it means that solving
+techniques from one category (such as \gls{implied.c} \glspl{constraint}) have
+strong synergy effects with solving techniques from another category (such as
+\glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
+\glspl{constraint}).
+%
+This highlights the difficulty of accurately evaluating the full effect that a
+solving technique has on the performance of a \gls{constraint model} as it may
+interact with other parts of the \glsshort{constraint model} in complex and
+counterintuitive ways, which is further magnified when \gls{lazy clause
+  learning} is involved.
+
+Regarding \glsshort{constraint model}~\modelC{} and \glsshort{constraint
+  model}~\modelD, we observe when comparing
+\refFigureList{solv-tech-disable-all-bad, solv-tech-disable-all} that both
+\glsplshort{constraint model} have very similar performance characteristics (the
+\glspl{GMI} are \printGMI{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+} and \printGMI{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, respectively).
+%
+While \glsshort{constraint model}~\modelD{} yields considerable solving time
+improvement for one case (second from the left), it is slightly worse than
+\glsshort{constraint model}~\modelC{} on several other cases, which is also
+reflected in the \gls{GMI}.
+%
+Hence we conclude that rejecting solving techniques that have a statistically
+negative effect on solving time when evaluated individually yields a
+\gls{constraint model} with best performance.
 
 
 \section{Summary}
