@@ -2129,7 +2129,13 @@ with the amount of \gls{propagation} they provide, as described in
 
 Second, based on the results for the experiment above, we then evaluate synergy
 effects among these \glspl{constraint} by comparing the solving times exhibited
-by four versions of the \glsshort{constraint model}: one with no \gls{implied.c}
+by \glspl{constraint model} with and without a given combination of
+\glspl{constraint}.
+%
+Because a full evaluation would require us to test every combination of
+\glspl{constraint}, which would result in an intractable number of experiments,
+we limit ourselves to only comparing the solving times exhibited by four
+versions of the \glsshort{constraint model}: one with no \gls{implied.c}
 \glspl{constraint}, one with only those who individually lead to an overall
 reduction in solving time, one without those who individually lead to an overall
 increase in solving time, and another with all such \glspl{constraint}.
@@ -2473,7 +2479,11 @@ others may degrade solving time.
 
 Second, based on the results for the experiment above, we then evaluate synergy
 effects among these \glspl{constraint} by comparing the solving times exhibited
-by four versions of the \glsshort{constraint model}: one with no
+by \glspl{constraint model} with and without a given combination of
+\glspl{constraint}.
+%
+Again, for practicality we limit ourselves to only comparing the solving times
+exhibited by four versions of the \glsshort{constraint model}: one with no
 \glsshort{symmetry breaking.c} or \gls{dominance breaking.c} \glspl{constraint},
 one with only those who individually lead to an overall reduction in solving
 time, one without those who individually lead to an overall increase in solving
@@ -2709,11 +2719,14 @@ to an overall reduction in solving time while others may degrade solving time.
 \def\modelF{\textsc{vi}}
 
 Second, based on the results for the experiment above, we then evaluate synergy
-effects among these techniques by comparing the solving times exhibited by four
-versions of the \glsshort{constraint model}: one with no \gls{presolving}
-techniques, one with only those who individually lead to an overall reduction in
-solving time, one without those who individually lead to an overall increase in
-solving time, and another one with all such techniques.
+effects among these techniques by comparing the solving times exhibited by
+\glspl{constraint model} with and without a given combination of techniques.
+%
+Again, for practicality we limit ourselves to only comparing the solving times
+exhibited by four versions of the \glsshort{constraint model}: one with no
+\gls{presolving} techniques, one with only those who individually lead to an
+overall reduction in solving time, one without those who individually lead to an
+overall increase in solving time, and another one with all such techniques.
 %
 We refer to these \glsplshort{constraint model} as \modelC, \modelD, \modelE,
 and \modelF, respectively.
