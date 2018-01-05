@@ -1435,15 +1435,15 @@ solving times (including presolving time) for the two \glspl{constraint
 All \glspl{function} are solved to optimality.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
-}{\s}
+}
 to
-\SIMinOf{
+\printMaxSolvingTime{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
-}{\s}
+}
 with a maximum coefficient of variation of
 \numMaxOf{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
@@ -1519,14 +1519,14 @@ support serving as \gls{subject}.
 All \glspl{function} are solved to optimality.
 %
 The costs range from
-\numMinOf[round-precision=0]{%
+\printMinCycles{%
   \AltValuesVsWithoutCyclesSpeedupCyclesAvgMin,
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMin
-}~cycles to
-\numMaxOf[round-precision=0]{%
+}to
+\printMaxCycles{%
   \AltValuesVsWithoutCyclesSpeedupCyclesAvgMax,
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
-}~cycles.
+}.
 %
 As the \gls{GMI} is \printGMI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -1981,28 +1981,28 @@ All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
 %
 The solving times range from
-\SIMinOf{%
+\printMinSolvingTime{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
-}{\s}
+}
 to
-\SIMaxOf{%
+\printMaxSolvingTime{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
-}{\s}
+}
 with a maximum coefficient of variation of
 \numMaxOf{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax
 }, and the costs range from
-\numMinOf[round-precision=0]{
+\printMinCycles{
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMin,
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin
-}~cycles to
-\numMaxOf[round-precision=0]{
+} to
+\printMaxCycles{
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMax,
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
-}~cycles.
+}.
 %
 As the \gls{GMI} for solving time is \printGMI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%

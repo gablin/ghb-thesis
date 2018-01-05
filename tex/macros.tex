@@ -1103,8 +1103,15 @@
 \newcommand{\plotPercentageFont}{\huge}
 \newcommand{\plotPercentage}[1]{{\plotPercentageFont$#1$\%}}
 \newcommand{\speedupValue}[1]{%
-  \pgfmathparse{#1}%
-  \pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}%
+  \pgfmathparse{and(-1 < #1, #1 < 1) ? 1 : 0}%
+  \ifnum \pgfmathresult=1
+    % Decimal rounding
+    \pgfmathprintnumber[fixed, precision=3]{#1}%
+  \else
+    % Significant figure rounding
+    \pgfmathprintnumberto[fixed, precision=3, verbatim]{#1}{\tempa}%
+    \num[round-mode=figures, round-precision=3]{\tempa}%
+  \fi%
 }
 \newcommand{\plotSpeedupTicsFont}{\huge}
 \newcommand{\plotSpeedupTics}[1]{%
@@ -1189,13 +1196,36 @@
   \SI[#1]{\pgfmathresult}{#3}%
 }
 
+\NewDocumentCommand{\printSolvingTime}{m}{%
+  \SI[round-mode=figures, round-precision=3]{#1}{\s}%
+}
+
+\NewDocumentCommand{\printMinSolvingTime}{m}{%
+  \minOf{#1}%
+  \printSolvingTime{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printMaxSolvingTime}{m}{%
+  \maxOf{#1}%
+  \printSolvingTime{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printCycles}{m}{%
+  \num[round-precision=0]{#1}~cycles%
+}
+
+\NewDocumentCommand{\printMinCycles}{m}{%
+  \minOf{#1}%
+  \printCycles{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printMaxCycles}{m}{%
+  \maxOf{#1}%
+  \printCycles{\pgfmathresult}%
+}
+
 \NewDocumentCommand{\printGMI}{m}{%
-  \pgfmathparse{or(#1 <= 0.99, #1 >= 1.01) ? 1 : 0}%
-  \ifthenelse{\pgfmathresult>0}{%
-    \num{#1}%
-  }{%
-    \num[round-precision=3]{#1}%
-  }%
+  \num[round-mode=figures, round-precision=3]{#1}%
 }
 
 \NewDocumentCommand{\printGMICI}{mm}{%

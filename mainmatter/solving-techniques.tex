@@ -1795,14 +1795,14 @@ described above, with the \glsshort{constraint model} based on the
 serving as \gls{subject}.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMin
-}{\s} to
-\SIMaxOf[round-precision=0]{
+} to
+\printMaxSolvingTime{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMax
-}{\s} with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
@@ -1861,21 +1861,20 @@ percentage of optimal \glspl{solution} found over time for the five
 \glspl{constraint model} described above.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeAvgMin,
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeAvgMin,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeAvgMin,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWUbSolvingTimeAvgMin,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeAvgMin
-}{\s} to
-\SIMaxOf[round-precision=0]{
+} to
+\printMaxSolvingTime{
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeAvgMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeAvgMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedNoBoundsSolvingTimeAvgMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWUbSolvingTimeAvgMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeRefinedWLbUbSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveNoBoundsSolvingTimeCvMax,
   \ObjFunRefinedVsNaiveOptProofsOverTimeNaiveWUbSolvingTimeCvMax,
@@ -1957,14 +1956,14 @@ based on the refined \gls{objective function} with upper bound, serving as
 \gls{subject}.
 %
 The costs range from
-\numMinOf[round-precision=0]{
+\printMinCycles{
   \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMin,
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesAvgMin
-}~cycles to
-\numMaxOf[round-precision=0]{
+} to
+\printMaxCycles{
   \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesAvgMax,
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesAvgMax
-}~cycles with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesCvMax,
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
@@ -2189,7 +2188,7 @@ without a particular \gls{implied.c} \gls{constraint}, serving as
 \gls{subject}.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
@@ -2205,8 +2204,8 @@ The solving times range from
   \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
-}{\s} to
-\SIMaxOf[round-precision=0]{
+} to
+\printMaxSolvingTime{
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableImplConsDefsInSpannedBlocksPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
@@ -2222,8 +2221,7 @@ The solving times range from
   \SolvTechDisableImplConsLocsOfUsesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
   \SolvTechDisableImplConsDefsDominateDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
@@ -2317,20 +2315,18 @@ For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
 \modelB, \modelC, and \modelD, respectively.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
-}{\s}
-to
-\SIMinOf{
+} to
+\printMaxSolvingTime{
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableBadImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
@@ -2477,7 +2473,7 @@ without a particular \glsshort{symmetry breaking.c} or \gls{dominance
 such \glspl{constraint}, serving as \gls{subject}.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMin,
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
@@ -2485,8 +2481,8 @@ The solving times range from
   \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
-}{\s} to
-\SIMaxOf[round-precision=0]{
+} to
+\printMaxSolvingTime{
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeAvgMax,
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableDomConsOperandsOfNonSelectedMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
@@ -2494,8 +2490,7 @@ The solving times range from
   \SolvTechDisableDomConsInterchDataChainsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupAllPrePlusSolvingTimeCvMax,
   \SolvTechDisableDomConsLocsOfStatesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
@@ -2569,18 +2564,16 @@ For brevity, we will refer to these \glsplshort{constraint model} as \modelA,
 \modelB, and \modelC, respectively.
 %
 The solving times range from
-\SIMinOf{
+\printMinSolvingTime{
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMin,
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin,
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMin
-}{\s}
-to
-\SIMinOf{
+} to
+\printMaxSolvingTime{
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeAvgMax,
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax
-}{\s}
-with a maximum coefficient of variation of
+} with a maximum coefficient of variation of
 \numMaxOf{
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupNonePrePlusSolvingTimeCvMax,
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
@@ -2647,7 +2640,7 @@ Hence we conclude that it is beneficial to only include
 
   \mkSolvTechSubfigure{dom-matches}%
                       [Dominated matches]%
-                      [3.5cm]%
+                      [3.65cm]%
                       {DomMatches}%
   \hfill%
   \mkSolvTechSubfigure{illegal-matches-uncovered-ops}%
