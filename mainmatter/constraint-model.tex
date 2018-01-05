@@ -1368,18 +1368,28 @@ respectively less than~\num{1}.
 In terms of solving time, for example, a \gls{subject} method~$a$ leads to an
 overall reduction over another \gls{baseline} method~$b$ if the \gls{GMI} is
 greater than~\num{1}.
+
+
+\subsubsection{Attaining Statistically Significant Results}
+
+Because we can only run experiments on a small set of \glspl{function} sampled
+from much larger pool, the \gls{GMI} we attain from the sampled set may not be
+representative for the pool as a whole.
 %
-If the \gls{GMI} is close to~\num{1}, it may not be clear whether the result is
-statistically significant.
+In other words, the result may not be statistically significant.
 %
-In such cases, we compute the \num{95}\textsuperscript{th} \gls{CI} for the
-\gls{GMI} using percentile bootstrapping with \num{100000}
-iterations~[\todo{citation}].
+To account for this uncertainty, we compute the \num{95}\textsuperscript{th}
+\gls{CI}~\cite{Neyman:1937} for the \gls{GMI} value.
 %
-If the \gls{CI} contains~\num{1}, then we cannot statistically conclude whether
-the result is positive or negative.
+Hence, if the \gls{CI} is greater than or less than~\num{1}, then we can
+statistically conclude with \SI{95}{\%} confidence that the result is positive
+respectively negative.
 %
-\todo{GMI is resilient from outliers, CI captures this information}
+If the \gls{CI} contains~\num{1}, then the result is inconclusive.
+
+For the experiments in this dissertation, we compute the \gls{CI} using
+\gls{percentile bootstrapping} with
+\num{100000}~iterations~\cite{EfronTibshirani:1994}.
 
 
 \subsubsection{Match Duplication vs. Alternative Values}
