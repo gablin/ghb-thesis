@@ -641,6 +641,12 @@
 \gpsetdashtype{gp dt solid}
 \gpsetlinewidth{1.00}
 \draw[gp path] (1.196,8.381)--(1.196,0.616)--(11.947,0.616)--(11.947,8.381)--cycle;
+\def\modelFont#1{{\large\figureFont#1}}
+\node [nothing] at (10.4,1.1) {\modelA};
+\node [nothing] at (10.3,2.1) {\modelB};
+\node [nothing] at (4.25,4.2) {\modelC};
+\node [nothing] at (2.1,4) {\modelD};
+\node [nothing] at (3.7,5.8) {\modelE};
 %% coordinates of the plot area
 \gpdefrectangularnode{gp plot 1}{\pgfpoint{1.196cm}{0.616cm}}{\pgfpoint{11.947cm}{8.381cm}}
 \end{tikzpicture}

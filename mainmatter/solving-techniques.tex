@@ -1859,7 +1859,7 @@ the \gls{divide-then-multiply method} is a better design choice over
 \gls{multiply-then-divide method}.
 
 \begin{figure}
-  \def\modelFont#1{{\small\textsf{#1}}}
+  \def\modelFont#1{{\small\figureFont#1}}
   \def\modelA{\modelFont{a}}
   \def\modelB{\modelFont{b}}
   \def\modelC{\modelFont{c}}
@@ -1876,13 +1876,17 @@ the \gls{divide-then-multiply method} is a better design choice over
   }
 
   \caption[%
-            Plot for evaluating the refined objective function's impact on
+            Plot for evaluating the different objective functions' impact on
             finding optimal solutions%
           ]%
           {%
             Percentage of optimal solutions found over time for five constraint
-            models implementing the naive and refined objective function, with
-            and without bounds%
+            models: one using the naive objective function without
+            bounds~(\modelA), one using the naive function with upper
+            bound~(\modelB), one using the refined objective function without
+            bounds~(\modelC), one using the refined function with upper
+            bound~(\modelD), and another using the refined function with both
+            lower and upper bound~(\modelE)%
           }
   \labelFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot}
 \end{figure}
