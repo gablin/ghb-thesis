@@ -1826,7 +1826,15 @@ The solving times range from
 \printMaxSolvingTime{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeAvgMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeAvgMax
-} with a maximum coefficient of variation of
+}%
+%
+\footnote{%
+  The solving time given here greater than the time limit because it also
+  includes the \gls{presolving} time while the time limit is only applied on the
+  \gls{constraint solver}.%
+}
+%
+with a maximum coefficient of variation of
 \numMaxOf{
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
