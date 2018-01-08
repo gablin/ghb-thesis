@@ -806,7 +806,43 @@ for graphics processors).
 \section{Research Methodology}
 \labelSection{intro-research-methodology}
 
-\todo{write}
+We begin with a thorough literature review to identify the strengths and
+limitations of existing \gls{instruction selection} techniques and common
+denominators among them.
+%
+As part of this study, four \gls{instruction selection} \glspl{principle} and
+five \glspl{instruction characteristic} are identified and the techniques are
+classified accordingly.
+%
+This classification enables us to recognize that certain classes of
+\glspl{instruction} are poorly supported by existing \gls{instruction selection}
+techniques, one reason being lack of appropriate \gls{program} and
+\gls{instruction} representations.
+%
+Having established the need for new representations, we then identify a set of
+representation requirements and build a new representation by starting from
+well-established, existing representations and then augmenting these as needed
+until all requirements are met.
+
+With the new representation at hand, we proceed with building the
+\gls{constraint model}.
+%
+For each task to be integrated, we first identify what constitutes a
+\gls{solution} to this task and then add the appropriate \glspl{variable} and
+\glspl{constraint} to enforce such \glspl{solution}.
+%
+If more than one design choice exist, then we implement both as separate
+\glsplshort{constraint model} and evaluate which is better before proceeding.
+
+We evaluate a \gls{constraint model} by applying it on a set of \glspl{function}
+which are sampled from a well-established benchmark suite.
+%
+The sampling is done using a sound clustering method to ensure diversity among
+the selected \glspl{function}.
+%
+All measurements are averaged over multiple runs to mitigate deviations, and
+well-established methods from statistics are applied in order to draw sound
+conclusions.
 
 
 \section{Outline}
