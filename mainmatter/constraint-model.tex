@@ -1382,17 +1382,25 @@ representative for the pool as a whole.
 %
 In other words, the result may not be statistically significant.
 %
-To account for this uncertainty, we compute the \num{95}\textsuperscript{th}
-\gls{CI}~\cite{Neyman:1937} for the \gls{GMI} value.
+Therefore, for the \gls{GMI} value we also compute the \gls!{CI}, which is a
+method of estimating the uncertainty of a value computed from a set of
+samples~\cite{Neyman:1937}.
 %
-Hence, if the \gls{CI} is greater than or less than~\num{1}, then we can
-statistically conclude with \SI{95}{\%} confidence that the result is positive
-respectively negative.
+Every \gls{CI} is computed with a predefined degree of confidence, say $X$,
+typically written as the $X$\textsuperscript{th} \gls{CI}.
+%
+This means that if the $X$\textsuperscript{th} \gls{CI} of the \gls{GMI} value
+is greater than or less than~\num{1}, then we can statistically conclude with
+$X\%$ confidence that the result is positive respectively negative.
 %
 If the \gls{CI} contains~\num{1}, then the result is inconclusive.
 
-For the experiments described in this dissertation, we compute the \gls{CI}
-using \gls{percentile bootstrapping} with
+For the experiments described in this dissertation, we compute the
+\num{95}\textsuperscript{th} \gls{CI} as is common for most statistical
+experiments.
+%
+Since we know nothing about the underlying distributions for our observations,
+we compute the \gls{CI} using \gls{percentile bootstrapping} with
 \num{100000}~iterations~\cite{EfronTibshirani:1994}.
 
 
