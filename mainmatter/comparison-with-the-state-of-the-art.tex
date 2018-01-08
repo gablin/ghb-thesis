@@ -13,28 +13,15 @@
 \section{Unison \versus LLVM}
 \labelSection{comparison-unison-vs-llvm}
 
-\todo{write}
-
-
-\section{Selection of SIMD instructions}
-\labelSection{comparison-with-or-without-simds}
-
-\def\patternSetA{\textsc{i}}
-\def\patternSetB{\textsc{ii}}
-
-We evaluate the impact of being able to select \gls{SIMD.instr}
-\glspl{instruction} by comparing the cost (that is, the total number of cycles,
-as described in \refSection{cm-objective-function} on
-\refPageOfSection{cm-objective-function}) of \glspl{solution} produced from two
-\glspl{pattern set}: one derived from \gls{Hexagon} without \gls{SIMD.instr}
-\glspl{instruction}, and another with such \glspl{instruction}.
-%
-We refer to these as \glspl{pattern set}~\patternSetA{} and~\patternSetB,
-respectively.
+We evaluate the impact of our approach by comparing the cost (that is, the total
+number of cycles, as described in \refSection{cm-objective-function} on
+\refPageOfSection{cm-objective-function}) of \glspl{solution} produced by our
+approach with the \glspl{solution} produced by \mbox{\gls{LLVM} 3.8}, an
+existing state-of-the-art \gls{compiler}.
 
 The experimental setup is the same as in
 \refSection{cm-alt-values-experimental-evaluation} on
-\refPageOfSection{cm-alt-values-experimental-evaluation} with two exceptions.
+\refPageOfSection{cm-alt-values-experimental-evaluation} with three exceptions.
 %
 First, when filtering we remove all \glspl{function} that have less than less
 than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will
@@ -55,6 +42,109 @@ Second, when solving we apply time limit of \SI{600}{\s} to the \gls{constraint
 For any given \gls{function}, the last \gls{solution} found is considered
 optimal if and only if the \glsshort{constraint solver} has finished its
 execution within the time limit.
+%
+Third, we apply the cost for the \gls{solution} computed by \gls{LLVM} for a
+given \gls{function} as the upper bound for the \gls{cost variable} in the
+corresponding instance of the \gls{constraint model}.
+
+\input{\expDir/unison-vs-llvm-hexagon5-cycles-speedup.stats}
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/unison-vs-llvm-hexagon5-cycles-speedup.plot}%
+    }%
+  }
+
+  \caption[Plot for evaluating the impact of our approach on code quality]%
+          {%
+            Normalized solution costs for two pattern sets: one without SIMD
+            instructions (baseline), and another with such instruction
+            (subject).
+            %
+            GMI:~\printGMI{%
+              \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
+            },
+            CI:~\printGMICI{%
+              \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMin%
+            }{%
+              \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMax%
+            }.
+            %
+            The constraint model uses an upper bound computed by LLVM.
+            %
+            \Glspl{function} whose bars are marked with two dots are those
+            for which the \gls{subject} fails to find the optimal solution%
+          }
+  \labelFigure{unison-vs-llvm-cycles-plot}
+\end{figure}
+
+\RefFigure{unison-vs-llvm-cycles-plot} shows the normalized \gls{solution} costs
+for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
+\gls{subject}.
+%
+The costs range from
+\printCycles{\UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesAvgMin} to
+\printCycles{\UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesAvgMax}, with a maximum
+coefficient of variation of
+\num{\UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesCvMax}.
+%
+The solving times range from
+\printSolvingTime{\UnisonVsLlvmHexagonFiveCyclesSpeedupPrePlusSolvingTimeAvgMin}
+to
+\printSolvingTime{\UnisonVsLlvmHexagonFiveCyclesSpeedupPrePlusSolvingTimeAvgMax}
+with a maximum coefficient of variation of
+\num{\UnisonVsLlvmHexagonFiveCyclesSpeedupPrePlusSolvingTimeCvMax}.
+%
+As the \gls{GMI} is \printGMI{%
+  \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMin%
+}{%
+  \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMax%
+}, we see that our approach produces \glspl{solution} with significantly lesser
+cost than those produced by \gls{LLVM}.
+%
+\todo{case study}
+%
+Hence we conclude that our approach generates code of equal or better quality
+compared to the state of the art.
+
+
+\section{Selection of SIMD instructions}
+\labelSection{comparison-with-or-without-simds}
+
+\def\patternSetA{\textsc{i}}
+\def\patternSetB{\textsc{ii}}
+
+We evaluate the impact of being able to select \gls{SIMD.instr}
+\glspl{instruction} by comparing the cost of \glspl{solution} produced from two
+\glspl{pattern set}: one derived from \gls{Hexagon} without \gls{SIMD.instr}
+\glspl{instruction}, and another with such \glspl{instruction}.
+%
+We refer to these as \glspl{pattern set}~\patternSetA{} and~\patternSetB,
+respectively.
+
+The experimental setup is the same as in \refSection{comparison-unison-vs-llvm}
+with two exceptions.
+%
+First, when filtering we again remove all \glspl{function} that have less than
+less than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller
+will most likely not have enough data parallelism for selection of
+\gls{SIMD.instr} \glspl{instruction} -- and greater than
+\num{150}~\glspl{instruction} -- anything larger will lead to unreasonably long
+experiment runtimes.
+%
+But to increase the chance of data parallelism, we also remove all
+\glspl{function} not containing at least two addition, subtraction, logical and,
+or logical or \glspl{instruction}.
+%
+This leaves a pool of \num{221}~\glspl{function}, from which
+\num{20}~\glspl{function} are sampled using the same method as before.
+%
+Second, we do not apply an upper bound in this case as that may prevent
+interesting \gls{solution} that make use of \gls{SIMD.instr} \gls{instruction}.
 
 \input{\expDir/simd-vs-without-cycles-speedup.stats}
 
@@ -100,6 +190,24 @@ The costs range from
 \printMaxCycles{%
   \SimdVsWithoutCyclesSpeedupCyclesAvgMax,
   \SimdVsWithoutCyclesSpeedupBaselineCyclesAvgMax
+}, with a maximum coefficient of variation of
+\numMaxOf{
+  \SimdVsWithoutCyclesSpeedupCyclesCvMax,
+  \SimdVsWithoutCyclesSpeedupBaselineCyclesCvMax
+}.
+%
+The solving times from
+\printMinSolvingTime{%
+  \SimdVsWithoutCyclesSpeedupPrePlusSolvingTimeAvgMin,
+  \SimdVsWithoutCyclesSpeedupBaselinePrePlusSolvingTimeAvgMin
+} to
+\printMaxSolvingTime{%
+  \SimdVsWithoutCyclesSpeedupPrePlusSolvingTimeAvgMax,
+  \SimdVsWithoutCyclesSpeedupBaselinePrePlusSolvingTimeAvgMax
+}, with a maximum coefficient of variation of
+\numMaxOf{
+  \SimdVsWithoutCyclesSpeedupPrePlusSolvingTimeCvMax,
+  \SimdVsWithoutCyclesSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
 As the \gls{GMI} is \printGMI{%
@@ -117,10 +225,12 @@ The five cases with lesser cost ({\codeFont debug\_print\_str}, {\codeFont
 {\codeFont zero}), our approach is able to combine pairs of additions or
 subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
 %
-One one of these cases ({\codeFont gl\_read\_alpha}) the additions originally
-reside in different \glspl{block}, but due to \gls{global code motion} our
-approach is able to move the operations to the same block in order to implement
-these using a single \gls{instruction}.
+In addition, in one of these cases ({\codeFont gl\_read\_alpha}) the additions
+originally reside in different \glspl{block}, but due to \gls{global code
+  motion} our approach is able to move the operations to the same block in order
+to implement these using a single \gls{instruction}.
+%
+\todo{make figure to illustrate the effect}
 %
 Hence we conclude that there is sufficient data parallelism to be exploited
 through selection of \gls{SIMD.instr} \glspl{instruction}, resulting in
