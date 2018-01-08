@@ -7,7 +7,124 @@
 \chapter{Comparison with the State of the Art}
 \labelChapter{comparison-with-the-state-of-the-art}
 
+\todo{write outline}
+
+
 \section{With or Without SIMDs}
-\section{Unison Vs. LLVM}
-\section{Discussion}
+\labelSection{comparison-with-or-without-simds}
+
+\def\patternSetA{\textsc{i}}
+\def\patternSetB{\textsc{ii}}
+
+We first evaluate the impact of being able to select \gls{SIMD.instr}
+\glspl{instruction} by comparing the cost (that is, the total number of cycles,
+as described in \refSection{cm-objective-function} on
+\refPageOfSection{cm-objective-function}) of \glspl{solution} produced from two
+\glspl{pattern set}: one derived from \gls{Hexagon} without \gls{SIMD.instr}
+\glspl{instruction}, and another with such \glspl{instruction}.
+%
+We refer to these as \glspl{pattern set}~\patternSetA{} and~\patternSetB,
+respectively.
+
+The experimental setup is the same as in
+\refSection{cm-alt-values-experimental-evaluation} on
+\refPageOfSection{cm-alt-values-experimental-evaluation} with two exceptions.
+%
+First, when filtering we remove all \glspl{function} that have less than less
+than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will
+most likely not have enough data parallelism for selection of \gls{SIMD.instr}
+\glspl{instruction} -- and greater than \num{150}~\glspl{instruction} --
+anything larger will lead to unreasonably long experiment runtimes.
+%
+To increase the amount of data parallelism, we also remove all \glspl{function}
+not containing at least two addition, subtraction, logical and, or logical or
+\glspl{instruction}.
+%
+This leaves a pool of \num{221}~\glspl{function}, from which
+\num{20}~\glspl{function} are sampled using the same method as before.
+%
+Second, when solving we apply time limit of \SI{600}{\s} to the \gls{constraint
+  solver}.
+%
+For any given \gls{function}, the last \gls{solution} found is considered
+optimal if and only if the \glsshort{constraint solver} has finished its
+execution within the time limit.
+
+\input{\expDir/simd-vs-without-cycles-speedup.stats}
+
+\begin{figure}
+  \centering%
+  \maxsizebox{\textwidth}{!}{%
+    \trimBarchartPlot{%
+      \input{\expDir/simd-vs-without-cycles-speedup.plot}%
+    }%
+  }
+
+  \caption[Plot for evaluating the impact on SIMD instructions on code quality]%
+          {%
+            Normalized solution costs for two pattern sets: one without SIMD
+            instructions (baseline), and another with such instruction
+            (subject).
+            %
+            GMI:~\printGMI{%
+              \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+            },
+            CI:~\printGMICI{%
+              \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
+            }{%
+              \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
+            }.
+            %
+            \Glspl{function} whose bars are marked with two dots are those
+            for which the \gls{subject} fails to find the optimal solution%
+          }
+  \labelFigure{simd-vs-without-cycles-plot}
+\end{figure}
+
+\RefFigure{simd-vs-without-cycles-plot} shows the normalized \gls{solution}
+costs for the two \glspl{pattern set} describe above, with \gls{pattern
+  set}~\patternSetA{} as \gls{baseline} and \gls{pattern set}~\patternSetB{} as
+\gls{subject}.
+%
+The costs range from
+\printMinCycles{%
+  \SimdVsWithoutCyclesSpeedupCyclesAvgMin,
+  \SimdVsWithoutCyclesSpeedupBaselineCyclesAvgMin
+}to
+\printMaxCycles{%
+  \SimdVsWithoutCyclesSpeedupCyclesAvgMax,
+  \SimdVsWithoutCyclesSpeedupBaselineCyclesAvgMax
+}.
+%
+As the \gls{GMI} is \printGMI{%
+  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
+}{%
+  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
+}, we see that the \gls{pattern set}~\patternSetB{} yields \glspl{solution} with
+significantly lesser cost than those yielded by \glsshort{pattern
+  set}~\patternSetA.
+%
+The five cases with lesser cost ({\codeFont debug\_print\_str}, {\codeFont
+  gl\_read\_alpha}, {\codeFont gx\_curve\_cursor}, {\codeFont mp\_dmul}, and
+{\codeFont zero}), our approach is able to combine pairs of additions or
+subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
+%
+One one of these cases ({\codeFont gl\_read\_alpha}) the additions originally
+reside in different \glspl{block}, but due to \gls{global code motion} our
+approach is able to move the operations to the same block in order to implement
+these using a single \gls{instruction}.
+%
+Hence we conclude that there is sufficient data parallelism to be exploited
+through selection of \gls{SIMD.instr} \glspl{instruction}, resulting in
+significantly better code quality, and that this exploitation is benefitted from
+\gls{global code motion}.
+
+
+\section{Unison \versus LLVM}
+\labelSection{comparison-unison-vs-llvm}
+
+
 \section{Summary}
+\labelSection{comparison-summary}
