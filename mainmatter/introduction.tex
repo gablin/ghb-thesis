@@ -48,13 +48,22 @@ implemented using a single \gls{instruction}.
 Consequently, in order to generate high-quality code, these tasks must be
 performed in unison.
 
-This dissertation addresses these problems by introducing a new approach based
-on methods from combinatorial optimization.
+This dissertation addresses these problems by introducing a new approach, called
+\gls!{universal instruction selection}, which is based on methods from
+combinatorial optimization.
 %
-The approach, called \gls!{universal instruction selection}, relies on a novel
-model that is simpler and more flexible compared to non-\glspl{combinatorial
-  approach} and captures crucial features ignored by other, existing
-combinatorial optimization models for \gls{instruction selection}.
+\begin{figure}
+  \centering%
+  \input{figures/introduction/approach-overview}
+
+  \caption{Overview of the approach}
+  \labelFigure{approach-overview}
+\end{figure}
+%
+The approach, outlined in \refFigure{approach-overview}, relies on a novel model
+that is simpler and more flexible compared to non-\glspl{combinatorial approach}
+and captures crucial features ignored by other, existing combinatorial
+optimization models for \gls{instruction selection}.
 %
 Most importantly, the model is the first to combine the task of \gls{global.is}
 \gls{instruction selection} with \gls{global code motion} in order to alleviate
@@ -447,45 +456,6 @@ This code takes eight cycles to execute, thus leading to a slowdown of
 %
 The \gls{instruction selector} must therefore be aware of additional jump
 \glspl{instruction} that may be required when making such decisions.
-
-
-\section{Approach}
-\labelSection{intro-approach}
-
-\begin{figure}
-  \centering%
-  \input{figures/introduction/approach-overview}
-
-  \caption{Overview of the approach}
-  \labelFigure{approach-overview}
-\end{figure}
-
-The approach, outlined in \refFigure{approach-overview}, is as follows.
-%
-The \gls{IR} code of the \gls{program} under compilation is fed to a tool which
-builds a \gls{graph}-based representation of the \gls{program}.
-%
-The \gls{graph} is subjected to a series of transformations and then fed to a
-matcher together with the \gls{pattern set} of the specified \gls{target
-  machine}.
-%
-The \gls{pattern set} is built from a \gls!{machine description}, which is a
-machine-readable specification of the \gls{target machine}, and contains a
-\gls{graph}-based \gls{pattern} for each \gls{instruction}.
-%
-These \glspl{pattern} have also been subjected to similar transformations.
-%
-Taking the \gls{graph} and \gls{pattern set} as input, the matcher produces a
-set of \glspl{match}.
-%
-This is fed to a modeler, which constructs a problem instance of the
-\gls{constraint model}.
-%
-The \gls{constraint model} is then solved by a generic off-the-shelf
-\gls{constraint solver}.
-%
-The \gls{solution} is then fed to a code emitter, which produces the code
-containing the selected \glspl{instruction}.
 
 
 \section{Research Methodology}
