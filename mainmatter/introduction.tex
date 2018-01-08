@@ -129,7 +129,9 @@ Another code generation task of interest is \gls!{block ordering}, where the
 \glspl{instruction}.
 
 
-\subsubsection{Global Instruction Selection and New Representations}
+\subsubsection{%
+  The Need for New Instruction Selection Techniques and Representations%
+}
 
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
@@ -224,7 +226,7 @@ captures both data and control flow.
 In comparison, existing representations only capture data flow.
 
 
-\subsubsection{Combining Instruction Selection and Global Code Motion}
+\subsubsection{For Combining Instruction Selection and Global Code Motion}
 
 Assume that the \gls{target machine} also has a \gls{SIMD.instr}
 \gls{instruction} for addition.\!%
@@ -254,7 +256,7 @@ Consequently, the \gls{global code mover} may take decisions which are
 detrimental for the \gls{instruction selector}.
 
 
-\subsubsection{Taking Cost of Data Copying Into Account}
+\subsubsection{For Taking Cost of Data Copying Into Account}
 
 Although selecting \gls{SIMD.instr} \glspl{instruction} may significantly
 improve code quality -- like in the previous example -- doing so carelessly may
@@ -275,7 +277,7 @@ These restrictions must be known by the \gls{instruction selector} to make
 effective use of \gls{SIMD.instr} \glspl{instruction}.
 
 
-\subsubsection{Combining Instruction Selection and Block Ordering}
+\subsubsection{For Combining Instruction Selection and Block Ordering}
 
 \begin{filecontents*}{isel-blorder-example.c}
 int f() {
