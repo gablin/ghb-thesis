@@ -9,48 +9,54 @@
 
 \enlargethispage{2pt}
 
-Today's processors are built to execute a vast range of \glspl{program}, from
-tiny \emph{Hello, world!} samples to large-scale Earth simulations, and they are
-built to execute these programs as fast and efficiently as possible.
+Processors are built to execute a vast range of \glspl{program}, from tiny
+\emph{Hello, world!} samples to large-scale Earth simulations.
 %
-To this end, CPU manufacturers continuously enhance their processors with
-sophisticated \glspl{instruction}, allowing complex computations that previously
-required many \gls{instruction} to be executed using a single \gls{instruction}.
+Most importantly, the processors are built to minimize the execution time for
+these \glspl{program}.
 %
-In particular, such \glspl{instruction} are common in \glspl{DSP} that appear in
-many contemporary mobile phones.
+To this end, CPU manufacturers continuously extend their processors with new,
+sophisticated \glspl{instruction} that allow complex computations to be executed
+using fewer \glspl{instruction}.
+%
+Such \glspl{instruction} are especially common in \glspl{DSP} that appear in
+most contemporary mobile phones.
 %
 But while the technology behind modern processors continues to advance, the
-techniques for selecting the \glspl{instruction} provided by the processors have
-not.
+techniques for automatically making use of the \glspl{instruction} have not.
 %
-In fact, the techniques applied in today's state-of-the-art \glspl{compiler} are
-essentially the same methods that were applied in the 1980s.
+In fact, the state-of-the-art \glspl{compiler} -- these are tools for
+translating \glspl{program} into \gls{assembly code} -- essentially apply the
+same techniques for selecting \glspl{instruction} that were used in the 1980s.
+
+Due to underlying assumptions about the \gls{instruction set}, many of the
+\glspl{instruction} currently available in modern processors cannot be handled
+by these techniques.
 %
-Since they assume a much simpler \gls{instruction set}, principally all
-sophisticated \glspl{instruction} currently available in modern processors
-cannot be selected using these techniques, forcing \gls{compiler} developers to
-implement hand-written heuristics that check the applicability of a specific
-\gls{instruction} and, if applicable, greedily select it.
+Instead, \gls{compiler} developers are forced to implement hand-written routines
+for checking whether a specific \gls{instruction} is applicable and, if so,
+greedily selecting it.
 %
 With over \num{100}~million microprocessors being shipped every
-quarter~\cite{Intel:2014:NewsRelease}, through release cycles that grow shorter
-and shorter, there is a pressing need for new and improved \gls{instruction
-  selection} techniques.
-%
+quarter~\cite{Intel:2014:NewsRelease}, through release cycles that become
+shorter and shorter, there is a growing need for new and improved
+\gls{instruction selection} techniques.
+
 Furthermore, the impact and availability of selecting a particular
-\gls{instruction} is highly dependent on other \gls{code generation} tasks.
+\gls{instruction} is highly dependent on other \gls{compiler} tasks.
 %
-For example, moving a computation from one part of the \gls{program} to another
-may enable it to be combined with another computation which can then both be
-implemented using a single \gls{instruction}.
+One such task is \gls{global code motion}, which involves moving computations
+from one part of the \gls{program} to another.
+%
+Integrating \gls{global code motion} with \gls{instruction selection} enables a
+larger set of combinations of computations, some of which may be implemented
+using sophisticated \glspl{instruction}.
 %
 Consequently, in order to generate high-quality code, these tasks must be
 performed in unison.
 
-This dissertation addresses these problems by introducing a new approach, called
-\gls!{universal instruction selection}, which is based on methods from
-combinatorial optimization.
+This dissertation introduces \gls!{universal instruction selection}, a new
+approach based on \glsdesc{CP} that addresses the problems described above.
 %
 \begin{figure}
   \centering%
@@ -60,33 +66,34 @@ combinatorial optimization.
   \labelFigure{approach-overview}
 \end{figure}
 %
-The approach, outlined in \refFigure{approach-overview}, relies on a novel model
-that is simpler and more flexible compared to non-\glspl{combinatorial approach}
-and captures crucial features ignored by other, existing combinatorial
-optimization models for \gls{instruction selection}.
+Outlined in \refFigure{approach-overview}, the approach is the first to combine
+\gls{instruction selection} with \gls{global code motion} and \gls{block
+  ordering}.
 %
-Most importantly, the model is the first to combine the task of \gls{global.is}
-\gls{instruction selection} with \gls{global code motion} in order to alleviate
-selection of sophisticated \glspl{instruction} that would otherwise not have
-been applicable.
+In doing so, our approach alleviates selection of sophisticated
+\glspl{instruction} that would otherwise not have been selectable.
 %
-In addition, because control flow is involved the model also integrates
-\gls{block ordering} as this is shown to impact \gls{instruction selection} and
-vice versa.
+The approach relies on a novel combinatorial model that is simpler and more
+flexible compared to non-\glspl{combinatorial approach}.
 %
-To enable this model, the dissertation introduces a novel, \gls{graph}-based
-representation that unifies data flow and control flow for entire
-\glspl{function}.
+It also captures crucial features ignored by other, existing
+\glspl{combinatorial approach}.
 %
-This representation also enables \glspl{instruction} whose behavior contains
-both data and control flow to be modeled as \glspl{graph} (for an exact
-definition of \glspl{graph} and other related terms, see
-\refAppendix{graph-definitions}).
+Extensions for integrating \gls{instruction scheduling} and \gls{register
+  allocation} -- these are two other \gls{code generation} tasks known to impact
+\gls{instruction selection} and vice versa -- are also proposed.
+
+The model is enabled by a novel, \gls{graph}-based representation that unifies
+data flow and control flow for entire \glspl{function}.
 %
-The dissertation also proposes extensions to this model for integrating
-\gls{instruction scheduling} and \gls{register allocation}, which are two other
-\gls{code generation} tasks known to impact \gls{instruction selection} and vice
-versa.
+Not only is this representation crucial for combining \gls{instruction
+  selection} with \gls{global code motion}, it also enables \glspl{instruction}
+whose behavior contains both data and control flow to be modeled as
+\glspl{graph}.
+%
+Hence there is no longer any need for hand-written routines to handle
+\glspl{instruction} that violate underlying assumptions about the
+\gls{instruction set}.
 
 
 \section{Thesis Statement}
