@@ -818,11 +818,14 @@ This classification enables us to recognize that certain classes of
 \glspl{instruction} are poorly supported by existing \gls{instruction selection}
 techniques, one reason being lack of appropriate \gls{program} and
 \gls{instruction} representations.
-%
+
 Having established the need for new representations, we then identify a set of
 representation requirements and build a new representation by starting from
 well-established, existing representations and then augmenting these as needed
 until all requirements are met.
+%
+As is common, we then apply a traditional \gls{subgraph isomorphism} algorithm
+for doing \gls{pattern matching} on this new representation.
 
 With the new representation at hand, we proceed with building the
 \gls{constraint model}.
@@ -831,8 +834,15 @@ For each task to be integrated, we first identify what constitutes a
 \gls{solution} to this task and then add the appropriate \glspl{variable} and
 \glspl{constraint} to enforce such \glspl{solution}.
 %
-If more than one design choice exist, then we implement both as separate
-\glsplshort{constraint model} and evaluate which is better before proceeding.
+If more than one design choice exist for integrating the same task, then we
+implement both as separate \glsplshort{constraint model} and evaluate which is
+better before proceeding.
+%
+The same goes for each individual solving technique introduced.
+%
+When all design decisions and solving techniques have been evaluated, we
+evaluate the \glsshort{constraint model} as a whole by comparing its
+\glspl{solution} with those produced by the state of the art.
 
 We evaluate a \gls{constraint model} by applying it on a set of \glspl{function}
 which are sampled from a well-established benchmark suite.
