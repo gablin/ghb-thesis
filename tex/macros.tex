@@ -97,6 +97,11 @@
     \IfBooleanTF{##1}{\refcmd*{##2}{\prefix}}%
                      {\refcmd{##2}{\prefix}}%
   }%
+  \expandafter\NewDocumentCommand\csname nameref#1\endcsname{sm}{%
+    \def\refcmd{\csname ref#1\endcsname}%
+    \IfBooleanF{##1}{\refcmd*{##2}.\thinspace}%
+    \nameref{#1:##2}%
+  }%
 }
 \makeatother
 
