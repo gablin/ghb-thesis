@@ -1138,11 +1138,49 @@ the 1990s when exponential increase in compute power and significant progress
 made in the field of combinatorial optimization enabled such methods to be
 applied to \gls{instruction selection}.
 %
-Several near-optimal but greedy approaches to \gls{DAG covering} also exist,
-which we will discuss first.
+Most combinatorial approaches natively support \gls{DAG}-shaped \glspl{pattern},
+but finding \glspl{match} for such \glspl{pattern} can no longer be done in
+linear time.
+%
+Consequently, such approaches typically apply generic \glshyphened{subgraph
+  isomorphism} algorithms when \gls{pattern matching}.
+
+
+\subsubsection{Pattern Matching as a Subgraph Isomorphism Problem}
+
+\def\mGP{G_{\textsc{p}}}
+\def\mGF{G_{\textsc{f}}}
+\def\mNP{N_{\textsc{p}}}
+\def\mNF{N_{\textsc{f}}}
+\def\mEP{E_{\textsc{p}}}
+\def\mEF{E_{\textsc{f}}}
+
+The \gls!{subgraph isomorphism} problem, which is known to be
+NP-complete~{\cite{Cook:1971}}, is to find instances where a
+\gls{graph}~\mbox{$\mGP = \mPair{\mNP}{\mEP}$} is \glsshort{isomorphism} to a
+\gls{subgraph} in another \gls{graph}~\mbox{$\mGF = \mPair{\mNF}{\mEF}$}.
+%
+$\mGP$ is \glsshort!{isomorphism} to $\mGF$ if and only if there exists a
+mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair{n}{o} \in
+  \mEP$} implies \mbox{$\mPair{f(n)}{f(o)} \in \mEF$}.
+%
+In this context, $\mGP$ denotes the \gls{pattern}, $\mGF$ denotes the \gls{block
+  DAG} or \gls{function graph}, and $m$ denotes a \gls{match}.
+
+As \gls{subgraph isomorphism} appears in many other fields, much research has
+been devoted to this problem (see for example \cite{Ullmann:1976,
+  CordellaEtAl:2001, GuoEtAl:2003, KrissinelHenrick:2004, SorlinSolnon:2004,
+  Gallagher:2006, FanEtAl:2010, FanEtAl:2011, HinoEtAl:2012, McCreesh:2017}).
+%
+Due to its simplicity, most combinatorial approaches apply the \gls{VF2}
+algorithm~\cite{CordellaEtAl:2001}, of which a detailed description is given in
+\refChapter{universal-representation}.
 
 
 \subsection{Greedy Approaches}
+
+We begin with discussing the greedy approaches to \gls{DAG covering}.
+
 
 \subsubsection{Maximum Munch}
 
