@@ -28,10 +28,13 @@ clean:
 	$(RM) *.loa
 	$(RM) *.run.xml
 
-.PHONY: distclean
-distclean: clean
-	$(LATEXMK) -C $(SRCTEX)
+.PHONY: cleandeps
+cleandeps:
 	$(RM) -r $(DEPS_DIR)
+
+.PHONY: distclean
+distclean: clean cleandeps
+	$(LATEXMK) -C $(SRCTEX)
 
 .PHONY: check-environment
 check-environment:
