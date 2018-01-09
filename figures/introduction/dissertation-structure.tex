@@ -1,0 +1,153 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\def\nodeSep{4mm}%
+\def\belowstrut{\vrule height 0pt depth 2pt width 0pt}%
+\begin{tikzpicture}[%
+    every node/.style={
+      nothing,
+      node distance=\nodeSep,
+      inner sep=1mm,
+      font=\belowstrut,
+    },
+    reading order/.style={
+      ->,
+      line width=1.5\normalLineWidth,
+    },
+    category line/.style={
+      line width=2\normalLineWidth,
+      draw=shade2,
+      dashed,
+    },
+    category label/.style={
+      nothing,
+      node distance=0,
+      inner xsep=1mm,
+      inner ysep=2mm,
+      font=\bfseries\scshape\smaller,
+    },
+  ]
+
+  \node (graphs) {\namerefAppendix{graph-definitions}};
+
+  \node [below=2.5*\nodeSep of graphs] (ex-isel-techs)
+        {%
+          \parbox{4.3cm}{%
+            \centering%
+            \namerefChapter{existing-isel-techniques-and-reps}%
+          }%
+        };
+  \node [below=of ex-isel-techs]
+        (macro-expansion) {\namerefAppendix{macro-expansion}};
+  \node [below=of macro-expansion]
+        (tree-covering)   {\namerefAppendix{tree-covering}};
+  \node [below=of tree-covering]
+        (dag-covering)    {\namerefAppendix{dag-covering}};
+  \node [below=of dag-covering]
+        (graph-covering)  {\namerefAppendix{graph-covering}};
+
+  \node [right=3*\nodeSep of ex-isel-techs.east |- macro-expansion] (uni-rep)
+        {%
+          \parbox{2.1cm}{%
+            \centering%
+            \namerefChapter{universal-representation}%
+          }%
+        };
+  \node [below=2.*\nodeSep of uni-rep]
+        (model) {\namerefChapter{constraint-model}};
+  \node [below right=1.5*\nodeSep and 1.5*\nodeSep of model.south]
+        (solv-techs) {\namerefChapter{solving-techniques}};
+  \node [below right=\nodeSep and \nodeSep of solv-techs.south]
+        (minizinc) {\namerefAppendix{minizinc-model}};
+  \node [below=of minizinc.south -| model] (comparison)
+        {%
+          \parbox{2.5cm}{%
+            \centering%
+            \namerefChapter{comparison-with-the-state-of-the-art}%
+          }%
+        };
+
+  \node [below=2*\nodeSep of comparison.south west, xshift=-1.5*\nodeSep]
+        (future-work) {\namerefChapter{future-work}};
+
+  \node [below=1.5*\nodeSep of future-work.south -| comparison]
+        (conclusions) {\namerefChapter*{conclusions}};
+
+  \coordinate (next-to-uni-rep) at ([xshift=1.5*\nodeSep] uni-rep.east);
+  \node at (graphs -| next-to-uni-rep)
+        (cp) {\namerefChapter{constraint-programming}};
+
+  \coordinate (left-border) at ([xshift=-6mm] ex-isel-techs.west);
+  \coordinate (right-border) at (minizinc.east);
+
+  \begin{scope}[category line]
+    \coordinate (background-y) at
+                ($(graphs.south) !.33! (ex-isel-techs.north)$);
+    \draw (background-y -| left-border)
+          --
+          (background-y -| right-border);
+    \coordinate (tmp-a) at (background-y -| left-border);
+    \coordinate (tmp-b) at (tmp-a |- graphs.north);
+    \coordinate (tmp-c) at ([yshift=\nodeSep] tmp-b);
+    \node [category label, right=of tmp-c, inner ysep=0] {background};
+
+    \node [category label, below right=of tmp-a] {literature survey};
+
+    \coordinate (survey-y) at ([yshift=-\nodeSep] graph-covering.south);
+    \coordinate (survey-x) at ([xshift=\nodeSep] ex-isel-techs.east);
+    \coordinate (survey-x-y) at (survey-x |- survey-y);
+    \draw [rounded corners=6pt]
+          (survey-y -| left-border)
+          --
+          ([xshift=-3*\nodeSep] survey-x-y)
+          --
+          ([yshift= 3*\nodeSep] survey-x-y)
+          --
+          (survey-x |- background-y);
+
+    \coordinate (tmp-a) at (survey-y -| left-border);
+    \node [category label, below right=of tmp-a]
+          {universal instruction selection};
+
+    \coordinate (ending-y) at
+                ($(comparison.south) !.5! (future-work.north -| comparison)$);
+    \draw (ending-y -| left-border)
+          --
+          (ending-y -| right-border);
+    \coordinate (tmp-a) at (ending-y -| left-border);
+    \node [category label, below right=of tmp-a]
+          {ending};
+  \end{scope}
+
+  \begin{scope}[reading order]
+    \draw (graphs) -- (ex-isel-techs);
+    \draw (ex-isel-techs) -- (macro-expansion);
+    \draw (macro-expansion) -- (tree-covering);
+    \draw (tree-covering) -- (dag-covering);
+    \draw (dag-covering) -- (graph-covering);
+
+    \draw [rounded corners=12pt]
+          (ex-isel-techs) -| (uni-rep);
+    \draw (cp.south)
+          .. controls +(down:2.5cm) and +(40:1.5cm) ..
+          (model.20);
+    \draw (uni-rep) -- (model);
+    \draw (model) -- (comparison);
+    \draw (model) -- (solv-techs);
+    \draw (model.-155)
+          .. controls +(-140:1.8cm) and +(up:2cm) ..
+          (future-work.north);
+    \draw (solv-techs) -- (minizinc);
+    \draw (comparison) -- (conclusions);
+    \draw (future-work) -- (conclusions);
+    \draw (solv-techs.south)
+          .. controls +(down:2.5cm) and +(40:2.2cm) ..
+          (conclusions.27);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
