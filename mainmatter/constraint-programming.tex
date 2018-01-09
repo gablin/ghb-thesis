@@ -361,11 +361,11 @@ this part of the \gls{search space}.
 \Glspl{propagator} implementing the same \gls{constraint} can differ in the
 amount of propagation they perform.
 %
-A \gls{propagator} is \glshyphened!{value consistency} if it only propagates
-when one of its \glspl{variable} becomes \gls{assigned.v}, \glshyphened!{bounds
-  consistency} if it only reduces the bounds of a \gls{domain}, and
-\glshyphened!{domain consistency} if it removes all values that do not appear in
-any \gls{solution} to the \gls{constraint}.
+A \gls{propagator} is \glshyphened!{value consistency} if it only
+\glsshort{propagat}[es] when one of its \glspl{variable} becomes
+\gls{assigned.v}, \glshyphened!{bounds consistency} if it only reduces the
+bounds of a \gls{domain}, and \glshyphened!{domain consistency} if it removes
+all values that do not appear in any \gls{solution} to the \gls{constraint}.
 %
 \begin{table}
   \centering%
@@ -475,8 +475,8 @@ of the \glsshort{constraint model} given in \refTable{cp-model-example}, one
 using $\mAllDiff$ and another using inequality \glspl{constraint}.
 %
 Because only \gls{value consistency} can be achieved for inequality
-\glspl{constraint}, they cannot propagate anything until at least one
-\gls{variable} becomes \gls{assigned.v}.
+\glspl{constraint}, they cannot \glsshort{propagation}[e] anything until at
+least one \gls{variable} becomes \gls{assigned.v}.
 %
 As all \glspl{propagator} are already at \gls{fixpoint}, the \gls{solver} must
 resort to \gls{search}.
@@ -492,7 +492,8 @@ Maximizing \gls{propagation} is key in making solving tractable, as the
 \gls{search space} grows exponentially with the number of \glspl{variable} and
 size of the \glspl{domain}.
 
-As to be expected, stronger propagation comes at a price of greater complexity.
+As to be expected, stronger \gls{propagation} comes at a price of greater
+complexity.
 %
 For the \gls{all-different constraint}, there exist \glsshort{bounds
   consistency} and \glshyphened{domain consistency} \glspl{propagator} with
@@ -731,7 +732,8 @@ squares can be packed.
 
 The benefit of a given \gls{implied.c}, \gls{symmetry breaking.c}, or
 \gls{dominance breaking.c} \gls{constraint} depends on the amount of \gls{search
-  space} it prunes and the cost of propagating the \gls{constraint}.
+  space} it prunes and the cost of \glsshort{propagation}[ing] the
+\gls{constraint}.
 %
 For example, if a \gls{constraint} is expensive to run and only has marginal
 effect on the \gls{variable} \gls{domain}, then adding it to a
