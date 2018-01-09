@@ -813,23 +813,27 @@ for graphics processors).
 \section{Research Methodology}
 \labelSection{intro-research-methodology}
 
-We begin with a thorough literature review to identify the strengths and
-limitations of existing \gls{instruction selection} techniques and common
-denominators among them.
+We begin with a thorough and systematic literature review to identify the
+strengths and limitations of existing \gls{instruction selection} techniques and
+common denominators among them.
 %
 As part of this study, four \gls{instruction selection} \glspl{principle} and
 five \glspl{instruction characteristic} are identified and the techniques are
-classified accordingly.
+systematically classified accordingly.
 %
 This classification enables us to recognize that certain classes of
 \glspl{instruction} are poorly supported by existing \gls{instruction selection}
-techniques, one reason being lack of appropriate \gls{program} and
+techniques.
+%
+In particular this is due to lack of appropriate \gls{program} and
 \gls{instruction} representations.
 
-Having established the need for new representations, we then identify a set of
-representation requirements and build a new representation by starting from
-well-established, existing representations and then augmenting these as needed
-until all requirements are met.
+Having established the need for new representations, we identify a set of
+requirements that such a representation must fulfill.
+%
+We then build a new representation by unifying two existing, well-established
+representations -- one for capturing data flow and another for capturing control
+flow -- and then augment the result as needed until all requirements are met.
 %
 As is common, we then apply a traditional \gls{subgraph isomorphism} algorithm
 for doing \gls{pattern matching} on this new representation.
@@ -838,18 +842,15 @@ With the new representation at hand, we proceed with building the
 \gls{constraint model}.
 %
 For each task to be integrated, we first identify what constitutes a
-\gls{solution} to this task and then add the appropriate \glspl{variable} and
+\gls{solution} to this task and then add the necessary \glspl{variable} and
 \glspl{constraint} to enforce such \glspl{solution}.
 %
-If more than one design choice exist for integrating the same task, then we
+If more than one design choice exists for integrating the same task, then we
 implement both as separate \glsplshort{constraint model} and evaluate which is
 better before proceeding.
 %
-The same goes for each individual solving technique introduced.
-%
-Picking the best design decisions and solving techniques, we then evaluate the
-significance of the \glsshort{constraint model} by comparing its
-\glspl{solution} with those produced by the state of the art.
+This is because the tasks are orthogonal from one another and can therefore be
+evaluated in isolation.
 
 We evaluate a \gls{constraint model} by applying it on a set of \glspl{function}
 which are sampled from a well-established benchmark suite.
@@ -860,6 +861,19 @@ the selected \glspl{function}.
 All measurements are averaged over multiple runs to mitigate deviations, and
 well-established methods from statistics are applied in order to draw sound
 conclusions.
+
+Once all tasks are integrated, we apply a range of solving techniques in order
+to increase scalability and robustness.
+%
+Because these techniques influence one another, we first evaluate the usefulness
+of each solving technique individually in order to form groups of solving
+techniques and then evaluate each group as a whole.
+%
+This is to avoid unreasonably long experiment runtimes.
+
+Using the \gls{constraint model} with the best design choices and solving
+techniques, we then evaluate the significance of our approach by comparing its
+\glspl{solution} with those produced by the state of the art.
 
 
 \section{Outline}
