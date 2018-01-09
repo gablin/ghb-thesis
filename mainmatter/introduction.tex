@@ -866,4 +866,48 @@ conclusions.
   \labelFigure{dissertation-structure}
 \end{figure}
 
-\todo{Describe chapters}
+As shown in \refFigure{dissertation-structure}, the dissertation is structured
+into four parts:
+%
+\begin{description}
+  \item[Background]
+    Provides necessary background material:
+    %
+    \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+      \item \refChapter{constraint-programming} describes \glsdesc{CP}, which is
+        a combinatorial optimizaion method on which our approach is based
+      \item \refAppendix{graph-definitions} contains exact definitions of
+        \glspl{graph} and related terms which are used throughout the
+        dissertation
+    \end{inlinelist}.
+  \item[Literature survey]
+    Discusses existing \gls{instruction selection} techniques:
+    %
+    \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+      \item \refChapter{existing-isel-techniques-and-reps} covers the techniques
+        relevant for \gls{universal instruction selection}
+      \item \refAppendixList{macro-expansion, tree-covering, dag-covering,
+        graph-covering} cover the remaining techniques
+    \end{inlinelist}.
+  \item[Universal instruction selection]
+    Presents our approach:
+    %
+    \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+      \item \refChapter{universal-representation} introduces the \gls{universal
+        representation}
+      \item \refChapter{constraint-model} introduces the \gls{constraint model}
+      \item \refChapter{solving-techniques} introduces the solving techniques
+      \item \refChapter{comparison-with-the-state-of-the-art} compares our
+        approach with the state of the art
+      \item \refAppendix{minizinc-implementation} provides an implementation of
+        the \gls{constraint model}, written in \gls{MiniZinc} (a high-level
+        modeling language)
+    \end{inlinelist}.
+  \item[Ending]
+    Closes the dissertation:
+    %
+    \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+      \item \refChapter{future-work} describes future work
+      \item \refChapter{conclusions} delivers the conclusions
+    \end{inlinelist}.
+\end{description}
