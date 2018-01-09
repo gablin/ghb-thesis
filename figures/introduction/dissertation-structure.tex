@@ -63,7 +63,13 @@
   \node [below right=1.5*\nodeSep and 1.5*\nodeSep of model.south]
         (solv-techs) {\namerefChapter{solving-techniques}};
   \node [below right=\nodeSep and \nodeSep of solv-techs.south]
-        (minizinc) {\namerefAppendix{minizinc-model}};
+        (minizinc)
+        {%
+          \parbox{2.1cm}{%
+            \centering%
+            \namerefAppendix{minizinc-implementation}%
+          }%
+        };
   \node [below=of minizinc.south -| model] (comparison)
         {%
           \parbox{2.5cm}{%
