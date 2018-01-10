@@ -1155,8 +1155,7 @@ Such approaches therefore typically apply generic \glshyphened{subgraph
 \def\mEP{E_{\textsc{p}}}
 \def\mEF{E_{\textsc{f}}}
 
-The \gls!{subgraph isomorphism} problem, which is known to be
-NP-complete~{\cite{Cook:1971}}, is to find instances where a
+The \gls!{subgraph isomorphism} problem is to find instances where a
 \gls{graph}~\mbox{$\mGP = \mPair{\mNP}{\mEP}$} is \glsshort{isomorphism} to a
 \gls{subgraph} in another \gls{graph}~\mbox{$\mGF = \mPair{\mNF}{\mEF}$}.
 %
@@ -1164,10 +1163,12 @@ $\mGP$ is \glsshort!{isomorphism} to $\mGF$ if and only if there exists a
 mapping \mbox{$\mFunDecl{m}{\mNP}{\mNF}$} such that \mbox{$\mPair{n}{o} \in
   \mEP$} implies \mbox{$\mPair{f(n)}{f(o)} \in \mEF$}.
 %
-In this context, $\mGP$ denotes the \gls{pattern}, $\mGF$ denotes the \gls{block
-  DAG} or \gls{function graph}, and $m$ denotes a \gls{match}.
+In the context of \gls{instruction selection}, $\mGP$ denotes the \gls{pattern},
+$\mGF$ denotes the \gls{block DAG} or \gls{function graph}, and $m$ denotes a
+\gls{match}.
 
-As \gls{subgraph isomorphism} appears in many other fields, much research has
+As \gls{subgraph isomorphism}, which is known to be
+NP-complete~{\cite{Cook:1971}}, appears in many other fields, much research has
 been devoted to this problem (see for example \cite{Ullmann:1976,
   CordellaEtAl:2001, GuoEtAl:2003, KrissinelHenrick:2004, SorlinSolnon:2004,
   Gallagher:2006, FanEtAl:2010, FanEtAl:2011, HinoEtAl:2012, McCreesh:2017}).
