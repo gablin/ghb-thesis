@@ -909,7 +909,26 @@ reduce the number of \glspl{variable} or to shrink the \gls{variable}
 Fewer \gls{variable} and smaller \glspl{domain} means smaller \glspl{constraint
   model}, which means shorter solving times.
 
-\todo{give better example than bound tightening}
+When dealing with optimization problems, a common \gls{presolving} technique is
+to precompute lower and upper bounds on the \gls{cost variable}.
+%
+A lower bound can be found by solving a relaxed, and hence simpler, version of
+the \gls{constraint model}, which enables pruning of parts in the \gls{search
+  space} that contain no \glspl{solution}.
+%
+An upper bound can be found by solving the problem using a greedy but fast
+heuristic, which enables pruning of parts in the \gls{search space} that contain
+inferior \glspl{solution}.
+%
+If applying the upper bound yields a \gls{search space} with no
+\glspl{solution}, then we know that the heuristic has already found the optimal
+\gls{solution}.
+
+In the context of \gls{instruction selection}, another \gls{presolving}
+technique is to remove \glspl{match} that we know cannot participate in any
+\gls{solution}.
+%
+Several such techniques are introduced in \refChapter{solving-techniques}.
 
 
 \subsection{Lazy Clause Learning}
