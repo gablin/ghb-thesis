@@ -140,7 +140,7 @@ improve solving compared to relations modeled using multiple \gls{binary.c}
 \glspl{constraint}.
 
 
-\subsubsection{The All-Different Constraint}
+\paragraph{The All-Different Constraint}
 
 Arguably, the most well-known \gls{global.c} \gls{constraint} is the
 \gls!{all-different constraint}~\cite{Lauriere:1978} (for a survey,
@@ -169,7 +169,7 @@ Hence the \glspl{constraint} in \refTable{cp-model-example} can be replaced by
 $\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 
-\subsubsection{The Global Cardinality Constraint}
+\paragraph{The Global Cardinality Constraint}
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
 \gls{constraint} -- the \gls{global cardinality
@@ -202,7 +202,7 @@ For completeness, we give here the formal definition of the \gls{constraint}.
 \end{definition}
 
 
-\subsubsection{The Circuit Constraint}
+\paragraph{The Circuit Constraint}
 
 Another relevant example is the \gls!{circuit constraint}~\cite{Lauriere:1978},
 which enforces that the \glspl{variable} representing adjacency forms a
@@ -297,7 +297,7 @@ As will be seen in \refChapter{constraint-model}, $\mCircuit$ is used to model
 \gls{block ordering}.
 
 
-\subsubsection{The Table Constraint}
+\paragraph{The Table Constraint}
 
 Another \gls{global.c} \gls{constraint}, belonging to the group of so-called
 \glspl!{extensional constraint}~\cite[Sect.\thinspace11.5.4]{Smith:2006}, is the
@@ -348,7 +348,7 @@ the \glsshort{constraint model} and to implement serveral of the \gls{implied.c}
 \glspl{constraint}.
 
 
-\subsubsection{The Value-Precede-Chain Constraint}
+\paragraph{The Value-Precede-Chain Constraint}
 \labelSection{cp-vpc}
 
 The last \gls{global.c} \gls{constraint} we need is the
@@ -715,7 +715,7 @@ More than one \gls{branching strategy} can be used for the same
 making it a key strength of \gls{CP}.
 
 
-\subsubsection{Branch and Bound}
+\paragraph{Branch and Bound}
 
 \Glspl{solution} to optimization problems are found using a method called
 \gls!{branch and bound}.
@@ -772,24 +772,21 @@ optimal \gls{solution}.
 Solving can be improved by applying various solving techniques, which can be
 divided into two categories.
 %
-The first involves additional \glspl{constraint} that are added to the
+The first category involves additional \glspl{constraint} that are added to the
 \glsshort{constraint model} in order to increase \gls{propagation} and also
 reduce the \gls{search space}.
-%
-The second involves applying methods that reduce the number of \glspl{variable}
-or shrink the \gls{variable} \glspl{domain}, thereby reducing the \gls{search
-  space}.
-
-
-\subsubsection{Implied, Symmetry Breaking, and Dominance Breaking Constraints}
-
-As previously stated, solving can be improved by extending the \gls{constraint
-  model} with additional \glspl{constraint}.
 %
 These \glspl{constraint} can be divided into three categories --
 \gls{implied.c}, \gls{symmetry breaking.c}, and \gls{dominance breaking.c} --
 which are discussed in detail by \mbox{\textcite{Smith:2006}},
 \textcite{GentEtAl:2006}, and \textcite{ChuStuckey:2015}, respectively.
+
+The second category involves applying methods that reduce the number of
+\glspl{variable} or shrink the \gls{variable} \glspl{domain}, thereby reducing
+the \gls{search space}.
+
+
+\paragraph{Implied Constraints}
 
 An \gls!{implied.c}[ \gls{constraint}] is a \gls{constraint} that strengthens
 \gls{propagation} without removing any \glspl{solution}.
@@ -818,6 +815,9 @@ While this \gls{constraint} is sufficient in capturing the problem,
 This holds because the sum of all occurrences -- that is, the number of items in
 the sequence -- must be equal to the length of the sequence.
 
+
+\paragraph{Symmetry Breaking Constraints}
+
 A \gls!{symmetry breaking.c}[ \gls{constraint}] is a \gls{constraint} that
 removes \glspl{solution} considered to be symmetric to one another.
 %
@@ -834,6 +834,9 @@ kept in the \gls{search space}.
 A simple method of removing most (but not all) symmetric \glspl{solution} is to
 force one of the squares to be packed into one of the quadrants of the enclosing
 square.
+
+
+\paragraph{Dominance Breaking Constraints}
 
 A \gls!{dominance breaking.c}[ \gls{constraint}] is a \gls{constraint} that
 removes \glspl{solution} known to be dominated by another \gls{solution}.
@@ -900,7 +903,7 @@ Consequently, the decision of whether to add a \gls{implied.c}, \gls{symmetry
 evaluation.
 
 
-\subsubsection{Presolving}
+\paragraph{Presolving}
 
 \Gls!{presolving} is the process of applying problem-specific algorithms to
 reduce the number of \glspl{variable} or to shrink the \gls{variable}
