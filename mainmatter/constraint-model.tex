@@ -1175,7 +1175,6 @@ These \glspl{constraint} are then modeled as
 
 
 \subsection{Experimental Evaluation}
-\labelSection{cm-alt-values-experimental-evaluation}
 
 We first evaluate the two methods for \gls{value reuse} by comparing the solving
 time exhibited by two versions of the \gls{constraint model}: one based on
@@ -1187,223 +1186,14 @@ by the better of the \glsplshort{constraint model} above with the cost of the
 optimal \gls{solution} produced by a \gls{constraint model} without \gls{value
   reuse}.
 
-
-\subsubsection{Setup}
-
-Each \gls{constraint model} is implemented in \mbox{\gls{MiniZinc}
-  2.1.6}~\cite{NethercoteEtAl:2007} -- a high-level \gls{constraint} modeling
-language -- and solved using \gls{Chuffed}~\cite{Chu:2011} -- a \gls{lazy clause
-  learning} \glsshort{constraint solver}, which is included in \gls{MiniZinc} --
-on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
-\SI{16}{\giga\byte} main memory.
-
-As problem instances, we take a subset of the \glspl{function} in
-\gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
--- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
-\gls{instruction set}.
+For these experiments, we remove all \glspl{function} that have less than less
+than ten~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
+likely not be benefitted by \gls{value reuse} -- and greater than
+\num{50}~\glspl{instruction} -- anything larger will lead to unreasonably long
+solving times.
 %
-The \glspl{function} are compiled into \gls{LLVM} \gls{IR} code -- the
-intermediate format used by \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with
-optimization flag~\texttt{-O3}.
-%
-Out of the initial pool of \num{6313}~\glspl{function}, we remove those that
-operate on non-integer data types (such as floating point and vector data types)
-as these are not yet supported by the current toolchain.
-%
-We also remove all \glspl{function} that have less than less than ten~\gls{LLVM}
-\gls{IR} \glspl{instruction} -- anything smaller will most likely not be
-benefitted by \gls{value reuse} -- and greater than \num{50}~\glspl{instruction}
--- anything larger will lead to unreasonably long solving times.
-%
-This leaves a pool of \num{453}~\glspl{function}, which will lead to untractable
-experiment runtimes if all are included.
-%
-We therefore draw a limited number of samples from this pool.
-%
-To get a diverse set of samples, we apply \gls{k-means
-  clustering}~\cite{PhansalkarEtAl:2005} to divide the \glspl{function} into
-twenty clusters based on the application from which the \gls{function} is
-derived (intuitively, \glspl{function} from different applications should
-exhibit different characteristics), its size in number of \gls{LLVM} \gls{IR}
-\glspl{instruction} (to evaluate how the methods behave as the \glspl{function}
-grow larger), and its number of memory \glspl{instruction} (due to its many
-addressing modes, many of which allowing constants to be loaded as part of the
-\gls{instruction}, these constitute a large part of the complex
-\glspl{instruction} in the \gls{instruction set}).
-%
-Then, from each cluster one \gls{function} is randomly selected, giving a total
-of twenty \glspl{function}.
-%
-Since we are measuring solving time, which could be affected by other factors,
-we run each experiment ten times and then take the arithmetic average.
-%
-When summarizing ratios, we instead take the geometric mean as it is more
-appropriate in such cases~\cite{FlemingWallace:1986}.
-
-
-\subsubsection{Normalizing Measurements}
-
-\newcommand{\speedupCase}[1]{\textrm{\textsc{#1}}}
-
-When we are interested in the relative difference between the measurements, we
-normalize all values to those obtained from one \glsshort{constraint model}
-which has been chosen as the \gls!{baseline}.
-%
-In this context, the other \glsplshort{constraint model} are called the
-\glspl!{subject}.
-
-For time measurements, the most typical method for normalization is to calculate
-the \gls!{speedup}, which is computed as
-%
-\begin{equation}
-  S = \frac{t_b}{t_a}
-  \labelEquation{speedup-normalization}
-\end{equation}
-%
-where $t_a$ and $t_b$ denotes time measurements obtained for a given problem
-instance from \gls{subject} \glsshort{constraint model}~$a$ and \gls{baseline}
-\glsshort{constraint model}~$b$.
-%
-A value greater than $1$ means $a$ is faster than $b$, a value less than $1$
-means $b$ is faster than $a$, and a value of exactly $1$ means $a$ and $b$ take
-the same time to solve a given \gls{function}.
-
-This method, however, creates problems when plotting the normalized values as
-barcharts.
-%
-Since the normalized values are centered around $1$, when $a$ is twice as fast
-as $b$ we intuitively expect the normalized value to be equally far away from
-$1$ as when $b$ is twice as fast as $a$.
-%
-With \refEquation{speedup-normalization}, this is not the case.
-%
-See for example \refFigure{speedup-comparison-regular}, illustrating two
-cases: \speedupCase{i}, where $a$ is twice as fast as $b$; and \speedupCase{ii},
-where $b$ is twice as fast as $a$.
-%
-\begin{figure}
-  \renewcommand{\functionName}[1]{{\Large\speedupCase{#1}}}%
-  \renewcommand{\plotSpeedupTicsFont}{\large}%
-  \renewcommand{\barValueFont}{\scriptsize}%
-
-  \def\insertSpeedupExamplePlot#1{%
-    \maxsizebox{30mm}{!}{%
-      \trimbox{18pt 8pt 74mm 45mm}{%
-        \input{figures/constraint-model/speedup-example-#1.plot}%
-      }%
-    }%
-  }%
-
-  \mbox{}%
-  \hfill%
-  \subcaptionbox{%
-                  Values normalized using speedup
-                  (\refEquation{speedup-normalization})%
-                  \labelFigure{speedup-comparison-regular}%
-                }%
-                [40mm]%
-                {%
-                  \insertSpeedupExamplePlot{regular}%
-                }%
-  \hfill%
-  \subcaptionbox{%
-                  Values normalized using zero-centered normalization
-                  (\refEquation{zero-centered-normalization})%
-                  \labelFigure{speedup-comparison-zero-centered}%
-                }%
-                [50mm]%
-                {%
-                  \insertSpeedupExamplePlot{zero-centered}%
-                }%
-  \hfill%
-  \mbox{}
-
-  \caption[Comparison between two methods for normalizing measurements]%
-          {%
-            Comparison between the two methods for normalizing measurements.
-            %
-            The comparison is done for two problem instances: one where the
-            subject is twice as fast as the baseline (\speedupCase{i}), and
-            another where the baseline is twice as fast as the subject
-            (\speedupCase{ii})%
-          }%
-  \labelFigure{speedup-comparison}%
-\end{figure}
-%
-We therefore normalize the values using a different method~[\todo{source?}]
-when plotting such values.
-%
-In this dissertation the method is called \gls!{zero-centered normalization},
-which is computed as
-%
-\begin{equation}
-  S =
-  \left\{
-  \begin{array}{ll}
-    \frac{t_b - t_a}{t_a} & \text{if $t_b \geq t_a$,} \\
-    \frac{t_b - t_a}{t_b} & \text{otherwise.}
-  \end{array}
-  \right.
-  \labelEquation{zero-centered-normalization}
-\end{equation}
-%
-As seen in \refFigure{speedup-comparison-zero-centered}, this method results in
-normalized values that are centered around $0$ (hence its name) and, unlike the
-\gls{speedup} method, are equally far apart in the case of \speedupCase{i} and
-\speedupCase{ii}.
-%
-A normalized value $v$ using \gls{zero-centered normalization} corresponds a
-\gls{speedup} of \mbox{$v + 1$} if \mbox{$v \geq 0$}, otherwise
-\mbox{$\frac{1}{1 - v}$}.
-
-\Gls{zero-centered normalization} is also applied when comparing \gls{solution}
-costs as they represent an estimate of the time it would take to execute the
-code yielded by the \glspl{solution} (our current implementation is not yet able
-to hook back into \gls{LLVM} in order to generate executable code).
-
-When summarizing normalized values, however, we do not use \gls{zero-centered
-  normalization} as the geometric mean cannot be computed for such values.
-%
-In such cases, we instead use the values normalized using the \gls{speedup}
-method as the geometric mean can be computed for such values, which we call the
-\gls!{GMI}.
-%
-A result is considered positive or negative if the \gls{GMI} is greater than
-respectively less than~\num{1}.
-%
-In terms of solving time, for example, a \gls{subject} method~$a$ leads to an
-overall reduction over another \gls{baseline} method~$b$ if the \gls{GMI} is
-greater than~\num{1}.
-
-
-\subsubsection{Attaining Statistically Significant Results}
-
-Because we can only run experiments on a small set of \glspl{function} sampled
-from much larger pool, the \gls{GMI} we attain from the sampled set may not be
-representative for the pool as a whole.
-%
-In other words, the result may not be statistically significant.
-%
-Therefore, for the \gls{GMI} value we also compute the \gls!{CI}, which is a
-method of estimating the uncertainty of a value computed from a set of
-samples~\cite{Neyman:1937}.
-%
-Every \gls{CI} is computed with a predefined degree of confidence, say $X$,
-typically written as the $X$\textsuperscript{th} \gls{CI}.
-%
-This means that if the $X$\textsuperscript{th} \gls{CI} of the \gls{GMI} value
-is greater than or less than~\num{1}, then we can statistically conclude with
-$X\%$ confidence that the result is positive respectively negative.
-%
-If the \gls{CI} contains~\num{1}, then the result is inconclusive.
-
-For the experiments described in this dissertation, we compute the
-\num{95}\textsuperscript{th} \gls{CI} as is common for most statistical
-experiments.
-%
-Since we know nothing about the underlying distributions for our observations,
-we compute the \gls{CI} using \gls{percentile bootstrapping} with
-\num{100000}~iterations~\cite{EfronTibshirani:1994}.
+This leaves a pool of \num{453}~\glspl{function}, on which we then perform
+sampling.
 
 
 \subsubsection{Match Duplication \versus Alternative Values}
@@ -1922,21 +1712,20 @@ redundant jump \glspl{instruction}, we expect \glsshort{constraint
   model}~\modelB{} perform better, both in terms of solving time and cost, than
 \glsshort{constraint model}~\modelA.
 
-The experiment setup is the same as in
-\refSection{cm-alt-values-experimental-evaluation} with a few exceptions.
-%
 When filtering, we remove all \glspl{function} that have less than less than
 \num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
 likely not require any additional jump \glspl{instruction} -- and greater than
 \num{100}~\glspl{instruction} -- anything larger will lead to needlessly long
 experiment runtimes.
 %
-This leaves a pool of \num{413}~\glspl{function}, from which
-\num{20}~\glspl{function} are sampled using the same method as before.
+This leaves a pool of \num{413}~\glspl{function}, on which we then perform
+sampling.
+
+When clustering, we replace the number of memory \glspl{instruction} as feature
+with the number of \glspl{block}.
 %
-When clustering, however, the \glspl{function} are grouped according to number
-of \glspl{block} instead of number of memory \glspl{instruction} (to evaluate
-how the methods behave as the number of blocks grow larger).
+This is to evaluate how the methods behave as the number of \glspl{block} grow
+larger.
 
 \input{%
   \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
