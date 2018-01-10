@@ -105,7 +105,7 @@ The first three \glsplshort{instruction characteristic} form sets of
 of the other \glsplshort{instruction characteristic}.
 
 
-\subsubsection{Single-Output Instructions}
+\paragraph{Single-Output Instructions}
 
 The simplest kind of \gls{instruction} forms the set of
 \gls!{single-output.ic}[ \glspl{instruction}].
@@ -128,7 +128,7 @@ architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
 support this kind of \gls{instruction}.
 
 
-\subsubsection{Multi-Output Instructions}
+\paragraph{Multi-Output Instructions}
 
 As expected from their name, \gls!{multi-output.ic}[ \glspl{instruction}]
 produce more than one observable output from the same input.
@@ -159,7 +159,7 @@ Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
 \gls{single-output.ic} \glspl{instruction}.
 
 
-\subsubsection{Disjoint-Output Instructions}
+\paragraph{Disjoint-Output Instructions}
 
 \Glspl{instruction} which produce many observable output values from many
 different input values are called \gls!{disjoint-output.ic}[
@@ -185,7 +185,7 @@ Recently, certain \gls{ARM} processors are also equipped with such
 extensions~\cite{ARM11:2008}.
 
 
-\subsubsection{Inter-Block Instructions}
+\paragraph{Inter-Block Instructions}
 
 \Glspl{instruction} whose behavior essentially spreads across multiple
 \glspl{block} are called \gls!{inter-block.ic}[ \glspl{instruction}].
@@ -219,7 +219,7 @@ If no such routine or \gls{compiler intrinsic} is available, making use of these
 \gls{assembly code}.
 
 
-\subsubsection{Interdependent Instructions}
+\paragraph{Interdependent Instructions}
 
 The last class is the set of \gls!{interdependent.ic}[ \glspl{instruction}].
 %
@@ -372,7 +372,7 @@ Third, due to \glspl{machine grammar} (to be described shortly), \gls{tree
 completeness.
 
 
-\subsubsection{Instruction Selection as a Graph Problem}
+\subsection{Instruction Selection as a Graph Problem}
 
 First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
 \glspl{node} represent \glspl{operation} in the function and \glspl{edge}
@@ -650,7 +650,7 @@ becomes equivalent to finding a sequence of \gls{rule} applications (called
 A method for finding the sequence with least cost is described shortly.
 
 
-\subsubsection{Normal Form}
+\paragraph{Normal Form}
 
 To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
 can be rewritten into \gls!{normal form.g}. A \gls{grammar} is in \gls{normal
@@ -913,7 +913,7 @@ The \gls{MIPS} \gls{instruction set}~\cite{Sweetman:2006}, for example, is one
 such architecture.
 
 
-\subsubsection{Precomputing Costs and Rule Decisions}
+\subsection{Precomputing Costs and Rule Decisions}
 
 Shortly after \citeauthor{AhoEtAl:1989} published their approach, it was
 recognized that the costs computed by \refAlgorithm{aho-etal-cost-algorithm}
@@ -1146,7 +1146,7 @@ Such approaches therefore typically apply generic \glshyphened{subgraph
   isomorphism} algorithms when \gls{pattern matching}.
 
 
-\subsubsection{Pattern Matching as a Subgraph Isomorphism Problem}
+\subsection{Pattern Matching as a Subgraph Isomorphism Problem}
 
 \def\mGP{G_{\textsc{p}}}
 \def\mGF{G_{\textsc{f}}}
@@ -1177,12 +1177,7 @@ algorithm~\cite{CordellaEtAl:2001}, of which a detailed description is given in
 \refChapter{universal-representation}.
 
 
-\subsection{Greedy Approaches}
-
-We begin with discussing the greedy approaches to \gls{DAG covering}.
-
-
-\subsubsection{Maximum Munch}
+\subsection{Maximum Munch}
 
 The most common approach for greedy \gls{pattern selection} on \glspl{block DAG}
 is called \gls!{maximum munch} (coined by \textcite{Cattell:1978}).
@@ -1202,7 +1197,8 @@ that effectively \glsshort{edge splitting} or \glsshort{node duplication}[e] the
 common subexpressions.
 
 
-\subsubsection{Balancing Splitting and Duplication}
+\subsection{Approaches for Balancing Splitting and Duplication}
+\labelSection{ex-isel-rep-balancing-splitting-and-duplication}
 
 Several approaches have been made in attempting to balance \gls{edge splitting}
 and \gls{node duplication}.
@@ -1320,7 +1316,7 @@ An example is shown in \refFigure{mis-example}.
 \end{figure}
 
 
-\subsubsection{Applications}
+\paragraph{Applications}
 
 \textcite{ScharwaechterEtAl:2007} appears to have pioneered the modeling of
 \gls{instruction selection} as a \gls{MWIS} problem, although the main
@@ -1482,7 +1478,7 @@ match~$m$, and $\mVar{x}[m]$ is a Boolean \gls{decision variable} indicating
 whether match~$m$ is selected.
 
 
-\subsubsection{Applications}
+\paragraph{Applications}
 
 Although mostly known for their work in \gls!{integrated.cg}[ \gls{code
     generation}] -- meaning \gls{instruction selection}, \gls{instruction
@@ -1607,7 +1603,7 @@ Instead, relations among multiple \glspl{variable} are modeled using
 solving.
 
 
-\subsubsection{Modeling Pattern Selection Using Global Constraints}
+\paragraph{Modeling Pattern Selection Using Global Constraints}
 
 \Gls{pattern selection} can be modeled using a \gls{global.c} \gls{constraint}
 called the \gls!{global cardinality constraint}.
@@ -1658,7 +1654,7 @@ which is more restrictive than \refEquation{pattern-selection-in-ip} and thus
 reduces solving time~\cite{FlochEtAl:2010}.
 
 
-\subsubsection{Applications}
+\paragraph{Applications}
 
 The use of \gls{CP}-based \gls{instruction selection} appears to have been
 pioneered by \textcite{BashfordLeupers:1999}.
@@ -1860,17 +1856,26 @@ stresses the need for new representations in order to handle the
 \glspl{instruction} of modern and forthcoming processors, which grow
 increasingly complex.
 
-
-\subsection{Greedy Approaches}
-
-To the best of my knowledge, only \textcite{PalecznyEtAl:2001} have attempted to
-perform greedy \gls{pattern selection} on \glspl{function graph}.
+First we will look at a few representations for capturing entire
+\glspl{function} as \glspl{graph}.
 %
-The approach represents \glspl{function} using a graph-based \gls{IR}, which
-will therefore be discussed first.
+Because they result in a relatively high \glspl{node} count, such
+representations are colloquially referred to as \glspl!{sea-of-nodes IR}.
 
 
-\subsubsection{Sea-of-nodes IRs}
+\subsection{Sea-of-nodes IRs}
+
+In the context of \gls{instruction selection}, there are two \glspl{sea-of-nodes
+  IR} that are of interest.
+%
+The first captures the data flow for entire \glspl{function}, and the second is
+an extension of the first in order to also capture control flow.
+
+
+\paragraph{Capturing Data Flow of Entire Functions}
+
+In order to simply many \gls{compiler} tasks, \textcite{CytronEtAl:1991}
+introduced a \gls{program} representation called \gls!{SSA} \glsEmph{form}.
 
 \begin{filecontents*}{fact.c}
 int factorial(int n) {
@@ -1929,42 +1934,12 @@ int factorial(int $\irVar{n}[1]$) {
                   }%
                 }
 
-  \vspace*{\betweensubfigures}
-
-  \subcaptionbox{%
-                  Click-Paleczny graph%
-                  \labelFigure{sea-of-nodes-example-click-paleczny-graph}%
-                }{%
-                  \input{figures/existing-isel-techniques-and-reps/%
-                    sea-of-nodes-example-click-paleczny-graph%
-                  }%
-                }
-
-  \caption[%
-            Example of an SSA graph and a Click-Paleczny graph%
-          ]%
-          {%
-            Example of an SSA graph and a Click-Paleczny graph.
-            %
-            Thin-lined nodes and edges denote data operations and data flow.
-            %
-            Thick-lined nodes and edges denote control operations and control
-            flow.
-            %
-            Dashed edges indicate to which block an operation belongs%
-          }
-  \labelFigure{sea-of-nodes-example}
+  \caption{Example of an SSA graph}
+  \labelFigure{ssa-example}
 \end{figure}
 
-Graph-based \glspl{IR} that represent entire \glspl{function} are colloquially
-referred to as \glspl!{sea-of-nodes IR}.
-%
-One such \gls{IR} was introduced by \textcite{ClickPaleczny:1995} which, for
-lack of better name, will be referred to as the \gls!{Click-Paleczny graph}.
-
-The \gls{Click-Paleczny graph} assumes the \gls{function} to be in \gls!{SSA}
-\glsEmph{form}~\cite{CytronEtAl:1991}, in which a \gls{variable} is defined
-exactly once.
+A \gls{program} is said to be in \gls{SSA}~form if every \gls{variable} is
+defined exactly once.
 %
 For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c}
 is not in \gls{SSA}~form as \glspl{variable}~\irCode{f} and~\irCode{n} are
@@ -1975,23 +1950,17 @@ By introducing new \glspl{variable} and connecting these using
 \gls{function} can be rewritten into \gls{SSA}~form, as shown in
 \refFigure{sea-of-nodes-example-ssa-c}.
 
-Like in \glspl{data-flow graph}, each \gls{operation} in the SSA-based
-\gls{function} is represented as a \gls{node}.
+From an \gls{SSA}-based \gls{function}, we can construct a \gls{data-flow graph}
+called the \gls!{SSA graph}~\cite{GerlekEtAl:1995}.
+%
+Like in \glspl{data-flow graph}, each \gls{operation} in the \gls{function}
+(including the \glspl{phi-function}) is represented as a \gls{node}.
 %
 These nodes are connected using \glspl{data-flow edge}, ignoring the fact that
 the \glspl{operation} may belong to different \glspl{block}.
 %
-This forms a \gls{data-flow graph} called the \gls!{SSA
-  graph}~\cite{GerlekEtAl:1995} (see
-\refFigure{sea-of-nodes-example-ssa-graph}).
-%
-The control flow is captured using \glspl{node} to represent the \glspl{block}
-in the \gls{function} and \glspl{edge} to represent jumps between \glspl{block}.
-%
-Conditional jumps flow through special \emph{if}~\glspl{node}, thereby allowing
-dependencies between data and control flow to be captured.
-%
-An example is shown in \refFigure{sea-of-nodes-example-click-paleczny-graph}.
+For the example above, this results in the \gls{SSA graph} shown in
+\refFigure{sea-of-nodes-example-ssa-graph}.
 
 Since \glspl{operation} are not pre-assigned to specific \glspl{block}, the same
 \gls{IR} can be used for performing \gls{global code motion}.
@@ -2001,10 +1970,52 @@ If an \gls{operation} should not be allowed to be moved to another \gls{block}
 to connect the \gls{operation} with its original \gls{block} placement.
 
 
-\subsubsection{Pattern Selection on a Sea of Nodes}
+\paragraph{Capturing Both Data And Control Flow}
 
-\citeauthor{PalecznyEtAl:2001} first divides the \gls{function graph} into a set
-of possibly overlapping \glspl{expression tree}.
+\textcite{ClickPaleczny:1995} introduced a \gls{sea-of-nodes IR} that captures
+both data and control flow.
+%
+The data flow is modeled exactly as in the \gls{SSA graph}, and the control flow
+is captured using \glspl{node} to represent the \glspl{block} in the
+\gls{function} and \glspl{edge} to represent jumps between \glspl{block}.
+%
+To capture dependencies between the data and control flow -- for example, when
+the target of a jump depends on a Boolean value -- such jumps flow through
+special \emph{if}~\glspl{node}.
+%
+An example of the \gls{Click-Paleczny graph} is shown in
+\refFigure{click-paleczny-graph-example}.
+
+\begin{figure}
+  \centering%
+  \input{%
+    figures/existing-isel-techniques-and-reps/%
+    sea-of-nodes-example-click-paleczny-graph%
+  }
+
+  \caption[Example of a Click-Paleczny graph]%
+          {%
+            Example of a Click-Paleczny graph, corresponding to the program
+            shown in \refFigure{ssa-example}.
+            %
+            Thin-lined nodes and edges denote data operations and data flow.
+            %
+            Thick-lined nodes and edges denote control operations and control
+            flow.
+            %
+            Dashed edges indicate to which block an operation belongs%
+          }
+  \labelFigure{click-paleczny-graph-example}
+\end{figure}
+
+
+\subsection{Pattern Selection on the Click-Paleczny Graph}
+
+\textcite{PalecznyEtAl:2001} introduced an approach for performing
+\gls{instruction selection} based on the \gls{Click-Paleczny graph}.
+
+The approach first divides the \gls{function graph} into a set of possibly
+overlapping \glspl{expression tree}.
 %
 This is done by labeling certain \glspl{node} in the \gls{function graph} as
 tree roots.
@@ -2015,7 +2026,7 @@ shared or \glspl{operation} with side effects and may therefore not be
 %
 The selection of roots is geared towards duplicating address computations and
 other expressions that can be subsumed into a single \gls{instruction}.
-
+%
 Once labeled, each \gls{expression tree} is covered using a variant of
 \refAlgorithm{opt-pat-sel-labeling-algorithm}.
 %
@@ -2238,7 +2249,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
 \end{figure}
 
 
-\subsubsection{Handling DAG-shaped Patterns}
+\paragraph{Handling DAG-shaped Patterns}
 
 The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
 %
@@ -2307,7 +2318,7 @@ For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
   3K$}.
 
 
-\subsubsection{Applications}
+\paragraph{Applications}
 
 \textcite{EcksteinEtAl:2003} were first with modeling \gls{instruction
   selection} as a \gls{PBQP}, and \textcite{EbnerEtAl:2008} extended their
