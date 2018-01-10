@@ -293,8 +293,8 @@ assignment forms two \glspl{cycle} instead of one:
   \end{tikzpicture}%
 \end{center}
 
-As will be seen in \refChapter{constraint-model}, $\mCircuit$ can be used to
-model \gls{block ordering}.
+As will be seen in \refChapter{constraint-model}, $\mCircuit$ is used to model
+\gls{block ordering}.
 
 
 \subsubsection{The Table Constraint}
@@ -343,8 +343,9 @@ because the tuple \mbox{$\mTuple{2, 4}$} appears as a row in~$A$.
 Similarly, \mbox{$\mTable(\mVar{x}_1 \in \mSet{3}, \mVar{x}_2 \in \mSet{3}, A)$}
 does not hold because the tuple \mbox{$\mTuple{3, 3}$} appears as a row in~$A$.
 
-As will be seen in \refChapter{solving-techniques}, $\mTable$ can be used to
-refine the \gls{objective function} in order to improve solving.
+As will be seen in \refChapter{solving-techniques}, $\mTable$ is used to refine
+the \glsshort{constraint model} and to implement serveral of the \gls{implied.c}
+\glspl{constraint}.
 
 
 \subsubsection{The Value-Precede-Chain Constraint}
@@ -400,8 +401,8 @@ not matter).
 However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
   \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
 
-As will be seen in \refChapter{solving-techniques}, $\mValuePrec$ can be used
-for implementing a \gls{dominance breaking.c} \gls{constraint}.
+As will be seen in \refChapter{solving-techniques}, $\mValuePrec$ is used to
+implement a \gls{dominance breaking.c} \gls{constraint}.
 
 
 \subsubsection{The Increasing Constraint}
@@ -441,8 +442,8 @@ However, \mbox{$\mIncreasing(\mVar{x}_1 \in \mSet{4}, \mVar{x}_2 \in \mSet{3})$}
 does not hold the corresponding sequence \mbox{$\mTuple{4, 3}$} is clearly not
 ordered.
 
-As will be seen in \refChapter{solving-techniques}, $\mIncreasing$ can be used
-for implementing two \gls{dominance breaking.c} \glspl{constraint}.
+As will be seen in \refChapter{solving-techniques}, $\mIncreasing$ is used to
+implement two \gls{dominance breaking.c} \glspl{constraint}.
 
 
 \subsection{Optimization}
