@@ -1121,8 +1121,8 @@ By replacing the \glspl{expression tree} used in \gls{tree covering} with
 
 \Gls{DAG covering} has several advantages of \gls{tree covering}.
 %
-First, as will be explained shortly, the \gls{block DAG} does not need to be
-decomposed into \glspl{expression tree}, which compromises code quality.
+First, the \gls{block DAG} does not need to be decomposed into \glspl{expression
+  tree}, which compromises code quality.
 %
 Second, it enables selection of \gls{multi-output.ic} \glspl{instruction}, which
 must be modeled as \glspl{pattern DAG}.
@@ -1142,7 +1142,7 @@ Most combinatorial approaches natively support \gls{DAG}-shaped \glspl{pattern},
 but finding \glspl{match} for such \glspl{pattern} can no longer be done in
 linear time.
 %
-Consequently, such approaches typically apply generic \glshyphened{subgraph
+Such approaches therefore typically apply generic \glshyphened{subgraph
   isomorphism} algorithms when \gls{pattern matching}.
 
 
@@ -2025,8 +2025,8 @@ method described in~\cite{Click:1995}.
 
 \subsection{PBQP-based Approaches}
 
-Another method of modeling \gls{instruction selection} is to model it as a
-\gls!{PBQP}.
+Similar to \gls{IP}-based approaches, another method of modeling
+\gls{instruction selection} is to model it as a \gls!{PBQP}.
 %
 First introduced by \textcite{ScholzEckstein:2002} to model and solve
 \gls{register allocation}, \gls{PBQP} is a variant of the \gls!{QAP}, which is a
