@@ -110,6 +110,9 @@ This makes for a simple construction process as the \glsshort{control-flow
   graph} and \glspl{SSA graph} are already used inside most, if not all, modern
 \glspl{compiler}.
 
+
+\paragraph{Capturing Control Flow}
+
 We start with the \gls{control-flow graph}.
 %
 As it captures the control flow for an entire \gls{function},
@@ -121,7 +124,7 @@ are called \glspl!{block node}.
 %
 In contexts where is no risk of confusion, the terms \emph{\glspl{block}} and
 \emph{\glspl{block node}} can be interchanged.
-%
+
 To partially achieve \refRequirement{uni-rep-explicit-ops}, we insert
 \glspl!{control node} representing \glspl{operation} that change the control
 flow from on \gls{block} to another and redirect the \glspl{edge} such that
@@ -274,7 +277,7 @@ connected to the \irBlock{end} \gls{node}.
 %
 This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
-%
+
 An invariant here is that each \gls{control node} has exactly one \gls{edge}
 flowing \emph{from} a \gls{block node}, and each \gls{block node} has exactly
 one \gls{edge} flowing \emph{to} a \gls{control node}.
@@ -287,6 +290,9 @@ This also means that the extended \gls{control-flow graph} forms a bipartite
 \gls{graph}, with \glspl{block node} on one end and \glspl{control node} on the
 other.
 
+
+\paragraph{Capturing Data Flow}
+
 We continue with the \gls{SSA graph}.
 %
 As it captures the data flow for an entire \gls{function} and represents data
@@ -296,7 +302,7 @@ the remaining parts of \refRequirement{uni-rep-capture-data-control} and
 %
 \refRequirement{uni-rep-ssa} is inherently fulfilled as the \gls{SSA graph}
 requires the \gls{function} to be in \gls{SSA}~form.
-%
+
 To achieve \refRequirement{uni-rep-explicit-values}, we insert \glspl!{value
   node} representing the entities produced and used by the data
 \glspl{operation} and redirect the \glspl{edge} in same fashion as when
@@ -308,10 +314,13 @@ represented in the extended \gls{control-flow graph}.
 Using the \gls{SSA graph} shown in \refFigure{function-example-ssa-graph} as
 example, this results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-ssa-graph}.
-%
+
 Note that at this point, the invariant specified in
 \refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
 one inbound \gls{data-flow edge} is broken, but this will be addressed shortly.
+
+
+\paragraph{Combining The Graphs}
 
 We now connect the two extended \glspl{graph} together.
 %
@@ -412,14 +421,14 @@ This forces $v$ to be produced in $b$, which in turn forbids the \gls{operation}
 producing $v$ from being moved out of $b$.
 %
 Hence \refRequirement{uni-rep-preserve-semantics} is achieved.
-%
+
 Lastly, for convenience we prevent \glspl{phi-function} from being moved by
 inserting a \gls{definition edge} between the value produced by the
 \gls{phi-function} and the \gls{block} wherein the \gls{phi-function} resides in
 the \gls{IR}.
 %
 This results in the \gls{graph} shown in
-\refFigure{uf-graph-example-full-graph},\hspace{-1pt}%
+\refFigure{uf-graph-example-full-graph},\!%
 %
 \footnote{%
   In this case, the \glspl{definition edge} from the \irBlock{entry} \gls{node}
@@ -430,20 +439,8 @@ This results in the \gls{graph} shown in
 %
 which is called \gls!{UF graph}.
 
-The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
-example \refFigure{uf-graph-example-full-graph} with
-\refFigure{sea-of-nodes-example-click-paleczny-graph} on
-\refPageOfFigure{sea-of-nodes-example-click-paleczny-graph}).
-%
-Both are combinations of \glsshort{control-flow graph} and \glspl{SSA graph},
-they represent (some) of the control \glspl{operation} as \glspl{node}, and they
-can restrict the placement of \glspl{operation} to \glspl{block} through
-auxiliary edges.
-%
-However, the \gls{Click-Paleczny graph} does not completely fulfill
-\refRequirement{uni-rep-explicit-ops} as unconditional branches are not
-represented as \glspl{node}, nor does it fulfill
-\refRequirement{uni-rep-explicit-values}.
+
+\paragraph{Refining the Notion of Coverage}
 
 Since new \glspl{node} have been introduced, we must refine the definition of
 \gls{cover}[age] to apply for \glspl{UF graph}.
@@ -454,7 +451,7 @@ Hence, a subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set},
   node}, appears in exactly one match from~$C$.
 
 
-\subsubsection{Representing Constants As Single Or Multiple Nodes}
+\subsection{Representing Constants As Single Or Multiple Nodes}
 
 Duplicated constants may either be represented using individual \glspl{value
   node} (as in \refFigure{uf-graph-example-full-graph}) or through a single
@@ -483,7 +480,7 @@ This problem is fixed by applying \gls{copy extension}, which will be described
 in \refChapter{constraint-model}.
 
 
-\subsubsection{Data Types of Values}
+\subsection{Data Types of Values}
 
 Both \glspl{program} and \glspl{instruction} expect their argument values to be
 represented in a specific representation.
@@ -513,7 +510,7 @@ A constant~$c$ is compatible with another constant~$d$ if the value range of~$d$
 is a subset of the value range of~$c$.
 
 
-\subsubsection{Common Subexpression Elimination}
+\subsection{Common Subexpression Elimination}
 
 Common subexpressions may appear as part of legalizing the \gls{function} before
 passing it to the \gls{instruction selector}.
@@ -533,7 +530,7 @@ Consequently, such common subexpressions should be eliminated after having
 performed legalization but before constructing the \gls{UF graph}.
 
 
-\subsubsection{Handling Side Effects}
+\subsection{Handling Side Effects}
 
 The representation described thus far is sufficient for handling
 \glspl{operation} without side effects, such as arithmetic computations.
@@ -617,7 +614,7 @@ block:
 \end{figure}
 
 
-\subsubsection{Edge Numbers}
+\subsection{Edge Numbers}
 
 During \gls{graph} construction, every \gls{edge} is given two \glspl!{edge
   number}, which allows the \glspl{edge} to be ordered \wrt to a given
@@ -758,7 +755,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
 \end{figure}
 
 
-\subsubsection{Covering $\mPhi$-Nodes}
+\subsection{Covering $\mPhi$-Nodes}
 
 Since covering of a \gls{UF graph} also includes the \glspl!{phi-node} -- that
 is, the \glspl{node} representing \glspl{phi-function} -- which typically do not
@@ -871,6 +868,25 @@ applying a variant of the method to be described in
 \refSection{forbidding-cyclic-data-dependencies} in the next chapter.
 
 \todo{prune away matches where one of the arguments is a constant value}
+
+
+\section{Comparison with Other Sea-of-Nodes IRs}
+
+The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
+example \refFigure{uf-graph-example-full-graph} on
+\refPageOfFigure{uf-graph-example-full-graph} with
+\refFigure{sea-of-nodes-example-click-paleczny-graph} on
+\refPageOfFigure{sea-of-nodes-example-click-paleczny-graph}).
+%
+Both are combinations of \glsshort{control-flow graph} and \glspl{SSA graph},
+they represent (some) of the control \glspl{operation} as \glspl{node}, and they
+can restrict the placement of \glspl{operation} to \glspl{block} through
+auxiliary edges.
+%
+However, the \gls{Click-Paleczny graph} does not completely fulfill
+\refRequirement{uni-rep-explicit-ops} as unconditional branches are not
+represented as \glspl{node}, nor does it fulfill
+\refRequirement{uni-rep-explicit-values}.
 
 
 \section{Summary}
