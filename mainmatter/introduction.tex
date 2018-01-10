@@ -7,7 +7,7 @@
 \chapter{Introduction}
 \labelChapter{introduction}
 
-\enlargethispage{2pt}
+\enlargethispage{3pt}
 
 Processors are built to execute a vast range of \glspl{program}, from tiny
 \emph{Hello, world!} samples to large-scale Earth simulations.
@@ -29,9 +29,14 @@ In fact, the state-of-the-art \glspl{compiler} -- these are tools for
 translating \glspl{program} into \gls{assembly code} -- essentially apply the
 same techniques for selecting \glspl{instruction} that were used in the 1980s.
 
-Due to underlying assumptions about the \gls{instruction set}, many of the
-\glspl{instruction} currently available in modern processors cannot be handled
-by these techniques.
+
+\paragraph{Problem Statement}
+
+Due to underlying assumptions, many of the \glspl{instruction} currently
+available in modern processors cannot be handled by these techniques.
+%
+In particular, they rely on representations that are too limited for modeling
+these \glspl{instruction}.
 %
 Instead, \gls{compiler} developers are forced to implement hand-written routines
 for checking whether a specific \gls{instruction} is applicable and, if so,
@@ -42,8 +47,8 @@ quarter~\cite{Intel:2014:NewsRelease}, through release cycles that become
 shorter and shorter, there is a growing need for new and improved
 \gls{instruction selection} techniques.
 
-Furthermore, the impact and availability of selecting a particular
-\gls{instruction} is highly dependent on other \gls{compiler} tasks.
+Furthermore, the set of selectable \glspl{instruction} is highly dependent on
+other \gls{compiler} tasks.
 %
 One such task is \gls{global code motion}, which involves moving computations
 from one part of the \gls{program} to another.
@@ -52,12 +57,21 @@ Integrating \gls{global code motion} with \gls{instruction selection} enables a
 larger set of combinations of computations, some of which may be implemented
 using sophisticated \glspl{instruction}.
 %
+Another task is \gls{block ordering}, which involves arranging the \gls{program}
+\glspl{block} into a consecutive sequence.
+%
+Depending on the processor, one set of selected \glspl{instruction} may impact
+the possible \gls{block} sequence and vice versa.
+%
 Consequently, in order to generate high-quality code, these tasks must be
 performed in unison.
 
+
+\paragraph{Universal Instruction Selection}
+
 This dissertation introduces \gls!{universal instruction selection}, a new
-approach based on \glsdesc{CP} that addresses the problems described above.
-%
+approach based on \glsdesc{CP} that addresses the problems recently described.
+
 \begin{figure}
   \centering%
   \input{figures/introduction/approach-overview}
@@ -65,7 +79,7 @@ approach based on \glsdesc{CP} that addresses the problems described above.
   \caption{Overview of the approach}
   \labelFigure{approach-overview}
 \end{figure}
-%
+
 Outlined in \refFigure{approach-overview}, the approach is the first to combine
 \gls{instruction selection} with \gls{global code motion} and \gls{block
   ordering}.
@@ -74,14 +88,14 @@ In doing so, our approach alleviates selection of sophisticated
 \glspl{instruction} that would otherwise not have been selectable.
 %
 The approach relies on a novel combinatorial model that is simpler and more
-flexible compared to non-combinatorial approaches.
+flexible compared to the techniques currently used by modern \glspl{compiler}.
 %
-It also captures crucial features ignored by other, existing combinatorial
-approaches.
+It also captures crucial features that are ignored by other, existing
+combinatorial approaches.
 %
-Extensions for integrating \gls{instruction scheduling} and \gls{register
-  allocation} -- these are two other \gls{code generation} tasks known to impact
-\gls{instruction selection} and vice versa -- are also proposed.
+We also propose extensions for integrating \gls{instruction scheduling} and
+\gls{register allocation}, which are two other \gls{code generation} tasks known
+to impact \gls{instruction selection}.
 
 The model is enabled by a novel, \gls{graph}-based representation that unifies
 data flow and control flow for entire \glspl{function}.
