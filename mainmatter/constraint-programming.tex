@@ -142,7 +142,7 @@ improve solving compared to relations modeled using multiple \gls{binary.c}
 Arguably, the most well-known \gls{global.c} \gls{constraint} is the
 \gls!{all-different constraint}.
 %
-Typically referred to as $\mAllDiff$ or $\mDistinct$, the \gls{constraint}
+Typically referred to as $\mAllDifferent$ or $\mDistinct$, the \gls{constraint}
 enforces all \glspl{variable} in a given set to take distinct values.
 %
 Formally, the \gls{constraint} is defined as follows.
@@ -153,7 +153,7 @@ Formally, the \gls{constraint} is defined as follows.
   Then
   %
   \begin{displaymath}
-    \mAllDiff(\mVar{x}_1, \ldots, \mVar{x}_k)
+    \mAllDifferent(\mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {\forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
@@ -162,7 +162,7 @@ Formally, the \gls{constraint} is defined as follows.
 \end{definition}
 
 Hence the \glspl{constraint} in \refTable{cp-model-example} can be replaced by
-$\mAllDiff(\mVar{x}, \mVar{y}, \mVar{z})$.
+$\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
 \gls{constraint} -- the \gls{global cardinality constraint}, which is a
@@ -368,7 +368,7 @@ all values that do not appear in any \gls{solution} to the \gls{constraint}.
                   \labelTable{cp-prop-strengths-example-inequality-cons}%
                 }{%
                   \begin{tabular}{%
-                                   l%
+                                   p{4.5cm}%
                                    C@{}C@{ }C@{}C%
                                    C@{}C@{ }C@{}C%
                                    C@{}C@{ }C@{ }C@{ }C@{}C%
@@ -426,7 +426,7 @@ all values that do not appear in any \gls{solution} to the \gls{constraint}.
                   \labelTable{cp-prop-strengths-example-alldiff}%
                 }{%
                   \begin{tabular}{%
-                                   l%
+                                   p{4.5cm}%
                                    C@{}C@{ }C@{}C%
                                    C@{}C@{ }C@{}C%
                                    C@{}C@{ }C@{ }C@{ }C@{}C%
@@ -443,7 +443,7 @@ all values that do not appear in any \gls{solution} to the \gls{constraint}.
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2, & 3, & 4 & \}\\
-                      Propagate $\mAllDiff(\mVar{x}, \mVar{y}, \mVar{z})$
+                      Propagate $\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$
                         & \{ & 1, & 2  & \}
                         & \{ & 1, & 2  & \}
                         & \{ &    &    & 3, & 4 & \}\\
@@ -464,7 +464,7 @@ all values that do not appear in any \gls{solution} to the \gls{constraint}.
 %
 For example, \refTable{cp-prop-strengths-example} shows solving of two versions
 of the \glsshort{constraint model} given in \refTable{cp-model-example}, one
-using $\mAllDiff$ and another using inequality \glspl{constraint}.
+using $\mAllDifferent$ and another using inequality \glspl{constraint}.
 %
 Because only \gls{value consistency} can be achieved for inequality
 \glspl{constraint}, they cannot \glsshort{propagation}[e] anything until at
