@@ -34,55 +34,88 @@ address the limitations of existing approaches we necessitate a \gls{constraint
 To this end, we require a \gls{graph}-based representation that fulfills the
 following requirements:
 %
+\def\typesetReq#1{\emph{#1}}%
 \begin{requirements}
   \item \labelRequirement{uni-rep-capture-data-control}
-    It must be able to capture the data and control flow of an entire
-    \gls{function}.
+    \typesetReq{It must capture the data and control flow of an entire
+      \gls{function}.}
     %
-    This is needed for modeling \gls{global.is} \gls{instruction selection}
-    and for uniform selection of data and control \glspl{instruction}.
+    This is needed for modeling \gls{global.is} \gls{instruction selection},
+    which demands access to the entire \gls{function} under compilation.
+    %
+    This is also needed for uniform selection of data and control
+    \glspl{instruction}, which requires both data and control flow must be
+    captured in a single \gls{graph}.
   \item \labelRequirement{uni-rep-explicit-blocks}
-    \Glspl{block} must be explicitly represented as \glspl{node}.
+    \typesetReq{\Glspl{block} must be explicitly represented as \glspl{node}.}
     %
-    This is needed for \gls{pattern matching} and for modeling \gls{global code
-      motion}.
+    This is needed for \gls{pattern matching}, where we must not be allowed to
+    match \glspl{pattern} whose control flow is inconsistent with the
+    \gls{function graph}.
+    %
+    For example, assume the \gls{pattern} derived from a saturated addition
+    \gls{instruction}.
+    %
+    Such a \gls{pattern} will consist of three \glspl{block}~$b_1$, $b_2$, and
+    $b_3$, where $b_1$ represents the \gls{instruction}'s point of entry, $b_2$
+    represents the part where clamping is performed, and $b_3$ represents the
+    \gls{instruction}'s point of exit.
+    %
+    The control flow in this \gls{pattern} will be such that there two
+    conditional jumps from $b_1$ to either $b_2$ or $b_3$, and an unconditional
+    jump from $b_2$ to $b_3$.
+    %
+    To be matched, part of the \gls{function graph} must exhibit the same
+    control flow structure.
+    %
+    This is also useful for modeling \gls{global code motion} as each such
+    \gls{node} will incur a \gls{variable} in the \gls{constraint model}.
   \item \labelRequirement{uni-rep-explicit-ops}
-    Data and control \glspl{operation} must be explicitly represented as
-    \glspl{node}.
+    \typesetReq{Data and control \glspl{operation} must be explicitly
+      represented as \glspl{node}.}
     %
-    This is needed for \gls{pattern matching}.
+    This is to retain the notion of \gls{cover}[age] and to uniformly treat
+    \glspl{instruction} that operate on data or control flow.
   \item \labelRequirement{uni-rep-explicit-values}
-    Values produced and used by the \glspl{operation} must also be explicitly
-    represented as \glspl{node}.
+    \typesetReq{Values produced and used by the \glspl{operation} must also be
+      explicitly represented as \glspl{node}}
     %
-    Also, for \glspl{graph} modeling \glspl{function} every such \gls{node} must
-    have exactly one inbound \gls{data-flow edge}.
+    This is useful for modeling \gls{global code motion} and \gls{data copying}
+    as every such \gls{node} will incur a \gls{variable} in the \gls{constraint
+      model}.
+  \item \labelRequirement{uni-rep-exactly-one-inbound-edge-for-values}
+    \typesetReq{In a \glspl{function graph}, every \gls{node} representing a
+      value must have exactly one inbound \gls{data-flow edge}.}
     %
-    This is needed for modeling \gls{global code motion} and \gls{data copying}.
+    This ensures that every value has exactly one \gls{match} defining that
+    value, which is helpful when modeling \gls{global code motion}.
   \item \labelRequirement{uni-rep-fixed-operations}
-    The \gls{block} in which a particular \gls{operation} in the \gls{function}
-    is to be performed must not be fixed.
+    \typesetReq{The \gls{block} in which a particular \gls{operation} in the
+      \gls{function} is to be performed must not be fixed.}
     %
-    This is needed for enabling \gls{global code motion}.
+    Without this, \gls{global code motion} is not possible.
   \item \labelRequirement{uni-rep-preserve-semantics}
-    Data \gls{operation} must be forbidden to be placed in \glspl{block} that
-    will break \gls{program} semantics.
+    \typesetReq{Data \gls{operation} must be forbidden to be placed in
+      \glspl{block} that will break \gls{program} semantics.}
     %
     This is needed to ensure correctness when performing \gls{global code
       motion}.
   \item \labelRequirement{uni-rep-ssa}
-    The representation must be based on \gls{SSA}.
+    \typesetReq{The representation must be based on \gls{SSA}.}
     %
-    Not only is this practical as most \glspl{IR} used in modern
-    \glspl{compiler} are already based on \gls{SSA}, it also helps in modeling
-    \gls{global code motion}.
+    This is needed in modeling \gls{global code motion} as it explicitly
+    states which values must be defined in which \glspl{block} in order to
+    preserve \gls{program} semantics.
+    %
+    This is also useful for practical reasons as most \glspl{IR} used in modern
+    \glspl{compiler} are already based on \gls{SSA}.
 \end{requirements}
 
-While there exists many \gls{graph}-based representations -- for a survey, see
-\cite{StanierWatson:2013} -- most fulfill only some of the requirements but not
-all.
+While there exists many \gls{graph}-based representations (see
+\cite{StanierWatson:2013} for a survey), most fulfill only some of the
+requirements but not all.
 %
-Consequently, a new representation had to be designed.
+Consequently, a new representation has to be designed.
 
 
 \section{Program Representation}
@@ -316,8 +349,9 @@ example, this results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-ssa-graph}.
 
 Note that at this point, the invariant specified in
-\refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
-one inbound \gls{data-flow edge} is broken, but this will be addressed shortly.
+\refRequirement{uni-rep-exactly-one-inbound-edge-for-values} that every
+\gls{value node} has exactly one inbound \gls{data-flow edge} is broken, but
+this will be addressed shortly.
 
 
 \paragraph{Combining The Graphs}
@@ -330,11 +364,11 @@ with the values used by these \glspl{operation}.
 In the case of our running example, such \glspl{edge} are added from
 values~\irVar{b} and~\irVar{f}[2] to the {\irFont\irCondBrText} and
 {\irFont\irRetText} \glspl{operation}, respectively.
-%
-To achieve the invariant specified in \refRequirement{uni-rep-explicit-values},
-\glspl{data-flow edge} are also inserted from the \glsshort{entry block}
-\gls{block node} to each \gls{value node} representing constants and function
-arguments.
+
+To achieve the invariant specified in
+\refRequirement{uni-rep-exactly-one-inbound-edge-for-values}, \glspl{data-flow
+  edge} are also inserted from the \glsshort{entry block} \gls{block node} to
+each \gls{value node} representing constants and function arguments.
 %
 Intuitively, this means that such values are produced at the point of entry to
 the \gls{function}.
@@ -683,9 +717,9 @@ are added for \glspl{value node} representing constants and \gls{instruction}
 input.
 %
 In other words, the invariant specified in
-\refRequirement{uni-rep-explicit-values} that every \gls{value node} has exactly
-one inbound \gls{data-flow edge} does not need to (and should not) hold for such
-values.
+\refRequirement{uni-rep-exactly-one-inbound-edge-for-values} that every
+\gls{value node} has exactly one inbound \gls{data-flow edge} does not need to
+(and should not) hold for such values.
 %
 This results in a \gls{graph} called \gls!{UP graph}, and two examples are given
 in \refFigure{up-graph-examples}.
@@ -886,7 +920,7 @@ auxiliary edges.
 However, the \gls{Click-Paleczny graph} does not completely fulfill
 \refRequirement{uni-rep-explicit-ops} as unconditional branches are not
 represented as \glspl{node}, nor does it fulfill
-\refRequirement{uni-rep-explicit-values}.
+\refRequirement{uni-rep-exactly-one-inbound-edge-for-values}.
 
 
 \section{Summary}
