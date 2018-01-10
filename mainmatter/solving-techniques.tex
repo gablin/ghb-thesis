@@ -1150,10 +1150,6 @@ then we are free to decide which.
 Intuitively, we want to forbid \glspl{solution} where selected \glspl{null-copy
   match} ``appear to the left'' of a non-\gls{null-copy match}.
 %
-This can be achieved by using the \gls{increasing constraint} which was
-introduced in \refChapter{constraint-programming} on
-\refPageOfSection{cp-increasing}.
-%
 Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
 can only be defined by \glspl{copy match}, \mbox{$\mNullCopyMatchSet \subseteq
   \mMatchSet$} denote the set of \glspl{null-copy match}, and
@@ -1173,6 +1169,18 @@ modeled as
   \labelEquation{dom-cons-null-copy-match-selection}
 \end{equation}
 %
+where
+%
+\begin{equation}
+  \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
+  \equiv
+  \hspace{-3pt}
+  \mBigAnd_{1 \leq i < k}
+  \hspace{-3pt}
+  \mVar{x}_{i} \leq \mVar{x}_{i + 1}
+  \labelEquation{increasing-function}
+\end{equation}
+%
 It is assumed there exists exactly one \gls{null-copy match} to cover each
 \gls{copy node}.
 
@@ -1183,9 +1191,8 @@ In the previous example, for example, if only one of the two \glspl{copy node}
 are needed, then we are free to decide which.
 %
 Intuitively, we want to forbid \glspl{solution} where \gls{killed.d}
-\glspl{datum} ``appear to the right'' of non-\gls{killed.d} \glspl{datum}, and
-again we make use of the \gls{increasing constraint} to model this
-\gls{dominance breaking.c} \gls{constraint} as
+\glspl{datum} ``appear to the right'' of non-\gls{killed.d} \glspl{datum}, which
+is modeled as
 %
 \begin{equation}
   \begin{array}{c}

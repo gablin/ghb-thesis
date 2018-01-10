@@ -351,9 +351,9 @@ the \glsshort{constraint model} and to implement serveral of the \gls{implied.c}
 \subsubsection{The Value-Precede-Chain Constraint}
 \labelSection{cp-vpc}
 
-Another \gls{global.c} \gls{constraint} we need is the \gls!{value-precede-chain
-  constraint}~\cite{LawLee:2004}, which requires a sequence of \glspl{variable}
-to be sorted according to a given chain of values.
+The last \gls{global.c} \gls{constraint} we need is the
+\gls!{value-precede-chain constraint}~\cite{LawLee:2004}, which requires a
+sequence of \glspl{variable} to be sorted according to a given chain of values.
 %
 We refer to this \gls{constraint} as $\mValuePrecChain$, which is defined as
 follows.
@@ -403,47 +403,6 @@ However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
 
 As will be seen in \refChapter{solving-techniques}, $\mValuePrec$ is used to
 implement a \gls{dominance breaking.c} \gls{constraint}.
-
-
-\subsubsection{The Increasing Constraint}
-\labelSection{cp-increasing}
-
-To this end, we make use of the \gls!{increasing constraint}~\todo{[ref]}, which
-requires a sequence of \glspl{variable} to be assigned values in a non-strictly
-increasing order.
-%
-We refer to this \gls{constraint} as $\mIncreasing$, which is defined as
-follows.
-
-\begin{definition}[$\mIncreasing$]
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
-  \glspl{variable}.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
-    \equiv
-    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {
-                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
-                  \forall_{\! i < k} \: d_i \leq d_{i+1}
-                }.
-  \end{displaymath}
-  \labelDefinition{increasing}
-\end{definition}
-
-For example, \mbox{$\mIncreasing(\mVar{x}_1 \in \mSet{1}, \mVar{x}_2 \in
-  \mSet{2}, \mVar{x}_3 \in \mSet{2}, \mVar{x}_4 \in \mSet{5})$} holds because
-the assignment forms a sequence \mbox{$\mTuple{1, 2, 2, 4}$} which is in
-non-strictly increasing order.
-%
-However, \mbox{$\mIncreasing(\mVar{x}_1 \in \mSet{4}, \mVar{x}_2 \in \mSet{3})$}
-does not hold the corresponding sequence \mbox{$\mTuple{4, 3}$} is clearly not
-ordered.
-
-As will be seen in \refChapter{solving-techniques}, $\mIncreasing$ is used to
-implement two \gls{dominance breaking.c} \glspl{constraint}.
 
 
 \subsection{Optimization}
