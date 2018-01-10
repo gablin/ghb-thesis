@@ -405,7 +405,15 @@
                 {\sffamily\relsize{-0.8}\bfseries}%
                 {}%
                 {1em}%
-                {\thmname{#1}\thmnumber{ #2}\thmnote{ -- #3}}
+                {%
+                  \thmname{#1}%
+                  \thmnumber{ #2}%
+                  \thmnote{ -- %
+                    \setboolean{consFontForceTextRM}{false}%
+                    #3%
+                    \setboolean{consFontForceTextRM}{true}%
+                  }%
+                }
 \theoremstyle{def}
 \newtheorem{definition}{Definition}[chapter]
 
@@ -492,7 +500,15 @@
 % Constraint model-related commands
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\mStronger}{\leq}
-\newcommand{\mConstraintFont}[1]{\textrm{\textsc{\MakeLowercase{#1}}}}
+\newboolean{consFontForceTextRM}
+\setboolean{consFontForceTextRM}{true}
+\newcommand{\mConstraintFont}[1]{%
+  \ifthenelse{\boolean{consFontForceTextRM}}{%
+    \mathsc{\MakeLowercase{#1}}%
+  }{%
+    \textsc{\MakeLowercase{#1}}%
+  }%
+}
 \newcommand{\mBrPattern}{g_{\mathrm{br}}}
 \newcommand{\mConst}{\rule{3pt}{3pt}}
 \newcommand{\mCopy}{\circ}
@@ -591,7 +607,7 @@
 \DeclareMathOperator{\mIsExt}{\mFunFont{isExt}}
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mGCC}{\mConstraintFont{GCC}}
-\DeclareMathOperator{\mIncreasing}{\mConstraintFont{inc}}
+\DeclareMathOperator{\mIncreasing}{\mConstraintFont{increasing}}
 \DeclareMathOperator{\mLat}{\mFunFont{lat}}
 \DeclareMathOperator{\mNoOverlap}{\mConstraintFont{NoOverlap}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}

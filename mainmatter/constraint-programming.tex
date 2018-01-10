@@ -128,7 +128,7 @@ The use of \glspl{variable} and \glspl{constraint} results in \glspl{constraint
 extended to capture additional problems to be solved in unison.
 
 
-\subsubsection{Global Constraints}
+\subsection{Global Constraints}
 
 If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
 \glspl{variable}, then a \gls!{global.c}[ \gls{constraint}] is a
@@ -139,15 +139,18 @@ If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
 improve solving compared to relations modeled using multiple \gls{binary.c}
 \glspl{constraint}.
 
+
+\subsubsection{The All-Different Constraint}
+
 Arguably, the most well-known \gls{global.c} \gls{constraint} is the
-\gls!{all-different constraint}.
+\gls!{all-different constraint}~\cite{Lauriere:1978} (for a survey,
+see~\cite{VanHoeve:2001}), which enforces all \glspl{variable} in a given set to
+take distinct values.
 %
-Typically referred to as $\mAllDifferent$ or $\mDistinct$, the \gls{constraint}
-enforces all \glspl{variable} in a given set to take distinct values.
-%
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[All-different Constraint]%
+We refer to this \gls{constraint} as $\mAllDifferent$, which is defined as
+follows.
+
+\begin{definition}[$\mAllDifferent$]
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable}.
   %
   Then
@@ -158,22 +161,26 @@ Formally, the \gls{constraint} is defined as follows.
     \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
                 {\forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
                  \forall_{\! i \neq j} \: d_i \neq d_j}.
-  \end{displaymath}%
+  \end{displaymath}
+  \labelDefinition{all-different}
 \end{definition}
 
 Hence the \glspl{constraint} in \refTable{cp-model-example} can be replaced by
 $\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$.
 
+
+\subsubsection{The Global Cardinality Constraint}
+
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
-\gls{constraint} -- the \gls{global cardinality constraint}, which is a
-generalization of the \gls{all-different constraint} -- and how it can be used
-to model the \gls{pattern selection} problem (see
-\refEquation{pattern-selection-using-gcc} on
-\refPageOfEquation{pattern-selection-using-gcc}).
+\gls{constraint} -- the \gls{global cardinality
+  constraint}~\cite{OplobeduEtAl:1989}, which is a generalization of the
+\gls{all-different constraint} -- and how it can be used to model the
+\gls{pattern selection} problem (see \refEquation{pattern-selection-using-gcc}
+on \refPageOfEquation{pattern-selection-using-gcc}).
 %
-For completeness, we provide the formal definition of the \gls{constraint}.
-%
-\begin{definition}[Global Cardinality Constraint]%
+For completeness, we give here the formal definition of the \gls{constraint}.
+
+\begin{definition}[$\mGCC$]
   Let $v$ be a value, and let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y}$}
   be a set of \glspl{variable}.
   %
@@ -190,17 +197,19 @@ For completeness, we provide the formal definition of the \gls{constraint}.
                      e = |\mSetBuilder{d_i}{\forall_i \: d_i = v}|
                    \end{array}
                  }.
-  \end{displaymath}%
-  \labelDefinition{gcc}%
+  \end{displaymath}
+  \labelDefinition{gcc}
 \end{definition}
 
-Another relevant example is the \gls!{circuit constraint}, typically referred to
-as $\mCircuit$ or $\mCycle$, which enforces that the \glspl{variable}
-representing adjacency forms a cycle.
+
+\subsubsection{The Circuit Constraint}
+
+Another relevant example is the \gls!{circuit constraint}~\cite{Lauriere:1978},
+which enforces that the \glspl{variable} representing adjacency forms a cycle.
 %
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[Circuit Constraint]
+We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
+
+\begin{definition}[$\mCircuit$]
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable} with
   \glspl{domain} \mbox{$\mDomain(\mVar{x}_i) \subseteq \mSet{1, \ldots, k}$} for
   \mbox{$i = 1, \ldots, k$}.
@@ -231,19 +240,25 @@ Formally, the \gls{constraint} is defined as follows.
   \labelDefinition{circuit}
 \end{definition}
 
-As will be seen in \refChapter{constraint-model}, $\mCircuit$ can be used
-to model \gls{block ordering}.
+\todo{give example}
 
-The last \gls{global.c} \gls{constraint} relevant for this dissertation is the
-\gls{table constraint}, which constrains a vector of \glspl{variable} such that
+As will be seen in \refChapter{constraint-model}, $\mCircuit$ can be used to
+model \gls{block ordering}.
+
+
+\subsubsection{The Table Constraint}
+
+Another \gls{global.c} \gls{constraint}, belonging to the group of so-called
+\glspl!{extensional constraint}~\cite[Sect.\thinspace11.5.4]{Smith:2006}, is the
+\gls!{table constraint}, which constrains a vector of \glspl{variable} such that
 the values appear as a row in a given matrix.
 %
 By encoding legal \gls{variable} assignments into the matrix, any relation can
 be expressed using a \gls{table constraint}.
 %
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[Table Constraint]
+We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
+
+\begin{definition}[$\mTable$]
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable}, and
   let $T$ be an \mbox{$m \times k$} matrix, where \mbox{$m \in \mathbb{N}$}.
   %
@@ -258,13 +273,107 @@ Formally, the \gls{constraint} is defined as follows.
                   d_1, \ldots, d_k \in T
                 }.
   \end{displaymath}
+  \labelDefinition{table}
 \end{definition}
 
+\todo{give example}
+
 As will be seen in \refChapter{solving-techniques}, $\mTable$ can be used to
-refining the modeling of cost.
+refine the \gls{objective function} in order to improve solving.
 
 
-\subsubsection{Optimization}
+\subsubsection{The Value-Precede-Chain Constraint}
+\labelSection{cp-vpc}
+
+Another \gls{global.c} \gls{constraint} we need is the \gls!{value-precede-chain
+  constraint}~\cite{LawLee:2004}, which requires a sequence of \glspl{variable}
+to be sorted according to a given chain of values.
+%
+We refer to this \gls{constraint} as $\mValuePrecChain$, which is defined as
+follows.
+
+\begin{definition}[$\mValuePrecChain$]
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
+  \glspl{variable}.
+  %
+  Let also $c$ be a 1-indexed sequence with $n$ elements.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mValuePrecChain(c, \mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \bigcap_{1 \leq i < n}
+    \mValuePrec(c[i], c[i+1], \mVar{x}[1], \ldots \mVar{x}[k]),
+  \end{displaymath}
+  %
+  where
+  %
+  \begin{displaymath}
+    \mValuePrec(s, t, \mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\! i} \: d_i = t
+                  \mImp \exists_{j} \: j < i \mAnd d_j = s
+                }.
+  \end{displaymath}
+  \labelDefinition{vpc}
+\end{definition}
+
+For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
+  \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
+  \mSet{4})$} holds because the~4 is preceded by a~5, which in turn is preceded
+by a~6, in the permutation of $\mVar{x}$~\glspl{variable}.
+%
+Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
+  \mVar{x}_2 \in \mSet{1})$} also holds because 4 does not appear among the
+$\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
+not matter).
+%
+However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
+  \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
+
+As will be seen in \refChapter{solving-techniques}, $\mValuePrec$ can be used
+for implementing a \gls{dominance breaking.c} \gls{constraint}.
+
+
+\subsubsection{The Increasing Constraint}
+\labelSection{cp-increasing}
+
+To this end, we make use of the \gls!{increasing constraint}~\todo{[ref]}, which
+requires a sequence of \glspl{variable} to be assigned values in a non-strictly
+increasing order.
+%
+We refer to this \gls{constraint} as $\mIncreasing$, which is defined as
+follows.
+
+\begin{definition}[$\mIncreasing$]
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
+  \glspl{variable}.
+  %
+  Then
+  %
+  \begin{displaymath}
+    \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
+    \equiv
+    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
+                {
+                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
+                  \forall_{\! i < k} \: d_i \leq d_{i+1}
+                }.
+  \end{displaymath}
+  \labelDefinition{increasing}
+\end{definition}
+
+\todo{give example}
+
+As will be seen in \refChapter{solving-techniques}, $\mIncreasing$ can be used
+for implementing two \gls{dominance breaking.c} \glspl{constraint}.
+
+
+\subsection{Optimization}
 
 In \gls{CP}, an optimization problem is modeled by maximizing or minimizing a
 \gls{variable}~$\mVar{c}$ whose value is constrained according to the

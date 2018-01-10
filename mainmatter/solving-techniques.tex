@@ -1115,55 +1115,13 @@ As a precaution, however, we will exclude \glspl{operand} used by
 cross-over connections.
 
 If we assume that there exists a partial order $\leq$ for~$\mDataSet$, then we
-can remove these symmetries using the \gls!{value-precede-chain constraint},
-which requires a sequence of \glspl{variable} to be sorted according to a given
-chain of values~\cite{LawLee:2004}.
+can remove these symmetries by enforcing an order of the values assigned to the
+$\mVar{alt}$~\glspl{variable}.
 %
-Formally, the \gls{constraint} is defined as follows.
+To this end, we use the \gls{value-precede-chain constraint} which was
+introduced in \refChapter{constraint-programming} on
+\refPageOfSection{cp-vpc}.
 %
-\begin{definition}[Value-Precede-Chain Constraint]%
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
-  \glspl{variable}.
-  %
-  Let also $c$ be a 1-indexed sequence with $n$ elements.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \mValuePrecChain(c, \mVar{x}_1, \ldots, \mVar{x}_k)
-    \equiv
-    \bigcap_{1 \leq i < n}
-    \mValuePrec(c[i], c[i+1], \mVar{x}[1], \ldots \mVar{x}[k]),
-  \end{displaymath}
-  %
-  where
-  %
-  \begin{displaymath}
-    \mValuePrec(s, t, \mVar{x}_1, \ldots, \mVar{x}_k)
-    \equiv
-    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {
-                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
-                  \forall_{\! i} \: d_i = t
-                  \mImp \exists_{j} \: j < i \mAnd d_j = s
-                }.
-  \end{displaymath}
-  \labelDefinition{vpc}
-\end{definition}
-%
-For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
-  \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
-  \mSet{4})$} holds because the~4 is preceded by a~5, which in turn is preceded
-by a~6, in the permutation of $\mVar{x}$~\glspl{variable}.
-%
-Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
-  \mVar{x}_2 \in \mSet{1})$} also holds because 4 does not appear among the
-$\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
-not matter).
-%
-However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
-  \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
-
 Hence, if $\mInterchDataSet$ denotes the set of chains of
 \gls{interchangeable.d} \glspl{datum} and \mbox{$\mOperandSet[\mPhi] \subseteq
   \mOperandSet$} denotes the set of \glspl{operand} used by \glspl{phi-match},
@@ -1192,29 +1150,9 @@ then we are free to decide which.
 Intuitively, we want to forbid \glspl{solution} where selected \glspl{null-copy
   match} ``appear to the left'' of a non-\gls{null-copy match}.
 %
-To this end, we make use of the \gls!{increasing constraint}, which requires a
-sequence of \glspl{variable} to be assigned values in a non-strictly increasing
-order.
-%
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[Increasing Constraint]%
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
-  \glspl{variable}.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
-    \equiv
-    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {
-                  \forall_{\! i} \: d_i \in \mDomain(\mVar{x}_i),
-                  \forall_{\! i < k} \: d_i \leq d_{i+1}
-                }.
-  \end{displaymath}
-  \labelDefinition{increasing}
-\end{definition}
+This can be achieved by using the \gls{increasing constraint} which was
+introduced in \refChapter{constraint-programming} on
+\refPageOfSection{cp-increasing}.
 %
 Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
 can only be defined by \glspl{copy match}, \mbox{$\mNullCopyMatchSet \subseteq
