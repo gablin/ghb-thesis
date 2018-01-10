@@ -450,7 +450,7 @@ propagation and remove uninteresting \glspl{solution} and by performing
 \gls{presolving}.
 
 
-\subsubsection{Propagation}
+\subsection{Propagation}
 
 Performing \gls{propagation} requires an array of \gls{domain}-pruning
 algorithms and a system that allows these algorithms to interact.
@@ -648,7 +648,7 @@ NP-complete problem~\cite{GareyJohnson:1979}, although an incomplete
 polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
 
 
-\subsubsection{Search}
+\subsection{Search}
 
 When no more \gls{propagation} can be performed -- that is, when all
 \glspl{propagator} are at \gls{fixpoint} -- the \gls{solver} resorts to
@@ -714,6 +714,9 @@ More than one \gls{branching strategy} can be used for the same
 \glsshort{constraint model} and, if needed, they can be customized by the user,
 making it a key strength of \gls{CP}.
 
+
+\subsubsection{Branch and Bound}
+
 \Glspl{solution} to optimization problems are found using a method called
 \gls!{branch and bound}.
 %
@@ -764,10 +767,24 @@ At this point the entire \gls{search space} has been explored, making $S_2$ the
 optimal \gls{solution}.
 
 
+\subsection{Solving Techniques}
+
+Solving can be improved by applying various solving techniques, which can be
+divided into two categories.
+%
+The first involves additional \glspl{constraint} that are added to the
+\glsshort{constraint model} in order to increase \gls{propagation} and also
+reduce the \gls{search space}.
+%
+The second involves applying methods that reduce the number of \glspl{variable}
+or shrink the \gls{variable} \glspl{domain}, thereby reducing the \gls{search
+  space}.
+
+
 \subsubsection{Implied, Symmetry Breaking, and Dominance Breaking Constraints}
 
-Solving can be improved by extending the \gls{constraint model} with additional
-\glspl{constraint}.
+As previously stated, solving can be improved by extending the \gls{constraint
+  model} with additional \glspl{constraint}.
 %
 These \glspl{constraint} can be divided into three categories --
 \gls{implied.c}, \gls{symmetry breaking.c}, and \gls{dominance breaking.c} --
@@ -895,6 +912,6 @@ Fewer \gls{variable} and smaller \glspl{domain} means smaller \glspl{constraint
 \todo{give better example than bound tightening}
 
 
-\subsubsection{Lazy Clause Learning}
+\subsection{Lazy Clause Learning}
 
 \todo{write}
