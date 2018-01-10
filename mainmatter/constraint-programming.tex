@@ -240,7 +240,57 @@ We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
   \labelDefinition{circuit}
 \end{definition}
 
-\todo{give example}
+For example, \mbox{$\mCircuit(\mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{4},
+  \mVar{x}_3 \in \mSet{1}, \mVar{x}_4 \in \mSet{3})$} holds because the
+assignment forms the following \gls{cycle}:
+%
+\begin{center}
+  \figureFont\figureFontSize%
+  \begin{tikzpicture}[%
+      every node/.style={
+        node distance=4mm,
+      }
+    ]
+
+    \node (x1) {$\mVar{x}_1$};
+    \node [right=of x1] (x2) {$\mVar{x}_2$};
+    \node [below=of x1] (x3) {$\mVar{x}_3$};
+    \node [right=of x3] (x4) {$\mVar{x}_4$};
+
+    \begin{scope}[->, line width=\normalLineWidth]
+      \draw (x1) -- (x2);
+      \draw (x2) -- (x4);
+      \draw (x4) -- (x3);
+      \draw (x3) -- (x1);
+    \end{scope}
+  \end{tikzpicture}%
+\end{center}
+%
+However, \mbox{$\mCircuit(\mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{1},
+  \mVar{x}_3 \in \mSet{4}, \mVar{x}_4 \in \mSet{3})$} does not hold because the
+assignment forms two \glspl{cycle} instead of one:
+%
+\begin{center}
+  \figureFont\figureFontSize%
+  \begin{tikzpicture}[%
+      every node/.style={
+        node distance=4mm,
+      }
+    ]
+
+    \node (x1) {$\mVar{x}_1$};
+    \node [right=of x1] (x2) {$\mVar{x}_2$};
+    \node [below=of x1] (x3) {$\mVar{x}_3$};
+    \node [right=of x3] (x4) {$\mVar{x}_4$};
+
+    \begin{scope}[->, line width=\normalLineWidth, bend left]
+      \draw (x1) to (x2);
+      \draw (x2) to (x1);
+      \draw (x3) to (x4);
+      \draw (x4) to (x3);
+    \end{scope}
+  \end{tikzpicture}%
+\end{center}
 
 As will be seen in \refChapter{constraint-model}, $\mCircuit$ can be used to
 model \gls{block ordering}.
@@ -276,7 +326,21 @@ We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
   \labelDefinition{table}
 \end{definition}
 
-\todo{give example}
+For example, assume we are given a matrix
+%
+\begin{displaymath}
+    A =
+    \begin{bmatrix}
+      1 & 1 \\
+      2 & 4
+    \end{bmatrix}\!.
+\end{displaymath}
+%
+Then \mbox{$\mTable(\mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{4}, A)$} holds
+because the tuple \mbox{$\mTuple{2, 4}$} appears as a row in~$A$.
+%
+Similarly, \mbox{$\mTable(\mVar{x}_1 \in \mSet{3}, \mVar{x}_2 \in \mSet{3}, A)$}
+does not hold because the tuple \mbox{$\mTuple{3, 3}$} appears as a row in~$A$.
 
 As will be seen in \refChapter{solving-techniques}, $\mTable$ can be used to
 refine the \gls{objective function} in order to improve solving.
@@ -367,7 +431,14 @@ follows.
   \labelDefinition{increasing}
 \end{definition}
 
-\todo{give example}
+For example, \mbox{$\mIncreasing(\mVar{x}_1 \in \mSet{1}, \mVar{x}_2 \in
+  \mSet{2}, \mVar{x}_3 \in \mSet{2}, \mVar{x}_4 \in \mSet{5})$} holds because
+the assignment forms a sequence \mbox{$\mTuple{1, 2, 2, 4}$} which is in
+non-strictly increasing order.
+%
+However, \mbox{$\mIncreasing(\mVar{x}_1 \in \mSet{4}, \mVar{x}_2 \in \mSet{3})$}
+does not hold the corresponding sequence \mbox{$\mTuple{4, 3}$} is clearly not
+ordered.
 
 As will be seen in \refChapter{solving-techniques}, $\mIncreasing$ can be used
 for implementing two \gls{dominance breaking.c} \glspl{constraint}.
