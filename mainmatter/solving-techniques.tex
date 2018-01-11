@@ -10,6 +10,8 @@
 This chapter introduces the techniques applied for improving solving of the
 \gls{constraint model} presented in the previous chapter.
 %
+\todo{rewrite}
+%
 \RefSection{st-model-refinements} introduces \glsshort{constraint model}
 refinements to strenghten \gls{propagation}.
 %
@@ -446,51 +448,6 @@ bounded as
   \mRelaxedCost \leq \mVar{cost} < \mHeuristicCost.
   \labelEquation{lower-bound}
 \end{equation}
-
-
-\section{Branching Strategies}
-\labelSection{st-branching-strategies}
-
-As explained in \refChapter{constraint-programming}, the \gls{branching
-  strategy} decides how to explore the \gls{search space}.
-%
-In optimization problems, it is generally a good approach to try to find the
-optimal \gls{solution} first as that will allow pruning of the still unexplored
-parts of the \gls{search space}.
-%
-To this end, we first branch on the $\mVar{ocost}$~\glspl{variable}, selecting
-the \gls{variable}~$v$ with the maximum \gls!{regret} -- that is, the
-\gls{variable} with the largest difference between the two smallest values in
-its \gls{domain} -- and the smallest value in the \gls{domain} of~$v$.
-%
-The intuition here is that, because our \gls{objective function} strives to
-minimize the total cost, we wish to minimize the cost incurred per
-\gls{operation}.
-%
-By selecting the \gls{variable} with the maximum \gls{regret}, we try to cover
-the \glspl{operation} for which to cost of bad decisions is largest, and for
-these we obviously try to cover these at least cost.
-%
-Note that this \gls{branching strategy} is only possible due to the refined
-\gls{objective function} described earlier in this chapter.
-
-Remaining decisions are left to the \gls{constraint solver}.
-%
-To improve \gls{match} selection, however, we make sure to arrange them in
-order of increasing latency.
-%
-If there is a tie between two \glspl{match}, and either of them is a \gls{kill
-  match}, then the \gls{kill match} comes first.
-%
-Otherwise, the \gls{match} covering more \glspl{operation} comes first (hence
-mimicking the scheme of \gls{maximum munch}).
-%
-This is because the \gls{constraint solver} will most likely attempt to select
-\glspl{match} in the order given to the \glsshort{constraint model}.
-%
-In such a setting, it is generally a good approach to first try a \gls{kill
-  match}, which incurs no cost and encourages value reuse, and then the
-\gls{match} which incurs the least cost.
 
 
 \section{Implied Constraints}
@@ -1195,6 +1152,51 @@ where $\mKillMatchSet$ denotes the set of \glspl{kill match}.
 %
 It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
   node}.
+
+
+\section{Branching Strategies}
+\labelSection{st-branching-strategies}
+
+As explained in \refChapter{constraint-programming}, the \gls{branching
+  strategy} decides how to explore the \gls{search space}.
+%
+In optimization problems, it is generally a good approach to try to find the
+optimal \gls{solution} first as that will allow pruning of the still unexplored
+parts of the \gls{search space}.
+%
+To this end, we first branch on the $\mVar{ocost}$~\glspl{variable}, selecting
+the \gls{variable}~$v$ with the maximum \gls!{regret} -- that is, the
+\gls{variable} with the largest difference between the two smallest values in
+its \gls{domain} -- and the smallest value in the \gls{domain} of~$v$.
+%
+The intuition here is that, because our \gls{objective function} strives to
+minimize the total cost, we wish to minimize the cost incurred per
+\gls{operation}.
+%
+By selecting the \gls{variable} with the maximum \gls{regret}, we try to cover
+the \glspl{operation} for which to cost of bad decisions is largest, and for
+these we obviously try to cover these at least cost.
+%
+Note that this \gls{branching strategy} is only possible due to the refined
+\gls{objective function} described earlier in this chapter.
+
+Remaining decisions are left to the \gls{constraint solver}.
+%
+To improve \gls{match} selection, however, we make sure to arrange them in
+order of increasing latency.
+%
+If there is a tie between two \glspl{match}, and either of them is a \gls{kill
+  match}, then the \gls{kill match} comes first.
+%
+Otherwise, the \gls{match} covering more \glspl{operation} comes first (hence
+mimicking the scheme of \gls{maximum munch}).
+%
+This is because the \gls{constraint solver} will most likely attempt to select
+\glspl{match} in the order given to the \glsshort{constraint model}.
+%
+In such a setting, it is generally a good approach to first try a \gls{kill
+  match}, which incurs no cost and encourages value reuse, and then the
+\gls{match} which incurs the least cost.ma
 
 
 \section{Presolving}
