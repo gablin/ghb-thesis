@@ -8,13 +8,21 @@
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
+\setlength{\opNodeDist}{12pt}%
 \providecommand{\fallthruString}{fall-thru}
-\begin{tikzpicture}
+\begin{tikzpicture}[
+    block node/.append style={
+      minimum width=1cm,
+    },
+  ]
+
   \node [block node] (entry) {\strut\opBlock{entry}};
   \node [control node, below=of entry] (c) {\opCondBr};
-  \node [block node, position=-135 degrees from c] (true)
+  \node [block node, node distance=1.33\opNodeDist,
+         position=-135 degrees from c] (true)
         {\strut\opBlock{true}};
-  \node [block node, position=- 45 degrees from c] (false)
+  \node [block node, node distance=1.33\opNodeDist,
+         position=- 45 degrees from c] (false)
         {\strut\opBlock{false}};
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
