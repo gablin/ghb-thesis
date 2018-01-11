@@ -1160,14 +1160,14 @@ It is assumed there exists exactly one \gls{kill match} to cover each \gls{copy
 As explained in \refChapter{constraint-programming}, the \gls{branching
   strategy} decides how to explore the \gls{search space}.
 %
-In optimization problems, it is generally a good approach to try to find the
-optimal \gls{solution} first as that will allow pruning of the still unexplored
-parts of the \gls{search space}.
+Following the \gls{first-fail principle} (see \refSection{cp-search} on
+\refPageOfSection{cp-search}), we first branch on the
+$\mVar{ocost}$~\glspl{variable}.
 %
-To this end, we first branch on the $\mVar{ocost}$~\glspl{variable}, selecting
-the \gls{variable}~$v$ with the maximum \gls!{regret} -- that is, the
-\gls{variable} with the largest difference between the two smallest values in
-its \gls{domain} -- and the smallest value in the \gls{domain} of~$v$.
+When branching on these \glspl{variable}, we select the \gls{variable}~$v$ with
+largest difference between the two smallest values in its \gls{domain} -- this
+is typically called the maximum \gls!{regret}~\cite{Sen:2010} -- and the
+smallest value in the \gls{domain} of~$v$.
 %
 The intuition here is that, because our \gls{objective function} strives to
 minimize the total cost, we wish to minimize the cost incurred per
@@ -1175,7 +1175,12 @@ minimize the total cost, we wish to minimize the cost incurred per
 %
 By selecting the \gls{variable} with the maximum \gls{regret}, we try to cover
 the \glspl{operation} for which to cost of bad decisions is largest, and for
-these we obviously try to cover these at least cost.
+these we obviously try to cover these at least cost.\!%
+%
+\footnote{%
+  In the field of decision theory, this is known as the \gls!{minimax}
+  approach~\cite{Savage:1951}.
+}
 %
 Note that this \gls{branching strategy} is only possible due to the refined
 \gls{objective function} described earlier in this chapter.
