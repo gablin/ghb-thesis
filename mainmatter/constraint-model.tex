@@ -685,12 +685,24 @@ The resulting \gls{UP graph} will now yield the same \glspl{match} as before
 
 \subsection{Handling Calling Conventions}
 
-The method for handling \gls{data copying} can also be used for handling calling
-conventions of the specific \gls{target machine}.
+The method for handling \gls{data copying} can also be used for handling
+\glspl{calling convention} of the specific \gls{target machine}.\!%
 %
-\Glspl{constraint} that callee arguments (that is, arguments to the
-\gls{function} under compilation) must reside in a specific \gls{location} are
-modeled as
+\footnote{%
+  A \gls!{calling convention} is an implementation scheme that defines how
+  arguments and return values are passed and received when making a
+  \gls{function} call.
+  %
+  The \gls{function} from which the call is made is typically called the
+  \gls!{caller}, and the \gls{function} to which the call is made is called the
+  \gls!{callee}.
+  %
+  A \gls{calling convention} is specific for the \gls{target machine} and may
+  therefore differ from one \glsshort{target machine} to another.
+}
+%
+\Glspl{constraint} that \gls{callee} arguments must reside in a specific
+\gls{location} are modeled as
 %
 \begin{equation}
   \mVar{loc}[d] \in \mArgLoc(d)
@@ -707,14 +719,12 @@ Arguments residing on the stack can be signified by introducing another special
 \gls{location}, thus requiring a memory load \gls{instruction} in order to be
 used by other \glspl{instruction}.
 
-\Glspl{location} for caller arguments (that is, arguments to \glspl{function}
-calls made from within the \gls{function} under compilation) can be enforced
-either through \refEquation{function-args} or through
-\refEquation{compatible-locations}.
+\Glspl{location} for caller arguments can be enforced either through
+\refEquation{function-args} or through \refEquation{compatible-locations}.
 %
-If the calling convention depends on the \gls{instruction} selected then the
-former is needed, otherwise the latter is more suitable as the restrictions can
-be enforced before a \gls{match} is selected.\!%
+If the \gls{calling convention} depends on the \gls{instruction} selected then
+the former is needed, otherwise the latter is more suitable as the restrictions
+can be enforced before a \gls{match} is selected.\!%
 %
 \footnote{%
   If exactly one \gls{match}~$m$ can cover a given \gls{function} call
