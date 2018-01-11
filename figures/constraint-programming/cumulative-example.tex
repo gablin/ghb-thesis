@@ -5,9 +5,11 @@
 % of the license).
 %
 \begingroup%
+\providecommand{\drawMoreTasks}{}%
 \figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
 \pgfdeclarelayer{foreground}%
-\pgfsetlayers{main,foreground}%
+\pgfsetlayers{background,main,foreground}%
 \def\gridYSize{6mm}%
 \def\gridXSize{3mm}%
 \def\axisWidth{1pt}%
@@ -36,7 +38,7 @@
 
   % Grid
   \foreach \y in {0, ..., 3} {
-    \foreach \x in {0, ..., 20} {
+    \foreach \x in {0, ..., 17} {
       \pgfmathtruncatemacro{\py}{\y - 1};
       \pgfmathtruncatemacro{\px}{\x - 1};
       \ifnum \x>0
@@ -59,7 +61,7 @@
             (3-0);
       \draw ([xshift=-.5*\axisWidth] 0-0)
             -- coordinate (x-axis)
-            (0-20);
+            (0-17);
     \end{scope}
   \end{pgfonlayer}
   \node [label, left=of y-axis] {\rotatebox{90}{capacity}};
@@ -68,18 +70,19 @@
   % Limit
   \draw [limit] (2-0)
         -- coordinate [pos=.075] (limit)
-        (2-20);
+        (2-17);
   \node [label, node distance=3pt, above=of limit] {limit};
 
   % Tasks
   \node [task, fit=(0-0) (1-5)] (t1) {};
   \node [task, fit=(1-3) (2-7)] (t2) {};
   \node [task, fit=(0-7) (2-12)] (t3) {};
-  \node [task, fit=(0-12) (1-19)] (t4) {};
-  \node [task, fit=(1-12) (2-17)] (t5) {};
+  \node [task, fit=(0-12) (1-16)] (t4) {};
 
-  \foreach \i in {1, ..., 5} {
+  \foreach \i in {1, ..., 4} {
     \node [nothing] at (t\i) {$t_\i$};
   }
+
+  \drawMoreTasks
 \end{tikzpicture}%
 \endgroup%

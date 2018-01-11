@@ -486,20 +486,39 @@ follows.
 \end{definition}
 
 \begin{figure}
-  \centering%
-  \input{figures/constraint-programming/cumulative-example}
+  \subcaptionbox{A solution\labelFigure{cumulative-example-solution}}%
+                {%
+                  \input{%
+                    figures/constraint-programming/cumulative-example-solution%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Not a solution; the capacity is exceeded%
+                  \labelFigure{cumulative-example-failure}%
+                }%
+                [60mm]%
+                {%
+                  \input{%
+                    figures/constraint-programming/cumulative-example-failure%
+                  }%
+                }
 
-  \caption[Example illustrating the cumulative constraint]%
+  \caption[Examples to illustrate the cumulative constraint]%
           {%
-            Example of a solution to the cumulative constraint.
+            Examples for the cumulative constraint.
             %
             Each box represents a task%
           }
   \labelFigure{cumulative-example}
 \end{figure}
 
-For example, the schedule shown in \refFigure{cumulative-example} is a
+For example, the schedule shown in \refFigure{cumulative-example-solution} is a
 \gls{solution} to this \gls{constraint}.
+%
+Likewise, the schedule shown in \refFigure{cumulative-example-failure} is not a
+\gls{solution} because tasks~$t_4$ and~$t_5$ exceed the capacity when scheduled
+in parallel.
 
 As will be seen in \refChapter{future-work}, $\mCumulative$ is used to integrate
 \gls{instruction scheduling}.
