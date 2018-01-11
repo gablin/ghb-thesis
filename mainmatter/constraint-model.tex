@@ -95,7 +95,7 @@ Similarly, $m$ \gls!{use.d}[s] $d$ if there exists an outbound
 of $m$.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 Given a \gls{UF graph}~$\mUFGraph$ and a set~$\mMatchSet$ of \glspl{match} found
 for $\mUFGraph$, the set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0,
@@ -118,7 +118,7 @@ the set of \glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq
   \mMatchSet$} denotes the set of \glspl{match} that can \gls{define.d}~$d$.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 If an \gls{operation}~$o$ is covered by a \gls{match}~$m$, then that entails
 selection of $m$, and vice versa.
@@ -240,7 +240,7 @@ add \glspl{constraint} forbidding selection of all \glspl{match} appearing in a
 \gls{cycle}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 Given a set~\mbox{$\mForbiddenCombSet \subseteq \mPowerset{\mMatchSet}$} of
 \glspl{cycle} found for the \gls{dependency graph} built from a \gls{UF graph}
@@ -326,7 +326,7 @@ The \glspl{phi-match} must be excluded since, due to the \glspl{definition
 \gls{block} wherein the \gls{phi-match} must be placed.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{oplace}[o] \in \mBlockSet$} models in
 which \gls{block} \gls{operation}~$o$ is placed, where $\mBlockSet$ denotes the
@@ -336,7 +336,7 @@ Likewise, the set of \glspl{variable} \mbox{$\mVar{dplace}[d] \in \mBlockSet$}
 models in which \gls{block} the definition of \gls{datum}~$d$ is placed.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 Intuitively, all \glspl{operation} covered by a \gls{match}~$m$ must be placed
 in the same \gls{block} wherein $m$ itself is placed.
@@ -523,7 +523,7 @@ requires $v$ to be in one of a set~$L$ of \glspl{location} can then enforce, if
 selected, that \mbox{$\mVar{x} \in L$}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{loc}[d] \in \mLocationSet \cup
   \mSet{\mIntLocation}$} models in which \gls{location} \gls{datum}~$d$ is
@@ -543,7 +543,7 @@ A value which is not an \gls{intermediate value} is called an \gls!{exterior
   value}, meaning it can be accessed by other \glspl{instruction}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 Every \gls{datum} must be made available in a \gls{location} that is compatible
 for all selected \glspl{match}.
@@ -1018,7 +1018,7 @@ next step is to extend the \gls{constraint model} with an another level of
 indirection wherever a \gls{constraint} refers to a \gls{datum}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 Assume first that each \glsshort{define.d}[ition] or \glsshort{use.d}[age] of
 \glspl{datum} within each \gls{match} incurs a unique \gls!{operand}.
@@ -1034,7 +1034,7 @@ to which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
 by~$\mMatchSet$.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 As stated previously, the aim is to add another level of indirection whenever a
 \gls{constraint} refers to a \gls{datum}.
@@ -1167,7 +1167,7 @@ This leaves a pool of \num{453}~\glspl{function}, on which we then perform
 sampling.
 
 
-\subsubsection{Match Duplication \versus Alternative Values}
+\paragraph{Match Duplication \versus Alternative Values}
 
 \def\modelA{\textsc{i}}
 \def\modelB{\textsc{ii}}
@@ -1258,7 +1258,7 @@ Hence we conclude that, when implementing \gls{value reuse}, \glspl{alternative
   value} is a better design choice over \gls{match duplication}.
 
 
-\subsubsection{Impact of Value Reuse}
+\paragraph{Impact of Value Reuse}
 
 \def\modelA{\textsc{i}}
 \def\modelB{\textsc{ii}}
@@ -1427,7 +1427,7 @@ We first introduce the \glspl{variable} and \glspl{constraint} for modeling
 experiments showing that one is superior to the other.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{succ}[b] \in \mBlockSet$} models the
 successor of block~$b$\hspace{-.5pt}.
@@ -1436,7 +1436,7 @@ For example, if \mbox{$\mVar{succ}[b] = b'$}, then \gls{block}~$b'$ will appear
 immediately after \gls{block}~$b$ in the \gls{block ordering} sequence.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 A \gls{solution} to the \gls{block ordering} problem is a sequence of
 \gls{block} successors such that they form a \gls{cycle}.
@@ -1845,7 +1845,7 @@ In this chapter we introduce a straightforward but naive implementation of the
 \gls{objective function}, which will be refined in the next chapter.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The \gls{cost variable} \mbox{$\mVar{cost} \in \mathbb{N}$} models the total
 cost of the selected \glspl{match}.
@@ -1853,7 +1853,7 @@ cost of the selected \glspl{match}.
 It is assumed the total cost can never be negative.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 A straightforward implementation of the \gls{objective function} described above
 can be modeled as
@@ -1913,7 +1913,7 @@ elimination of common subexpressions, and the third concerns implicit sign and
 zero extensions and truncations.
 
 
-\subsubsection{Recomputation}
+\paragraph{Recomputation}
 
 For some combinations of \glspl{function} and \glspl{target machine}, it may be
 beneficial to \glsshort!{recomputation} values appearing in common
@@ -1983,7 +1983,7 @@ dissertation which are needed for scalability and robustness rely on exact
 \gls{cover}[age].
 
 
-\subsubsection{If-Conversions}
+\paragraph{If-Conversions}
 
 In most cases, performing a branch incurs a performance penalty.
 %
@@ -2093,7 +2093,7 @@ This problem can be fixed by relaxing the \gls{constraint} of exact
 of the necessary solving techniques.
 
 
-\subsubsection{Implicit Sign or Zero Extensions}
+\paragraph{Implicit Sign or Zero Extensions}
 
 In cases where the \gls{function} contains sign or zero extensions, depending on
 the hardware the \gls{constraint model} may produce code with redundant
