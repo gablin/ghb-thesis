@@ -53,7 +53,7 @@ $m$\hspace{-1pt}, holds for every \gls{match}~$m'$ that \gls{use.d}[s]
 To model this problem, we require two new \glspl{variable}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{cycle}[m] \in \mNatNumSet$} models at
 which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
@@ -61,7 +61,7 @@ which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
 scheduled in \gls{block}~$b$\hspace{-1pt}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 If a selected \gls{match}~$m_1$ \gls{define.d}[s] a \gls{datum}~$d$ which is
 used by another selected \gls{match}~$m_2$ and $m_1$ and $m_2$ are both placed
@@ -88,6 +88,9 @@ This can be modeled as
 %
 where \mbox{$\mBlockOf(m) \in \mBlockSet$} denotes the block wherein $m$ is
 placed (see \refEquation{block-of-function}).
+
+
+\subsection{Handling VLIW Architectures}
 
 If the \gls{target machine} is a \gls{VLIW} architecture, then special care must
 be taken to ensure that the resource capacities are not exceeded by the
@@ -340,7 +343,7 @@ Also, since the \glspl{live range} depend on the schedule, we build upon the
 \gls{constraint model} proposed in \refSection{fw-isched}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The two sets of \glspl{variable} \mbox{$\mVar{start}[d] \in \mNatNumSet$} and
 \mbox{$\mVar{end}[d] \in \mNatNumSet$} models the start respectively end of the
@@ -356,7 +359,7 @@ In addition, the set of \glspl{variable} \mbox{$\mVar{alive}[d] \in \mSet{0,
 \gls{match}~$m$ uses \gls{datum}~$d$\hspace{-1pt}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 First, we constrain the $\mVar{alive}$~\glspl{variable} according to the
 definition of what it means for \glspl{datum} to be \gls{killed.d}, which is
@@ -608,7 +611,7 @@ for each \gls{block} in the \gls{function} together with an additional set of
 \glspl{block}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The two sets of \glspl{variable} \mbox{$\mVar{start}[d \hspace{-1pt}, b] \in
   \mNatNumSet$} and \mbox{$\mVar{end}[d \hspace{-1pt}, b] \in \mNatNumSet$}
@@ -622,7 +625,7 @@ making use of $d$ in one of the \glspl{block} to which a branch from $b$ can
 occur.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 Even with multiple \glspl{block}, the start of a \gls{live range} is still
 determined by the \gls{match} defining the \gls{datum}.
