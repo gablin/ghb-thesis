@@ -201,6 +201,14 @@ For completeness, we give here the formal definition of the \gls{constraint}.
   \labelDefinition{gcc}
 \end{definition}
 
+For example, \mbox{$\mGCC(3, \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3},
+  \mVar{y} \in \mSet{1})$} holds because exactly one of the
+$\mVar{x}$~\glspl{variable} is assigned value~$3$.
+%
+Similarly, \mbox{$\mGCC(3, \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3},
+  \mVar{y} \in \mSet{0, 2})$} does not holds because either none or both of the
+$\mVar{x}$~\glspl{variable} must be assigned value~$3$.
+
 
 \paragraph{The Circuit Constraint}
 
