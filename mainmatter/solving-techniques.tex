@@ -10,39 +10,42 @@
 This chapter introduces the techniques applied for improving solving of the
 \gls{constraint model} presented in the previous chapter.
 %
-\todo{rewrite}
+We begin in \refSectionList{st-refining-define-before-use-constraint,
+  st-refined-objective-function} with refining the \gls{constraint model}
+introduced in \refChapter{constraint-model} in order to strengthen
+\gls{propagation}.
 %
-\RefSection{st-model-refinements} introduces \glsshort{constraint model}
-refinements to strenghten \gls{propagation}.
+We continue to augment the \glsshort{constraint model} in
+\refSectionList{st-impl-constraints, st-dom-breaking-constraints} by adding
+\gls{implied.c}, \gls{symmetry breaking.c}, and \gls{dominance breaking.c}
+\glspl{constraint}.
 %
-\RefSection{st-cost-bounds} introduces techniques for bounding the \gls{cost
-  variable}.
+We then describe techniques for tightening the cost bounds in
+\refSection{st-cost-bounds} and describe the \glspl{branching strategy} applied
+in our approach in \refSection{st-branching-strategies}.
 %
-\RefSection{st-branching-strategies} introduces \glspl{branching strategy}.
+In \refSection{st-presolving}, we describe \gls{presolving} techniques for
+removing \glspl{match} that, for one reason or another, can be removed before
+instantiating the \glsshort{constraint model}.
 %
-\RefSectionList{st-impl-constraints, st-dom-breaking-constraints} introduce
-\gls{implied.c} respectively \glsshort{symmetry breaking.c} and \gls{dominance
-  breaking.c} \glspl{constraint}.
+With all solving techniques in place, we then evaluate in
+\refSection{st-experimental-evaluation} the impact of these techniques, both
+individually and as groups.
 %
-\RefSection{st-presolving} introduces \gls{presolving} techniques.
-%
-\RefSection{st-experimental-evaluation} presents an experimental evaluation of
-the above techniques.
-%
-Lastly, \refSection{st-summary} summarizes the chapter.
+Lastly, a summary is given in\refSection{st-summary}.
 
-The material presented in \refSectionList{st-refining-define-before-use
-  constraint, st-branching-strategies, st-impl-constraints,
-  st-dom-breaking-constraints, st-pre-dom-matches, st-canonical-locations} is
-based on ideas conceived by Mats~Carlsson, which have then been improved by the
-author of this dissertation.
+The material presented in
+\refSectionList{st-refining-define-before-use-constraint, st-impl-constraints,
+  st-dom-breaking-constraints, st-branching-strategies, st-pre-dom-matches,
+  st-canonical-locations} is based on ideas conceived by Mats~Carlsson which
+have been improved by the author of this dissertation.
 %
 All other materials in this chapter, including the text and figures, are due
 entirely to the author.
 
 
 \section{Refining the Define-Before-Use Constraint}
-\labelSection{st-refining-define-before-use constraint}
+\labelSection{st-refining-define-before-use-constraint}
 
 In \refChapter{constraint-model}, a simple but naive implementation is used for
 implementing the \gls{constraint} that all \glspl{datum} must be
