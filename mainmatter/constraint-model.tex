@@ -1147,17 +1147,12 @@ These \glspl{constraint} are then modeled as
 
 \subsection{Experimental Evaluation}
 
-We first evaluate the two methods for \gls{value reuse} by comparing the solving
-time exhibited by two versions of the \gls{constraint model}: one based on
-\gls{match duplication}, and another based on \glspl{alternative value}.
+We first evaluate the two different methods for \gls{value reuse}.
 %
-Based on the results for the experiment above, we then evaluate the impact of
-\gls{value reuse} by comparing the cost of the optimal \gls{solution} produced
-by the better of the \glsplshort{constraint model} above with the cost of the
-optimal \gls{solution} produced by a \gls{constraint model} without \gls{value
-  reuse}.
+Based on the results, we then evaluate the impact of \gls{value reuse} using the
+superior method.
 
-For these experiments, we remove all \glspl{function} that have less than less
+When filtering, we remove all \glspl{function} that have less than less
 than ten~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
 likely not be benefitted by \gls{value reuse} -- and greater than
 \num{50}~\glspl{instruction} -- anything larger will lead to unreasonably long
@@ -1339,9 +1334,17 @@ frequently used as arguments to \gls{function} call \glspl{instruction} and thus
 cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
 to \num{208}~cycles.
 
-Based on the observations above, we conclude that \gls{value reuse} is essential
-for reducing the number of copy \glspl{instruction} and, subsequently, lowering
-cost.
+Hence we conclude that \gls{value reuse} is essential for reducing the number of
+copy \glspl{instruction} and, subsequently, lowering cost.
+
+\paragraph{Conclusions}
+
+Based on the results from this experiment, we conclude:
+%
+\begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
+  \item that \glspl{alternative value} are superior to \gls{match duplication}
+  \item that \gls{value reuse} significantly improves code quality
+\end{enumerate*}.
 
 
 \section{Modeling Block Ordering}
@@ -1735,10 +1738,12 @@ with the number of \glspl{block}.
 This is to evaluate how the methods behave as the number of \glspl{block} grow
 larger.
 
+
+\paragraph{Impact on Solving Time}
+
 \input{%
   \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
 }
-\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
 
 \begin{figure}
   \centering%
@@ -1774,6 +1779,56 @@ larger.
   }
 \end{figure}
 
+\RefFigure{dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
+shows the normalized solving times (including \gls{presolving} time) for the two
+\glspl{constraint model} described above, with \glsshort{constraint
+  model}~\refModel{branch-ext} as \gls{baseline} and \glsshort{constraint
+  model}~\refModel{dual-target} as \gls{subject}.
+%
+All \glspl{function} are solved to optimality and arranged in increasing order
+of number of conditional branch \glspl{instruction}.
+%
+The solving times range from
+\printMinSolvingTime{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
+}
+to
+\printMaxSolvingTime{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
+}
+with a maximum coefficient of variation of
+\numMaxOf{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax,
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax
+}.
+
+As the \gls{GMI} is \printGMI{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}, we see that \glsshort{constraint model}~\refModel{dual-target} results in
+significantly shorter solving times than \glsshort{constraint
+  model}~\refModel{branch-ext}.
+%
+We also observe that, as expected, when the number of conditional branch
+\glspl{instruction} increases -- up to \num{13}, in the case of {\codeFont
+  nextkeypacket} -- the \gls{search space} for \glsshort{constraint
+  model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
+  model}~\refModel{dual-target}.
+%
+Hence we conclude that, in terms of solving time,
+\glspl{DTB pattern} is a better design choice over \gls{branch extension} when
+implementing insertion of jump \glspl{instruction}.
+
+
+\paragraph{Impact on Code Quality}
+
+\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
+
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1803,11 +1858,8 @@ larger.
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
 
-\RefFigureList{%
-  dual-target-branch-patterns-vs-branch-extension-solving-time-plot,
-  dual-target-branch-patterns-vs-branch-extension-cycles-plot%
-} show the normalized solving times (including \gls{presolving} time) and
-\gls{solution} costs, respectively, for the two \glspl{constraint model}
+\RefFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot} shows
+the normalized \gls{solution} costs for the two \glspl{constraint model}
 described above, with \glsshort{constraint model}~\refModel{branch-ext} as
 \gls{baseline} and \glsshort{constraint model}~\refModel{dual-target} as
 \gls{subject}.
@@ -1815,21 +1867,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
 %
-The solving times range from
-\printMinSolvingTime{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
-}
-to
-\printMaxSolvingTime{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMax,
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMax
-}
-with a maximum coefficient of variation of
-\numMaxOf{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax,
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax
-}, and the costs range from
+The costs range from
 \printMinCycles{
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMin,
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMin
@@ -1839,35 +1877,27 @@ with a maximum coefficient of variation of
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
 }.
 
-As the \gls{GMI} for solving time is \printGMI{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
-}{%
-  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\refModel{dual-target} results in
-significantly shorter solving times than \glsshort{constraint
-  model}~\refModel{branch-ext}.
-%
-We also observe that, as expected, when the number of conditional branch
-\glspl{instruction} increases -- up to \num{13}, in the case of {\codeFont
-  nextkeypacket} -- the \gls{search space} for \glsshort{constraint
-  model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
-  model}~\refModel{dual-target}.
-
-In addition, as the \gls{GMI} for cost is \printGMI{%
+As the \gls{GMI} is \printGMI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
     \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that, in some cases, \glsshort{constraint model}~\refModel{dual-target} produces
-optimal \glspl{solution} with slightly lower cost compared those produced by
-\glsshort{constraint model}~\refModel{branch-ext}.
+}, we see that, in some cases, \glsshort{constraint
+  model}~\refModel{dual-target} produces optimal \glspl{solution} with slightly
+lower cost compared those produced by \glsshort{constraint
+  model}~\refModel{branch-ext}.
+%
+Hence we conclude that, in terms of code quality,
+\glspl{DTB pattern} is a better design choice over \gls{branch extension} when
+implementing insertion of jump \glspl{instruction}.
 
-Based on the observations above, we conclude that \glspl{DTB pattern} is a
-better design choice over \gls{branch extension} when implementing insertion of
-jump \glspl{instruction}.
+
+\paragraph{Conclusions}
+
+Based on the results from these experiments, we conclude that \glspl{DTB
+  pattern} are superior, both in terms of solving time and code quality, to
+\gls{branch extension}.
 
 
 \section{Objective Function}

@@ -1633,7 +1633,7 @@ with their \gls{canonical.l} representative and then replace the original
 Excluding the refinement described in \refSection{st-refining-define-before-use
   constraint}, whose naive equivalence cannot be implemented on this
 experimental setup and therefore not be evaluated, we now evaluate the impact of
-each solving technique introduced in this chapter.
+the solving techniques introduced in this chapter.
 
 When filtering, we remove all \glspl{function} that have less than less than
 \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
@@ -1659,7 +1659,16 @@ When using an upper bound for a given \gls{function}, we take the cost for the
 
 \subsection{Objective Function Refinements and Cost Bounding}
 
-First, we evaluate the different methods for computing the cost matrix by
+We first evaluate the different methods for computing the cost matrix.
+%
+Based on the results, we then use the superior method to evaluate the impact
+that the different implementations of the \gls{objective function}, coupled with
+cost bounding, have on solving time and code quality.
+
+
+\paragraph{Multiply-then-Divide \versus Divide-then-Multiply}
+
+We evaluate the different methods for computing the cost matrix by
 comparing the solving times exhibited by two versions of the \gls{constraint
   model}:
 %
@@ -1671,57 +1680,6 @@ comparing the solving times exhibited by two versions of the \gls{constraint
 \end{modelList}.
 %
 No hypothesis is attempted on which \glsshort{constraint model} is better.
-
-Second, based on the results for the experiment above, we evaluate the impact
-that the refined \gls{objective function} together with cost bounding have on
-solving by comparing the number of \glspl{function} that can be solved optimally
-by five versions of the \gls{constraint model}:
-%
-\begin{modelList}[resume]
-  \item \labelModel{obj-fun-naive-no-b}
-    one based on the naive implementation of the \gls{objective function}
-    (\refEquation{naive-objective-function}), without cost bounds
-  \item \labelModel{obj-fun-naive-ub}
-    another naive \glsshort{constraint model} but with upper bound
-  \item \labelModel{obj-fun-refined-no-b}
-    one based on the refined implementation
-    (\refEquationList{omatch-oplace-ocost-connection, total-cost}), without
-    bounds
-  \item \labelModel{obj-fun-refined-ub}
-    another refined \glsshort{constraint model} but with upper bound
-  \item \labelModel{obj-fun-refined-lb-ub}
-    another refined \glsshort{constraint model} but with both bounds
-\end{modelList}.
-
-Since the refined \gls{objective function} enables tighter bounds to be derived
-for the \gls{cost variable}, we expect \glsplshort{constraint
-  model}~\refModel{obj-fun-refined-no-b}, \refModel{obj-fun-refined-ub},
-and~\refModel{obj-fun-refined-lb-ub}{} to find a greater number of optimal
-\glspl{solution} compared with \glsplshort{constraint
-  model}~\refModel{obj-fun-naive-no-b} and~\refModel{obj-fun-naive-ub}.
-%
-Due to further tightening of the cost bounds, we expect \glsshort{constraint
-  model}~\refModel{obj-fun-naive-ub} to outperform \glsshort{constraint
-  model}~\refModel{obj-fun-naive-no-b}, \glsplshort{constraint
-  model}~\refModel{obj-fun-refined-ub}{} and~\refModel{obj-fun-refined-lb-ub}{}
-to outperform \glsshort{constraint model}~\refModel{obj-fun-refined-no-b}, and
-\glsshort{constraint model}~\refModel{obj-fun-refined-lb-ub} to outperform
-\glsshort{constraint model}~\refModel{obj-fun-refined-ub}.
-
-Third, we evaluate the impact on code quality by comparing the cost of the best
-\gls{solution} found within the time limit by \glsplshort{constraint
-  model}~\refModel{obj-fun-naive-ub} (naive \glsshort{constraint model} with
-upper bound) and~\refModel{obj-fun-refined-ub} (refined \glsshort{constraint
-  model} with upper bound).
-%
-For the same reason as with the second experiment, we expect the
-\glspl{solution} produced by \glsshort{constraint
-  model}~\refModel{obj-fun-refined-ub} to be of significantly better quality
-compared with those produced by \glsshort{constraint
-  model}~\refModel{obj-fun-naive-ub}.
-
-
-\paragraph{Multiply-then-Divide \versus Divide-then-Multiply}
 
 \input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
 
@@ -1812,7 +1770,42 @@ Based on the observation above, we conclude that the \gls{divide-then-multiply
 implementing the refined \gls{objective function}.
 
 
-\paragraph{Impact on Solving}
+\paragraph{Impact on Solving Time}
+
+We evaluate the impact that the refined \gls{objective function} together with
+cost bounding have on solving by comparing the number of \glspl{function} that
+can be solved optimally by five versions of the \gls{constraint model}:
+%
+\begin{modelList}[resume]
+  \item \labelModel{obj-fun-naive-no-b}
+    one based on the naive implementation of the \gls{objective function}
+    (\refEquation{naive-objective-function}), without cost bounds
+  \item \labelModel{obj-fun-naive-ub}
+    another naive \glsshort{constraint model} but with upper bound
+  \item \labelModel{obj-fun-refined-no-b}
+    one based on the refined implementation
+    (\refEquationList{omatch-oplace-ocost-connection, total-cost}) using the
+    \gls{divide-then-multiply method}, without bounds
+  \item \labelModel{obj-fun-refined-ub}
+    another refined \glsshort{constraint model} but with upper bound
+  \item \labelModel{obj-fun-refined-lb-ub}
+    another refined \glsshort{constraint model} but with both bounds
+\end{modelList}.
+
+Since the refined \gls{objective function} enables tighter bounds to be derived
+for the \gls{cost variable}, we expect \glsplshort{constraint
+  model}~\refModel{obj-fun-refined-no-b}, \refModel{obj-fun-refined-ub},
+and~\refModel{obj-fun-refined-lb-ub}{} to find a greater number of optimal
+\glspl{solution} compared with \glsplshort{constraint
+  model}~\refModel{obj-fun-naive-no-b} and~\refModel{obj-fun-naive-ub}.
+%
+Due to further tightening of the cost bounds, we expect \glsshort{constraint
+  model}~\refModel{obj-fun-naive-ub} to outperform \glsshort{constraint
+  model}~\refModel{obj-fun-naive-no-b}, \glsplshort{constraint
+  model}~\refModel{obj-fun-refined-ub}{} and~\refModel{obj-fun-refined-lb-ub}{}
+to outperform \glsshort{constraint model}~\refModel{obj-fun-refined-no-b}, and
+\glsshort{constraint model}~\refModel{obj-fun-refined-lb-ub} to outperform
+\glsshort{constraint model}~\refModel{obj-fun-refined-ub}.
 
 \begin{figure}
   \def\modelFont#1{{\small\figureFont#1}}
@@ -1911,6 +1904,18 @@ We also conclude that this decision is crucial for scalability.
 
 \paragraph{Impact on Code Quality}
 
+We evaluate the impact on code quality by comparing the cost of the best
+\gls{solution} found within the time limit by \glsplshort{constraint
+  model}~\refModel{obj-fun-naive-ub} (naive \glsshort{constraint model} with
+upper bound) and~\refModel{obj-fun-refined-ub} (refined \glsshort{constraint
+  model} with upper bound).
+%
+For the same reason as with the second experiment, we expect the
+\glspl{solution} produced by \glsshort{constraint
+  model}~\refModel{obj-fun-refined-ub} to be of significantly better quality
+compared with those produced by \glsshort{constraint
+  model}~\refModel{obj-fun-naive-ub}.
+
 \input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
 
 \begin{figure}
@@ -1991,6 +1996,20 @@ refined \gls{objective function} coupled with an upper cost bound is a better
 design choice over naive \gls{objective function}.
 
 
+\paragraph{Conclusions}
+
+Based on the results from these experiments, we conclude:
+%
+\begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
+  \item that the \gls{divide-then-multiply method} is superior to the
+    \gls{multiply-then-divide method}
+  \item that the refined implementation of the \gls{objective function} is
+    superior to the naive implementation
+  \item that using the refined \gls{objective function} together with an upper
+    cost bound is crucial for scalability
+\end{enumerate*}.
+
+
 \subsection{Implied Constraints}
 \labelSection{st-exp-evaluation-implied-constraints}
 
@@ -2050,7 +2069,19 @@ design choice over naive \gls{objective function}.
   \input{\expDir/solv-tech-#1-#2-pre+solving-time-speedup.stats}%
 }
 
-First, we evaluate the impact of each \gls{implied.c} \gls{constraint}
+We first evaluate the \gls{implied.c} \glspl{constraint} individually.
+%
+Based on the results, we then arrange them into groups to evaluate synergy
+effects.
+%
+To curb experiment runtimes, we include all other solving techniques in the
+\glsplshort{constraint model} because, without them, a very long time out would
+have to be applied to discover the impact on solving time.
+
+
+\paragraph{Impact of a Single Constraint}
+
+We evaluate the impact of each \gls{implied.c} \gls{constraint}
 (\refEquationRange{impl-cons-defs-dominate-defs}{impl-cons-fix-fall-throughs})
 by comparing the solving times exhibited by two versions of the \gls{constraint
   model}:
@@ -2078,40 +2109,6 @@ in solving time while others may degrade solving time.
 As described in \refChapter{constraint-programming}, this is because some
 \glspl{constraint} may be too expensive to execute compared with the amount of
 \gls{propagation} they provide.
-
-Second, based on the results for the experiment above, we then evaluate synergy
-effects among these \glspl{constraint} by comparing the solving times exhibited
-by \glspl{constraint model} with and without a given combination of
-\glspl{constraint}.
-%
-Because a full evaluation would require us to test every combination of
-\glspl{constraint}, which would result in an intractable number of experiments,
-we limit ourselves to only comparing the solving times exhibited by four
-versions of the \glsshort{constraint model}:
-%
-\begin{modelList}[resume]
-  \item \labelModel{impl-ex-no-cons}
-    one with no \gls{implied.c} \glspl{constraint}
-  \item \labelModel{impl-ex-only-good-cons}
-    one with only those who individually lead to an overall reduction in solving
-    time
-  \item \labelModel{impl-ex-no-bad-cons}
-    one without those who individually lead to an overall increase in solving
-    time
-  \item \labelModel{impl-ex-all-cons}
-    one with all such \glspl{constraint}
-\end{modelList}.
-
-We expect \glsplshort{constraint model}~\refModel{impl-ex-only-good-cons},
-\refModel{impl-ex-no-bad-cons}, and~\refModel{impl-ex-all-cons} to all perform
-better than \glsplshort{constraint model}~\refModel{impl-ex-no-cons}.
-%
-No hypothesis is attempted regarding the relative performance between
-\glsplshort{constraint model}~\refModel{impl-ex-only-good-cons},
-\refModel{impl-ex-no-bad-cons}, and~\refModel{impl-ex-all-cons}.
-
-
-\paragraph{Impact of a Single Constraint}
 
 \includeSolvTechStats{impl-cons-defs-dominate-defs}
 \includeSolvTechStats{impl-cons-defs-in-spanned-blocks}
@@ -2292,6 +2289,36 @@ For \refEquationList{impl-cons-defs-dominate-defs,
 
 \paragraph{Impact of Groups of Constraints}
 
+We evaluate synergy effects among the \gls{implied.c} \glspl{constraint} by
+comparing the solving times exhibited by \glspl{constraint model} with and
+without a given combination of \glspl{constraint}.
+%
+Because a full evaluation would require us to test every combination of
+\glspl{constraint}, which would result in an intractable number of experiments,
+we limit ourselves to only comparing the solving times exhibited by four
+versions of the \glsshort{constraint model}:
+%
+\begin{modelList}[resume]
+  \item \labelModel{impl-ex-no-cons}
+    one with no \gls{implied.c} \glspl{constraint}
+  \item \labelModel{impl-ex-only-good-cons}
+    one with only those who individually lead to an overall reduction in solving
+    time
+  \item \labelModel{impl-ex-no-bad-cons}
+    one without those who individually lead to an overall increase in solving
+    time
+  \item \labelModel{impl-ex-all-cons}
+    one with all such \glspl{constraint}
+\end{modelList}.
+
+We expect \glsplshort{constraint model}~\refModel{impl-ex-only-good-cons},
+\refModel{impl-ex-no-bad-cons}, and~\refModel{impl-ex-all-cons} to all perform
+better than \glsplshort{constraint model}~\refModel{impl-ex-no-cons}.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\refModel{impl-ex-only-good-cons},
+\refModel{impl-ex-no-bad-cons}, and~\refModel{impl-ex-all-cons}.
+
 \includeSolvTechStats[enable]{only-good-implied-cons}
 \includeSolvTechStats{bad-implied-cons}
 \includeSolvTechStats{all-implied-cons}
@@ -2414,20 +2441,44 @@ statistically negative yet still outperforms \glsshort{constraint
 effects between the \gls{implied.c} \glspl{constraint} whose collective positive
 impact on solving time is greater than the sum of its parts.
 
-Based on the observations above, we conclude that it is most beneficial to
-include all \gls{implied.c} \glspl{constraint} in the \glsshort{constraint
-  model}.
+Based on the observations above, we conclude that the \gls{implied.c}
+\glspl{constraint} have strong enough synergy effects among each other that it
+appears to be most beneficial to include all such \glspl{constraint} in the
+\glsshort{constraint model}.
+
+
+\paragraph{Conclusions}
+
+Based on the results from these experiments, we conclude:
+%
+\begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; but\ }]
+  \item that some of the \gls{implied.c} \glspl{constraint} have a positive
+    impact on solving time while others have a negative impact
+  \item due to strong synergy effects, it appears to be most beneficial to
+    include all \gls{implied.c} \glspl{constraint} in the \glsshort{constraint
+      model}
+\end{enumerate*}.
 
 
 \subsection{Symmetry and Dominance Breaking Constraints}
 \labelSection{st-exp-evaluation-dom-constraints}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
+Like in \refSection{st-exp-evaluation-implied-constraints}, we first evaluate
+the \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
+\glspl{constraint} individually.
+%
+Based on the results, we then arrange them into groups to evaluate synergy
+effects.
+%
+To curb experiment runtimes, we include all other solving techniques in the
+\glsplshort{constraint model} because, without them, a very long time out would
+have to be applied to discover the impact on solving time.
 
-First, like in \refSection{st-exp-evaluation-implied-constraints} we evaluate
-the impact of each \glsshort{symmetry breaking.c} and \gls{dominance breaking.c}
-\gls{constraint}
+
+\paragraph{Impact of a Single Constraint}
+
+We evaluate the impact of each \glsshort{symmetry breaking.c} and \gls{dominance
+  breaking.c} \gls{constraint}
 (\refEquationRange{dom-cons-locs-of-states}{dom-cons-kill-match-selection}) by
 comparing the solving times exhibited by two versions of the \gls{constraint
   model}:
@@ -2443,40 +2494,6 @@ comparing the solving times exhibited by two versions of the \gls{constraint
 For the same reason as with the \gls{implied.c} \glspl{constraint}, we expect
 some \glspl{constraint} to lead to an overall reduction in solving time while
 others may degrade solving time.
-
-Second, based on the results for the experiment above, we then evaluate synergy
-effects among these \glspl{constraint} by comparing the solving times exhibited
-by \glspl{constraint model} with and without a given combination of
-\glspl{constraint}.
-%
-Again, for practicality we limit ourselves to only comparing the solving times
-exhibited by four versions of the \glsshort{constraint model}:
-%
-\begin{modelList}[resume]
-  \item \labelModel{dom-ex-no-cons}
-    one with no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
-    \glspl{constraint}
-\gls{implied.c} \glspl{constraint}
-  \item \labelModel{dom-ex-only-good-cons}
-    one with only those who individually lead to an overall reduction in solving
-    time
-  \item \labelModel{dom-ex-no-bad-cons}
-    one without those who individually lead to an overall increase in solving
-    time
-  \item \labelModel{dom-ex-all-cons}
-    one with all such \glspl{constraint}
-\end{modelList}.
-%
-We expect \glsplshort{constraint model}~\refModel{dom-ex-only-good-cons},
-\refModel{dom-ex-no-bad-cons}, and~\refModel{dom-ex-all-cons} to all perform
-better than \glsplshort{constraint model}~\refModel{dom-ex-no-cons}.
-%
-No hypothesis is attempted regarding the relative performance between
-\glsplshort{constraint model}~\refModel{dom-ex-only-good-cons},
-\refModel{dom-ex-no-bad-cons}, and~\refModel{dom-ex-all-cons}.
-
-
-\paragraph{Impact of a Single Constraint}
 
 \includeSolvTechStats{dom-cons-locs-of-states}
 \includeSolvTechStats{dom-cons-operands-of-non-selected-matches}
@@ -2606,6 +2623,37 @@ results are inconclusive.
 
 \paragraph{Impact of Groups of Constraints}
 
+We evaluate synergy effects among the \glsshort{symmetry breaking.c} and
+\gls{dominance breaking.c} \glspl{constraint} by comparing the solving times
+exhibited by \glspl{constraint model} with and without a given combination of
+\glspl{constraint}.
+%
+Again, for practicality we limit ourselves to only comparing the solving times
+exhibited by four versions of the \glsshort{constraint model}:
+%
+\begin{modelList}[resume]
+  \item \labelModel{dom-ex-no-cons}
+    one with no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
+    \glspl{constraint}
+\gls{implied.c} \glspl{constraint}
+  \item \labelModel{dom-ex-only-good-cons}
+    one with only those who individually lead to an overall reduction in solving
+    time
+  \item \labelModel{dom-ex-no-bad-cons}
+    one without those who individually lead to an overall increase in solving
+    time
+  \item \labelModel{dom-ex-all-cons}
+    one with all such \glspl{constraint}
+\end{modelList}.
+%
+We expect \glsplshort{constraint model}~\refModel{dom-ex-only-good-cons},
+\refModel{dom-ex-no-bad-cons}, and~\refModel{dom-ex-all-cons} to all perform
+better than \glsplshort{constraint model}~\refModel{dom-ex-no-cons}.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\refModel{dom-ex-only-good-cons},
+\refModel{dom-ex-no-bad-cons}, and~\refModel{dom-ex-all-cons}.
+
 \RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
 times (including \gls{presolving} time) for three of the \glspl{constraint
   model} described above in the second experiment, with \glsshort{constraint
@@ -2674,19 +2722,45 @@ Despite a \gls{GMI} of \printGMI{%
 } means it is not worthwhile to include all \glsshort{symmetry breaking.c} and
 \gls{dominance breaking.c} \glspl{constraint}.
 
-Based on the observations above, we conclude that it is most beneficial to only
-include \refEquationList{dom-cons-null-copy-match-selection,
+Based on the observations above, we conclude that the \glsshort{symmetry
+  breaking.c} and \gls{dominance breaking.c} \glspl{constraint} in the
+\glsshort{constraint model} do not have strong enough synergy effects among each
+other that it appears to be most beneficial to only include
+\refEquationList{dom-cons-null-copy-match-selection,
   dom-cons-kill-match-selection} in the \glsshort{constraint model}.
+
+
+\paragraph{Conclusions}
+
+Based on the results from these experiments, we conclude:
+%
+\begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
+  \item that some of the \glsshort{symmetry breaking.c} and \gls{dominance
+    breaking.c} \glspl{constraint} have a positive impact on solving time
+  \item that, due to weak synergy effects, it appears to be most beneficial to
+    only include those \glsshort{symmetry breaking.c} and \gls{dominance
+      breaking.c} \glspl{constraint} in the \glsshort{constraint model}
+\end{enumerate*}.
 
 
 \subsection{Presolving}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
+Like in \refSectionList{st-exp-evaluation-implied-constraints,
+  st-exp-evaluation-dom-constraints}, we first evaluate the \gls{presolving}
+techniques individually.
+%
+Based on the results, we then arrange them into groups to evaluate synergy
+effects.
+%
+To curb experiment runtimes, we include all other solving techniques in the
+\glsplshort{constraint model} because, without them, a very long time out would
+have to be applied to discover the impact on solving time.
 
-First, like in \refSectionList{st-exp-evaluation-implied-constraints,
-  st-exp-evaluation-dom-constraints}, we evaluate the impact of each
-\gls{presolving} technique (\refSection{st-pre-dom-matches},
+
+\paragraph{Impact of a Single Technique}
+
+We evaluate the impact of each \gls{presolving} technique
+(\refSection{st-pre-dom-matches},
 \refEquationRange{illegal-matches-uncovered-ops}{redun-non-null-copy-matches},
 and \refSection{st-canonical-locations}) by comparing the solving times
 exhibited by two versions of the \gls{constraint model}:
@@ -2701,43 +2775,6 @@ exhibited by two versions of the \gls{constraint model}:
 For the same reason as with the \gls{implied.c}, \gls{symmetry breaking.c},
 \gls{dominance breaking.c} \glspl{constraint}, we expect some techniques to lead
 to an overall reduction in solving time while others may degrade solving time.
-
-\def\modelC{\textsc{iii}}
-\def\modelD{\textsc{iv}}
-\def\modelE{\textsc{v}}
-\def\modelF{\textsc{vi}}
-
-Second, based on the results for the experiment above, we then evaluate synergy
-effects among these techniques by comparing the solving times exhibited by
-\glspl{constraint model} with and without a given combination of techniques.
-%
-Again, for practicality we limit ourselves to only comparing the solving times
-exhibited by four versions of the \glsshort{constraint model}:
-%
-\begin{modelList}[resume]
-  \item \labelModel{pre-ex-no-techs}
-    one with no \gls{presolving} techniques
-\gls{implied.c} \glspl{constraint}
-  \item \labelModel{pre-ex-only-good-techs}
-    one with only those who individually lead to an overall reduction in solving
-    time
-  \item \labelModel{pre-ex-no-bad-techs}
-    one without those who individually lead to an overall increase in solving
-    time
-  \item \labelModel{pre-ex-all-techs}
-    one with all such techniques
-\end{modelList}.
-%
-We expect \glsplshort{constraint model}~\refModel{pre-ex-only-good-techs},
-\refModel{pre-ex-no-bad-techs}, and~\refModel{pre-ex-all-techs} to all perform
-better than \glsplshort{constraint model}~\refModel{pre-ex-no-techs}.
-%
-No hypothesis is attempted regarding the relative performance between
-\glsplshort{constraint model}~\refModel{pre-ex-only-good-techs},
-\refModel{pre-ex-no-bad-techs}, and~\refModel{pre-ex-all-techs}.
-
-
-\paragraph{Impact of a Single Technique}
 
 \includeSolvTechStats{dom-matches}
 \includeSolvTechStats{illegal-matches-uncovered-ops}
@@ -2862,6 +2899,35 @@ and \gls{canonical.l} \glspl{location}, the results are inconclusive.
 
 
 \paragraph{Impact of Groups of Techniques}
+
+We evaluate synergy effects among the \gls{presolving} techniques by comparing
+the solving times exhibited by \glspl{constraint model} with and without a given
+combination of techniques.
+%
+Again, for practicality we limit ourselves to only comparing the solving times
+exhibited by four versions of the \glsshort{constraint model}:
+%
+\begin{modelList}[resume]
+  \item \labelModel{pre-ex-no-techs}
+    one with no \gls{presolving} techniques
+\gls{implied.c} \glspl{constraint}
+  \item \labelModel{pre-ex-only-good-techs}
+    one with only those who individually lead to an overall reduction in solving
+    time
+  \item \labelModel{pre-ex-no-bad-techs}
+    one without those who individually lead to an overall increase in solving
+    time
+  \item \labelModel{pre-ex-all-techs}
+    one with all such techniques
+\end{modelList}.
+%
+We expect \glsplshort{constraint model}~\refModel{pre-ex-only-good-techs},
+\refModel{pre-ex-no-bad-techs}, and~\refModel{pre-ex-all-techs} to all perform
+better than \glsplshort{constraint model}~\refModel{pre-ex-no-techs}.
+%
+No hypothesis is attempted regarding the relative performance between
+\glsplshort{constraint model}~\refModel{pre-ex-only-good-techs},
+\refModel{pre-ex-no-bad-techs}, and~\refModel{pre-ex-all-techs}.
 
 \includeSolvTechStats[enable]{only-good-presolving}
 \includeSolvTechStats{bad-presolving}
@@ -3002,9 +3068,26 @@ improves solving time for some \glspl{function} over \glsshort{constraint
   model}~\refModel{pre-ex-no-bad-techs}, it degrades solving time for a larger
 set of \glspl{function}, which is reflected in the \gls{GMI}.
 
-Based on the observations above, we conclude that it is most beneficial to
-exclude \refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}
-from the \glsshort{constraint model}.
+Based on the observations above, we conclude that the \gls{presolving}
+techniques have strong synergy effects within some groups but not within other
+groups.
+%
+Hence it appears to be most beneficial to exclude
+\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} from the
+\glsshort{constraint model}.
+
+
+\paragraph{Conclusions}
+
+Based on the results from these experiments, we conclude:
+%
+\begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
+  \item that some of the \gls{presolving} techniques have a positive impact on
+    solving time while others have a negative impact
+  \item that, due to weak synergy effects among these techniques, it appears to
+    be most beneficial to exclude the techniques that have a negative impact
+    from the \glsshort{constraint model}
+\end{enumerate*}.
 
 
 \subsection{Impact of All Solving Techniques}
@@ -3203,19 +3286,18 @@ negative effect on solving time when evaluated individually yields a
 \gls{constraint model} with best performance.
 
 
-\paragraph{Recap}
+\paragraph{Conclusions}
 
-Based on the results from this experiment, we have reached the following
-conclusions:
+Based on the results from this experiment, we conclude:
 %
 \begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
-  \item the solving techniques introduced in this chapter are crucial for
+  \item that the solving techniques introduced in this chapter are crucial for
     scalability
-  \item picking only solving techniques that have a statistically positive
+  \item that picking only solving techniques that have a statistically positive
     effect on solving time when evaluated individually is too conservative
-  \item rejecting solving techniques that have an statistically negative effect
-    on solving time when evaluated individually yields a \gls{constraint model}
-    with best performance
+  \item that rejecting solving techniques that have an statistically negative
+    effect on solving time when evaluated individually yields a \gls{constraint
+      model} with best performance
 \end{enumerate*}.
 
 
