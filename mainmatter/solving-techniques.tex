@@ -54,19 +54,18 @@ To begin with, it requires the use of set~\glspl{variable},\!%
   $\mVar{oplace}$~\glspl{variable} are used as indices.%
 }
 %
-which are expensive to use and typically results in poor \gls{propagation}.
-%
-Moreover, set \glspl{variable} are not supported by all \glspl{constraint
+which are expensive to use and necessarily supported by all \glspl{constraint
   solver}.
 %
 This is for example the case of \gls{Chuffed}, which is used in the experimental
 setup applied in this dissertation, thus preventing us from evaluating the
 impact of the naive implementation.
 %
-Second, many \gls{implied.c} \glspl{constraint} can be applied by introducing
-the notion of in which \glspl{block} \glspl{datum} are \gls{use.d}[d].
-%
-We first get rid the set~\glspl{variable} by capturing the information in the
+In addition, if we know in which \glspl{block} a \gls{datum} is \gls{use.d}[d],
+then many \gls{implied.c} \glspl{constraint} can be applied to strengthen
+\gls{propagation}.
+
+We first eliminate the set~\glspl{variable} by capturing the information in the
 $\mDom$~\gls{function} as a dominance relation matrix
 %
 \begin{equation}
