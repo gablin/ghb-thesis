@@ -594,6 +594,31 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
   \labelDefinition{no-overlap}
 \end{definition}
 
+\begin{figure}
+  \mbox{}%
+  \hfill\hfill%
+  \subcaptionbox{A solution\labelFigure{no-overlap-example-solution}}%
+                {%
+                  \input{%
+                    figures/constraint-programming/no-overlap-example-solution%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{Not a solution\labelFigure{no-overlap-example-failure}}%
+                [30mm]%
+                {%
+                  \input{%
+                    figures/constraint-programming/no-overlap-example-failure%
+                  }%
+                }%
+  \hfill\hfill%
+  \mbox{}
+
+  \caption[Examples to illustrate the no-overlap constraint]%
+          {Examples for the no-overlap constraint}
+  \labelFigure{no-overlap-example}
+\end{figure}
+
 \todo{give example}
 
 As will be seen in \refChapter{future-work}, $\mCumulative$ is used to integrate

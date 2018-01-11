@@ -1,0 +1,26 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\def\squareSize{10pt}%
+\def\gridWidth{.4pt}%
+\def\boundaryWidth{.8pt}%
+\tikzset{
+  square/.style={%
+    nothing,
+    draw,
+    fill=shade1,
+    line width=\boundaryWidth,
+  },
+  boundary/.style={%
+    draw,
+    line width=\boundaryWidth,
+  },
+  grid/.style={%
+    draw,
+    line width=\gridWidth,
+  },
+}%
