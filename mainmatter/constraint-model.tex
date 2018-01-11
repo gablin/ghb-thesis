@@ -683,45 +683,6 @@ The resulting \gls{UP graph} will now yield the same \glspl{match} as before
 \gls{copy extension} (\refFigure{copy-extending-pattern-example-after}).
 
 
-\subsubsection{Constraints}
-
-\todo{make this optional}
-
-Intuitively, selecting a \gls{null-copy match} that \gls{use.d}[s] a
-\gls{datum}~$d_1$ to \gls{define.d} another \gls{datum}~$d_2$ means that $d_1$
-and $d_2$ are \gls{define.d}[d] in the same \gls{block}.
-%
-This matters when \glspl{datum} are \gls{use.d} by \glspl{phi-function}.
-%
-For example, assume a \gls{datum}~$d_1$ \gls{define.d} in some \gls{block} $b_1$
-and that there is another \gls{datum}~$d_2$ which is a copy of $d_1$ and has a
-\gls{definition edge} requiring $d_2$ to be \gls{define.d} in \gls{block}~$b_2$.
-%
-If $d_2$ is \gls{define.d}[d] by a \gls{null-copy match}~$m$, then $m$ must be
-placed in $b_2$ in order for $d_2$ to be \gls{define.d} in $b_2$.
-%
-Since $m$ is a \gls{null match}, meaning it will not emit any
-\glspl{instruction}, any uses $d_2$ must be replaced by $d_1$.
-%
-But this violates the \glspl{constraint} implied by the \glspl{phi-function}
-because $d_1$ is \gls{define.d}[d] in $b_1$ and not $b_2$.
-
-If \mbox{$\mNullCopyMatchSet \subseteq \mMatchSet$} denotes the set of
-\glspl{null-copy match}, then the \gls{constraint} above is modeled as
-%
-\begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{dplace}[d_1] = \mVar{dplace}[d_2] \\
-    \forall m \in \mNullCopyMatchSet \hspace{-.8pt},
-    \forall d_1 \in \mUses(m),
-    \forall d_2 \in \mDefines(m).
-  \end{array}
-  \labelEquation{same-dplace-for-null-copy-matches}
-\end{equation}
-
-
 \subsection{Handling Calling Conventions}
 
 The method for handling \gls{data copying} can also be used for handling calling
