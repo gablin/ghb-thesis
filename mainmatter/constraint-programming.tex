@@ -555,10 +555,10 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
                        \text{ \st} \\
                        \begin{array}{@{}r@{\:}l@{}}
                            \forall_{\! 1 \,\leq\, i \,<\, j \,\leq\, k}
-                         & \mVar{xr_i} \leq \mVar{xl_j} \mOr
-                           \mVar{xl_i} \geq \mVar{xr_j} \mOr \mbox{} \\
-                         & \mVar{yu_i} \leq \mVar{yl_j} \mOr
-                           \mVar{yl_i} \geq \mVar{yu_j}
+                         & d_{\mVar{xr_i}} \leq d_{\mVar{xl_j}} \mOr
+                           d_{\mVar{xl_i}} \geq d_{\mVar{xr_j}} \mOr \mbox{} \\
+                         & d_{\mVar{yu_i}} \leq d_{\mVar{yl_j}} \mOr
+                           d_{\mVar{yl_i}} \geq d_{\mVar{yu_j}}
                        \end{array}
                      \end{array}
                    }\!.
