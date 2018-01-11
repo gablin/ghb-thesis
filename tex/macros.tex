@@ -231,6 +231,21 @@
   \ref{req:#1}%
 }
 
+\newlist{modelList}{enumerate*}{1}
+\setlist[modelList]{%
+  label={(\textsc{\roman*})},
+  ref=\textsc{\roman*},
+  itemjoin={;\ },
+  itemjoin*={; and\ },
+}
+
+\NewDocumentCommand{\labelModel}{m}{%
+  \label{model:#1}%
+}
+\NewDocumentCommand{\refModel}{m}{%
+  \ref{model:#1}%
+}
+
 \setlist[description]{%
   font=\sffamily,
 }

@@ -1169,20 +1169,20 @@ sampling.
 
 \paragraph{Match Duplication \versus Alternative Values}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-
 We evaluate the different methods of \gls{value reuse} by comparing the solving
-time exhibited by two \glsplshort{constraint model}: one based on \gls{match
-  duplication}, and another based on \glspl{alternative value}.
+time exhibited by two \glsplshort{constraint model}:
 %
-We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
-respectively.
+\begin{modelList}
+  \item \labelModel{match-dup}
+    one based on \gls{match duplication}
+  \item \labelModel{alt-values}
+    one based on \glspl{alternative value}
+\end{modelList}.
 %
 Since \gls{match duplication} yields an exponential increase in number of
 \glspl{match} compared to \glspl{alternative value}, we expect
-\glsshort{constraint model}~\modelB{} to perform better than
-\glsshort{constraint model}~\modelA.
+\glsshort{constraint model}~\refModel{alt-values} to perform better than
+\glsshort{constraint model}~\refModel{match-dup}.
 
 \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
 
@@ -1218,8 +1218,9 @@ Since \gls{match duplication} yields an exponential increase in number of
 
 \RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
 solving times (including \gls{presolving} time) for the two \glspl{constraint
-  model} described above, with \glsshort{constraint model}~\modelA{} as
-\gls{baseline} and \glsshort{constraint model}~\modelB{} as \gls{subject}.
+  model} described above, with \glsshort{constraint model}~\refModel{match-dup}
+as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
+\gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1238,43 +1239,45 @@ with a maximum coefficient of variation of
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
-%
+
 As the \gls{GMI} is \printGMI{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\modelB{} results in significantly
-shorter solving times than \glsshort{constraint model}~\modelA{}.
+}, we see that \glsshort{constraint model}~\refModel{alt-values} results in
+significantly shorter solving times than \glsshort{constraint
+  model}~\refModel{match-dup}.
 %
 In one case ({\codeFont reg2rsaref}), for example, the solving time differs by
 nearly a factor of~\num{50}, which is due to a high rate of \gls{copy-related.d}
 values for which \glspl{alternative value} results in only
 \num{94}~\glspl{match} whereas \gls{match duplication} results in
 \num{537}~\glspl{match}.
-%
-Hence we conclude that, when implementing \gls{value reuse}, \glspl{alternative
-  value} is a better design choice over \gls{match duplication}.
+
+Based on the observations above, we conclude that \glspl{alternative value} is a
+better design choice over \gls{match duplication} when implementing \gls{value
+  reuse}.
 
 
 \paragraph{Impact of Value Reuse}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-
 We evaluate the impact of \gls{value reuse} by comparing the cost (that is, the
 total number of cycles, as described in \refSection{cm-objective-function}) of
-the optimal \glspl{solution} produced by two \glsplshort{constraint model}: one
-with \gls{value reuse} support (based on \glspl{alternative value}), and another
-without this support.
+the optimal \glspl{solution} produced by two \glsplshort{constraint model}:
 %
-We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
-respectively.
+\begin{modelList}
+  \item \labelModel{wo-value-reuse}
+    one without \gls{value reuse} support
+  \item \labelModel{w-value-reuse}
+    one with this support (based on \glspl{alternative value})
+\end{modelList}.
 %
 Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
-we expect \glsshort{constraint model}~\modelB{} to produce \glspl{solution} with
-less cost compared with \glsshort{constraint model}~\modelA.
+we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
+\glspl{solution} with less cost compared with \glsshort{constraint
+  model}~\refModel{wo-value-reuse}.
 
 \input{\expDir/alt-values-vs-without-cycles-speedup.stats}
 
@@ -1306,8 +1309,8 @@ less cost compared with \glsshort{constraint model}~\modelA.
 
 \RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
 \gls{solution} costs for the two \glspl{constraint model} describe above, with
-\glsshort{constraint model}~\modelA{} as \gls{baseline} and \glsshort{constraint
-  model}~\modelB{} as \gls{subject}.
+\glsshort{constraint model}~\refModel{wo-value-reuse} as \gls{baseline} and
+\glsshort{constraint model}~\refModel{w-value-reuse} as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1320,24 +1323,25 @@ The costs range from
   \AltValuesVsWithoutCyclesSpeedupCyclesAvgMax,
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
 }.
-%
+
 As the \gls{GMI} is \printGMI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\modelB{} produces \glspl{solution}
-with significantly lesser cost than those produced by \glsshort{constraint
-  model}~\modelA.
+}, we see that \glsshort{constraint model}~\refModel{w-value-reuse} produces
+\glspl{solution} with significantly lesser cost than those produced by
+\glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
 In one case ({\codeFont putseqdispext}), for example, where two constants are
 frequently used as arguments to \gls{function} call \glspl{instruction} and thus
 cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
 to \num{208}~cycles.
-%
-Hence we conclude that \gls{value reuse} is essential for reducing the number of
-copy \glspl{instruction} and, subsequently, lowering cost.
+
+Based on the observations above, we conclude that \gls{value reuse} is essential
+for reducing the number of copy \glspl{instruction} and, subsequently, lowering
+cost.
 
 
 \section{Modeling Block Ordering}
@@ -1699,22 +1703,22 @@ which results in a significantly smaller \gls{search space}.
 
 \subsection{Experimental Evaluation}
 
-\def\modelA{\textsc{i}}
-\def\modelB{\textsc{ii}}
-
 We evaluate the different methods for inserting jump \glspl{instruction} by
 comparing the solving times exhibited and the cost of the optimal
-\glspl{solution} produced by two versions of the \gls{constraint model}: one
-based on \gls{branch extension}, and another based on \glspl{DTB pattern}.
+\glspl{solution} produced by two versions of the \gls{constraint model}:
 %
-We refer to these \glsplshort{constraint model} as \modelA{} and \modelB,
-respectively.
+\begin{modelList}
+  \item \labelModel{branch-ext}
+    one based on \gls{branch extension}
+  \item \labelModel{dual-target}
+    one based on \glspl{DTB pattern}
+\end{modelList}.
 %
 Since \gls{branch extension} yields a larger number of \glspl{block} compared to
 \glspl{DTB pattern}, many of which will be empty and thereby causing emission of
 redundant jump \glspl{instruction}, we expect \glsshort{constraint
-  model}~\modelB{} perform better, both in terms of solving time and cost, than
-\glsshort{constraint model}~\modelA.
+  model}~\refModel{dual-target} perform better, both in terms of solving time
+and cost, than \glsshort{constraint model}~\refModel{branch-ext}.
 
 When filtering, we remove all \glspl{function} that have less than less than
 \num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
@@ -1804,8 +1808,9 @@ larger.
   dual-target-branch-patterns-vs-branch-extension-cycles-plot%
 } show the normalized solving times (including \gls{presolving} time) and
 \gls{solution} costs, respectively, for the two \glspl{constraint model}
-described above, with \glsshort{constraint model}~\modelA{} as \gls{baseline}
-and \glsshort{constraint model}~\modelB{} as \gls{subject}.
+described above, with \glsshort{constraint model}~\refModel{branch-ext} as
+\gls{baseline} and \glsshort{constraint model}~\refModel{dual-target} as
+\gls{subject}.
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
@@ -1833,33 +1838,36 @@ with a maximum coefficient of variation of
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMax,
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
 }.
-%
+
 As the \gls{GMI} for solving time is \printGMI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\modelB{} results in significantly
-shorter solving times than \glsshort{constraint model}~\modelA.
+}, we see that \glsshort{constraint model}~\refModel{dual-target} results in
+significantly shorter solving times than \glsshort{constraint
+  model}~\refModel{branch-ext}.
 %
 We also observe that, as expected, when the number of conditional branch
 \glspl{instruction} increases -- up to \num{13}, in the case of {\codeFont
   nextkeypacket} -- the \gls{search space} for \glsshort{constraint
-  model}~\modelA{} grows faster than for \glsshort{constraint model}~\modelB.
-%
+  model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
+  model}~\refModel{dual-target}.
+
 In addition, as the \gls{GMI} for cost is \printGMI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
     \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that, in some cases, \glsshort{constraint model}~\modelB{} produces
+}, we see that, in some cases, \glsshort{constraint model}~\refModel{dual-target} produces
 optimal \glspl{solution} with slightly lower cost compared those produced by
-\glsshort{constraint model}~\modelA.
-%
-Hence we conclude that, when implementing insertion of jump \glspl{instruction},
-\glspl{DTB pattern} is a better design choice over \gls{branch extension}.
+\glsshort{constraint model}~\refModel{branch-ext}.
+
+Based on the observations above, we conclude that \glspl{DTB pattern} is a
+better design choice over \gls{branch extension} when implementing insertion of
+jump \glspl{instruction}.
 
 
 \section{Objective Function}
