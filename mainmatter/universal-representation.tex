@@ -900,7 +900,12 @@ We also ignore combinations that will lead to cyclic data dependencies by
 applying a variant of the method to be described in
 \refSection{forbidding-cyclic-data-dependencies} in the next chapter.
 
-\todo{prune away matches where one of the arguments is a constant value}
+To curb the number of \glspl{match}, we prune away all \gls{SIMD.instr}
+\glspl{match} where at least one of its arguments is a constant value.
+%
+This is such values will typically always require the \gls{SIMD.instr}
+\gls{instruction} to be preceeded by a copy \gls{instruction}, thereby
+nullifying the benefit of the \gls{SIMD.instr} \gls{instruction}.
 
 
 \section{Comparison with Other Sea-of-Nodes IRs}
