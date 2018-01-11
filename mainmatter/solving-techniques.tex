@@ -29,34 +29,24 @@ the above techniques.
 %
 Lastly, \refSection{st-summary} summarizes the chapter.
 
-The material presented in \refSectionList{st-model-refinements,
-  st-branching-strategies, st-impl-constraints, st-dom-breaking-constraints,
-  st-pre-dom-matches, st-canonical-locations} is based on ideas conceived by
-Mats~Carlsson, which have then been improved by the author of this dissertation.
+The material presented in \refSectionList{st-refining-define-before-use
+  constraint, st-branching-strategies, st-impl-constraints,
+  st-dom-breaking-constraints, st-pre-dom-matches, st-canonical-locations} is
+based on ideas conceived by Mats~Carlsson, which have then been improved by the
+author of this dissertation.
 %
 All other materials in this chapter, including the text and figures, are due
 entirely to the author.
 
 
-\section{Model Refinements}
-\labelSection{st-model-refinements}
-
-When introducing the \gls{constraint model} in \refChapter{constraint-model},
-two parts were presented using naive implementations that are indeed correct but
-give poor \gls{propagation}.
-%
-In this section, we fix these problems by refining the \glsshort{constraint
-  model}.
-
-
-\subsection{Refining the Define-Before-Use Constraint}
+\section{Refining the Define-Before-Use Constraint}
 \labelSection{st-refining-define-before-use constraint}
 
-When describing the \gls{constraint} that all \glspl{datum} must be
-\gls{define.d}[d] before \gls{use.d}[d], a simple but naive implementation was
-used (\refEquation{naive-dom-alt}).
+In \refChapter{constraint-model}, a simple but naive implementation is used for
+implementing the \gls{constraint} that all \glspl{datum} must be
+\gls{define.d}[d] before \gls{use.d}[d] (\refEquation{naive-dom-alt}).
 %
-First, it requires use of set~\glspl{variable},\!%
+To begin with, it requires the use of set~\glspl{variable},\!%
 %
 \footnote{%
   This is because the $\mVar{dplace}$~\glspl{variable} need to be members of the
@@ -195,7 +185,7 @@ We therefore fix the assignment in such cases, which is modeled as
 \end{equation}
 
 
-\subsection{Refining the Objective Function}
+\section{Refining the Objective Function}
 \labelSection{st-refined-objective-function}
 
 The straightforward implementation of the \gls{objective function}
