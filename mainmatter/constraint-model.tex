@@ -10,21 +10,21 @@
 This chapter introduces the \gls{constraint model} for \gls{universal
   instruction selection}.
 %
-\RefSectionRange{modeling-global-instruction-selection}{modeling-block-ordering}
-introduce the \glspl{variable} and \gls{constraint} for modeling \gls{global.is}
+We build the \glsshort{constraint model} by integrating one task a time.
+%
+To this end,
+\refSectionRange{modeling-global-instruction-selection}{modeling-block-ordering}
+describe the \glspl{variable} and \gls{constraint} for modeling \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, \gls{data copying},
 \gls{value reuse}, and \gls{block ordering}, respectively.
 %
-\RefSection{cm-objective-function} introduces the \gls{objective function}
-applied in the \gls{constraint model}.
+We then add the \gls{objective function}, which is described in
+\refSection{cm-objective-function}.
 %
-\RefSection{cm-limitations} discusses the \glsshort{constraint model}
-limitations.
+With all crucial components in place, we discuss the limitations of this
+\gls{constraint model} in \refSection{cm-limitations}.
 %
-Lastly, \refSection{model-summary} summarizes the chapter.
-
-A \gls{MiniZinc} implementation of the \gls{constraint model} is available in
-\refAppendix{minizinc-implementation}.
+Lastly, a summary is given in \refSection{model-summary}.
 
 
 \section{Modeling Global Instruction Selection}
@@ -2210,5 +2210,12 @@ In this chapter, we have introduced a \gls{constraint model} that integrates the
 problems of \gls{global.is} \gls{instruction selection}, \gls{global code
   motion}, \gls{data copying}, \gls{value reuse}, and \gls{block ordering}.
 %
+A complete implementation of this \glsshort{constraint model}, written in
+\gls{MiniZinc} (a high-level \gls{constraint} modeling language), is available
+in \refAppendix{minizinc-implementation}.
+%
+When multiple design choice exist for a given task, we have performed a thorough
+evaluation to decide which design choice is better.
+%
 We have also discussed the limitations of this \glsshort{constraint model} and
-how these impact the assembly code that can be produced.
+how these affect the assembly code that can be produced.
