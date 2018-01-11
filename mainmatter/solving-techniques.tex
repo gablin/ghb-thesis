@@ -85,7 +85,7 @@ Next, we introduce the \glspl{variable} needed for capturing \gls{use.d}[s] of
 \glspl{datum}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{uplace}[p] \in \mBlockSet$} models in
 which \gls{block} the \gls{datum} connected to \gls{operand}~$p$ is used.
@@ -95,7 +95,7 @@ Note that unlike the $\mVar{dplace}$~\glspl{variable}, which are indexed using a
 \gls{operand}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 Obviously, every \gls{use.d} of \glspl{datum} must be \gls{dominate.b}[d] by its
 definition.
@@ -355,7 +355,7 @@ in arbitrary cost values and consequently leads to larger \glspl{domain} for the
 \gls{cost variable}.
 
 
-\subsubsection{Variables}
+\paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{ocost}[o] \in \mNatNumSet$} models the
 cost incurred by covering \gls{operation}~$o$\hspace{-.8pt}.
@@ -363,7 +363,7 @@ cost incurred by covering \gls{operation}~$o$\hspace{-.8pt}.
 It is assumed the \gls{domain} is the same as for the \gls{cost variable}.
 
 
-\subsubsection{Constraints}
+\paragraph{Constraints}
 
 For each \gls{operation}~$o$\hspace{-.8pt}, the combination
 \mbox{$o\hspace{-.8pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
@@ -507,7 +507,7 @@ In this section, we discuss such \glspl{constraint} that have been added to the
 \glsshort{constraint model}.
 
 
-\subsubsection{Implied Operation and Data Placements}
+\subsection{Implied Operation and Data Placements}
 
 Due to \refEquationRange{naive-dom}{spanning}, if a selected \gls{match}
 \gls{define.d}[s] some \gls{datum}~$d_1$ and \gls{use.d}[s] some other
@@ -680,9 +680,7 @@ reoriented such that all \glspl{source} are either \glsshort{state node} or
 \glspl{value node} and all \glspl{target} are \glspl{block node}.
 
 
-\subsubsection{%
-  Implied Constraints due to the Define-Before-Use Refinement%
-}
+\subsection{Implied Constraints due to the Define-Before-Use Refinement}
 
 From \refEquationRange{refined-dom}{refined-dom-phi-operands}, we can infer the
 following \gls{implied.c} \glspl{constraint}.
@@ -763,7 +761,7 @@ This is modeled as
 \end{equation}
 
 
-\subsubsection{Implied Data Locations}
+\subsection{Implied Data Locations}
 
 Several \gls{implied.c} \glspl{constraint} can be due to
 \refEquation{compatible-locations}.
@@ -886,7 +884,7 @@ This is modeled similarly as
 \end{equation}
 
 
-\subsubsection{Implied Fall-Through}
+\subsection{Implied Fall-Through}
 
 Due to \refEquation{fall-through}, if for any two \glspl{block}~$b_1$ and~$b_2$
 there exists a \gls{match} requiring $b_2$ to follow $b_1$ but none requiring
@@ -927,7 +925,7 @@ In this section, we discuss such \glspl{constraint} that have been added to the
 \glsshort{constraint model}.
 
 
-\subsubsection{Location of State Nodes}
+\subsection{Location of State Nodes}
 
 Since \glspl{datum} also includes the \glspl{state node}, this means a
 $\mVar{loc}$~\gls{variable} will be allocated for each individual \gls{state
@@ -952,7 +950,7 @@ where \mbox{$\mStateDataSet \subseteq \mDataSet$} denotes the set of
 \glspl{state node}.
 
 
-\subsubsection{Operands of Non-Selected Matches}
+\subsection{Operands of Non-Selected Matches}
 
 The $\mVar{alt}$~\glspl{variable} of \glspl{match} that are not selected still
 need to be assigned a value.
@@ -991,7 +989,7 @@ This is modeled as
 \end{equation}
 
 
-\subsubsection{Interchangeable Data}
+\subsection{Interchangeable Data}
 
 As described in \refSection{modeling-value-reuse}, \glspl{datum} in the \gls{UF
   graph} that are copies of the same value are \gls{copy-related.d} and
