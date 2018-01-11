@@ -1551,6 +1551,39 @@ target \gls{block}.
 %
 Like with \gls{copy extension}, to retain matching \gls{branch extension} must
 also be performed on each \gls{UF graph} in the \gls{pattern set}.
+%
+\begin{figure}
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Original UF subgraph%
+                  \labelFigure{branch-extension-example-original}%
+                }%
+                [35mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/branch-extension-example-before%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  After branch extension%
+                  \labelFigure{branch-extension-example-after}%
+                }%
+                [40mm]%
+                {%
+                  \input{%
+                    figures/constraint-model/branch-extension-example-after%
+                  }%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption{Example of branch extension}%
+  \labelFigure{branch-extension-example}
+\end{figure}
+%
+An example is shown in \refFigure{branch-extension-example}.
 
 The disadvantage of \gls{branch extension} is that it inflates the \gls{search
   space}.

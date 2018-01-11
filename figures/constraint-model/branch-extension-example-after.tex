@@ -1,0 +1,44 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\setlength{\opNodeDist}{12pt}
+\begin{tikzpicture}[
+    block node/.append style={
+      minimum width=1cm,
+    },
+  ]
+
+  \node [block node] (entry) {\strut\opBlock{entry}};
+  \node [control node, below=of entry] (c) {\opCondBr};
+  \node [block node, node distance=1.33\opNodeDist,
+         position=-135 degrees from c] (new-true) {};
+  \node [block node, node distance=1.33\opNodeDist,
+         position=- 45 degrees from c] (new-false) {};
+  \node [control node, below=of new-true] (true-c) {\opBr};
+  \node [control node, below=of new-false] (false-c) {\opBr};
+  \node [block node, below=of true-c] (old-true) {\strut\opBlock{true}};
+  \node [block node, below=of false-c] (old-false) {\strut\opBlock{false}};
+  \begin{pgfonlayer}{background}
+    \begin{scope}[control flow]
+      \draw (entry) -- (c);
+      \draw (c)
+            -- node [control-flow label, pos=.4, swap] {T}
+            (new-true);
+      \draw (c)
+            -- node [control-flow label, pos=.4] {F}
+            (new-false);
+      \draw (new-true) -- (true-c);
+      \draw (new-false) -- (false-c);
+      \draw (true-c) -- (old-true);
+      \draw (false-c) -- (old-false);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%
