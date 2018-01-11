@@ -106,89 +106,9 @@ called \gls!{bundling}) or the number of functional units available.\!%
 }
 %
 To model these restrictions, we will apply the same approach as in
-\cite{CastanedaLozanoEtAl:2014:LCTES} and use the \gls!{cumulative constraint},
-which constrains the scheduling times for a given set of tasks such that the
-capacity of a given resource is not exceeded~\cite{SchuttEtAl:2011}.
-%
-\begin{figure}
-  \centering%
-  \input{figures/future-work/cumulative-example}
-
-  \caption[Example illustrating the cumulative constraint]%
-          {%
-            Example of a solution to the cumulative constraint.
-            %
-            Each box represents a task%
-          }
-  \labelFigure{cumulative-example}
-\end{figure}
-%
-An example is shown in \refFigure{cumulative-example}.
-%
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[Cumulative Constraint]
-  Let \mbox{$c \in \mNatNumSet$} represent the capacity of a resource to be used
-  by $k$ optional tasks.
-  %
-  For each task~$i$, let \mbox{$\mVar{s}_i \in \mNatNumSet$} be a \gls{variable}
-  representing the time at which $i$ is scheduled to start, \mbox{$l_i \in
-    \mNatNumSet$} represent its latency, \mbox{$u_i \in \mNatNumSet$} represent
-  the amount of resource required by~$i$, and \mbox{$\mVar{b}_i \in \mSet{0,
-      1}$} be a \gls{variable} representing whether $i$ is scheduled.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \begin{array}{c}
-      \mCumulative(
-        c \hspace{-1pt},
-        \mTuple{
-          \mVar{s}_1 \hspace{-.8pt},
-          l_1 \hspace{-.8pt},
-          u_1 \hspace{-.8pt},
-          \mVar{b}_1
-        } \hspace{-1pt},
-        \ldots,
-        \mTuple{
-          \mVar{s}_k \hspace{-.8pt},
-          l_k \hspace{-.8pt},
-          u_k \hspace{-.8pt},
-          \mVar{b}_k
-        }
-      )
-      \equiv \mbox{} \\
-      \mSetBuilder*{%
-                     \langle d_{\mVar{s}_1} \hspace{-.8pt}, \ldots, d_{\mVar{s}_k}
-                             \hspace{-.8pt},
-                             d_{\mVar{b}_1} \hspace{-.8pt}, \ldots, d_{\mVar{b}_k}
-                             \hspace{-1pt}
-                     \rangle
-                   }%
-                   {
-                     \begin{array}{@{}l@{}}
-                       \forall_{\! i} \: d_{\mVar{s}_i} \in \mDomain(\mVar{s}_i),
-                       \forall_{\! i} \: d_{\mVar{b}_i} \in \mDomain(\mVar{b}_i)
-                       \text{ \st} \\
-                       \forall_{\! 1 \,\leq\, t \,<\, \mMax(\cup_i \mDomain(\mVar{s}_i))}
-                         \displaystyle
-                         \hspace{-1.2em}
-                         \sum_{%
-                                \substack{
-                                  \forall{i} \text{ \st} \\
-                                  d_{\mVar{s}_i} \,\leq\, t \,<\,
-                                  d_{\mVar{s}_i} \hspace{-.8pt}+\, l_i
-                                }
-                              }
-                         \hspace{-1.2em}
-                           d_{\mVar{b}_i} \times u_i
-                         \leq c
-                     \end{array}
-                   }\!.
-    \end{array}
-  \end{displaymath}
-  \labelDefinition{cumulative}
-\end{definition}
+\cite{CastanedaLozanoEtAl:2014:LCTES} and use the \gls{cumulative constraint}
+which was introduced in \refChapter{constraint-programming} on
+\refPageOfSection{cp-cumulative}.
 
 If \mbox{$\mCapOf(r) \in \mNatNumSet$} denotes the capacity of a
 resource~\mbox{$r \in \mResourceSet$}, where $\mResourceSet$ denotes the set of
@@ -457,71 +377,9 @@ modeled as
   \labelEquation{local-m-using-d}
 \end{equation}
 
-To model the rectangle packing problem, we use the \gls!{no-overlap constraint}
-(often also called the \gls!{diffn constraint}), which enforces that no two
-rectangles may overlap \todo{insert citation}.
-%
-Formally, the \gls{constraint} is defined as follows.
-%
-\begin{definition}[No-Overlap Constraint]
-  For each rectangle~$i$, let \mbox{$\mVar{xl}_i, \mVar{xr}_i, \mVar{yl}_i,
-    \mVar{yu}_i \in \mNatNumSet$} be \glspl{variable} representing the
-  rectangle's left, right, lower, respectively upper boundary.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \begin{array}{c}
-      \mNoOverlap(
-        \mTuple{
-          \mVar{xl}_1 \hspace{-.8pt},
-          \mVar{xr}_1 \hspace{-.8pt},
-          \mVar{yl}_1 \hspace{-.8pt},
-          \mVar{yu}_1 \hspace{-.8pt}
-        } \hspace{-1pt},
-        \ldots,
-        \mTuple{
-          \mVar{xl}_k \hspace{-.8pt},
-          \mVar{xr}_k \hspace{-.8pt},
-          \mVar{yl}_k \hspace{-.8pt},
-          \mVar{yu}_k \hspace{-.8pt}
-        }
-      )
-      \equiv \mbox{} \\
-      \mSetBuilder*{%
-                     \left\langle
-                       \begin{array}{@{}c@{}}
-                         d_{\mVar{xl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xl}_k}
-                         \hspace{-.8pt},
-                         d_{\mVar{xr}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xr}_k}
-                         \hspace{-.8pt}, \\
-                         d_{\mVar{yl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yl}_k}
-                         \hspace{-.8pt},
-                         d_{\mVar{yu}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yu}_k}
-                       \end{array}
-                     \right\rangle
-                   }%
-                   {
-                     \begin{array}{@{}l@{}}
-                       \forall_{\! i} \: d_{\mVar{xl}_i} \in \mDomain(\mVar{xl}_i),
-                       \forall_{\! i} \: d_{\mVar{xr}_i} \in \mDomain(\mVar{xr}_i),
-                       \\
-                       \forall_{\! i} \: d_{\mVar{yl}_i} \in \mDomain(\mVar{yl}_i),
-                       \forall_{\! i} \: d_{\mVar{yu}_i} \in \mDomain(\mVar{yu}_i)
-                       \text{ \st} \\
-                       \begin{array}{@{}r@{\:}l@{}}
-                           \forall_{\! 1 \,\leq\, i \,<\, j \,\leq\, k}
-                         & \mVar{xr_i} \leq \mVar{xl_j} \mOr
-                           \mVar{xl_i} \geq \mVar{xr_j} \mOr \mbox{} \\
-                         & \mVar{yu_i} \leq \mVar{yl_j} \mOr
-                           \mVar{yl_i} \geq \mVar{yu_j}
-                       \end{array}
-                     \end{array}
-                   }\!.
-    \end{array}
-  \end{displaymath}
-  \labelDefinition{no-overlap}
-\end{definition}
+To model the rectangle packing problem, we use the \gls{no-overlap constraint}
+which was introduced in \refChapter{constraint-programming} on
+\refPageOfSection{cp-no-overlap}.
 %
 Thus the rectangle packing problem can be modeled as
 %
