@@ -1740,15 +1740,17 @@ with a maximum coefficient of variation of
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+%
+The \gls{GMI} is \printGMI{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\refModel{obj-fun-div-mul} results in
-significantly shorter solving times than \glsshort{constraint
+}
+
+We see clearly that \glsshort{constraint model}~\refModel{obj-fun-div-mul}
+results in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{obj-fun-mul-div}.
 %
 In one case (checksum{\codeFont build\_ycc\_rgb\_t}), for example, the solving
@@ -1977,14 +1979,16 @@ The costs range from
   \ObjFunRefinedVsNaiveCyclesSpeedupNaiveWUbCyclesCvMax,
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedWUbCyclesCvMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+%
+The \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMin%
 }{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWUbCyclesRegularSpeedupCiMax%
-}, we observe that \glsplshort{constraint model} based on the refined
+}
+
+We see clearly that \glsplshort{constraint model} based on the refined
 \gls{objective function} yield better code quality than those based on the naive
 \gls{objective function}.
 %
@@ -2271,11 +2275,13 @@ The solving times range from
   \SolvTechDisableImplConsLocsOfDefsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \SolvTechDisableImplConsFixFallThroughsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
+%
+The \glspl{GMI} and \glspl{CI} are given in
+\refFigure{single-impl-con-vs-no-con-solving-time-plots}.
 
-From the \glspl{GMI} and \glspl{CI}, also given in
-\refFigure{single-impl-con-vs-no-con-solving-time-plots}, we see that
-\refEquation{impl-cons-fix-fall-throughs} leads to an overall reduction in
-solving time, that \refEquationList{impl-cons-defs-dominate-entry-blocks,
+We see that \refEquation{impl-cons-fix-fall-throughs} leads to an overall
+reduction in solving time, that
+\refEquationList{impl-cons-defs-dominate-entry-blocks,
   impl-cons-no-span-use-defs} lead to an overall increase in solving time, and
 that \refEquationList{impl-cons-defs-in-spanned-blocks, impl-cons-spanned-input,
   impl-cons-place-phi-ops-same-as-def-edges} have no impact on solving time.
@@ -2574,10 +2580,11 @@ The solving times range from
   \SolvTechDisableDomConsNullCopyMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \SolvTechDisableDomConsKillMatchSelectionPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
+%
+The \glspl{GMI} and \glspl{CI} are given in
+\refFigure{single-dom-con-vs-no-con-solving-time-plots}.
 
-From the \glspl{GMI} and \glspl{CI}, also given in
-\refFigure{single-dom-con-vs-no-con-solving-time-plots}, we observe that
-\refEquationList{dom-cons-null-copy-match-selection,
+We observe that \refEquationList{dom-cons-null-copy-match-selection,
   dom-cons-kill-match-selection} lead to an overall reduction in solving time
 and that \refEquation{impl-cons-input-operands-not-taking-min-value} has no
 impact on solving time.
@@ -2884,11 +2891,12 @@ The solving times range from
   \SolvTechDisableRedunNonNullCopyMatchesPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \SolvTechDisableCanonicalLocsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
+%
+The \glspl{GMI} and \glspl{CI} are given in
+\refFigure{single-presolving-vs-no-presolving-solving-time-plots}.
 
-From the \glspl{GMI} and \glspl{CI}, also given in
-\refFigure{single-presolving-vs-no-presolving-solving-time-plots}, we observe
-that \refEquationList{redun-kills, redun-non-null-copy-matches} lead to an
-overall reduction in solving time, that
+We observe that \refEquationList{redun-kills, redun-non-null-copy-matches} lead
+to an overall reduction in solving time, that
 \refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} lead to an
 overall increase in solving time, and that
 \refEquation{illegal-matches-uncovered-ops} has no impact on solving time.
@@ -3223,10 +3231,11 @@ The solving times range from
   \SolvTechBestCombosPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax
 }.
 %
-From the \glspl{GMI} and \glspl{CI}, also given in
-\refFigure{diff-solv-tech-comb-solving-time-plot}, we observe that all
-\glsplshort{constraint model} significantly improve solving time over
-\glsshort{constraint model}~\refModel{st-ex-no-techs}.
+The \glspl{GMI} and \glspl{CI} are given in
+\refFigure{diff-solv-tech-comb-solving-time-plot}.
+
+We see clearly that all \glsplshort{constraint model} significantly improve
+solving time over \glsshort{constraint model}~\refModel{st-ex-no-techs}.
 %
 Hence we conclude that the solving techniques are crucial for being able to
 solve anything larger than the smallest of \glspl{function}.

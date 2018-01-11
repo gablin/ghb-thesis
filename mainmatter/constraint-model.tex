@@ -1234,14 +1234,16 @@ with a maximum coefficient of variation of
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeCvMax,
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+%
+The \gls{GMI} is \printGMI{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\refModel{alt-values} results in
+}.
+
+We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
@@ -1318,15 +1320,17 @@ The costs range from
   \AltValuesVsWithoutCyclesSpeedupCyclesAvgMax,
   \AltValuesVsWithoutCyclesSpeedupBaselineCyclesAvgMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+%
+The \gls{GMI} is \printGMI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\refModel{w-value-reuse} produces
-\glspl{solution} with significantly lesser cost than those produced by
+}.
+
+We see clearly that \glsshort{constraint model}~\refModel{w-value-reuse}
+produces \glspl{solution} with significantly lesser cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
 In one case ({\codeFont putseqdispext}), for example, where two constants are
@@ -1336,6 +1340,7 @@ to \num{208}~cycles.
 
 Hence we conclude that \gls{value reuse} is essential for reducing the number of
 copy \glspl{instruction} and, subsequently, lowering cost.
+
 
 \paragraph{Conclusions}
 
@@ -1803,15 +1808,16 @@ with a maximum coefficient of variation of
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeCvMax,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeCvMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+The \gls{GMI} is \printGMI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, we see that \glsshort{constraint model}~\refModel{dual-target} results in
-significantly shorter solving times than \glsshort{constraint
+}.
+
+We see clearly that \glsshort{constraint model}~\refModel{dual-target} results
+in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{branch-ext}.
 %
 We also observe that, as expected, when the number of conditional branch
@@ -1876,17 +1882,18 @@ The costs range from
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesAvgMax,
   \DualTargetPatternsVsBranchExtCyclesSpeedupBaselineCyclesAvgMax
 }.
-
-As the \gls{GMI} is \printGMI{%
+%
+The \gls{GMI} is \printGMI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
     \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that, in some cases, \glsshort{constraint
-  model}~\refModel{dual-target} produces optimal \glspl{solution} with slightly
-lower cost compared those produced by \glsshort{constraint
-  model}~\refModel{branch-ext}.
+}.
+
+We see clearly that \glsshort{constraint model}~\refModel{dual-target} produces
+optimal \glspl{solution} with slightly lower cost compared those produced by
+\glsshort{constraint model}~\refModel{branch-ext}.
 %
 Hence we conclude that, in terms of code quality,
 \glspl{DTB pattern} is a better design choice over \gls{branch extension} when
