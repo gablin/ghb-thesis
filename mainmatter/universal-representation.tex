@@ -7,20 +7,27 @@
 \chapter{Universal Representation}
 \labelChapter{universal-representation}
 
-This chapter introduces the \gls{universal representation}, which is used in the
+This chapter introduces the \gls{universal representation}, which is used in our
 approach for modeling \glspl{function} and \glspl{instruction}.
 %
-\RefSection{uni-rep-design-requirements} lists the design requirements that must
-be fulfilled by a graph-based representation.
+Based on the conclusions drawn in
+\refChapter{existing-isel-techniques-and-reps}, we begin in
+\refSection{uni-rep-design-requirements} with listing the design requirements
+that must be fulfilled by a graph-based representation.
 %
-\RefSection{uni-rep-program-rep} introduces the \gls{universal representation}
-and describes how to use it to model \glspl{function}, and
-\refSection{uni-rep-instr-rep} describes how to model \glspl{instruction}.
+From these requirements, we design the \gls{universal representation} in
+\refSection{uni-rep-program-rep} and describe how it is used for modeling
+\glspl{function}.
 %
-\RefSection{uni-rep-pattern-matching} describes how to perform \gls{pattern
-  matching} using the \gls{universal representation}.
+We then do the same for \glspl{instruction} in \refSection{uni-rep-instr-rep}.
 %
-Lastly, \refSection{uni-rep-summary} summarizes the chapter.
+In \refSection{uni-rep-pattern-matching}, we describe how to perform
+\gls{pattern matching} with the \gls{universal representation}.
+%
+In \refSection{uni-rep-ir-comparison}, we compare \gls{universal representation}
+with other, exising \glspl{sea-of-nodes IR}.
+%
+Lastly, a summary is given in \refSection{uni-rep-summary}.
 
 
 \section{Design Requirements}
@@ -909,6 +916,7 @@ nullifying the benefit of the \gls{SIMD.instr} \gls{instruction}.
 
 
 \section{Comparison with Other Sea-of-Nodes IRs}
+\labelSection{uni-rep-ir-comparison}
 
 The \gls{UF graph} is similar to the \gls{Click-Paleczny graph} (compare for
 example \refFigure{uf-graph-example-full-graph} on
