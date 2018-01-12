@@ -163,6 +163,14 @@
     draw=black!60!white,
     text=black!60!white,
   },
+  invclip/.style={%
+    clip,
+    insert path={
+      { [reset cm]
+        (-16383.99999pt,-16383.99999pt) rectangle (16383.99999pt,16383.99999pt)
+      }
+    },
+  },
 }
 \makeatletter
 \tikzset{

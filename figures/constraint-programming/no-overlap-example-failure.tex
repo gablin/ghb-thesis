@@ -12,22 +12,42 @@
     },
   ]
 
-\tikzset{}
-
   \node [square, minimum size=3*\squareSize] (s1) {};
   \node [square, minimum size=3*\squareSize, below right=0 and 5mm of s1.west]
         (s2) {};
 
   \def\sIPath{%
-    (s1.north east) -- (s1.south east) -- (s1.south west) -- (s1.north west)
+    (s1.north west) -- (s1.south west) -- (s1.south east) -- (s1.north east)
     -- cycle%
   }
   \def\sIIPath{%
-    (s2.north east) -- (s2.south east) -- (s2.south west) -- (s2.north west)
+    (s2.north west) -- (s2.south west) -- (s2.south east) -- (s2.north east)
     -- cycle%
   }
-  \draw [boundary] \sIPath;
-  \draw [boundary] \sIIPath;
+  \begin{scope}[boundary]
+    \begin{scope}
+      \begin{pgfinterruptboundingbox}
+        \path [invclip] \sIPath;
+      \end{pgfinterruptboundingbox}
+      \draw \sIIPath;
+    \end{scope}
+    \begin{scope}
+      \begin{pgfinterruptboundingbox}
+        \path [invclip] \sIIPath;
+      \end{pgfinterruptboundingbox}
+      \draw \sIPath;
+    \end{scope}
+    \begin{scope}[dashed]
+      \begin{scope}
+        \path [clip] \sIPath;
+        \draw \sIIPath;
+      \end{scope}
+      \begin{scope}
+        \path [clip] \sIIPath;
+        \draw \sIPath;
+      \end{scope}
+    \end{scope}
+  \end{scope}
 \end{tikzpicture}%
 \endgroup%
 
