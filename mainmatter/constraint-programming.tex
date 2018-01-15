@@ -157,9 +157,7 @@ follows.
   \begin{displaymath}
     \mAllDifferent(\mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
-    \hspace{-8pt}
-    \mBigAnd_{1 \,\leq\, i \,<\, j \,\leq\, k}
-    \hspace{-8pt}
+    \mBigAnd_{\mathclap{1 \,\leq\, i \,<\, j \,\leq\, k}}
     \mVar{x}_i \neq \mVar{x}_j.
   \end{displaymath}
   \labelDefinition{all-different}
@@ -363,14 +361,14 @@ follows.
   \begin{displaymath}
     \mValuePrecChain(c, \mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
-    \hspace{-4pt}
     \mBigAnd_{
-      \substack{
-        1 \,\leq\, i \,\leq\, k \hspace{-.8pt}, \\
-        1 \,\leq\, j \,<\, n \phantom{\hspace{-.8pt},}
+      \mathclap{
+        \substack{
+          1 \,\leq\, i \,\leq\, k \hspace{-.8pt}, \\
+          1 \,\leq\, j \,<\, n \phantom{\hspace{-.8pt},}
+        }
       }
     }
-    \hspace{-4pt}
     \mVar{x}_i = c[j+1] \mImp (\exists l < j : \mVar{x}_l = c[j]).
   \end{displaymath}
   \labelDefinition{vpc}
@@ -436,15 +434,16 @@ follows.
       }
     )
     \equiv
-    \hspace{-9pt}
-    \mBigAnd_{0 \,\leq\, t \,<\, t_{\mathsc{max}}}
-    \sum_{%
-           \substack{
-             1 \,\leq\, i \,\leq\, k \hspace{-.8pt} \text{ \st} \\
-             \mVar{s}_i \,\leq\, t \,<\, \mVar{s}_i \,+\, l_i
+    \mBigAnd_{\mathclap{0 \,\leq\, t \,<\, t_{\mathsc{max}}}}
+    \hspace{26pt}
+    \sum_{
+           \mathclap{
+             \substack{
+               1 \,\leq\, i \,\leq\, k \hspace{-.8pt} \text{ \st} \\
+               \mVar{s}_i \,\leq\, t \,<\, \mVar{s}_i \,+\, l_i
+             }
            }
          }
-    \hspace{-1.2em}
     \mVar{b}_i \times u_i
     \leq c \hspace{-1pt}.
   \end{displaymath}
@@ -525,8 +524,7 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
         }
       )
       \equiv \mbox{} \\
-      \displaystyle\mBigAnd_{1 \,\leq\, i \,<\, j \,\leq\, k}
-      \hspace{-8pt}
+      \displaystyle\mBigAnd_{\mathclap{1 \,\leq\, i \,<\, j \,\leq\, k}}
       \mVar{xr}_i \leq \mVar{xl}_j \mOr
       \mVar{xr}_j \leq \mVar{xl}_i \mOr
       \mVar{yu}_i \leq \mVar{yl}_j \mOr
@@ -972,7 +970,7 @@ While this \gls{constraint} is sufficient in capturing the problem,
 \gls{propagation} can be increased by adding the following \gls{constraint}:
 %
 \begin{equation}
-  \sum_{i = 0}^{n - 1} \mVar{x}_i = n.
+  \sum_{\mathclap{0 \,\leq\, i \,<\, n}} \mVar{x}_i = n.
 \end{equation}
 %
 This holds because the sum of all occurrences -- that is, the number of items in

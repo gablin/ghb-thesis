@@ -1467,9 +1467,10 @@ thousands of \glspl{variable}.
 In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 \begin{equation}
-  \sum_{\substack{m \in M, \\ n \in \mCovers(m)}}
-  \hspace*{-1em}
-  \mVar{x}[m] = 1, \forall n \in N,
+  \sum_{\mathclap{\substack{m \in M \text{ \st} \\ n \in \mCovers(m)}}}
+  \mVar{x}[m] = 1
+  \mQuantSep
+  \forall n \in N,
   \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
@@ -2072,9 +2073,9 @@ Formally, a \gls{PBQP} is defined as follows.
     \begin{array}{rl}
       \text{minimize}
         & \displaystyle
-          \sum_{1 \leq i < j \leq n} \hspace*{-.5em}
+          \sum_{\mathclap{1 \leq i < j \leq n}}
           \mVar{x}_i^{\transp} C_{ij} \, \mVar{x}_j +
-          \sum_{1 \leq i \leq n} \mVector{c}_i^{\transp} \mVar{x}_i, \\
+          \sum_{\mathclap{1 \leq i \leq n}} \mVector{c}_i^{\transp} \mVar{x}_i, \\
       \text{subject to}
         & \forall_{\! i} \: \mVector{1}^{\transp} \mVar{x}_i = 1. \\
     \end{array}
@@ -2305,8 +2306,7 @@ associated \gls{proxy.r} \gls{rule}.
 The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
-  \sum_{i \in N, j \in M}
-  \hspace*{-.5em}
+  \sum_{\mathclap{i \in N, j \in M}}
   \mVar{x}_i^{\transp} D_{ij} \, \mVar{x}_j
 \end{equation}
 %

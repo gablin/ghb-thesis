@@ -248,7 +248,7 @@ and \gls{match set}, the \gls{constraint} forbidding cyclic data dependencies is
 modeled as
 %
 \begin{equation}
-  \sum_{m \in f} \mVar{sel}[m] < \mCard{f}
+  \sum_{\mathclap{m \in f}} \mVar{sel}[m] < \mCard{f}
   \mQuantSep
   \forall f \in \mForbiddenCombSet.
   \labelEquation{cyclic-data-deps}
@@ -1938,7 +1938,7 @@ can be modeled as
 %
 \begin{equation}
   \mVar{cost} =
-  \sum_{m \in \mMatchSet}
+  \sum_{\mathclap{m \in \mMatchSet}}
   \mVar{sel}[m] \times \mCost(m) \times \mFreq(\mBlockOf(m)),
   \labelEquation{naive-objective-function}
 \end{equation}
