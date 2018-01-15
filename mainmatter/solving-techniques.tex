@@ -469,13 +469,15 @@ where
 \begin{equation}
   \mDataOf(o \hspace{-1pt}, f)
   \equiv
-  \hspace{-1.5em}
-  \bigcup_{\substack{%
-                   m \, \in \, \mMatchSet[o] \hspace{-.8pt}, \\
-                   p \, \in \, f\hspace{-1pt}(m) \text{ \st} \\
-                   \mCovers(m) \, = \, \mSet{o}
-                 }}
-  \hspace{-1.5em}
+  \bigcup_{
+    \mathclap{
+      \substack{
+        m \, \in \, \mMatchSet[o] \hspace{-.8pt}, \:
+        p \, \in \, f\hspace{-1pt}(m) \text{ \st} \\
+        \mCovers(m) \, = \, \mSet{o}
+      }
+    }
+  }
   \mDataSet[p]
   \labelEquation{data-of-function}
 \end{equation}
