@@ -1112,7 +1112,13 @@ been adapted to \glsdesc{CP} by adding \gls{CP} techniques on top of
 \gls{SAT}~solving~\cite{OhrimenkoEtAl:2007}.
 %
 An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
-\refFigure{lcg-solver-overview}.
+\refFigure{lcg-solver-overview}.\!%
+%
+\footnote{%
+  In \cite{FeydyStuckey:2009}, it is described how to re-engineer the original
+  implementation by embedding a \gls{SAT} solver inside a \gls{constraint
+    solver} instead of vice versa.
+}
 
 \begin{figure}
   \centering%
