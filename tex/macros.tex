@@ -603,6 +603,10 @@
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }
+\NewDocumentCommand{\mBoolRepVar}{m}{%
+  \def\vLine{\vrule width 0.4pt height 1.6ex depth 2pt}
+  [ \mathllap{\vLine\hspace*{.85pt}} #1 \mathrlap{\hspace*{.85pt}\vLine} ]
+}
 \newcommand{\mResourceSet}{R}
 \newcommand{\mHeuristicCost}{C_{\textsc{\textrm{heur}}}}
 \newcommand{\mRelaxedCost}{C_{\textsc{\textrm{rlx}}}}

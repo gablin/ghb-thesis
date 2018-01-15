@@ -1,0 +1,92 @@
+% Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\def\compSep{4mm}%
+\def\belowstrut{\vrule height 0pt depth 2pt width 0pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[%
+    component/.style={
+      nothing,
+      inner sep=1mm,
+      node distance=\compSep,
+    },
+    component wrapper/.style={
+      nothing,
+      inner xsep=3mm,
+      inner ysep=2mm,
+      draw,
+      line width=\normalLineWidth,
+      fill=shade1,
+    },
+    label/.style={
+      nothing,
+      node distance=0.5mm,
+      font=\bfseries,
+    },
+    order/.style={
+      ->,
+      line width=1.5\normalLineWidth,
+    },
+  ]
+
+  % SAT part
+  \node [component] (bool-vars) {Boolean variables\belowstrut};
+  \node [component, above=of bool-vars] (clauses) {clauses\belowstrut};
+  \node [component, above=of clauses] (unit-prop) {unit propagators};
+  \node [component, above=of unit-prop] (impl-graph) {implication graph};
+  \node [component, above=of impl-graph] (backtracking)
+        {%
+          \begin{tabular}{@{}c@{}}
+            clause learning,\\
+            backtracking
+          \end{tabular}%
+        };
+  \begin{scope}[order, shorten >=-2pt]
+    \draw (bool-vars) -- (clauses);
+    \draw [shorten >=-1pt] (clauses) -- (unit-prop);
+    \draw [rounded corners=3pt, shorten >=0]
+          (unit-prop.west)
+          --
+          ++(left:4mm)
+          |-
+          (bool-vars);
+    \draw (unit-prop) -- (impl-graph);
+    \draw (impl-graph) -- (backtracking);
+    \draw [rounded corners=6pt, shorten >=0]
+          (backtracking.west)
+          --
+          ++(left:7mm)
+          |- coordinate (sat-left)
+          (clauses);
+  \end{scope}
+  \begin{pgfonlayer}{background}
+    \node [component wrapper, fit=(bool-vars) (backtracking) (sat-left)]
+          (sat) {};
+  \end{pgfonlayer}
+  \node [label, above=of sat] {SAT region};
+
+  % CP part
+  \node [component, right=3*\compSep of bool-vars] (int-vars)
+        {integer variables};
+  \node [component] (constraints) at (int-vars |- clauses)
+        {constraints\belowstrut};
+  \begin{scope}[order, shorten >=-2pt]
+    \draw (int-vars) -- (constraints);
+  \end{scope}
+  \begin{pgfonlayer}{background}
+    \node [component wrapper, fit=(int-vars) (constraints)] (cp) {};
+  \end{pgfonlayer}
+  \node [label, above=of cp] {CP region};
+
+  \begin{scope}[order]
+    \draw (bool-vars) -- (int-vars);
+    \draw (constraints) -- (clauses);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

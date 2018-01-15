@@ -1897,7 +1897,9 @@ the optimal \gls{solution} for one \gls{function} whereas \glsshort{constraint
 %
 A possible explanation is that the lower bound computed by the relaxed
 \gls{constraint model} is too weak to be lead to any \gls{propagation} and
-instead only interferes with \gls{Chuffed}'s \gls{lazy clause learning} engine.
+instead only interferes with \gls{Chuffed}'s \gls{LCG} engine (see
+\refChapter{constraint-programming} on
+\refPageOfSection{cp-lazy-clause-generation} for a description of \gls{LCG}).
 
 Based on the observations above, we conclude that, in terms of solving time, the
 refined \gls{objective function} coupled with an upper cost bound is a better
@@ -3266,8 +3268,7 @@ another category (such as \glsshort{symmetry breaking.c} and \gls{dominance
 This highlights the difficulty of accurately evaluating the full effect that a
 solving technique has on the performance of a \gls{constraint model} as it may
 interact with other parts of the \glsshort{constraint model} in complex and
-counterintuitive ways, which is further magnified when \gls{lazy clause
-  learning} is involved.
+counterintuitive ways, which is further magnified when \gls{LCG} is involved.
 
 Regarding \glsshort{constraint model}~\refModel{st-ex-no-bad-techs} and
 \glsshort{constraint model}~\refModel{st-ex-all-techs}, we observe when

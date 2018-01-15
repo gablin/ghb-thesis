@@ -12,13 +12,18 @@
 This chapter describes \gls{CP}, which is a method for solving combinatorial
 problems.
 %
-Like similar methods such as \gls{IP} and \gls{SAT}~\cite{BiereEtAl:2009}, in
-\gls{CP} we first \emph{model} the problem and then we \emph{solve} the model.
+Like similar methods such as \gls{IP} and \gls{SAT} (see \cite{Wolsey:1998} and
+\cite{BiereEtAl:2009} for overviews), in \gls{CP} we first \emph{model} the
+problem and then we \emph{solve} the model.
 %
 The modeling and solving aspects are described in \refSectionList{cp-modeling,
   cp-solving}, respectively.
 %
 A comprehensive overview of \gls{CP} is given in~\cite{RossiEtAl:2006}.
+%
+In \refSection{cp-lazy-clause-generation} we will briefly discuss \glsdesc{LCG},
+which is a solving technique that the \gls{constraint solver} we use in our
+approach is based.
 
 In terms of modeling, \gls{CP} offers a higher level of abstraction compared to
 other methods.
@@ -1095,6 +1100,106 @@ technique is to remove \glspl{match} that we know cannot participate in any
 Several such techniques are introduced in \refChapter{solving-techniques}.
 
 
-\subsection{Lazy Clause Learning}
+\section{Lazy Clause Generation}
+\labelSection{cp-lazy-clause-generation}
 
-\todo{write}
+\Gls!{LCG} is a solving technique where the \gls{constraint solver}, when
+reaching a \gls{failure} during \gls{search}, learns new \glspl{constraint} in
+order to avoid repeating the same mistakes.
+%
+The technique originates from \gls{SAT}~\cite{MarquesSilvaEtal:2014} but has
+been adapted to \glsdesc{CP} by adding \gls{CP} techniques on top of
+\gls{SAT}~solving~\cite{OhrimenkoEtAl:2007}.
+%
+An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
+\refFigure{lcg-solver-overview}.
+
+\begin{figure}
+  \centering%
+  \input{figures/constraint-programming/lcg-solver-overview}
+
+  \caption{Overview of a typical LCG-based constraint solver}
+  \labelFigure{lcg-solver-overview}
+\end{figure}
+
+To begin with, every \glspl{variable} has two dual representations: one based on
+Booleans; and one based on integers, which is the \gls{domain} typically used in
+\gls{CP}.
+%
+Every integer variable~\mbox{$\mVar{x} \in [l, \ldots, u]$} results in a set
+\mbox{$\mBoolRepVar{\mVar{x} = l}, \ldots, \mBoolRepVar{\mVar{x} = u}$} and
+\mbox{$\mBoolRepVar{\mVar{x} \leq l}, \ldots, \mBoolRepVar{\mVar{x} \leq u-1}$}
+of Boolean \glspl{variable}, where \mbox{$\mBoolRepVar{e}$} denotes a Boolean
+\gls{variable} representing whether the expression~$e$ holds.
+%
+For example, \mbox{$\mVar{x} \in [1, 2, 3]$} results in
+\mbox{$\mBoolRepVar{\mVar{x} = 1}$}, \mbox{$\mBoolRepVar{\mVar{x} = 2}$},
+\mbox{$\mBoolRepVar{\mVar{x} = 3}$}, \mbox{$\mBoolRepVar{\mVar{x} \leq 1}$}, and
+\mbox{$\mBoolRepVar{\mVar{x} \leq 2}$}.
+%
+These Boolean \glspl{variable} are sufficient for capturing any
+\glspl{constraint} since \mbox{$\mVar{x} < k$}, \mbox{$\mVar{x} > k$}, and
+\mbox{$\mVar{x} \geq k$} are equivalent to \mbox{$\mBoolRepVar{\mVar{x} \leq k -
+    1}$}, \mbox{$\neg\mBoolRepVar{\mVar{x} \leq k - 1}$}, and
+\mbox{$\neg\mBoolRepVar{\mVar{x} \leq k - 1}$}.
+
+\Glspl{constraint} are applied over the integer \glspl{variable}, as before, but
+when \glsshort{propagation}[ing] the \glspl{constraint} do not directly shrink
+the \gls{domain} of the integer \glspl{variable}.
+%
+Instead they generate clauses consisting of disjunctions of \glspl{literal},
+where a \gls!{literal} is a Boolean \glspl{variable} that may optionally be
+negated.
+%
+For example, if $\mAllDifferent$ \glsshort{propagation}[es] that two
+\glspl{variable} \mbox{$\mVar{x}, \mVar{y} \in \mSet{1, 2, 3}$} cannot be
+assigned value~$2$, then it will produce two clauses \mbox{$\neg\mBoolRepVar{x =
+    2} \mOr \mBoolRepVar{y = 1} \mOr \mBoolRepVar{y = 3}$} and
+\mbox{$\neg\mBoolRepVar{y = 2} \mOr \mBoolRepVar{x = 1} \mOr \mBoolRepVar{x =
+    3}$} (these are equivalent to \mbox{$\mVar{x} = 2 \mImp \mVar{y} \in
+  \mSet{1, 3}$} and \mbox{$\mVar{y} = 2 \mImp \mVar{x} \in \mSet{1, 3}$},
+respectively).
+%
+Hence the Boolean dual \glsshort{constraint model} is built lazily as solving
+proceeds.
+
+If a clause consist of one unassigned Boolean \gls{variable}~$v$ and all other
+\glspl{literal} resolve to false, then in order for the clause to hold $v$ must
+be assigned such that the literal becomes true.
+%
+This is called \gls!{unit propagation}~\cite{DarwichePipatsrisawat:2014}.
+%
+For example, if we are given a clause~\mbox{$\mBoolRepVar{\mVar{x} = 1} \mOr
+  \neg\mBoolRepVar{\mVar{y} = 4}$} and $\mVar{x} = 2$, then the Boolean
+\gls{variable} \mbox{$\mBoolRepVar{\mVar{y} = 4}$} must be assigned false,
+meaning \mbox{$\mVar{y} \neq 4$}.
+
+When these \glspl{unit propagation} are caused by assignments that were made
+during \gls{search}, we can use this information to build an \gls!{implication
+  graph}.
+%
+In this \gls{directed.g} \gls{graph}, each \gls{node} represents a \gls{literal}
+that resolves to true and each \gls{edge} between two \glspl{literal}~$l_1$
+and~$l_2$ represents the fact that $l_1$ caused $l_2$ to become true.
+%
+When \gls{failure} is reached, we can then use the \gls{implication graph} to
+derive an explanation for why a \gls{constraint} \glsshort{failure}, which can
+be captured as a clause, called \gls!{no-good}, and added to the existing body
+of clauses.
+%
+This effectively cuts away that part of the \gls{search space} and prevents the
+\glsshort{constraint solver} from making the same mistake again.
+%
+For more details, see~\cite{MarquesSilvaEtal:2014}.
+
+It is well known that the effectiveness of \gls{LCG} is heavily impacted by how
+the problem is modeled as that affects which \glspl{no-good} can be
+learnt~\cite{ChuStuckey:2013}.
+%
+For the same reason, \gls{LCG} is also influenced by \gls{implied.c},
+\gls{symmetry breaking.c}, and \gls{dominance breaking.c} \glspl{constraint}
+that have been added to the \glsshort{constraint model}.
+%
+Consequently, due to \gls{LCG} there arise strong synergy effects between such
+\glspl{constraint} that would not have appeared when using a non-\gls{LCG}
+\gls{constraint solver}.
