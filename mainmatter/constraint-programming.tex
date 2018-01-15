@@ -292,8 +292,8 @@ assignment forms two \glspl{cycle} instead of one:
   \end{tikzpicture}%
 \end{center}
 
-As will be seen in \refChapter{constraint-model}, $\mCircuit$ is used to model
-\gls{block ordering}.
+$\MCircuit$ is used in \refChapter{constraint-model} to model \gls{block
+  ordering}.
 
 
 \paragraph{The Table Constraint}
@@ -338,8 +338,8 @@ because the tuple \mbox{$\mTuple{2, 4}$} appears as a row in~$A$.
 Similarly, \mbox{$\mTable(\mVar{x}_1 \in \mSet{3}, \mVar{x}_2 \in \mSet{3}, A)$}
 does not hold because the tuple \mbox{$\mTuple{3, 3}$} appears as a row in~$A$.
 
-As will be seen in \refChapter{solving-techniques}, $\mTable$ is used to refine
-the \glsshort{constraint model} and to implement serveral of the \gls{implied.c}
+$\MTable$ is used in \refChapter{solving-techniques} to refine the
+\glsshort{constraint model} and to implement serveral of the \gls{implied.c}
 \glspl{constraint}.
 
 
@@ -389,8 +389,8 @@ not matter).
 However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
   \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
 
-As will be seen in \refChapter{solving-techniques}, $\mValuePrec$ is used to
-implement a \gls{dominance breaking.c} \gls{constraint}.
+$\MValuePrec$ is used in \refChapter{solving-techniques} to implement a
+\gls{dominance breaking.c} \gls{constraint}.
 
 
 \paragraph{The Cumulative Constraint}
@@ -486,8 +486,8 @@ Likewise, the schedule shown in \refFigure{cumulative-example-failure} is not a
 \gls{solution} because tasks~$t_4$ and~$t_5$ exceed the capacity when scheduled
 in parallel.
 
-As will be seen in \refChapter{future-work}, $\mCumulative$ is used to integrate
-\gls{instruction scheduling}.
+$\MCumulative$ is used in \refChapter{future-work} to model \gls{instruction
+  scheduling}.
 
 
 \paragraph{The No-Overlap Constraint}
@@ -561,8 +561,8 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
   \labelFigure{no-overlap-example}
 \end{figure}
 
-As will be seen in \refChapter{future-work}, $\mNoOverlap$ is used to integrate
-\gls{register allocation}.
+$\MNoOverlap$ is used in \refChapter{future-work} to model \gls{register
+  allocation}.
 
 
 \subsection{Optimization}
