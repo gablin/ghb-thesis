@@ -61,17 +61,16 @@ A \gls{variable}~$\mVar{x}$ is \gls!{assigned.v} if
 \Glspl!{constraint} express relations between \glspl{variable} and forbid
 assignments that are illegal in the problem.
 %
-Formally, we say that a \gls{constraint}~$C$ applied on a set of
-\glspl{variable} returns a subset of the Cartesian product of the
-\glspl{variable}' \glspl{domain}, i.e.\ \mbox{$C(\mVar{x}_1, \ldots, \mVar{x}_k)
-  \subseteq \mDomain(\mVar{x}_1) \times \ldots \times \mDomain(\mVar{x}_k)$}.
+Given a set of \glspl{variable} \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} and a
+\gls{constraint}~$C$, an assignment to \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$}
+is a \gls!{solution}[ to $C$] if \mbox{$C(\mVar{x}_1, \ldots, \mVar{x}_k)$}
+holds.
 %
-A tuple $\mTuple{d_1, \ldots, d_k} \in C(\mVar{x}_1, \ldots, \mVar{x}_k)$ is
-called a \gls!{solution}[ to $C$], and an assignment to all \glspl{variable}
-that fulfills all \glspl{constraint} in a \gls{constraint model}~$M$ is called a
-\gls!{solution}[ to $M$].
+An assignment to all \glspl{variable} fulfilling all \glspl{constraint} in a
+\glsshort{constraint model}~$M$ is a \gls!{solution}[ to $M$].
 %
-An example is shown in \refTable{cp-model-example}.
+An example of a \gls{constraint model} and its \glspl{solution} is shown in
+\refTable{cp-model-example}.
 
 \begin{table}
   \centering%
@@ -158,13 +157,10 @@ follows.
   \begin{displaymath}
     \mAllDifferent(\mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
-    \mSetBuilder*{\langle d_1, \ldots, d_k \rangle}%
-                 {
-                   \begin{array}{@{}l@{\,}}
-                     \forall 1 \leq i \leq k: d_i \in \mDomain(\mVar{x}_i), \\
-                     \forall 1 \leq i < j \leq k: d_i \neq d_j
-                   \end{array}
-                 }\!.
+    \hspace{-8pt}
+    \mBigAnd_{1 \,\leq\, i \,<\, j \,\leq\, k}
+    \hspace{-8pt}
+    \mVar{x}_i \neq \mVar{x}_j.
   \end{displaymath}
   \labelDefinition{all-different}
 \end{definition}
@@ -193,16 +189,9 @@ For completeness, we give here the formal definition of the \gls{constraint}.
   \begin{displaymath}
     \mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
     \equiv
-    \mSetBuilder*{\mTuple{d_1, \ldots, d_k, e}}%
-                 {
-                   \begin{array}{@{}l@{\,}}
-                     \forall 1 \leq i \leq k: d_i \in \mDomain(\mVar{x}_i),
-                     e \in \mDomain(\mVar{y}), \\
-                     e = \big|
-                           \mSetBuilder{d_j}{\forall 1 \leq j \leq k : d_j = v}
-                         \big|
-                   \end{array}
-                 }\!.
+    \big|
+      \mSetBuilder{\mVar{x}_i}{\forall 1 \leq i \leq k : \mVar{x}_i = v}
+    \big| = \mVar{y}.
   \end{displaymath}
   \labelDefinition{gcc}
 \end{definition}
@@ -246,11 +235,7 @@ We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
   \begin{displaymath}
     \mCircuit(\mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
-    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {
-                  \forall 1 \leq i \leq k: d_i \in \mDomain(\mVar{x}_i),
-                  \text{$d_1, \ldots, d_k$ is cyclic}
-                }.
+    \text{$\mVar{x}_1, \ldots, \mVar{x}_k$ is cyclic}.
   \end{displaymath}
   \labelDefinition{circuit}
 \end{definition}
@@ -332,11 +317,7 @@ We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
   \begin{displaymath}
     \mTable(\mVar{x}_1, \ldots, \mVar{x}_k, T)
     \equiv
-    \mSetBuilder{\langle d_1, \ldots, d_k \rangle}%
-                {
-                  \forall 1 \leq i \leq k: d_i \in \mDomain(\mVar{x}_i),
-                  d_1, \ldots, d_k \in T
-                }.
+    \mTuple{\mVar{x}_1, \ldots, \mVar{x}_k} \in T.
   \end{displaymath}
   \labelDefinition{table}
 \end{definition}
@@ -382,22 +363,15 @@ follows.
   \begin{displaymath}
     \mValuePrecChain(c, \mVar{x}_1, \ldots, \mVar{x}_k)
     \equiv
-    \bigcap_{1 \leq i < n}
-    \mValuePrec(c[i], c[i+1], \mVar{x}[1], \ldots \mVar{x}[k]),
-  \end{displaymath}
-  %
-  where
-  %
-  \begin{displaymath}
-    \mValuePrec(s, t, \mVar{x}_1, \ldots, \mVar{x}_k)
-    \equiv
-    \mSetBuilder*{\langle d_1, \ldots, d_k \rangle}%
-                 {
-                   \begin{array}{@{}l@{\,}}
-                     \forall 1 \leq i \leq k: d_i \in \mDomain(\mVar{x}_i), \\
-                       d_i = t \mImp \exists j < i : d_j = s
-                   \end{array}
-                 }\!.
+    \hspace{-4pt}
+    \mBigAnd_{
+      \substack{
+        1 \,\leq\, i \,\leq\, k \hspace{-.8pt}, \\
+        1 \,\leq\, j \,<\, n \phantom{\hspace{-.8pt},}
+      }
+    }
+    \hspace{-4pt}
+    \mVar{x}_i = c[j+1] \mImp (\exists l < j : \mVar{x}_l = c[j]).
   \end{displaymath}
   \labelDefinition{vpc}
 \end{definition}
@@ -439,56 +413,40 @@ follows.
   the amount of resource required by~$i$, and \mbox{$\mVar{b}_i \in \mSet{0,
       1}$} be a \gls{variable} representing whether $i$ is scheduled.
   %
+  Let also \mbox{$t_{\mathsc{max}} = \mMax(\cup_{1 \,\leq\, j \,\leq\, k}
+    \mDomain(\mVar{s}_j))$}.
+  %
   Then
   %
   \begin{displaymath}
-    \begin{array}{c}
-      \mCumulative(
-        c \hspace{-1pt},
-        \mTuple{
-          \mVar{s}_1 \hspace{-.8pt},
-          l_1 \hspace{-.8pt},
-          u_1 \hspace{-.8pt},
-          \mVar{b}_1
-        } \hspace{-1pt},
-        \ldots,
-        \mTuple{
-          \mVar{s}_k \hspace{-.8pt},
-          l_k \hspace{-.8pt},
-          u_k \hspace{-.8pt},
-          \mVar{b}_k
-        }
-      )
-      \equiv \mbox{} \\
-      \mSetBuilder*{%
-                     \langle d_{\mVar{s}_1} \hspace{-.8pt}, \ldots, d_{\mVar{s}_k}
-                             \hspace{-.8pt},
-                             d_{\mVar{b}_1} \hspace{-.8pt}, \ldots, d_{\mVar{b}_k}
-                             \hspace{-1pt}
-                     \rangle
-                   }%
-                   {
-                     \begin{array}{@{}l@{}}
-                       \forall 1 \leq i \leq k:
-                         d_{\mVar{s}_i} \in \mDomain(\mVar{s}_i),
-                         d_{\mVar{s}_i} \in \mDomain(\mVar{s}_i), \\
-                       \forall 1 \,\leq\,
-                               t \,<\, \mMax(\cup_i \mDomain(\mVar{s}_i)) :
-                         \displaystyle
-                         \hspace{-1.2em}
-                         \sum_{%
-                                \substack{
-                                  1 \,\leq\, j \,\leq\, k, \\
-                                  d_{\mVar{s}_j} \,\leq\, t \,<\,
-                                  d_{\mVar{s}_j} \hspace{-.8pt}+\, l_j
-                                }
-                              }
-                         \hspace{-1.2em}
-                         d_{\mVar{b}_j} \times u_j
-                         \leq c
-                     \end{array}
-                   }\!.
-    \end{array}
+    \mCumulative(
+      c \hspace{-1pt},
+      \mTuple{
+        \mVar{s}_1 \hspace{-.8pt},
+        l_1 \hspace{-.8pt},
+        u_1 \hspace{-.8pt},
+        \mVar{b}_1
+      } \hspace{-1pt},
+      \ldots,
+      \mTuple{
+        \mVar{s}_k \hspace{-.8pt},
+        l_k \hspace{-.8pt},
+        u_k \hspace{-.8pt},
+        \mVar{b}_k
+      }
+    )
+    \equiv
+    \hspace{-9pt}
+    \mBigAnd_{0 \,\leq\, t \,<\, t_{\mathsc{max}}}
+    \sum_{%
+           \substack{
+             1 \,\leq\, i \,\leq\, k \hspace{-.8pt} \text{ \st} \\
+             \mVar{s}_i \,\leq\, t \,<\, \mVar{s}_i \,+\, l_i
+           }
+         }
+    \hspace{-1.2em}
+    \mVar{b}_i \times u_i
+    \leq c \hspace{-1pt}.
   \end{displaymath}
   \labelDefinition{cumulative}
 \end{definition}
@@ -567,36 +525,12 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
         }
       )
       \equiv \mbox{} \\
-      \mSetBuilder*{%
-                     \left\langle
-                       \begin{array}{@{}c@{}}
-                         d_{\mVar{xl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xl}_k}
-                         \hspace{-.8pt},
-                         d_{\mVar{xr}_1} \hspace{-.8pt}, \ldots, d_{\mVar{xr}_k}
-                         \hspace{-.8pt}, \\
-                         d_{\mVar{yl}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yl}_k}
-                         \hspace{-.8pt},
-                         d_{\mVar{yu}_1} \hspace{-.8pt}, \ldots, d_{\mVar{yu}_k}
-                       \end{array}
-                     \right\rangle
-                   }%
-                   {
-                     \begin{array}{@{}l@{}}
-                       \forall 1 \leq i \leq k :
-                         d_{\mVar{xl}_i} \in \mDomain(\mVar{xl}_i),
-                         d_{\mVar{xr}_i} \in \mDomain(\mVar{xr}_i),
-                       \\
-                       d_{\mVar{yl}_i} \in \mDomain(\mVar{yl}_i),
-                       d_{\mVar{yu}_i} \in \mDomain(\mVar{yu}_i), \\
-                       \begin{array}{@{}r@{\:}l@{}}
-                           \forall i < j \leq k :
-                         & d_{\mVar{xr}_i} \leq d_{\mVar{xl}_j} \mOr
-                           d_{\mVar{xl}_i} \geq d_{\mVar{xr}_j} \mOr \mbox{} \\
-                         & d_{\mVar{yu}_i} \leq d_{\mVar{yl}_j} \mOr
-                           d_{\mVar{yl}_i} \geq d_{\mVar{yu}_j}
-                       \end{array}
-                     \end{array}
-                   }\!.
+      \displaystyle\mBigAnd_{1 \,\leq\, i \,<\, j \,\leq\, k}
+      \hspace{-8pt}
+      \mVar{xr}_i \leq \mVar{xl}_j \mOr
+      \mVar{xr}_j \leq \mVar{xl}_i \mOr
+      \mVar{yu}_i \leq \mVar{yl}_j \mOr
+      \mVar{yu}_j \leq \mVar{yl}_i \hspace{-1pt}.
     \end{array}
   \end{displaymath}
   \labelDefinition{no-overlap}
