@@ -1524,8 +1524,9 @@ $b'$ appears immediately after $b$ in the \gls{block} sequence, then a jump
 %
 To prevent emission of such jump \glspl{instruction}, we extend the \gls{pattern
   set} with a special \gls!{null-jump pattern}, with \gls{graph} structure
-\mbox{$\mEdge{b}{\mEdge{c}{b'}}$}, that covers a \gls{control node}~$c$ at zero
-cost provided that \mbox{$\mVar{succ}[b] = b'$}.
+\mbox{$\mEdge{b}{\mEdge{c}{b'}}$}\hspace{-2pt}, that covers a \gls{control
+  node}~$c$ at zero cost provided that \mbox{$\mVar{succ}[b] =
+  b'$}\hspace{-2pt}.
 
 \Glspl{fall-through} to or via the \gls{function}'s \gls{entry block} is never
 allowed since that \gls{block} must always be placed first in the \gls{block}
