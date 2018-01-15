@@ -437,8 +437,7 @@ This is modeled as
                   {%
                     d \in \mDataOf(o \hspace{-1pt}, \mDefines),
                     m \in \mMatchSet[o] \hspace{-1pt},
-                    \exists p \in \mDefines(m)
-                    \text{ \st }
+                    \exists p \in \mDefines(m) :
                     \mDataSet[p] = \mSet{d}
                   }, \\
     \forall d_2 \in
@@ -446,8 +445,7 @@ This is modeled as
                   {
                     d \in \mDataOf(o \hspace{-1pt}, \mUses),
                     m \in \mMatchSet[o] \hspace{-1pt},
-                    \exists p \in \mUses(m)
-                    \text{ \st }
+                    \exists p \in \mUses(m) :
                     \mDataSet[p] = \mSet{d}
                   } : \\
     \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
@@ -492,8 +490,7 @@ This is modeled as
                      \begin{array}{@{}l@{}}
                        o' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[o'] \hspace{-1pt},
-                       \exists p \in \mDefines(m) \\
-                       \text{\st }
+                       \exists p \in \mDefines(m) : \\
                        \mSpans(m) = S \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
                    } : \\
@@ -541,8 +538,7 @@ This is modeled as
                      \begin{array}{@{}l@{}}
                        o' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[d'] \hspace{-1pt},
-                       \exists p \in \mUses(m) \\
-                       \text{ \st}
+                       \exists p \in \mUses(m) : \\
                        \mEntry(m) = \mSet{b} \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
                    } : \\
@@ -682,8 +678,7 @@ This is modeled as
                   {
                     o' \in \mOpSet \!,
                     m \in \mMatchSet[o'] \hspace{-1pt},
-                    \exists p \in \mUses(m) \setminus \mDefines(m)
-                    \text{ \st }
+                    \exists p \in \mUses(m) \setminus \mDefines(m) :
                     \mDataSet[p] = S
                   }, \\
     \exists d \in S :
@@ -709,11 +704,8 @@ This is modeled as
                      \begin{array}{@{}l@{}}
                        d' \in \mStateDataCompSet,
                        m \in \mMatchSet[d'] \setminus \mKillMatchSet,
-                       \exists p \in \mDefines(m) \\
-                       \text{\st }
-                       \mDataSet[p] = \mSet{d'}
-                       \mAnd
-                       \mIsExt(m, p)
+                       \exists p \in \mDefines(m) : \\
+                       \mDataSet[p] = \mSet{d'} \mAnd \mIsExt(m, p)
                      \end{array}
                    } \!, \\
     \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation},
