@@ -70,18 +70,19 @@ in the same \gls{block}, then $m_1$ must be scheduled before~$m_2$.
 This can be modeled as
 %
 \begin{equation}
-  \hspace*{-1em}
-  \begin{array}{c}
-    \mVar{sel}[m_1] \mAnd \mVar{sel}[m_2]
-    \mAnd \mBlockOf(m_1) = \mBlockOf(m_2)
-    \mAnd \mVar{alt}[p_1] = \mVar{alt}[p_2] \\
-    \mbox{} \mImp
-    \mVar{cycle}[m_1] + \mLat(m_1) \leq \mVar{cycle}[m_2] \\
+  \begin{array}{@{}c@{}}
     \forall m_1 \hspace{-1pt}, m_2 \in \mMatchSet,
     \forall p_1 \in \mDefines(m_1),
     \forall p_2 \in \mUses(m_2) \setminus \mDefines(m_2)
     \text{ \st }
-    m_1 \neq m_2 \hspace{-.8pt},
+    m_1 \neq m_2 : \\
+    \big(
+      \mVar{sel}[m_1] \mAnd \mVar{sel}[m_2]
+      \mAnd \mBlockOf(m_1) = \mBlockOf(m_2)
+      \mAnd \mVar{alt}[p_1] = \mVar{alt}[p_2]
+    \big) \\
+    \mbox{} \mImp
+    \mVar{cycle}[m_1] + \mLat(m_1) \leq \mVar{cycle}[m_2],
   \end{array}
   \labelEquation{precedence}
 \end{equation}
@@ -118,7 +119,9 @@ the latency of a \gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r)
 the \gls{constraint} can be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
+  \begin{array}{@{}c@{}}
+    \forall r \in \mResourceSet,
+    \forall b \in \mBlockSet : \\
     \mCumulative
     \!
     \left(
@@ -131,9 +134,7 @@ the \gls{constraint} can be modeled as
         \mResourceUse(m, r),
         \mVar{sched}[m \hspace{-.8pt}, b]
       }
-    \right) \\
-    \forall r \in \mResourceSet,
-    \forall b \in \mBlockSet \!.
+    \right)\!.
   \end{array}
   \labelEquation{resource-capacities}
 \end{equation}
@@ -142,13 +143,11 @@ Lastly, a \gls{match}~$m$ must be scheduled in \gls{block}~$b$ if and only if
 $m$ is selected and placed in $b$, which can be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sched}[m, b]
-    \mEq
-    \mVar{sel}[m] \mAnd \mBlockOf(m) = b \\
-    \forall b \in \mBlockSet,
-    \forall m \in \mMatchSet.
-  \end{array}
+  \forall b \in \mBlockSet,
+  \forall m \in \mMatchSet :
+  \mVar{sched}[m, b]
+  \mEq
+  \mVar{sel}[m] \mAnd \mBlockOf(m) = b \hspace{-1pt}.
   \labelEquation{optional-scheduling}
 \end{equation}
 
@@ -286,11 +285,10 @@ definition of what it means for \glspl{datum} to be \gls{killed.d}, which is
 modeled as
 %
 \begin{equation}
+  \forall d \in \mDataSet :
   \mVar{alive}[d]
   \mEq
-  \mVar{loc}[d] = \mKilledLocation
-  \mQuantSep
-  \forall d \in \mDataSet \!.
+  \mVar{loc}[d] = \mKilledLocation.
   \labelEquation{alive}
 \end{equation}
 
@@ -303,22 +301,19 @@ Otherwise, the start is set to zero.
 This can be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{alive}[d]
-    \mImp
-    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]] \\
-    \forall d \in \mDataSet \!,
-    \forall m \in \mMatchSet[d] \hspace{-.8pt},
-  \end{array}
+  \forall d \in \mDataSet \!,
+  \forall m \in \mMatchSet[d] :
+  \mVar{alive}[d]
+  \mImp
+  \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]],
   \labelEquation{local-live-range-start}
 \end{equation}
 %
 \begin{equation}
+  \forall d \in \mDataSet :
   \neg\mVar{alive}[d]
   \mImp
-  \mVar{start}[d] = 0
-  \mQuantSep
-  \forall d \in \mDataSet \!.
+  \mVar{start}[d] = 0.
   \labelEquation{local-killed-range-start}
 \end{equation}
 
@@ -331,19 +326,17 @@ to not affect \gls{register allocation} and \gls{instruction scheduling}.
 This can jointly be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{end}[d] =
-    \mMax\!
-    \left(
-      \cup_{m \,\in\, \mUsersOf(d)} \,
-      \mVar{cycle}[m]
-      \times
-      \mVar{using}[m \hspace{-1pt}, d]
-      \cup
-      \mSet{\mVar{start}[d]}
-    \right) \\
-    \forall d \in \mDataSet \!.
-  \end{array}
+  \forall d \in \mDataSet :
+  \mVar{end}[d] =
+  \mMax\!
+  \left(
+    \cup_{m \,\in\, \mUsersOf(d)} \,
+    \mVar{cycle}[m]
+    \times
+    \mVar{using}[m \hspace{-1pt}, d]
+    \cup
+    \mSet{\mVar{start}[d]}
+  \right)\!,
   \labelEquation{local-live-range-end}
 \end{equation}
 %
@@ -355,8 +348,8 @@ where
   \mSetBuilder{m}%
               {
                 m \in \mMatchSet,
-                \exists p \in \mUses(m)
-                \text{ \st } d \in \mDataSet[p]
+                \exists p \in \mUses(m) :
+                d \in \mDataSet[p]
               }.
   \labelEquation{users-of-function}
 \end{equation}
@@ -366,14 +359,12 @@ and one of its \glspl{operand} are connected to $d$\hspace{-1pt}, which can be
 modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{using}[m \hspace{-1pt}, d]
-    \mEq
-    \mVar{sel}[m] \mAnd \mVar{alt}[p] = d \\
-    \forall d \in \mDataSet \!,
-    \forall m \in \mMatchSet,
-    \forall p \in \mUses(m).
-  \end{array}
+  \forall d \in \mDataSet \!,
+  \forall m \in \mMatchSet,
+  \forall p \in \mUses(m) :
+  \mVar{using}[m \hspace{-1pt}, d]
+  \mEq
+  \mVar{sel}[m] \mAnd \mVar{alt}[p] = d \hspace{-1pt}.
   \labelEquation{local-m-using-d}
 \end{equation}
 
@@ -496,7 +487,10 @@ Hence \refEquationList{local-live-range-start, local-killed-range-start,
 grey):
 %
 \begin{equation}
-  \begin{array}{c}
+  \begin{array}{@{}c@{}}
+    \forall d \in \mDataSet \!,
+    \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} \,
+    \forall m \in \mMatchSet[d] : \\
     \hlDiff{(}
       \mVar{alive}[d]
       \hlDiff{
@@ -505,34 +499,30 @@ grey):
         \mVar{dplace}[d] = b
     )}
     \mImp
-    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]] \\
-    \forall d \in \mDataSet \!,
-    \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} \,
-    \forall m \in \mMatchSet[d] \hspace{-.8pt},
+    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]],
   \end{array}
   \labelEquation{global-live-range-start}
 \end{equation}
 %
 \begin{equation}
-  \begin{array}{c}
-    \hlDiff{(}
-      \neg\mVar{alive}[d]
-      \hlDiff{
-        \mbox{}
-        \mOr
-        \mVar{dplace}[d] \neq b
-      }
-    \hlDiff{)}
-    \mImp
-    \mVar{start}[d \hlDiff{\hspace{-.4pt}, b}] = 0 \\
-    \forall d \in \mDataSet \hspace{-1pt},
-    \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},}
-  \end{array}
+  \forall d \in \mDataSet \hspace{-1pt},
+  \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} :
+  \hlDiff{(}
+    \neg\mVar{alive}[d]
+    \hlDiff{
+      \mbox{}
+      \mOr
+      \mVar{dplace}[d] \neq b
+    }
+  \hlDiff{)}
+  \mImp
+  \mVar{start}[d \hlDiff{\hspace{-.4pt}, b}] = 0,
   \labelEquation{global-killed-range-start}
 \end{equation}
 %
 \begin{equation}
-  \begin{array}{c}
+  \begin{array}{@{}c@{}}
+    \hlDiff{\forall b \in \mBlockSet :} \\
     \mNoOverlap\!
     \left(
       \cup_{d \,\in\, \mDataSet}
@@ -542,8 +532,7 @@ grey):
            \mVar{loc}[d],
            \mVar{loc}[d] + \mWidthOf(d)
         }
-    \right) \\
-    \hlDiff{\forall b \in \mBlockSet} \hspace{-1pt}.
+    \right)\!.
   \end{array}
   \labelEquation{global-rect-packing}
 \end{equation}
@@ -556,18 +545,16 @@ schedule for $b$\hspace{-1pt}.
 This can be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{useafter}[d \hspace{-1pt}, b]
-    \mImp
-    \mVar{end}[d \hspace{-1pt}, b]
-    =
-    \mMax(
-      \cup_{d' \,\in\, \mDataSet \text{ \st } d' \neq d} \,
-      \mVar{end}[d' \!\!, b]
-    ) \\
-    \forall d \in \mDataSet \!,
-    \forall b \in \mBlockSet \hspace{-1pt},
-  \end{array}
+  \forall d \in \mDataSet \!,
+  \forall b \in \mBlockSet :
+  \mVar{useafter}[d \hspace{-1pt}, b]
+  \mImp
+  \mVar{end}[d \hspace{-1pt}, b]
+  =
+  \mMax(
+    \cup_{d' \,\in\, \mDataSet \text{ \st } d' \neq d} \,
+    \mVar{end}[d' \!\!, b]
+  ).
   \labelEquation{global-live-range-end-def-and-int-blocks}
 \end{equation}
 %
@@ -575,7 +562,9 @@ For every other \glspl{block}~$b''\!$, either $d$ is not used in
 $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
+  \begin{array}{@{}c@{}}
+    \forall d \in \mDataSet \!,
+    \forall b \in \mBlockSet :
     \neg\mVar{useafter}[d \hspace{-1pt}, b]
     \mImp \mbox{} \\
     \mVar{end}[d, b]
@@ -592,9 +581,7 @@ $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
         \mbox{} \cup
         \mSet{\mVar{start}[d, b]}
       \end{array}
-    \right) \\
-    \forall d \in \mDataSet \!,
-    \forall b \in \mBlockSet \hspace{-1pt}.
+    \right)
   \end{array}
   \labelEquation{global-live-range-end-last-use-block}
 \end{equation}
@@ -614,9 +601,8 @@ and~\refEquation*{global-live-range-end-last-use-block} implicitly assume that
 which can be enforced by
 %
 \begin{equation}
-  \mVar{cycles}[m] = 0
-  \mQuantSep
-  \forall m \in \mPhiMatchSet.
+  \forall m \in \mPhiMatchSet :
+  \mVar{cycles}[m] = 0.
   \labelEquation{schedule-phi-matches}
 \end{equation}
 
@@ -624,19 +610,17 @@ Lastly, we constrain the $\mVar{useafter}$~\glspl{variable} according to the
 definition above, which can be modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{useafter}[d \hspace{-1pt}, b_1]
-    \mEq
-    \exists m \in \mMatchSet
-    \text{ \st }
-    \mVar{using}[m \hspace{-1pt}, d]
-    \mAnd
-    \mVar{sched}[m \hspace{-1pt}, b_2]
-    \\
+  \begin{array}{@{}c@{}}
     \forall d \in \mDataSet \!,
     \forall b_1, b_2 \in \mBlockSet
     \text{ \st }
-    b_2 \in \mBranches(b_1),
+    b_2 \in \mBranches(b_1) : \\
+    \mVar{useafter}[d \hspace{-1pt}, b_1]
+    \mEq
+    \exists m \in \mMatchSet :
+    \mVar{using}[m \hspace{-1pt}, d]
+    \mAnd
+    \mVar{sched}[m \hspace{-1pt}, b_2],
   \end{array}
   \labelEquation{global-use-after-block}
 \end{equation}

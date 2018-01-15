@@ -109,9 +109,8 @@ Given a \glsshort{dominate.b}[ance] relation matrix~$\mDomMatrix$, this
 \gls{constraint} is modeled as
 %
 \begin{equation}
-  \mTable(\mVar{uplace}[p], \mVar{dplace}[\mVar{alt}[p]], \mDomMatrix)
-  \mQuantSep
-  \forall p \in \mPhiOperandCompSet.
+  \forall p \in \mPhiOperandCompSet :
+  \mTable(\mVar{uplace}[p], \mVar{dplace}[\mVar{alt}[p]], \mDomMatrix),
   \labelEquation{refined-dom}
 \end{equation}
 %
@@ -127,12 +126,10 @@ Next, if a \gls{match}~$m$ is selected and placed in \gls{block}~$b$, then all
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p] \\
-    \forall m \in \mPhiMatchCompSet,
-    \forall o \in \mCovers(m),
-    \forall p \in \mUses(m).
-  \end{array}
+  \forall m \in \mPhiMatchCompSet,
+  \forall o \in \mCovers(m),
+  \forall p \in \mUses(m) :
+  \mVar{sel}[m] \mImp \mVar{oplace}[o] = \mVar{uplace}[p].
   \labelEquation{refined-dom-selected}
 \end{equation}
 %
@@ -167,11 +164,9 @@ always \gls{dominate.b}[s] itself.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]] \\
-    \forall m \in \mPhiMatchCompSet,
-    \forall p \in \mUses(m).
-  \end{array}
+  \forall m \in \mPhiMatchCompSet,
+  \forall p \in \mUses(m) :
+  \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]].
   \labelEquation{refined-dom-not-selected}
 \end{equation}
 
@@ -182,9 +177,8 @@ does not matter, again giving rise to symmetric \glspl{solution}.
 We therefore fix the assignment in such cases, which is modeled as
 %
 \begin{equation}
-  \mVar{uplace}[p] = \mMin(\mBlockSet)
-  \mQuantSep
-  \forall p \in \mPhiOperandSet.
+  \forall p \in \mPhiOperandSet :
+  \mVar{uplace}[p] = \mMin(\mBlockSet).
   \labelEquation{refined-dom-phi-operands}
 \end{equation}
 
@@ -377,15 +371,14 @@ must appear as a row in the cost matrix.
 Hence, given a cost matrix~$\mCostMatrix$ this \gls{constraint} is modeled as
 %
 \begin{equation}
+  \forall o \in \mOpSet :
   \mTable(
     o\hspace{-1pt},
     \mVar{omatch}[o],
     \mVar{oplace}[o],
     \mVar{ocost}[o],
     \mCostMatrix
-  )
-  \mQuantSep
-  \forall o \in \mOpSet \hspace{-.8pt}.
+  ).
   \labelEquation{omatch-oplace-ocost-connection}
 \end{equation}
 %
@@ -430,10 +423,7 @@ In addition, $o$ must be placed in the same \gls{block} wherein $d_1$ is
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
-    \mAnd
-    \mVar{oplace}[o] = \mVar{dplace}[d_1] \\
+  \begin{array}{@{}c@{}}
     \forall o \in
       \mSetBuilder{o'}%
                   {%
@@ -453,13 +443,16 @@ This is modeled as
                   }, \\
     \forall d_2 \in
       \mSetBuilder{d}%
-                  {%
+                  {
                     d \in \mDataOf(o \hspace{-1pt}, \mUses),
                     m \in \mMatchSet[o] \hspace{-1pt},
                     \exists p \in \mUses(m)
                     \text{ \st }
                     \mDataSet[p] = \mSet{d}
-                  }.
+                  } : \\
+    \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
+    \mAnd
+    \mVar{oplace}[o] = \mVar{dplace}[d_1].
   \end{array}
   \labelEquation{impl-cons-defs-dominate-defs}
 \end{equation}
@@ -490,13 +483,12 @@ non-\gls{phi-node} \gls{operation} \gls{span.b} a set~$S$ of \glspl{block} and
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{dplace}[d] \in S \\
+  \begin{array}{@{}c@{}}
     \forall S \in \mPowerset{\mBlockSet} \hspace{-2pt},
     \forall d \in \mDataSet \!,
     \forall o \in
       \mSetBuilder*{o'}%
-                   {%
+                   {
                      \begin{array}{@{}l@{}}
                        o' \in \mOpCompSet{\mPhi},
                        m \in \mMatchSet[o'] \hspace{-1pt},
@@ -504,7 +496,8 @@ This is modeled as
                        \text{\st }
                        \mSpans(m) = S \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
-                   } \!.
+                   } : \\
+    \mVar{dplace}[d] \in S.
   \end{array}
   \labelEquation{impl-cons-defs-in-spanned-blocks}
 \end{equation}
@@ -516,17 +509,17 @@ non-\glspl{phi-match} covering \gls{operation}~$o$ have \gls{entry
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{oplace}[o] = b \\
+  \begin{array}{@{}c@{}}
     \forall b \in \mBlockSet \hspace{-1pt},
     \forall o \in
       \mSetBuilder{o'}%
-                  {%
+                  {
                     o' \in \mOpSet,
                     m \in \mMatchSet[o'] \setminus \mPhiMatchSet
                     \text{ \st }
                     \mEntry(m) = \mSet{b}
-                  }.
+                  } : \\
+    \mVar{oplace}[o] = b \hspace{-1pt}.
   \end{array}
   \labelEquation{impl-cons-identical-entry-blocks}
 \end{equation}
@@ -540,8 +533,7 @@ $b$\hspace{-1pt}.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix) \\
+  \begin{array}{@{}c@{}}
     \forall b \in \mBlockSet \hspace{-1pt},
     \forall d \in
       \mSetBuilder*{d'}%
@@ -553,7 +545,8 @@ This is modeled as
                        \text{ \st}
                        \mEntry(m) = \mSet{b} \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
-                   } \!.
+                   } : \\
+    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix).
   \end{array}
   \labelEquation{impl-cons-defs-dominate-entry-blocks}
 \end{equation}
@@ -566,18 +559,16 @@ must be placed $b$.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{oplace}[o] = b \\
-    \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
-    \forall o \in
-      \mSetBuilder{o'}%
-                  {%
-                    \begin{array}{@{}l@{}}
-                      m \in \mMatchSet[d] \cap \mPhiMatchSet,
-                      o' \in \mCovers(m)
-                    \end{array}
-                  }.
-  \end{array}
+  \forall \mEdge{d}{b} \in \mFunctionDefEdgeSet,
+  \forall o \in
+    \mSetBuilder{o'}%
+                {%
+                  \begin{array}{@{}l@{}}
+                    m \in \mMatchSet[d] \cap \mPhiMatchSet,
+                    o' \in \mCovers(m)
+                  \end{array}
+                } :
+  \mVar{oplace}[o] = b \hspace{-1pt}.
   \labelEquation{impl-cons-place-phi-ops-same-as-def-edges}
 \end{equation}
 %
@@ -598,48 +589,48 @@ same \gls{block}.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
+  \begin{array}{@{}c@{}}
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p_1, p_2 \in \mUses(m) \text{ \st } p_1 < p_2,
+    \forall p_1, p_2 \in \mUses(m) \text{ \st } p_1 < p_2 : \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2],
   \end{array}
   \labelEquation{impl-cons-no-span-uses}
 \end{equation}
 %
 \begin{equation}
   \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{dplace}[\mVar{alt}[p_1]] = \mVar{dplace}[\mVar{alt}[p_2]] \\
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
                   },
-    \forall p_1, p_2 \in \mDefines(m) \text{ \st } p_1 < p_2,
+    \forall p_1, p_2 \in \mDefines(m) \text{ \st } p_1 < p_2 : \\
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\mVar{alt}[p_1]] = \mVar{dplace}[\mVar{alt}[p_2]],
   \end{array}
   \labelEquation{impl-cons-no-span-defs}
 \end{equation}
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m]
-    \mImp
-    \mVar{uplace}[p_1] = \mVar{dplace}[\mVar{alt}[p_2]] \\
+  \begin{array}{@{}c@{}}
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) = \mEmptySet
-                  }, \\
-    \forall p_1 \in \mUses(m) \setminus \mDefines(m),
-    \forall p_2 \in \mDefines(m).
+                  },
+    \forall p_1 \in \mUses(m) \setminus \mDefines(m), \\
+    \forall p_2 \in \mDefines(m) :
+    \mVar{sel}[m]
+    \mImp
+    \mVar{uplace}[p_1] = \mVar{dplace}[\mVar{alt}[p_2]].
   \end{array}
   \labelEquation{impl-cons-no-span-use-defs}
 \end{equation}
@@ -651,16 +642,16 @@ all \gls{use.d}[s] of the input \glspl{datum} must occur in the same
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2] \\
+  \begin{array}{@{}c@{}}
     \forall m \in
       \mSetBuilder{m'}%
                   {%
                     m \in \mPhiMatchCompSet \hspace{-1pt},
                     \mSpans(m) \neq \mEmptySet
-                  },
-    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m) \\
-    \text{\st } p_1 < p_2.
+                  }, \\
+    \forall p_1, p_2 \in \mUses(m) \setminus \mDefines(m)
+    \text{ \st } p_1 < p_2 : \\
+    \mVar{sel}[m] \mImp \mVar{uplace}[p_1] = \mVar{uplace}[p_2].
   \end{array}
   \labelEquation{impl-cons-spanned-input}
 \end{equation}
@@ -684,21 +675,19 @@ then at least one of those values must be made \gls{available.d}.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \exists d \in S,
-    \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation} \\
+  \begin{array}{@{}c@{}}
     \forall S \in \mPowerset{\mStateDataCompSet} \hspace{-2pt},
     \forall o \in
-      \mSetBuilder*{o'}%
-                   {%
-                     \begin{array}{@{}l@{}}
-                       o' \in \mOpSet \!,
-                       m \in \mMatchSet[o'] \hspace{-1pt},
-                       \exists p \in \mUses(m) \setminus \mDefines(m) \\
-                       \text{\st }
-                       \mDataSet[p] = S
-                     \end{array}
-                   } \!.
+      \mSetBuilder{o'}%
+                  {
+                    o' \in \mOpSet \!,
+                    m \in \mMatchSet[o'] \hspace{-1pt},
+                    \exists p \in \mUses(m) \setminus \mDefines(m)
+                    \text{ \st }
+                    \mDataSet[p] = S
+                  }, \\
+    \exists d \in S :
+    \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation}.
   \end{array}
   \labelEquation{impl-cons-used-data-must-be-available}
 \end{equation}
@@ -713,20 +702,21 @@ If all non-\glspl{kill match} defining a non-\glsshort{state node}
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation} \\
+  \begin{array}{@{}c@{}}
     \forall d \in
       \mSetBuilder*{d'}%
                    {%
                      \begin{array}{@{}l@{}}
                        d' \in \mStateDataCompSet,
                        m \in \mMatchSet[d'] \setminus \mKillMatchSet,
-                       \exists p \in \mDefines(m) \text{ \st} \\
+                       \exists p \in \mDefines(m) \\
+                       \text{\st }
                        \mDataSet[p] = \mSet{d'}
                        \mAnd
                        \mIsExt(m, p)
                      \end{array}
-                   } \!.
+                   } \!, \\
+    \mVar{loc}[d] \notin \mSet{\mIntLocation, \mKilledLocation},
   \end{array}
   \labelEquation{impl-cons-exterior-data-must-be-available}
 \end{equation}
@@ -741,8 +731,7 @@ The intuition here is to take the union of all those \glspl{location}, which is
 modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{loc}[d] = S \\
+  \begin{array}{@{}c@{}}
     \forall d \in \mStateDataCompSet,
     \forall S \in
       \mPowerset{\mLocationSet
@@ -755,7 +744,8 @@ modeled as
                       l \in \mStores(m, p)
                       \text{ \st }
                       d \in \mDataSet[p]
-                    },
+                    } : \\
+    \mVar{loc}[d] = S.
   \end{array}
   \labelEquation{impl-cons-locs-of-uses}
 \end{equation}
@@ -767,8 +757,7 @@ Likewise, we can always constrain the \glspl{location} of a non-\glsshort{state
 This is modeled similarly as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{loc}[d] = S \\
+  \begin{array}{@{}c@{}}
     \forall d \in \mStateDataCompSet,
     \forall S \in
       \mPowerset{\mLocationSet
@@ -783,7 +772,8 @@ This is modeled similarly as
                       d \in \mDataSet[p]
                     }
     \mAnd
-    S \neq \mEmptySet.
+    S \neq \mEmptySet : \\
+    \mVar{loc}[d] = S.
   \end{array}
   \labelEquation{impl-cons-locs-of-defs}
 \end{equation}
@@ -799,8 +789,7 @@ then it is always safe to force $b_2$ to follow $b_1$.
 This is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mVar{succ}[b_1] = b_2 \\
+  \begin{array}{@{}c@{}}
     \forall b_1, b_2 \in \mBlockSet
     \text{ \st }
     \mSetBuilder{\mEntry(m)}{\mPair{m}{b_2} \in \mFallThroughSet} = \mSet{b_1}
@@ -810,7 +799,8 @@ This is modeled as
                   \mPair{m}{b} \in \mFallThroughSet
                   \text{ \st }
                   \mEntry(m) = \mSet{b_1}%
-                } = \mSet{b_2}.
+                } = \mSet{b_2} :
+    \mVar{succ}[b_1] = b_2.
   \end{array}
   \labelEquation{impl-cons-fix-fall-throughs}
 \end{equation}
@@ -845,9 +835,8 @@ Consequently, it makes sense to fix the \gls{location} for each \gls{state
   node}, which is modeled as
 %
 \begin{equation}
-  \mVar{loc}[d] = \mIntLocation
-  \mQuantSep
-  \forall d \in \mStateDataSet,
+  \forall d \in \mStateDataSet :
+  \mVar{loc}[d] = \mIntLocation,
   \labelEquation{dom-cons-locs-of-states}
 \end{equation}
 %
@@ -866,11 +855,9 @@ many symmetric \glspl{solution}.
 We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]) \\
-    \forall m \in \mMatchSet,
-    \forall p \in \mDefines(m) \cup \mUses(m).
-  \end{array}
+  \forall m \in \mMatchSet,
+  \forall p \in \mDefines(m) \cup \mUses(m) :
+  \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]).
   \labelEquation{dom-cons-operands-of-non-selected-matches}
 \end{equation}
 
@@ -881,14 +868,14 @@ that the corresponding \gls{datum} must be in a usable \gls{location}.
 %
 This is modeled as
 \begin{equation}
-  \begin{array}{c}
-    \mVar{alt}[p] \neq \mMin(\mDataSet[p])
-    \mImp
-    \mVar{alt}[p] \notin \mSet{\mIntLocation, \mKilledLocation} \\
+  \begin{array}{@{}c@{}}
     \forall m \in \mMatchSet,
     \forall p \in \mUses(m) \setminus \mDefines(m)
     \text{ \st }
-    \mCard{\mDataSet[p]} > 1.
+    \mCard{\mDataSet[p]} > 1 : \\
+    \mVar{alt}[p] \neq \mMin(\mDataSet[p])
+    \mImp
+    \mVar{alt}[p] \notin \mSet{\mIntLocation, \mKilledLocation}.
   \end{array}
   \labelEquation{impl-cons-input-operands-not-taking-min-value}
 \end{equation}
@@ -1021,14 +1008,14 @@ then the \gls{dominance breaking.c} \gls{constraint} described above is modeled
 as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]) \\
+  \begin{array}{@{}c@{}}
     \forall c \in \mInterchDataSet,
     \forall p_1, \ldots, p_k \in \mOperandSet \setminus \mOperandSet[\mPhi]
     \text{ \st }
     p_1 \neq \cdots \neq p_k
     \mAnd
-    (\forall 1 \leq i \leq k : \mDataSet[p_i] \! = c).
+    (\forall 1 \leq i \leq k : \mDataSet[p_i] \! = c) : \\
+    \mValuePrecChain(c, \mVar{alt}[p_1], \ldots, \mVar{alt}[p_k]).
   \end{array}
   \labelEquation{dom-cons-interch-data-chains}
 \end{equation}
@@ -1052,11 +1039,11 @@ Using these definitions, this \gls{dominance breaking.c} \glspl{constraint} is
 modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]) \\
+  \begin{array}{@{}c@{}}
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
-    \exists m_i \in \mMatchSet[c[i]] \cap \mNullCopyMatchSet \hspace{-.8pt}.
+    \exists m_i \in \mMatchSet[c[i]] \cap \mNullCopyMatchSet : \\
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]),
   \end{array}
   \labelEquation{dom-cons-null-copy-match-selection}
 \end{equation}
@@ -1066,9 +1053,7 @@ where
 \begin{equation}
   \mIncreasing(\mVar{x}_1, \ldots, \mVar{x}_k)
   \equiv
-  \hspace{-3pt}
-  \mBigAnd_{1 \leq i < k}
-  \hspace{-3pt}
+  \mBigAnd_{\mathclap{1 \,\leq\, i \,<\, k}}
   \mVar{x}_{i} \leq \mVar{x}_{i + 1}
   \labelEquation{increasing-function}
 \end{equation}
@@ -1087,11 +1072,11 @@ Intuitively, we want to forbid \glspl{solution} where \gls{killed.d}
 is modeled as
 %
 \begin{equation}
-  \begin{array}{c}
-    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]) \\
+  \begin{array}{@{}c@{}}
     \forall c \in \mInterchDataSet[\mCopy],
     \forall 1 \leq i < k,
-    \exists m_i \in \mMatchSet[c[i]] \cap \mKillMatchSet,
+    \exists m_i \in \mMatchSet[c[i]] \cap \mKillMatchSet : \\
+    \mIncreasing(\mVar{sel}[m_1], \ldots, \mVar{sel}[m_k]),
   \end{array}
   \labelEquation{dom-cons-kill-match-selection}
 \end{equation}
@@ -1398,11 +1383,13 @@ where
   \mCupUseLocsOf(d)
   \equiv
   \hspace{-2.5em}
-  \bigcup_{\substack{%
-                   m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
-                   p \, \in \, \mUses(m)
-                   \text{ \st } d \, \in \, \mDataSet[p]
-                  }}
+  \bigcup_{
+    \substack{
+      m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
+      p \, \in \, \mUses(m)
+      \text{ \st } d \, \in \, \mDataSet[p]
+    }
+  }
     \hspace{-2.5em}
     \mStores(m, p).
   \labelEquation{cup-use-locs-of-function}
@@ -1440,14 +1427,16 @@ where
 \begin{equation}
   \mCupDefLocsOf(d)
   \equiv
-  \hspace{-2.5em}
-  \bigcup_{\substack{%
-                   m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
-                   p \, \in \, \mDefines(m)
-                   \text{ \st } d \, \in \, \mDataSet[p]
-                  }}
-    \hspace{-2.5em}
-    \mStores(m, p).
+  \bigcup_{
+    \mathclap{
+      \substack{
+        m \, \in \, \mMatchSet[d] \setminus \mKillMatchSet, \\
+        p \, \in \, \mDefines(m)
+        \text{ \st } d \, \in \, \mDataSet[p]
+      }
+    }
+  }
+  \mStores(m, p).
   \labelEquation{cup-def-locs-of-function}
 \end{equation}
 

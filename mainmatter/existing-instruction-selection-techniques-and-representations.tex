@@ -1467,10 +1467,9 @@ thousands of \glspl{variable}.
 In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 \begin{equation}
+  \forall n \in N :
   \sum_{\mathclap{\substack{m \in M \text{ \st} \\ n \in \mCovers(m)}}}
-  \mVar{x}[m] = 1
-  \mQuantSep
-  \forall n \in N,
+  \mVar{x}[m] = 1,
   \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
@@ -1643,12 +1642,12 @@ With these \glsplshort{decision variable}, \gls{pattern selection} can be
 modeled as
 %
 \begin{equation}
+  \forall m \in M :
   \mGCC(
     m,
     \cup_{n \in \mCovers(m)} \, \mVar{match}_n,
     \mVar{count}_m
   ),
-  \forall m \in M,
   \labelEquation{pattern-selection-using-gcc}
 \end{equation}
 %
@@ -2077,7 +2076,8 @@ Formally, a \gls{PBQP} is defined as follows.
           \mVar{x}_i^{\transp} C_{ij} \, \mVar{x}_j +
           \sum_{\mathclap{1 \leq i \leq n}} \mVector{c}_i^{\transp} \mVar{x}_i, \\
       \text{subject to}
-        & \forall_{\! i} \: \mVector{1}^{\transp} \mVar{x}_i = 1. \\
+        & \forall 1 \leq i \leq n :
+          \mVector{1}^{\transp} \mVar{x}_i = 1. \\
     \end{array}
   \end{displaymath}
 \end{definition}
@@ -2306,7 +2306,7 @@ associated \gls{proxy.r} \gls{rule}.
 The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
-  \sum_{\mathclap{i \in N, j \in M}}
+  \sum_{\mathclap{i \,\in\, N, \: j \,\in\, M}}
   \mVar{x}_i^{\transp} D_{ij} \, \mVar{x}_j
 \end{equation}
 %
@@ -2507,14 +2507,14 @@ Formally, the rules are defined as follows.
   \begin{displaymath}
     \begin{array}{r@{}l}
         \mSynPredRule(s, n, m) \equiv \mbox{}
-      & \mPair{n'}{m'} \in s,
-        \forall m' \in \pN(s) \cap \mPred(\pG, m),
-         \exists n' \in \fN(s), \\[\abovedisplayskip]
+      & \forall m' \in \pN(s) \cap \mPred(\pG, m),
+        \exists n' \in \fN(s) :
+        \mPair{n'}{m'} \in s, \\[\abovedisplayskip]
 
         \mSynSuccRule(s, n, m) \equiv \mbox{}
-      & \mPair{n'}{m'} \in s,
-        \forall m' \in \pN(s) \cap \mSucc(\pG, m),
-        \exists n' \in \fN(s), \\[\abovedisplayskip]
+      & \forall m' \in \pN(s) \cap \mSucc(\pG, m),
+        \exists n' \in \fN(s) :
+        \mPair{n'}{m'} \in s, \\[\abovedisplayskip]
 
         \mSynInRule(s, n, m) \equiv \mbox{}
       & \mCard{\mSucc(\fN, n) \cap \fTin} \geq
@@ -2570,14 +2570,14 @@ Formally, the rules are defined as follows.
         \mSemNodeRule(s, n, m) \equiv \mbox{}
       & n \mVFTwoAttrCmp m, \\[\abovedisplayskip]
         \mSemEdgeRule(s, n, m) \equiv \mbox{}
-      & \left(
-        \mPair{n}{n'} \in \fE \mImp \mPair{n}{n'} \mVFTwoAttrCmp \mPair{m}{m'},
-        \forall \mPair{n'}{m'} \in \fE(s)
-        \right) \mAnd \mbox{} \\
-      & \left(
-        \mPair{n'}{n} \in \fE \mImp \mPair{n'}{n} \mVFTwoAttrCmp \mPair{m'}{m},
-        \forall \mPair{n'}{m'} \in \fE(s)
-        \right)\!.
+      & \big(
+        \forall \mPair{n'}{m'} \in \fE(s) :
+        \mPair{n}{n'} \in \fE \mImp \mPair{n}{n'} \mVFTwoAttrCmp \mPair{m}{m'}
+        \big) \mAnd \mbox{} \\
+      & \big(
+        \forall \mPair{n'}{m'} \in \fE(s) :
+        \mPair{n'}{n} \in \fE \mImp \mPair{n'}{n} \mVFTwoAttrCmp \mPair{m'}{m}
+        \big).
     \end{array}
   \end{displaymath}%
   \labelDefinition{pm-semantic-rules}%
