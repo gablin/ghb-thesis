@@ -160,15 +160,14 @@ We evaluate the impact of being able to select \gls{SIMD.instr}
 We refer to these as \glspl{pattern set}~\patternSetA{} and~\patternSetB,
 respectively.
 
-The experimental setup is the same as in \refSection{comparison-unison-vs-llvm}
-with two exceptions.
-%
-First, when filtering we again remove all \glspl{function} that have less than
-less than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller
-will most likely not have enough data parallelism for selection of
-\gls{SIMD.instr} \glspl{instruction} -- and greater than
-\num{150}~\glspl{instruction} -- anything larger will lead to unreasonably long
-experiment runtimes.
+
+\paragraph{Setup}
+
+When filtering, we again all \glspl{function} that have less than less than
+\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
+likely not have enough data parallelism for selection of \gls{SIMD.instr}
+\glspl{instruction} -- and greater than \num{150}~\glspl{instruction} --
+anything larger will lead to unreasonably long experiment runtimes.
 %
 But to increase the chance of data parallelism, we also remove all
 \glspl{function} not containing at least two addition, subtraction, logical and,
@@ -176,9 +175,14 @@ or logical or \glspl{instruction}.
 %
 This leaves a pool of \num{221}~\glspl{function}, from which
 \num{20}~\glspl{function} are sampled using the same method as before.
-%
-Second, we do not apply an upper bound in this case as that may prevent
-interesting \gls{solution} that make use of \gls{SIMD.instr} \gls{instruction}.
+
+In this experiment, we do not apply an upper bound in this case as that may
+prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
+\gls{instruction}.
+
+
+
+\paragraph{Results}
 
 \input{\expDir/simd-vs-without-cycles-speedup.stats}
 
@@ -244,36 +248,45 @@ The solving times from
   \SimdVsWithoutCyclesSpeedupBaselinePrePlusSolvingTimeCvMax
 }.
 %
-As the \gls{GMI} is \printGMI{%
+The \gls{GMI} is \printGMI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that the \gls{pattern set}~\patternSetB{} yields \glspl{solution} with
+}
+
+We see that the \gls{pattern set}~\patternSetB{} yields \glspl{solution} with
 significantly lesser cost than those yielded by \glsshort{pattern
   set}~\patternSetA.
 %
-The five cases with lesser cost ({\codeFont debug\_print\_str}, {\codeFont
-  gl\_read\_alpha}, {\codeFont gx\_curve\_cursor}, {\codeFont mp\_dmul}, and
-{\codeFont zero}), our approach is able to combine pairs of additions or
-subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
+The five cases with lesser cost (\codeInText{debug\_print\_str},
+\codeInText{gl\_read\_alpha}, \codeInText{gx\_curve\_cursor},
+\codeInText{mp\_dmul}, and \codeInText{zero}), our approach is able to combine
+pairs of additions or subtractions into \num{2}-way \gls{SIMD.instr}
+\glspl{instruction}.
 %
-In addition, in one of these cases ({\codeFont gl\_read\_alpha}) the additions
+In addition, in one of these cases (\codeInText{gl\_read\_alpha}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
   motion} our approach is able to move the operations to the same block in order
 to implement these using a single \gls{instruction}.
 %
 \todo{make figure to illustrate the effect}
 %
-Hence we conclude that there is sufficient data parallelism to be exploited
-through selection of \gls{SIMD.instr} \glspl{instruction}, resulting in
-significantly better code quality, and that this exploitation is benefitted from
-\gls{global code motion}.
+
+
+\paragraph{Conclusions}
+
+Based on the observations above, we conclude that there is sufficient data
+parallelism to be exploited through selection of \gls{SIMD.instr}
+\glspl{instruction}, resulting in significantly better code quality.
+%
+In addition, this exploitation is benefitted from \gls{global code motion} as
+that allows computations to be gathered from different \glspl{block} and
+implemented using a single \gls{SIMD.instr} \gls{instruction}.
 
 
 \section{Summary}
 \labelSection{comparison-summary}
 
 \todo{write}
-
