@@ -1738,16 +1738,18 @@ We see clearly that \glsshort{constraint model}~\refModel{obj-fun-div-mul}
 results in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{obj-fun-mul-div}.
 %
-In one case (checksum{\codeFont build\_ycc\_rgb\_t}), for example, the solving
-time is two orders of magnitude shorter, and in three cases ({\codeFont
-  alloc\_save\_spac}, {\codeFont gpk\_open}, and {\codeFont trueRandAccum}) the
-solving time is more than one order of magnitude shorter.
+In one case (checksum\codeInText{build\_ycc\_rgb\_t}), for example, the solving
+time is two orders of magnitude shorter, and in three cases
+(\codeInText{alloc\_save\_spac}, \codeInText{gpk\_open}, and
+\codeInText{trueRandAccum}) the solving time is more than one order of magnitude
+shorter.
 %
 Although \glsshort{constraint model}~\refModel{obj-fun-mul-div} outperforms
 \glsshort{constraint model}~\refModel{obj-fun-div-mul} in three other cases
-({\codeFont alloc\_name\_is\_s}, {\codeFont debug\_dump\_byte}, and {\codeFont
-  write\_file\_trai}), the loss in performance for these \glspl{function} is
-overshadowed by the gain in performance for other \glspl{function}.
+(\codeInText{alloc\_name\_is\_s}, \codeInText{debug\_dump\_byte}, and
+\codeInText{write\_file\_trai}), the loss in performance for these
+\glspl{function} is overshadowed by the gain in performance for other
+\glspl{function}.
 %
 This also underscores the fact that seemingly trivial changes to a
 \gls{constraint model} may have considerable impact on solving time.

@@ -1223,7 +1223,7 @@ We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case ({\codeFont reg2rsaref}), for example, the solving time differs by
+In one case (\codeInText{reg2rsaref}), for example, the solving time differs by
 nearly a factor of~\num{50}, which is due to a high rate of \gls{copy-related.d}
 values for which \glspl{alternative value} results in only
 \num{94}~\glspl{match} whereas \gls{match duplication} results in
@@ -1309,7 +1309,7 @@ We see clearly that \glsshort{constraint model}~\refModel{w-value-reuse}
 produces \glspl{solution} with significantly lesser cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
-In one case ({\codeFont putseqdispext}), for example, where two constants are
+In one case (\codeInText{putseqdispext}), for example, where two constants are
 frequently used as arguments to \gls{function} call \glspl{instruction} and thus
 cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
 to \num{208}~cycles.
@@ -1797,8 +1797,8 @@ in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{branch-ext}.
 %
 We also observe that, as expected, when the number of conditional branch
-\glspl{instruction} increases -- up to \num{13}, in the case of {\codeFont
-  nextkeypacket} -- the \gls{search space} for \glsshort{constraint
+\glspl{instruction} increases -- up to \num{13}, in the case of
+\codeInText{nextkeypacket} -- the \gls{search space} for \glsshort{constraint
   model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
   model}~\refModel{dual-target}.
 %
