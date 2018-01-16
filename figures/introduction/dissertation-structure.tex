@@ -70,9 +70,9 @@
             \namerefAppendix{minizinc-implementation}%
           }%
         };
-  \node [below=of minizinc.south -| model] (evaluation)
+  \node [below=of solv-techs.south -| model] (evaluation)
         {%
-          \parbox{2.5cm}{%
+          \parbox{3.5cm}{%
             \centering%
             \namerefChapter{exp-evaluation-using-the-state-of-the-art}%
           }%
@@ -146,14 +146,14 @@
     \draw (model) -- (evaluation);
     \draw (model) -- (solv-techs);
     \draw (model.-155)
-          .. controls +(-140:1.8cm) and +(up:2cm) ..
+          .. controls +(-140:2.3cm) and +(up:1.5cm) ..
           (future-work.north);
     \draw (solv-techs) -- (minizinc);
     \draw (evaluation) -- (conclusions);
     \draw (future-work) -- (conclusions);
     \draw (solv-techs.south)
-          .. controls +(down:2.5cm) and +(40:2.2cm) ..
-          (conclusions.27);
+          .. controls +(down:2cm) and +(40:2.2cm) ..
+          (conclusions.24);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%
