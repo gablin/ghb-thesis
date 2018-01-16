@@ -95,6 +95,7 @@
 \RequirePackage{mfirstuc}
 \RequirePackage{textcomp}
 \RequirePackage{xparse}
+\RequirePackage{xstring}
 
 
 %===========================
@@ -201,6 +202,16 @@
   }%
 }
 
+% Removes any initial zeroes from the given number string.
+\newcommand{\@removeZeros}[1]{%
+  \IfBeginWith{#1}{0}{%
+    \StrGobbleLeft{#1}{1}[\tempa]%
+    \@removeZeros{\tempa}%
+  }{%
+    #1%
+  }%
+}
+
 % Prints the defense date in English to be used in the copyright page.
 \NewDocumentCommand{\@printDefenseDateEng}{}{%
   \@ifHasField{defenseDate}{%
@@ -210,7 +221,7 @@
     \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
     \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
     \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday\ \@tday\ \@tmonthalp\ \@tyear%
+    \@tweekday\ \@removeZeros{\@tday}\ \@tmonthalp\ \@tyear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
@@ -226,7 +237,7 @@
     \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
     \protected@edef\@tmonthalp{\DTMswedishmonthname{\@tmonthnum}}%
     \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday{}en den \@tday\ \@tmonthalp\ \@tyear%
+    \@tweekday{}en den \@removeZeros{\@tday}\ \@tmonthalp\ \@tyear%
   }{%
     % Print appropriate error message
     \@getField{defenseDate}%
