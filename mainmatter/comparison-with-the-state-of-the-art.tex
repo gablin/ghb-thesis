@@ -277,9 +277,6 @@ In addition, in one of these cases (\codeInText{gl\_read\_alpha}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
   motion} our approach is able to move the operations to the same block in order
 to implement these using a single \gls{instruction}.
-%
-\todo{make figure to illustrate the effect}
-%
 
 
 \paragraph{Conclusions}
@@ -291,9 +288,3 @@ parallelism to be exploited through selection of \gls{SIMD.instr}
 In addition, this exploitation is benefitted from \gls{global code motion} as
 that allows computations to be gathered from different \glspl{block} and
 implemented using a single \gls{SIMD.instr} \gls{instruction}.
-
-
-\section{Summary}
-\labelSection{comparison-summary}
-
-\todo{write}
