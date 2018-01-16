@@ -70,18 +70,18 @@
             \namerefAppendix{minizinc-implementation}%
           }%
         };
-  \node [below=of minizinc.south -| model] (comparison)
+  \node [below=of minizinc.south -| model] (evaluation)
         {%
           \parbox{2.5cm}{%
             \centering%
-            \namerefChapter{comparison-with-the-state-of-the-art}%
+            \namerefChapter{exp-evaluation-using-the-state-of-the-art}%
           }%
         };
 
-  \node [below=2*\nodeSep of comparison.south west, xshift=-1.5*\nodeSep]
+  \node [below=2*\nodeSep of evaluation.south west, xshift=-1.5*\nodeSep]
         (future-work) {\namerefChapter{future-work}};
 
-  \node [below=1.5*\nodeSep of future-work.south -| comparison]
+  \node [below=1.5*\nodeSep of future-work.south -| evaluation]
         (conclusions) {\namerefChapter*{conclusions}};
 
   \coordinate (next-to-uni-rep) at ([xshift=1.5*\nodeSep] uni-rep.east);
@@ -121,7 +121,7 @@
           {universal instruction selection};
 
     \coordinate (ending-y) at
-                ($(comparison.south) !.5! (future-work.north -| comparison)$);
+                ($(evaluation.south) !.5! (future-work.north -| evaluation)$);
     \draw (ending-y -| left-border)
           --
           (ending-y -| right-border);
@@ -143,13 +143,13 @@
           .. controls +(down:2.5cm) and +(40:1.5cm) ..
           (model.20);
     \draw (uni-rep) -- (model);
-    \draw (model) -- (comparison);
+    \draw (model) -- (evaluation);
     \draw (model) -- (solv-techs);
     \draw (model.-155)
           .. controls +(-140:1.8cm) and +(up:2cm) ..
           (future-work.north);
     \draw (solv-techs) -- (minizinc);
-    \draw (comparison) -- (conclusions);
+    \draw (evaluation) -- (conclusions);
     \draw (future-work) -- (conclusions);
     \draw (solv-techs.south)
           .. controls +(down:2.5cm) and +(40:2.2cm) ..
