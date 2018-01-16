@@ -7,11 +7,18 @@
 \chapter{Comparison with the State of the Art}
 \labelChapter{comparison-with-the-state-of-the-art}
 
-\todo{write outline}
+This chapter evaluates how our approach compares against a state-of-the-art
+\gls{compiler}.
+%
+This is done in \refSection{evaluation-unison-vs-llvm}.
+%
+Since our approach is able to leverage selection of \gls{SIMD.instr}
+\glspl{instruction}, we also evaluate this impact in
+\refSection{evaluation-with-or-without-simds}.
 
 
 \section{Unison \versus LLVM}
-\labelSection{comparison-unison-vs-llvm}
+\labelSection{evaluation-unison-vs-llvm}
 
 We evaluate the impact of our approach by comparing the cost (that is, the total
 number of cycles, as described in \refSection{cm-objective-function} on
@@ -147,7 +154,7 @@ equal or better quality compared to the state of the art for up to medium-sized
 
 
 \section{Impact of SIMD instructions}
-\labelSection{comparison-with-or-without-simds}
+\labelSection{evaluation-with-or-without-simds}
 
 \def\patternSetA{\textsc{i}}
 \def\patternSetB{\textsc{ii}}
