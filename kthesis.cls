@@ -84,7 +84,6 @@
 \checkandfixthelayout
 
 
-
 %===============
 % LOAD PACKAGES
 %===============
@@ -96,7 +95,6 @@
 \RequirePackage{mfirstuc}
 \RequirePackage{textcomp}
 \RequirePackage{xparse}
-
 
 
 %===========================
