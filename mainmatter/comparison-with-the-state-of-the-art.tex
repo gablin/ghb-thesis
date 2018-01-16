@@ -19,33 +19,32 @@ number of cycles, as described in \refSection{cm-objective-function} on
 approach with the \glspl{solution} produced by \mbox{\gls{LLVM} 3.8}, an
 existing state-of-the-art \gls{compiler}.
 
-The experimental setup is the same as in
-\refSection{cm-alt-values-experimental-evaluation} on
-\refPageOfSection{cm-alt-values-experimental-evaluation} with three exceptions.
+
+\paragraph{Setup}
+
+When filtering, we remove all \glspl{function} that have less than less than
+\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
+likely not show any gain using our approach -- and greater than
+\num{200}~\glspl{instruction} -- anything larger will lead to unreasonably long
+experiment runtimes.
 %
-First, when filtering we remove all \glspl{function} that have less than less
-than \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will
-most likely not have enough data parallelism for selection of \gls{SIMD.instr}
-\glspl{instruction} -- and greater than \num{150}~\glspl{instruction} --
-anything larger will lead to unreasonably long experiment runtimes.
-%
-To increase the amount of data parallelism, we also remove all \glspl{function}
-not containing at least two addition, subtraction, logical and, or logical or
-\glspl{instruction}.
-%
-This leaves a pool of \num{221}~\glspl{function}, from which
-\num{20}~\glspl{function} are sampled using the same method as before.
-%
-Second, when solving we apply time limit of \SI{600}{\s} to the \gls{constraint
+This leaves a pool of \num{284}~\glspl{function}, on which we then perform
+sampling.
+
+When solving, we apply a time limit of \SI{600}{\s} to the \gls{constraint
   solver}.
+%
+This is to curb experiment runtimes.
 %
 For any given \gls{function}, the last \gls{solution} found is considered
 optimal if and only if the \glsshort{constraint solver} has finished its
 execution within the time limit.
 %
-Third, we apply the cost for the \gls{solution} computed by \gls{LLVM} for a
-given \gls{function} as the upper bound for the \gls{cost variable} in the
-corresponding instance of the \gls{constraint model}.
+As upper bound for a given \gls{function}, we take the cost for the
+\gls{solution} computed by \gls{LLVM}.
+
+
+\paragraph{Results}
 
 \input{\expDir/unison-vs-llvm-hexagon5-cycles-speedup.stats}
 
@@ -86,6 +85,9 @@ corresponding instance of the \gls{constraint model}.
 for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
 \gls{subject}.
 %
+The size of the \glspl{UF graph} range from \num{189} to
+\num{1524}~\glspl{node}.
+%
 The costs range from
 \printCycles{\UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesAvgMin} to
 \printCycles{\UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesAvgMax}, with a maximum
@@ -99,19 +101,48 @@ to
 with a \gls{CV} of
 \num{\UnisonVsLlvmHexagonFiveCyclesSpeedupPrePlusSolvingTimeCvMax}.
 %
-As the \gls{GMI} is \printGMI{%
+The \gls{GMI} is \printGMI{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
 } with \gls{CI}~\printGMICI{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMax%
-}, we see that our approach produces \glspl{solution} with significantly lesser
+}.
+
+We see that our approach produces \glspl{solution} with significantly lesser
 cost than those produced by \gls{LLVM}.
 %
-\todo{case study}
+These improvements are predominatly due to the combination of \gls{global.is}
+\gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 %
-Hence we conclude that our approach generates code of equal or better quality
-compared to the state of the art.
+In three cases (\codeInText{alloc\_save\_spac}, \codeInText{gp\_enumerate\_fi},
+and \codeInText{gpk\_open}), for example, our approach is able to lift
+computations, in particular constant loads, out of \glspl{block} with high
+execution frequency into \glspl{block} with lower frequency, thereby reducing
+the cost.
+%
+In \codeInText{alloc\_save\_spac}, our approach is also able to move an addition
+and memory operation into the same \gls{block} and implement both using a single
+auto-increment memory \gls{instruction}, whereas \gls{LLVM} must implement these
+computations using two \glspl{instruction}.
+%
+These improvements are only possible due to integrating \gls{global.is}
+\gls{instruction selection} with \gls{global code motion}.
+
+In three other cases (\codeInText{jpeg\_read\_header},
+\codeInText{gl\_TexImage3DEX}, and \codeInText{gl\_EnableClient}), our approach
+is able to reorder the \glspl{block} to remove one to two jump
+\glspl{instruction}.
+%
+These improvements are only possible when integrating \gls{global.is}
+\gls{instruction selection} with \gls{block ordering}.
+
+
+\paragraph{Conclusions}
+
+Based on the observations above, we conclude that our approach generates code of
+equal or better quality compared to the state of the art for up to medium-sized
+\glspl{function}.
 
 
 \section{Selection of SIMD instructions}
