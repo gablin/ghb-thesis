@@ -1,4 +1,7 @@
 * BEFORE SUBMISSION
+** TODO Update TRITA number
+** TODO Update ISBN
+** TODO Update hall
 ** TODO Check for bad use of past tense
 ** TODO Check for long sentences
 ** TODO Check for missing references
