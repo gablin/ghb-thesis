@@ -59,9 +59,8 @@ corresponding instance of the \gls{constraint model}.
 
   \caption[Plot for evaluating the impact of our approach on code quality]%
           {%
-            Normalized solution costs for two pattern sets: one without SIMD
-            instructions (baseline), and another with such instruction
-            (subject).
+            Solution costs produced by our approach, normalized to those
+            produced by LLVM.
             %
             GMI:~\printGMI{%
               \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -74,8 +73,11 @@ corresponding instance of the \gls{constraint model}.
             %
             The constraint model uses an upper bound computed by LLVM.
             %
-            \Glspl{function} whose bars are marked with two dots are those
-            for which the \gls{subject} fails to find the optimal solution%
+            \Glspl{function} whose bars are marked with two dots are those for
+            which the \gls{subject} fails to find the optimal solution, and
+            \glspl{function} marked with \barValueNoSolution{} are those where
+            the solution produced by \gls{LLVM} is already optimal \wrt the
+            model%
           }
   \labelFigure{unison-vs-llvm-cycles-plot}
 \end{figure}
