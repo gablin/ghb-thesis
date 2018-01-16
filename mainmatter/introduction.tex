@@ -70,8 +70,8 @@ performed in unison.
 \paragraph{Universal Instruction Selection}
 
 This dissertation introduces \gls!{universal instruction selection}, a new
-approach based on \glsdesc{CP} that addresses the problems recently described.
-
+approach that addresses the problems recently described.
+%
 \begin{figure}
   \centering%
   \input{figures/introduction/approach-overview}
@@ -79,18 +79,21 @@ approach based on \glsdesc{CP} that addresses the problems recently described.
   \caption{Overview of the approach}
   \labelFigure{approach-overview}
 \end{figure}
-
+%
 Outlined in \refFigure{approach-overview}, the approach is the first to combine
 \gls{instruction selection} with \gls{global code motion} and \gls{block
   ordering}.
 %
 In doing so, our approach alleviates selection of sophisticated
 \glspl{instruction} that would otherwise not have been selectable.
+
+To handle the combinatorial nature of these problems, our approach is based on
+\glsdesc{CP}.
 %
-The approach relies on a novel combinatorial model that is simpler and more
-flexible compared to the techniques currently used by modern \glspl{compiler}.
+It relies on a novel combinatorial model that is simpler and more flexible
+compared to the techniques currently used by modern \glspl{compiler}.
 %
-It also captures crucial features that are ignored by other, existing
+In addition, it captures crucial features that are ignored by other, existing
 combinatorial approaches.
 %
 We also propose extensions for integrating \gls{instruction scheduling} and
