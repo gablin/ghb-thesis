@@ -1,20 +1,20 @@
 * BEFORE SUBMISSION
+** TODO Remove 'electronic' document class option
 ** TODO Update TRITA number
 ** TODO Update ISBN
 ** TODO Update hall
-** TODO Check for bad use of past tense
-** TODO Check for long sentences
-** TODO Check for missing references
 ** TODO Add mention of status of tool and availability (github)
 ** TODO Remove misuse of glossary terms "variable" and "operation"
-** TODO Add labels to optimal-solutions-over-time plot
+** DONE Add labels to optimal-solutions-over-time plot
 ** TODO Add minizinc model as appendix
-** TODO Add references in the model to refer to the corresponding Eq in the dissertation
-** TODO Fix bad page breaks
-** TODO Fix figure placements
-** TODO Fix bad kerning, especially in math
-** TODO Fix paragraphs ending with only one word on last line
-** TODO Remove 'electronic' document class option
+** TODO Add references in the minizinc model to refer to the corresponding Eq in the dissertation
+** TODO Fix bad figure placements
 ** TODO In appendices, swap typesetting convention of terminals and nonterminals
 ** TODO In appendices, replace 'linear form' with 'normal form'
 ** TODO Check overflowing of bib entries
+** TODO Check for bad use of past tense
+** TODO Check for long sentences
+** TODO Check for paragraphs ending with only one word on last line
+** TODO Check for missing references
+** TODO Check bad kerning, especially in math
+** TODO Check for bad page breaks
