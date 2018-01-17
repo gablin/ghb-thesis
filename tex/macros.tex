@@ -806,23 +806,22 @@
 \setglossarystyle{myglossary}
 
 % Commands for introducing terms and acronyms
-\NewDocumentCommand{\newterm}{omO{}}{%
+\NewDocumentCommand{\newTerm}{omO{}}{%
   \IfNoValueTF{#1}{%
     \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
   }{%
     \newglossaryentry{#1}{name={#2}, description={#2}, #3}%
   }%
 }
-\let\oldnewacronym\newacronym
-\RenewDocumentCommand{\newacronym}{ommO{}}{%
+\NewDocumentCommand{\newAcronym}{ommO{}}{%
   \IfNoValueTF{#1}{%
-    \oldnewacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
+    \newacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
   }{%
-    \oldnewacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
+    \newacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
   }%
 }
 \NewDocumentCommand{\newToolTerm}{m}{%
-  \newterm[#1]{\toolFont{#1}}[sort={#1}]%
+  \newTerm[#1]{\toolFont{#1}}[sort={#1}]%
 }
 
 % Commands for referring to a short version of a term or acronym

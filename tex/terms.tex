@@ -10,454 +10,462 @@
 % COMPILER TERMS
 %================
 
-\newterm{assembly code}
-\newterm{AST}%
+\newTerm{assembly code}
+\newTerm{AST}%
         [first={abstract syntax tree~(AST)},
          firstplural={abstract syntax trees~(ASTs)}]
-\newterm{backend}
-\newterm{block ordering}
-\newterm{bootstrapping}
-\newterm{bundling}
-\newterm{callee}
-\newterm{caller}
-\newterm{calling convention}
-\newterm{code generation}
-\newterm[integrated.cg]{integrated}[parent={code generation}]
-\newterm[interpretative.cg]{interpretative}[parent={code generation}]
-\newterm{common subexpression elimination}
-\newterm{compiler}
-\newterm{compiler intrinsic}
-\newterm{condition code}[see={status flag}]
-\newterm{condition flag}[see={status flag}]
-\newterm{constant folding}
-\newterm{data copying}
-\newterm{dead code elimination}
-\newterm{fall-through}
-\newterm{frontend}
-\newterm{global code motion}
-\newterm{global code mover}
-\newterm{if-conversion}
-\newterm{instruction compaction}
-\newterm{instruction selection}
-\newterm[local.is]{local}[parent={instruction selection}]
-\newterm[global.is]{global}[parent={instruction selection}]
-\newterm{instruction selector}
-\newterm{instruction scheduler}
-\newterm{instruction scheduling}
-\newterm{IR}%
+\newTerm{backend}
+\newTerm{block ordering}
+\newTerm{bootstrapping}
+\newTerm{bundling}
+\newTerm{callee}
+\newTerm{caller}
+\newTerm{calling convention}
+\newTerm{code generation}
+\newTerm[integrated.cg]{integrated}[parent={code generation}]
+\newTerm[interpretative.cg]{interpretative}[parent={code generation}]
+\newTerm{common subexpression elimination}
+\newTerm{compiler}
+\newTerm{compiler intrinsic}
+\newTerm{condition code}[see={status flag}]
+\newTerm{condition flag}[see={status flag}]
+\newTerm{constant folding}
+\newTerm{data copying}
+\newTerm{dead code elimination}
+\newTerm{fall-through}
+\newTerm{frontend}
+\newTerm{global code motion}
+\newTerm{global code mover}
+\newTerm{if-conversion}
+\newTerm{instruction compaction}
+\newTerm{instruction selection}
+\newTerm[local.is]{local}[parent={instruction selection}]
+\newTerm[global.is]{global}[parent={instruction selection}]
+\newTerm{instruction selector}
+\newTerm{instruction scheduler}
+\newTerm{instruction scheduling}
+\newTerm{IR}%
         [description={intermediate representation},
          first={intermediate representation~(IR)}]
-\newterm{issue slot}
-\newterm{live range}
-\newterm{loop unrolling}
-\newterm{middle-end}[see={optimizer}]
-\newterm{optimizer}[see={middle-end}]
-\newterm{peephole optimization}
-\newterm{peephole optimizer}
-\newterm{register allocation}
-\newterm[local.ra]{local}[parent={register allocation}]
-\newterm[global.ra]{global}[parent={register allocation}]
-\newterm{register allocator}
-\newterm{recomputation}[user1={recompute}]
-\newterm{saturation arithmetic}
-\newterm{SSA}%
+\newTerm{issue slot}
+\newTerm{live range}
+\newTerm{loop unrolling}
+\newTerm{middle-end}[see={optimizer}]
+\newTerm{optimizer}[see={middle-end}]
+\newTerm{peephole optimization}
+\newTerm{peephole optimizer}
+\newTerm{register allocation}
+\newTerm[local.ra]{local}[parent={register allocation}]
+\newTerm[global.ra]{global}[parent={register allocation}]
+\newTerm{register allocator}
+\newTerm{recomputation}[user1={recompute}]
+\newTerm{saturation arithmetic}
+\newTerm{SSA}%
         [first={static single assignment~(SSA)}]
-\newterm{status flag}
-\newterm{value reuse}[user1={reuse}]
+\newTerm{status flag}
+\newTerm{value reuse}[user1={reuse}]
 
-\newterm{basic block}[see={block}]
-\newterm{block}[see={basic block}]
-\newterm[consume.b]{consume}[parent={block}, user1={consum}]
-\newterm[dominate.b]{dominate}[parent={block}, user1={domin}]
-\newterm[span.b]{span}[parent={block}]
-\newterm{entry block}[user1={entry}]
-\newterm{function}
-\newterm[phi-function]{$\mPhi$-function}
-\newterm[phi-node]{$\mPhi$-node}
-\newterm{program}
+\newTerm{basic block}[see={block}]
+\newTerm{block}[see={basic block}]
+\newTerm[consume.b]{consume}[parent={block}, user1={consum}]
+\newTerm[dominate.b]{dominate}[parent={block}, user1={domin}]
+\newTerm[span.b]{span}[parent={block}]
+\newTerm{entry block}[user1={entry}]
+\newTerm{function}
+\newTerm[phi-function]{$\mPhi$-function}
+\newTerm[phi-node]{$\mPhi$-node}
+\newTerm{program}
 
 
 %===============
 % MACHINE TERMS
 %===============
 
-\newterm{ARM}
-\newacronym{ASIP}{application-specific instruction set processor}
-\newacronym{AVX}{Advanced Vector Extensions}[see={Intel}]
-\newacronym{CISC}{complex instruction-set computer}
-\newterm{Cortex-M7}[see={ARM}]
-\newacronym{DSP}{digital signal processor}
-\newterm{Hexagon}
-\newterm{IBM}
-\newterm{instruction}
-\newacronym[SIMD.instr]%
+\newTerm{ARM}
+\newAcronym{ASIP}{application-specific instruction set processor}
+\newAcronym{AVX}{Advanced Vector Extensions}[see={Intel}]
+\newAcronym{CISC}{complex instruction-set computer}
+\newTerm{Cortex-M7}[see={ARM}]
+\newAcronym{DSP}{digital signal processor}
+\newTerm{Hexagon}
+\newTerm{IBM}
+\newTerm{instruction}
+\newAcronym[SIMD.instr]%
            {SIMD}%
            {single-instruction, multiple-data}%
            [parent={instruction}]
-\newterm{instruction set}
-\newterm{Intel}
-\newterm{LLVM}
-\newterm{machine description}
+\newTerm{instruction set}
+\newTerm{Intel}
+\newTerm{LLVM}
+\newTerm{machine description}
 \newToolTerm{MediaBench}
-\newterm{MIPS}
-\newterm{register}
-\newterm{register class}%
+\newTerm{MIPS}
+\newTerm{register}
+\newTerm{register class}%
         [plural={register classes}, user1={class}, user2={classes}]
-\newterm[spilling.r]{spilling}[parent={register}, user1={spill}, user2={spills}]
-\newacronym{RISC}{reduced instruction-set computer}
-\newterm{SSE}[see={Intel}]
-\newterm{target machine}[user1={target}]
-\newterm{temporary}[plural={temporaries}]
-\newterm[virtual.temp]{virtual}[parent={temporary}]
-\newterm{TI}
-\newterm{TMS320C55x}[see={TI}]
-\newacronym{VLIW}{very long instruction word}
-\newterm{X86}[see={Intel}]
+\newTerm[spilling.r]{spilling}[parent={register}, user1={spill}, user2={spills}]
+\newAcronym{RISC}{reduced instruction-set computer}
+\newTerm{SSE}[see={Intel}]
+\newTerm{target machine}[user1={target}]
+\newTerm{temporary}[plural={temporaries}]
+\newTerm[virtual.temp]{virtual}[parent={temporary}]
+\newTerm{TI}
+\newTerm{TMS320C55x}[see={TI}]
+\newAcronym{VLIW}{very long instruction word}
+\newTerm{X86}[see={Intel}]
 
 
 %=============
 % GRAPH TERMS
 %=============
 
-\newterm{child}[see={node}]
-\newterm{cycle}
-\newacronym{DAG}{directed acyclic graph}
-\newterm{edge}
-\newterm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
-\newterm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
-\newterm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
-\newterm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
-\newterm{edge number}
-\newterm[inbound.en]{inbound}[parent={edge number}]
-\newterm[outbound.en]{outbound}[parent={edge number}]
-\newterm{edge splitting}[user1={split}]
-\newterm{forest}
-\newterm{graph}
-\newterm[connected.g]{connected}[parent={graph}]
-\newterm[directed.g]{directed}[parent={graph}]
-\newterm[ordered.g]{ordered}[parent={graph}]
-\newterm[simple.g]{simple}[parent={graph}]
-\newterm[strongly connected.g]{strongly connected}[parent={graph}]
-\newterm[undirected.g]{undirected}[parent={graph}]
-\newterm[weakly connected.g]{weakly connected}[parent={graph}]
-\newterm{graph homomorphism}
-\newterm{graph isomorphism}
-\newterm{independent set}
-\newterm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
-\newterm{leaf}[plural={leaves}, see={node}]
-\newterm{loop edge}[see={loop}]
-\newterm{loop}[see={loop edge}]
-\newterm{multigraph}
-\newterm{node}
-\newterm[adjacent.n]{adjacent}[parent={node}]
-\newterm[connected.n]{connected}[parent={node}]
-\newterm[fixed.n]{fixed}[parent={node}]
-\newterm{node duplication}[user1={duplicat}]% The short term is without the
+\newTerm{child}[see={node}]
+\newTerm{cycle}
+\newAcronym{DAG}{directed acyclic graph}
+\newTerm{edge}
+\newTerm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
+\newTerm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
+\newTerm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
+\newTerm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
+\newTerm{edge number}
+\newTerm[inbound.en]{inbound}[parent={edge number}]
+\newTerm[outbound.en]{outbound}[parent={edge number}]
+\newTerm{edge splitting}[user1={split}]
+\newTerm{forest}
+\newTerm{graph}
+\newTerm[connected.g]{connected}[parent={graph}]
+\newTerm[directed.g]{directed}[parent={graph}]
+\newTerm[ordered.g]{ordered}[parent={graph}]
+\newTerm[simple.g]{simple}[parent={graph}]
+\newTerm[strongly connected.g]{strongly connected}[parent={graph}]
+\newTerm[undirected.g]{undirected}[parent={graph}]
+\newTerm[weakly connected.g]{weakly connected}[parent={graph}]
+\newTerm{graph homomorphism}
+\newTerm{graph isomorphism}
+\newTerm{independent set}
+\newTerm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
+\newTerm{leaf}[plural={leaves}, see={node}]
+\newTerm{loop edge}[see={loop}]
+\newTerm{loop}[see={loop edge}]
+\newTerm{multigraph}
+\newTerm{node}
+\newTerm[adjacent.n]{adjacent}[parent={node}]
+\newTerm[connected.n]{connected}[parent={node}]
+\newTerm[fixed.n]{fixed}[parent={node}]
+\newTerm{node duplication}[user1={duplicat}]% The short term is without the
                                             % ending 'e' in order to be used in
                                             % words like 'duplicate' and
                                             % 'duplicating'.
-\newterm{parent}[see={node}]
-\newterm{path}
-\newterm{root}[see={node}]
-\newterm{source}
-\newterm{subgraph}
-\newterm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
-\newterm{subtree}[see={tree}]
-\newterm{super node}
-\newterm{target}
-\newterm{topological sort}
-\newterm{tree}
-\newterm[directed.t]{directed}[parent={tree}]
-\newterm[rooted directed.t]{rooted directed}[parent={tree}]
-\newterm{vertex}[plural={vertices}, see={node}]
+\newTerm{parent}[see={node}]
+\newTerm{path}
+\newTerm{root}[see={node}]
+\newTerm{source}
+\newTerm{subgraph}
+\newTerm{subgraph isomorphism}[see={isomorphism}, user3={subgraph-isomorphism}]
+\newTerm{subtree}[see={tree}]
+\newTerm{super node}
+\newTerm{target}
+\newTerm{topological sort}
+\newTerm{tree}
+\newTerm[directed.t]{directed}[parent={tree}]
+\newTerm[rooted directed.t]{rooted directed}[parent={tree}]
+\newTerm{vertex}[plural={vertices}, see={node}]
 
 
 %========================
 % CONSTRAINT MODEL TERMS
 %========================
 
-\newterm{alternative value}[user1={alternative}]
-\newterm{block node}[user1={block}]
-\newterm{branch extension}
-\newterm{copy extension}
-\newterm{computation node}[user1={computation}]
-\newterm{control node}[user1={control}]
-\newterm{copy match}[plural={copy matches}]
-\newterm{copy node}[user1={copy}]
-\newterm{datum}[plural={data}]
-\newterm[available.d]{available}[parent={datum}]
-\newterm[copy-related.d]{copy-related}[parent={datum}]
-\newterm[define.d]{define}[parent={datum}, user1={defin}]
-\newterm[interchangeable.d]{interchangeable}[parent={datum}]
-\newterm[killed.d]{killed}[parent={datum}]
-\newterm[use.d]{use}[parent={datum}, user1={us}]
-\newterm{definition edge}
-\newterm{dependency graph}
-\newterm{divide-then-multiply method}[see={multiply-then-divide method}]
-\newterm{DTB pattern}%
+\newTerm{alternative value}[user1={alternative}]
+\newTerm{block node}[user1={block}]
+\newTerm{branch extension}
+\newTerm{copy extension}
+\newTerm{computation node}[user1={computation}]
+\newTerm{control node}[user1={control}]
+\newTerm{copy match}[plural={copy matches}]
+\newTerm{copy node}[user1={copy}]
+\newTerm{datum}[plural={data}]
+\newTerm[available.d]{available}[parent={datum}]
+\newTerm[copy-related.d]{copy-related}[parent={datum}]
+\newTerm[define.d]{define}[parent={datum}, user1={defin}]
+\newTerm[interchangeable.d]{interchangeable}[parent={datum}]
+\newTerm[killed.d]{killed}[parent={datum}]
+\newTerm[use.d]{use}[parent={datum}, user1={us}]
+\newTerm{definition edge}
+\newTerm{dependency graph}
+\newTerm{divide-then-multiply method}[see={multiply-then-divide method}]
+\newTerm{DTB pattern}%
         [first={dual-target branch (DTB) pattern},
          user4={dual-target branch pattern},
          user5={dual-target branch patterns}]
-\newterm{extension node}[user1={extension}]
-\newterm{exterior value}[user1={exterior}]
-\newterm{intermediate value}[user1={intermediate}]
-\newterm{input datum}[plural={input data}]
-\newterm{kill match}[plural={kill matches}]
-\newterm{kill pattern}
-\newterm{location}
-\newterm[canonical.l]{canonical}[parent={location}]
-\newterm{location set}
-\newterm{match duplication}
-\newterm{multiply-then-divide method}[see={divide-then-multiply method}]
-\newterm{null-copy match}[plural={null-copy matches}]
-\newterm{null-copy pattern}
-\newterm{null-def pattern}
-\newterm{null-extend pattern}
-\newterm{null-jump pattern}
-\newterm{null match}[plural={null matches}, user1={null}]
-\newterm{operand}
-\newterm{operation}
-\newterm[phi-match]{{}$\mPhi$-match}[plural={{}$\mPhi$-matches}]
+\newTerm{extension node}[user1={extension}]
+\newTerm{exterior value}[user1={exterior}]
+\newTerm{intermediate value}[user1={intermediate}]
+\newTerm{input datum}[plural={input data}]
+\newTerm{kill match}[plural={kill matches}]
+\newTerm{kill pattern}
+\newTerm{location}
+\newTerm[canonical.l]{canonical}[parent={location}]
+\newTerm{location set}
+\newTerm{match duplication}
+\newTerm{multiply-then-divide method}[see={divide-then-multiply method}]
+\newTerm{null-copy match}[plural={null-copy matches}]
+\newTerm{null-copy pattern}
+\newTerm{null-def pattern}
+\newTerm{null-extend pattern}
+\newTerm{null-jump pattern}
+\newTerm{null match}[plural={null matches}, user1={null}]
+\newTerm{operand}
+\newTerm{operation}
+\newTerm[phi-match]{{}$\mPhi$-match}[plural={{}$\mPhi$-matches}]
 % The {} is used to avoid problems with \Gls commands
-\newterm[phi-pattern]{$\mPhi$-pattern}
-\newterm{state node}[user1={state}, user2={states}]
-\newterm{state-flow edge}[user1={state-flow}]
-\newterm{universal instruction selection}
-\newterm{universal representation}
-\newterm{UF graph}[first={universal function (UF) graph}, user1={UF}]
-\newterm{UP graph}[first={universal pattern (UP) graph}, user1={UP}]
-\newterm{value node}[user1={value}]
+\newTerm[phi-pattern]{$\mPhi$-pattern}
+\newTerm{state node}[user1={state}, user2={states}]
+\newTerm{state-flow edge}[user1={state-flow}]
+\newTerm{universal instruction selection}
+\newTerm{universal representation}
+\newTerm{UF graph}[first={universal function (UF) graph}, user1={UF}]
+\newTerm{UP graph}[first={universal pattern (UP) graph}, user1={UP}]
+\newTerm{value node}[user1={value}]
 
 
 %==========
 % CP TERMS
 %==========
 
-\newterm{decision variable}[see={variable}, user1={variable}, user2={variables}]
-\newterm{solver}
+\newTerm{decision variable}[see={variable}, user1={variable}, user2={variables}]
+\newTerm{solver}
 
-\newterm{all-different constraint}[user1={all-different}]
-\newterm{branch and bound}[user3={branch-and-bound}]
-\newterm{branching strategy}[plural={branching strategies}]
+\newTerm{all-different constraint}[user1={all-different}]
+\newTerm{branch and bound}[user3={branch-and-bound}]
+\newTerm{branching strategy}[plural={branching strategies}]
 \newToolTerm{Chuffed}
-\newterm{circuit constraint}[user1={circuit}]
-\newterm{cost variable}
-\newterm{cumulative constraint}[user1={cumulative}]
-\newterm{constraint}
-\newterm[binary.c]{binary}[parent={constraint}]
-\newterm[dominance breaking.c]{dominance breaking}[parent={constraint}]
-\newterm[global.c]{global}[parent={constraint}]
-\newterm[implied.c]{implied}[parent={constraint}]
-\newterm[symmetry breaking.c]%
+\newTerm{circuit constraint}[user1={circuit}]
+\newTerm{cost variable}
+\newTerm{cumulative constraint}[user1={cumulative}]
+\newTerm{constraint}
+\newTerm[binary.c]{binary}[parent={constraint}]
+\newTerm[dominance breaking.c]{dominance breaking}[parent={constraint}]
+\newTerm[global.c]{global}[parent={constraint}]
+\newTerm[implied.c]{implied}[parent={constraint}]
+\newTerm[symmetry breaking.c]%
         {symmetry breaking}%
         [parent={constraint}, user1={symmetry}]
-\newterm{constraint propagation}[see={propagation}]
-\newterm{constraint model}[user1={model}, user2={models}]
-\newterm[compositional.cm]{compositional}[parent={constraint model}]
-\newterm{constraint solver}[user1={solver}, see={solver}]
-\newterm{constraint store}[see={store}]
-\newterm[stronger.cs]{stronger}[parent={constraint store}]
-\newterm{CP}%
+\newTerm{constraint propagation}[see={propagation}]
+\newTerm{constraint model}[user1={model}, user2={models}]
+\newTerm[compositional.cm]{compositional}[parent={constraint model}]
+\newTerm{constraint solver}[user1={solver}, see={solver}]
+\newTerm{constraint store}[see={store}]
+\newTerm[stronger.cs]{stronger}[parent={constraint store}]
+\newTerm{CP}%
         [description={constraint programming},
          first={constraint programming~(CP)}]
-\newterm{diffn constraint}[see={no-overlap constraint}]
-\newterm{domain}
-\newterm{extensional constraint}[see={table constraint}]
-\newterm{failure}[user1={failed}]
-\newterm{filtering algorithm}[see={propagator}]
-\newterm{first-fail principle}
-\newterm{fixpoint}
-\newterm{global cardinality constraint}
-\newterm{minimax}
+\newTerm{diffn constraint}[see={no-overlap constraint}]
+\newTerm{domain}
+\newTerm{extensional constraint}[see={table constraint}]
+\newTerm{failure}[user1={failed}]
+\newTerm{filtering algorithm}[see={propagator}]
+\newTerm{first-fail principle}
+\newTerm{fixpoint}
+\newTerm{global cardinality constraint}
+\newTerm{minimax}
 \newToolTerm{MiniZinc}
-\newterm{no-overlap constraint}[see={diffn constraint}]
-\newterm{objective function}
-\newterm{presolving}
-\newterm{propagation}[see={constraint propagation}, user1={propagat}]
-\newterm{propagator}[see={filtering algorithm}]
-\newterm{bounds consistency}[user1={bounds}, user3={bounds-consistent}]
-\newterm[decreasing.p]{decreasing}[parent={propagator}]
-\newterm{domain consistency}[user1={domain}, user3={domain-consistent}]
-\newterm[monotonic.p]{monotonic}[parent={propagator}]
-\newterm{value consistency}[user1={value}, user3={value-consistent}]
-\newterm{regret}
-\newterm{search}
-\newterm{search space}
-\newterm{search tree}
-\newterm{solution}
-\newterm{solution space}
-\newterm{store}[see={constraint store}]
-\newterm{table constraint}[user1={table}]
-\newterm{value-precede-chain constraint}
-\newterm{variable}
-\newterm[assigned.v]{assigned}[parent={variable}]
+\newTerm{no-overlap constraint}[see={diffn constraint}]
+\newTerm{objective function}
+\newTerm{presolving}
+\newTerm{propagation}[see={constraint propagation}, user1={propagat}]
+\newTerm{propagator}[see={filtering algorithm}]
+\newTerm{bounds consistency}[user1={bounds}, user3={bounds-consistent}]
+\newTerm[decreasing.p]{decreasing}[parent={propagator}]
+\newTerm{domain consistency}[user1={domain}, user3={domain-consistent}]
+\newTerm[monotonic.p]{monotonic}[parent={propagator}]
+\newTerm{value consistency}[user1={value}, user3={value-consistent}]
+\newTerm{regret}
+\newTerm{search}
+\newTerm{search space}
+\newTerm{search tree}
+\newTerm{solution}
+\newTerm{solution space}
+\newTerm{store}[see={constraint store}]
+\newTerm{table constraint}[user1={table}]
+\newTerm{value-precede-chain constraint}
+\newTerm{variable}
+\newTerm[assigned.v]{assigned}[parent={variable}]
 
-\newterm{magic sequence problem}
+\newTerm{magic sequence problem}
 
 
 %===================
 % OP RESEARCH TERMS
 %===================
 
-\newterm{MIS}%
+\newTerm{MIS}%
         [first={maximal independent set~(MIS)},
          firstplural={maximal independent sets~(MISs)}]
-\newterm{MWIS}%
+\newTerm{MWIS}%
         [first={maximal/minimal weighted independent set~(MWIS)},
          firstplural={maximal/minimal weighted independent sets (MWISs)}]
 
-\newterm{PBQP}[first={partitioned Boolean quadratic problem~(PBQP)}]
-\newterm{QAP}[first={quadratic assignment problem~(QAP)}]
+\newTerm{PBQP}[first={partitioned Boolean quadratic problem~(PBQP)}]
+\newTerm{QAP}[first={quadratic assignment problem~(QAP)}]
 
-\newterm{IP}[first={integer programming~(IP)}]
-\newterm{Horn clause}
-\newterm{integer linear programming}
+\newTerm{IP}[first={integer programming~(IP)}]
+\newTerm{Horn clause}
+\newTerm{integer linear programming}
 
-\newterm{SAT}[first={Boolean satisfiability~(SAT)}]
-\newterm{literal}
-\newterm{LCG}[description={lazy clause generation},
+\newTerm{SAT}[first={Boolean satisfiability~(SAT)}]
+\newTerm{literal}
+\newTerm{LCG}[description={lazy clause generation},
               first={lazy clause generation (LCG)}]
-\newterm{implication graph}
-\newterm{no-good}
-\newterm{unit propagation}
+\newTerm{implication graph}
+\newTerm{no-good}
+\newTerm{unit propagation}
 
 
 %===============
 % GRAMMAR TERMS
 %===============
 
-\newterm{context-free grammar}
-\newterm{grammar}[see={machine grammar}]
-\newterm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
-\newterm{machine grammar}[see={grammar}]
-\newterm{nonterminal}
-\newterm{production}
-\newterm{rule}
-\newterm[base.r]{base}[parent={rule}]
-\newterm[chain.r]{chain}[parent={rule}]
-\newterm[complex.r]{complex}[parent={rule}]
-\newterm[proxy.r]{proxy}[parent={rule}]
-\newterm[simple.r]{simple}[parent={rule}]
-\newterm[split.r]{split}[parent={rule}]
-\newterm{rule pattern}[user1={pattern}]
-\newterm{rule reduction}
-\newterm{rule result}[user1={result}]
-\newterm{state}
-\newterm{state table}
-\newterm{terminal}
+\newTerm{context-free grammar}
+\newTerm{grammar}[see={machine grammar}]
+\newTerm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
+\newTerm{machine grammar}[see={grammar}]
+\newTerm{nonterminal}
+\newTerm{production}
+\newTerm{rule}
+\newTerm[base.r]{base}[parent={rule}]
+\newTerm[chain.r]{chain}[parent={rule}]
+\newTerm[complex.r]{complex}[parent={rule}]
+\newTerm[proxy.r]{proxy}[parent={rule}]
+\newTerm[simple.r]{simple}[parent={rule}]
+\newTerm[split.r]{split}[parent={rule}]
+\newTerm{rule pattern}[user1={pattern}]
+\newTerm{rule reduction}
+\newTerm{rule result}[user1={result}]
+\newTerm{state}
+\newTerm{state table}
+\newTerm{terminal}
+
+
+%================
+% LANGUAGE TERMS
+%================
+
+\newTerm{C}
 
 
 %====================
 % RELATED WORK TERMS
 %====================
 
-\newterm{principle}
-\newterm{macro expansion}
-\newterm[naive.me]{naive}[parent={macro expansion}]
-\newterm{tree covering}
-\newterm{DAG covering}
-\newterm{graph covering}
+\newTerm{principle}
+\newTerm{macro expansion}
+\newTerm[naive.me]{naive}[parent={macro expansion}]
+\newTerm{tree covering}
+\newTerm{DAG covering}
+\newTerm{graph covering}
 
-\newterm{instruction characteristic}%
+\newTerm{instruction characteristic}%
         [user1={characteristic}, user2={characteristics}]
-\newterm[single-output.ic]%
+\newTerm[single-output.ic]%
         {single-output}%
         [parent={instruction characteristic}]
-\newterm[multi-output.ic]%
+\newTerm[multi-output.ic]%
         {multi-output}%
         [parent={instruction characteristic}]
-\newterm[disjoint-output.ic]%
+\newTerm[disjoint-output.ic]%
         {disjoint-output}%
         [parent={instruction characteristic}]
-\newterm[inter-block.ic]%
+\newTerm[inter-block.ic]%
         {inter-block}%
         [parent={instruction characteristic}]
-\newterm[interdependent.ic]%
+\newTerm[interdependent.ic]%
         {interdependent}%
         [parent={instruction characteristic}]
 
-\newterm{block DAG}[user1={block}]
-\newterm{control-flow edge}[user1={control-flow}]
-\newterm{control-flow graph}[user1={control-flow}]
-\newterm{cover}
-\newterm[least-cost.c]{least-cost}[parent={cover}]
-\newterm{data-flow edge}[user1={data-flow}]
-\newterm{data-flow graph}[user1={data-flow}]
-\newterm{expression tree}
-\newterm{function graph}[user1={function}]
-\newterm{interference graph}
-\newterm{match}[plural=matches]
-\newterm[complex.m]{complex}[parent={match}]
-\newterm[dominate.m]{dominate}[parent={match}, user1={domin}]
-\newterm[illegal.m]{illegal}[parent={match}]
-\newterm{match set}
-\newterm{matching}[see={pattern matching}]
-\newterm{overlap}
-\newterm{pattern}[see={pattern graph}]
-\newterm[complex.p]{complex}[parent={pattern}]
-\newterm[proxy.p]{proxy}[parent={pattern}]
-\newterm[simple.p]{simple}[parent={pattern}]
-\newterm{pattern DAG}[see={pattern}]
-\newterm{pattern graph}[see={pattern}]
-\newterm{pattern tree}[see={pattern}]
-\newterm{pattern matching}[user3={pattern-matching}, see={matching}]
-\newterm{pattern selection}[see={selection}]
-\newterm[optimal.ps]{optimal}[parent={pattern selection}]
-\newterm{pattern set}
-\newterm{sea-of-nodes IR}
-\newterm{selection}[see={pattern selection}]
-\newterm{SSA graph}
+\newTerm{block DAG}[user1={block}]
+\newTerm{control-flow edge}[user1={control-flow}]
+\newTerm{control-flow graph}[user1={control-flow}]
+\newTerm{cover}
+\newTerm[least-cost.c]{least-cost}[parent={cover}]
+\newTerm{data-flow edge}[user1={data-flow}]
+\newTerm{data-flow graph}[user1={data-flow}]
+\newTerm{expression tree}
+\newTerm{function graph}[user1={function}]
+\newTerm{interference graph}
+\newTerm{match}[plural=matches]
+\newTerm[complex.m]{complex}[parent={match}]
+\newTerm[dominate.m]{dominate}[parent={match}, user1={domin}]
+\newTerm[illegal.m]{illegal}[parent={match}]
+\newTerm{match set}
+\newTerm{matching}[see={pattern matching}]
+\newTerm{overlap}
+\newTerm{pattern}[see={pattern graph}]
+\newTerm[complex.p]{complex}[parent={pattern}]
+\newTerm[proxy.p]{proxy}[parent={pattern}]
+\newTerm[simple.p]{simple}[parent={pattern}]
+\newTerm{pattern DAG}[see={pattern}]
+\newTerm{pattern graph}[see={pattern}]
+\newTerm{pattern tree}[see={pattern}]
+\newTerm{pattern matching}[user3={pattern-matching}, see={matching}]
+\newTerm{pattern selection}[see={selection}]
+\newTerm[optimal.ps]{optimal}[parent={pattern selection}]
+\newTerm{pattern set}
+\newTerm{sea-of-nodes IR}
+\newTerm{selection}[see={pattern selection}]
+\newTerm{SSA graph}
 
-\newterm{BURS}[first={bottom-up rewriting system (BURS)}]
-\newterm{CGPL}[first={Code Generator Preprocessor Language (CGPL)}]
-\newterm{Click-Paleczny graph}
-\newterm{Davidson-Fraser approach}
+\newTerm{BURS}[first={bottom-up rewriting system (BURS)}]
+\newTerm{CGPL}[first={Code Generator Preprocessor Language (CGPL)}]
+\newTerm{Click-Paleczny graph}
+\newTerm{Davidson-Fraser approach}
 \newToolTerm{Dmacs}
-\newterm{expand procedure}
+\newTerm{expand procedure}
 \newToolTerm{Firm}
-\newterm{FRT}%
+\newTerm{FRT}%
         [first=factorized register transfer (FRT),
          firstplural=factorized register transfers (FRTs)]
 \newToolTerm{Glasgow}
 \newToolTerm{GCL}
-\newterm{ICL}[first={Interpretive Coding Language (ICL)}]
+\newTerm{ICL}[first={Interpretive Coding Language (ICL)}]
 \newToolTerm{LAD}
-\newterm{macro}
-\newterm{macro expander}[user3={macro-expan}]% The short term is without the
+\newTerm{macro}
+\newTerm{macro expander}[user3={macro-expan}]% The short term is without the
                                              % ending 'sion' in order to be used
                                              % in words like 'expanding'.
-\newterm{maximum munch}
-\newterm{MIML}[first={Machine-Independent Macro Language (MIML)}]
-\newterm{OMML}[first={Object Machine Macro Language (OMML)}]
+\newTerm{maximum munch}
+\newTerm{MIML}[first={Machine-Independent Macro Language (MIML)}]
+\newTerm{OMML}[first={Object Machine Macro Language (OMML)}]
 \newToolTerm{Pascal}
 \newToolTerm{PL/1}
 \newToolTerm{PL/C}
 \newToolTerm{Simcmp}
-\newterm[SLM instruction]%
+\newTerm[SLM instruction]%
         {SLM~instruction}%
         [first={source language machine (SLM) instruction}]
-\newterm{TEL}[first={Template Language (TEL)}]
-\newterm{template}
+\newTerm{TEL}[first={Template Language (TEL)}]
+\newTerm{template}
 \newToolTerm{Ucode}
 \newToolTerm{Ugen}
 \newToolTerm{VF2}
+\newTerm{XL}{first={Extensible Language (XL)}}
 
-\newterm{product automaton}[plural={product automata}]
-\newterm{pushdown automaton}[plural={pushdown automata}]
-\newterm{tree series transducer}
-\newterm{finite tree automaton}%
+\newTerm{product automaton}[plural={product automata}]
+\newTerm{pushdown automaton}[plural={pushdown automata}]
+\newTerm{tree series transducer}
+\newTerm{finite tree automaton}%
         [plural={finite tree automata}]
-\newterm{finite state automaton}%
+\newTerm{finite state automaton}%
         [plural={finite state automata}, see={state machine}]
-\newterm{state machine}[see={finite state automaton}]
+\newTerm{state machine}[see={finite state automaton}]
 
-\newterm[{k-means clustering}]{$k$-means clustering}
+\newTerm[{k-means clustering}]{$k$-means clustering}
 
-\newterm{baseline}
-\newterm{CI}[first={confidence interval (CI)}]
-\newterm{CV}[first={coefficient of variation (CV)}]
-\newterm{GMI}[first={geometric mean improvement (GMI)}]
-\newterm{percentile bootstrapping}
-\newterm{speedup}
-\newterm{subject}
-\newterm{zero-centered normalization}
+\newTerm{baseline}
+\newTerm{CI}[first={confidence interval (CI)}]
+\newTerm{CV}[first={coefficient of variation (CV)}]
+\newTerm{GMI}[first={geometric mean improvement (GMI)}]
+\newTerm{percentile bootstrapping}
+\newTerm{speedup}
+\newTerm{subject}
+\newTerm{zero-centered normalization}
