@@ -6,6 +6,7 @@
 
 \begin{sammanfattning}
   \selectlanguage{swedish}
+  %
   Inom kodgenerering v\"aljer instruktionsselektering (eng.\ \emph{instruction
     selection}) instruktioner f\"or att implementera ett givet program under
   kompilering, global kodf\"orflyttning (eng.\ \emph{global code motion})
@@ -13,9 +14,9 @@
   blockl\"aggning (eng.\ \emph{block ordering}) placerar programblock i en
   sekventiell f\"oljd.
   %
-  I denna avhandling introducerar vi en ny metod, kallad \emph{universal
-    instruktionsselektering}, som integrerar instruktionsselektering med global
-  kodf\"orflyttning och blockl\"aggning.
+  Denna avhandling introducerar en ny metod, kallad \emph{universell
+    instruktionsselektering}, som integrerar global instruktionsselektering med
+  global kodf\"orflyttning och blockl\"aggning.
   %
   Genom detta \r{a}tg\"ardar den begr\"ansningar hos befintliga
   instruktionsselekteringsmetoder som misslyckas med att utnyttja m\r{a}nga av
@@ -29,9 +30,9 @@
   f\r{a}ngar v\"asentliga funktioner som ignoreras av andra kombinatoriska
   metoder.
   %
-  Vi visar ocks\r{a} att modellen kan ut\"okas f\"or att integrera
-  instruktionsschemal\"aggning och registerallokering, tv\r{a} andra viktiga
-  kodgenereringsproblem.
+  Avhandlingen f\"oresl\r{a}r ocks\r{a} ut\"okningar av modellen f\"or att
+  integrera instruktionsschemal\"aggning och registerallokering, tv\r{a} andra
+  viktiga kodgenereringsproblem.
 
   Modellen m\"ojligg\"ors av en originell, grafbaserad representation som
   f\"orenar data- och kontrollfl\"ode f\"or hela funktioner.
@@ -41,20 +42,21 @@
   instruktioner, vars beteende omfattar b\r{a}de data- och kontrollfl\"ode, som
   grafer.
 
-  Genom experimentiell utv\"ardering demonstreras att v\r{a}r metod hanterar
-  arkitekturer med ett rikt instruktionsset och skalerar upp till mediumstora
-  funktioner.
+  Genom experimentiell utv\"ardering demonstreras att universell
+  instruktionsselektering kan hantera arkitekturer med ett rikt instruktionsset
+  och skalerar upp till mediumstora funktioner.
   %
   F\"or dessa funktioner genererar den kod av motsvarande eller b\"attre
   kvalitet \"an den senaste tekniken.
   %
-  Vi demonstrerar ocks\r{a} att det finns tillr\"ackligt med dataparallelism att
-  utnyttjas genom selektering av SIMD-instruktioner och att denna exploaritering
-  gynnas av global kodf\"orflyttning.
+  Avhandlingen demonstrerar ocks\r{a} att det finns tillr\"ackligt med
+  dataparallelism att utnyttjas genom selektering av SIMD-instruktioner och att
+  denna exploaritering gynnas av global kodf\"orflyttning.
   %
-  Med dessa resultat argumenterar vi f\"or att villkorsprogrammering \"ar en
+  Med dessa resultat argumenteras f\"or att villkorsprogrammering \"ar en
   flexibel, praktisk, konkurrenskraftig, och ut\"okningsbar metod f\"or att
   kombinera global instruktionsselektering, global kodf\"orflyttning, och
   blockl\"aggning.
+  %
   \selectlanguage{english}
 \end{sammanfattning}

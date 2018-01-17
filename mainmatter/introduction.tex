@@ -84,10 +84,10 @@ Outlined in \refFigure{approach-overview}, the approach is the first to combine
 \gls{instruction selection} with \gls{global code motion} and \gls{block
   ordering}.
 %
-In doing so, our approach alleviates selection of sophisticated
+In doing so, the approach alleviates selection of sophisticated
 \glspl{instruction} that would otherwise not have been selectable.
 
-To handle the combinatorial nature of these problems, our approach is based on
+To handle the combinatorial nature of these problems, the approach is based on
 \glsdesc{CP}.
 %
 It relies on a novel combinatorial model that is simpler and more flexible
@@ -96,9 +96,9 @@ compared to the techniques currently used by modern \glspl{compiler}.
 In addition, it captures crucial features that are ignored by other, existing
 combinatorial approaches.
 %
-We also propose extensions for integrating \gls{instruction scheduling} and
-\gls{register allocation}, which are two other \gls{code generation} tasks known
-to impact \gls{instruction selection}.
+The dissertation also proposes extensions for integrating \gls{instruction
+  scheduling} and \gls{register allocation}, which are two other \gls{code
+  generation} tasks known to impact \gls{instruction selection}.
 
 The model is enabled by a novel, \gls{graph}-based representation that unifies
 data flow and control flow for entire \glspl{function}.
@@ -122,17 +122,17 @@ Hence there is no longer any need for hand-written routines to handle
   \gls{global code motion}, and \gls{block ordering}.
 \end{statement}
 %
-By \emph{flexible}, it means that our approach can handle hardware architectures
+By \emph{flexible}, it means that the approach can handle hardware architectures
 with a rich \gls{instruction set}.
 %
-By \emph{practical}, it means that our approach can select \glspl{instruction}
+By \emph{practical}, it means that the approach can select \glspl{instruction}
 for \glspl{program} of sufficient complexity and scales to medium-sized
 \glspl{function} (measured in hundreds of \glspl{operation}).
 %
-By \emph{competitive}, it means that our approach generates code of equal or
+By \emph{competitive}, it means that the approach generates code of equal or
 better quality compared to the state of the art.
 %
-By \emph{extensible}, it means that our approach can be extended to integrate
+By \emph{extensible}, it means that the approach can be extended to integrate
 other \gls{code generation} tasks.
 
 
@@ -883,8 +883,9 @@ techniques and then evaluate each group as a whole.
 This is to avoid unreasonably long experiment runtimes.
 
 Using the \gls{constraint model} with the best design choices and solving
-techniques, we then evaluate the significance of our approach by comparing its
-\glspl{solution} with those produced by the state of the art.
+techniques, we then evaluate the significance of \gls{universal instruction
+  selection} by comparing its \glspl{solution} with those produced by the state
+of the art.
 
 
 \section{Evaluation Methodology}
@@ -914,7 +915,7 @@ The \gls{MediaBench} suite consists of \num{6313}~\glspl{function}, which are
 compiled into \gls{LLVM} \gls{IR} code -- the intermediate format used by
 \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization flag~\texttt{-O3}.
 %
-Due to insuffiicent support in our current toolchain, we remove all
+Due to insuffiicent support in the current toolchain, we remove all
 \glspl{function} that operate on non-integer data types (such as floating point
 and vector data types).
 %
@@ -1065,7 +1066,7 @@ A normalized value $v$ using \gls{zero-centered normalization} corresponds a
 
 \Gls{zero-centered normalization} is also applied when comparing \gls{solution}
 costs as they represent an estimate of the time it would take to execute the
-code yielded by the \glspl{solution} (our current implementation is not yet able
+code yielded by the \glspl{solution} (the current implementation is not yet able
 to hook back into \gls{LLVM} in order to generate executable code).
 
 When summarizing normalized values, however, we do not use \gls{zero-centered
@@ -1133,7 +1134,8 @@ into four parts:
     %
     \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
       \item \refChapter{constraint-programming} describes \glsdesc{CP}, which is
-        a combinatorial optimization method on which our approach is based
+        a combinatorial optimization method on which \gls{universal instruction
+          selection} is based
       \item \refAppendix{graph-definitions} contains exact definitions of
         \glspl{graph} and related terms which are used throughout the
         dissertation
@@ -1148,14 +1150,14 @@ into four parts:
         graph-covering} cover the remaining techniques
     \end{inlinelist}.
   \item[Universal instruction selection]
-    Presents our approach:
+    Presents the approach:
     %
     \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
       \item \refChapter{universal-representation} introduces the \gls{universal
         representation}
       \item \refChapter{constraint-model} introduces the \gls{constraint model}
       \item \refChapter{solving-techniques} introduces the solving techniques
-      \item \refChapter{exp-evaluation-using-the-state-of-the-art} evaluates our
+      \item \refChapter{exp-evaluation-using-the-state-of-the-art} evaluates the
         approach using the state of the art
       \item \refAppendix{minizinc-implementation} provides an implementation of
         the \gls{constraint model}, written in \gls{MiniZinc} (a high-level
