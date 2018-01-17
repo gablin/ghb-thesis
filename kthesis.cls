@@ -102,9 +102,10 @@
 % DOCUMENT STRUCTURE MACROS
 %===========================
 
+\newcommand{\@hfMarkText}[1]{#1}
 \makepagestyle{frontMatterChapPage}
-\makeevenhead{frontMatterChapPage}{\thepage}{}{}
-\makeoddhead{frontMatterChapPage}{}{}{\thepage}
+\makeevenhead{frontMatterChapPage}{\@hfMarkText{\thepage}}{}{}
+\makeoddhead{frontMatterChapPage}{}{}{\@hfMarkText{\thepage}}
 \newcommand{\@frontMatterChapFont}{%
   \large\bfseries%
 }
