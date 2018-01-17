@@ -6,6 +6,7 @@
 
 \usetikzlibrary{%
   calc,%
+  decorations.markings,%
   decorations.pathreplacing,%
   fit,%
   intersections,%
@@ -170,6 +171,13 @@
         (-16383.99999pt,-16383.99999pt) rectangle (16383.99999pt,16383.99999pt)
       }
     },
+  },
+  ->-/.style={
+    decoration={
+      markings,
+      mark=at position #1 with {\arrow{>}},
+    },
+    postaction={decorate},
   },
 }
 \makeatletter
