@@ -36,10 +36,13 @@
       node distance=1pt,
     },
     sep line/.style={
-      dotted,
+      thick,
+      draw=shade2,
+      dashed,
     },
     sep label/.style={
       nothing,
+      font=\relsize{-.5}\bfseries\scshape,
     },
   ]
 
@@ -73,7 +76,7 @@
           \end{tabular}%
         };
 
-  \node [input, above right=2.25*\nodeDist and 0 of ir.west]
+  \node [input, above right=1.9*\nodeDist and 0 of ir.west]
         (machine-description)
         {%
           \begin{tabular}{@{}c@{}}
@@ -119,9 +122,9 @@
           --
           (matcher);
     \coordinate (below-ps-transformations)
-                at ([yshift=-0.5*\nodeDist] ps-transformations.south);
+                at ([yshift=-.5*\nodeDist] ps-transformations.south);
     \draw [rounded corners=4pt]
-          (below-ps-transformations)
+          ([yshift=-.25*\nodeDist] below-ps-transformations)
           -|
           ($(modeler.north west) !.33! (modeler.north east)$);
 
@@ -182,18 +185,13 @@
           \end{tabular}%
         };
 
-  \coordinate (between-md-and-ir)
-              at ($(below-ps-transformations)
-                   !.5!
-                   (graph-builder.north -| below-ps-transformations)$);
-  \coordinate (sep-line-east) at (code-emitter.east |- between-md-and-ir);
   \draw [sep line]
-        (ir.west |- between-md-and-ir)
-        --
-        (sep-line-east);
-  \node [sep label, above left=2pt and 0 of sep-line-east]
+        (ir.west |- below-ps-transformations)
+        -- coordinate [pos=1] (sep-line-east)
+        (code-emitter.east |- below-ps-transformations);
+  \node [sep label, above left=1.5mm and 0 of sep-line-east]
         {at compiler build time};
-  \node [sep label, below left=2pt and 0 of sep-line-east]
+  \node [sep label, below left=1.5mm and 0 of sep-line-east]
         {at program compile time};
 \end{tikzpicture}%
 \endgroup%
