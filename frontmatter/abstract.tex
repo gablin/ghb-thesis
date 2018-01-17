@@ -5,5 +5,49 @@
 % of the license).
 
 \begin{abstract}
-  TODO: write
+  In code generation, instruction selection chooses instructions to implement a
+  given program under compilation, global code motion moves operations from one
+  part of the program to another, and block ordering arranges program blocks
+  into a consecutive sequence.
+  %
+  In this dissertation, we introduce a new approach called \emph{universal
+    instruction selection} that integrates global instruction selection with
+  global code motion and block ordering.
+  %
+  By doing so, it addresses limitations of existing instruction selection
+  techniques that fail to exploit many of the instructions provided by modern
+  processors.
+
+  To handle the combinatorial nature of these problems, the approach is based on
+  constraint programming, a combinatorial optimization method.
+  %
+  It relies on a novel model that is simpler and more flexible compared to the
+  techniques used in modern compilers and captures crucial features ignored by
+  other combinatorial approaches.
+  %
+  We also show that the model can be extended to integrate instruction
+  scheduling and register allocation, two other important problems of code
+  generation.
+
+  The model is enabled by a novel, graph-based representation that unifies data
+  and control flow for entire functions.
+  %
+  The representation is crucial for integrating instruction selection with
+  global code motion and for modeling sophisticated instructions, whose behavior
+  contains both data and control flow, as graphs.
+
+  Through experimental evaluation, our approach is demonstrated to handle
+  architectures with a rich instruction set and scales for up to medium-sized
+  functions.
+  %
+  For these functions, it generates code of equal or better quality compared to
+  the state of the art.
+  %
+  We also demonstrate that there is sufficient data parallelism to be exploited
+  through selection of SIMD instructions and that this exploitation benefits
+  from global code motion.
+  %
+  These results show that constraint programming is a flexible, practical,
+  competitive, and extensible approach for combining global instruction
+  selection, global code motion, and block ordering.
 \end{abstract}
