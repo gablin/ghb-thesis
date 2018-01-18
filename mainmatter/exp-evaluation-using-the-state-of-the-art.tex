@@ -118,7 +118,9 @@ The \gls{GMI} is \printGMI{%
 }.
 
 We see that our approach produces \glspl{solution} with significantly less
-cost than those produced by \gls{LLVM}.
+cost than those produced by \gls{LLVM} (up to~\printSpeedup{%
+  \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
+} improvement).
 %
 These improvements are predominatly due to the combination of \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
@@ -155,16 +157,16 @@ equal or better quality compared to the state of the art for up to medium-sized
 \section{Impact of SIMD instructions}
 \labelSection{evaluation-with-or-without-simds}
 
-\def\patternSetA{\textsc{i}}
-\def\patternSetB{\textsc{ii}}
-
 We evaluate the impact of being able to select \gls{SIMD.instr}
 \glspl{instruction} by comparing the cost of \glspl{solution} produced from two
-\glspl{pattern set}: one derived from \gls{Hexagon} without \gls{SIMD.instr}
-\glspl{instruction}, and another with such \glspl{instruction}.
+\glspl{pattern set}:
 %
-We refer to these as \glspl{pattern set}~\patternSetA{} and~\patternSetB,
-respectively.
+\begin{patternList}
+  \item \labelPattern{no-simd}
+    one derived from \gls{Hexagon} without \gls{SIMD.instr} \glspl{instruction}
+  \item \labelPattern{with-simd}
+    one with such \glspl{instruction}
+\end{patternList}.
 
 
 \paragraph{Setup}
@@ -187,7 +189,6 @@ prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
 \gls{instruction}.
 
 
-
 \paragraph{Results}
 
 \input{\expDir/simd-vs-without-cycles-speedup.stats}
@@ -203,8 +204,7 @@ prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
   \caption[Plot for evaluating the impact of SIMD instructions on code quality]%
           {%
             Normalized solution costs for two pattern sets: one without SIMD
-            instructions (baseline), and another with such instruction
-            (subject).
+            instructions (baseline), and one with such instruction (subject).
             %
             GMI:~\printGMI{%
               \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -223,8 +223,8 @@ prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
 
 \RefFigure{simd-vs-without-cycles-plot} shows the normalized \gls{solution}
 costs for the two \glspl{pattern set} describe above, with \gls{pattern
-  set}~\patternSetA{} as \gls{baseline} and \gls{pattern set}~\patternSetB{} as
-\gls{subject}.
+  set}~\refPattern{no-simd} as \gls{baseline} and \gls{pattern
+  set}~\refPattern{with-simd} as \gls{subject}.
 %
 The costs range from
 \printMinCycles{%
@@ -262,9 +262,11 @@ The \gls{GMI} is \printGMI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
 }
 
-We see that the \gls{pattern set}~\patternSetB{} yields \glspl{solution} with
-significantly less cost than those yielded by \glsshort{pattern
-  set}~\patternSetA.
+We see that the \gls{pattern set}~\refPattern{with-simd} yields \glspl{solution}
+with significantly less cost than those yielded by \gls{pattern
+  set}~\refPattern{no-simd} (up to~\printSpeedup{%
+  \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
+} improvement).
 %
 The five cases with less cost (\cCode*{debug\_print\_str},
 \cCode*{gl\_read\_alpha}, \cCode*{gx\_curve\_cursor}, \cCode*{mp\_dmul}, and

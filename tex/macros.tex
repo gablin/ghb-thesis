@@ -246,6 +246,21 @@
   \ref{model:#1}%
 }
 
+\newlist{patternList}{enumerate*}{1}
+\setlist[patternList]{%
+  label={(\textsc{\roman*})},
+  ref=\textsc{\roman*},
+  itemjoin={;\ },
+  itemjoin*={; and\ },
+}
+
+\NewDocumentCommand{\labelPattern}{m}{%
+  \label{pattern:#1}%
+}
+\NewDocumentCommand{\refPattern}{m}{%
+  \ref{pattern:#1}%
+}
+
 \setlist[description]{%
   font=\sffamily,
 }
