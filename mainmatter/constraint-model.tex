@@ -213,8 +213,8 @@ $\irStore{\irVar{p}[1]}{\irVar{q}[2]}$
 %
 An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
 %
-If both \glspl{match} are selected, then either value~\irVar{p}[2] or
-value~\irVar{q}[2] will be \gls{use.d}[d] before it is available (depending on
+If both \glspl{match} are selected, then either value~\irVar*{p}[2] or
+value~\irVar*{q}[2] will be \gls{use.d}[d] before it is available (depending on
 the instruction order), thus resulting in incorrect code.
 %
 Consequently, such combinations must be identified and forbidden.
@@ -414,25 +414,26 @@ This alone, however, could result in an over-constrained \glsshort{constraint
 For example, assume a \gls{match}~$m$ of the \gls{UP graph} shown in
 \refFigure{up-graph-examples-add-graph} on
 \refPageOfFigure{up-graph-examples-add-graph}, where the \glspl{block node}
-\irBlock{entry}, \irBlock{clamp}, and \irBlock{end} are matched to \glspl{block}
-in $\mUFGraph$ labeled \irBlock{A}, \irBlock{B}, and \irBlock{C}, respectively.
+\irBlock*{entry}, \irBlock*{clamp}, and \irBlock*{end} are matched to
+\glspl{block} in $\mUFGraph$ labeled \irBlock*{A}, \irBlock*{B}, and
+\irBlock*{C}, respectively.
 %
 Because of \refEquation{preventing-control-flow-op-moves}, $m$ must be placed in
-the \irBlock{A}~\gls{block}.
+the \irBlock*{A}~\gls{block}.
 %
 But because of \refEquation{def-edges}, one of its \glspl{value node} must be
-placed in the \irBlock{B}~\gls{block}.
+placed in the \irBlock*{B}~\gls{block}.
 %
 Consequently, for such conditions the \gls{constraint} is relaxed as follows.
 %
 We say that a \gls{match} \gls!{span.b}[s] the \glspl{block} matched by the
 \gls{UP graph}'s \glspl{block node} (hence $m$ \gls{span.b}[s] \glspl{block}
-\irBlock{A}, \irBlock{B}, and~\irBlock{C}).
+\irBlock*{A}, \irBlock*{B}, and~\irBlock*{C}).
 %
 We also say that a \gls{match} \gls!{consume.b}[s] any matched \glspl{block}
 where the corresponding \gls{block node} has both \gls{inbound.e} and
 \gls{outbound.e} control-flow \glspl{edge} in the \gls{UP graph} (hence $m$
-\gls{consume.b}[s] \gls{block}~\irBlock{B}).
+\gls{consume.b}[s] \gls{block}~\irBlock*{B}).
 %
 Consequently, every \gls{datum}~$d$ \gls{define.d}[d] by a \gls{match}~$m$ must
 be placed in the same \gls{block} as $m$ only if $m$ \gls{span.b}[s] no
@@ -653,7 +654,7 @@ In order to retain matching of \glspl{pattern}, we also need to perform
 See for example \refFigure{copy-extending-pattern-example}.
 %
 The \gls{UP graph} captures the behavior of an \gls{instruction} that adds two
-values~\irVar{r} and~\irVar{s} and then shifts the result by one bit to the
+values~\irVar*{r} and~\irVar*{s} and then shifts the result by one bit to the
 right (\refFigure{copy-extending-pattern-example-before}).
 %
 Since we want to preserve the ability of selecting copy \glspl{instruction} for
@@ -781,16 +782,16 @@ modern \gls{instruction selector}.
 %
 See for example \refFigure{value-reuse-example}.
 %
-Originally, the \gls{UF graph} has a value~\irVar{v} which is used by two
+Originally, the \gls{UF graph} has a value~\irVar*{v} which is used by two
 \glspl{operation} coverable by \glspl{match}~$m_1$ and~$m_2$
 (\refFigure{value-reuse-example-uf-graph}).
 %
 After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
-\irVar{v}[1] and \irVar{v}[2], respectively -- of \irVar{v}
+\irVar*{v}[1] and \irVar*{v}[2], respectively -- of \irVar*{v}
 (\refFigure{value-reuse-example-after-ce}).
 %
-Assume that both $m_1$ and $m_2$ require its copy of \irVar{v} to reside in a
-\gls{location} different from \irVar{v} -- \irVar{v} may reside on the stack,
+Assume that both $m_1$ and $m_2$ require its copy of \irVar*{v} to reside in a
+\gls{location} different from \irVar*{v} -- \irVar*{v} may reside on the stack,
 for instance -- which means that selection of $m_1$ or $m_2$ also entails
 emission of a copy \gls{instruction}.
 %
@@ -798,7 +799,7 @@ With the \glsshort{constraint model} introduced thus far, two copy
 \glspl{instruction} will be emitted if both $m_1$ and $m_2$ are selected
 (\refFigure{value-reuse-example-redundant-copies}).
 %
-However, if \irVar{v}[1] and \irVar{v}[2] could reside in the same
+However, if \irVar*{v}[1] and \irVar*{v}[2] could reside in the same
 \gls{location} then either of the values could be reused by either \gls{match},
 thus necessitating only one copy \gls{instruction}
 (\refFigure{value-reuse-example-one-copy}).
@@ -862,12 +863,12 @@ $m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
 %
 See for example \refFigure{match-duplication-example}.
 %
-The \gls{match set} contains a \gls{match}~$m$ that uses value~\irVar{v}[1],
-which is \gls{copy-related.d} with value~\irVar{v}[2]
+The \gls{match set} contains a \gls{match}~$m$ that uses value~\irVar*{v}[1],
+which is \gls{copy-related.d} with value~\irVar*{v}[2]
 (\refFigure{match-duplication-example-before}).
 %
-Because \irVar{v}[1] is an \gls{input datum} in~$m$, we duplicate $m$ to instead
-use \irVar{v}[2], resulting in match~$m'$
+Because \irVar*{v}[1] is an \gls{input datum} in~$m$, we duplicate $m$ to
+instead use \irVar*{v}[2], resulting in match~$m'$
 (\refFigure{match-duplication-example-after}).
 
 The main advantage of \gls{match duplication} is that no changes need to be done
@@ -937,15 +938,15 @@ between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
 See for example \refFigure{alt-values-example}.
 %
 Again, the \gls{match set} contains a \gls{match}~$m$ that uses
-value~\irVar{v}[1], which is \gls{copy-related.d} with value~\irVar{v}[2]
+value~\irVar*{v}[1], which is \gls{copy-related.d} with value~\irVar*{v}[2]
 (\refFigure{alt-values-example-before}).
 %
-Because \irVar{v}[1] is an \gls{input datum} in~$m$, we extend the mapping from
-$n$ to \irVar{v}[1] to include \irVar{v}[2], where $n$ is the corresponding
+Because \irVar*{v}[1] is an \gls{input datum} in~$m$, we extend the mapping from
+$n$ to \irVar*{v}[1] to include \irVar*{v}[2], where $n$ is the corresponding
 \gls{value node} in the \gls{UP graph} of~$m$
 (\refFigure{alt-values-example-after}).
 %
-In this context, \irVar{v}[1] and \irVar{v}[2] are said to be
+In this context, \irVar*{v}[1] and \irVar*{v}[2] are said to be
 \glspl!{alternative value} to~$m$.
 %
 For convenience, we assume that the set of \glspl{alternative value} for each
@@ -954,14 +955,14 @@ non-\gls{input datum}~$d$ in a \gls{match} contains only the \glsshort{state
 
 Special care must be taken to \glspl{match} derived from the \gls{phi-pattern}.
 %
-Assume, for example, that the \gls{match}~$m$ using value~\irVar{v}[1] in
+Assume, for example, that the \gls{match}~$m$ using value~\irVar*{v}[1] in
 \refFigure{alt-values-example-before} is a \gls{phi-match}.
 %
-This means that \irVar{v}[1] will participate in a \gls{definition edge},
-forcing \irVar{v}[1] to be \gls{define.d}[d] in some \gls{block}.
+This means that \irVar*{v}[1] will participate in a \gls{definition edge},
+forcing \irVar*{v}[1] to be \gls{define.d}[d] in some \gls{block}.
 %
 If $m$ is extended as in \refFigure{alt-values-example-after}, then $m$ is
-allowed to make use of value~\irVar{v}[2], which does not participate in the
+allowed to make use of value~\irVar*{v}[2], which does not participate in the
 \gls{definition edge} and hence could break \gls{program} semantics.
 %
 There are two approaches to fixing this problem:
@@ -1223,7 +1224,7 @@ We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case (\codeInText{reg2rsaref}), for example, the solving time differs by
+In one case (\cCode*{reg2rsaref}), for example, the solving time differs by
 nearly a factor of~\num{50}, which is due to a high rate of \gls{copy-related.d}
 values for which \glspl{alternative value} results in only
 \num{94}~\glspl{match} whereas \gls{match duplication} results in
@@ -1309,7 +1310,7 @@ We see clearly that \glsshort{constraint model}~\refModel{w-value-reuse}
 produces \glspl{solution} with significantly lesser cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
-In one case (\codeInText{putseqdispext}), for example, where two constants are
+In one case (\cCode*{putseqdispext}), for example, where two constants are
 frequently used as arguments to \gls{function} call \glspl{instruction} and thus
 cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
 to \num{208}~cycles.
@@ -1394,17 +1395,17 @@ sequence without inserting one or more additional jump \glspl{instruction}.
 %
 See for example \refFigure{jump-insert-example}.
 %
-\Glspl{block}~\irBlock{A} and~\irBlock{B} both contain control-flow
-\glspl{instruction} that branches to the beginning of \irBlock{B} if the
-condition holds, otherwise they should branches to block~\irBlock{C}
+\Glspl{block}~\irBlock*{A} and~\irBlock*{B} both contain control-flow
+\glspl{instruction} that branches to the beginning of \irBlock*{B} if the
+condition holds, otherwise they should branches to block~\irBlock*{C}
 (\refFigure{jump-insert-example-cfg}).
 %
-Because of the fall-through \gls{constraint}, \irBlock{A} and \irBlock{B} cannot
-both have \irBlock{C} as its successor \gls{block}.
+Because of the fall-through \gls{constraint}, \irBlock*{A} and \irBlock*{B}
+cannot both have \irBlock*{C} as its successor \gls{block}.
 %
-Hence an additional jump \gls{instruction} that directly branches to \irBlock{C}
-must be inserted after the control-flow \gls{instruction} in either \irBlock{A}
-or~\irBlock{B} (\refFigure{jump-insert-example-solutions}).
+Hence an additional jump \gls{instruction} that directly branches to
+\irBlock*{C} must be inserted after the control-flow \gls{instruction} in either
+\irBlock*{A} or~\irBlock*{B} (\refFigure{jump-insert-example-solutions}).
 
 In this dissertation, we discuss two methods for inserting jump
 \glspl{instruction} when required: \gls{branch extension} and \glspllong{DTB
@@ -1618,7 +1619,7 @@ cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
 %
 \begin{figure}
   \subcaptionbox{%
-                  A pattern that falls through to the \irBlock{false} block%
+                  A pattern that falls through to the \irBlock*{false} block%
                   \labelFigure{dual-target-branch-pattern-example-original}%
                 }%
                 [68mm]%
@@ -1798,7 +1799,7 @@ in significantly shorter solving times than \glsshort{constraint
 %
 We also observe that, as expected, when the number of conditional branch
 \glspl{instruction} increases -- up to \num{13}, in the case of
-\codeInText{nextkeypacket} -- the \gls{search space} for \glsshort{constraint
+\cCode*{nextkeypacket} -- the \gls{search space} for \glsshort{constraint
   model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
   model}~\refModel{dual-target}.
 %
@@ -2014,12 +2015,12 @@ store a, $\ldots$
 See for example \refFigure{recomputation-example}.
 %
 The \gls{function} performs two memory stores using the same address
-value~\irVar{a} (\refFigure{recomputation-example-ir}).
+value~\irVar*{a} (\refFigure{recomputation-example-ir}).
 %
 If the \gls{target machine} provides a memory \gls{instruction} with
 base-plus-index addressing mode (that is, the address to be used is the sum of
 the values appearing in a base and an index \gls{register}), then no
-add~\gls{instruction} is needed for computing~\irVar{a}.
+add~\gls{instruction} is needed for computing~\irVar*{a}.
 %
 In the context of \gls{instruction selection}, this means letting the
 \gls{operation} representing the addition to be covered by more than one
@@ -2117,8 +2118,8 @@ entry:
 %
 See for example \refFigure{if-conversions-example}.
 %
-Assume a \gls{function} containing two sums, \irVar{a} and~\irVar{b}, which are
-conditionally computed given a certain predicate~\irVar{p}
+Assume a \gls{function} containing two sums, \irVar*{a} and~\irVar*{b}, which
+are conditionally computed given a certain predicate~\irVar*{p}
 (\refFigure{if-conversions-example-ir}).
 %
 Because this constitutes an if-then-else structure, this code snippet is eligble
@@ -2133,8 +2134,8 @@ However, since $m_1$ and $m_2$ both cover the same \glspl{control node}, only
 one of the \glspl{match} can be selected (due to
 \refEquationList{operation-coverage, data-definitions}).
 %
-In addition, because both \glspl{match} \gls{consume.b} the \irBlock{body}
-\gls{block}, no other \glspl{operation} may be placed in \irBlock{body} if
+In addition, because both \glspl{match} \gls{consume.b} the \irBlock*{body}
+\gls{block}, no other \glspl{operation} may be placed in \irBlock*{body} if
 either is selected (due to \refEquation{consumption}).
 %
 This means either both or none of the \glspl{match} must be selected.
@@ -2165,8 +2166,8 @@ See for example \refFigure{implicit-extensions-example}, which depicts a
 \glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
 and~$m_3$.
 %
-Assume that {\irFont foo} represents a \gls{function} call and that \irVar{a},
-\irVar{b}, and \irVar{c} represent 8-bit values stored in 32-bit
+Assume that \irCode*{foo} represents a \gls{function} call and that \irVar*{a},
+\irVar*{b}, and \irVar*{c} represent 8-bit values stored in 32-bit
 \glspl{register}.
 %
 As is common, $m_3$ will be derived from an \gls{instruction} that checks
@@ -2176,9 +2177,9 @@ Consequently, as a precaution the upper bytes of the \glspl{register} need to be
 zero-extended (that is, those bits are all set to~0) before doing the
 comparison.
 %
-While this is certainly necessary for the \gls{register} of \irVar{a} as nothing
-can be assumed about the value returned by {\irFont foo}, it may be redundant
-for the register of \irVar{b}.
+While this is certainly necessary for the \gls{register} of \irVar*{a} as
+nothing can be assumed about the value returned by \irCode*{foo}, it may be
+redundant for the register of \irVar*{b}.
 %
 For example, $m_2$ may be derived from a single-byte load \gls{instruction} that
 clears the entire \gls{register} before loading the value.
@@ -2191,7 +2192,7 @@ One solution to this problem is to extend the \gls{pattern set} with additional
 %
 For example, merging the \glspl{pattern} of $m_2$ and $m_3$ results in a
 \gls{match} which, if selected, emits the \gls{instruction} of $m_2$ followed by
-the \glspl{instruction} of $m_3$ without the redundant clearing of \irVar{b}.
+the \glspl{instruction} of $m_3$ without the redundant clearing of \irVar*{b}.
 %
 Depending on the \gls{instruction set}, however, this may result in an
 exponential number of \glspl{pattern}.

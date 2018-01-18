@@ -123,24 +123,22 @@ cost than those produced by \gls{LLVM}.
 These improvements are predominatly due to the combination of \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 %
-In three cases (\codeInText{alloc\_save\_spac}, \codeInText{gp\_enumerate\_fi},
-and \codeInText{gpk\_open}), for example, our approach is able to lift
-computations, in particular constant loads, out of \glspl{block} with high
-execution frequency into \glspl{block} with lower frequency, thereby reducing
-the cost.
+In three cases (\cCode*{alloc\_save\_spac}, \cCode*{gp\_enumerate\_fi}, and
+\cCode*{gpk\_open}), for example, our approach is able to lift computations, in
+particular constant loads, out of \glspl{block} with high execution frequency
+into \glspl{block} with lower frequency, thereby reducing the cost.
 %
-In \codeInText{alloc\_save\_spac}, our approach is also able to move an addition
-and memory operation into the same \gls{block} and implement both using a single
+In \cCode*{alloc\_save\_spac}, our approach is also able to move an addition and
+memory operation into the same \gls{block} and implement both using a single
 auto-increment memory \gls{instruction}, whereas \gls{LLVM} must implement these
 computations using two \glspl{instruction}.
 %
 These improvements are only possible due to integrating \gls{global.is}
 \gls{instruction selection} with \gls{global code motion}.
 
-In three other cases (\codeInText{jpeg\_read\_header},
-\codeInText{gl\_TexImage3DEX}, and \codeInText{gl\_EnableClient}), our approach
-is able to reorder the \glspl{block} to remove one to two jump
-\glspl{instruction}.
+In three other cases (\cCode*{jpeg\_read\_header}, \cCode*{gl\_TexImage3DEX},
+and \cCode*{gl\_EnableClient}), our approach is able to reorder the
+\glspl{block} to remove one to two jump \glspl{instruction}.
 %
 These improvements are only possible when integrating \gls{global.is}
 \gls{instruction selection} with \gls{block ordering}.
@@ -268,13 +266,12 @@ We see that the \gls{pattern set}~\patternSetB{} yields \glspl{solution} with
 significantly lesser cost than those yielded by \glsshort{pattern
   set}~\patternSetA.
 %
-The five cases with lesser cost (\codeInText{debug\_print\_str},
-\codeInText{gl\_read\_alpha}, \codeInText{gx\_curve\_cursor},
-\codeInText{mp\_dmul}, and \codeInText{zero}), our approach is able to combine
-pairs of additions or subtractions into \num{2}-way \gls{SIMD.instr}
-\glspl{instruction}.
+The five cases with lesser cost (\cCode*{debug\_print\_str},
+\cCode*{gl\_read\_alpha}, \cCode*{gx\_curve\_cursor}, \cCode*{mp\_dmul}, and
+\cCode*{zero}), our approach is able to combine pairs of additions or
+subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
 %
-In addition, in one of these cases (\codeInText{gl\_read\_alpha}) the additions
+In addition, in one of these cases (\cCode*{gl\_read\_alpha}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
   motion} our approach is able to move the operations to the same block in order
 to implement these using a single \gls{instruction}.

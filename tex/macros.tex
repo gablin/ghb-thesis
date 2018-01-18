@@ -981,64 +981,150 @@
 %=====================
 
 \newcommand{\codeFont}{\ttfamily}
-\newcommand{\codeInText}[1]{{\codeFont\relsize{-.5}#1}}
 \lstset{basicstyle=\codeFont\footnotesize}
-\newcommand{\cCode}[1]{\mbox{\codeFont#1}}
-\NewDocumentCommand{\cVar}{mo}{%
-  \cCode{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+\NewDocumentCommand{\cCode}{sm}{%
+  {%
+    \IfBooleanTF{#1}{\relsize{-.5}}{}%
+    \mbox{\codeFont#2}%
+  }%
 }
-\NewDocumentCommand{\cVarInText}{mo}{%
-  \codeInText{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+\NewDocumentCommand{\cVar}{smo}{%
+  \IfBooleanTF{#1}{%
+    \cCode*{#2\IfValueTF{#3}{$_{\text{#3}}$}{}}%
+  }{%
+    \cCode{#2\IfValueTF{#3}{$_{\text{#3}}$}{}}%
+  }%
 }
 \newcommand{\irFont}{\ttfamily}
-\newcommand{\irCode}[1]{\mbox{\irFont#1}}
-\NewDocumentCommand{\irVar}{mo}{%
-  \irCode{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+\NewDocumentCommand{\irCode}{sm}{%
+  {%
+    \IfBooleanTF{#1}{\relsize{-.5}}{}%
+    \mbox{\irFont#2}%
+  }%
 }
-\NewDocumentCommand{\irTemp}{m}{%
-  \irCode{t$_{\text{#1}}$}%
+\NewDocumentCommand{\irVar}{smo}{%
+  \IfBooleanTF{#1}{%
+    \irCode*{#2\IfValueTF{#3}{$_{\text{#3}}$}{}}%
+  }{%
+    \irCode{#2\IfValueTF{#3}{$_{\text{#3}}$}{}}%
+  }%
 }
-\newcommand{\irAssign}[2]{\mbox{#1 $\leftarrow$ #2}}
+\NewDocumentCommand{\irTemp}{sm}{%
+  \IfBooleanTF{#1}{%
+    \irCode*{t$_{\text{#2}}$}%
+  }{%
+    \irCode{t$_{\text{#2}}$}%
+  }%
+}
+\NewDocumentCommand{\irAssign}{smm}{%
+  \mbox{#2 $\leftarrow$ #3}%
+}
 \newcommand{\irAddText}{$+$}
-\newcommand{\irAdd}[2]{\mbox{#1 \irAddText{} #2}}
-\newcommand{\irBlock}[1]{\irCode{#1}}
+\NewDocumentCommand{\irAdd}{smm}{%
+  \mbox{#2 \irAddText{} #3}%
+}
+\NewDocumentCommand{\irBlock}{sm}{%
+  \IfBooleanTF{#1}{\irCode*{#2}}{\irCode{#2}}%
+}
 \newcommand{\irBrText}{br}
-\newcommand{\irBr}[1]{\mbox{{\irFont\bfseries\irBrText} \irBlock{#1}}}
+\NewDocumentCommand{\irBr}{ms}{%
+  \mbox{%
+    {%
+      \bfseries%
+      \IfBooleanTF{#1}{\irCode*{\irBrText}}{\irCode{\irBrText}}%
+    }
+    \IfBooleanTF{#1}{\irBlock*{#2}}{\irBlock{#2}}%
+  }%
+}
 \newcommand{\irCallText}{call}
-\newcommand{\irCall}[1]{\mbox{{\irFont\bfseries\irCallText} #1}}
+\NewDocumentCommand{\irCall}{sm}{%
+  \mbox{%
+    {%
+      \bfseries%
+      \IfBooleanTF{#1}{\irCode*{\irCallText}}{\irCode{\irCallText}}%
+    }
+    \IfBooleanTF{#1}{\irCode*{#2}}{\irCode{#2}}%
+  }%
+}
 \newcommand{\irCondBrText}{c.br}
-\newcommand{\irCondBr}[3]{%
-  \mbox{\irFont\bfseries\irCondBrText} #1, \irBlock{#2}, \irBlock{#3}%
+\NewDocumentCommand{\irCondBr}{smmm}{%
+  \mbox{%
+    {%
+      \bfseries%
+      \IfBooleanTF{#1}{\irCode*{\irCondBrText}}{\irCode{\irCondBrText}}%
+    }
+    \IfBooleanTF{#1}{%
+      \irCode*{#2, }\irBlock*{#3}\irCode*{, }\irBlock*{#4}%
+    }{%
+      \irCode{#2, }\irBlock{#3}\irCode{, }\irBlock{#4}%
+    }%
+  }%
 }
 \newcommand{\irCpText}{cp}
 \newcommand{\irEQText}{$=$}
-\newcommand{\irEQ}[2]{\mbox{#1 \irEQText{} #2}}
+\NewDocumentCommand{\irEQ}{smm}{\mbox{#2 \irEQText{} #3}}
 \newcommand{\irNEText}{$\neq$}
-\newcommand{\irNE}[2]{\mbox{#1 \irNEText{} #2}}
+\NewDocumentCommand{\irNE}{smm}{\mbox{#2 \irNEText{} #3}}
 \newcommand{\irGEText}{$\geq$}
-\newcommand{\irGE}[2]{\mbox{#1 \irGEText{} #2}}
+\NewDocumentCommand{\irGE}{smm}{\mbox{#2 \irGEText{} #3}}
 \newcommand{\irGTText}{$>$}
-\newcommand{\irGT}[2]{\mbox{#1 \irGTText{} #2}}
+\NewDocumentCommand{\irGT}{smm}{\mbox{#2 \irGTText{} #3}}
 \newcommand{\irLEText}{$\leq$}
-\newcommand{\irLE}[2]{\mbox{#1 \irLEText{} #2}}
+\NewDocumentCommand{\irLE}{smm}{\mbox{#2 \irLEText{} #3}}
 \newcommand{\irLTText}{$<$}
-\newcommand{\irLT}[2]{\mbox{#1 \irLTText{} #2}}
+\NewDocumentCommand{\irLT}{smm}{\mbox{#2 \irLTText{} #3}}
 \newcommand{\irLSHText}{$\ll$}
-\newcommand{\irLSH}[2]{\mbox{#1 \irLSHText{} #2}}
+\NewDocumentCommand{\irLSH}{smm}{\mbox{#2 \irLSHText{} #3}}
 \newcommand{\irMulText}{$\times$}
-\newcommand{\irMul}[2]{\mbox{#1 \irMulText{} #2}}
+\NewDocumentCommand{\irMul}{smm}{\mbox{#2 \irMulText{} #3}}
 \newcommand{\irLoadText}{load}
-\newcommand{\irLoad}[1]{\mbox{{\irFont\bfseries\irLoadText} #1}}
+\NewDocumentCommand{\irLoad}{sm}{%
+  {%
+    \bfseries%
+    \IfBooleanTF{#1}{%
+      \irCode*{\irLoadText}%
+    }{%
+      \irCode{\irLoadText}%
+    }%
+  } #2%
+}
 \newcommand{\irPhiText}{$\mPhi$}
-\newcommand{\irPhi}[1]{\mbox{\irPhiText(#1)}}
+\NewDocumentCommand{\irPhi}{sm}{\mbox{\irPhiText(#2)}}
 \newcommand{\irRetText}{ret}
-\newcommand{\irRet}[1]{\mbox{{\irFont\bfseries\irRetText} #1}}
+\NewDocumentCommand{\irRet}{sm}{%
+  {%
+    \bfseries%
+    \IfBooleanTF{#1}{%
+      \irCode*{\irRetText}%
+    }{%
+      \irCode{\irRetText}%
+    }%
+  } #2%
+}
 \newcommand{\irStoreText}{store}
-\newcommand{\irStore}[2]{\mbox{{\irFont\bfseries\irStoreText} #1, #2}}
+\NewDocumentCommand{\irStore}{smm}{%
+  {%
+    \bfseries%
+    \IfBooleanTF{#1}{%
+      \irCode*{\irStoreText}%
+    }{%
+      \irCode{\irStoreText}%
+    }%
+  } #2, #3%
+}
 \newcommand{\irSubText}{$-$}
-\newcommand{\irSub}[2]{\mbox{#1 \irSubText{} #2}}
+\NewDocumentCommand{\irSub}{smm}{\mbox{#2 \irSubText{} #3}}
 \newcommand{\irZextText}{zxt}
-\newcommand{\irZext}[1]{\mbox{\irZextText{} #1}}
+\NewDocumentCommand{\irZext}{sm}{%
+  {%
+    \bfseries%
+    \IfBooleanTF{#1}{%
+      \irCode*{\irZextText}%
+    }{%
+      \irCode{\irZextText}%
+    }%
+  } #2%
+}
 
 % Commands to be used inside TikZ nodes
 \NewDocumentCommand{\noWidth}{mO{0pt}}{%

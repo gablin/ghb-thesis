@@ -173,8 +173,8 @@ control flows through these \glspl{node}.
 For example, in the \gls{control-flow graph} shown in
 \refFigure{function-example-cf-graph}, \glspl{control node} representing
 unconditional branches are inserted along the \glspl{edge} between the
-\irBlock{entry} and \irBlock{head} \glspl{node} and between the \irBlock{body}
-and \irBlock{head} \glspl{node}.
+\irBlock*{entry} and \irBlock*{head} \glspl{node} and between the
+\irBlock*{body} and \irBlock*{head} \glspl{node}.
 %
 \begin{filecontents*}{uf-example-ssa.c}
 int factorial(int $\irVar{n}[1]$) {
@@ -307,13 +307,13 @@ int factorial(int $\irVar{n}[1]$) {
   \labelFigure{uf-graph-example}
 \end{figure}%
 %
-For the conditional control flow originating from the \irBlock{head}
+For the conditional control flow originating from the \irBlock*{head}
 \gls{block}, a \gls{control node} representing a conditional branch is inserted
-and connected to the \irBlock{head} \gls{node}, and the labeled \glspl{edge} are
-redirected to the new \gls{node}.
+and connected to the \irBlock*{head} \gls{node}, and the labeled \glspl{edge}
+are redirected to the new \gls{node}.
 %
 Lastly, a \gls{control node} representing \gls{function} return is inserted and
-connected to the \irBlock{end} \gls{node}.
+connected to the \irBlock*{end} \gls{node}.
 %
 This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-extended-cf-graph}.
@@ -369,8 +369,8 @@ First, \glspl{data-flow edge} are inserted to connect control \glspl{operation}
 with the values used by these \glspl{operation}.
 %
 In the case of our running example, such \glspl{edge} are added from
-values~\irVar{b} and~\irVar{f}[2] to the {\irFont\irCondBrText} and
-{\irFont\irRetText} \glspl{operation}, respectively.
+values~\irVar*{b} and~\irVar*{f}[2] to the \irCode*{\irCondBrText} and
+\irCode*{\irRetText} \glspl{operation}, respectively.
 
 To achieve the invariant specified in
 \refRequirement{uni-rep-exactly-one-inbound-edge-for-values}, \glspl{data-flow
@@ -442,8 +442,8 @@ join:
   \labelFigure{preserving-semantics-example}
 \end{figure}
 %
-In the original code, the addition should be performed in the \irBlock{inc}
-\gls{block} while the subtraction should be performed in the \irBlock{dec}
+In the original code, the addition should be performed in the \irBlock*{inc}
+\gls{block} while the subtraction should be performed in the \irBlock*{dec}
 \gls{block}.
 %
 But according to the \gls{graph}, swapping the placement of these
@@ -472,10 +472,10 @@ This results in the \gls{graph} shown in
 \refFigure{uf-graph-example-full-graph},\!%
 %
 \footnote{%
-  In this case, the \glspl{definition edge} from the \irBlock{entry} \gls{node}
-  to the \irVar{n}[1] and \irVar{1} \glspl{node} are redundant since the
+  In this case, the \glspl{definition edge} from the \irBlock*{entry} \gls{node}
+  to the \irVar*{n}[1] and \irVar*{1} \glspl{node} are redundant since the
   \glspl{data-flow edge} are sufficient to force these values to be produced in
-  the \irBlock{entry} \gls{block}.
+  the \irBlock*{entry} \gls{block}.
 }
 %
 which is called \gls!{UF graph}.
@@ -507,12 +507,12 @@ also necessitates the \gls{UF graph} to be transformed and extended with
 additional \glspl{operation} in order to guarantee correctness.
 %
 For example, assume a \gls{function} containing two \glspl{phi-function}
-\mbox{\irFont \irPhi{$\ldots$, 1:\irBlock{a}, $\ldots$}} and \mbox{\irFont
-  \irPhi{$\ldots$, 1:\irBlock{b}, $\ldots$}}.
+\irCode*{\irPhi{$\ldots$, 1:\irBlock{a}, $\ldots$}} and
+\irCode*{\irPhi{$\ldots$, 1:\irBlock{b}, $\ldots$}}.
 %
-If the constant~\irVar{1} is represented using a single \gls{value node}, then
+If the constant~\irVar*{1} is represented using a single \gls{value node}, then
 the \gls{value node} will have two \glspl{definition edge}, one from
-\gls{block}~\irBlock{a} and another from \gls{block}~\irBlock{b}.
+\gls{block}~\irBlock*{a} and another from \gls{block}~\irBlock*{b}.
 %
 Since a value cannot be defined in two \gls{block} simultaneously, there exist
 no \gls{solution} for this \gls{UF graph}.

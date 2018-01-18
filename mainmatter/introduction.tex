@@ -224,11 +224,11 @@ while (i < N) {
             Example to illustrate the need for new techniques and the
             interaction between instruction selection and global code motion.
             %
-            The program computes the saturated sums of two arrays \irVar{A} and
-            \irVar{B} as a new array~\irVar{C}, all of which are assumed to be
+            The program computes the saturated sums of two arrays \irVar*{A} and
+            \irVar*{B} as a new array~\irVar*{C}, all of which are assumed to be
             of equal lengths and stored in memory.
             %
-            The variables \irVar{N} and \irVar{MAX} are constants representing
+            The variables \irVar*{N} and \irVar*{MAX} are constants representing
             the array length and the upper limit, respectively.
             %
             An integer is assumed to be 4~bytes%
@@ -254,11 +254,11 @@ the saturated-add \gls{operation} used in the \gls{program} shown in
 Hence the \gls{instruction} would implement the following five operations:%
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
-  \item the \irAdd{\irVar{a}}{\irVar{b}} addition
-  \item the \irLE{\irVar{MAX}}{\irVar{c}} comparison
-  \item the conditional jump to either of blocks~\irBlock{b4} and~\irBlock{b5}
-  \item the \irAssign{\irVar{c}}{\irVar{MAX}} assignment
-  \item the unconditional jump to~\irBlock{b5}
+  \item the \irAdd*{\irVar*{a}}{\irVar*{b}} addition
+  \item the \irLE*{\irVar*{MAX}}{\irVar*{c}} comparison
+  \item the conditional jump to either of blocks~\irBlock*{b4} and~\irBlock*{b5}
+  \item the \irAssign*{\irVar*{c}}{\irVar*{MAX}} assignment
+  \item the unconditional jump to~\irBlock*{b5}
 \end{inlinelist}.
 %
 Selecting this \gls{instruction} can have tremendous impact on performance.
@@ -271,10 +271,10 @@ of the loop takes \num{16}~cycles, and selecting the saturated-add
 Existing \gls{instruction selection} techniques and representations, however, do
 not support selection of such \glspl{instruction}.
 %
-Since the \glspl{operation} above reside in separate \glspl{block} (\irBlock{b3}
-and \irBlock{b4}), making use of the saturated-add \gls{instruction} requries an
-\gls{instruction selector} that is capable of processing multiple \glspl{basic
-  block} simultaneously.
+Since the \glspl{operation} above reside in separate \glspl{block}
+(\irBlock*{b3} and \irBlock*{b4}), making use of the saturated-add
+\gls{instruction} requries an \gls{instruction selector} that is capable of
+processing multiple \glspl{basic block} simultaneously.
 %
 In comparison, traditional \gls{instruction selection} techniques only consider
 one \gls{basic block} at a time.
@@ -299,17 +299,17 @@ Assume that the \gls{target machine} also has a \gls{SIMD.instr}
 }
 %
 Revisiting the example shown in \refFigure{isel-gcmotion-example}, there are
-four additions in the \gls{program} (\irAdd{\irVar{A}}{\irTemp{2}},
-\irAdd{\irVar{B}}{\irTemp{2}}, \irAdd{\irVar{C}}{\irTemp{2}}, and
-\irAdd{\irVar{i}}{\irVar{1}}) which are independent from one another and can
+four additions in the \gls{program} (\irAdd*{\irVar*{A}}{\irTemp*{2}},
+\irAdd*{\irVar*{B}}{\irTemp*{2}}, \irAdd*{\irVar*{C}}{\irTemp*{2}}, and
+\irAdd*{\irVar*{i}}{\irVar*{1}}) which are independent from one another and can
 therefore be executed in parallel.
 %
 Assuming again that all \glspl{instruction} takes one cycle to execute,
 implementing these four additions using a single \gls{SIMD.instr}
 \gls{instruction} would improve performance by almost \SI{19}{\percent}.
 %
-This requires that the two additions in block~\irBlock{b5} be moved to
-block~\irBlock{b4}, which is the task of \gls{global code motion}.
+This requires that the two additions in block~\irBlock*{b5} be moved to
+block~\irBlock*{b4}, which is the task of \gls{global code motion}.
 %
 However, as \gls{global code motion} is commonly considered to be a
 target-independent optimization, it is often done before \gls{code generation}.
@@ -436,7 +436,7 @@ int f() {
             Example to illustrate the interaction between instruction
             selection and block ordering.
             %
-            The function \irCode{f} calls another function \irCode{g} until it
+            The function \irCode*{f} calls another function \irCode*{g} until it
             returns a non-zero value, and then returns that value%
           }
   \labelFigure{isel-blorder-example}%
@@ -468,14 +468,14 @@ selectable for implementing the conditional branch (see
 the entire \gls{function}.
 %
 But by flipping the condition and swapping block labels (conditionally jumping
-to \irBlock{b2} instead of \irBlock{b1}), the more complex jump
+to \irBlock*{b2} instead of \irBlock*{b1}), the more complex jump
 \gls{instruction} becomes selectable (see
 \refFigure{isel-blorder-example-code-2}), bringing the cycle count to five
 cycles and thus reducing the execution time by almost \SI{17}{\percent}.
 %
 However, although this decision may appear better at the point of
 \gls{instruction selection}, it necessitates an additional jump
-\gls{instruction} when ordering the \glspl{block} (because block~\irBlock{b1}
+\gls{instruction} when ordering the \glspl{block} (because block~\irBlock*{b1}
 cannot fall-through to the top of itself; see
 \refFigure{isel-blorder-example-code-3}).
 %

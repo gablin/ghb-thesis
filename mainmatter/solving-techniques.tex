@@ -883,7 +883,7 @@ therefore interchangeable.
   \begin{minipage}[b]{58mm}%
     \centering%
     \subcaptionbox{%
-                    UF graph, where the values \irVar{v}[1] and \irVar{v}[2]
+                    UF graph, where the values \irVar*{v}[1] and \irVar*{v}[2]
                     constitute a chain of interchangeable data%
                     \labelFigure{interchangeable-data-example-annotated-graph}%
                   }%
@@ -965,18 +965,20 @@ therefore interchangeable.
 This is another source for symmetric \glspl{solution}, which is illustrated in
 \refFigure{interchangeable-data-example}.
 
-Assume a \gls{UF graph} containing two \gls{copy-related.d} values, \irVar{v}[1]
-and~\irVar{v}[2], that may both be connected to two \glspl{operand}~$p_1$
-and~$p_2$ (\refFigure{interchangeable-data-example-annotated-graph}).
+Assume a \gls{UF graph} containing two \gls{copy-related.d} values,
+\irVar*{v}[1] and~\irVar*{v}[2], that may both be connected to two
+\glspl{operand}~$p_1$ and~$p_2$
+(\refFigure{interchangeable-data-example-annotated-graph}).
 %
 We say that a set of values constitute a chain of \gls!{interchangeable.d} if
 they can be swapped in a \gls{solution} without affecting the \gls{program}
 semantics, which is the case if the values are all \gls{copy-related.d} and none
 is both \gls{define.d}[d] and \gls{use.d}[d] by some \gls{match}.
 %
-In the above example, \irVar{v}[1] and~\irVar{v}[2] constitute such a chain and
-can therefore be swapped for $p_1$ and~$p_2$, giving rise to unwanted symmetric
-\glspl{solution} (\refFigure{interchangeable-data-example-alt-solutions}).
+In the above example, \irVar*{v}[1] and~\irVar*{v}[2] constitute such a chain
+and can therefore be swapped for $p_1$ and~$p_2$, giving rise to unwanted
+symmetric \glspl{solution}
+(\refFigure{interchangeable-data-example-alt-solutions}).
 %
 The intuition here is to forbid \glspl{solution} containing ``cross-over''
 connections between the values in a chain and the $\mVar{alt}$~\glspl{variable}.
@@ -1253,7 +1255,7 @@ the additional check that none of intermediate values of $m$ are used by other
           {%
             Example where matches~$m_1$ and $m_2$ are jointly dominated by
             match~$m_3$ and can therefore safely be removed (provided that no
-            other match uses value~\irVar{v}[3]).
+            other match uses value~\irVar*{v}[3]).
             %
             The table contains the location restrictions enforced by each match%
           }
@@ -1738,18 +1740,16 @@ We see clearly that \glsshort{constraint model}~\refModel{obj-fun-div-mul}
 results in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{obj-fun-mul-div}.
 %
-In one case (checksum\codeInText{build\_ycc\_rgb\_t}), for example, the solving
-time is two orders of magnitude shorter, and in three cases
-(\codeInText{alloc\_save\_spac}, \codeInText{gpk\_open}, and
-\codeInText{trueRandAccum}) the solving time is more than one order of magnitude
-shorter.
+In one case (checksum\cCode*{build\_ycc\_rgb\_t}), for example, the solving time
+is two orders of magnitude shorter, and in three cases
+(\cCode*{alloc\_save\_spac}, \cCode*{gpk\_open}, and \cCode*{trueRandAccum}) the
+solving time is more than one order of magnitude shorter.
 %
 Although \glsshort{constraint model}~\refModel{obj-fun-mul-div} outperforms
 \glsshort{constraint model}~\refModel{obj-fun-div-mul} in three other cases
-(\codeInText{alloc\_name\_is\_s}, \codeInText{debug\_dump\_byte}, and
-\codeInText{write\_file\_trai}), the loss in performance for these
-\glspl{function} is overshadowed by the gain in performance for other
-\glspl{function}.
+(\cCode*{alloc\_name\_is\_s}, \cCode*{debug\_dump\_byte}, and
+\cCode*{write\_file\_trai}), the loss in performance for these \glspl{function}
+is overshadowed by the gain in performance for other \glspl{function}.
 %
 This also underscores the fact that seemingly trivial changes to a
 \gls{constraint model} may have considerable impact on solving time.

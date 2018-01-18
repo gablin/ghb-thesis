@@ -270,9 +270,9 @@ expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
           {%
             Example of a macro expanding an IR addition into assembly code.
             %
-            The template to match is given as argument to \codeInText{expand},
-            and the procedure to run upon expansion is given as
-            \codeInText{expand}'s body%
+            The template to match is given as argument to \cCode*{expand}, and
+            the procedure to run upon expansion is given as \cCode*{expand}'s
+            body%
           }
   \labelFigure{macro-example}
 \end{figure}%
@@ -465,11 +465,11 @@ x = A[i + 1];
   \caption[Example of the pattern matching and selection problem]%
           {%
             Example demonstrating the pattern matching and selection problem for
-            a program that loads a value from integer array \irVar{A} at offset
-            \mbox{\irVar{i} $+$ \irVar{1}}.
+            a program that loads a value from integer array \irVar*{A} at offset
+            \mbox{\irVar*{i} $+$ \irVar*{1}}.
             %
-            It is assumed that \irVar{i} is
-            stored in register and that \irVar{A} is stored in memory and that
+            It is assumed that \irVar*{i} is
+            stored in register and that \irVar*{A} is stored in memory and that
             an integer is 4~bytes.
             %
             Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
@@ -510,7 +510,7 @@ Assume further that the \gls{compiler} should maximize performance.
 %
 The corresponding matches \mbox{$m_1, m_2, \ldots, m_8, m_9, m_{10}$} are
 therefore assigned costs \mbox{$0, 1, \ldots, 1, 5, 5$}, respectively ($m_1$ has
-zero cost since \gls{variable}~\irVar{i} is already in a \gls{register}).
+zero cost since \gls{variable}~\irVar*{i} is already in a \gls{register}).
 %
 Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
 \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
@@ -658,13 +658,13 @@ can be rewritten into \gls!{normal form.g}. A \gls{grammar} is in \gls{normal
 of the following forms:
 %
 \begin{enumerate}
-  \item \mbox{$\mNT{N} \rightarrow \irCode{op} \; \mNT{A}[1] \; \mNT{A}[2]
-    \ldots \mNT{A}[n]$}, where \irCode{op} is a \gls{terminal}, representing an
+  \item \mbox{$\mNT{N} \rightarrow \irCode*{op} \; \mNT{A}[1] \; \mNT{A}[2]
+    \ldots \mNT{A}[n]$}, where \irCode*{op} is a \gls{terminal}, representing an
     \gls{operation} that takes $n$ arguments, and all $\mNT{A}[i]$ are
     \glspl{nonterminal}.
     %
     Such rules are called \gls!{base.r}[ \glspl{rule}].
-  \item \mbox{$\mNT{N} \rightarrow \irCode{t}$}, where \irCode{t} is a
+  \item \mbox{$\mNT{N} \rightarrow \irCode*{t}$}, where \irCode*{t} is a
     \gls{terminal}.
     %
     Such rules are also called \gls{base.r} \glspl{rule}.
@@ -1085,8 +1085,8 @@ y = *((int*) t);
             Example illustrating that using block DAGs results in
             better code compared to using expression trees.
             %
-            It is assumed variables \irVar{a}, \irVar{b}, \irVar{c},
-            \irVar{t} are stored in registers%
+            It is assumed variables \irVar*{a}, \irVar*{b}, \irVar*{c},
+            \irVar*{t} are stored in registers%
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
@@ -1095,7 +1095,7 @@ An example illustrating this effect is shown in
 \refFigure{exp-trees-limit-example}.
 %
 If the \gls{IR} is represented as trees, where the common subexpression for
-computing \irVar{t} has its own \gls{expression tree} (see
+computing \irVar*{t} has its own \gls{expression tree} (see
 \refFigure{exp-trees-limit-example-trees}), then matches~\mbox{$m_1, \ldots,
   m_7$}, and~$m_9$ must be selected, which results in a total cost of \mbox{$0 +
   \cdots + 0 + 2 + 3 + 5 = 10$}.
@@ -1750,8 +1750,8 @@ int f(int* A, int* B, int N) {
   \subcaptionbox{%
                   Block graphs involving variable~\opVar{s}.
                   %
-                  For brevity, the subtrees concerning \irCode{A[i]}
-                  and \irCode{B[i]} are not included%
+                  For brevity, the subtrees concerning \irCode*{A[i]}
+                  and \irCode*{B[i]} are not included%
                   \labelFigure{block-dags-limit-dags}%
                 }%
                 [72mm]%
@@ -1814,8 +1814,8 @@ Assume that the arrays consist of fixed-point values.
 For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
 of two fixed-point values return a value that is shifted one bit to the left.
 %
-For such \glspl{target machine}, both the value~\irCode{0} and the accumulator
-\gls{variable}~\irVar{s} should be in shifted mode throughout the entire
+For such \glspl{target machine}, both the value~\irCode*{0} and the accumulator
+\gls{variable}~\irVar*{s} should be in shifted mode throughout the entire
 \gls{function}, and only restored into normal mode upon return.
 %
 Otherwise the accumulated value would be needlessly shifted back and forth
@@ -1826,7 +1826,7 @@ Achieving this, however, is difficult when limited to covering only a single
 %
 Assume for example that the function had no multiplication.
 %
-In that case, deciding to load value~\irCode{0} in shifted mode would instead
+In that case, deciding to load value~\irCode*{0} in shifted mode would instead
 lower code quality as the value would needlessly have to be shifted back before
 returning, which takes an extra \gls{instruction}.
 
@@ -1943,7 +1943,7 @@ A \gls{program} is said to be in \gls{SSA}~form if every \gls{variable} is
 defined exactly once.
 %
 For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c}
-is not in \gls{SSA}~form as \glspl{variable}~\irCode{f} and~\irCode{n} are
+is not in \gls{SSA}~form as \glspl{variable}~\irCode*{f} and~\irCode*{n} are
 redefined within the loop.
 %
 By introducing new \glspl{variable} and connecting these using
@@ -2108,8 +2108,8 @@ For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
 Assume further that the \glspl{instruction} are represented as a \gls{machine
   grammar}, and that~$i$ and~$j$ can be covered using two \glspl{rule}, $r_i$
 and $r_j$, with \glspl{production} \mbox{$\mNT{A} \rightarrow
-  \irCode{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and \mbox{$\mNT{B}
-  \rightarrow \irCode{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$}, respectively.
+  \irCode*{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and \mbox{$\mNT{B}
+  \rightarrow \irCode*{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$}, respectively.
 %
 Since the result of $r_i$ does not match the operands of $r_j$, this \gls{rule}
 combination requires a \gls{chain.r} \gls{rule} -- or a chain of these, if
