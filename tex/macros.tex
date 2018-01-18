@@ -1404,12 +1404,26 @@
   \printCycles{\pgfmathresult}%
 }
 
-\NewDocumentCommand{\printGMI}{m}{%
-  \num[round-mode=figures, round-precision=3]{#1}%
+\NewDocumentCommand{\printGMI}{O{}m}{%
+  \num[round-mode=figures, round-precision=3, #1]{#2}%
 }
 
-\NewDocumentCommand{\printGMICI}{mm}{%
-  \mbox{$[\printGMI{#1}, \printGMI{#2}]$}%
+\NewDocumentCommand{\printGMICI}{O{}mO{}m}{%
+  \mbox{$[\printGMI[#1]{#2}, \printGMI[#3]{#4}]$}%
+}
+
+\NewDocumentCommand{\printSpeedup}{O{}m}{%
+  \num[round-mode=figures, round-precision=3, #1]{#2}$\times$%
+}
+
+\NewDocumentCommand{\printMaxSpeedup}{O{}m}{%
+  \maxOf{#2}%
+  \printSpeedup[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printMinSpeedup}{O{}m}{%
+  \minOf{#2}%
+  \printSpeedup[#1]{\pgfmathresult}%
 }
 
 \newcommand{\supportNo}{$\cdot$}

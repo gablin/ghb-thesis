@@ -1740,16 +1740,11 @@ We see clearly that \glsshort{constraint model}~\refModel{obj-fun-div-mul}
 results in significantly shorter solving times than \glsshort{constraint
   model}~\refModel{obj-fun-mul-div}.
 %
-In one case (checksum\cCode*{build\_ycc\_rgb\_t}), for example, the solving time
-is two orders of magnitude shorter, and in three cases
-(\cCode*{alloc\_save\_spac}, \cCode*{gpk\_open}, and \cCode*{trueRandAccum}) the
-solving time is more than one order of magnitude shorter.
-%
-Although \glsshort{constraint model}~\refModel{obj-fun-mul-div} outperforms
-\glsshort{constraint model}~\refModel{obj-fun-div-mul} in three other cases
-(\cCode*{alloc\_name\_is\_s}, \cCode*{debug\_dump\_byte}, and
-\cCode*{write\_file\_trai}), the loss in performance for these \glspl{function}
-is overshadowed by the gain in performance for other \glspl{function}.
+For one \gls{function} (\cCode*{build\_ycc\_rgb\_t}) the solving time is
+improved by
+\printSpeedup{%
+  \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}, and for no \glspl{function} is the solving time degraded.
 %
 This also underscores the fact that seemingly trivial changes to a
 \gls{constraint model} may have considerable impact on solving time.
@@ -1935,7 +1930,7 @@ compared with those produced by \glsshort{constraint
             GMI:~\printGMI{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupGmean%
             },
-            CI~\printGMICI{%
+            CI~\printGMICI[round-precision=5]{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMin%
             }{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMax%
@@ -1978,7 +1973,7 @@ The costs range from
 %
 The \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
+} with \gls{CI}~\printGMICI[round-precision=5]{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMin%
 }{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMax%
@@ -1987,6 +1982,11 @@ The \gls{GMI} is \printGMI{%
 We see clearly that \glsplshort{constraint model} based on the refined
 \gls{objective function} yield better code quality than those based on the naive
 \gls{objective function}.
+%
+For one \gls{function} (\cCode*{gpk\_open}) the code quality is improved by
+\printSpeedup{%
+  \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesZeroCenteredSpeedupMax%
+}, and for no \glspl{function} is code quality degraded.
 %
 This also shows that there is a significant difference between the optimal
 \gls{solution} and a \gls{solution} found using inferior solving techniques.
@@ -2028,7 +2028,7 @@ From the results from these experiments, we conclude:
 \newsavebox{\solvTechPlot}
 \newlength{\solvTechPlotW}
 \newlength{\solvTechSubfigW}
-\NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}moom}{%
+\NewDocumentCommand{\mkSolvTechSubfigure}{O{disable}moomO{}O{}O{}}{%
   \IfStrEq{#1}{disable}{\def\argUC{Disable}}{}%
   \IfStrEq{#1}{enable}{\def\argUC{Enable}}{}%
   \IfStrEq{#1}{best}{\def\argUC{Best}}{}%
@@ -2057,8 +2057,8 @@ From the results from these experiments, we conclude:
     \subcaption{%
                  \IfValueTF{#3}{#3}{\refEquation{#2}}.
                  %
-                 GMI:~\printGMI{\gmi},
-                 CI:~\printGMICI{\cimin}{\cimax}%
+                 GMI:~\printGMI[#6]{\gmi},
+                 CI:~\printGMICI[#7]{\cimin}[#8]{\cimax}%
                  \labelFigure{solv-tech-#1-#2}%
                 }%
     \vspace{0pt}% Force \belowcaptionspace to be applied
@@ -2103,8 +2103,8 @@ Because the \gls{pattern set} used in these experiments contains only
 \refEquationList{impl-cons-defs-in-spanned-blocks, impl-cons-spanned-input} to
 have no impact on solving time.
 %
-For the rest, we expect some \glspl{constraint} to lead to an overall reduction
-in solving time while others may degrade solving time.
+For the rest, we expect some \glspl{constraint} to lead to an overall solving
+time improvement while others may degrade solving time.
 %
 As described in \refChapter{constraint-programming}, this is because some
 \glspl{constraint} may be too expensive to execute compared with the amount of
@@ -2157,7 +2157,9 @@ As described in \refChapter{constraint-programming}, this is because some
                       {ImplConsIdenticalEntryBlocks}%
   \hfill%
   \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}%
-                      {ImplConsDefsDominateEntryBlocks}
+                      {ImplConsDefsDominateEntryBlocks}%
+                      []%
+                      [round-precision=4]
 
   \vspace{\betweensubfigures}
 
@@ -2276,8 +2278,8 @@ The \glspl{GMI} and \glspl{CI} are given in
 \refFigure{single-impl-con-vs-no-con-solving-time-plots}.
 
 We see that \refEquationList{impl-cons-defs-dominate-defs,
-  impl-cons-defs-dominate-entry-blocks} lead to an overall reduction in solving
-time, and that \refEquationList{impl-cons-defs-in-spanned-blocks,
+  impl-cons-defs-dominate-entry-blocks} lead to an overall solving time
+improvement, and that \refEquationList{impl-cons-defs-in-spanned-blocks,
   impl-cons-place-phi-ops-same-as-def-edges, impl-cons-spanned-input} have no
 impact on solving time.
 %
@@ -2303,8 +2305,8 @@ versions of the \glsshort{constraint model}:
   \item \labelModel{impl-ex-no-cons}
     one with no \gls{implied.c} \glspl{constraint}
   \item \labelModel{impl-ex-only-good-cons}
-    one with only those who individually lead to an overall reduction in solving
-    time
+    one with only those who individually lead to an overall solving time
+    improvement
   \item \labelModel{impl-ex-all-cons}
     one with all such \glspl{constraint}
 \end{modelList}.
@@ -2349,7 +2351,7 @@ and~\refModel{impl-ex-all-cons}.
             \begin{modelList}
               \item one with no implied constraints (baseline)
               \item one with only those who individually lead to an overall
-                reduction in solving time
+                solving time improvement
                 (\refEquationList{impl-cons-defs-dominate-defs,
                   impl-cons-defs-dominate-entry-blocks}; subject)
               \item one with all such \glspl{constraint} (subject)
@@ -2394,11 +2396,17 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
 }.
 %
 Hence combining \refEquationList{impl-cons-defs-dominate-defs,
-  impl-cons-defs-dominate-entry-blocks} yields a greater overall reduction in
-solving time than when picked individually.
+  impl-cons-defs-dominate-entry-blocks} yields a greater overall solving time
+improvement than when picked individually (up
+to~\printSpeedup{%
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}).
 %
-However, we note that this combination yields a considerable performance
-degradation for one \gls{function}.
+However, we note that this combination yields a considerable solving time
+degradation for one \gls{function} (down
+to~\printSpeedup{%
+  \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
 
 In comparison, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\refModel{impl-ex-all-cons} over \glsshort{constraint
@@ -2412,8 +2420,15 @@ In comparison, we observe that the \gls{GMI} for \glsshort{constraint
 }, which is a greater improvement compared to \glsshort{constraint
   model}~\refModel{impl-ex-only-good-cons}.
 %
-We also see that this combination yields no considerable performance degradation
-for any \gls{function}.
+Although the maximum improvement is less than for \glsshort{constraint
+  model}~\refModel{impl-ex-only-good-cons} (up to
+\printSpeedup{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}), this combination yields no considerable degradation for any \gls{function}
+(down to at
+most~\printSpeedup{%
+  \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
 %
 Hence it is most beneficial to include all such \glspl{constraint} in the
 \glsshort{constraint model}.
@@ -2464,7 +2479,7 @@ comparing the solving times exhibited by two versions of the \gls{constraint
 \end{modelList}.
 %
 For the same reason as with the \gls{implied.c} \glspl{constraint}, , we expect
-some \glspl{constraint} to lead to an overall reduction in solving time while
+some \glspl{constraint} to lead to an overall solving time improvement while
 others may degrade solving time.
 
 \includeSolvTechStats{dom-cons-locs-of-states}
@@ -2551,7 +2566,7 @@ The \glspl{GMI} and \glspl{CI} are given in
 \refFigure{single-dom-con-vs-no-con-solving-time-plots}.
 
 We observe that \refEquation{dom-cons-interch-data-chains} leads to an overall
-reduction in solving time and that
+solving time improvement and that
 \refEquation{impl-cons-input-operands-not-taking-min-value} has no impact on
 solving time.
 %
@@ -2574,8 +2589,8 @@ exhibited by three versions of the \glsshort{constraint model}:
     one with no \glsshort{symmetry breaking.c} or \gls{dominance breaking.c}
     \glspl{constraint}
   \item \labelModel{dom-ex-only-good-cons}
-    one with only those who individually lead to an overall reduction in solving
-    time
+    one with only those who individually lead to an overall solving time
+    improvement
   \item \labelModel{dom-ex-all-cons}
     one with all such \glspl{constraint}
 \end{modelList}.
@@ -2621,7 +2636,7 @@ and~\refModel{dom-ex-all-cons}.
               \item one with no symmetry or dominance breaking constraints
                 (baseline)
               \item one with only those who individually lead to an overall
-                reduction in solving time
+                solving time improvement
                 (\refEquation{dom-cons-interch-data-chains}; subject)
               \item one with all such \glspl{constraint} (subject)
             \end{modelList}%
@@ -2667,6 +2682,15 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
 This means that combining only the \glsshort{symmetry breaking.c} or
 \gls{dominance breaking.c} \glspl{constraint} that individually have a positive
 impact on solving time is not sufficient.
+%
+Although solving time is improved considerably for one \gls{function} (up to
+\printSpeedup{%
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}), this combination also degrades solving time for several \glspl{function}
+(down
+to~\printSpeedup{%
+  \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
 
 In comparison, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\refModel{dom-ex-all-cons} over \glsshort{constraint
@@ -2679,8 +2703,15 @@ is \printGMI{%
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, which is a statistically significant, positive impact.
 %
-In addition, this combination yields no considerable performance degradation for
-any \gls{function}.
+In addition, the maximum improvement is greater than for \glsshort{constraint
+  model}~\refModel{dom-ex-only-good-cons} (up to
+\printSpeedup{%
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}), and this combination yields no considerable degradation for any
+\gls{function} (down to at
+most~\printSpeedup{%
+  \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
 %
 Hence it is most beneficial to include all such \glspl{constraint} in the
 \glsshort{constraint model}.
@@ -2731,7 +2762,7 @@ exhibited by two versions of the \gls{constraint model}:
 %
 For the same reason as with the \gls{implied.c}, \gls{symmetry breaking.c},
 \gls{dominance breaking.c} \glspl{constraint}, we expect some techniques to lead
-to an overall reduction in solving time while others may degrade solving time.
+to an overall solving time improvement while others may degrade solving time.
 
 \includeSolvTechStats{dom-matches}
 \includeSolvTechStats{illegal-matches-uncovered-ops}
@@ -2846,9 +2877,9 @@ The \glspl{GMI} and \glspl{CI} are given in
 \refFigure{single-presolving-vs-no-presolving-solving-time-plots}.
 
 We observe that \refEquationList{redun-kills, redun-non-null-copy-matches}, and
-\gls{canonical.l} \glspl{location} lead to an overall reduction in solving time,
+\gls{canonical.l} \glspl{location} lead to an overall solving time improvement,
 that \refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} lead
-to an overall increase in solving time, and that
+to an overall solving time degradation, and that
 \refEquation{illegal-matches-uncovered-ops} has no impact on solving time.
 %
 For \gls{dominate.m}[d] \glspl{match} and
@@ -2869,11 +2900,11 @@ exhibited by four versions of the \glsshort{constraint model}:
     one with no \gls{presolving} techniques
 \gls{implied.c} \glspl{constraint}
   \item \labelModel{pre-ex-only-good-techs}
-    one with only those who individually lead to an overall reduction in solving
-    time
+    one with only those who individually lead to an overall solving time
+    improvement
   \item \labelModel{pre-ex-no-bad-techs}
-    one without those who individually lead to an overall increase in solving
-    time
+    one without those who individually lead to an overall solving time
+    degradation
   \item \labelModel{pre-ex-all-techs}
     one with all such techniques
 \end{modelList}.
@@ -2933,11 +2964,11 @@ No hypothesis is attempted regarding the relative performance between
             \begin{modelList}
               \item one with no presolving techniques (baseline)
               \item one with only those who individually lead to an overall
-                reduction in solving time (\refEquationList{redun-kills,
+                solving time improvement (\refEquationList{redun-kills,
                   redun-non-null-copy-matches}, and \gls{canonical.l}
                 \glspl{location}; subject)
               \item one without those who individually lead to an overall
-                increase in solving time
+                solving time degradation
                 (\refEquationList{illegal-matches-def-locs,
                   illegal-matches-use-locs}; subject)
               \item one with all such \glspl{constraint} (subject)
@@ -2984,9 +3015,15 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
   \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
 }, which is a statistically significant, positive impact.
 %
-However, we note that this combination yields a considerable performance
-degradation for one \gls{function}.
-%
+But although the improvement is considerable for some \glspl{function} (up to
+\printSpeedup{%
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}), we note that this combination yields a considerable degradation for others
+(down
+to~\printSpeedup{%
+  \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
+
 In comparison, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\refModel{pre-ex-no-bad-techs} over \glsshort{constraint
   model}~\refModel{pre-ex-no-techs}
@@ -2996,12 +3033,19 @@ In comparison, we observe that the \gls{GMI} for \glsshort{constraint
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
 }{%
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
-}, which is a greater reduction in solving time compared to \glsshort{constraint
+}, which is a greater solving time improvement compared to \glsshort{constraint
   model}~\refModel{pre-ex-only-good-techs}.
 %
-In addition, this combination yields no considerable performance degradation for
-any \gls{function}.
-%
+In addition, the maximum improvement is greater than for \glsshort{constraint
+  model}~\refModel{pre-ex-only-good-techs} (up to
+\printSpeedup{%
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}), and this combination yields no considerable degradation for any
+\gls{function} (down to at
+most~\printSpeedup{%
+  \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
+}).
+
 Lastly, we observe that the \gls{GMI} for \glsshort{constraint
   model}~\refModel{pre-ex-all-techs} over \glsshort{constraint
   model}~\refModel{pre-ex-no-techs}
@@ -3014,6 +3058,12 @@ Lastly, we observe that the \gls{GMI} for \glsshort{constraint
 }, which is still better than \glsshort{constraint
   model}~\refModel{pre-ex-only-good-techs} but worse than \glsshort{constraint
   model}~\refModel{pre-ex-no-bad-techs}.
+%
+In addition, the maximum improvement is less than for \glsshort{constraint
+  model}~\refModel{pre-ex-no-bad-techs} (up to at
+most~\printSpeedup{%
+  \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}).
 %
 Hence it is most beneficial to exclude
 \refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} from the
@@ -3042,11 +3092,11 @@ the \gls{constraint model}:
   \item \labelModel{st-ex-no-techs}
     one with no solving techniques
   \item \labelModel{st-ex-only-good-techs}
-    one with only those who individually lead to an overall reduction in solving
-    time
+    one with only those who individually lead to an overall solving time
+    improvement
   \item \labelModel{st-ex-no-bad-techs}
-    one with only those who individually lead to an overall increase in solving
-    time
+    one with only those who individually lead to an overall solving time
+    degradation
   \item \labelModel{st-ex-all-techs}
     one with all techniques
 \end{modelList}.
@@ -3101,14 +3151,14 @@ No hypothesis is attempted regarding the relative performance between
             \begin{modelList}
               \item one with no solving techniques (baseline)
               \item one with only those who individually lead to an overall
-                reduction in solving time (subject)
+                solving time improvement (subject)
                 (\refEquationList{impl-cons-defs-dominate-defs,
                   impl-cons-defs-dominate-entry-blocks,
                   dom-cons-interch-data-chains, redun-kills,
                   redun-non-null-copy-matches}, and \gls{canonical.l}
                 \glspl{location}; subject)
-              \item one with only those who individually lead to an overall
-                increase in solving time
+              \item one without those who individually lead to an overall
+                solving time degradation
                 (\refEquationList{illegal-matches-def-locs,
                   illegal-matches-use-locs}; subject)
               \item one with all techniques (subject)
@@ -3153,8 +3203,20 @@ The \glspl{GMI} and \glspl{CI} are given in
 
 To begin with, we see clearly that all \glsplshort{constraint model}
 significantly improve solving time over \glsshort{constraint
-  model}~\refModel{st-ex-no-techs} and do not degrade performance for any
-\glspl{function}.
+  model}~\refModel{st-ex-no-techs}.
+%
+For several \glspl{function}, the improvement is considerable (up
+to~\printMaxSpeedup{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
+}), and no combination yields considerable degradation for any \gls{function}
+(down
+to at most~\printMinSpeedup{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin
+}).
 %
 In fact, for two \glspl{function} \glsshort{constraint
   model}~\refModel{st-ex-no-techs} is not even able to produce a \gls{solution}
@@ -3163,19 +3225,45 @@ within the time limit.
 Hence the solving techniques are crucial for scalability.
 
 Next, we observe that \glsshort{constraint model}~\refModel{st-ex-no-bad-techs}
-(\refFigure{solv-tech-disable-all-bad}) yields the largest improvement over
-\glsshort{constraint model}~\refModel{st-ex-no-techs}, closely followed by
-\glsshort{constraint model}~\refModel{st-ex-all-techs}
-(\refFigure{solv-tech-disable-all}), which in turn considerably outperforms
-\glsshort{constraint model}~\refModel{st-ex-only-good-techs}
-(\refFigure{solv-tech-enable-only-all-good}).
+yields the largest \gls{GMI} over \glsshort{constraint
+  model}~\refModel{st-ex-no-techs} (\printGMI{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}), closely followed by \glsshort{constraint model}~\refModel{st-ex-all-techs}
+(\printGMI{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}),
+which in turn considerably outperforms \glsshort{constraint
+  model}~\refModel{st-ex-only-good-techs}
+(\printGMI{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+} with \gls{CI}~\printGMICI{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMin%
+}{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupCiMax%
+}).
+%
+We also note that the maximum improvement for \glsshort{constraint
+  model}~\refModel{st-ex-no-bad-techs} is greater than for \glsshort{constraint
+  model}~\refModel{st-ex-all-techs} (up to \printSpeedup{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+} \versus up to \printSpeedup{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
+}).
 %
 Hence, only picking solving techniques that have a statistically signficant,
 positive effect on solving time when evaluated individually is too conservative.
 %
-Also, rejecting solving techniques that have an overall negative effect on
-solving time when evaluated individually yields the \gls{constraint model} with
-best performance.
+Also, rejecting \gls{presolving} techniques that have an overall negative effect
+on solving time when evaluated individually yields the \gls{constraint model}
+with best performance.
 
 
 \paragraph{Conclusions}
@@ -3188,9 +3276,9 @@ From the results from this experiment, we conclude:
   \item that picking only solving techniques that have a statistically
     signficant, positive effect on solving time when evaluated individually is
     too conservative
-  \item that rejecting solving techniques that have an statistically
-    significant, negative effect on solving time when evaluated individually
-    yields a \gls{constraint model} with best performance
+  \item that rejecting \refEquationList{illegal-matches-def-locs,
+    illegal-matches-use-locs} gives the \gls{constraint model} with best
+    performance
 \end{enumerate*}.
 
 
@@ -3201,7 +3289,13 @@ In this chapter, we have introduced a wide range of techniques for solving the
 \gls{constraint model} presented in the previous chapter.
 %
 Through experimental evaluation, the techniques were demonstrated to be crucial
-for scalability.
+for scalability; in one case, the solving time was improved
+by~\printMaxSpeedup{%
+  \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
+}.
 %
-Some techniques were also rejected after having been shown to have a negative
-impact on solving time.
+Some techniques (\refEquationList{illegal-matches-def-locs,
+  illegal-matches-use-locs}) were also rejected after having been shown to have
+a negative impact on solving time.
