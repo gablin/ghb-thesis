@@ -79,10 +79,16 @@
         };
 
   \node [below=2*\nodeSep of evaluation.south west, xshift=-1.5*\nodeSep]
-        (future-work) {\namerefChapter{future-work}};
+        (prop-model-exts)
+        {%
+          \parbox{2.6cm}{%
+            \centering%
+            \namerefChapter{proposed-model-extensions}%
+          }
+        };
 
-  \node [below=1.5*\nodeSep of future-work.south -| evaluation]
-        (conclusions) {\namerefChapter{conclusions}};
+  \node [below=1.5*\nodeSep of prop-model-exts.south -| evaluation]
+        (conclusions-fw) {\namerefChapter{conclusions-prop-model-exts}};
 
   \coordinate (next-to-uni-rep) at ([xshift=1.5*\nodeSep] uni-rep.east);
   \node at (graphs -| next-to-uni-rep)
@@ -120,8 +126,9 @@
     \node [category label, below right=of tmp-a]
           {universal instruction selection};
 
-    \coordinate (ending-y) at
-                ($(evaluation.south) !.5! (future-work.north -| evaluation)$);
+    \coordinate
+      (ending-y) at
+      ($(evaluation.south) !.5! (prop-model-exts.north -| evaluation)$);
     \draw (ending-y -| left-border)
           --
           (ending-y -| right-border);
@@ -147,13 +154,13 @@
     \draw (model) -- (solv-techs);
     \draw (model.-155)
           .. controls +(-140:2.3cm) and +(up:1.5cm) ..
-          (future-work.north);
+          (prop-model-exts.north);
     \draw (solv-techs) -- (minizinc);
-    \draw (evaluation) -- (conclusions);
-    \draw (future-work) -- (conclusions);
+    \draw (evaluation) -- (conclusions-fw);
+    \draw (prop-model-exts) -- (conclusions-fw);
     \draw (solv-techs.south)
           .. controls +(down:2cm) and +(40:2.2cm) ..
-          (conclusions.24);
+          (conclusions-fw.24);
   \end{scope}
 \end{tikzpicture}%
 \endgroup%

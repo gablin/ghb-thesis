@@ -4,8 +4,8 @@
 % LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 % of the license).
 
-\chapter{Future Work}
-\labelChapter{future-work}
+\chapter{Proposed Model Extensions}
+\labelChapter{proposed-model-extensions}
 
 In this chapter, we discuss how the \gls{constraint model} can be extended to
 integrate other problems related to \gls{code generation}.
@@ -224,8 +224,8 @@ We begin by discussing the \gls{local.ra} problem and then extend it into the
           {%
             Example of local register allocation.
             %
-            It is assumed that variables~\irVar{a}, \irVar{c}, and \irVar{d}
-            each fit inside a single register whereas variable \irVar{b}
+            It is assumed that variables~\irVar*{a}, \irVar*{c}, and \irVar*{d}
+            each fit inside a single register whereas variable \irVar*{b}
             requires two adjacent registers%
           }
   \labelFigure{local-reg-alloc-example}
@@ -444,14 +444,14 @@ single \gls{block} but may span multiple \glspl{block}.
 %
 An example is shown in \refFigure{global-reg-alloc-example}.
 %
-Assume a \gls{function} where a variable~\irVar{x} is defined in one
-\gls{block}~\irBlock{A} and used in another \gls{block}~\irBlock{D}
+Assume a \gls{function} where a variable~\irVar*{x} is defined in one
+\gls{block}~\irBlock*{A} and used in another \gls{block}~\irBlock*{D}
 (\refFigure{global-reg-alloc-example-ir}).
 %
-Consequently, \irVar{x} must be live to the end of \irBlock{A}, through all
-\glspl{block} between \irBlock{A} and \irBlock{D} (that is,
-\glspl{block}~\irBlock{B} and~\irBlock{C}), and until the last use in
-\irBlock{D} (\refFigure{global-reg-alloc-example-live-ranges}).
+Consequently, \irVar*{x} must be live to the end of \irBlock*{A}, through all
+\glspl{block} between \irBlock*{A} and \irBlock*{D} (that is,
+\glspl{block}~\irBlock*{B} and~\irBlock*{C}), and until the last use in
+\irBlock*{D} (\refFigure{global-reg-alloc-example-live-ranges}).
 
 We extend the \gls{constraint model} proposed for \gls{local.ra} \gls{register
   allocation} by first creating $\mVar{start}$ and $\mVar{end}$~\glspl{variable}
