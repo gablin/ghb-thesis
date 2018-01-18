@@ -60,6 +60,16 @@ for bib_id in all_bibdata.entries:
     else:
         sys.stderr.write("WARNING: No 'istype' for bib entry " + bib_id + "\n")
 
+# Check existence of year data for all entries
+for bib_id in is_bib_dict.copy():
+    year = getYear(is_bib_dict[bib_id])
+    if year < 0:
+        sys.stderr.write("WARNING: No 'year' for bib entry " + bib_id + "\n")
+        del is_bib_dict[bib_id]
+if len(is_bib_dict) == 0:
+    sys.stderr.write("WARNING: No bib entries\n")
+    sys.exit(0)
+
 # Find time interval
 first_pub_year = 9999
 last_pub_year = 0
