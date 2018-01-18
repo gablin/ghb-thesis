@@ -2602,11 +2602,12 @@ First, while many combinatorial approaches combine \gls{instruction
   selection} with \gls{global code motion}, and for most of these it is not
 clear how to extend the model to integrate this task.
 
-Second, all combinatorial approaches only handle tree- and \gls{DAG}-shaped
-\glspl{pattern}, which excludes support for \gls{inter-block.ic}
-\glspl{instruction} as these extend over multiple \glspl{block} and must
-therefore be modeled as generic \glspl{graph} (one such example is given in
-\refChapter{introduction} on \refPage{saturated-arithmetic}).
+Second, all combinatorial approaches only handle \gls{tree}- and
+\gls{DAG}-shaped \glspl{pattern}, which excludes support for
+\gls{inter-block.ic} \glspl{instruction} as these extend over multiple
+\glspl{block} and must therefore be modeled as generic \glspl{graph} (one such
+example is given in \refChapter{introduction}
+on \refPage{saturated-arithmetic}).
 
 Third, with the exception of \textcite{TanakaEtAl:2003}, no combinatorial
 approaches takes the cost of \gls{data copying} into account.
