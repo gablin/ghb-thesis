@@ -7,25 +7,42 @@
 \chapter{Conclusions and Future Work}
 \labelChapter{conclusions-future-work}
 
-\todo{write outline}
+This chapter closes the dissertation.
+%
+We discuss the conclusions in \refSection{conclusions} future work in
+\refSection{future-work}.
 
 
 \section{Conclusions}
+\labelSection{conclusions}
 
-In this dissertation, we have introduced \gls!{universal instruction
-  selection},\!%
+This dissertation has introduced \gls!{universal instruction selection},\!%
 %
 \footnote{%
   The source code is freely available on
   {\relsize{-.5}{\url{github.com/unison-code/uni-instr-sel}}}.%
 }
 %
-a new approach that integrates \gls{global.is} \gls{instruction selection},
-\gls{global code motion}, and \gls{block ordering}.
+a new approach that, for the first time, integrates \gls{global.is}
+\gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
+
+By doing so, it addresses several limitations of existing \gls{instruction
+  selection} techniques.
 %
-By doing so, it addresses the limitations of existing \gls{instruction
-  selection} techniques that fail to exploit many of the \glspl{instruction}
-provided by modern processors.
+First, none of these can be readily extended for integrating \gls{global code
+  motion} or \gls{block ordering}.
+%
+Second, all existing combinatorial approaches are restricted to \gls{tree}- and
+\gls{DAG}-shaped \glspl{pattern}.
+%
+Third, with the exception of \textcite{TanakaEtAl:2003}, no combinatorial
+approach takes the cost of \gls{data copying} into account.
+%
+Fourth, all combinatorial approaches only deal with data flow.
+%
+Consequently, the existing approaches fail to exploit many of the
+\glspl{instruction} provided by modern processors, thereby sacraficing code
+quality.
 
 To handle the combinatorial nature of these problems, the approach is based on
 \glsdesc{CP}.
@@ -33,43 +50,97 @@ To handle the combinatorial nature of these problems, the approach is based on
 It relies on a novel combinatorial model that is simpler and more flexible
 compared to the techniques currently used in modern \glspl{compiler}.
 %
-In addition, it captures crucial features that are ignored by other
-combinatorial approaches.
+In addition to integrating \gls{global.c} \gls{instruction selection},
+\gls{global code motion}, and \gls{block ordering}, the \glsshort{constraint
+  model} also integrates \gls{data copying} and \gls{value reuse}.
 %
-We have also seen that the \glsshort{constraint model} can be extended to
-integrate \gls{instruction scheduling} and \gls{register allocation}, which are
-two other important tasks of \gls{code generation}.
+\Gls{data copying} takes the cost of moving data into account, which is crucial
+for avoiding greedy use of \gls{SIMD.instr} \glspl{instruction}.
+%
+This feature is currently ignored by nearly all existing combinatorial
+approaches.
+%
+\Gls{value reuse} enables copies of values to be shared among
+\glspl{instruction}, which is crucial for code quality.
+%
+The dissertation has also proposed extensions to the \glsshort{constraint model}
+for integrating \gls{instruction scheduling} and \gls{register allocation},
+which are two other important tasks of \gls{code generation}.
 
-The \glsshort{constraint model} is enabled by a novel, \gls{graph}-based
-representation that unifies data flow and control flow for entire
-\glspl{function}.
+The \glsshort{constraint model} is enabled by the \gls!{universal
+  representation}, a novel \gls{graph}-based representation that unifies data
+flow and control flow for entire \glspl{function}.
 %
-Not only is this representation crucial for combining \gls{instruction
-  selection} with \gls{global code motion}, it also enables \glspl{instruction}
-whose behavior contains both data and control flow to be modeled as
-\glspl{graph}.
+Not only is the \gls{universal representation} crucial for combining
+\gls{instruction selection} with \gls{global code motion}, it also enables
+\glspl{instruction} whose behavior contains both data and control flow to be
+modeled as \glspl{graph}.
 %
 Hence there is no longer any need for hand-written routines to handle
 \glspl{instruction} that violate underlying assumptions about the
 \gls{instruction set}.
 
-Through experimental evaluation, we have seen that \gls{universal instruction
-  selection} can handle hardware architectures with a rich \gls{instruction set}
-and scales up to medium-sized \glspl{function}.
+To make the approach work in practice, numerous solving techniques have been
+introduced.
 %
-For these \glspl{function}, the approach generates code of equal or better
-quality compared to the state of the art.
+Through experimental evaluation, we have seen that these techniques collectively
+improve solving time up to \printSpeedup{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
+}, with a \gls{GMI} of~\printGMI{%
+  \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean
+}.
 %
-In addition, we have seen that there is sufficient data parallelism to be
-exploited through selection of \gls{SIMD.instr} \glspl{instruction}, resulting
-in significantly better code quality, and that this exploitation is benefitted
-from \gls{global code motion}.
+We discovered that two solving techniques
+(\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}) have a
+negative impact on solving time, and rejecting them improves solving time up to
+\printSpeedup{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}, with a \gls{GMI} of~\printGMI{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
+}, for the same \glspl{function}.
+%
+Hence these solving techniques are crucial for scalability, enabling the
+approach to scale up to medium-sized \glspl{function}.
 
-Hence \glsdesc{CP} is a flexible, practical, competitive, and extensible
-approach for combining \gls{global.is} \gls{instruction selection}, \gls{global
-  code motion}, and \gls{block ordering}.
+We have experimentally evaluated the approach by comparing the code quality it
+produces for \gls{Hexagon} -- a \gls{DSP} with a rich \gls{instruction set} --
+with that produced by \gls{LLVM} -- a existing, state-of-the-art \gls{compiler}.
+%
+In these experiments, the approach improves the estimated execution time of
+\glspl{function} by up to~\printSpeedup{%
+  \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
+}, with a \gls{GMI} of \printGMI{%
+  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+}.
+%
+Hence the approach can handle hardware architectures with a rich
+\gls{instruction set} and generates code of equal or better quality compared to
+the state of the art.
+
+We have also experimented with generating code with and without \gls{SIMD.instr}
+\glspl{instruction}.
+%
+When such \glspl{instruction} are available, the approach improves code quality
+up to~\printSpeedup{%
+  \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
+}, with a \gls{GMI} of~\printGMI{%
+  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
+}.
+%
+In one case, the computations originally reside in different \glspl{block}, but
+due to \gls{global code motion} the approach is able to move the computations to
+the same \gls{block} and implement these using a single \gls{instruction}.
+%
+Hence there is sufficient data parallelism to be exploited through selection of
+\gls{SIMD.instr} \glspl{instruction}, and this exploitation is benefitted from
+\gls{global code motion}.
+
+From these results, we conclude that \glsdesc{CP} is a flexible, practical,
+competitive, and extensible approach for combining \gls{global.is}
+\gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 
 
 \section{Future Work}
+\labelSection{future-work}
 
 \todo{write}
