@@ -24,8 +24,8 @@ Since our approach is able to leverage selection of \gls{SIMD.instr}
 We evaluate the impact of our approach by comparing the cost (that is, the total
 number of cycles, as described in \refSection{cm-objective-function} on
 \refPageOfSection{cm-objective-function}) of \glspl{solution} produced by our
-approach with the \glspl{solution} produced by \mbox{\gls{LLVM} 3.8}, an
-existing state-of-the-art \gls{compiler}.
+approach with the \glspl{solution} produced by \mbox{\gls{LLVM} 3.8} -- an
+existing, state-of-the-art \gls{compiler}.
 
 
 \paragraph{Setup}
@@ -163,9 +163,10 @@ We evaluate the impact of being able to select \gls{SIMD.instr}
 %
 \begin{patternList}
   \item \labelPattern{no-simd}
-    one derived from \gls{Hexagon} without \gls{SIMD.instr} \glspl{instruction}
+    one derived from \gls{Hexagon} with no \gls{SIMD.instr} \glspl{instruction}
   \item \labelPattern{with-simd}
-    one with such \glspl{instruction}
+    one with \num{2}- and \num{4}-way \cCode*{add}, \cCode*{sub}, \cCode*{and},
+    and \cCode*{or} \glspl{instruction}
 \end{patternList}.
 
 
@@ -178,8 +179,8 @@ likely not have enough data parallelism for selection of \gls{SIMD.instr}
 anything larger will lead to unreasonably long experiment runtimes.
 %
 But to increase the chance of data parallelism, we also remove all
-\glspl{function} not containing at least two addition, subtraction, logical and,
-or logical or \glspl{instruction}.
+\glspl{function} not containing at least two addition, subtraction, logical-and,
+or logical-or \glspl{instruction}.
 %
 This leaves a pool of \num{221}~\glspl{function}, from which
 \num{20}~\glspl{function} are sampled using the same method as before.
@@ -275,8 +276,8 @@ subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
 %
 In addition, in one of these cases (\cCode*{gl\_read\_alpha}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
-  motion} our approach is able to move the operations to the same block in order
-to implement these using a single \gls{instruction}.
+  motion} our approach is able to move the computations to the same \gls{block}
+and implement these using a single \gls{instruction}.
 
 
 \paragraph{Conclusions}
