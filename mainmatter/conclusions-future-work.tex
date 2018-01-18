@@ -56,7 +56,7 @@ In addition to integrating \gls{global.c} \gls{instruction selection},
   model} also integrates \gls{data copying} and \gls{value reuse}.
 %
 \Gls{data copying} takes the cost of moving data into account, which is crucial
-for avoiding greedy use of \gls{SIMD.instr} \glspl{instruction}.
+for avoiding greedy use of \gls{SIMD.i} \glspl{instruction}.
 %
 This feature is currently ignored by nearly all existing combinatorial
 approaches.
@@ -118,7 +118,7 @@ Hence the approach can handle hardware architectures with rich
 \glspl{instruction set} and generates code of equal or better quality compared
 to the state of the art.
 
-Experiments have also been performed to evaluate the impact of \gls{SIMD.instr}
+Experiments have also been performed to evaluate the impact of \gls{SIMD.i}
 \gls{instruction} selection.
 %
 The results show that, when such \glspl{instruction} are available, the approach
@@ -133,7 +133,7 @@ due to \gls{global code motion} the approach is able to move the computations to
 the same \gls{block} and implement these using a single \gls{instruction}.
 %
 Hence there is sufficient data parallelism to be exploited through selection of
-\gls{SIMD.instr} \glspl{instruction} without having to resort to \gls{loop
+\gls{SIMD.i} \glspl{instruction} without having to resort to \gls{loop
   unrolling}
 %
 Moreover, this exploitation is benefitted from \gls{global code motion}.
@@ -153,8 +153,8 @@ of great interest to evaluate \gls{universal instruction selection} for this
 architecture.
 %
 Like \gls{Hexagon}, \gls{X86} has a rich \gls{instruction set} that is
-especially geared towards \gls{SIMD.instr} \glspl{instruction}, with
-\gls{AVX}-512 as its latest extension~\cite{Intel64:2015}.
+especially geared towards \gls{SIMD.i} \glspl{instruction}, with \gls{AVX}-512
+as its latest extension~\cite{Intel64:2015}.
 %
 The \gls{instruction set} also has many \glspl{instruction}, such as hardware
 loops, whose behavior contains control flow and can therefore not be modeled

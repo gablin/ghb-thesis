@@ -572,11 +572,11 @@ This \gls{constraint} is modeled as
 Depending on the \gls{target machine}, \refEquation{compatible-locations} can
 result in an over-constrained \glsshort{constraint model}.
 %
-For example, in many \glspl{target machine} the \gls{SIMD.instr}
-\glspl{instruction} use a different set of \glspl{register} than the other,
-general \glspl{instruction}.
+For example, in many \glspl{target machine} the \gls{SIMD.i} \glspl{instruction}
+use a different set of \glspl{register} than the other, general
+\glspl{instruction}.
 %
-In such situations, the \glspl{match} derived from the \gls{SIMD.instr}
+In such situations, the \glspl{match} derived from the \gls{SIMD.i}
 \glspl{instruction} and the \glspl{match} derived from the general
 \glspl{instruction} will have non-overlapping \glspl{location} on the same
 \glspl{datum} (that is, \mbox{$\mStores(m_1, d) \cap \mStores(m_2, d) =

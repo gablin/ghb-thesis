@@ -13,7 +13,7 @@ This chapter evaluates how our approach compares against a state-of-the-art
 %
 This is done in \refSection{evaluation-unison-vs-llvm}.
 %
-Since our approach is able to leverage selection of \gls{SIMD.instr}
+Since our approach is able to leverage selection of \gls{SIMD.i}
 \glspl{instruction}, we also evaluate this impact in
 \refSection{evaluation-with-or-without-simds}.
 
@@ -157,13 +157,12 @@ equal or better quality compared to the state of the art for up to medium-sized
 \section{Impact of SIMD instructions}
 \labelSection{evaluation-with-or-without-simds}
 
-We evaluate the impact of being able to select \gls{SIMD.instr}
-\glspl{instruction} by comparing the cost of \glspl{solution} produced from two
-\glspl{pattern set}:
+We evaluate the impact of being able to select \gls{SIMD.i} \glspl{instruction}
+by comparing the cost of \glspl{solution} produced from two \glspl{pattern set}:
 %
 \begin{patternList}
   \item \labelPattern{no-simd}
-    one derived from \gls{Hexagon} with no \gls{SIMD.instr} \glspl{instruction}
+    one derived from \gls{Hexagon} with no \gls{SIMD.i} \glspl{instruction}
   \item \labelPattern{with-simd}
     one with \num{2}- and \num{4}-way \cCode*{add}, \cCode*{sub}, \cCode*{and},
     and \cCode*{or} \glspl{instruction}
@@ -174,7 +173,7 @@ We evaluate the impact of being able to select \gls{SIMD.instr}
 
 When filtering, we again all \glspl{function} that have less than
 \num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
-likely not have enough data parallelism for selection of \gls{SIMD.instr}
+likely not have enough data parallelism for selection of \gls{SIMD.i}
 \glspl{instruction} -- and greater than \num{150}~\glspl{instruction} --
 anything larger will lead to unreasonably long experiment runtimes.
 %
@@ -186,7 +185,7 @@ This leaves a pool of \num{221}~\glspl{function}, from which
 \num{20}~\glspl{function} are sampled using the same method as before.
 %
 In this experiment, we do not apply an upper bound in this case as that may
-prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
+prevent interesting \gls{solution} that make use of \gls{SIMD.i}
 \gls{instruction}.
 
 Note that no \gls{loop unrolling}%
@@ -284,7 +283,7 @@ with significantly less cost than those yielded by \gls{pattern
 The five cases with less cost (\cCode*{debug\_print\_str},
 \cCode*{gl\_read\_alpha}, \cCode*{gx\_curve\_cursor}, \cCode*{mp\_dmul}, and
 \cCode*{zero}), our approach is able to combine pairs of additions or
-subtractions into \num{2}-way \gls{SIMD.instr} \glspl{instruction}.
+subtractions into \num{2}-way \gls{SIMD.i} \glspl{instruction}.
 %
 In addition, in one of these cases (\cCode*{gl\_read\_alpha}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
@@ -295,9 +294,9 @@ and implement these using a single \gls{instruction}.
 \paragraph{Conclusions}
 
 Based on the observations above, we conclude that there is sufficient data
-parallelism to be exploited through selection of \gls{SIMD.instr}
+parallelism to be exploited through selection of \gls{SIMD.i}
 \glspl{instruction} without having to resort to \gls{loop unrolling}.
 %
 In addition, this exploitation is benefitted from \gls{global code motion} as
 that allows computations to be gathered from different \glspl{block} and
-implemented using a single \gls{SIMD.instr} \gls{instruction}.
+implemented using a single \gls{SIMD.i} \gls{instruction}.

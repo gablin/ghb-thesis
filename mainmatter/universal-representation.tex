@@ -883,36 +883,36 @@ appropriate.
 \subsection{Matching SIMD Instructions Efficiently}
 
 Although the algorithm natively supports matching of \glspl{pattern} derived
-from \gls{SIMD.instr} \glspl{instruction}, doing so directly will result in many
+from \gls{SIMD.i} \glspl{instruction}, doing so directly will result in many
 redundant \glspl{match}.
 %
-For example, if a \gls{SIMD.instr} \gls{pattern} consists of $k$ identical
+For example, if a \gls{SIMD.i} \gls{pattern} consists of $k$ identical
 \glspl{operation} and the function contains $n$ such \glspl{operation}, then
 this \gls{pattern} alone will result in \mbox{$n! / (n - k)!$} \glspl{match}.
 %
-However, since all \gls{SIMD.instr} \glspl{instruction} consist of disjoint
+However, since all \gls{SIMD.i} \glspl{instruction} consist of disjoint
 \glspl{pattern} that are symmetric to one another, the order in which the
 \gls{pattern} \glspl{node} are mapped to \gls{function} \glspl{node} does not
 matter and should therefore yield at most $\binom{n}{k}$ \glspl{match}.
 
-To this end, instead of matching the full \gls{SIMD.instr} \gls{pattern} over
-the \gls{UF graph}, we do so only for one of the disjoint \glspl{subgraph} in
-the \gls{pattern}.
+To this end, instead of matching the full \gls{SIMD.i} \gls{pattern} over the
+\gls{UF graph}, we do so only for one of the disjoint \glspl{subgraph} in the
+\gls{pattern}.
 %
 After having found all \glspl{match} for the \gls{subgraph}, we then compute all
 combinations of these \gls{match} and construct for each combination a
-\gls{match} of the full \gls{SIMD.instr} \gls{pattern}.
+\gls{match} of the full \gls{SIMD.i} \gls{pattern}.
 %
 We also ignore combinations that will lead to cyclic data dependencies by
 applying a variant of the method to be described in
 \refSection{forbidding-cyclic-data-dependencies} in the next chapter.
 
-To curb the number of \glspl{match}, we prune away all \gls{SIMD.instr}
+To curb the number of \glspl{match}, we prune away all \gls{SIMD.i}
 \glspl{match} where at least one of its arguments is a constant value.
 %
-This is such values will typically always require the \gls{SIMD.instr}
+This is such values will typically always require the \gls{SIMD.i}
 \gls{instruction} to be preceeded by a copy \gls{instruction}, thereby
-nullifying the benefit of the \gls{SIMD.instr} \gls{instruction}.
+nullifying the benefit of the \gls{SIMD.i} \gls{instruction}.
 
 
 \section{Comparison with Other Sea-of-Nodes IRs}

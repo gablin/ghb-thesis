@@ -290,13 +290,12 @@ In comparison, existing representations only capture data flow.
 
 \subsection{For Combining Instruction Selection and Global Code Motion}
 
-Assume that the \gls{target machine} also has a
-\glsunset{SIMD.instr}\gls{SIMD.instr} \gls{instruction} for addition.\!%
+Assume that the \gls{target machine} also has a \glsunset{SIMD.i}\gls{SIMD.i}
+\gls{instruction} for addition.\!%
 %
 \footnote{%
-  A \glsreset{SIMD.instr}\gls!{SIMD.instr}[ \gls{instruction}] is an
-  \gls{instruction} that executes the same \gls{operation} over multiple sets of
-  input data.%
+  A \glsreset{SIMD.i}\gls!{SIMD.i}[ \gls{instruction}] is an \gls{instruction}
+  that executes the same \gls{operation} over multiple sets of input data.%
 }
 %
 Revisiting the example shown in \refFigure{isel-gcmotion-example}, there are
@@ -306,8 +305,8 @@ four additions in the \gls{program} (\irAdd*{\irVar*{A}}{\irTemp*{2}},
 therefore be executed in parallel.
 %
 Assuming again that all \glspl{instruction} takes one cycle to execute,
-implementing these four additions using a single \gls{SIMD.instr}
-\gls{instruction} would improve performance by almost \SI{19}{\percent}.
+implementing these four additions using a single \gls{SIMD.i} \gls{instruction}
+would improve performance by almost \SI{19}{\percent}.
 %
 This requires that the two additions in block~\irBlock*{b5} be moved to
 block~\irBlock*{b4}, which is the task of \gls{global code motion}.
@@ -321,23 +320,23 @@ detrimental for the \gls{instruction selector}.
 
 \subsection{For Taking Cost of Data Copying Into Account}
 
-Although selecting \gls{SIMD.instr} \glspl{instruction} may significantly
-improve code quality -- like in the previous example -- doing so carelessly may
-also have the opposite effect.
+Although selecting \gls{SIMD.i} \glspl{instruction} may significantly improve
+code quality -- like in the previous example -- doing so carelessly may also
+have the opposite effect.
 %
-Assume, for example, that the \gls{SIMD.instr} \gls{instruction} uses a limited
-set of registers.
+Assume, for example, that the \gls{SIMD.i} \gls{instruction} uses a limited set
+of registers.
 %
 If the other selected \glspl{instruction} cannot directly write to and read from
 these registers, then additional \glspl{instruction} must be emitted to copy the
-values between the general registers and the \gls{SIMD.instr} registers.
+values between the general registers and the \gls{SIMD.i} registers.
 %
 In the case of the program shown in \refFigure{isel-gcmotion-example}, eight
 such \glspl{instruction} would be needed, leading to a slowdown of over
 \SI{31}{\percent}.
 %
 These restrictions must be known by the \gls{instruction selector} to make
-effective use of \gls{SIMD.instr} \glspl{instruction}.
+effective use of \gls{SIMD.i} \glspl{instruction}.
 
 
 \subsection{For Combining Instruction Selection and Block Ordering}
