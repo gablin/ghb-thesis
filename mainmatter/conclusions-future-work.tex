@@ -83,14 +83,14 @@ Hence there is no longer any need for hand-written routines to handle
 To make the approach work in practice, numerous solving techniques have been
 introduced.
 %
-Through experimental evaluation, we have seen that these techniques collectively
-improve solving time up to \printSpeedup{%
+Through experimental evaluation, it has been shown that these techniques
+collectively improve solving time up to \printSpeedup{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }, with a \gls{GMI} of~\printGMI{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean
 }.
 %
-We discovered that two solving techniques
+It was also discovered that two solving techniques
 (\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}) have a
 negative impact on solving time, and rejecting them improves solving time up to
 \printSpeedup{%
@@ -102,7 +102,7 @@ negative impact on solving time, and rejecting them improves solving time up to
 Hence these solving techniques are crucial for scalability, enabling the
 approach to scale up to medium-sized \glspl{function}.
 
-We have experimentally evaluated the approach by comparing the code quality it
+The approach has been experimentally evaluated in comparing the code quality it
 produces for \gls{Hexagon} -- a \gls{DSP} with a rich \gls{instruction set} --
 with that produced by \gls{LLVM} -- a existing, state-of-the-art \gls{compiler}.
 %
@@ -117,11 +117,11 @@ Hence the approach can handle hardware architectures with rich
 \glspl{instruction set} and generates code of equal or better quality compared
 to the state of the art.
 
-We have also experimented with generating code with and without \gls{SIMD.instr}
-\glspl{instruction}.
+Experiments have also been performed to evaluate the impact of \gls{SIMD.instr}
+\gls{instruction} selection.
 %
-When such \glspl{instruction} are available, the approach improves code quality
-up to~\printSpeedup{%
+The results show that, when such \glspl{instruction} are available, the approach
+improves code quality up to~\printSpeedup{%
   \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }, with a \gls{GMI} of~\printGMI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -132,7 +132,10 @@ due to \gls{global code motion} the approach is able to move the computations to
 the same \gls{block} and implement these using a single \gls{instruction}.
 %
 Hence there is sufficient data parallelism to be exploited through selection of
-\gls{SIMD.instr} \glspl{instruction}, and this exploitation is benefitted from
+\gls{SIMD.instr} \glspl{instruction} without having to resort to \gls{loop
+  unrolling}
+
+, and this exploitation is benefitted from
 \gls{global code motion}.
 
 From these results, we conclude that \glsdesc{CP} is a flexible, practical,
