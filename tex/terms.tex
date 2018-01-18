@@ -11,6 +11,7 @@
 %================
 
 \newTerm{addressing mode}
+\newTerm{assembler}
 \newTerm{assembly code}
 \newAcronym{AST}%
            {abstract syntax tree}%
@@ -19,10 +20,12 @@
 \newTerm{block ordering}
 \newTerm{bootstrapping}
 \newTerm{bundling}
+\newTerm{byte code}
 \newTerm{callee}
 \newTerm{caller}
 \newTerm{calling convention}
 \newTerm{code generation}
+\newTerm{code generator}
 \newTerm[integrated.cg]{integrated}[parent={code generation}]
 \newTerm[interpretative.cg]{interpretative}[parent={code generation}]
 \newTerm{common subexpression elimination}
@@ -40,6 +43,7 @@
 \newTerm{if-conversion}
 \newTerm{instruction compaction}
 \newTerm{instruction selection}
+\newTerm{JIT compilation}[first={JIT (just-in-time) compilation}]
 \newTerm[local.is]{local}[parent={instruction selection}]
 \newTerm[global.is]{global}[parent={instruction selection}]
 \newTerm{instruction selector}
@@ -49,10 +53,13 @@
 \newTerm{issue slot}
 \newTerm{live range}
 \newTerm{loop unrolling}
+\newTerm{machine code}
 \newTerm{middle-end}[see={optimizer}]
 \newTerm{optimizer}[see={middle-end}]
+\newTerm{parse tree}
 \newTerm{peephole optimization}
 \newTerm{peephole optimizer}
+\newTerm{refactoring}
 \newTerm{register allocation}
 \newTerm[local.ra]{local}[parent={register allocation}]
 \newTerm[global.ra]{global}[parent={register allocation}]
@@ -61,6 +68,8 @@
 \newTerm{saturation arithmetic}
 \newAcronym{SSA}{static single assignment}
 \newTerm{status flag}
+\newTerm{syntactic analysis}
+\newTerm{superoptimizer}
 \newTerm{value reuse}[user1={reuse}]
 
 \newTerm{basic block}[see={block}]
@@ -84,6 +93,7 @@
 \newAcronym{AVX}{Advanced Vector Extensions}[see={Intel}]
 \newAcronym{CISC}{complex instruction-set computer}
 \newTerm{Cortex-M7}[see={ARM}]
+\newTerm{DEC-10}
 \newAcronym{DSP}{digital signal processor}
 \newTerm{Hexagon}
 \newTerm{IBM}
@@ -98,17 +108,22 @@
 \newTerm{machine description}
 \newToolTerm{MediaBench}
 \newTerm{MIPS}
+\newTerm{PDP-11}
+\newTerm{PowerPC}
 \newTerm{register}
 \newTerm{register class}%
         [plural={register classes}, user1={class}, user2={classes}]
 \newTerm[spilling.r]{spilling}[parent={register}, user1={spill}, user2={spills}]
 \newAcronym{RISC}{reduced instruction-set computer}
+\newTerm{Sparc}
+\newToolTerm[SPECint 2000]{SPECint~2000}[sort={SPECint 2000}]
 \newAcronym{SSE}{Streaming SIMD Extensions}[see={Intel}]
 \newTerm{target machine}[user1={target}]
 \newTerm{temporary}[plural={temporaries}]
 \newTerm[virtual.temp]{virtual}[parent={temporary}]
 \newTerm{TI}
 \newTerm{TMS320C55x}[see={TI}]
+\newTerm{VAX}
 \newAcronym{VLIW}{very long instruction word}
 \newTerm{X86}[see={Intel}]
 
@@ -322,25 +337,44 @@
 %===============
 
 \newTerm{action}
+\newTerm{affix grammar}
+\newTerm{attribute}
+\newTerm[inherited.a]{inherited}[parent={attribute}]
+\newTerm[synthesized.a]{synthesized}[parent={attribute}]
+\newTerm{attribute grammar}
+\newAcronym{BNF}{Backus-Naur form}
 \newTerm{context-free grammar}
 \newTerm{grammar}[see={machine grammar}]
+\newTerm[ambiguous.g]{ambiguous}[parent={grammar}]
 \newTerm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
+\newTerm{LR parser}
+\newTerm{LR parsing}
 \newTerm{machine grammar}[see={grammar}]
 \newTerm{nonterminal}
+\newTerm{predicate}
 \newTerm{production}
+\newTerm{production rule}[see={production}]
+\newTerm{reduce-reduce conflict}
 \newTerm{rule}
 \newTerm[base.r]{base}[parent={rule}]
 \newTerm[chain.r]{chain}[parent={rule}]
 \newTerm[complex.r]{complex}[parent={rule}]
 \newTerm[proxy.r]{proxy}[parent={rule}]
+\newTerm[rewrite.r]{rewrite}[parent={rule}]
 \newTerm[simple.r]{simple}[parent={rule}]
 \newTerm[split.r]{split}[parent={rule}]
 \newTerm{rule pattern}[user1={pattern}]
 \newTerm{rule reduction}
 \newTerm{rule result}[user1={result}]
+\newTerm{semantic blocking}
+\newTerm{shift}
+\newTerm{shift-reduce conflict}
 \newTerm{state}
 \newTerm{state table}
+\newTerm{symbol}
+\newTerm{syntactic blocking}
 \newTerm{terminal}
+\newTerm{tree parsing}
 
 
 %==================
@@ -387,6 +421,8 @@
         {interdependent}%
         [parent={instruction characteristic}]
 
+\newTerm{offline cost analysis}
+
 \newTerm{block DAG}[user1={block}]
 \newTerm{control-flow edge}[user1={control-flow}]
 \newTerm{control-flow graph}[user1={control-flow}]
@@ -412,53 +448,118 @@
 \newTerm{pattern graph}[see={pattern}]
 \newTerm{pattern tree}[see={pattern}]
 \newTerm{pattern matching}[user3={pattern-matching}, see={matching}]
+\newTerm{pattern matcher}
 \newTerm{pattern selection}[see={selection}]
+\newTerm[goal-driven.ps]{goal-driven}[parent={pattern selection}]
 \newTerm[optimal.ps]{optimal}[parent={pattern selection}]
 \newTerm{pattern set}
 \newTerm{sea-of-nodes IR}
 \newTerm{selection}[see={pattern selection}]
 \newTerm{SSA graph}
 
+\newTerm[AB pruning]{$\alpha$-$\beta$~pruning}
+\newTerm{answer set programming}
+\newTerm{ant colony optimization}
+\newTerm[AStar search]{A$^{*}$~search}[sort={A* search}]
+\newTerm{chaining graph}
+\newTerm{choice function}
+\newTerm{chromosome}[see={gene}]
 \newTerm{Click-Paleczny graph}
+\newTerm[CO graph]{CO~graph}[first={connection-operation (CO) graph}]
+\newTerm{coding skeleton}
+\newTerm{combiner}
+\newTerm{conversion pattern}
+\newTerm{cookie}
 \newTerm{Davidson-Fraser approach}
+\newTerm{discrimination net}
+\newTerm[d-LR graph]{$\delta$-LR~graph}
+\newTerm[d-UI LR graph]{$\delta$-UI~LR~graph}
+\newTerm{equational logic}
 \newTerm{expand procedure}
-\newTerm{finite state automaton}%
-        [plural={finite state automata}, see={state machine}]
-\newTerm{finite tree automaton}[plural={finite tree automata}]
+\newTerm{expander}
+\newTerm{gene}
+\newTerm{Glanville-Graham approach}
+\newTerm[LR graph]%
+        {LR~graph}%
+        [first={local rewrite~(LR) graph}]
+\newTerm[UI LR graph]%
+        {UI~LR~graph}%
+        [first={uniquely invertable~(UI) LR~graph}]
 \newTerm{macro}
 \newTerm{macro expander}[user3={macro-expan}]% The short term is without the
                                              % ending 'sion' in order to be used
                                              % in words like 'expanding'.
 \newTerm{maximum munch}
+\newTerm{machine invariant}
+\newTerm{machine operation}
+\newTerm{means-end analysis}
+\newTerm{microcode}
+\newTerm{microcode generation}
+\newTerm{Polish notation}
+\newTerm{parser cactus}[plural={parser cactuses}]
+\newAcronym{PAS}{preferred attribute set}
 \newTerm{product automaton}[plural={product automata}]
 \newTerm{pushdown automaton}[plural={pushdown automata}]
+\newTerm{recognizer}
+\newTerm{region node}
+\newTerm{rewriting strategy}
+\newTerm{semantic comparator}
+\newTerm{semantic primitive}
+\newTerm{semantic qualifier}
 \newTerm[SLM instruction]%
         {SLM~instruction}%
         [first={source language machine (SLM) instruction}]
-\newTerm{state machine}[see={finite state automaton}]
+\newTerm{T-operator}
 \newTerm{template}
+\newTerm{tile}
+\newTerm{tree rewriting}
 \newTerm{tree series transducer}
+\newTerm{finite tree automaton}[plural={finite tree automata}]
+\newTerm{finite state automaton}%
+        [plural={finite state automata}, see={state machine}]
+\newTerm{quantifier-free bit-vector logic}
+\newTerm{state machine}[see={finite state automaton}]
 
+\newAcronym{ACK}{Amsterdam Compiler Kit}
+\newAcronym{AMOP}{abstract machine operation}
 \newAcronym{BURS}{bottom-up rewriting system}
 \newAcronym{CGPL}{Code Generator Preprocessor Language}
+\newAcronym{FHC}{Fortran H Compiler}
 \newAcronym{FRT}%
            {factorized register transfer}%
            [firstplural={factorized register transfers~(FRTs)}]
+\newAcronym{GCC}{GNU Compiler Collection}
 \newAcronym{ICL}{Interpretive Coding Language}
+\newAcronym{ISFG}{internal signal-flow graph}
 \newAcronym{MIML}{Machine-Independent Macro Language}
 \newAcronym{OMML}{Object Machine Macro Language}
+\newAcronym{PCC}{Portable C Compiler}
+\newAcronym{PO}{Peephole Optimizer}
+\newAcronym{PQCC}{Production Quality Compiler-Compiler}
+\newAcronym{RT}{register transfer}
+\newTerm[unobservable.RT]{unobservable}[parent={RT}]
+\newAcronym{RTL}{register transfer list}
 \newAcronym{TEL}{Template Language}
 \newAcronym{XL}{Extensible Language}
+\newAcronym{YC}{Y Compiler}
 
+\newToolTerm{Bliss-11}
 \newToolTerm{Dmacs}
 \newToolTerm{Firm}
-\newToolTerm{Glasgow}
+\newToolTerm{Gburg}
 \newToolTerm{GCL}
+\newToolTerm{Glasgow}
+\newToolTerm{GNU lightning}
 \newToolTerm{LAD}
 \newToolTerm{Simcmp}
+\newToolTerm{Superoptimizer}
 \newToolTerm{Ucode}
 \newToolTerm{Ugen}
+\newToolTerm{Unix}
+\newToolTerm{Vcode}
+\newToolTerm{Vista}
 \newToolTerm{VF2}
+\newToolTerm{ZephyrVPO}
 
 
 %================
@@ -466,6 +567,20 @@
 %================
 
 \newTerm{C}
+\newTerm{Haskell}
+\newTerm{Java}
+\newTerm[lambdaRTL]{$\lambda$-RTL}
+\newAcronym{ML}{Metalanguage}
+\newTerm{Omniware}
 \newTerm{Pascal}
 \newTerm{PL/1}
 \newTerm{PL/C}
+\newTerm{Prolog}
+\newTerm{Smalltalk-80}
+
+
+%=============
+% OTHER TERMS
+%=============
+
+\newTerm{steganography}

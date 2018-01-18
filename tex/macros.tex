@@ -120,6 +120,10 @@
 \newcommand{\refPage}[1]{p.\thinspace\pageref{page:#1}}
 
 % Other text commands
+\NewDocumentCommand{\etal}{s}{%
+  et al%
+  \IfBooleanF{#1}{.\ }%
+}
 \NewDocumentCommand{\etc}{s}{%
   etc%
   \IfBooleanF{#1}{.\ }%
@@ -1192,6 +1196,15 @@
 % Commands for grammars
 \NewDocumentCommand{\mNT}{mO{}}{%
   \mathit{#1}_{#2}%
+}
+\NewDocumentCommand{\mAttr}{m}{%
+  \mathit{#1}%
+}
+\NewDocumentCommand{\mPredicate}{m}{%
+  \mathit{#1}%
+}
+\NewDocumentCommand{\mAction}{m}{%
+  \mathit{#1}%
 }
 
 % Commands used for algorithms
