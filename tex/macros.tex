@@ -807,21 +807,32 @@
 
 % Commands for introducing terms and acronyms
 \NewDocumentCommand{\newTerm}{omO{}}{%
-  \IfNoValueTF{#1}{%
-    \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
-  }{%
+  \IfValueTF{#1}{%
     \newglossaryentry{#1}{name={#2}, description={#2}, #3}%
+  }{%
+    \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
+  }%
+}
+\NewDocumentCommand{\newTermWithAcronym}{ommO{}}{%
+  \IfValueTF{#1}{%
+    \newTerm[#1]{#2}[description={#3}, first={#3 (#2)}, #4]%
+  }{%
+    \newTerm{#2}[description={#3}, first={#3 (#2)}, #4]%
   }%
 }
 \NewDocumentCommand{\newAcronym}{ommO{}}{%
-  \IfNoValueTF{#1}{%
-    \newacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
-  }{%
+  \IfValueTF{#1}{%
     \newacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
+  }{%
+    \newacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
   }%
 }
-\NewDocumentCommand{\newToolTerm}{m}{%
-  \newTerm[#1]{\toolFont{#1}}[sort={#1}]%
+\NewDocumentCommand{\newToolTerm}{omO{}}{%
+  \IfValueTF{#1}{%
+    \newTerm[#1]{\toolFont{#2}}[sort={#2}, #3]%
+  }{%
+    \newTerm[#2]{\toolFont{#2}}[sort={#2}, #3]%
+  }%
 }
 
 % Commands for referring to a short version of a term or acronym
@@ -972,8 +983,13 @@
 \newcommand{\codeFont}{\ttfamily}
 \newcommand{\codeInText}[1]{{\codeFont\relsize{-.5}#1}}
 \lstset{basicstyle=\codeFont\footnotesize}
-\newcommand{\cCode}[1]{\mbox{\texttt{#1}}}
-\newcommand{\cVar}[1]{\cCode{#1}}
+\newcommand{\cCode}[1]{\mbox{\codeFont#1}}
+\NewDocumentCommand{\cVar}{mo}{%
+  \cCode{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+}
+\NewDocumentCommand{\cVarInText}{mo}{%
+  \codeInText{#1\IfValueTF{#2}{$_{\text{#2}}$}{}}%
+}
 \newcommand{\irFont}{\ttfamily}
 \newcommand{\irCode}[1]{\mbox{\irFont#1}}
 \NewDocumentCommand{\irVar}{mo}{%
