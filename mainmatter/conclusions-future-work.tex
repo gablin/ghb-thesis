@@ -146,8 +146,57 @@ competitive, and extensible approach for combining \gls{global.is}
 \section{Future Work}
 \labelSection{future-work}
 
-\todo{apply approach on X86 and AVX}
+\paragraph{Selecting Instructions for X86}
 
-\todo{integrate recomputation}
+Since \gls{X86} is arguably the most common processor architecture today, it is
+of great interest to evaluate \gls{universal instruction selection} for this
+architecture.
+%
+Like \gls{Hexagon}, \gls{X86} has a rich \gls{instruction set} that is
+especially geared towards \gls{SIMD.instr} \glspl{instruction}, with
+\gls{AVX}-512 as its latest extension~\cite{Intel64:2015}.
+%
+The \gls{instruction set} also has many \glspl{instruction}, such as hardware
+loops, whose behavior contains control flow and can therefore not be modeled
+using other representations.
+%
+In addition, most modern \glspl{compiler} are highly optimized for generating
+code for this architecture, which means that even a minor improvement in code
+quality is considered a significant improvement.
 
-\todo{integration of instruction scheduling and register allocation}
+
+\paragraph{Integrating Recomputation}
+
+As discussed in \refChapter{constraint-model}, the \gls{constraint model} does
+not support \gls{recomputation} -- the task of recomputing values appearing in
+common subexpressions instead of reusing them -- which can have negative impact
+on code quality.
+%
+Moreover, \gls{recomputation} is essential for supporting \gls{if-conversion} --
+the task of converting if-then-else statements into straight-line \gls{assembly
+  code}) -- which can improve code quality.
+
+However, adapting the \gls{constraint model} to integrate \gls{recomputation} is
+a complex problem since many of the solving techniques rely on the fact that
+every \gls{operation} and \gls{datum} is \gls{cover}[ed] respectively
+\gls{define.d}[d] exactly once.
+%
+Hence further research is needed for either reformulating the solving techniques
+or redesigning the \glsshort{constraint model}.
+
+
+\paragraph{Integrating Instruction Scheduling and Register Allocation}
+
+It is well known that the three main problems of \gls{code generation} --
+\gls{instruction selection}, \gls{instruction scheduling}, and \gls{register
+  allocation} -- are interconnected with one another.
+%
+Therefore, in order to generate truly optimal code one must solve all these
+problems in unison.
+
+Such extensions of the \gls{constraint model} have already been proposed, but
+they lack the necessary model refinements and solving techniques that are
+crucial for making the \glsshort{constraint model} scale beyond anything larger
+but the smallest of \glspl{function}.
+%
+Hence further research is needed for making such an approach work in practice.
