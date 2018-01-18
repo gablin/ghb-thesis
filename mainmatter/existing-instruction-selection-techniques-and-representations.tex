@@ -116,7 +116,7 @@ means a value that can be accessed through the \gls{assembly code}.
 This includes all \glspl{instruction} that implement a single operation (such as
 addition, multiplication, and bit operations), but it also includes more
 complicated \glspl{instruction} that implement several operations (such as
-memory operations with complicated addressing modes).
+memory operations with complicated \glspl{addressing mode}).
 %
 As long as the observable output constitutes a single value, a
 \gls{single-output.ic} \gls{instruction} can be arbitrarily complex.
@@ -228,8 +228,8 @@ appear when they are combined with other \glspl{instruction} in certain ways.
 %
 An example includes an \instrCode{add}~\gls{instruction}, again from the
 \gls{TMS320C55x} \gls{instruction set}, which cannot be combined with an
-\instrCode{rpt}~instruction if a particular addressing mode is used for the
-\instrCode{add}~instruction.
+\instrCode{rpt}~instruction if a particular \gls{addressing mode} is used for
+the \instrCode{add}~instruction.
 
 \Gls{interdependent.ic} \glspl{instruction} are rare and can typically be found
 in complex, heterogeneous architectures such as \glspl{DSP}.
@@ -549,7 +549,7 @@ case whereas \glspl{nonterminal} start with a capital letter and are set in
 italics.
 %
 A \gls!{rule} describes the behavior of an \gls{instruction} and consists of a
-\gls{production}, a non-negative cost, and an action.
+\gls{production}, a non-negative cost, and an \gls{action}.
 %
 \Glspl!{production} describe how to derive \glspl{nonterminal}, and are written
 as
@@ -725,8 +725,8 @@ For example, rewriting the \gls{grammar} shown in
 \refTable{grammar-rules-example} into \gls{normal form.g} results in the
 \gls{grammar} shown in \refTable{normal-form-grammar-example}.
 %
-Note that the new \glspl{rule} have zero cost and no action as these are only
-intermediary steps towards enabling reduction of the original \gls{rule}.
+Note that the new \glspl{rule} have zero cost and no \gls{action} as these are
+only intermediary steps towards enabling reduction of the original \gls{rule}.
 
 Since all \glspl{production} in a \glsshort{normal form.g} \gls{grammar} have at
 most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial

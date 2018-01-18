@@ -525,8 +525,8 @@ values produced within an \gls{instruction} and can only be accessed by this
 very \gls{instruction}.
 %
 For example, the address computed by a memory load \gls{instruction} with a
-sophisticated addressing mode is produced within the pipeline and thus cannot be
-reused by other \glspl{instruction}.
+sophisticated \gls{addressing mode} is produced within the pipeline and thus
+cannot be reused by other \glspl{instruction}.
 %
 A value which is not an \gls{intermediate value} is called an \gls!{exterior
   value}, meaning it can be accessed by other \glspl{instruction}.
@@ -2018,8 +2018,8 @@ The \gls{function} performs two memory stores using the same address
 value~\irVar*{a} (\refFigure{recomputation-example-ir}).
 %
 If the \gls{target machine} provides a memory \gls{instruction} with
-base-plus-index addressing mode (that is, the address to be used is the sum of
-the values appearing in a base and an index \gls{register}), then no
+base-plus-index \gls{addressing mode} (that is, the address to be used is the
+sum of the values appearing in a base and an index \gls{register}), then no
 add~\gls{instruction} is needed for computing~\irVar*{a}.
 %
 In the context of \gls{instruction selection}, this means letting the
