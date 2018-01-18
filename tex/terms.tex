@@ -12,9 +12,9 @@
 
 \newTerm{addressing mode}
 \newTerm{assembly code}
-\newTerm{AST}%
-        [first={abstract syntax tree~(AST)},
-         firstplural={abstract syntax trees~(ASTs)}]
+\newAcronym{AST}%
+           {abstract syntax tree}%
+           [firstplural={abstract syntax trees~(ASTs)}]
 \newTerm{backend}
 \newTerm{block ordering}
 \newTerm{bootstrapping}
@@ -45,9 +45,7 @@
 \newTerm{instruction selector}
 \newTerm{instruction scheduler}
 \newTerm{instruction scheduling}
-\newTerm{IR}%
-        [description={intermediate representation},
-         first={intermediate representation~(IR)}]
+\newAcronym{IR}{intermediate representation}
 \newTerm{issue slot}
 \newTerm{live range}
 \newTerm{loop unrolling}
@@ -61,8 +59,7 @@
 \newTerm{register allocator}
 \newTerm{recomputation}[user1={recompute}]
 \newTerm{saturation arithmetic}
-\newTerm{SSA}%
-        [first={static single assignment~(SSA)}]
+\newAcronym{SSA}{static single assignment}
 \newTerm{status flag}
 \newTerm{value reuse}[user1={reuse}]
 
@@ -106,7 +103,7 @@
         [plural={register classes}, user1={class}, user2={classes}]
 \newTerm[spilling.r]{spilling}[parent={register}, user1={spill}, user2={spills}]
 \newAcronym{RISC}{reduced instruction-set computer}
-\newTerm{SSE}[see={Intel}]
+\newAcronym{SSE}{Streaming SIMD Extensions}[see={Intel}]
 \newTerm{target machine}[user1={target}]
 \newTerm{temporary}[plural={temporaries}]
 \newTerm[virtual.temp]{virtual}[parent={temporary}]
@@ -258,9 +255,7 @@
 \newTerm{constraint solver}[user1={solver}, see={solver}]
 \newTerm{constraint store}[see={store}]
 \newTerm[stronger.cs]{stronger}[parent={constraint store}]
-\newTerm{CP}%
-        [description={constraint programming},
-         first={constraint programming~(CP)}]
+\newAcronym{CP}{constraint programming}
 \newTerm{diffn constraint}[see={no-overlap constraint}]
 \newTerm{domain}
 \newTerm{extensional constraint}[see={table constraint}]
@@ -300,24 +295,23 @@
 % OP RESEARCH TERMS
 %===================
 
-\newTerm{MIS}%
-        [first={maximal independent set~(MIS)},
-         firstplural={maximal independent sets~(MISs)}]
-\newTerm{MWIS}%
-        [first={maximal/minimal weighted independent set~(MWIS)},
-         firstplural={maximal/minimal weighted independent sets (MWISs)}]
+\newAcronym{MIS}%
+           {maximal independent set}%
+           [firstplural={maximal independent sets~(MISs)}]
+\newAcronym{MWIS}%
+           {maximal/minimal weighted independent set}%
+           [firstplural={maximal/minimal weighted independent sets~(MWISs)}]
 
-\newTerm{PBQP}[first={partitioned Boolean quadratic problem~(PBQP)}]
-\newTerm{QAP}[first={quadratic assignment problem~(QAP)}]
+\newAcronym{PBQP}{partitioned Boolean quadratic problem}
+\newAcronym{QAP}{quadratic assignment problem}
 
-\newTerm{IP}[first={integer programming~(IP)}]
+\newAcronym{IP}{integer programming}
 \newTerm{Horn clause}
 \newTerm{integer linear programming}
 
-\newTerm{SAT}[first={Boolean satisfiability~(SAT)}]
+\newAcronym{SAT}{Boolean satisfiability}
 \newTerm{literal}
-\newTerm{LCG}[description={lazy clause generation},
-              first={lazy clause generation (LCG)}]
+\newAcronym{LCG}{lazy clause generation}
 \newTerm{implication graph}
 \newTerm{no-good}
 \newTerm{unit propagation}
@@ -349,11 +343,19 @@
 \newTerm{terminal}
 
 
-%================
-% LANGUAGE TERMS
-%================
+%==================
+% STATISTICS TERMS
+%==================
 
-\newTerm{C}
+\newTerm{baseline}
+\newAcronym{CI}{confidence interval}
+\newAcronym{CV}{coefficient of variation}
+\newAcronym{GMI}{geometric mean improvement}
+\newTerm[{k-means clustering}]{$k$-means clustering}
+\newTerm{percentile bootstrapping}
+\newTerm{speedup}
+\newTerm{subject}
+\newTerm{zero-centered normalization}
 
 
 %====================
@@ -417,57 +419,53 @@
 \newTerm{selection}[see={pattern selection}]
 \newTerm{SSA graph}
 
-\newTerm{BURS}[first={bottom-up rewriting system (BURS)}]
-\newTerm{CGPL}[first={Code Generator Preprocessor Language (CGPL)}]
 \newTerm{Click-Paleczny graph}
 \newTerm{Davidson-Fraser approach}
-\newToolTerm{Dmacs}
 \newTerm{expand procedure}
-\newToolTerm{Firm}
-\newTerm{FRT}%
-        [first=factorized register transfer (FRT),
-         firstplural=factorized register transfers (FRTs)]
-\newToolTerm{Glasgow}
-\newToolTerm{GCL}
-\newTerm{ICL}[first={Interpretive Coding Language (ICL)}]
-\newToolTerm{LAD}
+\newTerm{finite state automaton}%
+        [plural={finite state automata}, see={state machine}]
+\newTerm{finite tree automaton}[plural={finite tree automata}]
 \newTerm{macro}
 \newTerm{macro expander}[user3={macro-expan}]% The short term is without the
                                              % ending 'sion' in order to be used
                                              % in words like 'expanding'.
 \newTerm{maximum munch}
-\newTerm{MIML}[first={Machine-Independent Macro Language (MIML)}]
-\newTerm{OMML}[first={Object Machine Macro Language (OMML)}]
-\newToolTerm{Pascal}
-\newToolTerm{PL/1}
-\newToolTerm{PL/C}
-\newToolTerm{Simcmp}
+\newTerm{product automaton}[plural={product automata}]
+\newTerm{pushdown automaton}[plural={pushdown automata}]
 \newTerm[SLM instruction]%
         {SLM~instruction}%
         [first={source language machine (SLM) instruction}]
-\newTerm{TEL}[first={Template Language (TEL)}]
+\newTerm{state machine}[see={finite state automaton}]
 \newTerm{template}
+\newTerm{tree series transducer}
+
+\newAcronym{BURS}{bottom-up rewriting system}
+\newAcronym{CGPL}{Code Generator Preprocessor Language}
+\newAcronym{FRT}%
+           {factorized register transfer}%
+           [firstplural={factorized register transfers~(FRTs)}]
+\newAcronym{ICL}{Interpretive Coding Language}
+\newAcronym{MIML}{Machine-Independent Macro Language}
+\newAcronym{OMML}{Object Machine Macro Language}
+\newAcronym{TEL}{Template Language}
+\newAcronym{XL}{Extensible Language}
+
+\newToolTerm{Dmacs}
+\newToolTerm{Firm}
+\newToolTerm{Glasgow}
+\newToolTerm{GCL}
+\newToolTerm{LAD}
+\newToolTerm{Simcmp}
 \newToolTerm{Ucode}
 \newToolTerm{Ugen}
 \newToolTerm{VF2}
-\newTerm{XL}{first={Extensible Language (XL)}}
 
-\newTerm{product automaton}[plural={product automata}]
-\newTerm{pushdown automaton}[plural={pushdown automata}]
-\newTerm{tree series transducer}
-\newTerm{finite tree automaton}%
-        [plural={finite tree automata}]
-\newTerm{finite state automaton}%
-        [plural={finite state automata}, see={state machine}]
-\newTerm{state machine}[see={finite state automaton}]
 
-\newTerm[{k-means clustering}]{$k$-means clustering}
+%================
+% LANGUAGE TERMS
+%================
 
-\newTerm{baseline}
-\newTerm{CI}[first={confidence interval (CI)}]
-\newTerm{CV}[first={coefficient of variation (CV)}]
-\newTerm{GMI}[first={geometric mean improvement (GMI)}]
-\newTerm{percentile bootstrapping}
-\newTerm{speedup}
-\newTerm{subject}
-\newTerm{zero-centered normalization}
+\newTerm{C}
+\newTerm{Pascal}
+\newTerm{PL/1}
+\newTerm{PL/C}

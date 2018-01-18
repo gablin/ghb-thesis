@@ -93,9 +93,17 @@ placed (see \refEquation{block-of-function}).
 
 \subsection{Handling VLIW Architectures}
 
-If the \gls{target machine} is a \gls{VLIW} architecture, then special care must
-be taken to ensure that the resource capacities are not exceeded by the
-\glspl{instruction}.
+If the \gls{target machine} is a \glsunset{VLIW}\gls{VLIW} architecture,\!%
+%
+\footnote{%
+  A \glsreset{VLIW}\gls!{VLIW} architecture is a processor where multiple
+  \glspl{instruction} can be executed in parallel.
+  %
+  The schedule is static and thus computed by the \gls{compiler}.%
+}
+%
+then special care must be taken to ensure that the resource capacities are not
+exceeded by the \glspl{instruction}.
 %
 In this context, a resource capacity could be the number of \glspl{issue slot}
 (that is, the number of \glspl{instruction} that can run in parallel; this is

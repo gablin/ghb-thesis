@@ -290,12 +290,13 @@ In comparison, existing representations only capture data flow.
 
 \subsection{For Combining Instruction Selection and Global Code Motion}
 
-Assume that the \gls{target machine} also has a \gls{SIMD.instr}
-\gls{instruction} for addition.\!%
+Assume that the \gls{target machine} also has a
+\glsunset{SIMD.instr}\gls{SIMD.instr} \gls{instruction} for addition.\!%
 %
 \footnote{%
-  A \gls!{SIMD.instr}[ \gls{instruction}] is an \gls{instruction} that executes
-  the same \gls{operation} over multiple sets of input data.%
+  A \glsreset{SIMD.instr}\gls!{SIMD.instr}[ \gls{instruction}] is an
+  \gls{instruction} that executes the same \gls{operation} over multiple sets of
+  input data.%
 }
 %
 Revisiting the example shown in \refFigure{isel-gcmotion-example}, there are

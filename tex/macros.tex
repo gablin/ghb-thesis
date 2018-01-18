@@ -828,18 +828,11 @@
     \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
   }%
 }
-\NewDocumentCommand{\newTermWithAcronym}{ommO{}}{%
+\NewDocumentCommand{\newAcronym}{ommO{}}{%
   \IfValueTF{#1}{%
     \newTerm[#1]{#2}[description={#3}, first={#3 (#2)}, #4]%
   }{%
     \newTerm{#2}[description={#3}, first={#3 (#2)}, #4]%
-  }%
-}
-\NewDocumentCommand{\newAcronym}{ommO{}}{%
-  \IfValueTF{#1}{%
-    \newacronym[sort={#2}, indextext={#2}, #4]{#1}{#2}{#3}%
-  }{%
-    \newacronym[sort={#2}, indextext={#2}, #4]{#2}{#2}{#3}%
   }%
 }
 \NewDocumentCommand{\newToolTerm}{omO{}}{%

@@ -34,8 +34,6 @@ If there exists more than one \gls{edge} between the same pair of \glspl{node}
 then the \gls{graph} is a \gls!{multigraph}, otherwise it is a \gls!{simple.g}
 \gls{graph}.
 
-\glsreset{DAG}
-
 A sequence of \glspl{edge} that describe how to get from one \gls{node} to
 another is called a \gls!{path}.
 %
@@ -56,7 +54,7 @@ Two \glspl{node}~$n$ and~$m$, where \mbox{$n \neq m$}, are said to be
 \gls{path} is of length~1 then $n$ and $m$ are also \gls!{adjacent.n}.
 %
 A \gls{directed.g} \gls{graph} containing no \glspl{cycle} is known as a
-\gls!{DAG}.
+\glsreset{DAG}\gls!{DAG}.
 %
 An \gls{undirected.g} \gls{graph} is \gls!{connected.g} if and only if there
 exists a \gls{path} for every distinct pair of \glspl{node}.
