@@ -189,6 +189,18 @@ In this experiment, we do not apply an upper bound in this case as that may
 prevent interesting \gls{solution} that make use of \gls{SIMD.instr}
 \gls{instruction}.
 
+Note that no \gls{loop unrolling}%
+%
+\footnote{%
+  \Gls!{loop unrolling} is the task of duplicating the body of a loop in order
+  to increase data parallelism.
+  %
+  However, this is done at the cost of increased code size.%
+}
+%
+is performed on any of the \glspl{function} prior to \gls{instruction
+  selection}.
+
 
 \paragraph{Results}
 
@@ -284,7 +296,7 @@ and implement these using a single \gls{instruction}.
 
 Based on the observations above, we conclude that there is sufficient data
 parallelism to be exploited through selection of \gls{SIMD.instr}
-\glspl{instruction}, resulting in significantly better code quality.
+\glspl{instruction} without having to resort to \gls{loop unrolling}.
 %
 In addition, this exploitation is benefitted from \gls{global code motion} as
 that allows computations to be gathered from different \glspl{block} and
