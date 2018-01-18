@@ -11,6 +11,13 @@ LATEXMK  := latexmk -recorder -use-make -deps
 OKAY_TEXLIVE_VERSION := 2016
 DEPS_DIR := .deps
 
+GEN_PRIN_TIMELINE_SCRIPT := scripts/generate-principles-timeline
+GEN_PRIN_TIMELINE_STYLE_FILE := \
+    figures/existing-isel-techniques-and-reps/principles-timeline-styles.tex
+PRIN_TIMELINE_FILE := \
+    figures/existing-isel-techniques-and-reps/principles-timeline.tex
+BIB_FILE := references.bib
+
 -include $(DEPS_DIR)/$(SRCTEX).d
 
 $(DEPS_DIR):
@@ -73,9 +80,7 @@ check-environment:
 	fi
 	@echo "OK"
 
-figures/existing-isel-techniques-and-reps/principles-timeline.tex: \
-  references.bib \
-  scripts/generate-principles-timeline \
-  figures/existing-isel-techniques-and-reps/principles-timeline-styles.tex
-	scripts/generate-principles-timeline references.bib \
-		> figures/existing-isel-techniques-and-reps/principles-timeline.tex
+$(PRIN_TIMELINE_FILE): $(BIB_FILE) \
+                       $(GEN_PRIN_TIMELINE_SCRIPT) \
+                       $(GEN_PRIN_TIMELINE_STYLE_FILE)
+	$(GEN_PRIN_TIMELINE_SCRIPT) $(BIB_FILE) > $@
