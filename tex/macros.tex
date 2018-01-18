@@ -1044,9 +1044,10 @@
 \newcommand{\irBrText}{br}
 \NewDocumentCommand{\irBr}{ms}{%
   \mbox{%
-    {%
-      \bfseries%
-      \IfBooleanTF{#1}{\irCode*{\irBrText}}{\irCode{\irBrText}}%
+    \IfBooleanTF{#1}{%
+      \irCode*{\bfseries\irBrText}%
+    }{%
+      \irCode{\bfseries\irBrText}%
     }
     \IfBooleanTF{#1}{\irBlock*{#2}}{\irBlock{#2}}%
   }%
@@ -1054,9 +1055,10 @@
 \newcommand{\irCallText}{call}
 \NewDocumentCommand{\irCall}{sm}{%
   \mbox{%
-    {%
-      \bfseries%
-      \IfBooleanTF{#1}{\irCode*{\irCallText}}{\irCode{\irCallText}}%
+    \IfBooleanTF{#1}{%
+      \irCode*{\bfseries\irCallText}%
+    }{%
+      \irCode{\bfseries\irCallText}%
     }
     \IfBooleanTF{#1}{\irCode*{#2}}{\irCode{#2}}%
   }%
@@ -1064,9 +1066,10 @@
 \newcommand{\irCondBrText}{c.br}
 \NewDocumentCommand{\irCondBr}{smmm}{%
   \mbox{%
-    {%
-      \bfseries%
-      \IfBooleanTF{#1}{\irCode*{\irCondBrText}}{\irCode{\irCondBrText}}%
+    \IfBooleanTF{#1}{%
+      \irCode*{\bfseries\irCondBrText}%
+    }{%
+      \irCode{\bfseries\irCondBrText}%
     }
     \IfBooleanTF{#1}{%
       \irCode*{#2, }\irBlock*{#3}\irCode*{, }\irBlock*{#4}%
@@ -1094,51 +1097,43 @@
 \NewDocumentCommand{\irMul}{smm}{\mbox{#2 \irMulText{} #3}}
 \newcommand{\irLoadText}{load}
 \NewDocumentCommand{\irLoad}{sm}{%
-  {%
-    \bfseries%
-    \IfBooleanTF{#1}{%
-      \irCode*{\irLoadText}%
-    }{%
-      \irCode{\irLoadText}%
-    }%
-  } #2%
+  \IfBooleanTF{#1}{%
+    \irCode*{\bfseries\irLoadText}%
+  }{%
+    \irCode{\bfseries\irLoadText}%
+  }
+  #2%
 }
 \newcommand{\irPhiText}{$\mPhi$}
 \NewDocumentCommand{\irPhi}{sm}{\mbox{\irPhiText(#2)}}
 \newcommand{\irRetText}{ret}
 \NewDocumentCommand{\irRet}{sm}{%
-  {%
-    \bfseries%
-    \IfBooleanTF{#1}{%
-      \irCode*{\irRetText}%
-    }{%
-      \irCode{\irRetText}%
-    }%
-  } #2%
+  \IfBooleanTF{#1}{%
+    \irCode*{\bfseries\irRetText}%
+  }{%
+    \irCode{\bfseries\irRetText}%
+  }
+  #2%
 }
 \newcommand{\irStoreText}{store}
 \NewDocumentCommand{\irStore}{smm}{%
-  {%
-    \bfseries%
-    \IfBooleanTF{#1}{%
-      \irCode*{\irStoreText}%
-    }{%
-      \irCode{\irStoreText}%
-    }%
-  } #2, #3%
+  \IfBooleanTF{#1}{%
+    \irCode*{\bfseries\irStoreText}%
+  }{%
+    \irCode{\bfseries\irStoreText}%
+  }
+  #2, #3%
 }
 \newcommand{\irSubText}{$-$}
 \NewDocumentCommand{\irSub}{smm}{\mbox{#2 \irSubText{} #3}}
 \newcommand{\irZextText}{zxt}
 \NewDocumentCommand{\irZext}{sm}{%
-  {%
-    \bfseries%
-    \IfBooleanTF{#1}{%
-      \irCode*{\irZextText}%
-    }{%
-      \irCode{\irZextText}%
-    }%
-  } #2%
+  \IfBooleanTF{#1}{%
+    \irCode*{\bfseries\irZextText}%
+  }{%
+    \irCode{\bfseries\irZextText}%
+  }
+  #2%
 }
 
 % Commands to be used inside TikZ nodes
