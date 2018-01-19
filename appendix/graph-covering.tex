@@ -124,7 +124,7 @@ The \gls{subgraph isomorphism}[ problem] is to detect whether an arbitrary
 \gls{subgraph} of another \gls{graph}~$G_b$.
 %
 In such cases one says that $G_a$ is an \glsshort!{isomorphism}[ \gls{subgraph}]
-of~$G_b$, and deciding this is known to be NP-complete~\cite{Cook1971}.
+of~$G_b$, and deciding this is known to be NP-complete~\cite{Cook:1971}.
 %
 It should be clear that this is a generalization of the \gls{pattern matching}
 problem, and with appropriate constraints a solution to the corresponding
@@ -141,12 +141,12 @@ for the original \gls{pattern matching} problem.\!%
 }
 
 As \gls{subgraph isomorphism} is found in many other fields, a vast amount of
-research has been devoted to this problem (see for example~\cite{Ullmann1976,
-  Cordella2001, Guo2003, Krissinel2004, Sorlin2004, Gallagher2006, Fan2010,
-  Fan2011, Hino2012}).
+research has been devoted to this problem (see for example~\cite{Ullmann:1976,
+  CordellaEtAl:2001, GuoEtAl:2003, KrissinelHenrick:2004, SorlinSolnon:2004,
+  Gallagher:2006, FanEtAl:2010, FanEtAl:2011, HinoEtAl:2012}).
 %
-In this section we will mainly look at \citeauthor{Ullmann1976}'s algorithm and
-another commonly used algorithm by \citeauthor{Cordella2001}.
+In this section we will mainly look at \citeauthor{Ullmann:1976}'s algorithm and
+another commonly used algorithm by \citeauthor{CordellaEtAl:2001}.
 %
 As a side note, we will also discuss an algorithm that solves the \gls{graph
   isomorphism} problem in polynomial time for a certain class of \glspl{graph}.
@@ -165,8 +165,8 @@ from those covering the other -- and consequently may yield different code
 quality -- even though both versions of the \gls{assembly code} will produce the
 same value in the end.
 %
-In an attempt to mitigate this issue \textcite{Arora2010} introduced a method
-where the \glspl{function graph} are first normalized before \gls{pattern
+In an attempt to mitigate this issue \textcite{AroraEtAl:2010} introduced a
+method where the \glspl{function graph} are first normalized before \gls{pattern
   matching}, but the design is limited to arithmetic \glspl{block DAG} and still
 does not guarantee that all \glspl{match} will be found.
 
@@ -174,9 +174,9 @@ does not guarantee that all \glspl{match} will be found.
 \subsection{Ullmann's Algorithm}
 
 One of the first and most well-known methods for deciding \gls{subgraph
-  isomorphism} is an algorithm developed by \textcite{Ullmann1976}.
+  isomorphism} is an algorithm developed by \textcite{Ullmann:1976}.
 %
-In a seminal paper from~1976, \citeauthor{Ullmann1976} expresses the problem of
+In a seminal paper from~1976, \citeauthor{Ullmann:1976} expresses the problem of
 determining whether a \gls{graph} \mbox{$G_a = \mTuple{N_a, E_a}$} is
 \glsshort{subgraph isomorphism} to another \gls{graph} \mbox{$G_b = \mTuple{N_b,
     E_b}$} as a problem of finding a Boolean \mbox{$|N_a| \times |N_b|$}
@@ -202,17 +202,17 @@ to~1, and then iteratively reset them to~0 until a solution is found.
 As expected, this brute-force approach suffers from ensuing combinatorial
 explosion and will thus not be effective.
 %
-\citeauthor{Ullmann1976} therefore tried to reduce the search space by
+\citeauthor{Ullmann:1976} therefore tried to reduce the search space by
 developing a procedure that eliminates some of the 1s that will never appear in
 any solution.
 %
-But according to \textcite{Cordella2001}, even with this improvement the
+But according to \textcite{CordellaEtAl:2001}, even with this improvement the
 worst-case time complexity of the algorithm is still \mbox{$\mBigO(n!n^2)$}.
 
 
 \subsection{The VF2 Algorithm}
 
-In 2001, \textcite{Cordella2001} introduced another \gls{subgraph isomorphism}
+In 2001, \textcite{CordellaEtAl:2001} introduced another \gls{subgraph isomorphism}
 algorithm called \gls{VF2} -- the authors did not say what it stands for --
 which has been used in several \glsshort{DAG covering} and \gls{graph
   covering}-based instruction selectors.
@@ -266,18 +266,18 @@ Although this algorithm exhibits a worst-case time complexity of
 still makes it an efficient method for performing \gls{pattern matching} over
 very large \glspl{graph}.
 %
-For example, \citeauthor{Cordella2001} report in \cite{Cordella2001} that the
+For example, \citeauthor{CordellaEtAl:2001} report in \cite{CordellaEtAl:2001} that the
 \gls{VF2} algorithm has been successfully used on \glspl{graph} containing
 several thousand \glspl{node}.
 
 
 \subsection{Graph Isomorphism in Quadratic Time}
 
-\citeauthor{Jiang1996}~\cite{Jiang1996, Jiang1998a, Jiang1998b} discovered that
-if the \glspl{graph} are \gls!{ordered.g}, meaning all \glspl{edge} belonging to
-the same node have a predetermined order among each other, then the \gls{graph
-  isomorphism} problem can be solved in polynomial time for \gls{undirected.g}
-\glspl{graph}.
+\citeauthor{JiangBunke:1996}~\cite{JiangBunke:1996, JiangBunke:1998:Article,
+  JiangBunke:1998:Chapter} discovered that if the \glspl{graph} are
+\gls!{ordered.g}, meaning all \glspl{edge} belonging to the same node have a
+predetermined order among each other, then the \gls{graph isomorphism} problem
+can be solved in polynomial time for \gls{undirected.g} \glspl{graph}.
 %
 This is because \gls{ordered.g} \glspl{graph} contain additional structural
 information that can be exploited during \gls{pattern matching}.
@@ -286,7 +286,7 @@ Although it is unclear whether this discovery can be applied to \gls{instruction
   selection} -- the reasons will become apparent shortly -- I decided to include
 its discussion out of personal interest.
 
-\citeauthor{Jiang1996}'s algorithm essentially works as follows.
+\citeauthor{JiangBunke:1996}'s algorithm essentially works as follows.
 %
 Starting from some \gls{node}, traverse the first \gls{graph}~$G_a$ using
 breadth-first search in the order dictated by the \gls{edge} ordering for the
@@ -313,7 +313,7 @@ In the worst case this can be checked in $\mBigO(e^2)$, where $e$ is the total
 number of \glspl{edge} in the two \glspl{graph}.
 
 This algorithm is clearly a vast improvement over those by
-\citeauthor{Ullmann1976} and \citeauthor{Cordella2001}, but it also has several
+\citeauthor{Ullmann:1976} and \citeauthor{CordellaEtAl:2001}, but it also has several
 significant limitations that make it difficult to use in practice.
 %
 First, it requires that all \gls{program} and \glspl{pattern graph} be
@@ -343,7 +343,7 @@ But, as previously stated, this becomes an impediment when applied in \gls{graph
 %
 We will therefore continue by looking briefly at how \glspl{program} can be
 expressed using such representations (an excellent survey of this field was
-recently made by \textcite{Stanier2013}).
+recently made by \textcite{StanierWatson:2013}).
 
 
 \subsection{Static-Single-Assignment Graphs}
@@ -441,9 +441,8 @@ the beginning of the \cCode*{loop}~\gls{block}, the aforementioned problem of
   \gls{phi-function} to choose during execution? -- we will ignore these issues
   as they are out of scope for our purposes.
   %
-
-  There is also \gls!{gated single assignment}~\cite{Ballance1990}, where the
-  \glspl{phi-function} take a predicate as additional input, which enables
+  There is also \gls!{gated single assignment}~\cite{BallanceEtAl:1990}, where
+  the \glspl{phi-function} take a predicate as additional input, which enables
   executable interpretation of the \gls{SSA}-based \gls{IR} code.%
 }
 
@@ -485,11 +484,11 @@ branches and procedure calls.
 
 Another popular \glsdesc{IR} is the \gls!{PDG}.
 %
-Introduced by \textcite{Ferrante1987} in~1987, the \gls{PDG} only models the
-\emph{essential} control dependencies of the \gls{program} -- we will soon
+Introduced by \textcite{FerranteEtAl:1987} in~1987, the \gls{PDG} only models
+the \emph{essential} control dependencies of the \gls{program} -- we will soon
 elaborate on what this means -- and several subsequent \gls{IR}~designs, such as
-the \gls!{program-dependence web} by \textcite{Ballance1990} and the
-\gls!{value-dependence graph} by \textcite{Weise1994}, are either direct
+the \gls!{program-dependence web} by \textcite{BallanceEtAl:1990} and the
+\gls!{value-dependence graph} by \textcite{WeiseEtAl:1994}, are either direct
 extensions of the \gls{PDG} or have been heavily influenced by it.
 
 Instead of directly modeling the control flow within a \gls{function}, the
@@ -578,11 +577,12 @@ On the other hand, generating correct \gls{assembly code} directly from the
 
 Despite its widespread use in many \gls{program} optimization routines, I have
 not seen any techniques that use \glspl{PDG} for selecting \glspl{instruction},
-although \textcite{Paleczny2001} come close with their implementation of the
+although \textcite{PalecznyEtAl:2001} come close with their implementation of the
 \gls!{JHSC}.
 %
 Internally, \gls{JHSC} uses a \gls{graph}-based \gls{IR} format that was
-originally designed by \textcite{Click1995a} and is similar to the~\gls{PDG}.
+originally designed by \textcite{ClickPaleczny:1995} and is similar to
+the~\gls{PDG}.
 %
 The \glspl{function graph} are covered by a \gls{BURS}-based \gls{instruction
   selector} (see \refSection{precomputing-cost-computations}) which selects the
@@ -598,12 +598,12 @@ duplication.
 %
 After \gls{pattern selection} the \glspl{instruction} are placed into
 \glspl{block} using a heuristic \gls{global code motion} method
-(see~\cite{Click1995b}).
+(see~\cite{ClickCooper:1995}).
 
 
 \section{Modeling Pattern Selection as a PBQP}
 
-In 2003, \textcite{Eckstein2003} recognized that limiting \gls{instruction
+In 2003, \textcite{EcksteinEtAl:2003} recognized that limiting \gls{instruction
   selection} to \gls{local.is} scope can decrease code quality of \gls{assembly
   code} generated for fixed-point arithmetic \glsdesc{DSP}s.
 %
@@ -620,18 +620,18 @@ Otherwise the accumulated value will needlessly be shifted back and forth.
 But this is difficult to achieve using \gls{local.is} \gls{instruction
   selection}.
 
-To overcome this problem, \citeauthor{Eckstein2003} developed a design that
+To overcome this problem, \citeauthor{EcksteinEtAl:2003} developed a design that
 takes \glspl{SSA graph} as input -- making this technique the first to do so --
 and transforms the \gls{pattern selection} problem to a \gls!{PBQP}.
 %
 The \gls{PBQP} is an extension of the \gls!{QAP} -- a fundamental combinatorial
-optimization problem (see~\cite{Loiola2007} for a recent survey) -- and was
-first introduced \textcite{Scholz2002} as a means of tackling \gls{register
-  allocation}.
+optimization problem (see~\cite{LoiolaEtAl:2007} for a recent survey) -- and was
+first introduced \textcite{ScholzEckstein:2002} as a means of tackling
+\gls{register allocation}.
 %
-\gls{QAP} and \gls{PBQP} are both NP-complete, and \citeauthor{Eckstein2003}
-therefore developed their own heuristic solver as described
-in~\cite{Eckstein2003}.
+\gls{QAP} and \gls{PBQP} are both NP-complete, and
+\citeauthor{EcksteinEtAl:2003} therefore developed their own heuristic solver as
+described in~\cite{EcksteinEtAl:2003}.
 %
 We will explain the \glsshort{PBQP} approach by building the model bottom-up,
 starting with the definitions.
@@ -700,9 +700,9 @@ The chain costs for the second condition are calculated by first computing the
 \gls{transitive closure} for all \gls{chain.r} \glspl{rule} (see
 \refAppendix{tree-covering}, \refPage{transitive-closure}).
 %
-For this, \citeauthor{Eckstein2003} seem to have used the Floyd-Warshall
-algorithm~\cite{Floyd1962}, and \textcite{Schaefer2007} later discovered a
-method that computes the lowest cost for each~$c_{ij}$ by finding the optimal
+For this, \citeauthor{EcksteinEtAl:2003} seem to have used the Floyd-Warshall
+algorithm~\cite{Floyd:1962}, and \textcite{SchaeferScholz:2007} later discovered
+a method that computes the lowest cost for each~$c_{ij}$ by finding the optimal
 sequence of \gls{chain.r} \glspl{rule}.
 %
 Lastly, the costs are weighted according to the estimated execution frequency
@@ -720,10 +720,10 @@ following cost function:
 \end{displaymath}
 %
 The model is then solved using a heuristic \glsshort{PBQP} solver, which was
-also developed by \citeauthor{Eckstein2003} (we will omit details on how it
+also developed by \citeauthor{EcksteinEtAl:2003} (we will omit details on how it
 works).
 
-Using a prototype implementation, \citeauthor{Eckstein2003} ran experiments on a
+Using a prototype implementation, \citeauthor{EcksteinEtAl:2003} ran experiments on a
 selected set of fixed-point \glspl{program} exhibiting the behavior discussed
 earlier.
 %
@@ -731,7 +731,7 @@ The results indicate that their scheme improved performance by \mbox{40--60\%}
 on average -- and at most 82\% for one \gls{program} -- compared to a
 traditional \gls{tree}-based \gls{instruction selector}.
 %
-According to \citeauthor{Eckstein2003}, this considerable gain in performance
+According to \citeauthor{EcksteinEtAl:2003}, this considerable gain in performance
 comes from more efficient use of value modes to which \gls{tree covering}-based
 techniques must make premature assignments, and thus could have a detrimental
 effect on code quality.
@@ -740,7 +740,7 @@ For example, if chosen poorly, the \gls{instruction selector} may need to emit
 additional \glspl{instruction} in order to undo decisions regarding value modes,
 which obviously reduces performance and needlessly increases the code size.
 %
-Although the technique by \citeauthor{Eckstein2003} clearly mitigates these
+Although the technique by \citeauthor{EcksteinEtAl:2003} clearly mitigates these
 concerns, their design also has limitations of its own.
 %
 Most importantly, their \glsshort{PBQP} model can only support \glspl{pattern
@@ -750,8 +750,8 @@ Most importantly, their \glsshort{PBQP} model can only support \glspl{pattern
 
 \subsection{Extending the PBQP Approach to Pattern DAGs}
 
-In 2008, \textcite{Ebner2008} addressed the aforementioned concern by extending
-the original \glsshort{PBQP} model by \citeauthor{Eckstein2003} to also support
+In 2008, \textcite{EbnerEtAl:2008} addressed the aforementioned concern by extending
+the original \glsshort{PBQP} model by \citeauthor{EcksteinEtAl:2003} to also support
 \glspl{pattern DAG}.
 %
 When replacing the default \gls{instruction selector} in \gls{LLVM}~2.1 -- which
@@ -761,9 +761,9 @@ is a greedy \gls{DAG}~rewriter (see \refSection{llvm}) -- the performance of the
 %
 In addition, the impact on compilation time was shown to be negligible.
 
-\citeauthor{Ebner2008} first extended the \gls{grammar} to allow \glspl{rule} to
-contain multiple \glspl{production} in a similar fashion to that of
-\textcite{Scharwaechter2007} (see
+\citeauthor{EbnerEtAl:2008} first extended the \gls{grammar} to allow
+\glspl{rule} to contain multiple \glspl{production} in a similar fashion to that
+of \textcite{ScharwaechterEtAl:2007} (see
 \refAppendix{dag-covering}, \refPage{rules-multiple-productions}).
 %
 We will refer to such \glspl{rule} as \gls!{complex.r}[ \glspl{rule}], and the
@@ -862,7 +862,7 @@ is~0, then solutions are allowed where all \gls{proxy.r} \glspl{rule} of a
 \gls{complex.r} \gls{rule} are selected but the \gls{complex.r} \gls{rule}
 itself is not selected.
 %
-\citeauthor{Ebner2008} solved this problem by first setting a high cost~$M$ to
+\citeauthor{EbnerEtAl:2008} solved this problem by first setting a high cost~$M$ to
 all \gls{proxy.r} \glspl{rule} and then setting the cost of all \gls{complex.r}
 \glspl{rule} to \mbox{$\mCost{i} - |l_i|M$}, where $l_i$ is the set of
 \gls{proxy.r} \glspl{rule} of a \gls{complex.r} \gls{rule}~$i$.
@@ -877,7 +877,7 @@ To prevent this, we introduce a cost matrix~$\mMatrix{C}_{ij}^{\mCategory{C}
   \rightarrow \mCategory{C}}$ that prevents two instances~$i$ and $j$ from being
 selected simultaneously if such a combination incurs a cyclic data dependency.
 %
-In their model, \citeauthor{Ebner2008} also forbade selection of \gls{complex.r}
+In their model, \citeauthor{EbnerEtAl:2008} also forbade selection of \gls{complex.r}
 \gls{rule} instances that overlap.
 %
 As before, these restrictions are enforced by setting the elements in
@@ -885,7 +885,7 @@ $\mMatrix{C}_{ij}^{\mCategory{C} \rightarrow \mCategory{C}}$ corresponding to
 such situations to~$\infty$, and to 0 for all other elements.
 
 Hence the complete definition of $f$ in the \glsshort{PBQP} model by
-\citeauthor{Ebner2008} becomes
+\citeauthor{EbnerEtAl:2008} becomes
 %
 \todo{fix}
 %\begin{gather*}
@@ -910,15 +910,15 @@ Hence the complete definition of $f$ in the \glsshort{PBQP} model by
 
 \subsection{Using Rewrite Rules Instead of Production Rules}
 
-In 2010, \textcite{Buchwald2010} introduced another technique based on
+In 2010, \textcite{BuchwaldZwinkau:2010} introduced another technique based on
 \glspl{PBQP}.
 %
-But unlike \citeauthor{Eckstein2003} and \citeauthor{Ebner2008},
-\citeauthor{Buchwald2010} approached the task of \gls{instruction selection} as
+But unlike \citeauthor{EcksteinEtAl:2003} and \citeauthor{EbnerEtAl:2008},
+\citeauthor{BuchwaldZwinkau:2010} approached the task of \gls{instruction selection} as
 a formal \gls{graph} transformation problem, for which much previous work
 already exist.
 %
-Hence, in \citeauthor{Buchwald2010}'s design the \glspl{instruction} are
+Hence, in \citeauthor{BuchwaldZwinkau:2010}'s design the \glspl{instruction} are
 expressed as \gls!{rewrite.r}[ \glspl{rule}] instead of \glspl{production rule}.
 %
 As these \gls{rewrite.r} \glspl{rule} are based on a formal foundation, the
@@ -939,11 +939,11 @@ After finding all applicable \gls{rewrite.r} \glspl{rule} for this \gls{DAG}
 (this is done using traditional \gls{pattern matching}), a corresponding
 instance of the \gls{PBQP} is formulated and solved as before.
 
-\citeauthor{Buchwald2010} also discovered and addressed flaws in the
-\glsshort{PBQP} solver by \citeauthor{Eckstein2003}, which may fail to find a
+\citeauthor{BuchwaldZwinkau:2010} also discovered and addressed flaws in the
+\glsshort{PBQP} solver by \citeauthor{EcksteinEtAl:2003}, which may fail to find a
 solution in certain situations due to inadequate propagation of information.
 %
-However, \citeauthor{Buchwald2010} also cautioned that their own implementation
+However, \citeauthor{BuchwaldZwinkau:2010} also cautioned that their own implementation
 does not scale well when the number of overlapping \glspl{pattern} grows.
 %
 In addition, since the \gls{SSA graph} is devoid of control-flow information,
@@ -966,8 +966,8 @@ address the more traditional problem of \gls{instruction selection}.
 
 \subsubsection{\glsentrytext{Chess}}
 
-\textcite{Lanneer1990} developed in 1990 a design that was later adopted by
-\citeauthor{VanPraet1994}~\cite{VanPraet1994, VanPraet2001} in their
+\textcite{LanneerEtAl:1990} developed in 1990 a design that was later adopted by
+\citeauthor{VanPraetEtAl:1994}~\cite{VanPraetEtAl:1994, VanPraetEtAl:2001} in their
 implementation of \gls{Chess}, a well-known compiler targeting \glspl{DSP} and
 \glspl{ASIP}.
 
@@ -976,8 +976,8 @@ Comparing \gls{Chess} to \gls{MSSQ} (see
 %
 First, in \gls{MSSQ} the data paths of the processor are given by a manually
 written \gls{machine description}, whereas \gls{Chess} derives these
-automatically from an \mbox{\gls{nML}-based} specification~\cite{Fauth1993,
-  Fauth1995}.
+automatically from an \mbox{\gls{nML}-based} specification~\cite{FauthEtAl:1993,
+  FauthEtAl:1995}.
 
 Second, the method of \gls{bundling} -- which is the task of scheduling
 operations for parallel execution -- is different.
@@ -1009,14 +1009,14 @@ This process iterates until no more \glspl{node} can be collapsed, and every
 remaining \gls{node} in the \gls{chaining graph} thus constitutes a
 \gls!{bundle}.
 %
-The same authors later extended this design in~\cite{VanPraet2001} to consider
+The same authors later extended this design in~\cite{VanPraetEtAl:2001} to consider
 selection between \emph{all} possible \glspl{bundle} using \glshyphened{branch
   and bound} \gls{search}, and to enable some measure of code duplication by
 allowing the same operations in the \gls{function graph} to appear in multiple
 \glspl{bundle}.
 
 Using this incremental scheme to form the \glspl{bundle}, the design by
-\citeauthor{VanPraet1994} is capable of \gls{bundling} operations that
+\citeauthor{VanPraetEtAl:1994} is capable of \gls{bundling} operations that
 potentially reside in different \glspl{block}.
 %
 Their somewhat-\gls{integrated.cg} \gls{code generation} approach also allows
@@ -1032,13 +1032,13 @@ most likely out of reach due to its heuristic nature.
 \subsubsection{Generating Assembly Code Using Simulated Annealing}
 
 Another, albeit unusual, \gls{code generation} technique was proposed by
-\textcite{Visser1999} in~1999.
+\textcite{Visser:1999} in~1999.
 %
-Like \gls{MSSQ} and \gls{Chess}, \citeauthor{Visser1999}'s approach is an
+Like \gls{MSSQ} and \gls{Chess}, \citeauthor{Visser:1999}'s approach is an
 \gls{integrated.cg} \gls{code generation} design but solves the problem using
 \gls!{simulated annealing}, which is a meta-heuristic to avoid getting stuck in
 a local maximum when searching for solutions (see for example
-\cite{Kirkpatrick1983} for an overview).
+\cite{KirkpatrickEtAl:1983} for an overview).
 %
 In brief terms, an initial solution is found by randomly mapping each \gls{node}
 in the \gls{function graph} to a \gls{node} in the hardware \gls{graph} -- which
@@ -1062,8 +1062,8 @@ The last item we will discuss is a technique called \gls!{mutation
   orthogonal to the theory of \glsdesc{GA}s.%
 }
 %
-which was introduced in 1994 by \citeauthor{Novack2002}~\cite{Novack1994,
-  Novack2002}.
+which was introduced in 1994 by
+\citeauthor{NovackEtAl:2002}~\cite{NovackNicolau:1994, NovackEtAl:2002}.
 %
 \Gls{mutation scheduling} is technically a form of \gls{instruction scheduling}
 that primarily targets \gls{VLIW} architectures, but it also integrates a
@@ -1103,7 +1103,7 @@ These operations are selected from a \gls!{mutation set}, which is conceptually
 a recursive data structure, as an expression in the \gls{mutation set} may use
 intermediate values that in turn necessitate \glspl{mutation set} of their own.
 %
-\citeauthor{Novack2002} compute these \glspl{mutation set} by first taking the
+\citeauthor{NovackEtAl:2002} compute these \glspl{mutation set} by first taking the
 original operation and then applying a series of semantic-preserving functions
 that have been derived from various logical axioms, algebraic theorems, and the
 characteristics of the \gls{target machine}.
@@ -1142,9 +1142,10 @@ and incur dependencies of their own, the existing candidates appearing in
 The ``best'' combination of mutations is then decided heuristically, but the
 paper is vague on how this is done exactly.
 
-\citeauthor{Novack2002} implemented a prototype by extending an existing
+\citeauthor{NovackEtAl:2002} implemented a prototype by extending an existing
 scheduler based on \gls!{GRiP}, which is another global \gls{instruction
-  scheduling} technique developed by the same authors (see~\cite{Nicolau1992}).
+  scheduling} technique developed by the same authors
+(see~\cite{NicolauNovack:1992}).
 %
 Subsequent experiments using a selected set of benchmark \glspl{program}
 demonstrated that the \gls{mutation scheduling}-based design yielded a two- to
