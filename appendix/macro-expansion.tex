@@ -624,7 +624,7 @@ variant of \gls!{branch and bound} as \gls{search} strategy.\!
     pruning}, which is an entirely different search strategy, but their
   description of it fits more the \gls{branch and bound} approach.
   %
-  Both are well explained in~\cite{Norvig:2010}.%
+  Both are well explained in~\cite{RussellNorvig:2010}.%
 }
 %
 The problem is how to prove that a given branch in the \gls{search space} will
@@ -781,7 +781,7 @@ Since this kind of optimization is tailored for a particular \gls{target
   machine}, the earliest implementations were (and still often are) done ad hoc
 and by hand.
 %
-For example, in 2002, \textcite{Krishnaswamy:2002} wrote a \gls{peephole
+For example, in 2002, \textcite{KrishnaswamyGupta:2002} wrote a \gls{peephole
   optimizer} by hand which reduces code size by replacing known \glspl{pattern}
 of \gls{ARM}~code with smaller equivalents.
 %
@@ -789,7 +789,8 @@ Recognizing the need for automation, \textcite{Fraser:1979} introduced in 1979
 the first technique that allowed \glspl{peephole optimizer} to be generated from
 a formal description.
 %
-The technique is also described in a longer article by \textcite{Davidson:1980}.
+The technique is also described in a longer article by
+\textcite{DavidsonFraser:1980}.
 
 Like \citeauthor{Miller:1971}, \citeauthor{Fraser:1979} described the semantics
 of the \glspl{instruction} separately in a symbolic \gls{machine description}.
@@ -854,7 +855,7 @@ adjacent in the \gls{assembly code}.
 The \glspl{instruction} were also not allowed to cross \gls{block} boundaries,
 meaning that they had to belong to the same \gls{block}.
 %
-\textcite{Davidson:1984} later removed the limitation of lexicographical
+\textcite{DavidsonFraser:1984} later removed the limitation of lexicographical
 adjacency by making use of \glspl{data-flow graph} instead of operating directly
 on the \gls{assembly code}, and they also extended the size of the
 \gls{instruction} window from pairs to triples.
@@ -896,8 +897,8 @@ shorter implementations that exhibit the same behavior as the original
   and extract William Shakespeare's play \textit{King Lear}.%
 }
 %
-\textcite{Granlund:1992} later adapted \citeauthor{Massalin:1987}'s ideas into a
-method that minimizes the number of branches.
+\textcite{GranlundKenner:1992} later adapted \citeauthor{Massalin:1987}'s ideas
+into a method that minimizes the number of branches.
 %
 Both implementations, however, were implemented by hand and
 customized for a particular \gls{target machine}.
@@ -905,18 +906,18 @@ customized for a particular \gls{target machine}.
 Moreover, neither makes any
 guarantees on correctness.
 %
-A technique for automatically generating
-\gls{peephole optimization}-based \glspl{superoptimizer} was developed by
-\textcite{Bansal:2006}, where the \gls{superoptimizer} learns to optimize short
-sequences of \glspl{instruction} from a set of training \glspl{program}.
+A technique for automatically generating \gls{peephole optimization}-based
+\glspl{superoptimizer} was developed by \textcite{BansalAiken:2006}, where the
+\gls{superoptimizer} learns to optimize short sequences of \glspl{instruction}
+from a set of training \glspl{program}.
 %
 A couple of designs that guarantee correctness have been developed by
-\citeauthor{Joshi:2002}~\cite{Joshi:2002, Joshi:2006} and \textcite{Crick:2009},
-who applied automatic theorem proving and \gls{answer set programming},
-respectively.
+\citeauthor{JoshiEtAl:2002}~\cite{JoshiEtAl:2002, JoshiEtAl:2006} and
+\textcite{CrickEtAl:2009}, who applied automatic theorem proving and \gls{answer
+  set programming}, respectively.
 %
 Recently, a similar technique based on \gls{quantifier-free
-  bit-vector logic} formulas was introduced by \textcite{Srinivasan:2015}.
+  bit-vector logic} formulas was introduced by \textcite{SrinivasanReps:2015}.
 
 
 \subsection{Combining Naive Macro Expansion with Peephole Optimization}
@@ -926,20 +927,21 @@ Up to this point peephole optimizers had mainly been used to improve
 already-generated \gls{assembly code} -- in other words, \emph{after}
 instruction selection had been performed.
 %
-In 1984, however, \textcite{Davidson:1984} developed an \gls{instruction
+In 1984, however, \textcite{DavidsonFraser:1984} developed an \gls{instruction
   selection} technique that incorporates the power of \gls{peephole
   optimization} with the simplicity of \gls{macro expansion}.
 %
 Similar yet unsuccessful strategies had already been proposed earlier by
-\textcite{Auslander:1982} and \textcite{Harrison:1979}, but
-\citeauthor{Davidson:1984} struck the right balance between \gls{compiler}
+\textcite{AuslanderHopkins:1982} and \textcite{Harrison:1979}, but
+\citeauthor{DavidsonFraser:1984} struck the right balance between \gls{compiler}
 retargetability and code quality, which made their design a viable option for
 production-quality \glspl{compiler}.
 %
 This scheme has hence become known as the \gls!{Davidson-Fraser approach}, and
 variants of it have been used in several \glspl{compiler}, such as the
-\gls{YC}~\cite{Davidson:1982}, the \gls{ZephyrVPO}~system~\cite{Appel:1998}, the
-\gls{ACK}~\cite{Tanenbaum:1983}, and, most famously the
+\gls{YC}~\cite{DavidsonFraser:1982}, the
+\gls{ZephyrVPO}~system~\cite{AppelEtAl:1998}, the
+\gls{ACK}~\cite{TanenbaumEtAl:1983}, and, most famously the
 \gls{GCC}~\cite{Stallman:1988, Khedker:2012}.
 
 
@@ -950,7 +952,7 @@ variants of it have been used in several \glspl{compiler}, such as the
 %  \input{\figurePath/macro-expansion/davidson-fraser}
 %
 %  \figCaption{Overview of the \glsentrytext{Davidson-Fraser approach}}%
-%    [Davidson:1984]
+%    [DavidsonFraser:1984]
 %  \labelFigure{davidson-fraser}
 %\end{figure}
 
@@ -996,7 +998,7 @@ multiple \glspl{RTL}, the \gls{instruction selector} can effectively extend over
 multiple \glspl{node} in the \gls{AST} or \gls{expression tree}, potentially
 across \gls{block} boundaries.
 %
-The \gls{instruction} support in \citeauthor{Davidson:1984}'s design is
+The \gls{instruction} support in \citeauthor{DavidsonFraser:1984}'s design is
 therefore in theory only restricted by the number of \glspl{instruction} that
 the \gls{peephole optimizer} can compare at a time.
 %
@@ -1011,9 +1013,10 @@ added complexity, thus making it difficult to handle complicated
 
 \subsubsection{Further Improvements}
 
-\textcite{Fraser:1988} later expanded the work by \citeauthor{Davidson:1984}.
+\textcite{FraserWendt:1988} later expanded the work by
+\citeauthor{DavidsonFraser:1984}.
 %
-In a paper from~1988, \citeauthor{Fraser:1988} describe a method where the
+In a paper from~1988, \citeauthor{FraserWendt:1988} describe a method where the
 \gls{expander} and \gls{combiner} are effectively fused together into a single
 component.
 %
@@ -1022,11 +1025,11 @@ The idea is to generate the \gls{instruction selector} in two steps.
 The first step produces a \gls{naive.me} \gls{macro expander} that is capable of
 expanding a single \gls{IR} \gls{node} at a time.
 %
-Unlike \citeauthor{Davidson:1984}, who implemented the \gls{expander} by hand,
-\citeauthor{Fraser:1988} applied an elaborate scheme consisting of a series of
-switch and goto statements -- effectively implementing a \gls{state machine} --
-which allowed their \gls{expander} to be generated automatically from a
-\gls{machine description}.
+Unlike \citeauthor{DavidsonFraser:1984}, who implemented the \gls{expander} by
+hand, \citeauthor{FraserWendt:1988} applied an elaborate scheme consisting of a
+series of switch and goto statements -- effectively implementing a \gls{state
+  machine} -- which allowed their \gls{expander} to be generated automatically
+from a \gls{machine description}.
 %
 Once produced, the \gls{macro expander} is executed on a carefully designed
 training set.
@@ -1043,7 +1046,7 @@ This effectively enables the \gls{macro expander} to expand multiple \gls{IR}
 \glspl{node} at a time, thus removing the need for a separate \gls{peephole
   optimizer} in the final \gls{compiler}.
 %
-\citeauthor{Fraser:1988} argued that as the \gls{instruction selector} only
+\citeauthor{FraserWendt:1988} argued that as the \gls{instruction selector} only
 implements the optimization decisions that are deemed to be ``useful,'' the code
 quality is improved with minimal overhead.
 %
@@ -1056,12 +1059,12 @@ evolved into a compact standalone language used for implementing \glspl{code
 \subsubsection{Enforcing the Machine Invariant with a Recognizer}
 
 The \gls{Davidson-Fraser approach} was also recently extended by
-\textcite{Dias:2006}.
+\textcite{DiasRamsey:2006}.
 %
 Instead of requiring each separate \gls{RTL}-oriented optimization routine to
-abide by the \gls{machine invariant}, \citeauthor{Dias:2006}'s design employs a
-\gls!{recognizer} to determine whether an optimization decision violates the
-aforementioned restriction (see \refFigure{dias-ramsey}).
+abide by the \gls{machine invariant}, \citeauthor{DiasRamsey:2006}'s design
+employs a \gls!{recognizer} to determine whether an optimization decision
+violates the aforementioned restriction (see \refFigure{dias-ramsey}).
 %
 The idea is that, by doing so, the optimization routines can be simplified and
 generated automatically as they no longer need to internalize the \gls{machine
@@ -1072,7 +1075,7 @@ generated automatically as they no longer need to internalize the \gls{machine
 %  \input{\figurePath/macro-expansion/dias-ramsey}
 %
 %  \figCaption[An extension of the \glsentrytext{Davidson-Fraser approach}]%
-%    {Overview of \citeauthor{Dias:2006}'s design}[Dias:2006]
+%    {Overview of \citeauthor{DiasRamsey:2006}'s design}[DiasRamsey:2006]
 %  \labelFigure{dias-ramsey}
 %\end{figure}
 
@@ -1094,23 +1097,24 @@ generated automatically as they no longer need to internalize the \gls{machine
 %  \labelFigure{lambda-rtl-example}
 %\end{figure}
 
-In a paper from~2006, \citeauthor{Dias:2006} demonstrate how the
+In a paper from~2006, \citeauthor{DiasRamsey:2006} demonstrate how the
 \gls{recognizer} can be produced from a declarative \gls{machine description}
 written in \gls{lambdaRTL}.
 %
-Originally developed by \textcite{Ramsey:1998}, \gls!{lambdaRTL} is a high-level
-functional language based on \gls!{ML} and raises the level of abstraction for
-writing \glspl{RTL} (see \refFigure{lambda-rtl-example} for an example).
+Originally developed by \textcite{RamseyDavidson:1998}, \gls!{lambdaRTL} is a
+high-level functional language based on \gls!{ML} and raises the level of
+abstraction for writing \glspl{RTL} (see \refFigure{lambda-rtl-example} for an
+example).
 %
-In their paper, \citeauthor{Dias:2006} claim that \gls{lambdaRTL}-based
+In their paper, \citeauthor{DiasRamsey:2006} claim that \gls{lambdaRTL}-based
 \glspl{machine description} are more concise and simpler to write compared to
 those of many other designs, including \gls{GCC}.
 %
 In particular, \gls{lambdaRTL} is precise and unambiguous, which makes it
 suitable for automated tool generation and verification.
 %
-The latter has been explored by \textcite{Fernandez:1997} and
-\textcite{Bailey:2003}.
+The latter has been explored by \textcite{FernandezRamsey:1997} and
+\textcite{BaileyDavidson:2003}.
 
 The \gls{recognizer} checks whether an \gls{RTL} in the \gls{program} fulfills
 the \gls{machine invariant} by performing a syntactic comparison between that
@@ -1121,19 +1125,19 @@ given \gls{lambdaRTL} description contains $m$~\glspl{instruction} whose
 \gls{RTL} contains $l$~operations, then a naive implementation would take
 $\mBigO(nml)$ time to check a single \gls{RTL}.
 %
-Instead, using techniques to be discussed in
-\refAppendix{tree-covering}, \citeauthor{Dias:2006} automatically generate the
-\gls{recognizer} as a \gls{finite state automaton} that can compare a given
-\gls{RTL} against all \glspl{RTL} in the \gls{lambdaRTL} description with a
-single check.
+Instead, using techniques to be discussed in \refAppendix{tree-covering},
+\citeauthor{DiasRamsey:2006} automatically generate the \gls{recognizer} as a
+\gls{finite state automaton} that can compare a given \gls{RTL} against all
+\glspl{RTL} in the \gls{lambdaRTL} description with a single check.
 
 
 \subsubsection{``One Program to Expand Them All''}
 
-In 2010, \citeauthor{Dias:2010} introduced a scheme, described in
-\cite{Dias:2010} and \cite{Ramsey:2011}, where the \gls{macro expander} only
-needs to be implemented once per every distinct \emph{architecture family}
-instead of once per every distinct \emph{instruction set}.
+In 2010, \citeauthor{DiasRamsey:2010} introduced a scheme, described in
+\cite{DiasRamsey:2010} and \cite{RamseyDias:2011}, where the \gls{macro
+  expander} only needs to be implemented once per every distinct
+\emph{architecture family} instead of once per every distinct
+\emph{\gls{instruction set}}.
 %
 For example, \gls{register}-based and stack-based machines are two separate
 architecture families, whereas \gls{X86}, \gls{PowerPC}, and \gls{Sparc} are
@@ -1171,11 +1175,11 @@ After \gls{macro expansion} the \glspl{tile} are replaced by the
 A remaining problem is how to find \glspl{instruction} to implement a given
 \gls{tile} for a particular \gls{target machine}.
 %
-In the same papers, \citeauthor{Dias:2010} describe a scheme for doing this
-automatically.
+In the same papers, \citeauthor{DiasRamsey:2010} describe a scheme for doing
+this automatically.
 %
 By expressing both the \glspl{tile} and the \glspl{instruction} as
-\gls{lambdaRTL}, \citeauthor{Dias:2010} developed a technique where the
+\gls{lambdaRTL}, \citeauthor{DiasRamsey:2010} developed a technique where the
 \glspl{RTL} of the \glspl{instruction} are combined such that the effects equal
 that of a \gls{tile}.
 %
@@ -1187,13 +1191,13 @@ Using algebraic laws and combining existing \glspl{RTL} to produce new
 \glspl{RTL}, the pool is grown iteratively until either all \glspl{tile} have
 been implemented, or some termination criterion is reached.
 %
-The latter is necessary, as \citeauthor{Dias:2010} proved that the general
+The latter is necessary, as \citeauthor{DiasRamsey:2010} proved that the general
 problem of finding implementations for arbitrary \glspl{tile} is undecidable.
 
-Although the primary aim of \citeauthor{Dias:2010}'s design is to facilitate
-\gls{compiler} retargetability, some experiments suggest that it potentially
-also yields better code quality than the original \gls{Davidson-Fraser
-  approach}.
+Although the primary aim of \citeauthor{DiasRamsey:2010}'s design is to
+facilitate \gls{compiler} retargetability, some experiments suggest that it
+potentially also yields better code quality than the original
+\gls{Davidson-Fraser approach}.
 %
 When a prototype was compared against the default \gls{instruction selector} in
 \gls{GCC}, the results favored the former.
@@ -1207,20 +1211,20 @@ disabled; when they were reactivated, \gls{GCC} still produced better results.
 In the techniques just discussed, the \gls{peephole optimizer} runs after
 \gls{code generation}.
 %
-But in a scheme developed in 1989 by \textcite{Genin:1989}, a similar routine is
-executed \emph{before} \gls{code generation}.
+But in a scheme developed in 1989 by \textcite{GeninEtAl:1989}, a similar
+routine is executed \emph{before} \gls{code generation}.
 %
 Targeting digital signal processors, their \gls{compiler} first transforms the
 \gls{program} into an \gls!{ISFG}, and then executes a routine --
-\citeauthor{Genin:1989} called it a \gls!{pattern matcher} -- which attempts to
-find several low-level operations in the \gls{ISFG} that can be merged into
+\citeauthor{GeninEtAl:1989} called it a \gls!{pattern matcher} -- which attempts
+to find several low-level operations in the \gls{ISFG} that can be merged into
 single \glspl{node}.\!%
 %
 \footnote{%
   The paper is not clear on how this is done exactly, but presumably
-  \citeauthor{Genin:1989} implemented the routine as a handwritten \gls{peephole
-    optimizer} since the intermediate format is fixed and does not change from
-  one \gls{target machine} to another.%
+  \citeauthor{GeninEtAl:1989} implemented the routine as a handwritten
+  \gls{peephole optimizer} since the intermediate format is fixed and does not
+  change from one \gls{target machine} to another.%
 }
 %
 \Gls{code generation} is then done following the conventional \gls{macro
@@ -1233,10 +1237,10 @@ The invoked rule produces the \gls{assembly code} appropriate for the given
 context, and can also insert new \glspl{node} to offload decisions that are
 deemed better handled by the rules corresponding to the inserted \glspl{node}.
 
-According to \citeauthor{Genin:1989}, experiments show that their \gls{compiler}
-generated \gls{assembly code} that was five to \num{50}~times faster than that
-produced by other, contemporary \gls{DSP} \glspl{compiler}, and comparable with
-manually optimized \gls{assembly code}.
+According to \citeauthor{GeninEtAl:1989}, experiments show that their
+\gls{compiler} generated \gls{assembly code} that was five to \num{50}~times
+faster than that produced by other, contemporary \gls{DSP} \glspl{compiler}, and
+comparable with manually optimized \gls{assembly code}.
 %
 A disadvantage of this design is that it is limited to \glspl{program} where
 prior knowledge about the application area, in this case digital signal
@@ -1251,10 +1255,11 @@ The aforementioned techniques yield \glspl{peephole optimizer} which are static
 once they have been generated, meaning they will only recognize and optimize
 \gls{assembly code} for a fixed set of \glspl{pattern}.
 %
-A method to overcome this issue has been designed by \textcite{Kulkarni:2006},
-which is also the first and only one to my knowledge.
+A method to overcome this issue has been designed by
+\textcite{KulkarniEtAl:2006}, which is also the first and only one to my
+knowledge.
 
-In a paper from~2006, \citeauthor{Kulkarni:2006} describe a \gls{compiler}
+In a paper from~2006, \citeauthor{KulkarniEtAl:2006} describe a \gls{compiler}
 system called \gls{Vista}, which is an interactive compilation environment where
 the user is given greater control over the \gls{compiler}.
 %
@@ -1266,7 +1271,7 @@ Hence optimization privileges which normally are limited to low-level
 \gls{assembly code} programmers are also granted to higher-level programming
 language users.
 %
-In addition, \citeauthor{Kulkarni:2006} employed genetic algorithms -- these
+In addition, \citeauthor{KulkarniEtAl:2006} employed genetic algorithms -- these
 will be explained in \refAppendix{tree-covering} -- in an attempt to
 automatically derive a combination of user-provided optimization guidelines to
 improve the code quality of a particular \gls{program}.
