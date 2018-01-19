@@ -756,7 +756,7 @@ to the appropriate \glspl{nonterminal} appearing on the right-hand side of~$r$.
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
 $r$ plus the cost of reducing $n$ to the \glsshort{rule result} of~$r$.
 %
-The recursive nature of these costs can be exploited using dynamic programming,
+The recursive nature of these costs can be exploited using \glsdesc{DP},
 resulting in the algorithm shown in \refAlgorithm{aho-etal-cost-algorithm} which
 computes the least cost of reducing a given \gls{expression tree} to a
 particular \gls{nonterminal}.

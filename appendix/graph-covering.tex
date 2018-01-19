@@ -130,7 +130,7 @@ The \gls{subgraph isomorphism}[ problem] is to detect whether an arbitrary
 %
 In such cases one says that $G_a$
 is an \gls{isomorphic}[ \gls{subgraph}] of~$G_b$, and deciding this is known to
-be \gls{NP complete}~\cite{Cook1971}.
+be NP-complete~\cite{Cook1971}.
 %
 It should be clear that this is a
 generalization of the \gls{pattern matching} problem, and with appropriate
@@ -159,7 +159,7 @@ polynomial time for a certain class of \glspl{graph}.
 
 It should be noted that although we are now using the most generic \gls{graph}
 form for representing the \glspl{program} and \glspl{pattern}, these methods of
-\gls{pattern matching} are still only capable of finding the \glspl{matchset}
+\gls{pattern matching} are still only capable of finding the \glspl{match set}
 where the \glspl{pattern} have matching \emph{structure}, and not matching
 \emph{semantics}.
 %
@@ -219,7 +219,7 @@ that will never appear in any solution.
 %
 But according to
 \textcite{Cordella2001}, even with this improvement the worst-case time
-complexity of the algorithm is still \mbox{$\mBigO{n!n^2}$}.
+complexity of the algorithm is still \mbox{$\mBigO(n!n^2)$}.
 
 \subsection{The VF2 Algorithm}
 
@@ -278,7 +278,7 @@ checks, such as ensuring that the \gls{node} types are compatible, can be added
 by customizing the definition of~$F_{\text{sem}}$.
 
 Although this algorithm exhibits a worst-case time complexity of
-\mbox{$\mBigO{n!n}$}, its best-case time complexity---which is
+\mbox{$\mBigO(n!n)$}, its best-case time complexity---which is
 polynomial---still makes it an efficient method for performing \gls{pattern
   matching} over very large \glspl{graph}.
 %
@@ -332,7 +332,7 @@ then do the same for the second \gls{graph}~$G_b$, and if there exists some
 must be \gls{isomorphic} to~$G_a$.
 %
 In the worst case this can be checked in
-$\mBigO{e^2}$, where $e$ is the total number of \glspl{edge} in the two
+$\mBigO(e^2)$, where $e$ is the total number of \glspl{edge} in the two
 \glspl{graph}.
 
 This algorithm is clearly a vast improvement over those by
@@ -670,7 +670,7 @@ recent survey)---and was first introduced \textcite{Scholz2002} as a means of
 tackling \gls{register allocation}.
 %
 The \gls{QA problem} and \gls{PBQ problem}
-are both \gls{NP complete}, and \citeauthor{Eckstein2003} therefore developed
+are both NP-complete, and \citeauthor{Eckstein2003} therefore developed
 their own heuristic solver as described in~\cite{Eckstein2003}.
 %
 We will explain

@@ -468,6 +468,7 @@
 \newcommand{\transp}{\mathsf{T}}
 \newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
+\newcommand{\mSigma}{\Sigma}
 \NewDocumentCommand{\mSequence}{sm}{
   \IfBooleanT{#1}{\left}\langle
     #2
@@ -652,6 +653,7 @@
 \DeclareMathOperator{\mIsExt}{\mFunFont{isExt}}
 \DeclareMathOperator{\mFreq}{\mFunFont{freq}}
 \DeclareMathOperator{\mLat}{\mFunFont{lat}}
+\DeclareMathOperator{\mMTrees}{\mFunFont{mtrees}}
 \DeclareMathOperator{\mOpCost}{\mFunFont{cost}}
 \DeclareMathOperator{\mResourceUse}{\mFunFont{req}}
 \DeclareMathOperator{\mSpans}{\mFunFont{spans}}
@@ -694,6 +696,21 @@
   }%
 }
 \newsavebox{\adjblockarraybox}
+
+% Typesets a tree that appears in the sigma set.
+\NewDocumentCommand{\mSigmaTree}{mm}{%
+  #1(#2)%
+}
+
+\newcommand{\mSubsumes}{\geq}
+\newcommand{\mStrictSubsumes}{>}
+\newcommand{\mImmSubsumes}{>_i}
+\newcommand{\mMatchSetBase}[1]{#1_0}
+\NewDocumentCommand{\mReduceCost}{mm}{
+  \mFunFont{reducecost}(
+    #1 \xrightarrow{\raisebox{-2pt}[-6pt]{\scriptsize$*$}} #2
+  )
+}
 
 
 %============

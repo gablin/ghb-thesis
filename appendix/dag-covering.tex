@@ -69,7 +69,7 @@ the problems of \gls{pattern matching} and \gls{pattern selection}.
     original \gls{DAG} form.
 %
 In general, matching \glspl{tree} on \glspl{DAG} is
-    \gls{NP complete}~\cite{Garey1979}, but designs applying this technique
+    NP-complete~\cite{Garey1979}, but designs applying this technique
     typically sacrifice completeness to retain linear time complexity.
   \item Match the \glspl{pattern DAG} directly using a generic \gls{subgraph
     isomorphism} algorithm.
@@ -92,7 +92,7 @@ give us is a substantial increase in complexity.
 As we saw in
 \refAppendix{tree-covering}, selecting an \gls{optimal.ps} set of
 \glspl{pattern} to cover a \gls{expression tree} can be done in linear time, but
-doing the same for \glspl{program DAG} is an \gls{NP complete} problem.
+doing the same for \glspl{program DAG} is an NP-complete problem.
 %
 Proofs
 were given in 1976 by \textcite{Bruno1976} and \textcite{Aho1976b}, but
@@ -125,9 +125,9 @@ with the following structure:
 \end{displaymath}
 A variable~$x$ can also be negated, written as \mbox{$\mNot x$}.
 
-Since the \gls{SAT problem} is \gls{NP complete}, all polynomial-time
+Since the \gls{SAT problem} is NP-complete, all polynomial-time
 transformations from \glsshort{SAT problem} to any other problem $\mClass{P}$
-must also render $\mClass{P}$ \gls{NP complete}.
+must also render $\mClass{P}$ NP-complete.
 
 
 \subsubsection{Modeling SAT as a Covering Problem}
@@ -384,7 +384,7 @@ transforming it, in polynomial time, to an instance of the \gls{optimal.ps}
 %
 Hence \gls{optimal.ps} \gls{DAG covering}---and
 therefore also \gls{optimal instr-sel} \gls{instruction selection} based on
-\gls{DAG covering}---is \gls{NP complete}.
+\gls{DAG covering}---is NP-complete.
 %
 \hfill\qedsymbol
 
@@ -557,7 +557,7 @@ call \glspl{toe print}---and are found by a \gls{semantic comparator}.
 The
 \gls{semantic comparator} first performs syntactic matching---that is, checking
 that the \glspl{node} are of the same type, which is done using a
-straightforward \mbox{$\mBigO{nm}$}~algorithm---and then resorts to
+straightforward \mbox{$\mBigO(nm)$}~algorithm---and then resorts to
 semantic-preserving transformations for when syntactic matching fails.
 %
 To bound
@@ -799,8 +799,8 @@ available \glspl{pattern tree} into a single \gls{tree} of \glspl{pattern}.
 %
 This
 \gls{pattern tree} is traversed in tandem with the \gls{program DAG}, and for
-each \gls{node} an \mbox{$\mBigO{nm}$} \gls{pattern matcher} is used to find all
-\glspl{matchset}.
+each \gls{node} an \mbox{$\mBigO(nm)$} \gls{pattern matcher} is used to find all
+\glspl{match set}.
 %
 \Gls{pattern selection} is then performed using an extended
 version of the \tDPalgorithm, but the paper does not explain how this is done
@@ -809,7 +809,7 @@ exactly.
 Moreover, the algorithm is only applied on the data flow of the
 \gls{program DAG}---control flow is covered separately using a simple
 heuristic---and no guarantees are made that the \gls{pattern selection} is
-\gls{optimal.ps}, as that is an \gls{NP complete} problem.
+\gls{optimal.ps}, as that is an NP-complete problem.
 
 
 \subsubsection{Potentially Optimal Pattern Selection}
@@ -1000,7 +1000,7 @@ An example is given in \refFigure{arnold-example}.
 %\end{figure}
 
 The \tpartialPatterns are then matched over the \gls{program DAG} using an
-\mbox{$\mBigO{nm}$} algorithm.
+\mbox{$\mBigO(nm)$} algorithm.
 %
 After matching, another algorithm attempts to
 merge appropriate combinations of partial \glspl{match} into \glspl{match} of
@@ -1070,11 +1070,11 @@ largest set of \glspl{node} from a \gls{graph} such that no pairs of selected
 \glspl{node} have an \gls{edge} between them.
 %
 In the general case, finding such
-a solution is \gls{NP complete}~\cite{Garey1979}, and the \gls{pattern
+a solution is NP-complete~\cite{Garey1979}, and the \gls{pattern
   selection} problem is transformed into an \gls{MIS problem} as follows.
 %
 From
-the \glspl{matchset} found by \gls{pattern matching}, a corresponding
+the \glspl{match set} found by \gls{pattern matching}, a corresponding
 \gls{conflict graph}---or \gls{interference graph}, as it is sometimes
 called---is formed.
 %
@@ -1223,11 +1223,11 @@ aforementioned terms are illustrated more clearly below:
 
 \Gls{pattern matching} is a two-step process.
 %
-First, the \glspl{matchset} are
+First, the \glspl{match set} are
 found for the \glsshort{simple pattern} and \tsplitPatterns, using conventional
 \gls{tree}-based \gls{pattern matching} techniques.
 %
-Second, the \glspl{matchset}
+Second, the \glspl{match set}
 for the \tcomplexPatterns are found by combining the \glspl{match} of
 \tsplitPatterns into \glspl{match} of \tcomplexPatterns where appropriate.
 %
@@ -1258,7 +1258,7 @@ The weights are calculated as the negated sum of the \tsplitPattern costs,
 but the paper is ambiguous on how these costs are calculated.
 %
 Since the
-\gls{MWIS problem} is known to be \gls{NP complete},
+\gls{MWIS problem} is known to be NP-complete,
 \citeauthor{Scharwaechter2007} employed a greedy heuristic called \gls{Gwmin2}
 by \textcite{Sakai2003}.
 %
@@ -1333,13 +1333,13 @@ To find these cases in a given \gls{program},
 \gls{subgraph isomorphism} algorithm that we will describe in
 \refAppendix{graph-covering}.
 %
-Summing the sizes of the resulting \glspl{matchset}
+Summing the sizes of the resulting \glspl{match set}
 gives a measure of code duplication for each \gls{subgraph}, but this value will
-be an overestimation as the \glspl{matchset} may contain overlapping
+be an overestimation as the \glspl{match set} may contain overlapping
 \glspl{match}.
 %
 \citeauthor{Brisk2004} addressed this by first solving the
-\gls{MIS problem} on the \gls{conflict graph} for each \gls{matchset}, and then
+\gls{MIS problem} on the \gls{conflict graph} for each \gls{match set}, and then
 adding up the sizes of \emph{these} sets.
 %
 After selecting the most beneficial
@@ -1390,7 +1390,7 @@ at least~1.
 An example is given in
 \refFigure{unate-covering-example}.
 %
-\Gls{unate covering} is an \gls{NP complete}
+\Gls{unate covering} is an NP-complete
 problem, but as with the \glsshort{MIS problem} and \glspl{MWIS problem} there
 exist several efficient techniques for solving it heuristically (see for
 example~\cite{Cordone2000, Goldberg2006} for an overview).
@@ -1549,7 +1549,7 @@ As explained in \refAppendix{introduction}, performing \gls{instruction
 isolation will typically always yield suboptimal \gls{assembly code}.
 %
 But since
-each subproblem is already \gls{NP complete} on its own, attaining
+each subproblem is already NP-complete on its own, attaining
 \gls{integrated code-gen}[ \gls{code generation}]---where all these problems
 are solved simultaneously---is an even more difficult problem.
 
@@ -1567,7 +1567,7 @@ example~\cite{Wolsey1998} for an overview), and a solution to an \tIPmodel is an
 assignment to all variables such that all equations are fulfilled.
 %
 In general,
-solving an \tIPmodel is \gls{NP complete}, but extensive research in this field
+solving an \tIPmodel is NP-complete, but extensive research in this field
 has made many problem instances tractable.
 
 In their seminal paper, \citeauthor{Wilson1994} describe that the \gls{pattern
@@ -1579,7 +1579,7 @@ In their seminal paper, \citeauthor{Wilson1994} describe that the \gls{pattern
 %
 This reads: for every \gls{node}~$n$ in the \gls{program
   DAG}~\mbox{$\mTupleTwo{N}{E}$}, at most one \gls{pattern}~$p$ from the
-\gls{matchset} involving~$n$ (represented by $P_n$) may be selected.
+\gls{match set} involving~$n$ (represented by $P_n$) may be selected.
 %
 The
 decision is represented by $x_p$, which is a Boolean \mbox{$0/1$}
@@ -1626,7 +1626,7 @@ heuristics.
 
 \newcommand{\mCmd}[1]{\text{\smaller\sffamily\textbf{#1}}}
 
-Although \tIPmodels are \gls{NP complete} to solve in general, it was discovered
+Although \tIPmodels are NP-complete to solve in general, it was discovered
 that for a certain class of problem instances---namely those based on
 \glspl{Horn clause}---an optimal solution can be found in linear
 time~\cite{Hooker1988}.
@@ -1947,7 +1947,7 @@ the~\gls{ERI}.
 This \tCPmodel is then solved to optimality using a \tCPsolver.
 %
 But since
-\gls{optimal.ps} covering using \glspl{FRT} is \gls{NP complete},
+\gls{optimal.ps} covering using \glspl{FRT} is NP-complete,
 \citeauthor{Bashford1999} applied heuristics to curb the complexity by splitting
 the \gls{program DAG} into smaller pieces along \glspl{edge} where intermediate
 results are shared, and then performing \gls{instruction selection} on each
@@ -2039,10 +2039,10 @@ set~$\mDVar{var}$ assume the value~$\mDVar{i}$, where $\mDVar{val}$ can either
 be a fixed value or represent another \gls{domain variable}.
 %
 Let us assume that
-every \gls{node} in the \gls{program DAG} has an associated \gls{matchset}
+every \gls{node} in the \gls{program DAG} has an associated \gls{match set}
 containing all the \glspl{pattern} that may cover that \gls{node}, and that each
-\gls{match}~$m$ appearing in that \gls{matchset} has been assigned a unique
-integer value~$i_m$ (if $m$ appears in multiple \glspl{matchset}, it is still
+\gls{match}~$m$ appearing in that \gls{match set} has been assigned a unique
+integer value~$i_m$ (if $m$ appears in multiple \glspl{match set}, it is still
 given the same value).
 %
 We introduce a \gls{domain variable}~$\mathit{match}_n$
@@ -2106,7 +2106,7 @@ multiple \glspl{subinstruction}, each modeled by a disjoint \gls{pattern}.
 %
 A
 generic \gls{subgraph isomorphism} algorithm is used to find all
-\glspl{matchset}, and \gls{pattern selection} is then modeled as an instance of
+\glspl{match set}, and \gls{pattern selection} is then modeled as an instance of
 the \tCPmodel with the additional constraints to schedule the
 \glspl{subinstruction} such that they can be replaced by the original
 \gls{disjoint-output instruction}.
@@ -2316,7 +2316,7 @@ The process
 then backtracks and repeats in a recursive fashion until the entire \gls{expression tree} is covered.
 %
 A subsequent process then selects a specific \gls{version}
-from each \gls{matchset} and tries to schedule them so that they can be combined
+from each \gls{match set} and tries to schedule them so that they can be combined
 into \glspl{bundle} for parallel execution.
 
 Although \gls{microcode generation} is at a lower hardware level than
@@ -2351,7 +2351,7 @@ modern \glspl{compiler}.
 
 The ultimate cost of transitioning from \glspl{tree} to \glspl{DAG}, however, is
 that \gls{optimal.ps} \gls{pattern selection} can no longer be achieved in
-linear time as it is \gls{NP complete}.
+linear time as it is NP-complete.
 %
 At the same time, \glspl{DAG} are not
 expressive enough to allow the proper modeling of all aspects featured in the
