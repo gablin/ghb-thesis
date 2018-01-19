@@ -137,14 +137,14 @@ problem, and then gradually transition to those that do.
 
 In 1972 and 1973, the first \gls{code generation} techniques known to use
 \gls{tree}-based \gls{pattern matching} were introduced by
-\textcite{Wasilew1972} and \textcite{Weingart1973}, respectively.
+\textcite{Wasilew:1972} and \textcite{Weingart:1973}, respectively.
 %
-Unfortunately only \citeauthor{Weingart1973}'s work appears to be recognized by
-other literature, even though \citeauthor{Wasilew1972}'s ideas have more in
+Unfortunately only \citeauthor{Weingart:1973}'s work appears to be recognized by
+other literature, even though \citeauthor{Wasilew:1972}'s ideas have more in
 common with later \gls{tree}-based \gls{instruction selection} techniques.
 %
 We will briefly cover both in this dissertation, as described by
-\textcite{Lunell1983}, who gives a more detailed account in his doctoral
+\textcite{Lunell:1983}, who gives a more detailed account in his doctoral
 dissertation.
 
 %\begin{figure}[t]%
@@ -165,19 +165,19 @@ dissertation.
 %OR m MAJ 4FCOID 4FCOIN if-equal2 1 J + transfer
 %\end{plainCode}
 %  \end{minipage}
-%  \figCaption{An example program expressed using \citeauthor{Wasilew1972}'s
-%    intermediate language}[Lunell1983]
+%  \figCaption{An example program expressed using \citeauthor{Wasilew:1972}'s
+%    intermediate language}[Lunell:1983]
 %  \labelFigure{wasilew-code-example}
 %\end{figure}
 
-To begin with, \citeauthor{Wasilew1972} devised an \glsdesc{IR} where the
+To begin with, \citeauthor{Wasilew:1972} devised an \glsdesc{IR} where the
 \glspl{program} are represented using a postfix notation (see
 \refFigure{wasilew-code-example}).
 %
 This is also called \gls!{Polish notation}, which we will discuss further in
 \refSection{graham-glanville}.
 %
-\citeauthor{Wasilew1972} also developed his own programming language, which is
+\citeauthor{Wasilew:1972} also developed his own programming language, which is
 transformed into \gls{IR} code as part of compilation.
 %
 The \glspl{instruction} of the \gls{target machine} are described in a table,
@@ -210,22 +210,22 @@ Once all combinations have been found, the cheapest combination -- whose cost is
 based on the \glspl{instruction}' execution time and code size -- is selected.
 
 Compared to the early macro-expanding \glspl{instruction selector} (at least
-those prior to \glsshort{Davidson-Fraser approach}), \citeauthor{Wasilew1972}'s
+those prior to \glsshort{Davidson-Fraser approach}), \citeauthor{Wasilew:1972}'s
 design had a more extensive \gls{instruction} support as it could include
 \glspl{pattern} that extend over multiple\gls{IR} \glspl{node}.
 %
 However, its exhaustive nature makes it considerably more expensive in terms of
 compilation time.
 %
-In addition, the notations used by \citeauthor{Wasilew1972} are difficult to
+In addition, the notations used by \citeauthor{Wasilew:1972} are difficult to
 read and write.
 
-In comparison to \citeauthor{Wasilew1972}, \citeauthor{Weingart1973}'s design is
-centered around a single \gls{tree} of \glspl{pattern} --
-\citeauthor{Weingart1973} called this a \gls!{discrimination net} -- which is
+In comparison to \citeauthor{Wasilew:1972}, \citeauthor{Weingart:1973}'s design
+is centered around a single \gls{tree} of \glspl{pattern} --
+\citeauthor{Weingart:1973} called this a \gls!{discrimination net} -- which is
 automatically derived from a declarative \gls{machine description}.
 %
-Using a single \gls{tree} of \glspl{pattern}, \citeauthor{Weingart1973} argued,
+Using a single \gls{tree} of \glspl{pattern}, \citeauthor{Weingart:1973} argued,
 allows for a compact and efficient means of representing the \gls{pattern set}.
 %
 The process of building the \gls{AST} is then extended to simultaneously push
@@ -239,7 +239,7 @@ A \gls{match} is found when the process reaches a \gls{leaf} in the
 \gls{discrimination net}, whereupon the \gls{instruction} associated with the
 \gls{match} is emitted.
 
-Like \citeauthor{Wasilew1972}'s design, \citeauthor{Weingart1973}'s had a more
+Like \citeauthor{Wasilew:1972}'s design, \citeauthor{Weingart:1973}'s had a more
 extensive \gls{instruction} support compared to the contemporary techniques as
 it could include \glspl{pattern} extending over multiple \gls{AST} \glspl{node}.
 %
@@ -247,14 +247,14 @@ However, when applied in practice, the design suffered from several problems.
 %
 First, structuring the \gls{discrimination net} to support efficient
 \gls{pattern matching} proved difficult for certain \glspl{target machine}; it
-is known that \citeauthor{Weingart1973} struggled in particular with the
+is known that \citeauthor{Weingart:1973} struggled in particular with the
 \gls{PDP-11}.
 %
 Second, the design assumes that there exists at least one \gls{instruction} on
 the \gls{target machine} that corresponds to a particular \gls{node} type of
 the~\gls{AST}, which turned out to not always be the case.
 %
-\citeauthor{Weingart1973} partly addressed this problem by introducing
+\citeauthor{Weingart:1973} partly addressed this problem by introducing
 \glspl!{conversion pattern}, which could transform mismatched parts of the
 \gls{AST} into another form that hopefully would be matched by some
 \gls{pattern} at a later stage, but these had to be added manually and could
@@ -314,17 +314,17 @@ Third, like its macro-expanding predecessors, the process immediately selects a
 %%
 %In the second pattern we see that multiple
 %      restrictions can be \techTerm{OR}'ed together, thus allowing multiple
-%      patterns to be expressed in a more concise manner}[Johnson1981]
+%      patterns to be expressed in a more concise manner}[Johnson:1981]
 %  \labelFigure{pcc-machine-description-sample}
 %\end{figure}
 
 Another early \gls{pattern matching} technique was developed by
-\textcite{Johnson1978}, which was implemented in the \gls{PCC} -- a renowned
+\textcite{Johnson:1978}, which was implemented in the \gls{PCC} -- a renowned
 system that was the first standard \gls{C}~\gls{compiler} to be shipped with
 \gls{Unix}.
 %
-\citeauthor{Johnson1978} based his design on the earlier work by
-\textcite{Snyder1975} (which we discussed in
+\citeauthor{Johnson:1978} based his design on the earlier work by
+\textcite{Snyder:1975} (which we discussed in
 \refSection{separating-macros-and-machine-description}), but replaced the use of
 \gls{macro expansion} with a method that performs \gls{tree rewriting}.
 %
@@ -426,14 +426,14 @@ expression could first be rewritten into \cCode*{a = a + b} and then another
 
 Although successful for its time, \gls{PCC} had several disadvantages.
 %
-Like \citeauthor{Weingart1973}, \citeauthor{Johnson1981} used heuristic
+Like \citeauthor{Weingart:1973}, \citeauthor{Johnson:1981} used heuristic
 \gls{rewrite.r} \glspl{rule} to handle mismatching situations.
 %
 Without formal methods of verification there was always the risk that the
 current set of \glspl{rule} would be inadequate and potentially cause the
 \gls{compiler} to never terminate for certain \glspl{program}.
 %
-\textcite{Reiser1981} also noted that the investigated version of \gls{PCC} only
+\textcite{Reiser:1981} also noted that the investigated version of \gls{PCC} only
 supported unary and binary \glspl{pattern} with a maximum height of~1, thus
 excluding many \glspl{instruction}, such as those with complex \glspl{addressing
   mode}.
@@ -461,15 +461,15 @@ resource-efficient.
 \subsection{The Glanville-Graham Approach}
 \labelSection{glanville-graham}
 
-In 1978, \textcite{Glanville1978} presented a seminal paper that describes how
+In 1978, \textcite{GlanvilleGraham:1978} presented a seminal paper that describes how
 techniques of \gls{syntactic analysis} can be adapted to \gls{instruction
   selection}\footnote{This had also been vaguely hinted at ten years earlier in
-  an article by \textcite{Feldman1968}.}.
+  an article by \textcite{FeldmanGries:1968}.}.
 %
 Subsequent experiments and evaluations showed that this design -- which we will
 refer to as the \gls!{Glanville-Graham approach} -- proved simpler and more
-general than contemporary designs~\cite{Graham1980, Ganapathi1982a, Graham1982,
-  Landwehr1982, Aigrain1984}.
+general than contemporary designs~\cite{Graham:1980, GanapathiEtAl:1982:Survey,
+  GrahamEtAl:1982, LandwehrEtAl:1982, AigrainEtAl:1984}.
 %
 Moreover, due to its table-driven nature, \gls{assembly code} could be generated
 very rapidly (although the performance of the first implementations matched that
@@ -479,7 +479,7 @@ Consequently the \gls{Glanville-Graham approach} has been acknowledged as one of
 the most significant breakthroughs in this field, and these ideas have
 influenced many later techniques in one way or another.
 %
-In particular, \textcite{Henry1984} received his doctoral degree for his
+In particular, \textcite{Henry:1984} received his doctoral degree for his
 research on \glsshort{Glanville-Graham approach} \glspl{code generator}, and his
 1984 doctoral dissertation provides an extremely deep and thorough account of
 the theory and practice of this approach.
@@ -505,12 +505,12 @@ arithmetic expressions without making them ambiguous is to use \gls{Polish
 For example, \cCode*{1 + (2 + 3)} can be written as {\cCode*{+ 1 + 2 3} and
   still denote the same expression.
 %
-\citeauthor{Glanville1978} recognized that by using this form the
+\citeauthor{GlanvilleGraham:1978} recognized that by using this form the
 \glspl{instruction} can be expressed as a \gls{context-free grammar} based on
 \gls!{BNF}.
 %
 This concept is already well described in most \gls{compiler} textbooks (see for
-example~\cite{Aho2006}), so we will proceed with only a brief introduction.
+example~\cite{AhoEtAl:2006}), so we will proceed with only a brief introduction.
 
 A \gls{context-free grammar} consists of a set of \glspl!{terminal} and
 \glspl!{nonterminal}, and we will refer to both as \glspl!{symbol}.
@@ -643,8 +643,8 @@ The \gls{machine grammar} provides us with a formal methodology for modeling
 \glspl{instruction}, but it does not address the problems of \gls{pattern
   matching} and \gls{pattern selection}.
 %
-For that, \citeauthor{Glanville1978} applied an already-known technique called
-\gls{LR parsing}~\cite{Knuth1965}.
+For that, \citeauthor{GlanvilleGraham:1978} applied an already-known technique called
+\gls{LR parsing}~\cite{Knuth:1965}.
 %
 Because this technique is mostly associated with \gls{syntactic analysis}, the
 same application on \glspl{tree} is commonly referred to as \gls{tree parsing}.
@@ -775,7 +775,7 @@ To make this information available during parsing, the parser pushes it onto the
 stacking along with its corresponding \gls{terminal} or \gls{nonterminal}
 \gls{symbol}.
 %
-\citeauthor{Glanville1978} also incorporated a \gls{register allocator} into
+\citeauthor{GlanvilleGraham:1978} also incorporated a \gls{register allocator} into
 their parser, thus constituting an entire \gls{code generator}.
 
 %\begin{figure}[p]
@@ -1066,7 +1066,7 @@ This causes the \gls{instruction selector} to have the option of performing
 either a \gls{shift} or a \gls{rule reduction}, which is known as
 \gls!{shift-reduce conflict}.
 %
-To solve this kind of conflict, \citeauthor{Glanville1978}'s state table
+To solve this kind of conflict, \citeauthor{GlanvilleGraham:1978}'s state table
 generator always decides to \gls{shift}.
 %
 The intuition is that this will favor larger \glspl{pattern} over smaller ones
@@ -1077,7 +1077,7 @@ stack.\!%
 \footnote{%
   The approach of always selecting the largest possible \gls{pattern} is a
   scheme commonly known as \gls!{maximum munch}, which was coined by
-  \citeauthor{Cattell1978} in his doctoral dissertation~\cite{Cattell1978}.%
+  \citeauthor{Cattell:1978} in his doctoral dissertation~\cite{Cattell:1978}.%
 }.
 %
 Unfortunately, this scheme can cause the \gls{instruction selector} to fail even
@@ -1093,7 +1093,7 @@ Likewise, there is also the possibility of \glspl{reduce-reduce conflict}, where
 the parser has the option of choosing between two or more \glspl{rule} in a
 \glsshort{rule reduction}.
 %
-\citeauthor{Glanville1978} resolved these by selecting the \gls{rule} with the
+\citeauthor{GlanvilleGraham:1978} resolved these by selecting the \gls{rule} with the
 longest \gls{pattern}.
 %
 If the \gls{grammar} contains \glspl{rule} that differ only in their semantic
@@ -1115,7 +1115,7 @@ a default \gls{rule} that can be invoked when all other semantically constrained
 %
 This fallback \gls{rule} typically uses multiple, shorter \glspl{instruction} to
 simulate the effect of the more complex \gls{rule}, and
-\citeauthor{Glanville1978} devised a clever trick to infer them automatically.
+\citeauthor{GlanvilleGraham:1978} devised a clever trick to infer them automatically.
 %
 For every semantically constrained \gls{rule}~$r$, \gls{tree parsing} is
 performed over the \gls{tree} representing the pattern of~$r$, and then the
@@ -1128,7 +1128,7 @@ implementation of the fallback \gls{rule} for~$r$.
 By relying on a state table, \glsshort{Glanville-Graham approach}-style
 \glspl{instruction selector} are completely table-driven and implemented by a
 core that basically consists of a series of table
-lookups\footnote{\textcite{Pennello1986} developed a technique to express the
+lookups\footnote{\textcite{Pennello:1986} developed a technique to express the
   state table directly as \gls{assembly code}, thus eliminating even the need to
   perform table lookups.
 %
@@ -1151,16 +1151,16 @@ the time that the state table is generated, thus reducing compilation time.
 Another advantage of the \gls{Glanville-Graham approach} is its formal
 foundation, which enables means of automatic verification.
 %
-For instance, \textcite{Emmelmann1992b} presented one of the first methods of
+For instance, \textcite{Emmelmann:1992:Testing} presented one of the first methods of
 proving the completeness of an \gls{machine grammar}\footnote{Note, however,
   that even though an \gls{machine grammar} has been proven to be complete, a
   greedy \gls{instruction selector} may still fail to use a necessary
   \gls{rule}.
 %
-Consequently, \citeauthor{Emmelmann1992b}'s checker assumes that an optimal
+Consequently, \citeauthor{Emmelmann:1992:Testing}'s checker assumes that an optimal
 \gls{instruction selector} will be used for the proven \gls{machine grammar}.}.
 %
-The intuition behind \citeauthor{Emmelmann1992b}'s automatic prover is to find
+The intuition behind \citeauthor{Emmelmann:1992:Testing}'s automatic prover is to find
 all \glspl{expression tree} that can appear in the \gls{program} but cannot be
 handled by the \gls{instruction selector}.
 %
@@ -1171,14 +1171,14 @@ If we further use $L(X)$ to represent the set of all \glspl{tree} accepted by a
 \gls{grammar}~$X$, we can then determine whether the \gls{machine grammar} is
 incomplete by checking if $L(T) \backslash L(G)$ yields a nonempty set.
 %
-\citeauthor{Emmelmann1992b} recognized that this intersection can be computed by
+\citeauthor{Emmelmann:1992:Testing} recognized that this intersection can be computed by
 creating a \gls{product automaton} which essentially implements the language
 that accepts only the \glspl{tree} in this set of counterexamples.
 %
 From this automaton it is also possible to derive the \glspl{rule} that are
 missing from the \gls{machine grammar}.
 %
-\textcite{Brandner2010} recently extended this method to handle
+\textcite{BrandnerEtAl:2010} recently extended this method to handle
 \glspl{production} that contain \glspl{predicate} -- we will discuss these
 shortly when exploring \glspl{attribute grammar} -- by splitting
 \glspl{terminal} to expose these otherwise-hidden characteristics.
@@ -1202,9 +1202,9 @@ to be duplicated for each such mode.
 For most \glspl{target machine} this turned out to be impracticable.
 %
 For example, in the case of the \gls{VAX}~machine -- a \gls{CISC} architecture
-from the 1980s, where each \gls{instruction} accepted a multitude of operand
-modes~\cite{Ceruzzi2003} -- the \gls{machine grammar} would contain over eight
-million \glspl{rule}~\cite{Graham1982}.
+from the :1980s, where each \gls{instruction} accepted a multitude of operand
+modes~\cite{Ceruzzi:2003} -- the \gls{machine grammar} would contain over eight
+million \glspl{rule}~\cite{GrahamEtAl:1982}.
 %
 By introducing auxiliary \glspl{nonterminal} to combine features shared among
 the \glspl{rule} -- a task called \gls!{refactoring} -- the number was brought
@@ -1233,14 +1233,15 @@ information.
 For example, the exact \gls{register} represented by a
 $\mNT{reg}$~\gls{nonterminal} is not available.
 %
-\citeauthor{Glanville1978} worked around this limitation by pushing the
+\citeauthor{GlanvilleGraham:1978} worked around this limitation by pushing the
 information onto the stack, but even then their modified \gls{LR parser} could
 reason upon it using only simple equality comparisons.
 %
-\citeauthor{Ganapathi1982b}~\cite{Ganapathi1980, Ganapathi1982b, Ganapathi1984,
-  Ganapathi1985} addressed this problem by replacing the use of traditional,
-\glspl{context-free grammar} with the use of a more powerful set of
-\glspl{grammar} known as \glspl{attribute grammar}.
+\citeauthor{GanapathiEtAl:1982:AttrGr}~\cite{Ganapathi:1980,
+  GanapathiEtAl:1982:AttrGr, GanapathiFischer:1984, GanapathiFischer:1985}
+addressed this problem by replacing the use of traditional, \glspl{context-free
+  grammar} with the use of a more powerful set of \glspl{grammar} known as
+\glspl{attribute grammar}.
 %
 There are also \glspl!{affix grammar}, which can be thought of as a subset of
 \glspl{attribute grammar}.
@@ -1252,7 +1253,7 @@ only at a high level.
 
 \subsubsection{Attribute Grammars}
 
-\Glspl{attribute grammar} were introduced in 1968 by \textcite{Knuth1968}, who
+\Glspl{attribute grammar} were introduced in 1968 by \textcite{Knuth:1968}, who
 extended \glspl{context-free grammar} with \glspl{attribute}.
 %
 \Glspl!{attribute} are used to store, manipulate, and propagate additional
@@ -1272,8 +1273,8 @@ copies the value from the \gls{parent}.
 We therefore distinguish between \gls{synthesized.a} and \gls{inherited.a}
 \glspl{attribute} by a $\uparrow$ or~$\downarrow$, respectively, which will be
 prefixed to the \gls{attribute} of the concerned \gls{symbol} (for example, the
-\gls{synthesized.a} attribute~$\mAttr{x}$ of a $\mNT{reg}$~\gls{nonterminal} is
-written as \mbox{$\mNT{reg}\uparrow\mAttr{x}$}).
+\gls{synthesized.a} attribute~$\mAttr{x}$ of a $\mNT{Reg}$~\gls{nonterminal} is
+written as \mbox{$\mNT{Reg}\uparrow\mAttr{x}$}).
 
 The \glspl{attribute} are then used within \glspl{predicate} and \glspl{action}.
 %
@@ -1334,7 +1335,7 @@ Let us look at an example.
 %
 %    \figCaption[An instruction set expressed as an attribute grammar]
 %      {An instruction set expressed as an attribute grammar}%
-%      [Ganapathi1982b]
+%      [GanapathiEtAl:1982:AttrGr]
 %    \labelFigure{ganapathi-fischer-instruction-grammar}
 %  \end{minipage}
 %\end{figure}
@@ -1381,7 +1382,7 @@ more concise \gls{machine grammar} compared to a \gls{context-free grammar}.
 For example, for the \gls{VAX}~machine, the use of \glspl{attribute} leads to a
 \gls{grammar} half the size (around 600~\glspl{rule}) compared to that required
 for the \gls{Glanville-Graham approach}, even without applying any extensive
-\gls{refactoring}~\cite{Ganapathi1985}.
+\gls{refactoring}~\cite{GanapathiFischer:1985}.
 %
 \Glspl{attribute grammar} also facilitate incremental development of the
 \glspl{machine description}: one can start by implementing the most general
@@ -1396,7 +1397,7 @@ Another useful feature is that other \gls{program} optimization routines, such
 as \gls{constant folding}, can be expressed as part of the \gls{grammar} instead
 of as a separate component.
 %
-\textcite{Farrow1982} even made an attempt at deriving an entire \gls{Pascal}
+\textcite{Farrow:1982} even made an attempt at deriving an entire \gls{Pascal}
 \gls{compiler} from an \gls{attribute grammar}.
 
 But to permit \glspl{attribute} to be used together with \gls{LR parsing}, the
@@ -1425,7 +1426,7 @@ decisions regarding one \gls{subtree} without any consideration of sibling
 %
 This can result in \gls{assembly code} that could have been improved if all
 \glspl{subtree} had been available beforehand, and this is again a limitation
-due to the use of \gls{LR parsing}.  \textcite{Ganapathi1989} later made an
+due to the use of \gls{LR parsing}.  \textcite{Ganapathi:1989} later made an
 attempt to resolve this problem by implementing an \gls{instruction selector} in
 \gls{Prolog} -- a logic-based programming language -- but this incurred
 exponential worst-case time complexity of the \gls{instruction selector}.
@@ -1438,22 +1439,22 @@ and thus only produce one out of many possible \glspl{parse tree} -- the quality
 of the produced \gls{assembly code} is heavily dependent on the \gls{machine
   grammar} to guide the parser in finding a ``good'' \gls{parse tree}.
 
-\textcite{Christopher1984} attempted to address this concern by using the
+\textcite{ChristopherEtAl:1984} attempted to address this concern by using the
 concepts of the \gls{Glanville-Graham approach} but extending the parser to
 produce \emph{all} \glspl{parse tree}, and then select the one that yields the
 best \gls{assembly code}.
 %
 This was achieved by replacing the original \gls{LR parser} with an
-implementation of \citeauthor{Earley1970}'s algorithm~\cite{Earley1970}, and
+implementation of \citeauthor{Earley:1970}'s algorithm~\cite{Earley:1970}, and
 although this scheme certainly improves code quality -- at least in theory -- it
 does so at the cost of enumerating all \glspl{parse tree}, which is often too
 expensive in practice.
 
-In 2000, \textcite{Madhavan2000} extended the \gls{Glanville-Graham approach} to
+In 2000, \textcite{MadhavanEtAl:2000} extended the \gls{Glanville-Graham approach} to
 achieve \gls{optimal.ps} selection of \glspl{pattern} while allegedly retaining
 the linear time complexity of \gls{LR parsing}.
 %
-By incorporating a new version of \gls{LR parsing}~\cite{Shankar2000},
+By incorporating a new version of \gls{LR parsing}~\cite{ShankarEtAl:2000},
 \glsshort{rule reduction}s that were previously executed directly as matching
 \glspl{rule} were found are now allowed to be postponed by an arbitrary number
 of steps.
@@ -1463,17 +1464,18 @@ Hence the \gls{instruction selector} essentially keeps track of multiple
 \gls{program} before committing to a decision that could turn out to be
 suboptimal.
 %
-In other words, as in the case of \citeauthor{Christopher1984} the design by
-\citeauthor{Madhavan2000} also covers all \glspl{parse tree}, but immediately
-discards those which are determined to result in less efficient \gls{assembly
-  code} (this resembles the \gls{branch and bound}~\gls{search} strategy
-discussed in \refAppendix{macro-expansion} on \refPage{branch-and-bound}).
+In other words, as in the case of \citeauthor{ChristopherEtAl:1984} the design
+by \citeauthor{MadhavanEtAl:2000} also covers all \glspl{parse tree}, but
+immediately discards those which are determined to result in less efficient
+\gls{assembly code} (this resembles the \gls{branch and bound}~\gls{search}
+strategy discussed in \refAppendix{macro-expansion}
+on \refPage{branch-and-bound}).
 %
 To do this efficiently, the design also incorporates \gls{offline cost
   analysis}, which we will explore later in
 \refSection{precomputing-cost-computations}.
 %
-More recently, \textcite{Yang2010} proposed a similar technique involving the
+More recently, \textcite{Yang:2010} proposed a similar technique involving the
 use of \glspl!{parser cactus}, where deviating \glspl{parse tree} are branched
 off a common trunk to reduce space requirements.
 %
@@ -1524,16 +1526,16 @@ to become uncoverable.
 \subsubsection{Using Means-End Analysis to Guide Instruction Selection}
 \labelPage{means-end-analysis-approach}
 
-To the best of my knowledge, \textcite{Newcomer1975} was the first to develop a
+To the best of my knowledge, \textcite{Newcomer:1975} was the first to develop a
 scheme that uses top-down \gls{tree covering} to address \gls{instruction
   selection}.
 %
-In his 1975 doctoral dissertation, \citeauthor{Newcomer1975} proposes a design
+In his 1975 doctoral dissertation, \citeauthor{Newcomer:1975} proposes a design
 that exhaustively finds all combinations of \glspl{pattern} that cover a given
 \gls{expression tree}, and then selects the one with lowest cost.
 %
-\textcite{Cattell1977} also describes this in his survey paper, which is the
-main source for the discussion of \citeauthor{Newcomer1975}'s design.
+\textcite{Cattell:1977} also describes this in his survey paper, which is the
+main source for the discussion of \citeauthor{Newcomer:1975}'s design.
 
 The \glspl{instruction} are modeled as \glspl!{T-operator}, which are basically
 \glspl{pattern tree} with costs and \glspl{attribute} attached.
@@ -1565,13 +1567,13 @@ Afterwards, each sequence is checked for whether the \glspl{attribute} of its
 If not, the \gls{instruction selector} will attempt to rewrite the \gls{subtree}
 using the transformation \glspl{T-operator} until the \glspl{attribute} match.
 %
-To guide this process, \citeauthor{Newcomer1975} applied a heuristic search
+To guide this process, \citeauthor{Newcomer:1975} applied a heuristic search
 strategy known as \gls!{means-end analysis}, which was introduced by
-\textcite{Newell1959} in~1959.
+\textcite{NewellSimon:1959} in~1959.
 %
 The intuition behind \gls{means-end analysis} is to recursively minimize the
 quantitative difference -- how this is calculated is not mentioned
-in~\cite{Cattell1977} -- between the current state (that is, what the
+in~\cite{Cattell:1977} -- between the current state (that is, what the
 \gls{subtree} looks like \emph{now}) and a goal state (what it \emph{should}
 look like).
 %
@@ -1584,14 +1586,14 @@ sequence; if not, the sequence is dropped.
 From the found \gls{pattern} sequences the one with the lowest total cost is
 selected, followed by \gls{assembly code} emission.
 
-\citeauthor{Newcomer1975}'s design was pioneering as its application of
+\citeauthor{Newcomer:1975}'s design was pioneering as its application of
 \gls{means-end analysis} made it possible to guide the process of modifying the
 \gls{program} until it could be implemented on the \gls{target machine}, without
 have to resort to target-specific mechanisms.
 %
 But the design also had several significant flaws.
 %
-First, it had little practical application, as \citeauthor{Newcomer1975}'s
+First, it had little practical application, as \citeauthor{Newcomer:1975}'s
 implementation only handled arithmetic expressions.
 %
 Second, the \glspl{T-operator} used for modeling the \glspl{instruction} as well
@@ -1608,10 +1610,11 @@ except for very small \glspl{expression tree}.
 
 \subsubsection{Making Means-End Analysis Work in Practice}
 
-Cattell~\etal \cite{Cattell1979, Cattell1980, Leverett1980} later improved and
-extended \citeauthor{Newcomer1975}'s work into a more practical framework which
-was implemented in the \gls{PQCC}, a derivation of the \gls{Bliss-11}
-\gls{compiler} originally written by \textcite{Wulf1975}.
+\citeauthor{CattellEtAl:1979}~\cite{CattellEtAl:1979, Cattell:1980,
+  LeverettEtAl:1980} later improved and extended \citeauthor{Newcomer:1975}'s
+work into a more practical framework which was implemented in the \gls!{PQCC}, a
+derivation of the \gls{Bliss-11} \gls{compiler} originally written by
+\textcite{WulfEtAl:1975}.
 %
 Instead of performing the \gls{means-end analysis} as the \gls{program} is
 compiled, their design does it as a preprocessing step when generating the
@@ -1621,14 +1624,14 @@ The \glspl{pattern} are expressed as a set of \glspl{template} which are formed
 using recursive composition, and are thus similar to the \glspl{production}
 found in \glspl{machine grammar}.
 %
-But unlike \citeauthor{Glanville1978}'s and \citeauthor{Ganapathi1982b}'s
+But unlike \citeauthor{GlanvilleGraham:1978}'s and \citeauthor{GanapathiEtAl:1982:AttrGr}'s
 designs -- where the \glspl{grammar} were written by hand -- the
 \glspl{template} in \gls{PQCC} are derived automatically from a target-specific
 \gls{machine description}.
 %
 Each \gls{instruction} is modeled as a set of \glspl!{machine operation} that
 describe the effects of the \gls{instruction}, and are thus akin to the
-\glspl{RTL} introduced by \textcite{Fraser1979} in
+\glspl{RTL} introduced by \textcite{Fraser:1979} in
 \refAppendix{macro-expansion}.
 %
 These effects are then used by a separate tool, called the \gls!{CGG}, to create
@@ -1656,20 +1659,20 @@ ever be applicable in practice.
 Once generated, \gls{instruction selection} is performed in a greedy, top-down
 fashion that always selects the lowest-cost \gls{template} matching the current
 \gls{node} in the \gls{expression tree} (\gls{pattern matching} is done using a
-scheme identical to \citeauthor{Newcomer1975}'s).
+scheme identical to \citeauthor{Newcomer:1975}'s).
 %
 If there is a tie, the \gls{instruction selector} picks the \gls{template} with
 the least number of memory loads and stores.
 
 Compared to the \gls{LR parsing}-based methods discussed previously, the design
-by Cattell~\etal has both advantages and disadvantages.
+by \citeauthor{CattellEtAl:1979} has both advantages and disadvantages.
 %
 The main advantage is that the \glspl{instruction selector} is less at risk of
 failing to generate \gls{assembly code} for some \gls{program}.
 %
 There is the possibility that the set of predefined \glspl{template} is
 insufficient to produce all necessary single-node \glspl{pattern}, but then
-\gls{CGG} can at least issue a warning (in \citeauthor{Ganapathi1982b}'s design
+\gls{CGG} can at least issue a warning (in \citeauthor{GanapathiEtAl:1982:AttrGr}'s design
 this correctness has to be ensured by the \gls{grammar} designer).
 %
 The disadvantage is that it is relatively slow: whereas the \gls{tree
@@ -1683,11 +1686,12 @@ quadratic time in the worst case.
 
 To the best of my knowledge, the only recent technique (less than 20~years old)
 to use this kind of recursive top-down methodology for \gls{tree covering} is
-that of \citeauthor{Nymeyer1996}~\cite{Nymeyer1996, Nymeyer1997}.
+that of \citeauthor{NymeyerEtAl:1996}~\cite{NymeyerEtAl:1996,
+  NymeyerKatoen:1997}.
 %
-In two papers from 1996 and~1997, \citeauthor{Nymeyer1996} introduce a method
-where \gls{A* search} -- another strategy for exploring the search space
-(see~\cite{Norvig2010}) -- is combined with \gls{BURS} theory.
+In two papers from 1996 and~1997, \citeauthor{NymeyerEtAl:1996} introduce a
+method where \gls{A* search} -- another strategy for exploring the search space
+(see~\cite{RussellNorvig:2010}) -- is combined with \gls{BURS} theory.
 %
 We will discuss \gls{BURS} theory in more detail later in this appendix -- the
 anxious reader can skip directly to \refSection{precomputing-cost-computations}
@@ -1885,15 +1889,16 @@ Fortunately, we can do better.
 
 Over the years many algorithms have been discovered for finding all
 \glspl{match} given a subject \gls{tree} and a set of \glspl{pattern tree} (see
-for example~\cite{Karp1972, Hoffmann1982, Purdom1985, Weisgerber1988,
-  Ramesh1992, Dubiner1994, Chen1995, Cole1997, Shamir1999, Wuu2000}).
+for example~\cite{KarpEtAl:1972, HoffmannODonnell:1982, PurdomBrown:1985,
+  WeisgerberWilhelm:1988, RameshRamakrishnan:1992, DubinerEtAl:1994,
+  ChenEtAl:1995, ColeHariharan:1997, ShamirTsur:1999, WuuYang:2000}).
 %
 For \gls{tree covering}, most \gls{pattern matching} algorithms have been
 derived from methods of string-based \gls{pattern matching}.
 %
-This was first discovered by \textcite{Karp1972} in~1972, and their ideas were
-later extended by \textcite{Hoffmann1982} to form the algorithms most applied by
-\gls{tree}-based \gls{instruction selection} techniques.
+This was first discovered by \textcite{KarpEtAl:1972} in~1972, and their ideas
+were later extended by \textcite{HoffmannODonnell:1982} to form the algorithms
+most applied by \gls{tree}-based \gls{instruction selection} techniques.
 %
 Hence, in order to understand \gls{pattern matching} with \glspl{tree}, let us
 first explore how this is done with strings.
@@ -1902,7 +1907,7 @@ first explore how this is done with strings.
 \subsubsection{Matching Trees Is Equivalent to Matching Strings}
 
 The algorithms most commonly used for string matching were introduced by
-\textcite{Aho1975} and \textcite{Knuth1977} (also known as the
+\textcite{AhoCorasick:1975} and \textcite{KnuthEtAl:1977} (also known as the
 \gls!{Knuth-Morris-Pratt algorithm}) in 1975 and~1977, respectively.
 %
 Independently discovered from one another, both algorithms operate in the same
@@ -1959,9 +1964,9 @@ the \gls{pattern}.
 %
 Consequently all occurrences of the \gls{pattern} can be found in linear time.
 %
-We continue our discussion with \citeauthor{Aho1975}'s design as it is capable
+We continue our discussion with \citeauthor{AhoCorasick:1975}'s design as it is capable
 of matching multiple \glspl{pattern} whereas the algorithm of
-\citeauthor{Knuth1977} only considers a single \gls{pattern} (although it can
+\citeauthor{KnuthEtAl:1977} only considers a single \gls{pattern} (although it can
 easily be extended to handle multiple \glspl{pattern} as well).
 
 %\begin{figure}[t]
@@ -2013,7 +2018,7 @@ easily be extended to handle multiple \glspl{pattern} as well).
 %  \labelFigure{string-matching-machine}
 %\end{figure}
 
-\citeauthor{Aho1975}'s algorithm relies on three functions -- $\mFunFont{goto}$,
+\citeauthor{AhoCorasick:1975}'s algorithm relies on three functions -- $\mFunFont{goto}$,
 $\mFunFont{failure}$, and $\mFunFont{output}$ -- where the first function is
 implemented as a \gls{state machine} and the two latter ones are implemented as
 simple table lookups.
@@ -2052,10 +2057,10 @@ to state~7, where $\mFunFont{output}(7)$ indicates a \gls{match} with the
 
 \subsubsection{The Hoffmann-O'Donnell Algorithm}
 
-\textcite{Hoffmann1982} developed two algorithms incorporating the ideas of
-\citeauthor{Aho1975} and \citeauthor{Knuth1977}.
+\textcite{HoffmannODonnell:1982} developed two algorithms incorporating the
+ideas of \citeauthor{AhoCorasick:1975} and \citeauthor{KnuthEtAl:1977}.
 %
-In a paper from~1982, \citeauthor{Hoffmann1982} first present an
+In a paper from~1982, \citeauthor{HoffmannODonnell:1982} first present an
 \mbox{$\mBigO(np)$} algorithm which matches \glspl{pattern tree} in a top-down
 fashion, and then an \mbox{$\mBigO(n+m)$} bottom-up algorithm which trades
 linear-time \gls{pattern matching} for longer preprocessing times ($n$ is the
@@ -2116,7 +2121,7 @@ then retrieved via a subsequent top-down traversal of the labeled \gls{tree}.
 %  \end{minipage}
 %\end{figure}
 
-Since the bottom-up algorithm introduced by \citeauthor{Hoffmann1982} has had a
+Since the bottom-up algorithm introduced by \citeauthor{HoffmannODonnell:1982} has had a
 historical impact on \gls{instruction selection}, we will spend some time
 discussing the details of how the lookup tables are produced.
 
@@ -2150,7 +2155,7 @@ The \gls{alphabet} needs to be finite and \gls!{ranked.a}, meaning that each
 Hence, in our case \mbox{$\mRank(a) = 2$} and \mbox{$\mRank(b) = \mRank(c) =
   \mRank(v) = 0$}.
 %
-Following the terminology used in \citeauthor{Hoffmann1982}'s paper, we also
+Following the terminology used in \citeauthor{HoffmannODonnell:1982}'s paper, we also
 introduce the notion of a \gls!{sigma term} and define it as follows:
 %
 \begin{enumerate}
@@ -2176,7 +2181,7 @@ We continue with some definitions concerning \glspl{pattern}.
 %
 First, let us denote by $\mMTrees(p)$ the set of trees that can be matched by
 the \gls{pattern}~$p$ at the \gls{root} of any valid tree\footnote{This
-  definition is not used by \citeauthor{Hoffmann1982} in their paper, but having
+  definition is not used by \citeauthor{HoffmannODonnell:1982} in their paper, but having
   it will simplify the discussion to come.}.
 %
 Depending on the \gls{alphabet}, this set could be infinite.
@@ -2217,7 +2222,7 @@ such that
 
 \Glspl{pattern set} that contain no \gls{independent.pt} \glspl{pattern} are
 known as \gls{simple.ps}[ \glspl{pattern set}]\footnote{In
-  \citeauthor{Hoffmann1982}'s paper these are called \emph{\gls{simple.ps}
+  \citeauthor{HoffmannODonnell:1982}'s paper these are called \emph{\gls{simple.ps}
     \gls{pattern} \glspl{forest}}.}.
 %
 For example, the \gls{pattern set} consisting of \glspl{pattern}~\patI and
@@ -2338,12 +2343,12 @@ properties that we will use for generating the lookup tables.
 In general, the size of each lookup table is exponential to the size of the
 \gls{pattern set}, as is the time to generate these tables.
 %
-But \citeauthor{Hoffmann1982} recognized that, for \gls{simple.ps}
+But \citeauthor{HoffmannODonnell:1982} recognized that, for \gls{simple.ps}
 \glspl{pattern set}, the number of possible \glspl{match set} is equal to the
 number of \glspl{pattern}, making it tractable to generate the tables for such
 sets.
 
-Furthermore, \citeauthor{Hoffmann1982} found that each possible \gls{match set}
+Furthermore, \citeauthor{HoffmannODonnell:1982} found that each possible \gls{match set}
 for a \gls{simple.ps} \gls{pattern set} can be represented using a single
 \gls{pattern tree}.
 %
@@ -2664,7 +2669,7 @@ which may in turn prevent \gls{optimal.ps} \gls{pattern selection}.
 %  \labelFigure{table-compression}
 %\end{figure}
 
-\textcite{Chase1987} further advanced \citeauthor{Hoffmann1982}'s table
+\textcite{Chase:1987} further advanced \citeauthor{HoffmannODonnell:1982}'s table
 generation technique by developing an algorithm that compresses the final lookup
 tables.
 %
@@ -2690,12 +2695,12 @@ Table compression also provides another benefit in that, for some \glspl{pattern
   set}, the lookup tables can be so large that they cannot even be constructed
 in the first place.
 %
-But \citeauthor{Chase1987} discovered that the tables can be compressed as they
+But \citeauthor{Chase:1987} discovered that the tables can be compressed as they
 are generated, thus pushing the limit on how large lookup tables can be
 produced.
 %
-\textcite{Cai1992} later improved the asymptotic bounds of
-\citeauthor{Chase1987}'s algorithm.
+\textcite{CaiEtAl:1992} later improved the asymptotic bounds of
+\citeauthor{Chase:1987}'s algorithm.
 \labelPage{chase-table-compression}
 
 
@@ -2706,24 +2711,24 @@ Once it became possible to find all \glspl{match set} for the entire
 \gls{expression tree} in linear time, techniques started to appear that also
 tackled the problem of \gls{optimal.ps} \gls{pattern selection} in linear time.
 %
-According to the literature, \textcite{Ripken1977} was the first to propose a
+According to the literature, \textcite{Ripken:1977} was the first to propose a
 viable method for optimal linear-time \gls{instruction selection}, which is
 described in a 1977 technical report.
 %
-\citeauthor{Ripken1977} based his method on the \glsdesc{DP} algorithm by
-\citeauthor{Aho1976a} -- which was mentioned in \refAppendix{introduction} --
+\citeauthor{Ripken:1977} based his method on the \glsdesc{DP} algorithm by
+\citeauthor{AhoJohnson:1976} -- which was mentioned in \refAppendix{introduction} --
 and later extended it to handle more realistic \glspl{instruction set} with
 multiple \glspl{register class} and \glspl{addressing mode}.
 %
 For brevity, we will henceforth abbreviate \glsdesc{DP} as~\gls{DP}.
 
-Although \citeauthor{Ripken1977} appears to have been the first to propose a
+Although \citeauthor{Ripken:1977} appears to have been the first to propose a
 design of an optimal \gls{DP}-based \gls{instruction selector}, it only remained
 that -- a proposal.
 %
 The first \emph{practical} attempt was instead made in 1986 by
-\citeauthor{Aho1989}~\cite{Aho1985, Tjiang1986, Aho1989} with the introduction
-of a \gls{compiler} generator called \gls{Twig}.
+\citeauthor{AhoEtAl:1989}~\cite{AhoGanapthi:1985, Tjiang:1986, AhoEtAl:1989} with
+the introduction of a \gls{compiler} generator called \gls{Twig}.
 
 
 \subsubsection{\glsentrytext{Twig}}
@@ -2754,17 +2759,17 @@ of a \gls{compiler} generator called \gls{Twig}.
 %    \end{plainCode}
 %  \end{minipage}
 %
-%  \figCaption{Rule samples for \glsentrytext{Twig}, written in CGL}[Aho1989]
+%  \figCaption{Rule samples for \glsentrytext{Twig}, written in CGL}[AhoEtAl:1989]
 %  \labelFigure{twig-example}
 %\end{figure}
 
-As in \citeauthor{Ripken1977}'s design, \gls{Twig} uses a version of
-\citeauthor{Aho1976a}'s \gls{DP}~algorithm for selecting the \gls{optimal.ps}
+As in \citeauthor{Ripken:1977}'s design, \gls{Twig} uses a version of
+\citeauthor{AhoJohnson:1976}'s \gls{DP}~algorithm for selecting the \gls{optimal.ps}
 set of \glspl{pattern tree} to cover a given \gls{expression tree}.
 %
 The \gls{machine description} is expressed as an \gls{machine grammar} (see
 \refSection{graham-glanville}) using a language called \gls{CGL}, which as
-introduced by \textcite{Aho1985} in~1985.
+introduced by \textcite{AhoGanapthi:1985} in~1985.
 %
 An excerpt of such a \gls{machine description} is shown in
 \refFigure{twig-example}.
@@ -2778,7 +2783,7 @@ every \gls{node} in the \gls{expression tree}\footnote{Remember that, when using
   \glspl{machine grammar}, a \gls{pattern} found in the \gls{match set} during
   \gls{pattern matching} corresponds to the right-hand side of a
   \gls{production}.} using an implementation of the Aho-Corasick string matching
-algorithm~\cite{Aho1975}.
+algorithm~\cite{AhoCorasick:1975}.
 %
 The second pass is a bottom-up cost computation pass that gives the cost of
 selecting a particular \gls{pattern} for a given \gls{node}.
@@ -2856,7 +2861,7 @@ algorithms.
 %  \end{subfigure}
 %
 %  \figCaption{Algorithms for optimal tree-based pattern selection using dynamic
-%    programming}[Aho1989]
+%    programming}[AhoEtAl:1989]
 %  \labelFigure{dp-algorithm}
 %\end{figure}
 
@@ -2925,9 +2930,9 @@ infinite loop no longer need to be explicitly broken.
 Third, machine descriptions can be made more concise as \glspl{rule} differing
 only in cost can be combined into a single \gls{rule}.
 %
-Again taking the \gls{VAX}~machine as an example, \citeauthor{Aho1989} reported
+Again taking the \gls{VAX}~machine as an example, \citeauthor{AhoEtAl:1989} reported
 that the entire \gls{Twig} specification could be implemented using only
-115~\glspl{rule}, which is about half the size of \citeauthor{Ganapathi1982b}'s
+115~\glspl{rule}, which is about half the size of \citeauthor{GanapathiEtAl:1982:AttrGr}'s
 \gls{attribute}-based \gls{machine grammar} for the same \gls{target machine}.
 
 However, the \gls{DP}~approach requires that the \gls{code generation} problem
@@ -2944,43 +2949,44 @@ solutions, whose total sum is greater compared to another set of selected
 \labelSection{iburg}
 \labelSection{olive}
 
-Several improvements of \gls{Twig} were later made by \textcite{Yates1988} and
-\textcite{Emmelmann1989}.
+Several improvements of \gls{Twig} were later made by
+\textcite{YatesSchwartz:1988} and \textcite{EmmelmannEtAl:1989}.
 %
-\citeauthor{Yates1988} improved the rate of \gls{pattern matching} by replacing
-\gls{Twig}'s top-down approach with the faster bottom-up algorithm proposed by
-\citeauthor{Hoffmann1982}, and also extended the \gls{attribute} support for
-more powerful \glspl{predicate}.
+\citeauthor{YatesSchwartz:1988} improved the rate of \gls{pattern matching} by
+replacing \gls{Twig}'s top-down approach with the faster bottom-up algorithm
+proposed by \citeauthor{HoffmannODonnell:1982}, and also extended the
+\gls{attribute} support for more powerful \glspl{predicate}.
 %
-\citeauthor{Emmelmann1989} modified the \gls{DP}~algorithm to be run as the
+\citeauthor{EmmelmannEtAl:1989} modified the \gls{DP}~algorithm to be run as the
 \glspl{expression tree} are built by the frontend, which also inlines the code
 of auxiliary functions directly into the \gls{DP}~algorithm to reduce the
 overhead.
 %
-\citeauthor{Emmelmann1989} implemented their improvements in a system called the
-\gls!{BEG}, and a modified version of this is currently used in the \gls!{CoSy}
-\gls{compiler}~\cite{ACE2003}.
+\citeauthor{EmmelmannEtAl:1989} implemented their improvements in a system
+called the \gls!{BEG}, and a modified version of this is currently used in the
+\gls!{CoSy} \gls{compiler}~\cite{ACE:2003}.
 
 \labelPage{iburg}
 
-\textcite{Fraser1992a} made similar improvements in a system called \gls{IBurg}
-that is both simpler and faster than \gls{Twig} -- \gls{IBurg} requires only
-950~lines of code compared to \gls{Twig}'s \mbox{3,000 lines} of \gls{C}~code,
-and generates \gls{assembly code} of comparable quality at a rate that is
-25~times faster -- and has been used in several \glspl{compiler} (such as
-\gls!{Record}~\cite{Leupers1997, Marwedel1997} and
-\gls!{Redaco}~\cite{Kreuzer1996}).
+\textcite{FraserEtAl:1992:IBurg} made similar improvements in a system called
+\gls{IBurg} that is both simpler and faster than \gls{Twig} -- \gls{IBurg}
+requires only 950~lines of code compared to \gls{Twig}'s \mbox{3,000 lines} of
+\gls{C}~code, and generates \gls{assembly code} of comparable quality at a rate
+that is 25~times faster -- and has been used in several \glspl{compiler} (such
+as \gls!{Record}~\cite{LeupersMarwedel:1997, Marwedel:1997} and
+\gls!{Redaco}~\cite{KreuzerEtAl:1996}).
 %
-\citeauthor{Gough1997}~\cite{Gough1995, Gough1997} later extended the
-\gls{predicate} support of \gls{IBurg} in an implementation called \gls{MBurg}.
+\citeauthor{GoughLedermann:1997}~\cite{Gough:1995, GoughLedermann:1997} later extended
+the \gls{predicate} support of \gls{IBurg} in an implementation called
+\gls{MBurg}.
 %
 Both \gls{IBurg} and \gls{MBurg} have later been reimplemented in various
 programming languages, such as the \gls{Java}-based \gls{JBurg}~\cite{JBURG},
 \gls{OCamlBurg}~\cite{OCamlBURG}, which is written in~\gls{C--}, and
-\gls{GPBurg}~\cite{Gough2012}, which is written in \gls{CSharp}.
+\gls{GPBurg}~\cite{Gough:2012}, which is written in \gls{CSharp}.
 
-According to \textcite{Leupers2001} and \textcite{Cao2011},
-\textcite{Tjiang1993} later merged the ideas of \gls{Twig} and \gls{IBurg} into
+According to \textcite{LeupersMarwedel:2001} and \textcite{CaoEtAl:2011},
+\textcite{Tjiang:1993} later merged the ideas of \gls{Twig} and \gls{IBurg} into
 a new implementation called \gls!{Olive} -- the name is a spin-off of \gls{Twig}
 -- and made several additional improvements such as \glspl{rule} to use
 arbitrary cost functions instead of fixed, numeric values.
@@ -2989,15 +2995,15 @@ This supports more versatile \gls{instruction selection}, as \glspl{rule} can be
 dynamically deactivated by setting infinite costs, which can be controlled from
 the current context.
 %
-\gls{Olive} is used in the implementation of \gls!{Spam}~\cite{Sudarsanam1999}
--- a fixed-point \gls{DSP} \gls{compiler} -- and \textcite{Araujo1995} employed
-it in an attempt to integrate \gls{instruction selection} with scheduling and
-\gls{register allocation}.
+\gls{Olive} is used in the implementation of
+\gls!{Spam}~\cite{SudarsanamEtAl:1999} -- a fixed-point \gls{DSP} \gls{compiler}
+-- and \textcite{AraujoMalik:1995} employed it in an attempt to integrate
+\gls{instruction selection} with scheduling and \gls{register allocation}.
 
 
 \subsubsection{Code Size-Reducing Instruction Selection}
 
-In 2010, \textcite{EdlerVonKoch2010} modified the backend in \gls{CoSy} to
+In 2010, \textcite{EdlerVonKochEtAl:2010} modified the backend in \gls{CoSy} to
 perform \gls{code generation} in two stages in order to reduce code size for
 architectures with mixed \mbox{16-bit} and \mbox{32-bit} \glspl{instruction},
 where the former is smaller but can only access a reduced set of
@@ -3021,10 +3027,10 @@ compared to \gls{CoSy} for the selected target architecture and benchmark suite.
 
 \subsubsection{Combining DP with Macro Expansion}
 
-After arguing that \citeauthor{Glanville1978}'s method attacked the
+After arguing that \citeauthor{GlanvilleGraham:1978}'s method attacked the
 \gls{instruction selection} problem from the wrong direction (that is, by
 defining the \glspl{instruction} in terms of \gls{IR}~operations),
-\textcite{Horspool1987} developed in 1987 a technique that essentially is an
+\textcite{Horspool:1987} developed in 1987 a technique that essentially is an
 enhanced form of \gls{macro expansion}.
 %
 As discussed in \refAppendix{macro-expansion}, because \gls{macro}-expanding
@@ -3038,7 +3044,7 @@ bookkeeping into the macro definitions, but doing so by hand often proves to be
 infeasible.
 %
 By including an \gls{edge} labeling step prior to \gls{macro expansion},
-\citeauthor{Horspool1987} found a way of supporting such \glspl{instruction}
+\citeauthor{Horspool:1987} found a way of supporting such \glspl{instruction}
 while at the same time simplifying the \gls{macro} definitions.
 
 %\begin{figure}[t]
@@ -3080,7 +3086,7 @@ while at the same time simplifying the \gls{macro} definitions.
 %
 %  \figCaption[Breaking down a pattern into single-node components]
 %    {Breaking down a pattern into single-node components in order for it to be
-%     supported by a macro-expanding instruction selector}[Horspool1987]%
+%     supported by a macro-expanding instruction selector}[Horspool:1987]%
 %  \labelFigure{pattern-single-node-breakdown}
 %\end{figure}
 
@@ -3112,11 +3118,11 @@ macro definitions become much simpler compared to those of traditional
 Moreover, there is no need to handle backtracking, as such a combination of
 \gls{edge} labels would imply an illegal cover of the \gls{expression tree}.
 
-In principle, \citeauthor{Horspool1987}'s design is comparable to that of
-\citeauthor{Aho1989}, and should yield similar code quality.
+In principle, \citeauthor{Horspool:1987}'s design is comparable to that of
+\citeauthor{AhoEtAl:1989}, and should yield similar code quality.
 %
-However, \citeauthor{Horspool1987} appears to have had to implement his
-\gls{instruction selection} tables by hand whereas \citeauthor{Aho1989} built a
+However, \citeauthor{Horspool:1987} appears to have had to implement his
+\gls{instruction selection} tables by hand whereas \citeauthor{AhoEtAl:1989} built a
 tool to do it for them.
 
 
@@ -3240,31 +3246,31 @@ However, we have yet to describe how to compute the \glspl{state}.
 %$\mathit{RT}$ stands for \emph{rule table} and
 %      specifies the rule to select for optimal covering given a certain state
 %      and goal}%
-%    [Proebsting1995a]
+%    [Proebsting:1995:BURS]
 %  \labelFigure{pattern-selection-and-code-emission-states}
 %\end{figure}
 
 
 \subsubsection{First Technique to Apply Offline Cost Analysis}
 
-Due to a 1986~paper, \textcite{Hatcher1986} appear to have been pioneers in
+Due to a 1986~paper, \textcite{HatcherChristopher:1986} appear to have been pioneers in
 applying \gls{offline cost analysis} to \gls{pattern selection}.
-\citeauthor{Hatcher1986}'s design is an extension of the work by
-\citeauthor{Hoffmann1982}, and their intuition is to find which \gls{rule} to
+\citeauthor{HatcherChristopher:1986}'s design is an extension of the work by
+\citeauthor{HoffmannODonnell:1982}, and their intuition is to find which \gls{rule} to
 apply for some \gls{expression tree}, whose \gls{root} has been assigned a
 label~$l$, such that the entire \gls{tree} can be reduced to a given
 \gls{nonterminal} at lowest cost.
 %
-\citeauthor{Hatcher1986} argued that for \gls{optimal.ps} \gls{pattern
+\citeauthor{HatcherChristopher:1986} argued that for \gls{optimal.ps} \gls{pattern
   selection} we can consider each pair of a label~$l$ and
 \gls{nonterminal}~$\mathit{nt}$, and then always apply the \gls{rule} that will
 reduce the largest \gls{expression tree}~$T_l$, which is representative of~$l$,
 to $\mathit{nt}$ at the lowest cost.
 %
-In \citeauthor{Hoffmann1982}'s design, where there is only one \gls{nullary
+In \citeauthor{HoffmannODonnell:1982}'s design, where there is only one \gls{nullary
   symbol} that may match any \gls{subtree}, $T_l$ is equal to the largest
 \gls{pattern} appearing in the \gls{match set}, but to accommodate
-\glspl{machine grammar}, \citeauthor{Hatcher1986}'s version includes one
+\glspl{machine grammar}, \citeauthor{HatcherChristopher:1986}'s version includes one
 \gls{nullary symbol} per \gls{nonterminal}.
 %
 This means that $T_l$ has to be found by overlapping all \glspl{pattern}
@@ -3296,18 +3302,18 @@ This will select either the largest \gls{pattern} appearing in the \gls{match
 with others has a lower cost.
 %
 We have of course glossed over many details, but this covers the main idea of
-\citeauthor{Hatcher1986}'s design.
+\citeauthor{HatcherChristopher:1986}'s design.
 
 By encoding the selected \glspl{rule} into an additional table to be used during
 \gls{pattern matching}, we achieve a completely table-driven \gls{instruction
   selector} which also performs \gls{optimal.ps} \gls{pattern selection}.
 %
-\citeauthor{Hatcher1986} also augmented the original algorithm so that the
+\citeauthor{HatcherChristopher:1986} also augmented the original algorithm so that the
 returned \glspl{match set} contain all \glspl{pattern} that were duplicated due
 commutative operations.
 %
 However, if the \gls{pattern set} contains \glspl{pattern} which are truly
-\gls{independent.pt}, then \citeauthor{Hatcher1986}'s design does not always
+\gls{independent.pt}, then \citeauthor{HatcherChristopher:1986}'s design does not always
 guarantee that the \glspl{expression tree} can be optimally covered.
 %
 It is also not clear whether \gls{optimal.ps} \gls{pattern selection} for the
@@ -3364,14 +3370,14 @@ approximation for \gls{optimal.ps} \gls{pattern selection} for all possible
 %    \end{minipage}%
 %  \end{subfigure}
 %
-%  \figCaption{BURS example}[Pelegri-Llopart1988]
+%  \figCaption{BURS example}[Pelegri-LlopartGraham:1988]
 %  \labelFigure{burs-example}
 %\end{figure}
 
 A different and more well-known method for generating the \glspl{state} was
-developed by \textcite{Pelegri-Llopart1988}.
+developed by \textcite{Pelegri-LlopartGraham:1988}.
 %
-In a seminal paper from~1988, \citeauthor{Pelegri-Llopart1988} prove that the
+In a seminal paper from~:1988, \citeauthor{Pelegri-LlopartGraham:1988} prove that the
 methods of \gls{tree rewriting} can always arranged such that all rewrites occur
 at the \glspl{leaf} of the \gls{tree}, resulting in a \gls{BURS}.
 %
@@ -3381,12 +3387,12 @@ which is similar to the \glspl{grammar} already seen, with the exception that
 -- to appear on the left-hand side of a \gls{production}.
 %
 An example of such a \gls{grammar} is given in
-\refFigure{burs-example-rewrite-system}, and \textcite{Dold1998}, as an
-extension to the work of \textcite{Zimmermann1997}, later developed a method for
-proving the correctness of \glspl{BURS grammar} using abstract \glspl{state
-  machine}.
+\refFigure{burs-example-rewrite-system}, and \textcite{DoldEtAl:1998}, as an
+extension to the work of \textcite{ZimmermannGaul:1997}, later developed a
+method for proving the correctness of \glspl{BURS grammar} using abstract
+\glspl{state machine}.
 
-Using \gls{BURS} theory \citeauthor{Pelegri-Llopart1988} developed an algorithm
+Using \gls{BURS} theory \citeauthor{Pelegri-LlopartGraham:1988} developed an algorithm
 that computes the tables needed for \gls{optimal.ps} \gls{pattern selection}
 based on a given \gls{BURS grammar}.
 %
@@ -3405,7 +3411,7 @@ Each \gls{UI LR graph} then corresponds to a \gls{state}, and by generating all
 input, we can find all the necessary \glspl{state}.
 %
 Since finding a \gls{UI LR graph} is an NP-complete problem,
-\citeauthor{Pelegri-Llopart1988} applied a heuristic that iteratively removes
+\citeauthor{Pelegri-LlopartGraham:1988} applied a heuristic that iteratively removes
 \glspl{node} which are deemed ``useless'' until a \gls{UI LR graph} is achieved.
 
 
@@ -3465,7 +3471,7 @@ Since finding a \gls{UI LR graph} is an NP-complete problem,
 %
 %  \figCaption[An example of state explosion]%
 %    {An example illustrating how incorporating costs into states can result in
-%      an infinite number of states}[Pelegri-Llopart1988]
+%      an infinite number of states}[Pelegri-LlopartGraham:1988]
 %  \labelFigure{burs-example2}
 %\end{figure}
 
@@ -3495,14 +3501,14 @@ needed \glspl{state} is bounded, as seen in
 \refFigure{burs-example2-tree-bounded}.
 %
 This cost is called the \gls!{delta cost} and the augmented \gls{LR graph} is
-thus known as a \gls{d-LR graph}.
+thus known as a \gls!{d-LR graph}.
 %
 To limit the memory footprint when generating the \glspl{d-LR graph},
-\citeauthor{Pelegri-Llopart1988} used an extension of \citeauthor{Chase1987}'s
-table compression algorithm~\cite{Chase1987} (which we discussed
+\citeauthor{Pelegri-LlopartGraham:1988} used an extension of \citeauthor{Chase:1987}'s
+table compression algorithm~\cite{Chase:1987} (which we discussed
 on \refPage{chase-table-compression}).
 
-During testing, \citeauthor{Pelegri-Llopart1988} reported that their
+During testing, \citeauthor{Pelegri-LlopartGraham:1988} reported that their
 implementation yielded \gls{state} tables only slightly larger than those
 produced by \gls{LR parsing}, and generated \gls{assembly code} of quality
 comparable to \gls{Twig}'s but at a rate that was about five times faster.
@@ -3511,19 +3517,19 @@ comparable to \gls{Twig}'s but at a rate that was about five times faster.
 
 \subsubsection{BURS $\nLeftrightarrow$ Offline Cost Analysis}
 
-Since \citeauthor{Pelegri-Llopart1988}'s 1988 paper, many later publications
+Since \citeauthor{Pelegri-LlopartGraham:1988}'s 1988 paper, many later publications
 mistakenly associate to the idea of \gls{offline cost analysis} with~\gls{BURS}
 theory, typically using terms like \glspl!{BURS state}, when these two aspects
 are in fact orthogonal to each other.
 %
-Although the work by \citeauthor{Pelegri-Llopart1988} undoubtedly led to making
+Although the work by \citeauthor{Pelegri-LlopartGraham:1988} undoubtedly led to making
 \gls{offline cost analysis} an established aspect of modern \gls{instruction
   selection}, the application of \gls{BURS} theory is only \emph{one} means to
 achieving \gls{optimal.ps} \gls{pattern selection} using tables.
 
-For example, in 1990 \textcite{Balachandran1990} introduced an alternative
+For example, in 1990 \textcite{BalachandranEtAl:1990} introduced an alternative
 method for generating the \glspl{state} that is both simpler and more efficient
-than that of \citeauthor{Pelegri-Llopart1988}.
+than that of \citeauthor{Pelegri-LlopartGraham:1988}.
 %
 At its heart their algorithm iteratively creates new \glspl{state} using those
 already committed to appear in the \gls{state} tables.
@@ -3541,11 +3547,11 @@ and the process repeats until no new \glspl{state} can be created.
 %
 We will go into more detail shortly.
 
-Compared to \citeauthor{Pelegri-Llopart1988}, this algorithm is less complicated
+Compared to \citeauthor{Pelegri-LlopartGraham:1988}, this algorithm is less complicated
 and also faster as it directly generates a smaller set of \glspl{state} instead
 of first enumerating all possible \glspl{state} and then reducing them.
 %
-In addition, \citeauthor{Balachandran1990} expressed the \glspl{instruction} as
+In addition, \citeauthor{BalachandranEtAl:1990} expressed the \glspl{instruction} as
 a more traditional \gls{machine grammar} -- like those used in the
 \gls{Glanville-Graham approach} -- instead of as a \gls{BURS grammar}.
 
@@ -3553,7 +3559,7 @@ a more traditional \gls{machine grammar} -- like those used in the
 \subsubsection{Normal-Form Grammars}
 \labelPage{normal-form-grammar}
 
-In the same paper, \citeauthor{Balachandran1990} also introduce the idea of
+In the same paper, \citeauthor{BalachandranEtAl:1990} also introduce the idea of
 \glspl{grammar} being in \emph{\glsshort{normal form.g}}, which means that the
 pattern of every \gls{production} in the \gls{grammar} is restricted to one of
 the following forms:%
@@ -3620,20 +3626,20 @@ more uniform, which greatly simplifies the task of generating the \glspl{state}.
 \subsubsection{A Work Queue Approach for State Table Generation}
 
 Another \gls{state}-generating algorithm similar to the one by
-\citeauthor{Balachandran1990} was proposed by
-\citeauthor{Proebsting1992b}~\cite{Proebsting1992b, Proebsting1995a}.
+\citeauthor{BalachandranEtAl:1990} was proposed by
+\citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS, Proebsting:1995:BURS}.
 %
-This algorithm was also implemented by \textcite{Fraser1992b} in a renowned
+This algorithm was also implemented by \textcite{FraserEtAl:1992:Burg} in a renowned
 \gls{code generation} system called \gls{Burg},\!%
 %
 \footnote{%
-  The keen reader will notice that \citeauthor{Fraser1992a} also implemented the
+  The keen reader will notice that \citeauthor{FraserEtAl:1992:IBurg} also implemented the
   \gls{DP}-based system \gls{IBurg} which was introduced on \refPage{iburg}.
   %
   The connection between the two is that \gls{IBurg} began as a testbench for
   the \gls{grammar} specification to be used as input to \gls{Burg}.
   %
-  \citeauthor{Fraser1992b} later recognized that some of the ideas for the
+  \citeauthor{FraserEtAl:1992:Burg} later recognized that some of the ideas for the
   testbench showed some merit in themselves, and therefore improved and extended
   them into a stand-alone generator.
   %
@@ -3644,26 +3650,26 @@ This algorithm was also implemented by \textcite{Fraser1992b} in a renowned
   and stands for \emph{Bottom-Up Rewrite Generator}.%
 }%
 %
-which since its publication in 1992 has sparked a naming convention within the
+which since its publication in :1992 has sparked a naming convention within the
 \gls{compiler} community that I have chosen to call the \gls!{BURGer
   phenomenon}.\!%
 %
 \footnote{%
   During my research for this dissertation, I came across the following systems,
-  all with equally creative naming schemes: \gls{Burg}~\cite{Fraser1992b},
-  \gls{CBurg}~\cite{Scharwaechter2007}, \gls{DBurg}~\cite{Ertl1999},
-  \gls{GBurg}~\cite{Fraser1999}, \gls{GPBurg}~\cite{Gough2012},
-  \gls{HBurg}~\cite{HBURG}, \gls{IBurg}~\cite{Fraser1992a},
-  \gls{JBurg}~\cite{JBURG}, \gls{LBurg}~\cite{Hanson1995},
-  \gls{MBurg}~\cite{Gough1995, Gough1997}, \gls{OCamlBurg}~\cite{OCamlBURG}, and
-  \gls{WBurg}~\cite{Proebsting1996}.%
+  all with equally creative naming schemes: \gls{Burg}~\cite{FraserEtAl:1992:Burg},
+  \gls{CBurg}~\cite{ScharwaechterEtAl:2007}, \gls{DBurg}~\cite{Ertl:1999},
+  \gls{GBurg}~\cite{FraserProebsting:1999}, \gls{GPBurg}~\cite{Gough:2012},
+  \gls{HBurg}~\cite{HBURG}, \gls{IBurg}~\cite{FraserEtAl:1992:IBurg},
+  \gls{JBurg}~\cite{JBURG}, \gls{LBurg}~\cite{HansonFraser:1995},
+  \gls{MBurg}~\cite{Gough:1995, GoughLedermann:1997}, \gls{OCamlBurg}~\cite{OCamlBURG}, and
+  \gls{WBurg}~\cite{ProebstingWhaley:1996}.%
 }
 %
-Although \citeauthor{Balachandran1990} were first, we will continue with
-studying \citeauthor{Proebsting1992b}'s algorithm as it is better documented.
+Although \citeauthor{BalachandranEtAl:1990} were first, we will continue with
+studying \citeauthor{Proebsting:1992:BURS}'s algorithm as it is better documented.
 %
-More details are also available in \citeauthor{Proebsting1992a}'s doctoral
-dissertation~\cite{Proebsting1992a}.
+More details are also available in \citeauthor{Proebsting:1992:Thesis}'s doctoral
+dissertation~\cite{Proebsting:1992:Thesis}.
 
 %\begin{inParFigure}{4.75cm}[r][2]%
 %  \centering%
@@ -3712,13 +3718,13 @@ been generated.
 The time required to generate the \gls{state} tables can be decreased if the
 number of committed \glspl{state} can be minimized.
 %
-According to \textcite{Proebsting1992b}, the first attempts to do this were made
-by \textcite{Henry1989}, whose methods were later improved and generalized by
-\citeauthor{Proebsting1992b}~\cite{Proebsting1992b, Proebsting1995a}.
+According to \textcite{Proebsting:1992:BURS}, the first attempts to do this were made
+by \textcite{Henry:1989}, whose methods were later improved and generalized by
+\citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS, Proebsting:1995:BURS}.
 %
-\citeauthor{Proebsting1992b} developed two methods for reducing the number of
+\citeauthor{Proebsting:1992:BURS} developed two methods for reducing the number of
 generated \glspl{state}: \gls!{state trimming}, which extends and generalizes
-\citeauthor{Henry1989}'s ideas; and a new technique called \gls!{chain rule
+\citeauthor{Henry:1989}'s ideas; and a new technique called \gls!{chain rule
   trimming}.
 %
 Without going into details, \gls{state trimming} increases the likelihood that
@@ -3729,9 +3735,10 @@ covering.
 \Gls{chain rule trimming} then further minimizes the number of \glspl{state} by
 attempting to use the same \glspl{rule} whenever possible.
 %
-This technique was later improved by \citeauthor{Kang1995}~\cite{Kang1995,
-  Kang2004}, who exploited properties of common \glspl{machine description} to
-decrease the amount of redundant \gls{state} testing.
+This technique was later improved by
+\citeauthor{KangChoe:1995}~\cite{KangChoe:1995, Kang:2004}, who exploited
+properties of common \glspl{machine description} to decrease the amount of
+redundant \gls{state} testing.
 
 
 \subsubsection{More Applications}
@@ -3740,20 +3747,22 @@ The approach of extending \gls{pattern selection} with \gls{offline cost
   analysis} has been applied in numerous \gls{compiler}-related systems.
 %
 Some notable applications that we have not already mentioned include
-\gls{UNH-Codegen}~\cite{Hatcher1988}, \gls{DCG}~\cite{Engler1994},
-\gls{LBurg}~\cite{Hanson1995}, and \gls{WBurg}~\cite{Proebsting1996}.
+\gls{UNH-Codegen}~\cite{HatcherTuller:1988},
+\gls{DCG}~\cite{EnglerProebsting:1994}, \gls{LBurg}~\cite{HansonFraser:1995},
+and \gls{WBurg}~\cite{ProebstingWhaley:1996}.
 %
 \Gls{Burg} is also available as a Haskell clone called
-\gls!{HBurg}~\cite{HBURG}, and has been adapted by \textcite{Boulytchev2007} to
+\gls!{HBurg}~\cite{HBURG}, and has been adapted by \textcite{Boulytchev:2007} to
 assist \gls{instruction set} selection.
 %
-\gls{LBurg} was developed to be used in the \gls!{LCC}~\cite{Hanson1995}, and
-was adopted by \textcite{Brandner2007} in designing an architecture description
-language from which the \glspl{instruction} can automatically be inferred.
+\gls{LBurg} was developed to be used in the \gls!{LCC}~\cite{HansonFraser:1995},
+and was adopted by \textcite{BrandnerEtAl:2007} in designing an architecture
+description language from which the \glspl{instruction} can automatically be
+inferred.
 %
-\gls{LBurg} was also extended by \textcite{Farfeleder2006} to support certain
-\gls{multi-output.ic} \glspl{instruction} by adding an additional, handwritten
-pass in the \gls{pattern matcher}.
+\gls{LBurg} was also extended by \textcite{FarfelederEtAl:2006} to support
+certain \gls{multi-output.ic} \glspl{instruction} by adding an additional,
+handwritten pass in the \gls{pattern matcher}.
 
 
 \subsection{Generating States Lazily}
@@ -3775,7 +3784,7 @@ support \gls{grammar} \glspl{rule} with fixed costs.
 
 \subsubsection{Combining the Best of State Tables and DP}
 
-In 2006, \textcite{Ertl2006} introduced a method that allows the \gls{state}
+In 2006, \textcite{ErtlEtAl:2006} introduced a method that allows the \gls{state}
 tables to be generated lazily and on demand.
 %
 The intuition is that instead of generating the \glspl{state} for \emph{all}
@@ -3800,7 +3809,7 @@ This allows the cost of \gls{state} generation to be amortized as the
 \gls{subtree} can now be optimally covered faster than if it had been processed
 using a purely \gls{DP}-based \gls{pattern selector}.
 %
-\citeauthor{Ertl2006} reported the overhead of \gls{state} reuse was minimal
+\citeauthor{ErtlEtAl:2006} reported the overhead of \gls{state} reuse was minimal
 compared to purely table-driven implementations, and the time required to first
 compute the \glspl{state} and then label the \glspl{expression tree} was on par
 with selecting \glspl{pattern} using ordinary \gls{DP}-based techniques.
@@ -3809,7 +3818,7 @@ Moreover, by generating the \glspl{state} lazily it is possible to handle larger
 and more complex \glspl{machine grammar} which otherwise would require an
 intractable number of \glspl{state}.
 
-\citeauthor{Ertl2006} also extended this design to support dynamic costs by
+\citeauthor{ErtlEtAl:2006} also extended this design to support dynamic costs by
 recomputing and storing the \glspl{state} in hash tables whenever the costs at
 the \gls{expression tree} \glspl{root} differ.
 %
@@ -3834,11 +3843,11 @@ but solve the \gls{instruction selection} problem using alternative methods.
 \subsubsection{Homomorphisms and Inversion of Derivors}
 
 In order to simplify the \glspl{machine description} and enable formal
-verification, \textcite{Geigerich1988} proposed in 1988 an algebraic framework
+verification, \textcite{GeigerichSchmal:1988} proposed in 1988 an algebraic framework
 intended to support all aspects of \gls{code generation}, including
 \gls{instruction scheduling} and \gls{register allocation}.
 %
-In brief terms \citeauthor{Geigerich1988} reformulated the \gls{instruction
+In brief terms \citeauthor{GeigerichSchmal:1988} reformulated the \gls{instruction
   selection} problem into a ``problem of a hierarchic derivor,'' which
 essentially entails the specification and implementation of a mechanism
 %
@@ -3876,19 +3885,19 @@ Conceptually this gives us the following functionality:
   T(Q) \annotArrow{\delta^{-1}} 2^{T(Z)} \annotArrow{\xi} T(Z).
 \end{displaymath}
 %
-In the same paper, \citeauthor{Geigerich1988} also demonstrate how some other
+In the same paper, \citeauthor{GeigerichSchmal:1988} also demonstrate how some other
 methods, such as \gls{tree parsing}, can be expressed using this framework.
 %
 A similar scheme based on rewriting techniques was later proposed by
-\citeauthor{Despland1990}~\cite{Despland1987, Despland1990} in an implementation
-called \gls!{Pagode}~\cite{Canalda1995}.
+\citeauthor{DesplandEtAl:1990}~\cite{DesplandEtAl:1987, DesplandEtAl:1990} in an
+implementation called \gls!{Pagode}~\cite{CanaldaEtAl:1995}.
 
 
 \subsubsection{Equational Logic}
 
-Shortly after \citeauthor{Geigerich1988}, \textcite{Hatcher1991} developed a
-design similar to that of \citeauthor{Pelegri-Llopart1988} that relies on
-\gls{equational logic}~\cite{ODonnell1985} instead of \gls{BURS} theory.
+Shortly after \citeauthor{GeigerichSchmal:1988}, \textcite{Hatcher:1991} developed a
+design similar to that of \citeauthor{Pelegri-LlopartGraham:1988} that relies on
+\gls{equational logic}~\cite{ODonnell:1985} instead of \gls{BURS} theory.
 %
 The two are closely related in that both apply a set of predefined \glspl{rule}
 to rewrite the \gls{expression tree} into a single goal term, but an equational
@@ -3925,59 +3934,60 @@ without going into much detail.
 \subsubsection{Using Finite Tree Automata, Series Transducers, and Pushdown
   Automata}
 
-\textcite{Emmelmann1992a} introduced in 1992 a technique that relies on the
-theories of \glspl{finite tree automaton} (see for example~\cite{Gecseg1984} for
-an overview), which was later extended by \textcite{Ferdinand1994}.
+\textcite{Emmelmann:1992:Rewriting} introduced in 1992 a technique that relies
+on the theories of \glspl{finite tree automaton} (see for
+example~\cite{GecsegSteinby:1984} for an overview), which was later extended by
+\textcite{FerdinandEtAl:1994}.
 %
-In their 1994~paper, \citeauthor{Ferdinand1994} demonstrate how \glspl{finite
-  tree automaton} can be used to solve both \gls{pattern matching} and
-\gls{pattern selection} -- greedily as well as \gls{optimal.ps}[ly] -- and also
-present algorithms for how to produce these automata.
+In their 1994~paper, \citeauthor{FerdinandEtAl:1994} demonstrate how
+\glspl{finite tree automaton} can be used to solve both \gls{pattern matching}
+and \gls{pattern selection} -- greedily as well as \gls{optimal.ps}[ly] -- and
+also present algorithms for how to produce these automata.
 %
 An experimental implementation demonstrated the feasibility of this technique,
 but the results were not compared to those of other techniques.
 %
-Similar designs were later proposed by \textcite{Borchardt2004} and
-\textcite{Janousek2014}, who made use of \glspl{tree series transducer} (see for
-example~\cite{Engelfriet2001} for an overview) and \glspl{pushdown automaton},
-respectively.
+Similar designs were later proposed by \textcite{Borchardt:2004} and
+\textcite{JanousekJaroslav:2014}, who made use of \glspl{tree series transducer}
+(see for example~\cite{EngelfrietEtAl:2001} for an overview) and \glspl{pushdown
+  automaton}, respectively.
 
 
 \subsubsection{Rewriting Strategies}
 
-In 2002, \citeauthor{Bravenboer2002} presented a design where \gls{rule}-based
-\gls{program} transformation systems~\cite{Visser2005} are adapted to
-\gls{instruction selection}.
+In 2002, \citeauthor{BravenboerVisser:2002} presented a design where
+\gls{rule}-based \gls{program} transformation systems~\cite{Visser:2005} are
+adapted to \gls{instruction selection}.
 %
-Through a system called \gls!{Stratego}~\cite{Visser2001}, a \gls{machine
+Through a system called \gls!{Stratego}~\cite{Visser:2001}, a \gls{machine
   description} can be augmented by \gls{pattern selection} strategies, allowing
 the \gls{pattern selector} to be tailored to that particular \gls{target
   machine}.
 %
-\citeauthor{Bravenboer2002} refer to this as providing a \gls{rewriting
+\citeauthor{BravenboerVisser:2002} refer to this as providing a \gls{rewriting
   strategy}, and their system supports modeling of several strategies such as
 exhaustive search, \gls{maximum munch}, and dynamic programming.
 %
 Purely table-driven techniques, however, do not seem to be supported at the time
 of writing, which excludes the application of \gls{offline cost analysis}.
 %
-In their paper, \citeauthor{Bravenboer2002} argue that this setup allows several
-\gls{pattern selection} techniques to be combined, but they do not provide an
-example of where this would be beneficial.
+In their paper, \citeauthor{BravenboerVisser:2002} argue that this setup allows
+several \gls{pattern selection} techniques to be combined, but they do not
+provide an example of where this would be beneficial.
 
 
 \subsection{Techniques Based on Genetic Algorithms}
 \labelSection{genetic-algorithms}
 
-To solve the \gls{pattern selection} problem, \textcite{Shu1996} employed the
+To solve the \gls{pattern selection} problem, \textcite{ShuEtAl:1996} employed the
 theories of \glspl{GA}, which mimic the process of natural selection (see for
-example \cite{Reeves2010} for an overview).\!%
+example \cite{Reeves:2010} for an overview).\!%
 %
 \footnote{%
-  On a related note, \textcite{Wu2006} applied \gls{ant colony optimization} --
-  a meta-heuristic inspired by the shortest-path searching behavior of various
-  ant species \cite{Dorigo2010} -- to improve overall code size by alternating
-  between \glspl{instruction set} on a per-function basis.%
+  On a related note, \textcite{WuLi:2006} applied \gls{ant colony optimization}
+  -- a meta-heuristic inspired by the shortest-path searching behavior of
+  various ant species \cite{DorigoStutzle:2010} -- to improve overall code size
+  by alternating between \glspl{instruction set} on a per-function basis.%
 }
 %
 The idea is to formulate a solution as a string, called a \gls!{chromosome} (or
@@ -3985,7 +3995,7 @@ The idea is to formulate a solution as a string, called a \gls!{chromosome} (or
 solution.
 %
 For a given \gls{expression tree} whose \glspl{match set} have been found using
-an \mbox{$\mBigO(nm)$} \gls{pattern matcher}, \citeauthor{Shu1996} formulated
+an \mbox{$\mBigO(nm)$} \gls{pattern matcher}, \citeauthor{ShuEtAl:1996} formulated
 each \gls{chromosome} as a binary bit string where a~1 indicates the selection
 of a particular \gls{pattern}.
 %
@@ -3996,7 +4006,7 @@ The length of a \gls{chromosome} is therefore equal to the sum of the number of
 \glspl{pattern} appearing in all \glspl{match set}.
 %
 The objective is then to find the \gls{chromosome} which maximizes a
-\gls!{fitness function}~$f$, which \citeauthor{Shu1996} defined as%
+\gls!{fitness function}~$f$, which \citeauthor{ShuEtAl:1996} defined as%
 %
 \def\numPats#1{p_{#1}}%
 \def\multCov#1{n_{#1}}%
@@ -4026,7 +4036,7 @@ at most 50~\glspl{node}.
 Moreover, due to the nature of \glspl{GA}, optimality cannot be guaranteed for
 all \glspl{expression tree}.
 %
-A similar technique was devised by \textcite{Eriksson2008}, which also
+A similar technique was devised by \textcite{Eriksson:2008}, which also
 incorporates \gls{instruction scheduling}, for generating \gls{assembly code}
 for clustered \gls{VLIW} architectures.
 
@@ -4035,10 +4045,10 @@ for clustered \gls{VLIW} architectures.
 \labelSection{trellis-diagrams-trees}
 
 The last \gls{instruction selection} technique that we will examine in this
-appendix is a rather unusual design by \citeauthor{Wess1992}~\cite{Wess1992,
-  Wess1995}.
+appendix is a rather unusual design by \citeauthor{Wess:1992}~\cite{Wess:1992,
+  Wess:1995}.
 %
-Specifically targeting \glsdesc{DSP}[s], \citeauthor{Wess1992}'s design
+Specifically targeting \glsdesc{DSP}[s], \citeauthor{Wess:1992}'s design
 integrates \gls{instruction selection} with \gls{register allocation} through
 the use of \glspl{trellis diagram}.
 
@@ -4190,7 +4200,7 @@ given in \refFigure{trellis-example}.
 %%
 %Note that two instructions are selected for
 %      the root as the result is required to be stored in memory}%
-%    [Wess1992]
+%    [Wess:1992]
 %    \labelFigure{trellis-example}
 %\end{figure}
 
@@ -4204,7 +4214,7 @@ By keeping track of the costs, we can get the optimal \gls{instruction} sequence
 by selecting the path which ends at the \gls{OVA}~element with the lowest cost
 in the \gls{root} of the \gls{trellis diagram}.
 
-The strength of \citeauthor{Wess1992}'s design is that \glspl{target machine}
+The strength of \citeauthor{Wess:1992}'s design is that \glspl{target machine}
 with asymmetric \glspl{register class} -- where different \glspl{instruction}
 are needed for accessing different \glspl{register} -- are easily handled, as
 \gls{instruction selection} and \gls{register allocation} is done
@@ -4213,7 +4223,7 @@ simultaneously.
 The drawback is that the number of \glspl{node} in the \gls{trellis diagram} is
 exponential in the number of \glspl{register}.
 %
-This problem was mitigated by \textcite{Frohlich1999}, who augmented the
+This problem was mitigated by \textcite{FrohlichEtAl:1999}, who augmented the
 algorithm to build the \gls{trellis diagram} in a lazy fashion, but both schemes
 nonetheless require a \mbox{1-to-1} mapping between the \glspl{node} in a
 \gls{trellis diagram} and the \glspl{instruction} in order to be
@@ -4286,12 +4296,10 @@ the following workarounds:
   \item Repeating the shared operations, which in \gls{Polish notation} results
     in
     \begin{center}
-      \small%
       \irCode*{$=$ y $+$ $+$ a b $+$ a b}.
     \end{center}
   \item Splitting the expression, which results in
     \begin{center}
-      \small%
       \irCode*{$=$ x $+$ a b}\\
       \irCode*{$=$ y $+$ x x}.
     \end{center}
