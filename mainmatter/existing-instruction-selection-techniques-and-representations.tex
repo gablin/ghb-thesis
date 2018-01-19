@@ -767,9 +767,10 @@ particular \gls{nonterminal}.
   {%
     $S$ \Assign $\mSetBuilder{s}%
                              {\text{$s$ is a nonterminal in $G$}}$\;
-    $C$ \Assign matrix of size $|T| \times |S|$, costs initialized to $\infty$\;
+    $\mMatrix{C}$ \Assign
+      matrix of size $|T| \times |S|$, costs initialized to $\infty$\;
     \Call{ComputeCostsRec}{root node of $T$}\;
-    \Return{$C$}\;
+    \Return{$\mMatrix{C}$}\;
     \BlankLine
     \DeclFunction{ComputeCostsRec}{node $n$}{%
       \ForEach{child $m$ of $n$}{%
@@ -778,18 +779,18 @@ particular \gls{nonterminal}.
       \ForEach{base rule $r \in \text{\Call{FindMatchingRules}{$n$}}$}{%
         $c$ \Assign \Call{ComputeReductionCost}{$n$, $r$}\;
         $l$ \Assign result of $r$\;
-        \If{$c < C[n][l]$.cost}{%
-          $C[n][l]$.cost \Assign $c$\;
-          $C[n][l]$.rule \Assign $r$\;
+        \If{$c < \mMatrix{C}[n][l]$.cost}{%
+          $\mMatrix{C}[n][l]$.cost \Assign $c$\;
+          $\mMatrix{C}[n][l]$.rule \Assign $r$\;
         }
       }
-      \Repeat{no change to $C$}{%
+      \Repeat{no change to $\mMatrix{C}$}{%
         \ForEach{chain rule $r \in G$}{%
           $c$ \Assign \Call{ComputeReductionCost}{$n$, $r$}\;
           $l$ \Assign result of $r$\;
-          \If{$c < C[n][l]$.cost}{%
-            $C[n][l]$.cost \Assign $c$\;
-            $C[n][l]$.rule \Assign $r$\;
+          \If{$c < \mMatrix{C}[n][l]$.cost}{%
+            $\mMatrix{C}[n][l]$.cost \Assign $c$\;
+            $\mMatrix{C}[n][l]$.rule \Assign $r$\;
           }
         }
       }
@@ -811,13 +812,13 @@ particular \gls{nonterminal}.
       $c$ \Assign cost of $r$\;
       \eIf{$r$ is a chain rule}{%
         $s$ \Assign nonterminal in pattern of $r$\;
-        $c$ \Assign $c$ $+$ $C[n][s]$.cost
+        $c$ \Assign $c$ $+$ $\mMatrix{C}[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
         \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th nonterminal in pattern of $r$\;
-          $c$ \Assign $c$ $+$ $C[m][s]$.cost\;
+          $c$ \Assign $c$ $+$ $\mMatrix{C}[m][s]$.cost\;
         }
       }
       \Return{$c$}\;
@@ -836,9 +837,10 @@ particular \gls{nonterminal}.
 
 The algorithm works as follows.
 %
-It first constructs a cost matrix~$C$, where rows represent \glspl{node} in the
-\gls{expression tree} and columns represent \glspl{nonterminal} in the
-\gls{grammar}, which is assumed to be in \gls{normal form.g}.\!%
+It first constructs a cost matrix~$\mMatrix{C}$, where rows represent
+\glspl{node} in the \gls{expression tree} and columns represent
+\glspl{nonterminal} in the \gls{grammar}, which is assumed to be in \gls{normal
+  form.g}.\!%
 %
 \footnote{%
   The algorithm can be adapted to accept any \gls{grammar} by expanding the
@@ -873,7 +875,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 \begin{algorithm}[t]
   \DeclFunction{Select}{expression tree $T$,
                         goal nonterminal $g$,
-                        cost matrix $C$}%
+                        cost matrix $\mMatrxi{C}$}%
   {%
     $n$ \Assign root node of $T$\;
     $r$ \Assign $C[n][g]$.rule\;
@@ -1443,8 +1445,9 @@ overview).
 Formally, an \gls{IP} problem is defined as follows.
 %
 \begin{definition}[IP]
-  Let $\mVector{c}$ and $\mVector{b}$ be integer vectors, $A$ be an integer
-  matrix, and $\mVar{x}$ be a vector of integer \glspl{decision variable}.
+  Let $\mVector{c}$ and $\mVector{b}$ be integer vectors, $\mMatrix{A}$ be an
+  integer matrix, and $\mVar{x}$ be a vector of integer \glspl{decision
+    variable}.
   %
   Then
   %
@@ -1453,8 +1456,8 @@ Formally, an \gls{IP} problem is defined as follows.
       \text{maximize} &
         \multirow{2}{*}{$\mVector{c}^{\transp} \mVar{x}$} \\
       \text{or minimize} & \\
-      \text{subject to} & A \mVar{x} \leq \mVector{b}, \\
-        & A \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
+      \text{subject to} & \mMatrix{A} \mVar{x} \leq \mVector{b}, \\
+        & \mMatrix{A} \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
       \text{and} & \mVar{x} \in \mathbb{N}^n\!. \\
     \end{array}
   \end{displaymath}
@@ -2059,7 +2062,8 @@ Formally, a \gls{PBQP} is defined as follows.
 %
 \begin{definition}[PBQP]
   Let \mbox{$\mVector{c}_1, \ldots, \mVector{c}_n$} be a set of vectors, and let
-  \mbox{$C_{1,1}, C_{1,2}, \ldots, C_{1,n}$}, \mbox{$C_{2,2}, \ldots, C_{n,n}$}
+  \mbox{$\mMatrix{C}_{1,1}, \mMatrix{C}_{1,2}, \ldots, \mMatrix{C}_{1,n}$},
+  \mbox{$\mMatrix{C}_{2,2}, \ldots, \mMatrix{C}_{n,n}$}
   be a set of matrices of size \mbox{$|c_i| \times |c_j|$} for \mbox{$i = 1,
     \ldots, n$} and \mbox{$j = i, \ldots, n$}.
   %
@@ -2073,7 +2077,7 @@ Formally, a \gls{PBQP} is defined as follows.
       \text{minimize}
         & \displaystyle
           \sum_{\mathclap{1 \leq i < j \leq n}}
-          \mVar{x}_i^{\transp} C_{ij} \, \mVar{x}_j +
+          \mVar{x}_i^{\transp} \mMatrix{C}_{ij} \, \mVar{x}_j +
           \sum_{\mathclap{1 \leq i \leq n}} \mVector{c}_i^{\transp} \mVar{x}_i, \\
       \text{subject to}
         & \forall 1 \leq i \leq n :
@@ -2096,12 +2100,13 @@ exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
-decisions~$i$ and~$j$ are represented through a cost matrix~$C_{ij}$.
+decisions~$i$ and~$j$ are represented through a cost matrix~$\mMatrix{C}_{ij}$.
 
 In this context, $\mVar{x}_i$ decides whether to select a particular \gls{match}
 to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
-\gls{match}, and $C_{ij}$ contains the cost of additional \glspl{instruction}
-that may need to be selected due to certain combinations of \glspl{match}.
+\gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
+\glspl{instruction} that may need to be selected due to certain combinations of
+\glspl{match}.
 %
 For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
 %
@@ -2193,26 +2198,26 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                         \begin{array}{Rl}
                           \mVector{c}_{\opVar{a}}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
+                                \begin{block}{[\mMatrix{C}]X}
                                   0 & \mlabel{m_1} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opVar{b}}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
+                                \begin{block}{[\mMatrix{C}]X}
                                   0 & \mlabel{m_2} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opAdd}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
+                                \begin{block}{[\mMatrix{C}]X}
                                   1 & \mlabel{m_3} \\
                                   5 & \mlabel{m_5} \\
                                 \end{block}
                               \end{adjblockarray} \\[3ex]
                           \mVector{c}_{\opLoad}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
+                                \begin{block}{[\mMatrix{C}]X}
                                   3 & \mlabel{m_4} \\
                                   5 & \mlabel{m_5} \\
                                 \end{block}
@@ -2225,21 +2230,21 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \begin{minipage}{33mm}%
                     \begin{displaymath}
                       \begin{array}{Rc}
-                        C_{\opVar{a} \opAdd}
+                        \mMatrix{C}_{\opVar{a} \opAdd}
                           & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}
                                 0 & 0 & \mlabel{m_1} \\
                               \end{block}
                             \end{adjblockarray} \\[-2.2ex]
-                        C_{\opVar{b} \opAdd}
+                        \mMatrix{C}_{\opVar{b} \opAdd}
                           & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}
                                 0 & 0 & \mlabel{m_1} \\
                               \end{block}
                             \end{adjblockarray} \\[-2.2ex]
-                        C_{\opAdd\opLoad}
+                        \mMatrix{C}_{\opAdd\opLoad}
                           & \begin{adjblockarray}{ccc}{0ex}
                               \scriptstyle m_4 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}

@@ -520,6 +520,7 @@
 \newcommand{\mFunDecl}[3]{
   #1 : #2 \rightarrow #3
 }
+\newcommand{\mMatrix}[1]{\mathbf{#1}}
 \newcommand{\mVector}[1]{\vec{#1}}
 \newcommand{\mBigO}{O}
 \DeclareMathOperator{\mInEdgeNr}{\mFunFont{in}}
@@ -583,8 +584,8 @@
 \newcommand{\mPhiOperandSet}{\mOperandSet[\mPhi]}
 \newcommand{\mPhiOperandCompSet}{\mOperandCompSet{\mPhi}}
 \newcommand{\mForbiddenCombSet}{F}
-\newcommand{\mCostMatrix}{C_{\textsc{m}}}
-\newcommand{\mDomMatrix}{R_{\textsc{m}}}
+\newcommand{\mCostMatrix}{\mMatrix{C}}
+\newcommand{\mDomMatrix}{\mMatrix{R}}
 \NewDocumentCommand{\mDataSet}{o}{
   \IfValueTF{#1}{D_{#1}}{D}
 }
