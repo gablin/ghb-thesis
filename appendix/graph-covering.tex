@@ -9,8 +9,8 @@
 
 \todo{write introduction}
 
-Although \gls{DAG covering} is more general than \gls{tree covering}---and thus
-offers a more powerful approach to \gls{instruction selection}---it is still
+Although \gls{DAG covering} is more general than \gls{tree covering} -- and thus
+offers a more powerful approach to \gls{instruction selection} -- it is still
 not enough for handling all aspects featured in the \glspl{program} and
 \glspl{instruction}.
 %
@@ -72,14 +72,14 @@ In addition, it can move operations from one
 (this is known as \gls{global code motion}).
 %
 Second, to support
-\glspl{inter-block instruction}---which require modeling of both data and
-control-flow information---it is imperative that the \glspl{pattern} be
+\glspl{inter-block instruction} -- which require modeling of both data and
+control-flow information -- it is imperative that the \glspl{pattern} be
 expressible using \glspl{graph} that may contain \glspl{cycle}.
 %
 This makes
 \gls{graph covering} one of the key approaches for making use of fewer but more
 efficient \glspl{instruction}, which is becoming more and more crucial for
-modern \glspl{target machine}---especially embedded systems---where both power
+modern \glspl{target machine} -- especially embedded systems -- where both power
 consumption and heat emission are becoming increasingly important factors.
 
 %\begin{figure}[t]
@@ -168,8 +168,8 @@ For example, the expressions \mbox{$a * (b + c)$} and \mbox{$a
 structured \glspl{graph}.
 %
 Hence the \glspl{pattern} selected to cover one
-\gls{program graph} may differ from those covering the other---and consequently
-may yield different code quality---even though both versions of the
+\gls{program graph} may differ from those covering the other -- and consequently
+may yield different code quality -- even though both versions of the
 \gls{assembly code} will produce the same value in the end.
 %
 In an attempt to
@@ -224,7 +224,7 @@ complexity of the algorithm is still \mbox{$\mBigO(n!n^2)$}.
 \subsection{The VF2 Algorithm}
 
 In 2001, \textcite{Cordella2001} introduced another \gls{subgraph isomorphism}
-algorithm called \gls{VF2}---the authors did not say what it stands for---which
+algorithm called \gls{VF2} -- the authors did not say what it stands for -- which
 has been used in several \glsshort{DAG covering} and \gls{graph covering}-based
 instruction selectors.
 
@@ -270,16 +270,16 @@ necessary, the rules can be modified with minimal effort to check \gls{graph
   isomorphism} instead of \gls{subgraph isomorphism}.
 %
 In the former the
-structures of $G_a$ and $G_b$ must be rigid---and thus cannot be twisted and
-turned in order to match---which is more fitting for our purposes.
+structures of $G_a$ and $G_b$ must be rigid -- and thus cannot be twisted and
+turned in order to match -- which is more fitting for our purposes.
 %
 Additional
 checks, such as ensuring that the \gls{node} types are compatible, can be added
 by customizing the definition of~$F_{\text{sem}}$.
 
 Although this algorithm exhibits a worst-case time complexity of
-\mbox{$\mBigO(n!n)$}, its best-case time complexity---which is
-polynomial---still makes it an efficient method for performing \gls{pattern
+\mbox{$\mBigO(n!n)$}, its best-case time complexity -- which is
+polynomial -- still makes it an efficient method for performing \gls{pattern
   matching} over very large \glspl{graph}.
 %
 For example,
@@ -301,7 +301,7 @@ structural information that can be exploited during \gls{pattern
   matching}.
 %
 Although it is unclear whether this discovery can be applied to
-\gls{instruction selection}---the reasons will become apparent shortly---I
+\gls{instruction selection} -- the reasons will become apparent shortly -- I
 decided to include its discussion out of personal interest.
 
 \citeauthor{Jiang1996}'s algorithm essentially works as follows.
@@ -374,7 +374,7 @@ survey of this field was recently made by \textcite{Stanier2013}).
 
 \subsection{Static-Single-Assignment Graphs}
 
-Most modern \glspl{compiler}---including \gls{GCC} and~\gls{LLVM}---use
+Most modern \glspl{compiler} -- including \gls{GCC} and~\gls{LLVM} -- use
 \glspl{IR} based on \gls{SSA}, which is a form where each variable or
 \gls{temporary} within a \gls{function} is restricted to being defined only
 once.
@@ -446,15 +446,15 @@ This \emph{define-only-once} restriction, however, causes problems for variables
 whose value can come from more than one source.
 %
 For example, in
-\refSubfigure{ssa-example-not-ssa} we see the factorial \gls{function}
+\refFigure{ssa-example-not-ssa} we see the factorial \gls{function}
 (introduced in \refAppendix{introduction}), which is not in \tSSAform as
 \cVar*{n} and \cVar*{f} are defined multiple times (first at lines~1
 and~3, and then at lines~7 and~6, respectively).
 %
 We could try to rename the
-variables to avoid redefinition conflicts---\cVar*{n} is renamed to
+variables to avoid redefinition conflicts -- \cVar*{n} is renamed to
 \cVar*{n}[1] at line~1 and to \cVar*{n}[2] at line~7, and \cVar*{f} is
-renamed to \cVar*{f}[1] at line~3 and to \cVar*{f}[2] at line~6---but
+renamed to \cVar*{f}[1] at line~3 and to \cVar*{f}[2] at line~6 -- but
 which variable do we use for the \cCode*{return} at line~10? These situations
 are addressed through the use of \glspl{phi function}, which allow variables to
 be defined using one of several values that originate from a separate
@@ -463,9 +463,9 @@ be defined using one of several values that originate from a separate
 Hence, by declaring additional variables and inserting \glspl{phi
   function} at the beginning of the \cCode*{loop}~\gls{block}, the
 aforementioned problem of \cVar*{f} is resolved as shown in
-\refSubfigure{ssa-example-ssa}\footnote{Although this in turn introduces two new
-  problems---where do we insert these \glspl{phi function}, and how do we know
-  which value within the \gls{phi function} to choose during execution?---we
+\refFigure{ssa-example-ssa}\footnote{Although this in turn introduces two new
+  problems -- where do we insert these \glspl{phi function}, and how do we know
+  which value within the \gls{phi function} to choose during execution? -- we
   will ignore these issues as they are out of scope for our purposes.
 %
 There is
@@ -483,7 +483,7 @@ There is
 %  \begin{minipage}{6cm}
 %    \figCaption[\glsentrytext{SSA graph} example]%
 %      {Corresponding \glsentrytext{SSA graph} of the function from
-%        \refSubfigure{ssa-example-ssa}.
+%        \refFigure{ssa-example-ssa}.
 %%
 % Note that, unlike in expression trees and
 %        DAGs, the data flows \emph{downwards} along the \glsentrytext{SSA
@@ -494,7 +494,7 @@ There is
 
 From the \gls{SSA} representation we can extract an \gls{SSA graph}, which is
 basically a \gls{program graph} where \glspl{loop} are permitted (see for
-example \refSubfigure{ssa-example-ssa}).
+example \refFigure{ssa-example-ssa}).
 %
 Unlike \glspl{program DAG}, the
 \gls{SSA graph} captures the data flow across \glspl{block} as well as within
@@ -515,8 +515,8 @@ Another popular \glsdesc{IR} is the \gls{PDG}.
 %
 Introduced by
 \textcite{Ferrante1987} in~1987, the \gls{PDG} only models the \emph{essential}
-control dependencies of the \gls{program}---we will soon elaborate on what this
-means---and several subsequent \gls{IR}~designs, such as the \gls{program
+control dependencies of the \gls{program} -- we will soon elaborate on what this
+means -- and several subsequent \gls{IR}~designs, such as the \gls{program
   dependence web} by \textcite{Ballance1990} and the \gls{value dependence
   graph} by \textcite{Weise1994}, are either extensions of the \gls{PDG} or have
 been heavily influenced by it.
@@ -573,7 +573,7 @@ dependencies.
 %  \end{subfigure}
 %
 %  \figCaption[Converting a function into a \glsentrytext{PDG}]
-%    {Converting the function from \refSubfigure{ssa-example-not-ssa} into a
+%    {Converting the function from \refFigure{ssa-example-not-ssa} into a
 %      program-dependence graph.
 %%
 %Node numbers correspond to line numbers in the
@@ -598,8 +598,8 @@ dependencies between the operations within these \glspl{block}, then they could
 be executed in parallel.
 %
 In a \gls{control-flow graph} (see
-\refSubfigure{pdg-example-cfg}) this information is not immediately visible, but
-in the \gls{CDG} (see \refSubfigure{pdg-example-cdg}) this fact becomes clear,
+\refFigure{pdg-example-cfg}) this information is not immediately visible, but
+in the \gls{CDG} (see \refFigure{pdg-example-cdg}) this fact becomes clear,
 as these operations only depend on the \gls{function} entry.
 %
 On the other hand,
@@ -647,10 +647,10 @@ common idiosyncrasy of such \glspl{DSP} is that their fixed-point multiplication
 units will often leave the result shifted one bit to the left.
 %
 Hence, if a value
-is computed by accumulating values from fixed-point multiplications---as in the
+is computed by accumulating values from fixed-point multiplications -- as in the
 factorial \gls{function} given in \refFigure{ssa-example}\unskip%
 % Removes unwanted space
----it should remain in shifted mode until all fixed-point multiplications have
+ -- it should remain in shifted mode until all fixed-point multiplications have
 been performed.
 %
 Otherwise the accumulated value will needlessly be shifted back
@@ -660,13 +660,13 @@ But this is difficult to achieve using \gls{local instr-sel}
 \gls{instruction selection}.
 
 To overcome this problem, \citeauthor{Eckstein2003} developed a design that
-takes \glspl{SSA graph} as input---making this technique the first to do
-so---and transforms the \gls{pattern selection} problem to a \gls{PBQ
+takes \glspl{SSA graph} as input -- making this technique the first to do
+so -- and transforms the \gls{pattern selection} problem to a \gls{PBQ
   problem}.
 %
-The \gls{PBQ problem} is an extension of the \gls{QA problem}---a
+The \gls{PBQ problem} is an extension of the \gls{QA problem} -- a
 fundamental combinatorial optimization problem (see~\cite{Loiola2007} for a
-recent survey)---and was first introduced \textcite{Scholz2002} as a means of
+recent survey) -- and was first introduced \textcite{Scholz2002} as a means of
 tackling \gls{register allocation}.
 %
 The \gls{QA problem} and \gls{PBQ problem}
@@ -768,7 +768,7 @@ selected set of fixed-point \glspl{program} exhibiting the behavior discussed
 earlier.
 %
 The results indicate that their scheme improved performance by
-\mbox{40--60\%} on average---and at most 82\% for one \gls{program}---compared
+\mbox{40--60\%} on average -- and at most 82\% for one \gls{program} -- compared
 to a traditional \gls{tree}-based \gls{instruction selector}.
 %
 According to
@@ -798,8 +798,8 @@ the original \glsshort{PBQ problem} model by \citeauthor{Eckstein2003} to also
 support \glspl{pattern DAG}.
 %
 When replacing the default \gls{instruction
-  selector} in \gls{LLVM}~2.1---which is a greedy \gls{DAG}~rewriter (see
-\refSection{llvm})---the performance of the \gls{assembly code} targeting an
+  selector} in \gls{LLVM}~2.1 -- which is a greedy \gls{DAG}~rewriter (see
+\refSection{llvm}) -- the performance of the \gls{assembly code} targeting an
 \gls{ARM}~processor improved by an average of 13\% for a selected set of
 \glspl{program}.
 %
@@ -1025,8 +1025,8 @@ manually written \gls{machine description}, whereas \gls{Chess} derives these
 automatically from an \mbox{\gls{nML}-based} specification~\cite{Fauth1993,
   Fauth1995}.
 
-Second, the method of \gls{bundling}---which is the task of scheduling
-operations for parallel execution---is different.
+Second, the method of \gls{bundling} -- which is the task of scheduling
+operations for parallel execution -- is different.
 %
 The \gls{instruction
   selector} in \gls{MSSQ} uses techniques from \gls{DAG covering} to find
@@ -1087,7 +1087,7 @@ Another, albeit unusual, \gls{code generation} technique was proposed by
 \textcite{Visser1999} in~1999.
 %
 Like \gls{MSSQ} and \gls{Chess},
-\citeauthor{Visser1999}'s approach is an \gls{integrated code-gen} \gls{code
+\citeauthor{Visser1999}'s approach is an \gls{integrated.cg} \gls{code
   generation} design but solves the problem using \gls{simulated annealing},
 which is a meta-heuristic to avoid getting stuck in a local maximum when
 searching for solutions (see for example \cite{Kirkpatrick1983} for an
@@ -1095,7 +1095,7 @@ overview).
 %
 In brief terms, an initial solution is found by randomly mapping each
 \gls{node} in the \gls{program graph} to a \gls{node} in the hardware
-\gls{graph}---which models the entire processor---and then a schedule is found
+\gls{graph} -- which models the entire processor -- and then a schedule is found
 using traditional \gls{list scheduling}.
 %
 A fitness function is then applied to
@@ -1143,7 +1143,7 @@ executed in parallel with other \glspl{instruction} and thus finish sooner.
 If
 such a move cannot be made, for example due to violation of some resource
 constraint or data dependency, then \gls{mutation scheduling} tries to alter the
-value---this is called \gls{value mutation}---which means that the current
+value -- this is called \gls{value mutation} -- which means that the current
 operation is replaced by other, equivalent operations that conform to the
 restrictions.
 %

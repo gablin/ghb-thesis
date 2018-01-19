@@ -10,6 +10,7 @@
 % COMPILER TERMS
 %================
 
+\newTerm{address generation}
 \newTerm{addressing mode}
 \newTerm{assembler}
 \newTerm{assembly code}
@@ -19,7 +20,7 @@
 \newTerm{backend}
 \newTerm{block ordering}
 \newTerm{bootstrapping}
-\newTerm{bundling}
+\newTerm{bundling}[user1={bundl}]
 \newTerm{byte code}
 \newTerm{callee}
 \newTerm{caller}
@@ -51,6 +52,7 @@
 \newTerm{instruction scheduling}
 \newAcronym{IR}{intermediate representation}
 \newTerm{issue slot}
+\newTerm{list scheduling}
 \newTerm{live range}
 \newTerm{loop unrolling}
 \newTerm{machine code}
@@ -59,12 +61,13 @@
 \newTerm{parse tree}
 \newTerm{peephole optimization}
 \newTerm{peephole optimizer}
+\newTerm{recomputation}[user1={recompute}]
 \newTerm{refactoring}
 \newTerm{register allocation}
 \newTerm[local.ra]{local}[parent={register allocation}]
 \newTerm[global.ra]{global}[parent={register allocation}]
 \newTerm{register allocator}
-\newTerm{recomputation}[user1={recompute}]
+\newTerm{register pressure}
 \newTerm{saturation arithmetic}
 \newAcronym{SSA}{static single assignment}
 \newTerm{SSA graph}
@@ -96,6 +99,7 @@
 \newTerm{Cortex-M7}[see={ARM}]
 \newTerm{DEC-10}
 \newAcronym{DSP}{digital signal processor}
+\newTerm{echo instruction}
 \newTerm{Hexagon}
 \newTerm{IBM}
 \newTerm{instruction}
@@ -124,6 +128,7 @@
 \newTerm[virtual.temp]{virtual}[parent={temporary}]
 \newTerm{TI}
 \newTerm{TMS320C55x}[see={TI}]
+\newTerm{TMS320C2x}[see={TI}]
 \newTerm{VAX}
 \newAcronym{VLIW}{very long instruction word}
 \newTerm{X86}[see={Intel}]
@@ -167,6 +172,8 @@
 \newTerm[adjacent.n]{adjacent}[parent={node}]
 \newTerm[connected.n]{connected}[parent={node}]
 \newTerm[fixed.n]{fixed}[parent={node}]
+\newTerm[split.n]{split}[parent={node}]
+\newTerm[transfer.n]{transfer}[parent={node}]
 \newTerm{node duplication}[user1={duplicat}]% The short term is without the
                                             % ending 'e' in order to be used in
                                             % words like 'duplicate' and
@@ -329,6 +336,7 @@
 
 \newAcronym{IP}{integer programming}
 \newTerm{Horn clause}
+\newTerm{implication clause}
 \newAcronym{ILP}{integer linear programming}
 
 \newAcronym{SAT}{Boolean satisfiability}
@@ -404,6 +412,7 @@
 %======================
 
 \newTerm{block DAG}[user1={block}]
+\newTerm{conflict graph}[see={interference graph}]
 \newTerm{control-flow edge}[user1={control-flow}]
 \newTerm{control-flow graph}[user1={control-flow}]
 \newTerm{cover}
@@ -412,7 +421,7 @@
 \newTerm{data-flow graph}[user1={data-flow}]
 \newTerm{expression tree}
 \newTerm{function graph}[user1={function}]
-\newTerm{interference graph}
+\newTerm{interference graph}[see={conflict graph}]
 \newTerm{match}[plural=matches]
 \newTerm[complex.m]{complex}[parent={match}]
 \newTerm[dominate.m]{dominate}[parent={match}, user1={domin}]
@@ -422,8 +431,10 @@
 \newTerm{overlap}
 \newTerm{pattern}[see={pattern graph}]
 \newTerm[complex.p]{complex}[parent={pattern}]
+\newTerm[partial.p]{partial}[parent={pattern}]
 \newTerm[proxy.p]{proxy}[parent={pattern}]
 \newTerm[simple.p]{simple}[parent={pattern}]
+\newTerm[split.p]{split}[parent={pattern}]
 \newTerm{pattern DAG}[see={pattern}]
 \newTerm{pattern graph}[see={pattern}]
 \newTerm{pattern tree}[see={pattern}]
@@ -471,14 +482,17 @@
 
 \newTerm{offline cost analysis}
 
+\newTerm[A* search]{A$^{*}$~search}[sort={A* search}, user1={A$^{*}$}]
 \newTerm[AB pruning]{{$\alpha$}-{$\beta$}~pruning}
 \newTerm{alphabet}
 \newTerm[ranked.a]{ranked}[parent={alphabet}]
+\newTerm{anchor node}
 \newTerm{answer set programming}
 \newTerm{ant colony optimization}
-\newTerm[A* search]{A$^{*}$~search}[sort={A* search}, user1={A$^{*}$}]
 \newTerm{base}
 \newTerm{base pattern}
+\newTerm{binate covering}[user1={binate}, see={unate covering}]
+\newTerm{box node}
 \newTerm{built-in operation}
 \newTerm[BURGer phenomenon]%
         {\textsc{Burg}er phenomenon}%
@@ -507,8 +521,10 @@
 \newTerm{finite state automaton}%
         [plural={finite state automata}, see={state machine}]
 \newTerm{fitness function}
+\newTerm{foot print}
 \newTerm{gene}
 \newTerm{Glanville-Graham approach}
+\newTerm{hierarchical planning}
 \newTerm{immediately subsume}[see={subsume}]
 \newTerm{immediate subsumption graph}
 \newTerm{index map}
@@ -529,7 +545,6 @@
 \newTerm{nullary symbol}
 \newTerm{Polish notation}
 \newTerm{parser cactus}[plural={parser cactuses}]
-\newAcronym{PAS}{preferred attribute set}
 \newTerm{product automaton}[plural={product automata}]
 \newTerm{pushdown automaton}[plural={pushdown automata}]
 \newTerm{quantifier-free bit-vector logic}
@@ -541,48 +556,63 @@
 \newTerm{semantic qualifier}
 \newTerm[sigma term]{{$\mSigma$}-term}
 \newTerm[ordered.st]{ordered}[parent={sigma term}]
+\newTerm{SIMD pair}
+\newTerm{sea-of-nodes IR}
 \newTerm[SLM instruction]%
         {SLM~instruction}%
         [first={source language machine (SLM) instruction}]
-\newTerm{subpattern}
-\newTerm{subsume}[see={strictly subsume}]
 \newTerm{state trimming}
 \newTerm{strictly subsume}[see={subsume}]
+\newTerm{state machine}[see={finite state automaton}]
+\newTerm{stop node}
+\newTerm{storage class}[plural={storage classes}]
+\newTerm{storage location}
+\newTerm{subinstruction}
+\newTerm{subpattern}
+\newTerm{subsume}[see={strictly subsume}]
 \newTerm{subsumption graph}
 \newTerm{subsumption order}
 \newTerm{T-operator}
 \newTerm{template}
 \newTerm{tile}
+\newTerm{toe print}
 \newTerm{transitive closure}
 \newTerm{transitive reduction order}
 \newTerm{tree rewriting}
 \newTerm{tree series transducer}
 \newTerm{trellis diagram}
-\newTerm{sea-of-nodes IR}
-\newTerm{state machine}[see={finite state automaton}]
-\newTerm{storage class}[plural={storage classes}]
+\newTerm[virtual.sl]{virtual}[parent={storage location}]
 \newTerm[UI LR graph]%
         {UI~LR~graph}%
         [first={uniquely invertable~(UI) LR~graph}]
+\newTerm{unate covering}[user1={unate}, see={binate covering}]
+\newTerm{undagging}[user1={undag}]
+\newTerm{version}
 
 \newAcronym{ACK}{Amsterdam Compiler Kit}
 \newAcronym{AMOP}{abstract machine operation}
 \newAcronym{BEG}{Back End Generator}
 \newAcronym{BURS}{bottom-up rewriting system}
+\newAcronym{CBC}{Common Bus Compiler}
 \newAcronym{CGG}{Code-Generator Generator}
 \newAcronym{CGL}{Code Generator Language}
 \newAcronym{CGPL}{Code Generator Preprocessor Language}
+\newAcronym{CNF}{conjunctive normal form}
+\newAcronym{ERI}{extended resource information}
 \newAcronym{FHC}{Fortran H Compiler}
 \newAcronym{FRT}%
            {factorized register transfer}%
            [firstplural={factorized register transfers~(FRTs)}]
 \newAcronym{GCC}{GNU Compiler Collection}
 \newAcronym{ICL}{Interpretive Coding Language}
+\newAcronym{ISE}{instruction set extension}
 \newAcronym{ISFG}{internal signal-flow graph}
 \newAcronym{LCC}{Little C Compiler}
 \newAcronym{MIML}{Machine-Independent Macro Language}
+\newAcronym{MIMOLA}{Machine Independent Microprogramming Language}
 \newAcronym{OMML}{Object Machine Macro Language}
 \newAcronym{OVA}{optimal value array}
+\newAcronym{PAS}{preferred attribute set}
 \newAcronym{PCC}{Portable C Compiler}
 \newAcronym{PO}{Peephole Optimizer}
 \newAcronym{PQCC}{Production Quality Compiler-Compiler}
@@ -590,29 +620,42 @@
 \newTerm[unobservable.RT]{unobservable}[parent={RT}]
 \newAcronym{RTL}{register transfer list}
 \newAcronym{TEL}{Template Language}
+\newAcronym{VLSI}{very large scale integration}
 \newAcronym{XL}{Extensible Language}
 \newAcronym{YC}{Y Compiler}
 
+\newToolTerm{Aviv}
 \newToolTerm{Bliss-11}
 \newToolTerm{Burg}
 \newToolTerm{CBurg}
+\newToolTerm{CodeSyn}
 \newToolTerm{CoSy}
+\newToolTerm{Dagon}
 \newToolTerm{DBurg}
 \newToolTerm{DCG}
 \newToolTerm{Firm}
+\newToolTerm{FlexWare}
 \newToolTerm{GBurg}
 \newToolTerm{GCL}
 \newToolTerm{Glasgow}
+\newToolTerm{Gwmin2}
 \newToolTerm{GNU lightning}
 \newToolTerm{GPBurg}
 \newToolTerm{HBurg}
 \newToolTerm{IBurg}
+\newToolTerm[Jalapeno]{Jalape\~{n}o}
 \newToolTerm{JBurg}
 \newToolTerm{LAD}
 \newToolTerm{LBurg}
 \newToolTerm{MBurg}
+\newToolTerm{MSS}
+\newToolTerm{MSSC}
+\newToolTerm{MSSQ}
+\newToolTerm{MSSV}
+\newToolTerm{Noltis}
 \newToolTerm{OCamlBurg}
 \newToolTerm{Olive}
+\newToolTerm{Optimist}
 \newToolTerm{Pagode}
 \newToolTerm{Record}
 \newToolTerm{Redaco}
@@ -620,6 +663,8 @@
 \newToolTerm{Spam}
 \newToolTerm{Stratego}
 \newToolTerm{Superoptimizer}
+\newToolTerm{Tablegen}
+\newToolTerm{Toast}
 \newToolTerm{Twig}
 \newToolTerm{UCG}
 \newToolTerm{Ucode}

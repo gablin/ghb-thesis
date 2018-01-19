@@ -1566,7 +1566,7 @@ If not, the \gls{instruction selector} will attempt to rewrite the \gls{subtree}
 using the transformation \glspl{T-operator} until the \glspl{attribute} match.
 %
 To guide this process, \citeauthor{Newcomer1975} applied a heuristic search
-strategy known as \gls{means-end analysis}, which was introduced by
+strategy known as \gls!{means-end analysis}, which was introduced by
 \textcite{Newell1959} in~1959.
 %
 The intuition behind \gls{means-end analysis} is to recursively minimize the
@@ -2759,7 +2759,7 @@ of a \gls{compiler} generator called \gls{Twig}.
 %\end{figure}
 
 As in \citeauthor{Ripken1977}'s design, \gls{Twig} uses a version of
-\citeauthor{Aho1976a}'s \gls{DP} algorithm for selecting the \gls{optimal.ps}
+\citeauthor{Aho1976a}'s \gls{DP}~algorithm for selecting the \gls{optimal.ps}
 set of \glspl{pattern tree} to cover a given \gls{expression tree}.
 %
 The \gls{machine description} is expressed as an \gls{machine grammar} (see
@@ -2783,7 +2783,7 @@ algorithm~\cite{Aho1975}.
 The second pass is a bottom-up cost computation pass that gives the cost of
 selecting a particular \gls{pattern} for a given \gls{node}.
 %
-As we will see, the costs are computed using \gls{DP} and hence the computation
+As we will see, the costs are computed using \gls{DP}~and hence the computation
 constitutes the core of this design.
 %
 The last pass is a recursive top-down pass that finds the least-cost cover of
@@ -2914,7 +2914,7 @@ as the use of such a \gls{rule} causes the routine to be reinvoked on the same
 
 \subsubsection{DP \versus LR Parsing}
 
-The \gls{DP} scheme has several advantages over those based on \gls{LR parsing}.
+The \gls{DP}~scheme has several advantages over those based on \gls{LR parsing}.
 First, \glsshort{rule reduction} conflicts are automatically handled by the
 cost-computing algorithm, removing the need of ordering the \glspl{rule} which
 could affect the code quality yielded by \glspl{LR parser}.
@@ -2930,7 +2930,7 @@ that the entire \gls{Twig} specification could be implemented using only
 115~\glspl{rule}, which is about half the size of \citeauthor{Ganapathi1982b}'s
 \gls{attribute}-based \gls{machine grammar} for the same \gls{target machine}.
 
-However, the \gls{DP} approach requires that the \gls{code generation} problem
+However, the \gls{DP}~approach requires that the \gls{code generation} problem
 exhibit properties of optimal substructure, meaning that it is possible to
 generate optimal \gls{assembly code} by solving each of its subproblems to
 optimality.
@@ -2952,9 +2952,9 @@ Several improvements of \gls{Twig} were later made by \textcite{Yates1988} and
 \citeauthor{Hoffmann1982}, and also extended the \gls{attribute} support for
 more powerful \glspl{predicate}.
 %
-\citeauthor{Emmelmann1989} modified the \gls{DP} algorithm to be run as the
+\citeauthor{Emmelmann1989} modified the \gls{DP}~algorithm to be run as the
 \glspl{expression tree} are built by the frontend, which also inlines the code
-of auxiliary functions directly into the \gls{DP} algorithm to reduce the
+of auxiliary functions directly into the \gls{DP}~algorithm to reduce the
 overhead.
 %
 \citeauthor{Emmelmann1989} implemented their improvements in a system called the
@@ -3123,7 +3123,7 @@ tool to do it for them.
 \subsection{Faster Pattern Selection with Offline Cost Analysis}
 \labelSection{precomputing-cost-computations}
 
-In the \gls{DP} approach just discussed, the \gls{rule} costs needed for
+In the \gls{DP}~approach just discussed, the \gls{rule} costs needed for
 selecting the \glspl{pattern} are dynamically computed while the \gls{pattern
   matcher} is completely table-driven.
 %
@@ -3996,7 +3996,7 @@ The length of a \gls{chromosome} is therefore equal to the sum of the number of
 \glspl{pattern} appearing in all \glspl{match set}.
 %
 The objective is then to find the \gls{chromosome} which maximizes a
-\gls!{fitness function}~$\mFunFont{f}$, which \citeauthor{Shu1996} defined as%
+\gls!{fitness function}~$f$, which \citeauthor{Shu1996} defined as%
 %
 \def\numPats#1{p_{#1}}%
 \def\multCov#1{n_{#1}}%
