@@ -18,3 +18,5 @@
 ** TODO Check for missing references
 ** TODO Check bad kerning, especially in math
 ** TODO Check for bad page breaks
+** TODO Check for unused glossary terms
+** TODO Check for undefined (!) glossary terms
