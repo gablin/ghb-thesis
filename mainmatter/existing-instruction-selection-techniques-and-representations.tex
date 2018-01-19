@@ -875,7 +875,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 \begin{algorithm}[t]
   \DeclFunction{Select}{expression tree $T$,
                         goal nonterminal $g$,
-                        cost matrix $\mMatrxi{C}$}%
+                        cost matrix $\mMatrix{C}$}%
   {%
     $n$ \Assign root node of $T$\;
     $r$ \Assign $C[n][g]$.rule\;
@@ -2197,26 +2197,26 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                         \begin{array}{Rl}
                           \mVector{c}_{\opVar{a}}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[\mMatrix{C}]X}
+                                \begin{block}{[C]X}
                                   0 & \mlabel{m_1} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opVar{b}}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[\mMatrix{C}]X}
+                                \begin{block}{[C]X}
                                   0 & \mlabel{m_2} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
                           \mVector{c}_{\opAdd}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[\mMatrix{C}]X}
+                                \begin{block}{[C]X}
                                   1 & \mlabel{m_3} \\
                                   5 & \mlabel{m_5} \\
                                 \end{block}
                               \end{adjblockarray} \\[3ex]
                           \mVector{c}_{\opLoad}
                             & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[\mMatrix{C}]X}
+                                \begin{block}{[C]X}
                                   3 & \mlabel{m_4} \\
                                   5 & \mlabel{m_5} \\
                                 \end{block}
