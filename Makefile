@@ -7,7 +7,7 @@
 SRCTEX   := ghb-thesis.tex
 SRCPDF   := $(SRCTEX:.tex=.pdf)
 LATEX    := latex
-LATEXMK  := latexmk -recorder -use-make -deps
+LATEXMK  := latexmk -pdflatex=lualatex -recorder -use-make -deps
 OKAY_TEXLIVE_VERSION := 2016
 DEPS_DIR := .deps
 
