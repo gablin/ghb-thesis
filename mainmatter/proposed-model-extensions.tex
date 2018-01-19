@@ -319,7 +319,7 @@ This can be modeled as
 %
 \begin{equation}
   \forall d \in \mDataSet :
-  \neg\mVar{alive}[d]
+  \mNot\mVar{alive}[d]
   \mImp
   \mVar{start}[d] = 0.
   \labelEquation{local-killed-range-start}
@@ -516,7 +516,7 @@ grey):
   \forall d \in \mDataSet \hspace{-1pt},
   \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} :
   \hlDiff{(}
-    \neg\mVar{alive}[d]
+    \mNot\mVar{alive}[d]
     \hlDiff{
       \mbox{}
       \mOr
@@ -573,7 +573,7 @@ $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
   \begin{array}{@{}c@{}}
     \forall d \in \mDataSet \!,
     \forall b \in \mBlockSet :
-    \neg\mVar{useafter}[d \hspace{-1pt}, b]
+    \mNot\mVar{useafter}[d \hspace{-1pt}, b]
     \mImp \mbox{} \\
     \mVar{end}[d, b]
     =

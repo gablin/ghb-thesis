@@ -1145,8 +1145,8 @@ For example, \mbox{$\mVar{x} \in [1, 2, 3]$} results in
 These Boolean \glspl{variable} are sufficient for capturing any
 \glspl{constraint} since \mbox{$\mVar{x} < k$}, \mbox{$\mVar{x} > k$}, and
 \mbox{$\mVar{x} \geq k$} are equivalent to \mbox{$\mBoolRepVar{\mVar{x} \leq k -
-    1}$}, \mbox{$\neg\mBoolRepVar{\mVar{x} \leq k - 1}$}, and
-\mbox{$\neg\mBoolRepVar{\mVar{x} \leq k - 1}$}.
+    1}$}, \mbox{$\mNot\mBoolRepVar{\mVar{x} \leq k - 1}$}, and
+\mbox{$\mNot\mBoolRepVar{\mVar{x} \leq k - 1}$}.
 
 \Glspl{constraint} are applied over the integer \glspl{variable}, as before, but
 when \glsshort{propagation}[ing] the \glspl{constraint} do not directly shrink
@@ -1158,9 +1158,9 @@ negated.
 %
 For example, if $\mAllDifferent$ \glsshort{propagation}[es] that two
 \glspl{variable} \mbox{$\mVar{x}, \mVar{y} \in \mSet{1, 2, 3}$} cannot be
-assigned value~$2$, then it will produce two clauses \mbox{$\neg\mBoolRepVar{x =
-    2} \mOr \mBoolRepVar{y = 1} \mOr \mBoolRepVar{y = 3}$} and
-\mbox{$\neg\mBoolRepVar{y = 2} \mOr \mBoolRepVar{x = 1} \mOr \mBoolRepVar{x =
+assigned value~$2$, then it will produce two clauses \mbox{$\mNot\mBoolRepVar{x
+    = 2} \mOr \mBoolRepVar{y = 1} \mOr \mBoolRepVar{y = 3}$} and
+\mbox{$\mNot\mBoolRepVar{y = 2} \mOr \mBoolRepVar{x = 1} \mOr \mBoolRepVar{x =
     3}$} (these are equivalent to \mbox{$\mVar{x} = 2 \mImp \mVar{y} \in
   \mSet{1, 3}$} and \mbox{$\mVar{y} = 2 \mImp \mVar{x} \in \mSet{1, 3}$},
 respectively).
@@ -1175,7 +1175,7 @@ be assigned such that the literal becomes true.
 This is called \gls!{unit propagation}~\cite{DarwichePipatsrisawat:2014}.
 %
 For example, if we are given a clause~\mbox{$\mBoolRepVar{\mVar{x} = 1} \mOr
-  \neg\mBoolRepVar{\mVar{y} = 4}$} and $\mVar{x} = 2$, then the Boolean
+  \mNot\mBoolRepVar{\mVar{y} = 4}$} and $\mVar{x} = 2$, then the Boolean
 \gls{variable} \mbox{$\mBoolRepVar{\mVar{y} = 4}$} must be assigned false,
 meaning \mbox{$\mVar{y} \neq 4$}.
 

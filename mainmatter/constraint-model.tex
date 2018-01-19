@@ -103,7 +103,7 @@ for $\mUFGraph$, the set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0,
 %
 Hence $m$ is selected if \mbox{$\mVar{sel}[m] = 1$}, abbreviated
 $\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
-\mbox{$\neg\mVar{sel}[m]$}.
+\mbox{$\mNot\mVar{sel}[m]$}.
 
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
 which selected \gls{match} covers \gls{operation}~\mbox{$o \in
@@ -2218,8 +2218,8 @@ Then the \gls{constraint model} is extended with two sets of \glspl{variable},
 %
 We also extend the \gls{pattern set} with a special \gls!{null-extend pattern},
 with \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{e}{v'}}$}, that covers $e$ at
-zero cost provided that \mbox{$(\mVar{sext}[v] \mOr \neg\mVar{sext}[v']) \mAnd
-  (\mVar{zext}[v] \mOr \neg\mVar{zext}[v'])$} holds.
+zero cost provided that \mbox{$(\mVar{sext}[v] \mOr \mNot\mVar{sext}[v']) \mAnd
+  (\mVar{zext}[v] \mOr \mNot\mVar{zext}[v'])$} holds.
 %
 Obviously, a \gls{match} derived from the \gls{null-extend pattern} emits
 nothing if selected.

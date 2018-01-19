@@ -166,7 +166,7 @@ This is modeled as
 \begin{equation}
   \forall m \in \mPhiMatchCompSet,
   \forall p \in \mUses(m) :
-  \neg\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]].
+  \mNot\mVar{sel}[m] \mImp \mVar{uplace}[p] = \mVar{dplace}[\mVar{alt}[p]].
   \labelEquation{refined-dom-not-selected}
 \end{equation}
 
@@ -849,7 +849,7 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 \begin{equation}
   \forall m \in \mMatchSet,
   \forall p \in \mDefines(m) \cup \mUses(m) :
-  \neg\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]).
+  \mNot\mVar{sel}[m] \mImp \mVar{alt}[p] = \mMin(\mDataSet[\hspace{-1pt}p]).
   \labelEquation{dom-cons-operands-of-non-selected-matches}
 \end{equation}
 
