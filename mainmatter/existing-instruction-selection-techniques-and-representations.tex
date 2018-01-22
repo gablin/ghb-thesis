@@ -588,7 +588,7 @@ is given in \refTable{grammar-rules-example}.
       \overbrace{
         \overbrace{\mNT{Reg}[1]}^{\text{result}}
         \rightarrow \;
-        \overbrace{\opAdd{} \; \mNT{Reg}[2] \; \irCode{const}}^{\text{pattern}}%
+        \overbrace{\opAdd{} \; \mNT{Reg}[2] \; \irCode{int}}^{\text{pattern}}%
       }^{\text{production}}
       \qquad
       \overbrace{\text{4}}^{\text{cost}}
@@ -623,10 +623,10 @@ Similarly, the \gls{expression tree} shown in
     \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
       & \multicolumn{1}{c}{\tabhead action}\\
     \midrule
-    1 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \mNT{Reg}[2] \; \irCode{const}$
+    1 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \mNT{Reg}[2] \; \irCode{int}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
-    2 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \irCode{const} \; \mNT{Reg}[2]$
+    2 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \irCode{int} \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
     3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
@@ -692,18 +692,18 @@ of the following forms:
     1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
-                               $A.C.\text{const}$(\$$A.\mNT{Reg}$)}\\
+                               $A.C.\text{int}$(\$$A.\mNT{Reg}$)}\\
     4 & $\mNT{A}$ & $\opAdd \; \mNT{Reg} \; \mNT{C}$
       & 0
       & \\
     2 & $\mNT{Reg}$ & $\opLoad \; \mNT{B}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
-                               $B.C.\text{const}$(\$$B.\mNT{Reg}$)}\\
+                               $B.C.\text{int}$(\$$B.\mNT{Reg}$)}\\
     5 & $\mNT{B}$ & $\opAdd \; \mNT{C} \; \mNT{Reg}$
       & 0
       & \\
-    6 & $\mNT{C}$ & $\irCode{const}$
+    6 & $\mNT{C}$ & $\irCode{int}$
       & 0
       & \\
     3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
