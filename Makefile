@@ -29,18 +29,12 @@ $(SRCPDF): check-environment $(DEPS_DIR)
 .PHONY: clean
 clean:
 	$(LATEXMK) -c $(SRCTEX)
-	$(RM) *.bbl
-	$(RM) *.c
-	$(RM) *.glg *.glo *.gls *.ist
-	$(RM) *.loa
-	$(RM) *.run.xml
-
-.PHONY: cleandeps
-cleandeps:
 	$(RM) -r $(DEPS_DIR)
+	$(RM) $(PRIN_TIMELINE_FILE)
+	$(RM) *.c
 
 .PHONY: distclean
-distclean: clean cleandeps
+distclean: clean
 	$(LATEXMK) -C $(SRCTEX)
 
 .PHONY: check-environment

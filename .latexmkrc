@@ -4,6 +4,7 @@
 # LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
 # of the license).
 
+# Add handling of glossaries
 add_cus_dep('glo', 'gls', 0, 'makeglo2gls');
 sub makeglo2gls {
     system("makeglossaries -t '$_[0]'.glg -o '$_[0]'.gls '$_[0]'");
@@ -16,3 +17,10 @@ sub makeglo2gls {
     # replaced spans across two lines)
     system("perl -0777 -pi -e 's/\\\\delimN\n\t\t\\\\glsseeformat/\n\t\t\\\\glsseeformat/igs' $_[0].gls");
 }
+push @generated_exts, 'ist', 'glg', 'glo', 'gls';
+
+# Always remove BibTeX files upon cleanup
+$bibtex_use = 2;
+
+# Add generation_exts info
+push @generated_exts, 'loa', 'run.xml';
