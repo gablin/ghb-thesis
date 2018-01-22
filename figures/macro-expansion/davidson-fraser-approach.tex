@@ -1,0 +1,60 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\def\boxWidth{16mm}%
+\def\boxHeight{8mm}%
+\def\boxDist{\boxWidth}%
+\begin{tikzpicture}[%
+    input/.style={%
+      inner sep=0,
+      outer sep=0,
+      node distance=\boxDist,
+    },
+    output/.style={%
+      input,
+    },
+    box/.style={%
+      draw,
+      minimum width=\boxWidth,
+      minimum height=\boxHeight,
+      inner xsep=0.05*\boxWidth,
+      inner ysep=0,
+      thick,
+      fill=shade1,
+      node distance=\boxDist,
+    },
+    flow/.style={%
+      ->,
+      thick,
+    },
+    data/.style={%
+      minimum size=0,
+      inner sep=0,
+      outer sep=1mm,
+    },
+  ]
+
+  \node [input] (input) {};
+  \node [box, right=of input] (expander) {expander};
+  \node [box, right=of expander] (combiner) {combiner};
+  \node [output, right=of combiner] (output) {};
+
+  \begin{scope}[flow]
+    \draw (input) -- node [data, above] {IR} (expander);
+    \draw (expander) -- node [data, above] {RTLs} (combiner);
+    \draw (combiner) -- coordinate (combiner-output) (output);
+  \end{scope}
+  \node [data] at (combiner-output)
+        {%
+          \begin{tabular}{c}
+            assembly\\
+            code
+          \end{tabular}
+        };
+\end{tikzpicture}%
+\endgroup%

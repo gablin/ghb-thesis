@@ -7,9 +7,7 @@
 \chapter{Macro Expansion}
 \labelAppendix{macro-expansion}
 
-\todo{write introduction}
-
-\todo{add figures}
+\todo{rewrite introduction}
 
 The selection of techniques in this appendix includes all those discussed in
 earlier surveys by \textcite{Cattell:1977} and
@@ -120,7 +118,7 @@ I = CDR(38)
 CDR(36) = CAR(I)
 \end{filecontents*}
 %
-\begin{figure}[b]
+\begin{figure}
   \figureFont\figureFontSize%
   \centering%
 
@@ -197,7 +195,7 @@ $\irTemp{t}$ = a + b
 c = $\irTemp{1}$ * 2
 \end{filecontents*}
 %
-\begin{figure}[b]%
+\begin{figure}
   \centering%
 
   \mbox{}%
@@ -544,48 +542,50 @@ reduce the compilation time, which is the time it takes to compile a given
 \gls{program}.
 
 
-\subsubsection{Representing Instructions as Coding Skeletons}
+\subsubsection{Instruction Selection Using Bit Strings}
 
 In 1969 \textcite{LowryMedlock:1969} introduced one of the first table-driven
 methods for \gls{code generation}.
+
+\begin{table}
+  \centering%
+  \figureFont\figureFontSize%
+  \newcolumntype{L}{>{\codeFont*}l}%
+  \newcolumntype{T}{>{\figureFontSize\tabhead}c}%
+  \begin{tabular}{LL}
+    \toprule
+        \multicolumn{1}{T}{instruction}
+      & \multicolumn{1}{T}{bit string}\\
+    \midrule
+      L  B2, D(0, BD) & XXXXXXXX00000000\\
+      LH B2, D(0, B2) & 0000111100000000\\
+      LR R1, R2       & 0000110100001101\\
+    \bottomrule
+  \end{tabular}
+
+  \caption[]%
+          {%
+            Example of instruction bit strings.
+            %
+            An \cVar*{X} means that it will always match any bit in a given
+            bit string
+            \cite{LowryMedlock:1969}%
+          }
+  \labelTable{instruction-bit-strings}
+\end{table}
+
+In their implementation of \gls{FHC}, \citeauthor{LowryMedlock:1969} essentially
+perform \gls{instruction selection} after \gls{register allocation} depending on
+the status of the operands to a computation.
 %
-%\begin{inParFigure}{6cm}[p][2]
-%  \centering%
+These statuses are represented as bit strings, which are then matched against
+the corresponding bit strings for the \glspl{instruction} (see
+\refTable{instruction-bit-strings} for examples).
 %
-%  % LAYOUT FIX:
-%  % Create a bit of space above
-%  \vspace{0.9\baselineskip}
-%
-%  % Table cannot be full textwidth or it will overflow by 5-6 pt
-%  \begin{framedBoxWI}{0.98\textwidth}
-%    \centering%
-%    \figureFont% The usual patch doesn't work for inParFigure
-%    \begin{tabular}{lll}
-%      \dataTerm{L}  & \dataTerm{B2,D(0,BD)} & \dataTerm{XXXXXXXX00000000}\\
-%      \dataTerm{LH} & \dataTerm{B2,D(0,B2)} & \dataTerm{0000111100000000}\\
-%      \dataTerm{LR} & \dataTerm{R1,R2}      & \dataTerm{0000110100001101}\\
-%    \end{tabular}
-%  \end{framedBoxWI}
-%
-%  % LAYOUT FIX:
-%  % Create a bit of space below
-%  \vspace{\baselineskip}
-%\end{inParFigure}%
-%
-In their implementation of \gls{FHC}, \citeauthor{LowryMedlock:1969} used a bit
-string, called a \gls!{coding skeleton} (see \refFigure{coding-skeleton} for an
-example), for each \gls{instruction}.
-%
-The bits represent the restrictions of the \glspl{instruction}, such as the
-modes permitted for the operands and the result (for example, ``load from
-memory,'' ``load from \gls{register},'' ``do not store,'' ``use this or that
-base \gls{register}'').
-%
-These \glspl{coding skeleton} are then matched against the bit strings
-corresponding to the \gls{program} under compilation.
-%
-An `\cVar*{X}' appearing in the \gls{coding skeleton} means that it will
-always match any bit.
+The bits represent restrictions applied by the \glspl{instruction}, for example
+that the first operand must be fetched from memory, the second operand must
+reside in a \gls{register} whose content will be erased because the result will
+be placed in the same \gls{register}.
 
 The main disadvantage of \citeauthor{LowryMedlock:1969}'s design was that the
 tables could only be used for the most basic of \glspl{instruction}, and had to
@@ -955,18 +955,17 @@ variants of it have been used in several \glspl{compiler}, such as the
 
 \subsubsection{The Davidson-Fraser Approach}
 
-%\begin{figure}
-%  \centering%
-%  \input{\figurePath/macro-expansion/davidson-fraser}
-%
-%  \figCaption{Overview of the \glsentrytext{Davidson-Fraser approach}}%
-%    [DavidsonFraser:1984]
-%  \labelFigure{davidson-fraser}
-%\end{figure}
-
 In the \gls{Davidson-Fraser approach} the \gls{instruction selector} consists of
 two parts: an \gls!{expander} and a \gls!{combiner} (see
-\refFigure{davidson-fraser}).
+\refFigure{davidson-fraser-approach}).
+%
+\begin{figure}
+  \centering%
+  \input{figures/macro-expansion/davidson-fraser-approach}
+
+  \caption{Overview of the Davidson-Fraser approach}
+  \labelFigure{davidson-fraser-approach}
+\end{figure}
 %
 The task of the \gls{expander} is to transform the \gls{program} into a series
 of \glspl{RTL}.
@@ -1066,44 +1065,26 @@ evolved into a compact standalone language used for implementing \glspl{code
 
 \subsubsection{Enforcing the Machine Invariant with a Recognizer}
 
-The \gls{Davidson-Fraser approach} was also recently extended by
+The \gls{Davidson-Fraser approach} was also extended by
 \textcite{DiasRamsey:2006}.
 %
 Instead of requiring each separate \gls{RTL}-oriented optimization routine to
 abide by the \gls{machine invariant}, \citeauthor{DiasRamsey:2006}'s design
 employs a \gls!{recognizer} to determine whether an optimization decision
-violates the aforementioned restriction (see \refFigure{dias-ramsey}).
+violates the aforementioned restriction (see \refFigure{dias-ramsey-approach}).
+%
+\begin{figure}
+  \centering%
+  \input{figures/macro-expansion/dias-ramsey-approach}
+
+  \caption[An extension of the Davidson-Fraser approach]%
+          {Overview of \citeauthor{DiasRamsey:2006}'s design}
+  \labelFigure{dias-ramsey-approach}
+\end{figure}
 %
 The idea is that, by doing so, the optimization routines can be simplified and
 generated automatically as they no longer need to internalize the \gls{machine
   invariant}.
-
-%\begin{figure}
-%  \centering%
-%  \input{\figurePath/macro-expansion/dias-ramsey}
-%
-%  \figCaption[An extension of the \glsentrytext{Davidson-Fraser approach}]%
-%    {Overview of \citeauthor{DiasRamsey:2006}'s design}[DiasRamsey:2006]
-%  \labelFigure{dias-ramsey}
-%\end{figure}
-
-%\begin{figure}
-%  \centering%
-%  \begin{minipage}{9cm}%
-%    \centering%
-%    \lstset{escapechar=|}
-%    \begin{plainCode}
-%default attribute
-%  add(rd, rs1, rs2) is |\$|r[rd] := |\$|rs[rs1] + |\$|r[rs2]
-%    \end{plainCode}
-%  \end{minipage}
-%
-%  \figCaption[An \glsentrytext{instruction} expressed in
-%      \glsentrytext{lambdaRTL}]
-%    {A \glsentrytext{PowerPC} \dataTerm{add} \glsentrytext{instruction}
-%      specified using \glsentrytext{lambdaRTL}}[Dias:2010]
-%  \labelFigure{lambda-rtl-example}
-%\end{figure}
 
 In a paper from~2006, \citeauthor{DiasRamsey:2006} demonstrate how the
 \gls{recognizer} can be produced from a declarative \gls{machine description}
@@ -1113,6 +1094,27 @@ Originally developed by \textcite{RamseyDavidson:1998}, \gls!{lambdaRTL} is a
 high-level functional language based on \gls!{ML} and raises the level of
 abstraction for writing \glspl{RTL} (see \refFigure{lambda-rtl-example} for an
 example).
+%
+\begin{filecontents*}{add-instr-lambda-rtl.c}
+default attribute
+  add(rd, rs1, rs2) is $r[rd] := $rs[rs1] + $r[rs2]
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \begin{lstpage}{9cm}%
+    \centering%
+    \lstinputlisting{add-instr-lambda-rtl.c}%
+  \end{lstpage}
+
+  \caption[An instruction expressed in \glsentrytext{lambdaRTL}]%
+          {%
+            An \cCode*{add} instruction from the \glsentrytext{PowerPC}
+            instruction set, specified using
+            \glsentrytext{lambdaRTL}~\cite{DiasRamsey:2010}%
+          }
+  \labelFigure{lambda-rtl-example}
+\end{figure}
 %
 In their paper, \citeauthor{DiasRamsey:2006} claim that \gls{lambdaRTL}-based
 \glspl{machine description} are more concise and simpler to write compared to
