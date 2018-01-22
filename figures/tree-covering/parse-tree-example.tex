@@ -1,0 +1,61 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+%
+\def\nodeDist{4mm}%
+\figureFont\figureFontSize%
+\begin{tikzpicture}[
+    sym/.style={%
+      inner sep=1mm,
+      outer sep=0,
+      minimum size=0,
+      node distance=\nodeDist,
+      font=\strut,
+    },
+    edge/.style={%
+      -,
+      draw,
+      thick,
+    },
+    rule/.style={%
+      inner sep=0,
+      outer sep=0,
+      minimum size=0,
+      node distance=0,
+      font=\strut,
+    },
+  ]
+
+  \node [sym] (r1) {$\mNT{Reg}[\irVar{y}]$};
+  \node [sym, below=of r1] (r2) {$\mNT{Reg}[\irVar{a}]$};
+  \node [sym, left=2*\nodeDist of r2] (op1) {\opAdd};
+  \node [sym, right=4*\nodeDist of r2] (r3) {$\mNT{Reg}[\irVar{x}]$};
+
+  \node [sym, below=of r2] (reg-a) {\opVar{reg(a)}};
+
+  \node [sym, below=of r3] (r4) {$\mNT{Reg}[\irVar{b}]$};
+  \node [sym, left =2*\nodeDist of r4] (op2) {\opMul};
+  \node [sym, right=2*\nodeDist of r4] (r5) {$\mNT{Reg}[\irVar{2}]$};
+
+  \node [sym, below=of r4] (reg-b) {\opVar{reg(b)}};
+  \node [sym, below=of r5] (int-2) {\opVar{int(2)}};
+
+  \begin{scope}[edge]
+    \draw (r1.south west) -- (op1.north east);
+    \draw (r1.south)      -- (r2);
+    \draw (r1.south east) -- (r3.north west);
+    \draw (r2) -- (reg-a);
+    \draw (r3.south west) -- (op2.north east);
+    \draw (r3.south)      -- (r4);
+    \draw (r3.south east) -- (r5.north west);
+    \draw (reg-b) -- (r4);
+    \draw (int-2) -- (r5);
+  \end{scope}
+
+  \foreach \i/\r in {1/1, 2/3, 3/2, 4/3, 5/3} {%
+    \node [rule, left=of r\i] {(\r)};
+  }
+\end{tikzpicture}%

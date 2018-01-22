@@ -534,7 +534,8 @@
 \DeclareMathOperator{\mTarget}{\mFunFont{target}}
 \DeclareMathOperator{\mType}{\mFunFont{type}}
 
-\newcommand{\mVFTwoAttrCmp}{\backsimeq}
+\newcommand{\mNodeMatchRel}{\backsimeq}
+\newcommand{\mVFTwoAttrCmp}{\mNodeMatchRel}
 
 \newcommand{\mAnchor}{\bullet}
 \newcommand{\mBox}{\square}
@@ -1265,6 +1266,10 @@
 \SetKwComment{cmt}{\righttriangle\:}{}
 \SetKw{Return}{return}
 \SetNlSty{figureFont}{}{}
+
+\SetKw{And}{and}
+\SetKw{Not}{not}
+\SetKw{Or}{or}
 
 % Command for removing algorithm line number for a single line
 \let\oldnl\nl

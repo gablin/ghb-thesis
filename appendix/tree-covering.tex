@@ -152,35 +152,44 @@ We will briefly cover both in this dissertation, as described by
 \textcite{Lunell:1983}, who gives a more detailed account in his doctoral
 dissertation.
 
-%\begin{figure}[t]%
-%  \centering%
-%  \begin{minipage}{9cm}
-%    \lstset{
-%      keywordstyle=\bfseries,
-%      keywords={assign, m, transfer},
-%      otherkeywords={if-AZ, if-equal2, -, +},
-%    }%
-%\begin{plainCode}
-%AWAY m YHPASS assign
-%K AMA m PMFI 7 - assign
-%Z K AMA m ANS assign assign
-%X 8 + m HEAD X 6 + m I1 + m X 6 + m I2 + m assign
-%X Y FR AA transfer assign
-%X INC if-AZ BB transfer
-%OR m MAJ 4FCOID 4FCOIN if-equal2 1 J + transfer
-%\end{plainCode}
-%  \end{minipage}
-%  \figCaption{An example program expressed using \citeauthor{Wasilew:1972}'s
-%    intermediate language}[Lunell:1983]
-%  \labelFigure{wasilew-code-example}
-%\end{figure}
-
 To begin with, \citeauthor{Wasilew:1972} devised an \glsdesc{IR} where the
-\glspl{program} are represented using a postfix notation (see
-\refFigure{wasilew-code-example}).
+\glspl{program} are represented using \gls!{postfix notation} (or
+\gls!{reverse.pn}[ \gls{Polish notation}] as this is also called; we will
+discuss more on \gls{Polish notation} in \refSection{tc-glanville-graham}).
 %
-This is also called \gls!{Polish notation}, which we will discuss further in
-\refSection{graham-glanville}.
+An example is shown in \refFigure{wasilew-code-example}.
+%
+\begin{filecontents*}{wasilew-code-example.c}
+AWAY m YHPASS assign
+K AMA m PMFI 7 - assign
+Z K AMA m ANS assign assign
+X 8 + m HEAD X 6 + m I1 + m X 6 + m I2 + m assign
+X Y FR AA transfer assign
+X INC if-AZ BB transfer
+OR m MAJ 4FCOID 4FCOIN if-equal2 1 J + transfer
+\end{filecontents*}
+%
+\begin{figure}
+  \centering%
+  \begin{lstpage}{86.5mm}
+    \lstset{
+      keywordstyle=\bfseries,
+      keywords={assign, m, transfer},
+      otherkeywords={if-AZ, if-equal2, -, +},
+    }%
+    \lstinputlisting{wasilew-code-example.c}%
+  \end{lstpage}
+
+  \caption[%
+            Example of a program expressed using \citeauthor{Wasilew:1972}'s
+            IR%
+          ]%
+          {%
+            Example of a program expressed using \citeauthor{Wasilew:1972}'s
+            IR \cite{Lunell:1983}%
+          }
+  \labelFigure{wasilew-code-example}
+\end{figure}
 %
 \citeauthor{Wasilew:1972} also developed his own programming language, which is
 transformed into \gls{IR} code as part of compilation.
@@ -265,63 +274,8 @@ the~\gls{AST}, which turned out to not always be the case.
 \gls{pattern} at a later stage, but these had to be added manually and could
 potentially cause the \gls{compiler} to get stuck in an infinite loop.
 %
-Third, like its macro-expanding predecessors, the process immediately selects a
-\gls{pattern} as soon as a \gls{match} is found.
-
-%\begin{figure}[b]%
-%  \centering%
-%
-%  \begin{minipage}{11cm}
-%\begin{plainCodeNumbered}
-%ASG PLUS,   INAREG,
-%            SAREG,   TINT,
-%            SNAME,   TINT,
-%                     0,      RLEFT,
-%                     "       add      AL,AR\n",
-%...
-%ASG OPSIM,   INAREG|FORCC,
-%             SAREG,      TINT|TUNSIGNED|TPOINT,
-%             SAREG|SNAME|SOREG|SCON,   TINT|TUNSIGNED|TPOINT,
-%                         0,            RLEFT|RESCC
-%                         "             OI            AL,AR\n",
-%\end{plainCodeNumbered}
-%  \end{minipage}
-%
-%  \figCaption[A machine description sample for \glsentrytext{PCC}]%
-%    {A machine description sample for \glsentrytext{PCC}, consisting of two
-%      patterns.
-%%
-%The
-%      first line specifies the node type of the root (\dataTerm{+=}, for the
-%      first pattern) together with its cookie
-%      (``result must appear in an
-%      \dataTerm{A}-type register'').
-%%
-%The second and third lines specify the left
-%      and right descendants, respectively, of the root.
-%%
-%The left subtree of
-%      the first pattern must be an \dataTerm{int} allocated in an
-%      \dataTerm{A}-type register, and the right subtree must be a
-%      \dataTerm{NAME} node, also of type \dataTerm{int}.
-%%
-%The fourth line
-%      indicates that no registers or temporaries are required and that the
-%      matched
-%      part in the expression tree is to be replaced by the left descendant of
-%      the pattern's root.
-%%
-%The fifth and last line declares the assembly
-%      string, where lowercase letters are output verbatim and uppercase words
-%      indicate a macro invocation -- \dataTerm{AL} stands for ``Address form of
-%      Left operand'', and likewise for \dataTerm{AR} -- whose result is then put
-%      into the assembly string.
-%%
-%In the second pattern we see that multiple
-%      restrictions can be \techTerm{OR}'ed together, thus allowing multiple
-%      patterns to be expressed in a more concise manner}[Johnson:1981]
-%  \labelFigure{pcc-machine-description-sample}
-%\end{figure}
+Third, like its \glshyphened{macro expander}[ding] predecessors, the process
+immediately selects a \gls{pattern} as soon as a \gls{match} is found.
 
 Another early \gls{pattern matching} technique was developed by
 \textcite{Johnson:1978}, which was implemented in the \gls{PCC} -- a renowned
@@ -342,6 +296,59 @@ multiple, similar \glspl{pattern} to be condensed into a single declaration.
 %
 An example is shown in \refFigure{pcc-machine-description-sample}.
 
+\begin{filecontents*}{pcc-machine-description-sample.c}
+ASG PLUS,   INAREG,
+            SAREG,   TINT,
+            SNAME,   TINT,
+                     0,      RLEFT,
+                     "       add      AL,AR\n",
+...
+ASG OPSIM,   INAREG|FORCC,
+             SAREG,      TINT|TUNSIGNED|TPOINT,
+             SAREG|SNAME|SOREG|SCON,   TINT|TUNSIGNED|TPOINT,
+                         0,            RLEFT|RESCC
+                         "             OI            AL,AR\n"
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \begin{lstpage}{106.5mm}%
+    \lstinputlisting{pcc-machine-description-sample.c}%
+  \end{lstpage}
+
+  \caption[A machine description sample for \glsentrytext{PCC}]%
+          {%
+            A machine description sample for \glsentrytext{PCC}, consisting of
+            two patterns.
+            %
+            The first line specifies the node type of the root (\cCode*{+=}, for
+            the first pattern) together with its cookie (``result must appear in
+            an \cCode*{A}-type register'').
+            %
+            The second and third lines specify the left and right descendants,
+            respectively, of the root.
+            %
+            The left subtree of the first pattern must be an \cCode*{int}
+            allocated in an \cCode*{A}-type register, and the right subtree must
+            be a \cCode*{NAME} node, also of type \cCode*{int}.
+            %
+            The fourth line indicates that no registers or temporaries are
+            required and that the matched part in the expression tree is to be
+            replaced by the left descendant of the pattern's root.
+            %
+            The fifth and last line declares the assembly string, where
+            lowercase letters are output verbatim and uppercase words indicate a
+            macro invocation -- \cCode*{AL} stands for ``Address form of Left
+            operand'', and likewise for \cCode*{AR} -- whose result is then put
+            into the assembly string.
+            %
+            In the second pattern we see that multiple restrictions can be
+            or'ed together, thus allowing multiple patterns to be
+            expressed in a more concise manner~\cite{Johnson:1981}%
+          }
+          \labelFigure{pcc-machine-description-sample}
+\end{figure}
+
 The \gls{pattern matching} process is then relatively straightforward: for a
 given \gls{node} in the \gls{expression tree}, the \gls{node} is compared
 against the \gls{root} of each \gls{pattern}.
@@ -353,8 +360,56 @@ Once all \glspl{leaf} in the \gls{pattern} are reached, a \gls{match} has been
 found.
 %
 As this algorithm -- whose pseudo-code is given in
-\refFigure{straight-forward-pattern-matching} -- exhibits quadratic time
+\refAlgorithm{tree-based-pattern-matching} -- exhibits quadratic time
 complexity, it is desirable to minimize the number of redundant checks.
+%
+\begin{algorithm}[t]
+  \DeclFunction{FindMatchSet}%
+               {expression tree $T$, pattern set $P$}%
+  {%
+    $M$ \Assign array of size $|T|$, initialized to $\mEmptySet$\;
+    \ForEach{node $n_T \in T$}{%
+      \ForEach{pattern $p \in P$}{%
+        $n_P$ \Assign root node of $P$\;
+        \If{\Call{Matches}{$n$, $n_P$}}{%
+          $M[n_T]$ \Assign $M[n_T] \cup \mSet{p}$\;
+        }
+      }
+    }
+    \Return{$M$}\;
+
+    \BlankLine
+    \DeclFunction{IsMatch}{expression tree rooted at node $n_T$,
+                           pattern tree rooted at node $n_P$}{%
+      $|n_T|$ \Assign number of children for $n_T$\;
+      $|n_P|$ \Assign number of children for $n_P$\;
+      \If{$n_T \mNodeMatchRel n_P$ \And $|n_T| = |n_P|$}{%
+        \ForEach{child $n_T', n_P'$ of $n_T, n_P$}{%
+          \If{\Not \Call{IsMatch}{$n_T'$, $n_P'$}}{%
+            \Return{false}\;
+          }
+        }
+        \Return{true}\;
+      }
+      \Else{%
+        \Return{false}\;
+      }
+    }
+  }
+
+  \caption[Straightforward algorithm for pattern-matching trees]%
+          {%
+            A straightforward algorithm for pattern-matching trees.
+            %
+            The algorithm has \mbox{$\mBigO(n^2 p)$} time complexity, where $n$
+            is the number of nodes in the expression tree and $p$ is the number
+            patterns in the pattern set.
+            %
+            The relation $n_1 \mNodeMatchRel n_2$ holds for two nodes~$n_1$
+            and~$n_2$ if both are of the same type%
+          }
+    \labelAlgorithm{tree-based-pattern-matching}
+\end{algorithm}
 %
 This is done by maintaining a set of \gls{code generation} goals which are
 encoded into the \gls{instruction selector} as an integer.
@@ -382,52 +437,6 @@ is found.
 For example, to match an \cCode*{a = reg + b} \gls{pattern}, an \cCode*{a += b}
 expression could first be rewritten into \cCode*{a = a + b} and then another
 \gls{rule} could try to force operand \cCode*{a} into a \gls{register}.
-
-%\begin{figure}[t]
-%  \centering%
-%
-%  \begin{minipage}{9.5cm}%
-%    \centering%
-%    \figureFont% The usual patch doesn't work here
-%    \begin{framedBox}
-%      \tAlgName{FindMatchSet}(%
-%        \mbox{expression tree rooted at node $n$, set $P$ of pattern trees):}%
-%
-%      \begin{algorithmic}[1]
-%        \STATE{initialize match set as empty}
-%        \FORALL{$\text{pattern} p \in P$}
-%          \IF{\tAlgName{Matches}($n$, $p$)}
-%            \STATE{add $p$ to match set}
-%          \ENDIF
-%        \ENDFOR
-%        \STATE{return match set}
-%      \end{algorithmic}
-%
-%      \vspace{\baselineskip}
-%
-%      \tAlgName{Matches}(%
-%        \mbox{expression tree rooted at node $n$, %
-%              pattern tree rooted at node $p$):}%
-%
-%      \begin{algorithmic}[1]
-%        \IF{$n$ matches $p$ \AND number of children of $n$ and $p$ are equal}
-%          \FORALL{child $n'$ of $n$ \AND child $p'$ of $p$}
-%            \IF{\NOT \tAlgName{Matches($n'$, $p'$)}}
-%              \STATE{return \FALSE}
-%            \ENDIF
-%          \ENDFOR
-%        \ENDIF
-%        \STATE{return \TRUE}
-%      \end{algorithmic}
-%    \end{framedBox}
-%  \end{minipage}
-%
-%  \figCaption[A straightforward, tree-based pattern matching algorithm]%
-%    {A straightforward, tree-based pattern matching algorithm with
-%      \mbox{$\mBigO(nm)$} time complexity, where $n$ is the number of nodes in
-%      the expression tree and $m$ is the total number of nodes in the patterns}
-%    \labelFigure{straight-forward-pattern-matching}
-%\end{figure}
 
 Although successful for its time, \gls{PCC} had several disadvantages.
 %
@@ -464,7 +473,7 @@ resource-efficient.
 
 
 \subsection{The Glanville-Graham Approach}
-\labelSection{glanville-graham}
+\labelSection{tc-glanville-graham}
 
 In 1978, \textcite{GlanvilleGraham:1978} presented a seminal paper that describes how
 techniques of \gls{syntactic analysis} can be adapted to \gls{instruction
@@ -490,25 +499,40 @@ research on \glsshort{Glanville-Graham approach} \glspl{code generator}, and his
 the theory and practice of this approach.
 
 
-\subsubsection{Expressing Instructions as a Grammar}
+\subsubsection{Expressing Instructions as Machine Grammars}
 
-\todo{fix figure}
+\begin{inParFigure}{25mm}[r]
+  \centering
 
-%\begin{inParFigure}{2cm}[r]%
-%  \centering%
-%  % LAYOUT FIX: make the figure as high as the entire paragraph
-%  \vspace*{.5\baselineskip}
-%  \input{\figurePath/tree-covering/tree-linearize-example}%
-%  % LAYOUT FIX: make the figure as high as the entire paragraph
-%  \vspace*{1.5\baselineskip}
-%\end{inParFigure}%
-%\noindent
+  % LAYOUT FIX:
+  % Make the figure as high as the entire paragraph
+  \vspace*{.5\baselineskip}
+
+  \begin{minipage}{\linewidth}
+    \centering%
+    \input{figures/tree-covering/tree-linearize-example}
+
+    \vspace{.5em}
+
+    $\Downarrow$
+
+    \vspace{.5em}
+
+    \figureFontSize%
+    \cCode{\irMulText{} \irAddText{} \irVar{a} \irVar{b} \irVar{2}}%
+  \end{minipage}
+
+  % LAYOUT FIX:
+  % Make the figure as high as the entire paragraph
+  \vspace*{1.5\baselineskip}
+\end{inParFigure}%
+\noindent
 To begin with, a well-known method of removing the need for parentheses in
-arithmetic expressions without making them ambiguous is to use \gls{Polish
+arithmetic expressions without making them ambiguous is to use \gls!{Polish
   notation}.
 %
-For example, \cCode*{1 + (2 + 3)} can be written as {\cCode*{+ 1 + 2 3} and
-  still denote the same expression.
+For example, \mbox{$1 + (2 + 3)$} can be written as \mbox{$+ \; 1 + 2 \; 3$} and
+still represent the same expression.
 %
 \citeauthor{GlanvilleGraham:1978} recognized that by using this form the
 \glspl{instruction} can be expressed as a \gls{context-free grammar} based on
@@ -517,121 +541,116 @@ For example, \cCode*{1 + (2 + 3)} can be written as {\cCode*{+ 1 + 2 3} and
 This concept is already well described in most \gls{compiler} textbooks (see for
 example~\cite{AhoEtAl:2006}), so we will proceed with only a brief introduction.
 
-A \gls{context-free grammar} consists of a set of \glspl!{terminal} and
-\glspl!{nonterminal}, and we will refer to both as \glspl!{symbol}.
+A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
+\glspl{rule}.
 %
-We will distinguish between the two by always writing \glspl{terminal} with an
-initial capital letter (for example~\irCode*{Term}), and \glspl{nonterminal}
-entirely in lowercase (for example~$\mNT{nt}$).
+In this context, a \gls!{terminal} is a \gls{symbol} representing an
+\gls{operation} (e.g.\ \irAddText, \irLTText, \irLoadText), and a
+\gls!{nonterminal} is a \gls{symbol} representing an abstract result
+(e.g.\ $\mNT{Reg}$) produced by the \gls{instruction}.
 %
-For each \gls{nonterminal} there exists one or more \glspl{production} of the
-following form:
-%\begin{displaymath}
-%  \boolfalse{TinRunningText}%
-%  \small%
-%  \mbox{\mNT{lhs}}
-%  \; \rightarrow \;
-%  \mbox{\mNT{Right} \mT{hand} \mT{Side}} \ldots
-%\end{displaymath}
-A \gls{production} basically specifies how its left-hand side \gls{nonterminal}
-\gls{symbol} can be replaced by its right-hand side as a string of
-\gls{terminal} and \gls{nonterminal} \glspl{symbol}.
+To distinguish between the two, \glspl{terminal} are written entirely in lower
+case whereas \glspl{nonterminal} start with a capital letter and are set in
+italics.
 %
-Since \glspl{nonterminal} can appear on both sides in a \gls{production}, most
-\glspl{grammar} allow for infinite chains of replacements, which is one of the
-powerful features of \glspl{context-free grammar}.
+A \gls!{rule} describes the behavior of an \gls{instruction} and consists of a
+\gls{production}, a non-negative cost, and an \gls{action}.
 %
-In terms of recursion, one can also think of \glspl{nonterminal} as inducing the
-recursive case whereas the \glspl{terminal} provide the base case that stops the
-recursion.
+\Glspl!{production} describe how to derive \glspl{nonterminal}, and are written
+as
 %
-\Glspl{production} are often also called \glspl!{production rule} or just
-\glspl!{rule}, and although they can typically be interchanged without causing
-confusion, we will be consistent in this dissertation and only use the first
-term (\glspl{production}), as \glspl{rule} will hold a slightly different
-meaning.
+\begin{displaymath}
+  a \rightarrow b c \ldots
+\end{displaymath}
+%
+where the left-hand side is consists a \gls{nonterminal} and the right-hand side
+consists of a sequence of \glspl{terminal} and \glspl{nonterminal}.
+%
+Each \gls{instruction} therefore gives rise to one or more \glspl{production},
+where the right-hand side of a \gls{production} captures a \gls{pattern} of the
+\gls{instruction} and the left-hand side denotes the result produced by the
+\gls{instruction}.
+%
+Hence the left-hand and right-hand sides of a \gls{rule} are referred to as the
+\gls{rule}'s \glsshort!{rule result} and \glsshort!{rule pattern}, respectively.
+%
+The cost should be self-explanatory at this point, and the \gls!{action} is the
+activity to perform when the \gls{rule} is selected (typically, this is to emit
+a string of \gls{assembly code}).
+%
+The \gls{rule} structure is also illustrated in
+\refFigure{machine-grammar-rule-anatomy-2}, and an example of a few
+\glspl{rule} is given in \refTable{grammar-rules-example-2}.
+%
+\begin{figure}
+  \centering%
+  \figureFont\figureFontSize%
+  \begin{displaymath}
+    \underbrace{
+      \overbrace{
+        \overbrace{\mNT{Reg}[1]}^{\text{result}}
+        \rightarrow \;
+        \overbrace{%
+          \irCode{\irAddText} \; \mNT{Reg}[2] \; \irCode{int}%
+        }^{\text{pattern}}%
+      }^{\text{production}}
+      \qquad
+      \overbrace{\text{4}}^{\text{cost}}
+      \qquad
+      \overbrace{
+        \text{emit:}~
+        \text{\instrFont{} add \$$\mNT{Reg}[1]$, \$$\mNT{Reg}[2]$, \#const}%
+      }^{\text{action}}
+    }_{\text{rule}}
+  \end{displaymath}
 
-To model a set of \glspl{instruction} as a \gls{context-free grammar}, one would
-add one or more \glspl{rule} for each \gls{instruction}.
+  \vspace*{-\baselineskip}
+
+  \caption{Anatomy of a rule in a machine grammar}
+  \labelFigure{machine-grammar-rule-anatomy-2}
+\end{figure}
 %
-Each rule contains a \gls{production}, a cost, and an \gls{action}.
+\begin{table}
+  \centering%
+  \figureFontSize%
+  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+    \toprule
+    \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
+      & \multicolumn{1}{c}{\tabhead action}\\
+    \midrule
+    1 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \mNT{Reg}[2] \;
+         \irCode{int}$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
+    2 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \irCode{int} \;
+         \mNT{Reg}[2]$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
+    3 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \mNT{Reg}[2]$
+      & 1
+      & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
+    \bottomrule
+  \end{tabular}
+
+  \caption[Example of rules]%
+          {%
+            Example of rules corresponding to a
+            \mbox{\instrFont* load \$t, o(\$s)} \gls{instruction} that loads a
+            value from memory at the address given in register~\instrCode*{s},
+            offset by an immediate value~\instrCode*{o}, and stores the loaded
+            value in register~\instrCode*{t}, in one cycle.
+            %
+            The subscripts are only needed for referencing the right
+            nonterminal in the action%
+          }
+  \labelTable{grammar-rules-example-2}
+\end{table}
 %
-The right-hand side of the \gls{production} represents the \gls{pattern tree} to
-be matched over a \gls{expression tree}, and the left-hand side contains the
-\gls{nonterminal} indicating the characteristics of the result of executing the
-\gls{instruction} (like a specific \gls{register class}).
-%
-The cost should be self-explanatory at this point, and the \gls{action} would
-typically be to emit a string of \gls{assembly code}.
-%
-We illustrate the anatomy of a \gls{rule} more succinctly with an annotated
-example:%
-%\begin{displaymath}
-%  \boolfalse{TinRunningText}%
-%  \small%
-%  \def\tPadded#1{%
-%    \vbox to 1.5\baselineskip {%
-%      \vfil%
-%      \hbox{#1}%
-%      \vfil%
-%    }%
-%  }%
-%  \NewDocumentCommand{\pgT}{mo}{%
-%    \tPadded{\text{%
-%      \IfValueTF{#2}{%
-%        \mT{#1}[#2]%
-%      }{%
-%        \mT{#1}%
-%      }%
-%    }}%
-%  }
-%  \NewDocumentCommand{\pgNT}{mo}{%
-%    \tPadded{\text{%
-%      \IfValueTF{#2}{%
-%        \mNT{#1}[#2]%
-%      }{%
-%        \mNT{#1}%
-%      }%
-%    }}%
-%  }
-%  \NewDocumentCommand{\pgA}{mo}{%
-%    \tPadded{\text{%
-%      \IfValueTF{#2}{%
-%        \gA{#1}[#2]%
-%      }{%
-%        \gA{#1}%
-%      }%
-%    }}%
-%  }
-%  \def\tText#1{\text{\figureFontStyle#1}}%
-%  \underbrace{
-%    \overbrace{
-%      \overbrace{\pgNT{reg}}^{\tText{result}}
-%      \tPadded{$\rightarrow$} \;
-%      \overbrace{%
-%        % LAYOUT FIX:
-%        % Force the '+' to be vertically aligned with the rest of the text
-%        \tPadded{%
-%          \raisebox{2pt}{\mT{+}}%
-%        }
-%        \; \pgNT{reg}[1] \; \pgNT{reg}[2]}^{\tText{pattern tree}%
-%      }
-%    }^{\tText{production}}
-%    \qquad
-%    \overbrace{\tPadded{\tText{4}}}^{\tText{cost}}
-%    \qquad
-%    \overbrace{%
-%      \pgA{EMIT} \;
-%      % LAYOUT FIX:
-%      % Force the data term to be vertically aligned with the rest of the text
-%      \tPadded{%
-%        \raisebox{0pt}[1.8ex]{\cCode{``add \cVar{r}[1],\cVar{r}[2]''}}%
-%      }%
-%    }^{\tText{action}}
-%  }_{\tText{rule}}
-%\end{displaymath}%
 The collection of \glspl{rule} for a particular \gls{target machine} is called
-the \gls{machine grammar} of that machine.
+the \gls!{machine grammar} of that machine.
 
 \labelPage{rule-terms} In most literature, \glspl{rule} and \glspl{pattern}
 usually have the same connotations.
@@ -641,6 +660,9 @@ refers to a tuple of \gls{production}, cost, and \gls{action}, and a
 \gls{pattern} refers to the right-hand side of the \gls{production} appearing in
 a \gls{rule}.
 
+Not shown in the example, a \gls{machine grammar} also consists of a
+\gls!{goal.s}[ \gls{symbol}], whose purpose will be explained shortly.
+
 
 \subsubsection{Tree Parsing}
 
@@ -648,61 +670,171 @@ The \gls{machine grammar} provides us with a formal methodology for modeling
 \glspl{instruction}, but it does not address the problems of \gls{pattern
   matching} and \gls{pattern selection}.
 %
-For that, \citeauthor{GlanvilleGraham:1978} applied an already-known technique called
-\gls{LR parsing}~\cite{Knuth:1965}.
+For that, \citeauthor{GlanvilleGraham:1978} applied an already-known technique
+called \gls!{LR parsing}~\cite{Knuth:1965}.
 %
 Because this technique is mostly associated with \gls{syntactic analysis}, the
-same application on \glspl{tree} is commonly referred to as \gls{tree parsing}.
+same application on \glspl{tree} is commonly referred to as \gls!{tree parsing}.
 
-As an example, let us assume that we have the \gls{machine grammar}
+As an example, let us assume that we have the \gls{machine grammar} given in
+\refFigure{tree-parsing-example-machine-grammar} and that we want to use it to
+generate \gls{assembly code} for the \gls{expression tree} given in
+\refFigure{tree-parsing-example-expression-tree} such that the result ends up in
+a \gls{register}.
 %
-%\begin{center}
-%  \boolfalse{TinRunningText}%
-%  \begin{framedBoxWI}{8cm}
-%    \centering%
-%    \mathDisplayFontSize\figureFontStyle%
-%    \begin{tabular}%
-%      {@{}c@{~~}|@{~~}l@{$\;\; \rightarrow \;\;$}l@{\qquad}c@{\qquad}l@{}}
+We assume that \cVar*{a} and \cVar*{b} are variables already stored in
+\glspl{register} and that \cVar*{2} is an integer constant.
 %
-%         % LAYOUT FIX: The part after PRODUCTION is to force the text to be
-%         % centered with the productions
-%       & \multicolumn{2}{c}{PRODUCTION\qquad\mbox{}}
-%       & COST
-%       & \multicolumn{1}{c}{ACTION}\\
-%      \hline
-%      % LAYOUT FIX: prevent first row from touching the line above
-%      \rule{0pt}{2ex}%
-%      1 & \mNT{reg}
-%        & \mT{$+$}\hspace{1.5mm}\mNT{reg}[1]\hspace{1.5mm}\mNT{reg}[2] & 1
-%        & \gA{EMIT} \dataTerm{``add \cVar{r}[1],\cVar{r}[2]''}\\
-%      2 & \mNT{reg}
-%        & \mT{$*$}\hspace{1.5mm}\mNT{reg}[1]\hspace{1.5mm}\mNT{reg}[2] & 1
-%        & \gA{EMIT} \dataTerm{``mul \cVar{r}[1],\cVar{r}[2]''}\\
-%      3 & \mNT{reg} & \mT{Int} & 1
-%        & \gA{EMIT} \dataTerm{``mv r,I''}\\
-%    \end{tabular}
-%  \end{framedBoxWI}
-%\end{center}
-%
-and that we want to generate \gls{assembly code} for the \gls{expression tree}
-%
-\begin{center}
-  \cCode*{+ c * a b}
-\end{center}
-%
-such that the result of the expression ends up in a \gls{register}.
-%
-If \cVar*{a}, \cVar*{b}, and \cVar*{c} all are integers, then we can assume that
-each \gls{node} in the \gls{expression tree} is of type \irCode*{Int},
-\irCode*{$*$}, or \irCode*{$+$}.
+Hence each \gls{node} in the \gls{expression tree} is either of type
+\irCode*{\irAddText}, \irCode*{\irMulText}, \irCode*{reg}, or \irCode*{int}.
 %
 These will be our \glspl{terminal}.
-
-After transforming the \glspl{expression tree} into sequences of
-\glspl{terminal}, we traverse each from left to right.
 %
-In doing so we either \gls{shift} the just-traversed \gls{symbol} onto a stack,
-or replace \glspl{symbol} currently on the stack via a \gls{rule reduction}.
+Because the result should be end up in a \gls{register}, we say that $\mNT{Reg}$
+is our \gls{goal.s} \gls{symbol}.
+
+\newcommand{\gS}{\mbox{\figureFont s}}
+\newcommand{\gR}[1]{\mbox{\figureFont r$_{\text{#1}}$}}
+
+\begin{filecontents*}{tree-parsing-example-expression-tree.c}
+$\irAddText$ a $\irMulText$ b 2
+\end{filecontents*}
+
+\begin{filecontents*}{tree-parsing-example-terminal-sequence.c}
+$\irAddText$ reg(a) $\irMulText$ reg(b) int(2)
+\end{filecontents*}
+
+\begin{filecontents*}{tree-parsing-example-assembly-code.c}
+mv  $\$\mNT{Reg}[\irCode{2}]$, #2
+mul $\$\mNT{Reg}[\irCode{x}]$, $\$\mNT{Reg}[\irCode{b}]$, $\$\mNT{Reg}[\irCode{2}]$
+add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x}]$
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{%
+                  Machine grammar%
+                  \labelFigure{tree-parsing-example-machine-grammar}%
+                }%
+                {%
+                  \figureFontSize%
+                  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+                    \toprule
+                        \tabhead \#
+                      & \multicolumn{2}{c}{\tabhead production}
+                      & \tabhead cost
+                      & \multicolumn{1}{c}{\tabhead action}\\
+                    \midrule
+                        1
+                      & $\mNT{Reg}[1]$
+                      & $\irCode{\irAddText} \; \mNT{Reg}[2] \; \mNT{Reg}[3]$
+                      & 1
+                      & emit: {\instrFont add \$$\mNT{Reg}[1]$,
+                                              \$$\mNT{Reg}[2]$,
+                                              \$$\mNT{Reg}[3]$}\\
+                        2
+                      & $\mNT{Reg}[1]$ & $\irCode{\irMulText} \;
+                                          \mNT{Reg}[2] \;
+                                          \mNT{Reg}[3]$
+                      & 1
+                      & emit: {\instrFont mul \$$\mNT{Reg}[1]$,
+                                              \$$\mNT{Reg}[2]$,
+                                              \$$\mNT{Reg}[3]$}\\
+                        3
+                      & $\mNT{Reg}$ & \irCode{int}
+                      & 1
+                      & emit: {\instrFont mv  \$$\mNT{Reg}$, \#\irCode{int}}\\
+                        4
+                      & $\mNT{Reg}$ & \irCode{reg}
+                      & 1
+                      & \\
+                    \bottomrule
+                  \end{tabular}%
+                }
+
+  \vspace{\betweensubfigures}
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Expression tree%
+                  \labelFigure{tree-parsing-example-expression-tree}%
+                }%
+                [28mm]%
+                {%
+                  \begin{lstpage}{19mm}%
+                    \lstinputlisting[mathescape]%
+                                    {tree-parsing-example-expression-tree.c}%
+                  \end{lstpage}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Sequence of terminals%
+                  \labelFigure{tree-parsing-example-terminal-sequence}%
+                }{%
+                  \begin{lstpage}{44mm}%
+                    \lstinputlisting[mathescape]%
+                                    {tree-parsing-example-terminal-sequence.c}%
+                  \end{lstpage}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox{%
+                  Sequence of shifts and rule reductions%
+                  \labelFigure{tree-parsing-example-shift-rule-reductions}%
+                }%
+                [\textwidth]%
+                {%
+                  \gS{} \, \gS{} \, \gR{4} \, \gS{} \, \gS{} \, \gR{4} \,
+                  \gS{} \, \gR{3} \, \gR{2} \, \gR{1}
+                }
+
+  \vspace{\betweensubfigures}
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Parse tree.
+                  %
+                  The rule numbers are shown in parentheses.
+                  %
+                  The subscripts appearing in the nonterminals are used for
+                  book keeping%
+                  \labelFigure{tree-parsing-example-parse-tree}%
+                }{%
+                  \input{figures/tree-covering/parse-tree-example}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Assembly code%
+                  \labelFigure{tree-parsing-example-assembly-code}%
+                }{%
+                  \begin{lstpage}{38mm}%
+                    \lstinputlisting[mathescape]%
+                                    {tree-parsing-example-assembly-code.c}%
+                  \end{lstpage}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[TODO]
+          {TODO}
+  \labelFigure{tree-parsing-example}
+\end{figure}
+
+After transforming the \gls{expression tree} into a sequence of \glspl{terminal}
+(as in \refFigure{tree-parsing-example-terminal-sequence}), we traverse the
+sequence from left to right.
+%
+When doing so, we either \gls!{shift} the just-traversed \gls{symbol} onto a
+stack, or replace \glspl{symbol} currently on the stack via a \gls!{rule
+  reduction}.
+%
+We denote a \gls{shift} by~\gS{} and a \gls{rule reduction} by~\gR{$x$}, where
+$x$ is the number of the reduced \gls{rule}.
 %
 A \gls{rule reduction} consists of two steps.
 %
@@ -713,45 +845,27 @@ The number and order of \glspl{symbol} popped must match exactly for a valid
 \gls{rule reduction}.
 %
 Once popped, the \gls{nonterminal} appearing on the left-hand side is pushed
-onto the stack, and the \gls{assembly code} associated with the \gls{rule}, if
-any, is also emitted.
+onto the stack.
 %
-For a given input the performed \glspl{rule reduction} can also be represented
-as a \gls{parse tree}, illustrating the \glspl{terminal} and \glspl{nonterminal}
-which were used to parse the \gls{tree}.
+When the last \gls{rule reduction} has been performed, the stack must contain
+only the \gls{goal.s} \gls{symbol}.
 %
-Now, turning back to our example, if we denote a \gls{shift} by $s$ and a
-\gls{rule reduction} by~$r_x$, where $x$ is the number of the reduced
-\gls{rule}, then a valid \gls{tree parsing} of the \gls{expression tree}
-\begin{center}
-  \cCode*{+ Int(c) * Int(a) Int(b)}
-\end{center}
-could be
+For our example, a valid sequence of \glspl{shift} and \glspl{rule reduction}
+is given in \refFigure{tree-parsing-example-shift-rule-reductions}.
 %
-\begin{displaymath}
- s \; s \; s \; r_3 \; s \; r_3 \; r_2 \; s \; r_3 \; r_1.
-\end{displaymath}
+The performed \glspl{rule reduction} can also be represented as a \gls!{parse
+  tree}, illustrating the \glspl{terminal} and \glspl{nonterminal} which were
+used to parse the sequence of \glspl{terminal}.
 %
-For this particular \gls{tree parsing}, the corresponding \gls{parse tree} and
-generated \gls{assembly code} is shown below (the \gls{rule} numbers are shown
-next to the \glspl{nonterminal} in the \gls{parse tree}):
+\RefFigure{tree-parsing-example-parse-tree} shows the corresponding \gls{parse
+  tree} for the sequence shown in
+\refFigure{tree-parsing-example-shift-rule-reductions}.
 %
-%\begin{center}
-%  \begin{minipage}{6cm}%
-%    \input{\figurePath/tree-covering/parse-tree-example}
-%  \end{minipage}%
-%  \hspace{1cm}%
-%  \begin{minipage}{3cm}
-%    \lstset{escapechar=|}
-%    \begin{plainCode}
-%mv |\cVar{r}[a]|,a
-%mv |\cVar{r}[b]|,b
-%mul |\cVar{r}[a]|,|\cVar{r}[b]|
-%mv |\cVar{r}[c]|,c
-%add |\cVar{r}[a]|,|\cVar{r}[c]|
-%    \end{plainCode}
-%  \end{minipage}%
-%\end{center}
+Lastly, when performing a \gls{rule reduction} we also execute the \gls{action}
+associated with the \gls{rule}.
+%
+For our example, the resulting \gls{assembly code} is shown in
+\refFigure{tree-parsing-example-assembly-code}.
 
 The problem that remains is how to know when to \gls{shift} and when to reduce.
 %
