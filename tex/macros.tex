@@ -1034,11 +1034,11 @@
     \cCode{#2\IfValueTF{#3}{$_{\text{#3}}$}{}}%
   }%
 }
-\newcommand{\irFont}{\ttfamily}
+\let\irFont\codeFont
 \NewDocumentCommand{\irCode}{sm}{%
-  {%
-    \IfBooleanTF{#1}{\relsize{-.5}}{}%
-    \mbox{\irFont#2}%
+  \mbox{%
+    \IfBooleanTF{#1}{\irFont*}{\irFont}%
+    #2%
   }%
 }
 \NewDocumentCommand{\irVar}{smo}{%
