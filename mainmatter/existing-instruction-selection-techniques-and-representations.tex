@@ -1445,19 +1445,19 @@ Formally, an \gls{IP} problem is defined as follows.
 %
 \begin{definition}[IP]
   Let $\mVector{c}$ and $\mVector{b}$ be integer vectors, $\mMatrix{A}$ be an
-  integer matrix, and $\mVar{x}$ be a vector of integer \glspl{decision
-    variable}.
+  integer matrix, and $\mVector{\mVar{x}}$ be a vector of integer
+  \glspl{decision variable}.
   %
   Then
   %
   \begin{displaymath}
     \begin{array}{rl}
       \text{maximize} &
-        \multirow{2}{*}{$\mVector{c}^{\transp} \mVar{x}$} \\
+        \multirow{2}{*}{$\mVector{c}^{\transp} \mVector{\mVar{x}}$} \\
       \text{or minimize} & \\
-      \text{subject to} & \mMatrix{A} \mVar{x} \leq \mVector{b}, \\
-        & \mMatrix{A} \mVar{x} \in \mathbb{Z}^{n \times n}\!, \\
-      \text{and} & \mVar{x} \in \mathbb{N}^n\!. \\
+      \text{subject to} & \mMatrix{A} \mVector{\mVar{x}} \leq \mVector{b}, \\
+        & \mMatrix{A} \mVector{\mVar{x}} \in \mathbb{Z}^{n \times n}\!, \\
+      \text{and} & \mVector{\mVar{x}} \in \mathbb{N}^n\!. \\
     \end{array}
   \end{displaymath}
 \end{definition}
@@ -1470,15 +1470,15 @@ In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 \begin{equation}
   \forall n \in N :
-  \sum_{\mathclap{\substack{m \in M \text{ \st} \\ n \in \mCovers(m)}}}
-  \mVar{x}[m] = 1,
+  \sum_{\mathclap{\substack{m \,\in\, M \text{ \st} \\ n \,\in\, \mCovers(m)}}}
+  \mVector{\mVar{x}}[m] = 1,
   \labelEquation{pattern-selection-in-ip}
 \end{equation}
 %
 where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
-match~$m$, and $\mVar{x}[m]$ is a Boolean \gls{decision variable} indicating
-whether match~$m$ is selected.
+match~$m$, and $\mVector{\mVar{x}}[m]$ is a Boolean (\mbox{$\mSet{0, 1}$})
+\gls{decision variable} indicating whether match~$m$ is selected.
 
 
 \paragraph{Applications}
@@ -1503,7 +1503,7 @@ In most cases, not all copies are needed and therefore not all \glspl{operation}
 must be covered.
 %
 Consequently, \citeauthor{WilsonEtAl:1994} model \gls{pattern selection} as
-\mbox{$\sum_m \mVar{x}[m] \leq 1$}.
+\mbox{$\sum_m \mVector{\mVar{x}}[m] \leq 1$}.
 
 Another approach for \gls{integrated.cg} \gls{code generation} was made by
 \textcite{BednarskiKessler:2006}, whose design was later reused by
@@ -2060,14 +2060,15 @@ developing a greedy, linear-time solver.
 Formally, a \gls{PBQP} is defined as follows.
 %
 \begin{definition}[PBQP]
-  Let \mbox{$\mVector{c}_1, \ldots, \mVector{c}_n$} be a set of vectors, and let
+  Let \mbox{$\mVector{c}_1, \ldots, \mVector{c}_n$} be integer vectors, and let
   \mbox{$\mMatrix{C}_{1,1}, \mMatrix{C}_{1,2}, \ldots, \mMatrix{C}_{1,n}$},
   \mbox{$\mMatrix{C}_{2,2}, \ldots, \mMatrix{C}_{n,n}$}
-  be a set of matrices of size \mbox{$|c_i| \times |c_j|$} for \mbox{$i = 1,
+  be integer matrices of size \mbox{$|c_i| \times |c_j|$} for \mbox{$i = 1,
     \ldots, n$} and \mbox{$j = i, \ldots, n$}.
   %
-  Let also \mbox{$\mVar{x}_1, \ldots, \mVar{x}_n$} be a set of vectors, where
-  \mbox{$\mVar{x}_i \in \mSet{0, 1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
+  Let also \mbox{$\mVector{\mVar{x}}_1, \ldots, \mVector{\mVar{x}}_n$} be
+  vectors of integer \glspl{decision variable}, where \mbox{$\mVar{x}_i \in
+    \mSet{0, 1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
   %
   Then
   %
@@ -2076,11 +2077,12 @@ Formally, a \gls{PBQP} is defined as follows.
       \text{minimize}
         & \displaystyle
           \sum_{\mathclap{1 \leq i < j \leq n}}
-          \mVar{x}_i^{\transp} \mMatrix{C}_{ij} \, \mVar{x}_j +
-          \sum_{\mathclap{1 \leq i \leq n}} \mVector{c}_i^{\transp} \mVar{x}_i, \\
+          \mVector{\mVar{x}}_i^{\transp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
+          \sum_{\mathclap{1 \leq i \leq n}}
+          \mVector{c}_i^{\transp} \mVector{\mVar{x}}_i, \\
       \text{subject to}
         & \forall 1 \leq i \leq n :
-          \mVector{1}^{\transp} \mVar{x}_i = 1. \\
+          \mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1. \\
     \end{array}
   \end{displaymath}
 \end{definition}
@@ -2089,19 +2091,19 @@ Intuitively, one can interpret this definition as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVar{x}_i$ is a \gls!{decision variable} with $k$~elements, where
-\mbox{$\mVar{x}_i[j] = 1$} means that choice~$j$ has been selected for
-decision~$i$.
+Then $\mVector{\mVar{x}}_i$ is a \gls!{decision variable} with $k$~elements,
+where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
+selected for decision~$i$.
 %
 For each \gls{decision variable}, the condition
-\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVar{x}_i = 1$} ensures that
-exactly one choice is selected.
+\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
+ensures that exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
 decisions~$i$ and~$j$ are represented through a cost matrix~$\mMatrix{C}_{ij}$.
 
-In this context, $\mVar{x}_i$ decides whether to select a particular \gls{match}
+In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular \gls{match}
 to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
 \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 \glspl{instruction} that may need to be selected due to certain combinations of
@@ -2183,10 +2185,10 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \begin{minipage}{22mm}%
                     \begin{displaymath}
                       \begin{array}{r@{\;\in\;}l}
-                        \mVar{x}_{\opVar{a}} & \mSet{0, 1}    \\[.7ex]
-                        \mVar{x}_{\opVar{b}} & \mSet{0, 1}    \\[.7ex]
-                        \mVar{x}_{\opAdd}   & \mSet{0, 1}^{2} \\[.7ex]
-                        \mVar{x}_{\opLoad}  & \mSet{0, 1}^{2}
+                        \mVector{\mVar{x}}_{\opVar{a}} & \mSet{0, 1}    \\[.7ex]
+                        \mVector{\mVar{x}}_{\opVar{b}} & \mSet{0, 1}    \\[.7ex]
+                        \mVector{\mVar{x}}_{\opAdd}   & \mSet{0, 1}^{2} \\[.7ex]
+                        \mVector{\mVar{x}}_{\opLoad}  & \mSet{0, 1}^{2}
                       \end{array}
                     \end{displaymath}%
                   \end{minipage}%
@@ -2277,12 +2279,12 @@ that can be combined into an instance of a \gls{complex.r} \gls{rule}, a
 \gls!{complex.m}[ \gls{match}] is created.
 %
 Each \gls{complex.m} \gls{match}~$i$ in turn introduces a \gls{decision
-  variable}~\raisebox{0pt}[\height-2pt]{$\mVar{x}_i \in \mSet{0, 1}^2$} to
-decide whether $i$ is selected.
+  variable}~\raisebox{0pt}[\height-2pt]{$\mVector{\mVar{x}}_i \in \mSet{0,
+    1}^2$} to decide whether $i$ is selected.
 %
-Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVar{x}_i = 1$}
-condition, every such \gls{variable} has exactly two elements (one representing
-\emph{on} and the other \emph{off}).
+Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp}
+  \mVector{\mVar{x}}_i = 1$} condition, every such \gls{variable} has exactly
+two elements (one representing \emph{on} and the other \emph{off}).
 %
 Like with the \gls{simple.r} \glspl{rule}, the costs of selecting a
 \gls{complex.m} \gls{rule} and interactions between these -- for example, two
@@ -2293,25 +2295,25 @@ In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
 \glspl{rule} must also be selected.
 %
 This is achieved by first extending, for each node~$i$, the domain of its
-\gls{decision variable}~$\mVar{x}_i$ with \glspl{match} derived from
+\gls{decision variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived from
 \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
-and \gls{complex.m} \gls{match}~$j$, the costs are 0 if \mbox{$\mVar{x}_j =
-  \text{\emph{off}}$} or $\mVar{x}_i$ is set to a \gls{proxy.r} \gls{rule}
-associated with $j$.
+and \gls{complex.m} \gls{match}~$j$, the costs are 0 if
+\mbox{$\mVector{\mVar{x}}_j = \text{\emph{off}}$} or $\mVector{\mVar{x}}_i$ is
+set to a \gls{proxy.r} \gls{rule} associated with $j$.
 %
 Otherwise the costs are $\infty$.
 %
 Consequently, if a \gls{complex.m} \gls{match} covering some node~$n$ is
-selected, then the only choice for $\mVar{x}_n$ with non-infinite cost is an
-associated \gls{proxy.r} \gls{rule}.
+selected, then the only choice for $\mVector{\mVar{x}}_n$ with non-infinite cost
+is an associated \gls{proxy.r} \gls{rule}.
 %
 The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
   \sum_{\mathclap{i \,\in\, N, \: j \,\in\, M}}
-  \mVar{x}_i^{\transp} D_{ij} \, \mVar{x}_j
+  \mVector{\mVar{x}}_i^{\transp} D_{ij} \, \mVector{\mVar{x}}_j
 \end{equation}
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
