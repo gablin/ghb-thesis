@@ -26,7 +26,6 @@ $(SRCPDF): check-environment $(DEPS_DIR) $(PRIN_TIMELINE_FILE)
                -use-make \
                -deps \
                -bibtex \
-               -interaction=batchmode \
                -pdf \
                -deps-out=$(DEPS_DIR)/$(SRCTEX).d \
                $(SRCTEX)
