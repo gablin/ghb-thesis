@@ -424,6 +424,7 @@
 %========
 
 \newcommand{\tabhead}{\sffamily\bfseries}
+\newcommand{\mathtabhead}[1]{\bm{#1}}
 
 
 %======
@@ -1222,17 +1223,23 @@
 \let\instrVar\irVar
 
 % Commands for grammars
+\newcommand{\mNTFont}[1]{%
+  % This command must not be declared using \NewDocumentCommand because it
+  % will appear inside a \bm{...}, which cannot handle \NewDocumentCommand-
+  % declared macros.
+  \mathit{#1}%
+}
 \NewDocumentCommand{\mNT}{mO{}}{%
-  \mathit{#1}_{#2}%
+  \mNTFont{#1}_{#2}%
 }
 \NewDocumentCommand{\mAttr}{m}{%
-  \mathit{#1}%
+  \mNTFont{#1}%
 }
 \NewDocumentCommand{\mPredicate}{m}{%
-  \mathit{#1}%
+  \mNTFont{#1}%
 }
 \NewDocumentCommand{\mAction}{m}{%
-  \mathit{#1}%
+  \mNTFont{#1}%
 }
 
 

@@ -613,7 +613,7 @@ The \gls{rule} structure is also illustrated in
 \begin{table}
   \centering%
   \figureFontSize%
-  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+  \begin{tabular}{cl@{ $\rightarrow$ }lcl}
     \toprule
     \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
       & \multicolumn{1}{c}{\tabhead action}\\
@@ -635,9 +635,9 @@ The \gls{rule} structure is also illustrated in
     \bottomrule
   \end{tabular}
 
-  \caption[Example of rules]%
+  \caption[Example of grammar rules]%
           {%
-            Example of rules corresponding to a
+            Example of grammar rules corresponding to a
             \mbox{\instrFont* load \$t, o(\$s)} \gls{instruction} that loads a
             value from memory at the address given in register~\instrCode*{s},
             offset by an immediate value~\instrCode*{o}, and stores the loaded
@@ -701,7 +701,7 @@ $\irAddText$ a $\irMulText$ b 2
 \end{filecontents*}
 
 \begin{filecontents*}{tree-parsing-example-terminal-sequence.c}
-$\irAddText$ reg(a) $\irMulText$ reg(b) int(2)
+$\irAddText$ $\cVar{reg}[a]$ $\irMulText$ $\cVar{reg}[b]$ $\cVar{int}[2]$
 \end{filecontents*}
 
 \begin{filecontents*}{tree-parsing-example-assembly-code.c}
@@ -718,7 +718,7 @@ add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x
                 }%
                 {%
                   \figureFontSize%
-                  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+                  \begin{tabular}{cl@{ $\rightarrow$ }lcl}
                     \toprule
                         \tabhead \#
                       & \multicolumn{2}{c}{\tabhead production}
@@ -771,8 +771,10 @@ add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x
   \subcaptionbox{%
                   Sequence of terminals%
                   \labelFigure{tree-parsing-example-terminal-sequence}%
-                }{%
-                  \begin{lstpage}{44mm}%
+                }%
+                [35mm]%
+                {%
+                  \begin{lstpage}{31mm}%
                     \lstinputlisting[mathescape]%
                                     {tree-parsing-example-terminal-sequence.c}%
                   \end{lstpage}%
@@ -801,8 +803,7 @@ add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x
                   %
                   The rule numbers are shown in parentheses.
                   %
-                  The subscripts appearing in the nonterminals are used for
-                  book keeping%
+                  The subscripts denote book keeping data%
                   \labelFigure{tree-parsing-example-parse-tree}%
                 }{%
                   \input{figures/tree-covering/parse-tree-example}%
@@ -874,305 +875,357 @@ generated for a specific \gls{grammar}.
 %
 How this table is produced is out of scope for this dissertation, but an
 example, generated from the \gls{machine grammar} appearing in
-\refFigure{graham-glanville-instruction-grammar}, is given in
-\refFigure{graham-glanville-table}, and a walk-through of executing an
+\refFigure{glanville-graham-instruction-grammar}, is given in
+\refFigure{glanville-graham-table}, and a walk-through of executing an
 \gls{instruction selector} with this state table using an \gls{LR parser} is
-provided in \refFigure{graham-glanville-execution}.
+provided in \refFigure{glanville-graham-execution}.
 
 The subscripts that appear in some of the \glspl{production} in
-\refFigure{graham-glanville-instruction-grammar} are \glspl{semantic qualifier},
+\refFigure{glanville-graham-instruction-grammar} are \glspl{semantic qualifier},
 which are used to express restrictions that may appear for some of the
 \glspl{instruction}.
 %
 For example, all two-address arithmetic \glspl{instruction} store the result in
 one of the \glspl{register} provided as input, and using semantic quantifiers
-this could be expressed as \mbox{$\mNT{r}[1]$ $\rightarrow$ \irCode*{$+$}
-  $\mNT{r}[1]$ $\mNT{r}[2]$}, indicating that the destination \gls{register}
+this could be expressed as \mbox{$\mNT{R}[1]$ $\rightarrow$ \irCode*{$+$}
+  $\mNT{R}[1]$ $\mNT{R}[2]$}, indicating that the destination \gls{register}
 must be the same as that of the first operand.
 %
 To make this information available during parsing, the parser pushes it onto the
 stacking along with its corresponding \gls{terminal} or \gls{nonterminal}
 \gls{symbol}.
 %
-\citeauthor{GlanvilleGraham:1978} also incorporated a \gls{register allocator} into
-their parser, thus constituting an entire \gls{code generator}.
+\citeauthor{GlanvilleGraham:1978} also incorporated a \gls{register allocator}
+into their parser, thus constituting an entire \gls{code generator}.
 
-%\begin{figure}[p]
-%  \boolfalse{TinRunningText}
-%  \begin{minipage}{5.7cm}
-%    \centering%
-%    \begin{framedBoxWI}{\textwidth}
-%      \centering%
-%      \figureFont% The usual patch doesn't work here
-%      \begin{tabular}{@{}r@{~~}|@{~~}l@{$\;\; \rightarrow \;\;$}l@{\qquad}l@{}}
-%          % LAYOUT FIX: The part after PRODUCTION is to force the text to be
-%          % centered with the productions
-%          & \multicolumn{2}{c}{PRODUCTION~~\mbox{}}
-%          & \multicolumn{1}{c}{ACTION}\\
-%        \hline
-%        % LAYOUT FIX: prevent first row from touching the line above
-%        \rule{0pt}{2ex}%
-%        1 & \mNT{r}[2] & \mT{$+$ Ld $+$ C} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{add \cVar{r}[2],C,\cVar{r}[1]}\\
-%        2 & \mNT{r}[1] & \mT{$+$} \mNT{r}[1] \mT{Ld $+$ C} \mNT{r}[2]
-%          & \dataTerm{add \cVar{r}[1],C,\cVar{r}[2]}\\
-%        3 & \mNT{r} & \mT{$+$ Ld C} \mNT{r} & \dataTerm{add r,C}\\
-%        4 & \mNT{r} & \mT{$+$} \mNT{r} \mT{Ld C}
-%          & \dataTerm{add r,C}\\
-%        5 & \mNT{r}[1] & \mT{$+$} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{add \cVar{r}[1],\cVar{r}[2]}\\
-%        6 & \mNT{r}[2] & \mT{$+$} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{add \cVar{r}[2],\cVar{r}[1]}\\
-%        7 & & \mT{$=$ Ld $+$ C} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{store \cVar{r}[2],*C,\cVar{r}[1]}\\
-%        8 & & \mT{$=$ $+$ C} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{store \cVar{r}[2],C,\cVar{r}[1]}\\
-%        9 & & \mT{$=$ Ld C} \mNT{r} & \dataTerm{store r,*C}\\
-%       10 & & \mT{$=$ C} \mNT{r} & \dataTerm{store r,C}\\
-%       11 & & \mT{$=$} \mNT{r}[1] \mNT{r}[2]
-%          & \dataTerm{store \cVar{r}[2],\cVar{r}[1]}\\
-%       12 & \mNT{r}[2] & \mT{Ld $+$ C} \mNT{r}[1]
-%          & \dataTerm{load \cVar{r}[2],C,\cVar{r}[1]}\\
-%       13 & \mNT{r}[2] & \mT{$+$ C} \mNT{r}[1]
-%          & \dataTerm{load \cVar{r}[2],$=\!c$,\cVar{r}[1]}\\
-%       14 & \mNT{r}[2] & \mT{$+$} \mNT{r}[1] \mT{C}
-%          & \dataTerm{load \cVar{r}[2],=C,\cVar{r}[1]}\\
-%       15 & \mNT{r}[2] & \mT{Ld} \mNT{r}[1]
-%          & \dataTerm{load \cVar{r}[2],*\cVar{r}[1]}\\
-%       16 & \mNT{r} & \mT{Ld C} & \dataTerm{load r,=C}\\
-%       17 & \mNT{r} & \mT{C} & \dataTerm{mv r,C}\\
-%      \end{tabular}
-%    \end{framedBoxWI}
-%
-%    \figCaption[machine grammar example]%
-%      {\booltrue{TinRunningText}%
-%        An example of an machine grammar.
-%%
-% All rules have the same
-%        unit cost.
-%%
-%\mT{C}, \mT{Ld}, \mT{$+$}, and \mT{$=$} are all terminals
-%        (\mT{C} stands for ``const'' and \mT{Ld} for ``load''), \mNT{r} is
-%        a nonterminal indicating that the result will be stored in a register,
-%        and subscripts denote the semantic qualifiers}[Glanville1978]
-%      \labelFigure{graham-glanville-instruction-grammar}
-%  \end{minipage}%
-%  \hfill%
-%  \begin{minipage}{5.3cm}
-%    \centering%
-%    \figureFont% The usual patch doesn't work here
-%    \begin{framedBoxWI}{\textwidth}
-%      \centering%
-%      \begin{tabular}%
-%        {@{}r@{~~}|@{~~}c@{\quad}c@{\quad}c@{\quad}c@{\quad}c@{\quad}c@{}}
-%
-%          & \mT{\$} & \mNT{r} & \mT{c} & \mT{$+$} & \mT{Ld} & \mT{$=$}\\
-%        \hline
-%        % LAYOUT FIX: prevent first row from touching the line above
-%        \rule{0pt}{2ex}%
-%        0 &  \textit{accept} &  & &       &       &    s1\\
-%        1 &       &    s2 &    s3 &    s4 &    s5 &\\
-%        2 &       &    s6 &    s7 &    s8 &    s9 &\\
-%        3 &       &   s10 &    s7 &    s8 &    s9 &\\
-%        4 &       &   s11 &   s12 &    s8 &   s13 &\\
-%        5 &       &   s14 &   s15 &   s16 &    s9 &\\
-%        6 &   r11 &   r11 &   r11 &   r11 &   r11 &   r11\\
-%        7 &   r17 &   r17 &   r17 &   r17 &   r17 &   r17\\
-%        8 &       &   s11 &   s17 &    s8 &   s13 &\\
-%        9 &       &   s14 &   s18 &   s19 &    s9 &\\
-%       10 &   r10 &   r10 &   r10 &   r10 &   r10 &   r10\\
-%       11 &       &   s20 &   s21 &    s8 &   s22 &\\
-%       12 &       &   s23 &    s7 &    s8 &    s9 &\\
-%       13 &       &   s14 &   s24 &   s25 &    s9 &\\
-%       14 &   r15 &   r15 &   r15 &   r15 &   r15 &   r15\\
-%       15 &       &   s26 &    s7 &    s8 &    s9 &\\
-%       16 &       &   s11 &   s27 &    s8 &   s13 &\\
-%       17 &       &   s28 &    s7 &    s8 &    s9 &\\
-%       18 &   r16 &   r16 &   r16 &   r16 &   r16 &   r16\\
-%       19 &       &   s11 &   s29 &    s8 &   s13 &\\
-%       20 &  r5/6 &  r5/6 &  r5/6 &  r5/6 &  r5/6 &  r5/6\\
-%       21 &   r14 &   r14 &   r14 &   r14 &   r14 &   r14\\
-%       22 &       &   s14 &   s30 &   s31 &    s9 &\\
-%       23 &       &   s32 &    s7 &    s8 &    s9 &\\
-%       24 &       &   s33 &    s7 &    s8 &    s9 &\\
-%       25 &       &   s11 &   s34 &    s8 &   s13 &\\
-%       26 &    r9 &    r9 &    r9 &    r9 &    r9 &    r9\\
-%       27 &       &   s35 &    s7 &    s8 &    s9 &\\
-%       28 &   r13 &   r13 &   r13 &   r13 &   r13 &   r13\\
-%       29 &       &   s36 &    s7 &    s8 &    s9 &\\
-%       30 &    r4 &    r4 &    r4 &    r4 &    r4 &    r4\\
-%       31 &       &   s11 &   s37 &    s8 &   s13 &\\
-%       32 &    r8 &    r8 &    r8 &    r8 &    r8 &    r8\\
-%       33 &    r3 &    r3 &    r3 &    r3 &    r3 &    r3\\
-%       34 &       &   s38 &    s7 &    s8 &    s9 &\\
-%       35 &       &   s39 &    s7 &    s8 &    s9 &\\
-%       36 &   r12 &   r12 &   r12 &   r12 &   r12 &   r12\\
-%       37 &       &   s40 &    s7 &    s8 &    s9 &\\
-%       38 &       &   s41 &    s7 &    s8 &    s9 &\\
-%       39 &    r7 &    r7 &    r7 &    r7 &    r7 &    r7\\
-%       40 &    r2 &    r2 &    r2 &    r2 &    r2 &    r2\\
-%       41 &    r1 &    r1 &    r1 &    r1 &    r1 &    r1\\
-%      \end{tabular}
-%    \end{framedBoxWI}
-%
-%    \figCaption[State table generated from the grammar in
-%      \refFigure{graham-glanville-instruction-grammar}]%
-%      {\booltrue{TinRunningText}%
-%        State table generated from the machine grammar given in
-%        \refFigure{graham-glanville-instruction-grammar}.
-%        \tT{s}$x$ indicates a shift
-%        to the next state $x$, \tT{r}$i$ indicates the reduction
-%        of rule~$i$, and a
-%        blank entry indicates an error}[Glanville1978]
-%      \labelFigure{graham-glanville-table}
-%  \end{minipage}
-%\end{figure}
+\begin{figure}
+  \figureFont\figureFontSize\relsize{-.5}%
+  \begin{minipage}{66mm}%
+    \centering%
+    \begin{tabular}{rl@{$\; \rightarrow \;$}ll}
+      \toprule
+          \multicolumn{1}{c}{\tabhead \#}
+        & \multicolumn{2}{c}{\tabhead production}
+        & \multicolumn{1}{c}{\tabhead action}\\
+      \midrule
+          1
+        & $\mNT{R}[2]$
+        & \cCode{$+$ ld $+$ c} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{add $\mNT{R}[2]$,c,$\mNT{R}[1]$}\\
+          2
+        & $\mNT{R}[1]$
+        & \cCode{$+$} $\mNT{R}[1]$ \cCode{ld $+$ c} $\mNT{R}[2]$
+        & \instrCode{add $\mNT{R}[1]$,c,$\mNT{R}[2]$}\\
+          3
+        & $\mNT{R}$
+        & \cCode{$+$ ld c} $\mNT{R}$
+        & \instrCode{add $\mNT{R}$,c}\\
+          4
+        & $\mNT{R}$
+        & \cCode{$+$} $\mNT{R}$ \cCode{ld c}
+        & \instrCode{add $\mNT{R}$,c}\\
+          5
+        & $\mNT{R}[1]$
+        & \cCode{$+$} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{add $\mNT{R}[1]$,$\mNT{R}[2]$}\\
+          6
+        & $\mNT{R}[2]$
+        & \cCode{$+$} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{add $\mNT{R}[2]$,$\mNT{R}[1]$}\\
+          7
+        & & \cCode{$=$ ld $+$ c} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{store $\mNT{R}[2]$,*c,$\mNT{R}[1]$}\\
+          8
+        & & \cCode{$=$ $+$ c} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{store $\mNT{R}[2]$,c,$\mNT{R}[1]$}\\
+          9
+        & & \cCode{$=$ ld c} $\mNT{R}$
+        & \instrCode{store $\mNT{R}$,*c}\\
+          10
+        & & \cCode{$=$ c} $\mNT{R}$
+        & \instrCode{store $\mNT{R}$,c}\\
+          11
+        & & \cCode{$=$} $\mNT{R}[1]$ $\mNT{R}[2]$
+        & \instrCode{store $\mNT{R}[2]$,$\mNT{R}[1]$}\\
+          12
+        & $\mNT{R}[2]$
+        & \cCode{ld $+$ c} $\mNT{R}[1]$
+        & \instrCode{load $\mNT{R}[2]$,c,$\mNT{R}[1]$}\\
+          13
+        & $\mNT{R}[2]$
+        & \cCode{$+$ c} $\mNT{R}[1]$
+        & \instrCode{load $\mNT{R}[2]$,$=\!c$,$\mNT{R}[1]$}\\
+          14
+        & $\mNT{R}[2]$
+        & \cCode{$+$} $\mNT{R}[1]$ \cCode{c}
+        & \instrCode{load $\mNT{R}[2]$,=c,$\mNT{R}[1]$}\\
+          15
+        & $\mNT{R}[2]$
+        & \cCode{ld} $\mNT{R}[1]$
+        & \instrCode{load $\mNT{R}[2]$,*$\mNT{R}[1]$}\\
+          16
+        & $\mNT{R}$
+        & \cCode{ld c}
+        & \instrCode{load $\mNT{R}$,=c}\\
+          17
+        & $\mNT{R}$
+        & \cVar{c}
+        & \instrCode{mv $\mNT{R}$,c}\\
+      \bottomrule
+    \end{tabular}
 
-%\begin{figure}[p]
-%  \boolfalse{TinRunningText}
-%  \begin{adjustbox}{rotate=90, center}
-%  \begin{minipage}{17.3cm}
-%    \centering%
-%    \begin{framedBoxWI}{\textwidth}
-%      \centering%
-%      \figureFont% The usual patch doesn't work here
-%      \begin{tabular}{@{}r@{~~}|@{~~}l@{~~}l@{}r@{\quad}l@{}}
-%          & STATE STACK & SYMBOL STACK & INPUT & ACTION\\
-%        \hline
-%  % LAYOUT FIX: prevent first row from touching the line above
-%  \rule{0pt}{2ex}%
-%  1 & 0
-%    &
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld}
-%      \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 1\\
-%  2 & 0 1
-%    & \mT{$=$}
-%    & \mT{$+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7]
-%      \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 4\\
-%  3 & 0 1 4
-%    & \mT{$=$ $+$}
-%    & \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld}
-%      \mT{C}[c] \mT{\$}
-%    & shift to 12\\
-%  4 & 0 1 4 12
-%    & \mT{$=$ $+$} \mT{C}[a]
-%    & \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c]
-%      \mT{\$}
-%    & shift to 23\\
-%  5 & 0 1 4 12 23
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7]
-%    & \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 8\\
-%  6 & 0 1 4 12 23 8
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$}
-%    & \mT{Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 13\\
-%  7 & 0 1 4 12 23 8 13
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld}
-%    & \mT{$+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c]\mT{\$}
-%    & shift to 25\\
-%  8 & 0 1 4 12 23 8 13 25
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$}
-%    & \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 34\\
-%  9 & 0 1 4 12 23 8 13 25 34
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b]
-%    & \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 9\\
-% 10 & 0 1 4 12 23 8 13 25 34 9
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld}
-%    & \mNT{r}[7] \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 14\\
-% 11 & 0 1 4 12 23 8 13 25 34 9 14
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mT{Ld}
-%      \mNT{r}[7]
-%    & \mT{Ld} \mT{C}[c] \mT{\$}
-%    & reduce rule 15 (\mNT{r}[2] $\rightarrow$ \mT{Ld} \mNT{r}[1])\\
-%    & & & & assign result to r8\\
-%    & & & & emit \dataTerm{``load r8,*r7''}\\
-%    & & & & shift to 38\\
-% 12 & 0 1 4 12 23 8 13 25 34 38
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b]\mNT{r}[8]
-%    & \mT{Ld} \mT{C}[c] \mT{\$}
-%    & shift to 9\\
-% 13 & 0 1 4 12 23 8 13 25 34 38 9
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mNT{r}[8]
-%      \mT{Ld}
-%    & \mT{C}[c] \mT{\$}
-%    & shift to 18\\
-% 14 & 0 1 4 12 23 8 13 25 34 38 9 18
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mNT{r}[8]
-%      \mT{Ld} \mT{C}[c]
-%    & \mT{\$}
-%    & reduce rule 16 (\mNT{r} $\rightarrow$ \mT{Ld C})\\
-%    & & & & assign result to r9\\
-%    & & & & emit \dataTerm{``load r9,C''}\\
-%    & & & & shift to 41\\
-% 15 & 0 1 4 12 23 8 13 25 34 38 41
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$ Ld $+$} \mT{C}[b] \mNT{r}[8]
-%      \mNT{r}[9]
-%    & \mT{\$}
-%    & reduce rule 1 (\mNT{r}[2] $\rightarrow$ \mT{$+$ Ld $+$ C} \mNT{r}[1]
-%                     \mNT{r}[2])\\
-%    & & & & emit \dataTerm{``add r9,B,r8''}\\
-%    & & & & shift to 32\\
-% 16 & 0 1 4 12 23 32
-%    & \mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mNT{r}[2]
-%    & \mT{\$}
-%    & reduce rule 8 (\quad $\rightarrow$ \mT{$=$ $+$ C} \mNT{r}[1] \mNT{r}[2])\\
-%    & & & & emit \dataTerm{``store r9,A,r7''}\\
-% 17 & 0
-%    &
-%    & \mT{\$}
-%    & accept\\
-%      \end{tabular}
-%    \end{framedBoxWI}
-%
-%    \figCaption[Execution walk-through of the Glanville-Graham approach]%
-%      {\booltrue{TinRunningText}%
-%        A walk-through of executing \citeauthor{Glanville1978}'s instruction
-%        selector on an expression \dataTerm{a = b + c}, where~\dataTerm{a},
-%        \dataTerm{b} and \dataTerm{c} are constants residing in memory, which
-%        yielded the IR~code \mbox{\mT{$=$ $+$} \mT{C}[a] \mNT{r}[7] \mT{$+$}
-%          \mT{Ld $+$} \mT{C}[b] \mT{Ld} \mNT{r}[7] \mT{Ld} \mT{C}[c]}, where
-%        \mNT{r}[7] is the base address register.
-%%
-%The execution is based on the
-%        precomputed table from \refFigure{graham-glanville-table}.
-%%
-%The
-%        proceedings of the reduction steps may need some explanation.
-%%
-%A rule
-%        reduction may involve two operations: the mandatory reduce operation,
-%        followed by an optional operation which may be a shift or another rule
-%        reduction.
-%%
-%Let us examine step~11.
-%%
-%First, a reduce is executed using
-%        rule~15, which pops \mbox{\mT{Ld} \mNT{r}[7]} from the symbol
-%        stack.
-%%
-%This is followed by pushing the result of the rule, \mNT{r}[8],
-%        on top.
-%%
-%At the same time, states~9 and~14 are popped from the stack,
-%        which leaves state~34 on top.
-%%
-%The top elements of both stacks are now
-%        used to consult the state table for inferring the next, additional
-%        action (if any).
-%%
-%In this case, input symbol \mNT{r}[8] at state~34 leads
-%        to a shift to state~38}%
-%      [Glanville1978]
-%      \labelFigure{graham-glanville-execution}
-%  \end{minipage}
-%  \end{adjustbox}
-%\end{figure}
+    \caption[Machine grammar example]%
+            {%
+              Example of a machine grammar.
+              %
+              \cCode*{c} (``const''), \cCode*{ld} (``load''), \cCode*{$+$}, and
+              \cCode*{$=$} are all terminals, $\mNT{R}$ is a nonterminal
+              indicating that the result will be stored in a register, and
+              subscripts denote the semantic
+              qualifiers.
+              %
+              All rules have the same unit cost~\cite{GlanvilleGraham:1978}%
+            }
+    \labelFigure{glanville-graham-machine-grammar}
+  \end{minipage}%
+  \hfill%
+  \begin{minipage}{55mm}
+    \centering%
+    \begin{tabular}{r@{\hspace{.6em}}c@{\hspace{.6em}}c*{4}{@{\hspace{1.2em}}c}}
+      \toprule
+          \multicolumn{1}{c}{\tabhead \#}
+        & \tabhead\cCode{\$}
+        & \tabhead$\mathtabhead{\mNTFont{R}}$
+        & \tabhead\cCode{c}
+        & \tabhead$\mathtabhead{+}$
+        & \tabhead\cCode{ld}
+        & \tabhead$\mathtabhead{=}$\\
+      \midrule
+         0 & accept &       &       &       &       &    s1\\
+         1 &        &    s2 &    s3 &    s4 &    s5 &      \\
+         2 &        &    s6 &    s7 &    s8 &    s9 &      \\
+         3 &        &   s10 &    s7 &    s8 &    s9 &      \\
+         4 &        &   s11 &   s12 &    s8 &   s13 &      \\
+         5 &        &   s14 &   s15 &   s16 &    s9 &      \\
+         6 &    r11 &   r11 &   r11 &   r11 &   r11 &   r11\\
+         7 &    r17 &   r17 &   r17 &   r17 &   r17 &   r17\\
+         8 &        &   s11 &   s17 &    s8 &   s13 &      \\
+         9 &        &   s14 &   s18 &   s19 &    s9 &      \\
+        10 &    r10 &   r10 &   r10 &   r10 &   r10 &   r10\\
+        11 &        &   s20 &   s21 &    s8 &   s22 &      \\
+        12 &        &   s23 &    s7 &    s8 &    s9 &      \\
+        13 &        &   s14 &   s24 &   s25 &    s9 &      \\
+        14 &    r15 &   r15 &   r15 &   r15 &   r15 &   r15\\
+        15 &        &   s26 &    s7 &    s8 &    s9 &      \\
+        16 &        &   s11 &   s27 &    s8 &   s13 &      \\
+        17 &        &   s28 &    s7 &    s8 &    s9 &      \\
+        18 &    r16 &   r16 &   r16 &   r16 &   r16 &   r16\\
+        19 &        &   s11 &   s29 &    s8 &   s13 &      \\
+        20 &   r5/6 &  r5/6 &  r5/6 &  r5/6 &  r5/6 &  r5/6\\
+        21 &    r14 &   r14 &   r14 &   r14 &   r14 &   r14\\
+        22 &        &   s14 &   s30 &   s31 &    s9 &      \\
+        23 &        &   s32 &    s7 &    s8 &    s9 &      \\
+        24 &        &   s33 &    s7 &    s8 &    s9 &      \\
+        25 &        &   s11 &   s34 &    s8 &   s13 &      \\
+        26 &     r9 &    r9 &    r9 &    r9 &    r9 &    r9\\
+        27 &        &   s35 &    s7 &    s8 &    s9 &      \\
+        28 &    r13 &   r13 &   r13 &   r13 &   r13 &   r13\\
+        29 &        &   s36 &    s7 &    s8 &    s9 &      \\
+        30 &     r4 &    r4 &    r4 &    r4 &    r4 &    r4\\
+        31 &        &   s11 &   s37 &    s8 &   s13 &      \\
+        32 &     r8 &    r8 &    r8 &    r8 &    r8 &    r8\\
+        33 &     r3 &    r3 &    r3 &    r3 &    r3 &    r3\\
+        34 &        &   s38 &    s7 &    s8 &    s9 &      \\
+        35 &        &   s39 &    s7 &    s8 &    s9 &      \\
+        36 &    r12 &   r12 &   r12 &   r12 &   r12 &   r12\\
+        37 &        &   s40 &    s7 &    s8 &    s9 &      \\
+        38 &        &   s41 &    s7 &    s8 &    s9 &      \\
+        39 &     r7 &    r7 &    r7 &    r7 &    r7 &    r7\\
+        40 &     r2 &    r2 &    r2 &    r2 &    r2 &    r2\\
+        41 &     r1 &    r1 &    r1 &    r1 &    r1 &    r1\\
+      \bottomrule
+    \end{tabular}
+
+    \caption[%
+              State table generated from grammar in
+              \refFigure{glanville-graham-machine-grammar}%
+            ]%
+            {%
+              State table generated from the machine grammar given in
+              \refFigure{glanville-graham-machine-grammar}.
+              %
+              {\figureFont s$i$} indicates a shift to the next state $i$,
+              {\figureFont r$j$} indicates the reduction of rule~$j$, and a
+              blank entry indicates an error~\cite{GlanvilleGraham:1978}%
+            }
+    \labelFigure{glanville-graham-table}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}
+  \centering%
+  \figureFont\figureFontSize\relsize{-.5}%
+  \begin{adjustbox}{rotate=90, center}
+    \begin{minipage}{170mm}
+      \begin{tabular}{rll@{}rl}
+        \toprule
+             \tabhead step
+           & \tabhead state stack
+           & \tabhead symbol
+           & \tabhead input
+           & \tabhead action\\
+        \midrule
+             1
+           & 0
+           &
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]
+             \cCode{\$}
+           & shift to 1\\
+             2
+           & 0 1
+           & \cCode{$=$}
+           & \cCode{$+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]
+             \cCode{\$}
+           & shift to 4\\
+             3
+           & 0 1 4
+           & \cCode{$=$ $+$}
+           & \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld}
+             \cVar{c}[c] \cCode{\$}
+           & shift to 12\\
+             4
+           & 0 1 4 12
+           & \cCode{$=$ $+$} \cVar{c}[a]
+           & $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]
+             \cCode{\$}
+           & shift to 23\\
+             5
+           & 0 1 4 12 23
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$
+           & \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 8\\
+             6
+           & 0 1 4 12 23 8
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$}
+           & \cCode{ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 13\\
+             7
+           & 0 1 4 12 23 8 13
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld}
+           & \cCode{$+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]\cCode{\$}
+           & shift to 25\\
+             8
+           & 0 1 4 12 23 8 13 25
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+           & \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 34\\
+             9
+           & 0 1 4 12 23 8 13 25 34
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b]
+           & \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 9\\
+             10
+           & 0 1 4 12 23 8 13 25 34 9
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld}
+           & $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 14\\
+             11
+           & 0 1 4 12 23 8 13 25 34 9 14
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld}
+             $\mNT{R}[7]$
+           & \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & reduce rule 15 ($\mNT{R}[2]$ $\rightarrow$ \cCode{ld} $\mNT{R}[1]$)\\
+           & & & & assign result to r8\\
+           & & & & emit \instrCode{``load r8,*r7''}\\
+           & & & & shift to 38\\
+             12
+           & 0 1 4 12 23 8 13 25 34 38
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] $\mNT{R}[8]$
+           & \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & shift to 9\\
+             13
+           & 0 1 4 12 23 8 13 25 34 38 9
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
+             \cCode{ld}
+           & \cVar{c}[c] \cCode{\$}
+           & shift to 18\\
+             14
+           & 0 1 4 12 23 8 13 25 34 38 9 18
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
+             \cCode{ld} \cVar{c}[c]
+           & \cCode{\$}
+           & reduce rule 16 ($\mNT{R}$ $\rightarrow$ \cCode{ld C})\\
+           & & & & assign result to r9\\
+           & & & & emit \instrCode{``load r9,C''}\\
+           & & & & shift to 41\\
+             15
+           & 0 1 4 12 23 8 13 25 34 38 41
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
+             $\mNT{R}[9]$
+           & \cCode{\$}
+           & reduce rule 1 ($\mNT{R}[2]$ $\rightarrow$ \cCode{$+$ ld $+$ C} $\mNT{R}[1]$
+                            $\mNT{R}[2]$)\\
+           & & & & emit \instrCode{``add r9,B,r8''}\\
+           & & & & shift to 32\\
+             16
+           & 0 1 4 12 23 32
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ $\mNT{R}[2]$
+           & \cCode{\$}
+           & reduce rule 8 (\quad $\rightarrow$ \cCode{$=$ $+$ C} $\mNT{R}[1]$ $\mNT{R}[2]$)\\
+           & & & & emit \instrCode{``store r9,A,r7''}\\
+             17
+           & 0
+           &
+           & \cCode{\$}
+           & accept\\
+        \bottomrule
+      \end{tabular}
+
+      \caption[Execution walk-through of the Glanville-Graham approach]%
+        {%
+          A walk-through of executing \citeauthor{Glanville1978}'s instruction
+          selector on an expression \irCode*{a = b + c}, where~\irVar*{a},
+          \irVar*{b} and \irVar*{c} are constants residing in memory, which
+          yielded the IR~code \mbox{\cCode*{$=$ $+$} \cCode*{C}[a] $\mNT{R}[7]$ \cCode*{$+$}
+            \cCode*{ld $+$} \cCode*{C}[b] \cCode*{ld} $\mNT{R}[7]$ \cCode*{ld} \cCode*{C}[c]}, where
+          $\mNT{R}[7]$ is the base address register.
+  %
+  The execution is based on the
+          precomputed table from \refFigure{glanville-graham-table}.
+  %
+  The
+          proceedings of the reduction steps may need some explanation.
+  %
+  A rule
+          reduction may involve two operations: the mandatory reduce operation,
+          followed by an optional operation which may be a shift or another rule
+          reduction.
+  %
+  Let us examine step~11.
+  %
+  First, a reduce is executed using
+          rule~15, which pops \mbox{\cCode{ld} $\mNT{R}[7]$} from the symbol
+          stack.
+  %
+  This is followed by pushing the result of the rule, $\mNT{R}[8]$,
+          on top.
+  %
+  At the same time, states~9 and~14 are popped from the stack,
+          which leaves state~34 on top.
+  %
+  The top elements of both stacks are now
+          used to consult the state table for inferring the next, additional
+          action (if any).
+  %
+  In this case, input symbol $\mNT{R}[8]$ at state~34 leads
+          to a shift to state~38~\cite{GlanvilleGraham:1978}}%
+      \labelFigure{glanville-graham-execution}
+    \end{minipage}%
+  \end{adjustbox}
+\end{figure}
 
 
 \subsubsection{Resolving Conflicts and Avoiding Blocking}
@@ -1217,12 +1270,12 @@ longest \gls{pattern}.
 %
 If the \gls{grammar} contains \glspl{rule} that differ only in their semantic
 quantifiers, then there may still exist more than one \gls{rule} to reduce (in
-\refFigure{graham-glanville-instruction-grammar}, \glspl{rule}~5 and~6 are two
+\refFigure{glanville-graham-instruction-grammar}, \glspl{rule}~5 and~6 are two
 such \glspl{rule}).
 %
 These are resolved at parse time by checking the semantic restrictions in the
 order in which they appear in the \gls{grammar} (see for example state~20 in
-\refFigure{graham-glanville-table}).
+\refFigure{glanville-graham-table}).
 %
 If all \glspl{rule} in this set are semantically constrained, then situations
 can arise where the parser is unable to apply any \gls{rule} due to semantic
@@ -1428,23 +1481,23 @@ Let us look at an example.
 %        % LAYOUT FIX: prevent first row from touching the line above
 %        \rule{0pt}{2ex}%
 %        1 & \gByteSynAttr{r}
-%          & \mT{$+$} \gByteSynAttr{a} \gByteSynAttr{r}
+%          & \cCode{$+$} \gByteSynAttr{a} \gByteSynAttr{r}
 %          & \mPredicate{IsOne}(\gInhAttr{a}), \mPredicate{NotBusy}(\gInhAttr{r})
 %          & \gA{EMIT} \cVar{``incb \gInhAttr{r}''}\\
 %        2 & \gByteSynAttr{r}
-%          & \mT{$+$} \gByteSynAttr{r} \gByteSynAttr{a}
+%          & \cCode{$+$} \gByteSynAttr{r} \gByteSynAttr{a}
 %          & \mPredicate{IsOne}(\gInhAttr{a}), \mPredicate{NotBusy}(\gInhAttr{r})
 %          & \gA{EMIT} \cVar{``incb \gInhAttr{r}''}\\
 %        3 & \gByteSynAttr{r}
-%          & \mT{$+$} \gByteSynAttr{a} \gByteSynAttr{r}
+%          & \cCode{$+$} \gByteSynAttr{a} \gByteSynAttr{r}
 %          & \mPredicate{TwoOp}(\gInhAttr{a}, \gInhAttr{r})
 %          & \gA{EMIT} \cVar{``addb2 \gInhAttr{a},\gInhAttr{r}''}\\
 %        4 & \gByteSynAttr{r}
-%          & \mT{$+$} \gByteSynAttr{r} \gByteSynAttr{a}
+%          & \cCode{$+$} \gByteSynAttr{r} \gByteSynAttr{a}
 %          & \mPredicate{TwoOp}(\gInhAttr{a}, \gInhAttr{r})
 %          & \gA{EMIT} \cVar{``addb2 \gInhAttr{a},\gInhAttr{r}''}\\
 %        5 & \gByteSynAttr{r}
-%          & \mT{$+$} \gByteSynAttr{a} \gByteSynAttr{b}
+%          & \cCode{$+$} \gByteSynAttr{a} \gByteSynAttr{b}
 %          &
 %          & \gA{GETREG}(\gSynAttr{r})\\
 %          & \multicolumn{3}{c}{}
@@ -1875,10 +1928,10 @@ following \gls{machine grammar}:
 %      % LAYOUT FIX: prevent first row from touching the line above
 %      \rule{0pt}{2ex}%
 %      1 & \mNT{reg}[A]
-%        & \mT{Int}\\
+%        & \cCode{Int}\\
 %      2 & \mNT{reg}[B] & \mNT{reg}[A]\\
 %      3 & \mNT{reg}[B]
-%        & \mNT{reg}[B]\hspace{1.5mm}\mT{$+$}\hspace{1.5mm}\mNT{reg}[B]\\
+%        & \mNT{reg}[B]\hspace{1.5mm}\cCode{$+$}\hspace{1.5mm}\mNT{reg}[B]\\
 %    \end{tabular}
 %  \end{framedBoxWI}
 %\end{center}
@@ -1897,7 +1950,7 @@ it will not be able to match and select the necessary \gls{chain.r} \glspl{rule}
 %  \centering%
 %  \begin{subfigure}[expression tree to cover.
 %%
-%Variables \mT{A} and \mT{B} are
+%Variables \cCode{A} and \cCode{B} are
 %      assumed to represent integer values][tree-covering-dilemma-input]
 %    \begin{minipage}{10cm}
 %      \centering%
@@ -2887,7 +2940,7 @@ As in \citeauthor{Ripken:1977}'s design, \gls{Twig} uses a version of
 set of \glspl{pattern tree} to cover a given \gls{expression tree}.
 %
 The \gls{machine description} is expressed as an \gls{machine grammar} (see
-\refSection{graham-glanville}) using a language called \gls{CGL}, which as
+\refSection{tc-glanville-graham}) using a language called \gls{CGL}, which as
 introduced by \textcite{AhoGanapthi:1985} in~1985.
 %
 An excerpt of such a \gls{machine description} is shown in
@@ -3456,16 +3509,16 @@ approximation for \gls{optimal.ps} \gls{pattern selection} for all possible
 %          \hline
 %          % LAYOUT FIX: prevent first row from touching the line above
 %          \rule{0pt}{2ex}%
-%          1 & \mNT{r} & \mNT{op} \mNT{a} \mNT{a}\\
-%          2 & \mNT{r} & \mT{R}\\
-%          3 & \mNT{r} & \mNT{a}\\
-%          4 & \mNT{a} & \mNT{r}\\
-%          5 & \mNT{a} & \mT{C}\\
-%          6 & \mNT{a} & \mT{$+$} \mT{C} \mNT{r}\\
-%          7 & \mT{C}  & \mT{0}\\
-%          8 & \mNT{x} & \mT{$+$} \mNT{x} \mT{0}\\
-%          9 & \mT{$+$} \mNT{y} \mNT{x} & \mT{$+$} \mNT{x} \mNT{y}\\
-%         10 & \mNT{op} \mNT{x} \mNT{y} & \mT{$+$} \mNT{x} \mNT{y}\\
+%          1 & \mNT{R} & \mNT{op} \mNT{a} \mNT{a}\\
+%          2 & \mNT{R} & \cCode{R}\\
+%          3 & \mNT{R} & \mNT{a}\\
+%          4 & \mNT{a} & \mNT{R}\\
+%          5 & \mNT{a} & \cCode{C}\\
+%          6 & \mNT{a} & \cCode{$+$} \cCode{C} \mNT{R}\\
+%          7 & \cCode{C}  & \cCode{0}\\
+%          8 & \mNT{x} & \cCode{$+$} \mNT{x} \cCode{0}\\
+%          9 & \cCode{$+$} \mNT{y} \mNT{x} & \cCode{$+$} \mNT{x} \mNT{y}\\
+%         10 & \mNT{op} \mNT{x} \mNT{y} & \cCode{$+$} \mNT{x} \mNT{y}\\
 %        \end{tabular}
 %      \end{framedBoxWI}
 %    \end{minipage}%
@@ -3473,8 +3526,8 @@ approximation for \gls{optimal.ps} \gls{pattern selection} for all possible
 %  \hfill%
 %  \begin{subfigure}%
 %    [Example of an \glsentrytext{local rewrite graph} based on the expression tree
-%      \mbox{\mT{$+$} \mT{0}
-%        \mT{$+$} \mT{C} \mT{C}} and the grammar shown in
+%      \mbox{\cCode{$+$} \cCode{0}
+%        \cCode{$+$} \cCode{C} \cCode{C}} and the grammar shown in
 %      \refInternalSubfigure{burs-example-rewrite-system}.
 %%
 %Dashed nodes represent
@@ -3543,7 +3596,7 @@ Since finding a \gls{UI LR graph} is an NP-complete problem,
 %                    A rewrite system that may lead to an unbounded number of
 %                    states.
 %%
-%\mT{Ld} stands for ``load''%
+%\cCode{Ld} stands for ``load''%
 %                    \boolfalse{TinRunningText}]%
 %                   [burs-example2-rewrite-system]
 %    \begin{minipage}{3.5cm}
@@ -3555,8 +3608,8 @@ Since finding a \gls{UI LR graph} is an NP-complete problem,
 %          \hline
 %          % LAYOUT FIX: prevent first row from touching the line above
 %          \rule{0pt}{2ex}%
-%          1 & \mNT{r} & \mT{Int}        & 1\\
-%          2 & \mNT{r} & \mT{Ld} \mNT{r} & 1\\
+%          1 & \mNT{R} & \cCode{Int}        & 1\\
+%          2 & \mNT{R} & \cCode{Ld} \mNT{R} & 1\\
 %        \end{tabular}
 %      \end{framedBoxWI}
 %    \end{minipage}%
@@ -3684,7 +3737,7 @@ pattern of every \gls{production} in the \gls{grammar} is restricted to one of
 the following forms:%
 %
 %\begin{enumerate}
-%  \item $\mNT{lhs}$ $\rightarrow$ $\mT{Op}$ $\mNT{n}[1]$ $\ldots$ $\mNT{n}[k]$,
+%  \item $\mNT{lhs}$ $\rightarrow$ $\cCode{Op}$ $\mNT{n}[1]$ $\ldots$ $\mNT{n}[k]$,
 %    where \irCode*{Op} is a \gls{terminal} representing an operator for which
 %    \mbox{$\mRank(\text{\irCode*{Op}}) > 0$} and $\mNT{n}[i]$ are all
 %    \glspl{nonterminal}.
@@ -3722,11 +3775,11 @@ An example is shown below:
 %      \hline
 %      % LAYOUT FIX: prevent first row from touching the line above
 %      \rule{0pt}{2ex}%
-%      \mNT{reg} & \mT{Ld} \mT{$+$} \mT{Const} \mT{Const} & 2
-%        & & & \mNT{reg} & \mT{Ld} \mNT{n}[1] & 2\\
+%      \mNT{reg} & \cCode{Ld} \cCode{$+$} \cCode{Const} \cCode{Const} & 2
+%        & & & \mNT{reg} & \cCode{Ld} \mNT{n}[1] & 2\\
 %      \multicolumn{3}{l}{} & & & \mNT{n}[1] & $+$ \mNT{n}[2] \mNT{n}[2]
 %        & 0\\
-%      \multicolumn{3}{l}{} & & & \mNT{n}[2] & \mT{Const} & 0\\[2ex]
+%      \multicolumn{3}{l}{} & & & \mNT{n}[2] & \cCode{Const} & 0\\[2ex]
 %      \multicolumn{3}{c}{Original grammar}
 %        & \multicolumn{2}{c}{$\Rightarrow$}
 %        & \multicolumn{3}{c}{normal form.gammar}\\
