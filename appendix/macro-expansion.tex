@@ -31,7 +31,7 @@ To not disturb the flow of reading, material already presented in
 
 \begin{inParFigure}{54mm}[r]
   \centering%
-  \input{figures/macro-expansion/principle-example}%
+  \input{figures/macro-expansion/principle-example}
 
   % LAYOUT FIX:
   % Allow for some more space underneath the figure
@@ -44,8 +44,34 @@ applications starting to appear in the 1960s.
 In \gls{macro expansion}, the \glspl{instruction} are expressed as
 \glspl!{macro} which consist of two parts: a \gls!{template} to be matched over
 the \gls{function}, and an \gls!{expand procedure} to be executed upon the part
-of the \gls{function} that was matched (see \refFigure{macro-example} on
-\refPageOfFigure{macro-example} for an example).
+of the \gls{function} that was matched (see \refFigure{macro-example-2} for an
+example).
+%
+\begin{filecontents*}{macro-example-2.c}
+expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
+  r1 = getRegOf($\$$1);
+  r2 = getRegOf($\$$2);
+  r3 = mkNewReg($\$$3);
+  print "add " + r3 + ", " + r1 + ", " + r2;
+}
+\end{filecontents*}%
+%
+\begin{figure}
+  \centering%
+  \begin{minipage}{.6\textwidth}
+    \lstinputlisting[mathescape]{macro-example-2.c}
+  \end{minipage}
+
+  \caption[Example of a macro]%
+          {%
+            Example of a macro expanding an IR addition into assembly code.
+            %
+            The template to match is given as argument to \cCode*{expand}, and
+            the procedure to run upon expansion is given as \cCode*{expand}'s
+            body%
+          }
+  \labelFigure{macro-example-2}
+\end{figure}%
 %
 A \gls!{macro expander} traverses the \gls{function} under compilation and
 attempts one \gls{macro} after another, typically in the order they are declared
