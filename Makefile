@@ -7,7 +7,7 @@
 SRCTEX   := ghb-thesis.tex
 SRCPDF   := $(SRCTEX:.tex=.pdf)
 LATEX    := latex
-LATEXMK  := latexmk -pdflatex=lualatex -recorder -use-make -deps
+LATEXMK  := latexmk
 OKAY_TEXLIVE_VERSION := 2016
 DEPS_DIR := .deps
 
@@ -20,8 +20,16 @@ BIB_FILE := references.bib
 
 -include $(DEPS_DIR)/$(SRCTEX).d
 
-$(SRCPDF): check-environment $(DEPS_DIR)
-	$(LATEXMK) -pdf -deps-out=$(DEPS_DIR)/$(SRCTEX).d $(SRCTEX)
+$(SRCPDF): check-environment $(DEPS_DIR) $(PRIN_TIMELINE_FILE)
+	$(LATEXMK) -pdflatex=lualatex \
+               -recorder \
+               -use-make \
+               -deps \
+               -bibtex \
+               -interaction=batchmode \
+               -pdf \
+               -deps-out=$(DEPS_DIR)/$(SRCTEX).d \
+               $(SRCTEX)
 
 $(DEPS_DIR):
 	mkdir $@

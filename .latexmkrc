@@ -19,8 +19,5 @@ sub makeglo2gls {
 }
 push @generated_exts, 'ist', 'glg', 'glo', 'gls';
 
-# Always remove BibTeX files upon cleanup
-$bibtex_use = 2;
-
 # Add generation_exts info
 push @generated_exts, 'loa', 'run.xml';
