@@ -469,13 +469,13 @@ Assume that the \gls{target machine} has three \glspl{instruction} for handling
 control flow:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item a \mbox{{\instrFont jmp} $p$, $b$} \gls{instruction}, which
+  \item a \mbox{{\instrFont* jmp} $p$, $b$} \gls{instruction}, which
     branches to block~$b$ if the value in register~$p$ corresponds the Boolean
     value~$\mathit{true}$
-  \item a \mbox{{\instrFont jmp} $r \neq 0$, $b$} \gls{instruction}, which
+  \item a \mbox{{\instrFont* jmp} $r \neq 0$, $b$} \gls{instruction}, which
     branches to block~$b$ if the condition \mbox{$r \neq 0$} holds, where $r$
     is a register
-  \item a \mbox{{\instrFont jmp} $b$} \gls{instruction}, which
+  \item a \mbox{{\instrFont* jmp} $b$} \gls{instruction}, which
     unconditionally branches to block~$b$
 \end{inlinelist}.
 %

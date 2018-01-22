@@ -133,7 +133,7 @@ support this kind of \gls{instruction}.
 As expected from their name, \gls!{multi-output.ic}[ \glspl{instruction}]
 produce more than one observable output from the same input.
 %
-Examples include \instrCode{divmod}~\glspl{instruction}, which compute both the
+Examples include \instrCode*{divmod}~\glspl{instruction}, which compute both the
 quotient and the remainder of two input values, as well as arithmetic
 \glspl{instruction} that, in addition to computing the result, also set one or
 more \glspl{status flag}.\!%
@@ -226,10 +226,10 @@ The last class is the set of \gls!{interdependent.ic}[ \glspl{instruction}].
 This includes \glspl{instruction} which exhibit additional constraints that
 appear when they are combined with other \glspl{instruction} in certain ways.
 %
-An example includes an \instrCode{add}~\gls{instruction}, again from the
+An example includes an \instrCode*{add}~\gls{instruction}, again from the
 \gls{TMS320C55x} \gls{instruction set}, which cannot be combined with an
-\instrCode{rpt}~instruction if a particular \gls{addressing mode} is used for
-the \instrCode{add}~instruction.
+\instrCode*{rpt}~instruction if a particular \gls{addressing mode} is used for
+the \instrCode*{add}~instruction.
 
 \Gls{interdependent.ic} \glspl{instruction} are rare and can typically be found
 in complex, heterogeneous architectures such as \glspl{DSP}.
@@ -507,10 +507,11 @@ The cost of a \gls{cover}~$C$ is the sum of the costs for the \glspl{match}
 appearing in~$C$, where the cost of a \gls{match} has been assigned to reflect a
 desired characteristic in the produced code.
 
-For example, assume that the \instrCode{mv}, \instrCode{add}, \instrCode{mul},
-and \instrCode{muladd} \glspl{instruction} in \refFigure{p-match-sel-example}
-all take one cycle to execute whereas the \instrCode{load} and
-\instrCode{amload} \glspl{instruction} take five cycles to execute.
+For example, assume that the \instrCode*{mv}, \instrCode*{add},
+\instrCode*{mul}, and \instrCode*{muladd} \glspl{instruction} in
+\refFigure{p-match-sel-example} all take one cycle to execute whereas the
+\instrCode*{load} and \instrCode*{amload} \glspl{instruction} take five cycles
+to execute.
 %
 Assume further that the \gls{compiler} should maximize performance.
 %
@@ -545,9 +546,9 @@ language syntax.
 A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
 \glspl{rule}.
 %
-In this context, a \gls!{terminal} is a symbol representing an \gls{operation}
-(e.g.\ \opAdd, \opLT, \opLoad), and a \gls!{nonterminal} is a symbol
-representing an abstract result (e.g.\ $\mNT{Reg}$) produced by the
+In this context, a \gls!{terminal} is a \gls{symbol} representing an
+\gls{operation} (e.g.\ \opAdd, \opLT, \opLoad), and a \gls!{nonterminal} is a
+\gls{symbol} representing an abstract result (e.g.\ $\mNT{Reg}$) produced by the
 \gls{instruction}.
 %
 To distinguish between the two, \glspl{terminal} are written entirely in lower
@@ -605,9 +606,9 @@ is given in \refTable{grammar-rules-example}.
   \labelFigure{machine-grammar-rule-anatomy}
 \end{figure}
 %
-The \glspl{production} are typically written in Polish notation to avoid the
-need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as \mbox{$+
-  \; 1 + 2 \; 3$}).
+The \glspl{production} are typically written in \gls{Polish notation} to avoid
+the need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as
+\mbox{$+ \; 1 + 2 \; 3$}).
 %
 Similarly, the \gls{expression tree} shown in
 \refFigure{p-match-sel-example-tree} can be expressed as \mbox{$\opLoad \;
@@ -632,15 +633,15 @@ Similarly, the \gls{expression tree} shown in
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
     \bottomrule
-  \end{tabular}%
+  \end{tabular}
 
   \caption[Example of rules]%
           {%
             Example of rules corresponding to a
-            \mbox{\instrFont load \$t, o(\$s)} \gls{instruction} that loads a
-            value from memory at the address given in register~\instrCode{s},
-            offset by an immediate value~\instrCode{o}, and stores the loaded
-            value in register~\instrCode{t}, in one cycle.
+            \mbox{\instrFont* load \$t, o(\$s)} \gls{instruction} that loads a
+            value from memory at the address given in register~\instrCode*{s},
+            offset by an immediate value~\instrCode*{o}, and stores the loaded
+            value in register~\instrCode*{t}, in one cycle.
             %
             The subscripts are only needed for referencing the right
             nonterminal in the action%
@@ -1119,7 +1120,7 @@ matches~$m_8$ and~$m_{10}$, resulting in a total cost of \mbox{$0 + \cdots + 0 +
 %
 \Glsshort{node duplication}[ing] the \glspl{node} of the common subexpression
 would, in this case, yield the same \glspl{cover}, but would have resulted in
-suboptimal code in cases where the \instrCode{addmul} and \instrCode{addload}
+suboptimal code in cases where the \instrCode*{addmul} and \instrCode* {addload}
 \glspl{instruction} are not available.
 
 

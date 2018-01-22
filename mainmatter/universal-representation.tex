@@ -562,14 +562,14 @@ is a subset of the value range of~$c$.
 Common subexpressions may appear as part of legalizing the \gls{function} before
 passing it to the \gls{instruction selector}.
 %
-For example, in \gls{LLVM} there is an operation called {\instrFont
-  getelementptr} which takes care of computing the address when accessing an
-array element or object field.
+For example, in \gls{LLVM} there is an operation called
+\instrCode*{getelementptr} which takes care of computing the address when
+accessing an array element or object field.
 %
 To construct the corresponding \gls{UF graph}, these operations first need to be
 lowered into a series of additions and multiplications.
 %
-However, if two or more {\instrFont getelementptr}s compute the same address
+However, if two or more \instrCode*{getelementptr}s compute the same address
 then these expressions will be duplicated, thus resulting in redundant
 \glspl{instruction}.
 %
@@ -764,7 +764,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
   \setlength{\tmpLength}{2\baselineskip + \betweensubfigures}%
   \begin{tabular}{@{}c@{\quad}c@{}}
     \subcaptionbox{%
-                    Semantic behavior of an \mbox{\instrFont add \$d, \$s, \$t}
+                    Semantic behavior of an \mbox{\instrFont* add \$d, \$s, \$t}
                     instruction%
                     \labelFigure{up-graph-examples-add-code}%
                   }%
@@ -780,7 +780,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
                   }%
     &
     \subcaptionbox{%
-                    UP graph of {\instrFont add}%
+                    UP graph of {\instrFont* add}%
                     \labelFigure{up-graph-examples-add-graph}%
                   }%
                   [28mm]%
@@ -788,7 +788,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
     \\[\tmpLength]
     \subcaptionbox{%
                     Semantic behavior of a
-                    \mbox{\instrFont satadd \$d, \$s, \$t} instruction%
+                    \mbox{\instrFont* satadd \$d, \$s, \$t} instruction%
                     \labelFigure{up-graph-examples-satadd-code}%
                   }%
                   [64mm]%
@@ -804,7 +804,7 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
                   }%
     &
     \subcaptionbox{%
-                    UP graph of {\instrFont satadd}%
+                    UP graph of {\instrFont* satadd}%
                     \labelFigure{up-graph-examples-satadd}%
                   }{\input{figures/universal-representation/up-graph-satadd}}
   \end{tabular}
