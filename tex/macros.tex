@@ -1309,6 +1309,23 @@
 
 \lstset{%
   basicstyle=\codeFont\footnotesize,
+  frame=lines,
+  framerule=\heavyrulewidth,
+  framexleftmargin=.5em,
+  framexrightmargin=.5em,
+  aboveskip=0pt,
+  belowskip=0pt,
+}
+
+% Creates a minipage of certain width where the frame from the listings will
+% not overflow.
+\newenvironment{lstpage}[1]{%
+  \begin{minipage}{#1}%
+    \centering%
+    \begin{minipage}{#1-1em}%
+}{%
+    \end{minipage}%
+  \end{minipage}%
 }
 
 

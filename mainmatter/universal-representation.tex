@@ -197,32 +197,36 @@ int factorial(int $\irVar{n}[1]$) {
 \begin{figure}
   \centering
 
-  \begin{minipage}{55mm}
-    \centering%
-    \subcaptionbox{Function in SSA form\labelFigure{function-example-ssa-c}}%
-                  {%
-                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
+  \subcaptionbox{Function in SSA form\labelFigure{function-example-ssa-c}}%
+                {%
+                  \begin{lstpage}{60mm}%
+                    \lstinputlisting[%
+                                      language=c,
+                                      mathescape,
+                                      morekeywords={bool}%
+                                    ]%
                                     {uf-example-ssa.c}%
-                  }%
-  \end{minipage}%
+                  \end{lstpage}%
+                }
+
+  \vspace{\baselineskip}
+
+  \mbox{}%
   \hfill%
-  \begin{minipage}{67mm}
-    \centering%
-    \subcaptionbox{%
-                    Control-flow graph%
-                    \labelFigure{function-example-cf-graph}%
-                  }%
-                  [32mm]%
-                  {%
-                    \input{figures/universal-representation/%
-                      control-flow-graph-example}%
-                  }
-
-    \vspace{\baselineskip}
-
-    \subcaptionbox{SSA graph\labelFigure{function-example-ssa-graph}}%
-                  {\input{figures/universal-representation/ssa-graph-example}}
-  \end{minipage}
+  \subcaptionbox{%
+                  Control-flow graph%
+                  \labelFigure{function-example-cf-graph}%
+                }%
+                [32mm]%
+                {%
+                  \input{figures/universal-representation/%
+                    control-flow-graph-example}%
+                }%
+  \hfill\hfill%
+  \subcaptionbox{SSA graph\labelFigure{function-example-ssa-graph}}%
+                {\input{figures/universal-representation/ssa-graph-example}}
+  \hfill%
+  \mbox{}
 
   \caption[Function example used in describing the program representation]%
           {%
@@ -419,8 +423,10 @@ join:
                   Code snippet%
                   \labelFigure{preserving-semantics-example-code-snippet}%
                 }{%
-                  \lstinputlisting[language=c,mathescape]%
-                                  {preserving-semantics-code.c}%
+                  \begin{lstpage}{51mm}%
+                    \lstinputlisting[language=c,mathescape]%
+                                    {preserving-semantics-code.c}%
+                  \end{lstpage}%
                 }%
   \hfill\hfill\hfill%
   \subcaptionbox{%
@@ -629,10 +635,11 @@ block:
   \mbox{}%
   \hfill%
   \subcaptionbox{Code snippet\labelFigure{uni-rep-side-effects-example-ir}}%
-                [25mm]%
                 {%
-                  \lstinputlisting[language=c,mathescape]%
-                                  {side-effects-example-ir.c}%
+                  \begin{lstpage}{26mm}
+                    \lstinputlisting[language=c,mathescape]%
+                                    {side-effects-example-ir.c}%
+                  \end{lstpage}%
                 }%
   \hfill%
   \subcaptionbox{%
@@ -761,10 +768,15 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
                     instruction%
                     \labelFigure{up-graph-examples-add-code}%
                   }%
-                  [40mm]%
                   {%
-                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
-                                    {add-code.c}%
+                    \begin{lstpage}{42mm}%
+                      \lstinputlisting[%
+                                        language=c,
+                                        mathescape,
+                                        morekeywords={bool}
+                                      ]%
+                                      {add-code.c}%
+                    \end{lstpage}%
                   }%
     &
     \subcaptionbox{%
@@ -781,8 +793,14 @@ int satadd(int $\irVar{s}$, int $\irVar{t}$) {
                   }%
                   [64mm]%
                   {%
-                    \lstinputlisting[language=c,mathescape,morekeywords={bool}]%
-                                    {satadd-code.c}%
+                    \begin{lstpage}{62mm}%
+                      \lstinputlisting[%
+                                        language=c,
+                                        mathescape,
+                                        morekeywords={bool}
+                                      ]%
+                                      {satadd-code.c}%
+                    \end{lstpage}%
                   }%
     &
     \subcaptionbox{%

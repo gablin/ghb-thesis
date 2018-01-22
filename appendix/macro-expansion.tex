@@ -128,9 +128,10 @@ CDR(36) = CAR(I)
                   A macro definition%
                   \labelFigure{sicmp-example-macro}%
                 }%
-                [40mm]%
                 {%
-                  \lstinputlisting{simcmp-example-macro.c}
+                  \begin{lstpage}{40mm}%
+                    \lstinputlisting{simcmp-example-macro.c}%
+                  \end{lstpage}%
                 }%
   \hfill%
   \subcaptionbox{%
@@ -139,7 +140,9 @@ CDR(36) = CAR(I)
                 }%
                 [32mm]%
                 {%
-                  \lstinputlisting{simcmp-example-input.c}
+                  \begin{lstpage}{19.5mm}%
+                    \lstinputlisting{simcmp-example-input.c}%
+                  \end{lstpage}%
                 }%
   \hfill%
   \subcaptionbox{%
@@ -148,7 +151,9 @@ CDR(36) = CAR(I)
                 }%
                 [36mm]%
                 {%
-                  \lstinputlisting{simcmp-example-result.c}
+                  \begin{lstpage}{30mm}%
+                    \lstinputlisting{simcmp-example-result.c}%
+                  \end{lstpage}%
                 }
 
   \caption[Example of macro expansion using \glsentrytext{Simcmp}]%
@@ -201,7 +206,9 @@ c = $\irTemp{1}$ * 2
                   IR code%
                   \labelFigure{expression-tree-example-ir-code}%
                 }{%
-                  \lstinputlisting[mathescape]{ir-code-example.c}
+                  \begin{lstpage}{20mm}%
+                    \lstinputlisting[mathescape]{ir-code-example.c}%
+                  \end{lstpage}%
                 }%
   \hfill%
   \subcaptionbox{%
@@ -260,12 +267,12 @@ ADDB2 GRI  A,B,A        $\commentize{Generate A+B}$
 %
 \begin{figure}%
   \centering%
-  \begin{minipage}{8.5cm}
+  \begin{lstpage}{88mm}
     \lstinputlisting[mathescape]{icl-example-macro.c}%
-  \end{minipage}
+  \end{lstpage}
 
   \caption[A binary addition macro in \glsentrytext{ICL}]%
-          {A binary addition macro in \glsentrytext{ICL} \cite{Wilcox:1971}]}
+          {A binary addition macro in \glsentrytext{ICL} \cite{Wilcox:1971}}
   \labelFigure{icl-example}
 \end{figure}
 %
@@ -330,18 +337,18 @@ set of procedural two-argument commands that serves as the \gls{IR} format (see
 \refFigure{miml-example} for an example);
 %
 \begin{filecontents*}{miml-example.c}
-1:    SS      C,J
-2:    IMUL    1,D
-3:    IADD    2,B
-4:    SS      A,I
-5:    ASSG    4,3
+1:  SS    C,J
+2:  IMUL  1,D
+3:  IADD  2,B
+4:  SS    A,I
+5:  ASSG  4,3
 \end{filecontents*}
 %
 \begin{figure}%
   \centering%
-  \begin{minipage}{3cm}%
+  \begin{lstpage}{26mm}%
     \lstinputlisting{miml-example.c}%
-  \end{minipage}
+  \end{lstpage}
 
   \caption[MIML example]%
           {%
@@ -400,9 +407,9 @@ from FREG(m1),WORD(m2) emit ME m1,m2   result FREG(m1)
 %
 \begin{figure}%
   \centering%
-  \begin{minipage}{9.2cm}%
+  \begin{lstpage}{95mm}%
     \lstinputlisting{omml-example.c}%
-  \end{minipage}
+  \end{lstpage}
 
   \caption[OMML example]%
           {%

@@ -431,7 +431,11 @@ x = A[i + 1];
 \begin{figure}
   \centering%
   \subcaptionbox{C code\labelFigure{p-match-sel-example-c}}%
-                {\lstinputlisting[language=c]{p-match-sel-example.c}}%
+                {%
+                  \begin{lstpage}{2.6cm}%
+                    \lstinputlisting[language=c]{p-match-sel-example.c}%
+                  \end{lstpage}%
+                }%
   \hfill%
   \subcaptionbox{%
                   Instructions. The $*s$ \mbox{notation} means ``get value at
@@ -1030,7 +1034,11 @@ y = *((int*) t);
   \mbox{}%
   \hfill%
   \subcaptionbox{C code\labelFigure{exp-trees-limit-example-c}}%
-                {\lstinputlisting[language=c]{exp-trees-limit-example.c}}%
+                {%
+                  \begin{lstpage}{3cm}
+                    \lstinputlisting[language=c]{exp-trees-limit-example.c}%
+                  \end{lstpage}%
+                }%
   \hfill%
   \subcaptionbox{%
                   Instructions. The $*s$ notation means ``get value at address
@@ -1749,7 +1757,11 @@ int f(int* A, int* B, int N) {
 \begin{figure}
   \centering%
   \subcaptionbox{C code\labelFigure{block-dags-limit-example-c}}%
-                {\lstinputlisting[language=c]{block-dags-limit-example.c}}%
+                {%
+                  \begin{lstpage}{56mm}%
+                    \lstinputlisting[language=c]{block-dags-limit-example.c}%
+                  \end{lstpage}%
+                }%
   \hfill%
   \subcaptionbox{%
                   Block graphs involving variable~\opVar{s}.
@@ -1758,7 +1770,7 @@ int f(int* A, int* B, int N) {
                   and \irCode*{B[i]} are not included%
                   \labelFigure{block-dags-limit-dags}%
                 }%
-                [72mm]%
+                [60mm]%
                 {%
                   \input{figures/existing-isel-techniques-and-reps/%
                     block-dags-limit-example-dags%
@@ -1923,10 +1935,18 @@ int factorial(int $\irVar{n}[1]$) {
                   \labelFigure{sea-of-nodes-example-c}%
                 }%
                 [50mm]%
-                {\lstinputlisting[language=c]{fact.c}}%
-  \hfill%
+                {%
+                  \begin{lstpage}{45mm}%
+                    \lstinputlisting[language=c]{fact.c}%
+                  \end{lstpage}%
+                }%
+  \hfill\hfill%
   \subcaptionbox{Code in SSA form\labelFigure{sea-of-nodes-example-ssa-c}}%
-                {\lstinputlisting[language=c,mathescape]{fact-ssa.c}}%
+                {%
+                  \begin{lstpage}{59mm}%
+                    \lstinputlisting[language=c,mathescape]{fact-ssa.c}%
+                  \end{lstpage}%
+                }%
   \hfill%
   \mbox{}
 
