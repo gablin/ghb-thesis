@@ -377,11 +377,13 @@ int f() {
                                    >{\instrFont}l@{\hspace{4pt}}%
                                    >{\instrFont}l@{}%
                                  }
+                    \toprule
                     b1: & call & a $\leftarrow$ g()\\
                         & cmp  & \instrTemp{1} $\leftarrow$
                                  \instrEQ{\instrVar{a}}{\instrVar{0}}\\
                         & jmp  & \instrTemp{1}, \instrBlock{b1}\\
-                    b2: & ret  & \instrVar{a}
+                    b2: & ret  & \instrVar{a}\\
+                    \bottomrule
                   \end{tabular}%
                 }%
   \hfill%
@@ -399,11 +401,13 @@ int f() {
                                    >{\instrFont}l@{\hspace{4pt}}%
                                    >{\instrFont}l@{}%
                                  }
+                    \toprule
                     b1: & call & a $\leftarrow$ g()\\
                         & jmp  & \instrNE{\instrVar{a}}{\instrVar{0}},
                                  \instrBlock{b2}\\
                     \\
-                    b2: & ret  & \instrVar{a}
+                    b2: & ret  & \instrVar{a}\\
+                    \bottomrule
                   \end{tabular}%
                 }
   \hfill%
@@ -421,11 +425,13 @@ int f() {
                                    >{\instrFont}l@{\hspace{4pt}}%
                                    >{\instrFont}l@{}%
                                  }
+                    \toprule
                     b1: & call & a $\leftarrow$ g()\\
                         & jmp  & \instrNE{\instrVar{a}}{\instrVar{0}},
                                  \instrBlock{b2}\\
                         & jmp  & \instrBlock{b1}\\
-                    b2: & ret  & \instrVar{a}
+                    b2: & ret  & \instrVar{a}\\
+                    \bottomrule
                   \end{tabular}%
                 }
 

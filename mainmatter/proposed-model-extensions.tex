@@ -196,11 +196,13 @@ We begin by discussing the \gls{local.ra} problem and then extend it into the
                   }%
                   \setlength\extrarowheight{\gridYSize-11pt}%
                   \begin{tabular}{@{\hspace{3pt}}cl@{}}
+                    \toprule
                     1 & \irAssign{\irVar{b}}{\ldots} \\
                     2 & \irAssign{\irVar{c}}{\ldots \irVar{a} \ldots} \\
                     3 & \irAssign{\irVar{d}}%
                                  {\ldots \irVar{a}, \irVar{b} \ldots} \\
-                    \raisebox{0pt}[\gridYSize-2pt]{\vdots} &
+                    \raisebox{0pt}[\gridYSize-2pt]{\vdots} & \\
+                    \bottomrule
                   \end{tabular}
 
                   \vspace*{3.5pt}
@@ -420,6 +422,7 @@ single \gls{block} but may span multiple \glspl{block}.
                 {%
                   \figureFont\figureFontSize%
                   \begin{tabular}{@{}c@{\hspace{.5em}}l@{}}
+                    \toprule
                       \irBlock{A:}
                     & \irAssign{\irVar{x}}{\ldots} \\
                     & \irCondBr{\ldots}{B}{C} \\
@@ -431,7 +434,8 @@ single \gls{block} but may span multiple \glspl{block}.
                     & \irBr{D} \\
                       \irBlock{D:}
                     & \ldots \\
-                    & \irAssign{\irVar{y}}{\ldots \irVar{x} \ldots}
+                    & \irAssign{\irVar{y}}{\ldots \irVar{x} \ldots}\\
+                    \bottomrule
                   \end{tabular}%
                 }%
   \hfill%
