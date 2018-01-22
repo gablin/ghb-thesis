@@ -20,22 +20,16 @@ BIB_FILE := references.bib
 
 -include $(DEPS_DIR)/$(SRCTEX).d
 
-$(DEPS_DIR):
-	mkdir $@
-
 $(SRCPDF): check-environment $(DEPS_DIR)
 	$(LATEXMK) -pdf -deps-out=$(DEPS_DIR)/$(SRCTEX).d $(SRCTEX)
 
-.PHONY: clean
-clean:
-	$(LATEXMK) -c $(SRCTEX)
-	$(RM) -r $(DEPS_DIR)
-	$(RM) $(PRIN_TIMELINE_FILE)
-	$(RM) *.c
+$(DEPS_DIR):
+	mkdir $@
 
-.PHONY: distclean
-distclean: clean
-	$(LATEXMK) -C $(SRCTEX)
+$(PRIN_TIMELINE_FILE): $(BIB_FILE) \
+                       $(GEN_PRIN_TIMELINE_SCRIPT) \
+                       $(GEN_PRIN_TIMELINE_STYLE_FILE)
+	$(GEN_PRIN_TIMELINE_SCRIPT) $(BIB_FILE) > $@
 
 .PHONY: check-environment
 check-environment:
@@ -74,7 +68,13 @@ check-environment:
 	fi
 	@echo "OK"
 
-$(PRIN_TIMELINE_FILE): $(BIB_FILE) \
-                       $(GEN_PRIN_TIMELINE_SCRIPT) \
-                       $(GEN_PRIN_TIMELINE_STYLE_FILE)
-	$(GEN_PRIN_TIMELINE_SCRIPT) $(BIB_FILE) > $@
+.PHONY: clean
+clean:
+	$(LATEXMK) -c $(SRCTEX)
+	$(RM) -r $(DEPS_DIR)
+	$(RM) $(PRIN_TIMELINE_FILE)
+	$(RM) *.c
+
+.PHONY: distclean
+distclean: clean
+	$(LATEXMK) -C $(SRCTEX)
