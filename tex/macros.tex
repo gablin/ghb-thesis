@@ -1014,15 +1014,14 @@
 \pagestyle{headings}
 
 
-%=====================
-% CODE AND ALGORITHMS
-%=====================
+%==================
+% FOR WRITING CODE
+%==================
 
 \NewDocumentCommand{\codeFont}{s}{%
   \ttfamily%
   \IfBooleanT{#1}{\relsize{-.5}}%
 }
-\lstset{basicstyle=\codeFont\footnotesize}
 \NewDocumentCommand{\cCode}{sm}{%
   \mbox{%
     \IfBooleanTF{#1}{\codeFont*}{\codeFont}%
@@ -1236,6 +1235,11 @@
   \mathit{#1}%
 }
 
+
+%========================
+% FOR WRITING ALGORITHMS
+%========================
+
 % Commands used for algorithms
 \newcommand{\Or}{\textbf{or}\ }
 \newcommand{\Assign}{$\leftarrow$\ }
@@ -1294,6 +1298,15 @@
 
 % Redefined \listofalgorithms for consistent appearance
 \makeListOfCommand{\listofalgorithms}{\listalgorithmcfname}{loa}{chapter}
+
+
+%==========
+% LISTINGS
+%==========
+
+\lstset{%
+  basicstyle=\codeFont\footnotesize,
+}
 
 
 %=========
