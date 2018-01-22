@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Gabriel Hjort Blindell <ghb@kth.se>
+# Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
 #
 # This work is licensed under a Creative Commons 4.0 International License (see
 # LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
