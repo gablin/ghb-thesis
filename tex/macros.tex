@@ -1018,12 +1018,15 @@
 % CODE AND ALGORITHMS
 %=====================
 
-\newcommand{\codeFont}{\ttfamily}
+\NewDocumentCommand{\codeFont}{s}{%
+  \ttfamily%
+  \IfBooleanT{#1}{\relsize{-.5}}%
+}
 \lstset{basicstyle=\codeFont\footnotesize}
 \NewDocumentCommand{\cCode}{sm}{%
-  {%
-    \IfBooleanTF{#1}{\relsize{-.5}}{}%
-    \mbox{\codeFont#2}%
+  \mbox{%
+    \IfBooleanTF{#1}{\codeFont*}{\codeFont}%
+    #2%
   }%
 }
 \NewDocumentCommand{\cVar}{smo}{%
