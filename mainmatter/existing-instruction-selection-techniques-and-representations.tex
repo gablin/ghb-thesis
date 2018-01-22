@@ -928,7 +928,7 @@ significantly reduce the runtime of the algorithm.
 Although pioneered by \textcite{HatcherChristopher:1986}, the idea was first
 successfully applied by \textcite{Pelegri-LlopartGraham:1988}, and later
 improved and simplified by \textcite{BalachandranEtAl:1990} and
-\textcite{Proebsting:1992:PLDI}.
+\textcite{Proebsting:1992:BURS}.
 
 The \gls{expression tree} is traversed bottom up and labeled with a
 \gls!{state}.
@@ -1541,8 +1541,8 @@ This is often called \gls!{instruction compaction}, and as there is an abundance
 of overlap between such combinations, \citeauthor{LeupersMarwedel:1995} solved
 this problem using \gls{IP}.
 
-\textcite{Leupers:2000} later introduced another \gls{IP}-based approach for
-selecting \gls{SIMD.i} \glspl{instruction}.
+\textcite{Leupers:2000:SIMD} later introduced another \gls{IP}-based approach
+for selecting \gls{SIMD.i} \glspl{instruction}.
 %
 Again, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.i} \gls{instruction}
 is decomposed into trees -- making it a \gls{disjoint-output.ic}
@@ -1554,8 +1554,8 @@ Since the potential of using \gls{SIMD.i} \glspl{instruction} can be increased
 by allowing them to cover \glspl{node} from multiple \glspl{expression tree},
 covering each tree individually often leads to suboptimal code.
 %
-To address this problem, \citeauthor{Leupers:2000} first extended a \gls{machine
-  grammar} with additional \glspl{nonterminal} to indicate whether a
+To address this problem, \citeauthor{Leupers:2000:SIMD} first extended a
+\gls{machine grammar} with additional \glspl{nonterminal} to indicate whether a
 \gls{SIMD.i} \gls{instruction} is used in covering a particular \gls{node} and
 then modified \refAlgorithm{opt-pat-sel-labeling-algorithm} to compute the all
 optimal \glspl{cover} instead of a single solution.
@@ -1565,10 +1565,10 @@ Once all \gls{least-cost.c} \glspl{cover} have been found for all
 how to make the best use of \gls{SIMD.i} \glspl{instruction} for this
 \gls{block}.
 %
-\textcite{Leupers:2000}'s model was later extended by \textcite{TanakaEtAl:2003}
-to take the cost of data transfers into account by extending the \gls{block DAG}
-with additional copy \glspl{node}, which is needed for architectures with
-irregular \glspl{instruction set}.
+\textcite{Leupers:2000:SIMD}'s model was later extended by
+\textcite{TanakaEtAl:2003} to take the cost of data transfers into account by
+extending the \gls{block DAG} with additional copy \glspl{node}, which is needed
+for architectures with irregular \glspl{instruction set}.
 
 The last \gls{IP}-based approach to be discussed is that of
 \textcite{Gebotys:1997}, who applied to the theory of \glspl{Horn clause} to
