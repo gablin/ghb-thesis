@@ -547,9 +547,9 @@ A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
 \glspl{rule}.
 %
 In this context, a \gls!{terminal} is a \gls{symbol} representing an
-\gls{operation} (e.g.\ \opAdd, \opLT, \opLoad), and a \gls!{nonterminal} is a
-\gls{symbol} representing an abstract result (e.g.\ $\mNT{Reg}$) produced by the
-\gls{instruction}.
+\gls{operation} (e.g.\ \irCode*{\irAddText}, \irCode*{\irLTText},
+\irCode*{\irLoadText}), and a \gls!{nonterminal} is a \gls{symbol} representing
+an abstract result (e.g.\ $\mNT{Reg}$) produced by the \gls{instruction}.
 %
 To distinguish between the two, \glspl{terminal} are written entirely in lower
 case whereas \glspl{nonterminal} start with a capital letter and are set in
@@ -588,14 +588,16 @@ is given in \refTable{grammar-rules-example}.
       \overbrace{
         \overbrace{\mNT{Reg}[1]}^{\text{result}}
         \rightarrow \;
-        \overbrace{\opAdd{} \; \mNT{Reg}[2] \; \irCode{int}}^{\text{pattern}}%
+        \overbrace{%
+          \irCode{\irAddText} \; \mNT{Reg}[2] \; \irCode{int}%
+        }^{\text{pattern}}%
       }^{\text{production}}
       \qquad
       \overbrace{\text{4}}^{\text{cost}}
       \qquad
       \overbrace{
         \text{emit:}~
-        \text{\instrFont add \$$\mNT{Reg}[1]$, \$$\mNT{Reg}[2]$, \#const}%
+        \text{\instrFont{} add \$$\mNT{Reg}[1]$, \$$\mNT{Reg}[2]$, \#const}%
       }^{\text{action}}
     }_{\text{rule}}
   \end{displaymath}
@@ -611,9 +613,9 @@ the need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as
 \mbox{$+ \; 1 + 2 \; 3$}).
 %
 Similarly, the \gls{expression tree} shown in
-\refFigure{p-match-sel-example-tree} can be expressed as \mbox{$\opLoad \;
-  \opAdd \; \opMul \; \opAdd \; \opVar{i} \; \opVar{1} \; \opVar{4} \;
-  \opVar{A}$}.
+\refFigure{p-match-sel-example-tree} can be expressed as
+\mbox{\irFont*$\irLoadText \; \irAddText \; \irMulText \; \irAddText \;
+  \irVar{i} \; \irVar{1} \; \irVar{4} \; \irVar{A}$}.
 
 \begin{table}[t]
   \centering%
@@ -623,13 +625,18 @@ Similarly, the \gls{expression tree} shown in
     \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
       & \multicolumn{1}{c}{\tabhead action}\\
     \midrule
-    1 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \mNT{Reg}[2] \; \irCode{int}$
+    1 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \mNT{Reg}[2] \;
+         \irCode{int}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
-    2 & $\mNT{Reg}[1]$ & $\opLoad \; \opAdd \; \irCode{int} \; \mNT{Reg}[2]$
+    2 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \irCode{int} \;
+         \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
-    3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
+    3 & $\mNT{Reg}[1]$
+      & $\irCode{\irLoadText} \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
     \bottomrule
@@ -689,24 +696,24 @@ of the following forms:
     \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
       & \multicolumn{1}{c}{\tabhead action}\\
     \midrule
-    1 & $\mNT{Reg}$ & $\opLoad \; \mNT{A}$
+    1 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{A}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
                                $A.C.\text{int}$(\$$A.\mNT{Reg}$)}\\
-    4 & $\mNT{A}$ & $\opAdd \; \mNT{Reg} \; \mNT{C}$
+    4 & $\mNT{A}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{C}$
       & 0
       & \\
-    2 & $\mNT{Reg}$ & $\opLoad \; \mNT{B}$
+    2 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{B}$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}$,
                                $B.C.\text{int}$(\$$B.\mNT{Reg}$)}\\
-    5 & $\mNT{B}$ & $\opAdd \; \mNT{C} \; \mNT{Reg}$
+    5 & $\mNT{B}$ & $\irCode{\irAddText} \; \mNT{C} \; \mNT{Reg}$
       & 0
       & \\
     6 & $\mNT{C}$ & $\irCode{int}$
       & 0
       & \\
-    3 & $\mNT{Reg}[1]$ & $\opLoad \; \mNT{Reg}[2]$
+    3 & $\mNT{Reg}[1]$ & $\irCode{\irLoadText} \; \mNT{Reg}[2]$
       & 1
       & emit: {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
     \bottomrule
@@ -1765,7 +1772,7 @@ int f(int* A, int* B, int N) {
                 }%
   \hfill%
   \subcaptionbox{%
-                  Block graphs involving variable~\opVar{s}.
+                  Block graphs involving variable~\irVar*{s}.
                   %
                   For brevity, the subtrees concerning \irCode*{A[i]}
                   and \irCode*{B[i]} are not included%
@@ -1786,8 +1793,8 @@ int f(int* A, int* B, int N) {
       %
       For brevity, the actions are not included.
       %
-      $\mNT{Null}$ is a dummy nonterminal since \opRet*{} does not return
-      anything, yet all productions must have a result.
+      $\mNT{Null}$ is a dummy nonterminal since \irCode*{\irRetText} does not
+      return anything, yet all productions must have a result.
       %
       All rules are assumed to have equal cost%
     }%
@@ -1801,12 +1808,16 @@ int f(int* A, int* B, int N) {
         \midrule
         $\mNT{Reg}$ & \irCode{const}
           & $\mNT{SReg}$
-          & \multicolumn{2}{L}{$\opMul \; \mNT{Reg} \; \mNT{Reg}$}\\
+          & \multicolumn{2}{L}{%
+              $\irCode{\irMulText} \; \mNT{Reg} \; \mNT{Reg}$%
+            }\\
         $\mNT{SReg}$ & \irCode{const}
-          & $\mNT{Null}$ & \multicolumn{2}{L}{$\opRet* \; \mNT{Reg}$}\\
-        $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$
+          & $\mNT{Null}$ & \multicolumn{2}{L}{%
+              $\irCode{\irRetText} \; \mNT{Reg}$%
+            }\\
+        $\mNT{Reg}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{Reg}$
           & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
-        $\mNT{SReg}$ & $\opAdd \; \mNT{SReg} \; \mNT{SReg}$
+        $\mNT{SReg}$ & $\irCode{\irAddText} \; \mNT{SReg} \; \mNT{SReg}$
           & $\mNT{SReg}$ & $\mNT{Reg}$  & $(r \gg 1)$\\
         \bottomrule
       \end{tabular}%
@@ -2166,9 +2177,11 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
         \multicolumn{2}{c}{\tabhead rules} & \tabhead cost\\
         \midrule
         $\mNT{Reg}$ & \irCode{var} & 0\\
-        $\mNT{Reg}$ & $\opAdd \; \mNT{Reg} \; \mNT{Reg}$ & 1\\
-        $\mNT{Reg}$ & $\opLoad \; \mNT{Addr}$ & 3\\
-        $\mNT{Reg}$ & $\opLoad \; \opAdd \; \mNT{Reg} \; \mNT{Reg}$ & 5\\
+        $\mNT{Reg}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{Reg}$ & 1\\
+        $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{Addr}$ & 3\\
+        $\mNT{Reg}$ & $\irCode{\irLoadText} \; \irAddText \; \mNT{Reg} \;
+                      \mNT{Reg}$
+                    & 5\\
         $\mNT{Addr}$ & $\mNT{Reg}$ & 2\\
         \bottomrule
       \end{tabular}%
@@ -2208,10 +2221,12 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \begin{minipage}{22mm}%
                     \begin{displaymath}
                       \begin{array}{r@{\;\in\;}l}
-                        \mVector{\mVar{x}}_{\opVar{a}} & \mSet{0, 1}    \\[.7ex]
-                        \mVector{\mVar{x}}_{\opVar{b}} & \mSet{0, 1}    \\[.7ex]
-                        \mVector{\mVar{x}}_{\opAdd}   & \mSet{0, 1}^{2} \\[.7ex]
-                        \mVector{\mVar{x}}_{\opLoad}  & \mSet{0, 1}^{2}
+                          \mVector{\mVar{x}}_{\irVar{a}} & \mSet{0, 1} \\[.7ex]
+                          \mVector{\mVar{x}}_{\irVar{b}} & \mSet{0, 1} \\[.7ex]
+                          \mVector{\mVar{x}}_{\irCode{\irAddText}}
+                        & \mSet{0, 1}^{2} \\[.7ex]
+                          \mVector{\mVar{x}}_{\irCode{\irLoadText}}
+                        & \mSet{0, 1}^{2}
                       \end{array}
                     \end{displaymath}%
                   \end{minipage}%
@@ -2220,26 +2235,26 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                     \begin{minipage}{27mm}%
                       \begin{displaymath}
                         \begin{array}{Rl}
-                          \mVector{c}_{\opVar{a}}
+                          \mVector{c}_{\irVar{a}}
                             & \begin{adjblockarray}{cc}{1.3ex}
                                 \begin{block}{[C]X}
                                   0 & \mlabel{m_1} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
-                          \mVector{c}_{\opVar{b}}
+                          \mVector{c}_{\irVar{b}}
                             & \begin{adjblockarray}{cc}{1.3ex}
                                 \begin{block}{[C]X}
                                   0 & \mlabel{m_2} \\
                                 \end{block}
                               \end{adjblockarray} \\[1.5ex]
-                          \mVector{c}_{\opAdd}
+                          \mVector{c}_{\irCode{\irAddText}}
                             & \begin{adjblockarray}{cc}{1.3ex}
                                 \begin{block}{[C]X}
                                   1 & \mlabel{m_3} \\
                                   5 & \mlabel{m_5} \\
                                 \end{block}
                               \end{adjblockarray} \\[3ex]
-                          \mVector{c}_{\opLoad}
+                          \mVector{c}_{\irCode{\irLoadText}}
                             & \begin{adjblockarray}{cc}{1.3ex}
                                 \begin{block}{[C]X}
                                   3 & \mlabel{m_4} \\
@@ -2254,21 +2269,21 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   \begin{minipage}{33mm}%
                     \begin{displaymath}
                       \begin{array}{Rc}
-                        \mMatrix{C}_{\opVar{a} \opAdd}
+                        \mMatrix{C}_{\irVar{a} \irCode{\irAddText}}
                           & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}
                                 0 & 0 & \mlabel{m_1} \\
                               \end{block}
                             \end{adjblockarray} \\[-2.2ex]
-                        \mMatrix{C}_{\opVar{b} \opAdd}
+                        \mMatrix{C}_{\irVar{b} \irCode{\irAddText}}
                           & \begin{adjblockarray}{ccc}{-0.1ex}
                               \scriptstyle m_3 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}
                                 0 & 0 & \mlabel{m_1} \\
                               \end{block}
                             \end{adjblockarray} \\[-2.2ex]
-                        \mMatrix{C}_{\opAdd\opLoad}
+                        \mMatrix{C}_{\irCode{\irAddText} \irCode{\irLoadText}}
                           & \begin{adjblockarray}{ccc}{0ex}
                               \scriptstyle m_4 & \scriptstyle m_5 & \\[\lskip]
                               \begin{block}{[cc]X}
