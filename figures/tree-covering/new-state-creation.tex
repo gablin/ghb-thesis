@@ -1,0 +1,90 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\begin{tikzpicture}[
+    text data/.style={
+      nothing,
+    },
+    comma/.style={
+      nothing,
+      anchor=baseline,
+    },
+    operand/.style={
+      nothing,
+      minimum width=8pt,
+      anchor=baseline,
+    },
+    dots/.style={
+      nothing,
+      minimum width=16pt,
+      anchor=baseline,
+    },
+    state/.style={
+      node,
+      node distance=6pt,
+    },
+    encompass/.style={
+      draw,
+      decorate,
+      decoration={brace, mirror},
+      line width=\dataFlowLineWidth,
+    },
+    label/.style={
+      nothing,
+    },
+  ]
+
+  % Terminal
+  \node [text data] (op) {$\mathit{op}$(};
+  \node [operand, right=of op] (opand1) {};
+  \node [comma, right=of opand1] (comma1) {,};
+  \node [operand, right=of comma1] (opand2) {};
+  \node [comma, right=of opand2] (comma2) {,};
+  \node [dots, right=of comma2] (dots1) {$\ldots$};
+  \node [comma, right=of dots1] (comma3) {,};
+  \node [operand, right=of comma3] (opandn) {};
+  \node [text data, right=of opandn] (opend) {)};
+
+  % Existing states
+  \node [state, above left=8mm and 0mm of opand1] (s1) {$s_1$};
+  \node [state, right=of s1] (s2) {$s_2$};
+  \node [dots, minimum width=8pt, right=6pt of s2] (dots2) {$\ldots$};
+  \node [state, right=of dots2] (sn) {$s_n$};
+  \begin{scope}[data flow]
+    \foreach \i in {1, 2, n} {%
+      \draw (s\i) -- (opand\i);
+    }
+  \end{scope}
+
+  % New state
+  \draw [encompass, transform canvas={yshift=-6pt}]
+    (op.west) -- coordinate (encompass center) (opend.east);
+  \coordinate (encompass point) at ([yshift=-8pt] encompass center);
+  \node [state, below=6mm of encompass point] (new state) {$s_{n+1}$};
+  \draw [data flow] (encompass point) -- (new state);
+
+  % Labels
+  \coordinate (label right end) at ([xshift=-8mm] s1);
+  \node [label, left=of label right end |- s1] {%
+    \begin{tabular}{c}
+      existing\\
+      states
+    \end{tabular}%
+  };
+  \node [label, left=of label right end |- op] {%
+    \begin{tabular}{c}
+      terminal
+    \end{tabular}%
+  };
+  \node [label, left=of label right end |- new state] {%
+    \begin{tabular}{c}
+      new state
+    \end{tabular}%
+  };
+\end{tikzpicture}%
+\endgroup%

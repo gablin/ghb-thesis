@@ -672,6 +672,99 @@ Not shown in the example, a \gls{machine grammar} also consists of a
 \gls!{goal.s}[ \gls{symbol}], whose purpose will be explained shortly.
 
 
+\paragraph{Normal Form}
+
+To simplify \gls{pattern matching} and \gls{pattern selection}, a \gls{grammar}
+can be rewritten into \gls!{normal form.g}~\cite{BalachandranEtAl:1990}.
+%
+A \gls{grammar} is in \gls{normal form.g} if every \gls{rule} in the
+\gls{grammar} has a \gls{production} in one of the following forms:
+%
+\begin{enumerate}
+  \item \mbox{$\mNT{N} \rightarrow \irCode*{op} \; \mNT{A}[1] \; \mNT{A}[2]
+    \ldots \mNT{A}[n]$}, where \irCode*{op} is a \gls{terminal}, representing an
+    \gls{operation} that takes $n$ arguments, and all $\mNT{A}[i]$ are
+    \glspl{nonterminal}.
+    %
+    Such rules are called \gls!{base.r}[ \glspl{rule}].
+  \item \mbox{$\mNT{N} \rightarrow \irCode*{t}$}, where \irCode*{t} is a
+    \gls{terminal}.
+    %
+    Such rules are also called \gls{base.r} \glspl{rule}.
+  \item \mbox{$\mNT{N} \rightarrow \mNT{A}$}, where $\mNT{A}$ is a
+    \gls{nonterminal}.
+    %
+    Such rules are called \gls!{chain.r}[ \glspl{rule}].
+\end{enumerate}
+
+A \gls{grammar} can be mechanically rewritten into \gls{normal form.g} by
+introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule} into
+multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{normal
+  form.g}.
+%
+For example, rewriting the \gls{grammar} shown in
+\refTable{grammar-rules-example} into \gls{normal form.g} results in the
+\gls{grammar} shown in \refTable{normal-form-grammar-example}.
+%
+\begin{table}[t]
+  \centering%
+  \figureFontSize%
+  \begin{tabular}{cr@{ $\rightarrow$ }lcl}
+    \toprule
+    \tabhead \# & \multicolumn{2}{c}{\tabhead production} & \tabhead cost
+      & \multicolumn{1}{c}{\tabhead action}\\
+    \midrule
+    1 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{A}$
+      & 1
+      & emit {\instrFont load \$$\mNT{Reg}$,
+                               $A.C.\text{int}$(\$$A.\mNT{Reg}$)}\\
+    4 & $\mNT{A}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{C}$
+      & 0
+      & \\
+    2 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{B}$
+      & 1
+      & emit {\instrFont load \$$\mNT{Reg}$,
+                               $B.C.\text{int}$(\$$B.\mNT{Reg}$)}\\
+    5 & $\mNT{B}$ & $\irCode{\irAddText} \; \mNT{C} \; \mNT{Reg}$
+      & 0
+      & \\
+    6 & $\mNT{C}$ & $\irCode{int}$
+      & 0
+      & \\
+    3 & $\mNT{Reg}[1]$ & $\irCode{\irLoadText} \; \mNT{Reg}[2]$
+      & 1
+      & emit {\instrFont load \$$\mNT{Reg}[1]$, 0(\$$\mNT{Reg}[2]$)}\\
+    \bottomrule
+  \end{tabular}%
+
+  \caption[Grammar from \refTable{grammar-rules-example} in normal form]%
+          {%
+            The grammar from \refTable{grammar-rules-example} in normal form.
+            %
+            Nonterminals~$\mNT{A}$,~$\mNT{B}$ and~$\mNT{C}$ and
+            rules~\mbox{4--6} are introduced in order to transform rules~1 and~2
+            into base rules%
+          }
+  \labelTable{normal-form-grammar-example}
+\end{table}
+%
+Note that the new \glspl{rule} have zero cost and no \gls{action} as these are
+only intermediary steps towards enabling reduction of the original \gls{rule}.
+
+Since all \glspl{production} in a \glsshort{normal form.g} \gls{grammar} have at
+most one \gls{terminal}, the \gls{pattern matching} problem becomes trivial
+(simply match the \gls{node} type against the \gls{terminal} in all \gls{base.r}
+\glspl{rule}).
+%
+Otherwise another bottom-up traversal of the \gls{expression tree} would have to
+be made in order to find all \glspl{match}, which can be done in linear time for
+most reasonable \glspl{grammar}~\cite{HoffmannODonnell:1982}.
+%
+As we will see, this also simplifies \gls{pattern selection} as the
+\glspl{pattern} on the right-hand side in all \glspl{production} have uniform
+height.
+
+
 \subsubsection{Tree Parsing}
 
 The \gls{machine grammar} provides us with a formal methodology for modeling
@@ -3944,10 +4037,11 @@ publications mistakenly associate to the idea of \gls{offline cost analysis}
 with~\gls{BURS} theory, typically using terms like \glspl!{BURS state}, when
 these two aspects are in fact orthogonal to each other.
 %
-Although the work by \citeauthor{Pelegri-LlopartGraham:1988} undoubtedly led to making
-\gls{offline cost analysis} an established aspect of modern \gls{instruction
-  selection}, the application of \gls{BURS} theory is only \emph{one} means to
-achieving \gls{optimal.ps} \gls{pattern selection} using tables.
+Although the work by \citeauthor{Pelegri-LlopartGraham:1988} undoubtedly led to
+making \gls{offline cost analysis} an established aspect of modern
+\gls{instruction selection}, the application of \gls{BURS} theory is only
+\emph{one} means to achieving \gls{optimal.ps} \gls{pattern selection} using
+tables.
 
 For example, in 1990 \textcite{BalachandranEtAl:1990} introduced an alternative
 method for generating the \glspl{state} that is both simpler and more efficient
@@ -3969,90 +4063,26 @@ and the process repeats until no new \glspl{state} can be created.
 %
 We will go into more detail shortly.
 
-Compared to \citeauthor{Pelegri-LlopartGraham:1988}, this algorithm is less complicated
-and also faster as it directly generates a smaller set of \glspl{state} instead
-of first enumerating all possible \glspl{state} and then reducing them.
+Compared to \citeauthor{Pelegri-LlopartGraham:1988}, this algorithm is less
+complicated and also faster as it directly generates a smaller set of
+\glspl{state} instead of first enumerating all possible \glspl{state} and then
+reducing them.
 %
-In addition, \citeauthor{BalachandranEtAl:1990} expressed the \glspl{instruction} as
-a more traditional \gls{machine grammar} -- like those used in the
-\gls{Glanville-Graham approach} -- instead of as a \gls{BURS grammar}.
-
-
-\subsubsection{Normal-Form Grammars}
-\labelSection{tc-normal-form-grammar}
-
-In the same paper, \citeauthor{BalachandranEtAl:1990} also introduce the idea of
-\glspl{grammar} being in \emph{\glsshort{normal form.g}}, which means that the
-pattern of every \gls{production} in the \gls{grammar} is restricted to one of
-the following forms:%
-%
-%\begin{enumerate}
-%  \item $\mNT{lhs}$ $\rightarrow$ $\cCode{Op}$ $\mNT{n}[1]$ $\ldots$ $\mNT{n}[k]$,
-%    where \irCode*{Op} is a \gls{terminal} representing an operator for which
-%    \mbox{$\mRank(\text{\irCode*{Op}}) > 0$} and $\mNT{n}[i]$ are all
-%    \glspl{nonterminal}.
-%%
-% \Glspl{rule} with such \glspl{production} are called
-%    \tbaseRules.
-%  \item $\mNT{lhs}$ $\rightarrow$ \irCode*{T}, where \irCode*{T} is a terminal.
-%%
-%Such
-%    \glspl{rule} are also called \tbaseRules.
-%  \item \mNT{lhs} $\rightarrow$ \mNT{nt}, where \mNT{nt} is a
-%    \gls{nonterminal}.
-%%
-%As before, such \glspl{rule} are called \gls{chain.r} \glspl{rule}.
-%\end{enumerate}
-%
-A non\gls{normal form.g} \gls{grammar} can easily be rewritten into
-\glsshort{normal form.g} by introducing new \glspl{nonterminal} and \glspl{rule}
-for making the necessary transitions.
-%
-An example is shown below:
-%
-%\begin{center}%
-%  \boolfalse{TinRunningText}%
-%  \begin{framedBoxWI}{8cm}%
-%    \centering%
-%    \mathDisplayFontSize\figureFontStyle%
-%    \begin{tabular}{%
-%        r@{$\;\; \rightarrow \;\;$}lc
-%        p{0.2cm}|p{0.2cm}
-%        r@{$\;\; \rightarrow \;\;$}l@{\qquad}c
-%      }%
-%      \multicolumn{2}{c}{PRODUCTION} & COST & &
-%        & \multicolumn{2}{c}{PRODUCTION} & COST\\
-%      \hline
-%      % LAYOUT FIX: prevent first row from touching the line above
-%      \rule{0pt}{2ex}%
-%      \mNT{reg} & \cCode{Ld} \cCode{$+$} \cCode{Const} \cCode{Const} & 2
-%        & & & \mNT{reg} & \cCode{Ld} \mNT{n}[1] & 2\\
-%      \multicolumn{3}{l}{} & & & \mNT{n}[1] & $+$ \mNT{n}[2] \mNT{n}[2]
-%        & 0\\
-%      \multicolumn{3}{l}{} & & & \mNT{n}[2] & \cCode{Const} & 0\\[2ex]
-%      \multicolumn{3}{c}{Original grammar}
-%        & \multicolumn{2}{c}{$\Rightarrow$}
-%        & \multicolumn{3}{c}{normal form.gammar}\\
-%    \end{tabular}%
-%  \end{framedBoxWI}%
-%\end{center}
-
-The advantage of this kind of \gls{grammar} is that the \gls{pattern matching}
-problem is reduced to simply comparing the operator of the \gls{root} in the
-\gls{pattern} with the operator of a \gls{node} in the \gls{expression tree}.
-%
-This also means that the \glspl{production} appearing in the \glspl{rule} become
-more uniform, which greatly simplifies the task of generating the \glspl{state}.
+In addition, \citeauthor{BalachandranEtAl:1990} expressed the
+\glspl{instruction} as a more traditional \gls{machine grammar} -- like those
+used in the \gls{Glanville-Graham approach} -- instead of as a \gls{BURS
+  grammar}.
 
 
 \subsubsection{A Work Queue Approach for State Table Generation}
 
 Another \gls{state}-generating algorithm similar to the one by
 \citeauthor{BalachandranEtAl:1990} was proposed by
-\citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS, Proebsting:1995:BURS}.
+\citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS,
+  Proebsting:1995:BURS}.
 %
-This algorithm was also implemented by \textcite{FraserEtAl:1992:Burg} in a renowned
-\gls{code generation} system called \gls{Burg},\!%
+This algorithm was also implemented by \textcite{FraserEtAl:1992:Burg} in a
+renowned \gls{code generation} system called \gls{Burg},\!%
 %
 \footnote{%
   The keen reader will notice that \citeauthor{FraserEtAl:1992:IBurg} also
@@ -4079,61 +4109,54 @@ which since its publication in :1992 has sparked a naming convention within the
 %
 \footnote{%
   During my research for this dissertation, I came across the following systems,
-  all with equally creative naming schemes: \gls{Burg}~\cite{FraserEtAl:1992:Burg},
+  all with equally creative naming schemes:
+  \gls{Burg}~\cite{FraserEtAl:1992:Burg},
   \gls{CBurg}~\cite{ScharwaechterEtAl:2007}, \gls{DBurg}~\cite{Ertl:1999},
   \gls{GBurg}~\cite{FraserProebsting:1999}, \gls{GPBurg}~\cite{Gough:2012},
   \gls{HBurg}~\cite{HBURG}, \gls{IBurg}~\cite{FraserEtAl:1992:IBurg},
   \gls{JBurg}~\cite{JBURG}, \gls{LBurg}~\cite{HansonFraser:1995},
-  \gls{MBurg}~\cite{Gough:1995, GoughLedermann:1997}, \gls{OCamlBurg}~\cite{OCamlBURG}, and
+  \gls{MBurg}~\cite{Gough:1995, GoughLedermann:1997},
+  \gls{OCamlBurg}~\cite{OCamlBURG}, and
   \gls{WBurg}~\cite{ProebstingWhaley:1996}.%
 }
 %
 Although \citeauthor{BalachandranEtAl:1990} were first, we will continue with
-studying \citeauthor{Proebsting:1992:BURS}'s algorithm as it is better documented.
+studying \citeauthor{Proebsting:1992:BURS}'s algorithm as it is better
+documented.
 %
-More details are also available in \citeauthor{Proebsting:1992:Thesis}'s doctoral
-dissertation~\cite{Proebsting:1992:Thesis}.
+More details are also available in \citeauthor{Proebsting:1992:Thesis}'s
+doctoral dissertation~\cite{Proebsting:1992:Thesis}.
 
-%\begin{inParFigure}{4.75cm}[r][2]%
-%  \centering%
+The idea for computing the \glspl{state} -- which will only be described briefly
+-- works as follows.
 %
-%  % LAYOUT FIX:
-%  % Create some space above
-%  \vspace{0.85\baselineskip}
+First the states for all leaf \glspl{node} are built, considering only
+\gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
+in the \gls{production}.
 %
-%  \input{\figurePath/tree-covering/burs-new-state}%
+The costs and \gls{rule} decisions are computed using the same logic as in
+\refAlgorithm{aho-etal-cost-algorithm-2}, lines~8--21.
 %
-%  % LAYOUT FIX:
-%  % Create some space below
-%  \vspace{0.75\baselineskip}
-%\end{inParFigure}%
+The leaf \gls{state} are then pushed onto a queue.
 %
-The algorithm is centered around a work queue that contains a backlog of
-\glspl{state} under consideration.
+Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
+\glspl{rule} with a non-leaf \glspl{terminal} in combination with all other
+existing \glspl{state} (see \refFigure{new-state-creation}).
 %
-Again, it is assumed that the \gls{machine grammar} is in \glsshort{normal
-  form.g}.
+\begin{figure}
+  \centering%
+  \input{figures/tree-covering/new-state-creation}
+
+  \caption{Creation of a new state}
+  \labelFigure{new-state-creation}
+\end{figure}
 %
-The queue is first initialized with the \glspl{state} that can be generated from
-all possible \glspl{leaf}.
+If any combination gives rise to a new set of costs and \gls{rule} decisions,
+then a new \gls{state} is created and pushed onto the queue after having updated
+the \glspl{state table}.
 %
-A \gls{state} is then popped from the queue and used in combination with other
-already-visited \glspl{state} in an attempt to produce new \glspl{state}.
-%
-This is done by effectively simulating what would happen if a set of
-\glspl{node}, appearing as \glspl{child} to some node~$n$, were labeled with
-some combination of \glspl{state}, including the \gls{state} that was just
-popped.
-%
-If $n$ can be labeled using an already existing \gls{state}, then nothing
-happens; if not, then a new appropriate \gls{state} is created and appended to
-the queue, making sure that all applicable \gls{chain.r} \glspl{rule} have been
-applied to the \gls{state}, as this can affect costs.
-%
-This is checked for every possible combination of \glspl{state} and operator
-\glspl{symbol}, and the algorithm terminates when the queue becomes empty,
-indicating that all \glspl{state} necessary for the \gls{machine grammar} have
-been generated.
+This process continues until the queue is empty, whereupon all necessary
+\glspl{state} have been built.
 
 
 \subsubsection{Further Improvements}
@@ -4141,12 +4164,13 @@ been generated.
 The time required to generate the \gls{state} tables can be decreased if the
 number of committed \glspl{state} can be minimized.
 %
-According to \textcite{Proebsting:1992:BURS}, the first attempts to do this were made
-by \textcite{Henry:1989}, whose methods were later improved and generalized by
-\citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS, Proebsting:1995:BURS}.
+According to \textcite{Proebsting:1992:BURS}, the first attempts to do this were
+made by \textcite{Henry:1989}, whose methods were later improved and generalized
+by \citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS,
+  Proebsting:1995:BURS}.
 %
-\citeauthor{Proebsting:1992:BURS} developed two methods for reducing the number of
-generated \glspl{state}: \gls!{state trimming}, which extends and generalizes
+\citeauthor{Proebsting:1992:BURS} developed two methods for reducing the number
+of generated \glspl{state}: \gls!{state trimming}, which extends and generalizes
 \citeauthor{Henry:1989}'s ideas; and a new technique called \gls!{chain rule
   trimming}.
 %
@@ -4232,10 +4256,11 @@ This allows the cost of \gls{state} generation to be amortized as the
 \gls{subtree} can now be optimally covered faster than if it had been processed
 using a purely \gls{DP}-based \gls{pattern selector}.
 %
-\citeauthor{ErtlEtAl:2006} reported the overhead of \gls{state} reuse was minimal
-compared to purely table-driven implementations, and the time required to first
-compute the \glspl{state} and then label the \glspl{expression tree} was on par
-with selecting \glspl{pattern} using ordinary \gls{DP}-based techniques.
+\citeauthor{ErtlEtAl:2006} reported the overhead of \gls{state} reuse was
+minimal compared to purely table-driven implementations, and the time required
+to first compute the \glspl{state} and then label the \glspl{expression tree}
+was on par with selecting \glspl{pattern} using ordinary \gls{DP}-based
+techniques.
 %
 Moreover, by generating the \glspl{state} lazily it is possible to handle larger
 and more complex \glspl{machine grammar} which otherwise would require an
@@ -4266,13 +4291,13 @@ but solve the \gls{instruction selection} problem using alternative methods.
 \subsubsection{Homomorphisms and Inversion of Derivors}
 
 In order to simplify the \glspl{machine description} and enable formal
-verification, \textcite{GeigerichSchmal:1988} proposed in 1988 an algebraic framework
-intended to support all aspects of \gls{code generation}, including
+verification, \textcite{GeigerichSchmal:1988} proposed in 1988 an algebraic
+framework intended to support all aspects of \gls{code generation}, including
 \gls{instruction scheduling} and \gls{register allocation}.
 %
-In brief terms \citeauthor{GeigerichSchmal:1988} reformulated the \gls{instruction
-  selection} problem into a ``problem of a hierarchic derivor,'' which
-essentially entails the specification and implementation of a mechanism
+In brief terms \citeauthor{GeigerichSchmal:1988} reformulated the
+\gls{instruction selection} problem into a ``problem of a hierarchic derivor,''
+which essentially entails the specification and implementation of a mechanism
 %
 \begin{displaymath}
   \gamma: T(Q) \rightarrow T(Z),
@@ -4308,8 +4333,9 @@ Conceptually this gives us the following functionality:
   T(Q) \annotArrow{\delta^{-1}} 2^{T(Z)} \annotArrow{\xi} T(Z).
 \end{displaymath}
 %
-In the same paper, \citeauthor{GeigerichSchmal:1988} also demonstrate how some other
-methods, such as \gls{tree parsing}, can be expressed using this framework.
+In the same paper, \citeauthor{GeigerichSchmal:1988} also demonstrate how some
+other methods, such as \gls{tree parsing}, can be expressed using this
+framework.
 %
 A similar scheme based on rewriting techniques was later proposed by
 \citeauthor{DesplandEtAl:1990}~\cite{DesplandEtAl:1987, DesplandEtAl:1990} in an
@@ -4318,9 +4344,10 @@ implementation called \gls!{Pagode}~\cite{CanaldaEtAl:1995}.
 
 \subsubsection{Equational Logic}
 
-Shortly after \citeauthor{GeigerichSchmal:1988}, \textcite{Hatcher:1991} developed a
-design similar to that of \citeauthor{Pelegri-LlopartGraham:1988} that relies on
-\gls{equational logic}~\cite{ODonnell:1985} instead of \gls{BURS} theory.
+Shortly after \citeauthor{GeigerichSchmal:1988}, \textcite{Hatcher:1991}
+developed a design similar to that of \citeauthor{Pelegri-LlopartGraham:1988}
+that relies on \gls{equational logic}~\cite{ODonnell:1985} instead of \gls{BURS}
+theory.
 %
 The two are closely related in that both apply a set of predefined \glspl{rule}
 to rewrite the \gls{expression tree} into a single goal term, but an equational
@@ -4402,12 +4429,12 @@ provide an example of where this would be beneficial.
 \subsection{Techniques Based on Genetic Algorithms}
 \labelSection{genetic-algorithms}
 
-To solve the \gls{pattern selection} problem, \textcite{ShuEtAl:1996} employed the
-theories of \glspl{GA}, which mimic the process of natural selection (see for
-example \cite{Reeves:2010} for an overview).\!%
+To solve the \gls{pattern selection} problem, \textcite{ShuEtAl:1996} employed
+the theories of \glspl{GA}, which mimic the process of natural selection (see
+for example \cite{Reeves:2010} for an overview).\!%
 %
 \footnote{%
-  On a related note, \textcite{WuLi:2006} applied \gls{ant colony optimization}
+  On a related note, \textcite{WuLi:2006} applied \gls!{ant colony optimization}
   -- a meta-heuristic inspired by the shortest-path searching behavior of
   various ant species \cite{DorigoStutzle:2010} -- to improve overall code size
   by alternating between \glspl{instruction set} on a per-function basis.%
@@ -4418,9 +4445,9 @@ The idea is to formulate a solution as a string, called a \gls!{chromosome} (or
 solution.
 %
 For a given \gls{expression tree} whose \glspl{match set} have been found using
-an \mbox{$\mBigO(nm)$} \gls{pattern matcher}, \citeauthor{ShuEtAl:1996} formulated
-each \gls{chromosome} as a binary bit string where a~1 indicates the selection
-of a particular \gls{pattern}.
+an \mbox{$\mBigO(nm)$} \gls{pattern matcher}, \citeauthor{ShuEtAl:1996}
+formulated each \gls{chromosome} as a binary bit string where a~1 indicates the
+selection of a particular \gls{pattern}.
 %
 Likewise, a~0 indicates that the \gls{pattern} is not used in the \gls{tree
   covering}.
@@ -4434,9 +4461,9 @@ The objective is then to find the \gls{chromosome} which maximizes a
 \def\numPats#1{p_{#1}}%
 \def\multCov#1{n_{#1}}%
 %
-%\begin{displaymath}
-%  \mFunctionDef{f}{c}{\frac{1}{k * \numPats{c} + \multCov{c}}},
-%\end{displaymath}
+\begin{displaymath}
+  f(c) = {\frac{1}{k * \numPats{c} + \multCov{c}}},
+\end{displaymath}
 %
 where $k$ is a tweakable constant greater than~1, $\numPats{c}$ is the number of
 selected \glspl{pattern} in the \gls{chromosome}~$c$, and $\multCov{c}$ is the
