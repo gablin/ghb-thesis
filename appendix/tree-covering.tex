@@ -874,29 +874,12 @@ This can be addressed by consulting a state table which has been
 generated for a specific \gls{grammar}.
 %
 How this table is produced is out of scope for this dissertation, but an
-example, generated from the \gls{machine grammar} appearing in
-\refFigure{glanville-graham-instruction-grammar}, is given in
-\refFigure{glanville-graham-table}, and a walk-through of executing an
-\gls{instruction selector} with this state table using an \gls{LR parser} is
-provided in \refFigure{glanville-graham-execution}.
-
-The subscripts that appear in some of the \glspl{production} in
-\refFigure{glanville-graham-instruction-grammar} are \glspl{semantic qualifier},
-which are used to express restrictions that may appear for some of the
-\glspl{instruction}.
+example generated from the \gls{machine grammar} shown in
+\refFigure{glanville-graham-machine-grammar} is given in
+\refFigure{glanville-graham-table}.
 %
-For example, all two-address arithmetic \glspl{instruction} store the result in
-one of the \glspl{register} provided as input, and using semantic quantifiers
-this could be expressed as \mbox{$\mNT{R}[1]$ $\rightarrow$ \irCode*{$+$}
-  $\mNT{R}[1]$ $\mNT{R}[2]$}, indicating that the destination \gls{register}
-must be the same as that of the first operand.
-%
-To make this information available during parsing, the parser pushes it onto the
-stacking along with its corresponding \gls{terminal} or \gls{nonterminal}
-\gls{symbol}.
-%
-\citeauthor{GlanvilleGraham:1978} also incorporated a \gls{register allocator}
-into their parser, thus constituting an entire \gls{code generator}.
+A walk-through of executing an \gls{instruction selector} with this state table
+using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
 
 \begin{figure}
   \figureFont\figureFontSize\relsize{-.5}%
@@ -1066,8 +1049,8 @@ into their parser, thus constituting an entire \gls{code generator}.
   \centering%
   \figureFont\figureFontSize\relsize{-.5}%
   \begin{adjustbox}{rotate=90, center}
-    \begin{minipage}{170mm}
-      \begin{tabular}{rll@{}rl}
+    \begin{minipage}{\textheight}
+      \begin{tabular}{rll@{\hspace{-2mm}}rl}
         \toprule
              \tabhead step
            & \tabhead state stack
@@ -1092,53 +1075,60 @@ into their parser, thus constituting an entire \gls{code generator}.
              3
            & 0 1 4
            & \cCode{$=$ $+$}
-           & \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld}
-             \cVar{c}[c] \cCode{\$}
+           & \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld}
+             $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
            & shift to 12\\
              4
            & 0 1 4 12
            & \cCode{$=$ $+$} \cVar{c}[a]
-           & $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]
-             \cCode{\$}
+           & $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$
+             \cCode{ld} \cVar{c}[c] {\$}
            & shift to 23\\
              5
            & 0 1 4 12 23
            & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$
-           & \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld}
+             \cVar{c}[c] \cCode{\$}
            & shift to 8\\
              6
            & 0 1 4 12 23 8
            & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$}
-           & \cCode{ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & \cCode{ld $+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld}
+             \cVar{c}[c] \cCode{\$}
            & shift to 13\\
              7
            & 0 1 4 12 23 8 13
            & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld}
-           & \cCode{$+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]\cCode{\$}
+           & \cCode{$+$} \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld}
+             \cVar{c}[c] \cCode{\$}
            & shift to 25\\
              8
            & 0 1 4 12 23 8 13 25
            & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
-           & \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
+           & \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c]
+             \cCode{\$}
            & shift to 34\\
              9
            & 0 1 4 12 23 8 13 25 34
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b]
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b]
            & \cCode{ld} $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
            & shift to 9\\
              10
            & 0 1 4 12 23 8 13 25 34 9
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld}
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] \cCode{ld}
            & $\mNT{R}[7]$ \cCode{ld} \cVar{c}[c] \cCode{\$}
            & shift to 14\\
              11
            & 0 1 4 12 23 8 13 25 34 9 14
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] \cCode{ld}
-             $\mNT{R}[7]$
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] \cCode{ld} $\mNT{R}[7]$
            & \cCode{ld} \cVar{c}[c] \cCode{\$}
-           & reduce rule 15 ($\mNT{R}[2]$ $\rightarrow$ \cCode{ld} $\mNT{R}[1]$)\\
-           & & & & assign result to r8\\
-           & & & & emit \instrCode{``load r8,*r7''}\\
+           & reduce rule 15 ($\mNT{R}[2]$ $\rightarrow$ \cCode{ld}
+             $\mNT{R}[1]$)\\
+           & & & & assign result to register 8\\
+           & & & & emit \instrCode{load $\mNT{R}[8]$,*$\mNT{R}[7]$}\\
            & & & & shift to 38\\
              12
            & 0 1 4 12 23 8 13 25 34 38
@@ -1148,34 +1138,35 @@ into their parser, thus constituting an entire \gls{code generator}.
            & shift to 9\\
              13
            & 0 1 4 12 23 8 13 25 34 38 9
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
-             \cCode{ld}
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] $\mNT{R}[8]$ \cCode{ld}
            & \cVar{c}[c] \cCode{\$}
            & shift to 18\\
              14
            & 0 1 4 12 23 8 13 25 34 38 9 18
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
-             \cCode{ld} \cVar{c}[c]
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] $\mNT{R}[8]$ \cCode{ld} \cVar{c}[c]
            & \cCode{\$}
-           & reduce rule 16 ($\mNT{R}$ $\rightarrow$ \cCode{ld C})\\
-           & & & & assign result to r9\\
-           & & & & emit \instrCode{``load r9,C''}\\
+           & reduce rule 16 ($\mNT{R}$ $\rightarrow$ \cCode{ld} \cVar{c})\\
+           & & & & assign result to register 9\\
+           & & & & emit \instrCode{load r9,c}\\
            & & & & shift to 41\\
              15
            & 0 1 4 12 23 8 13 25 34 38 41
-           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$} \cVar{c}[b] $\mNT{R}[8]$
-             $\mNT{R}[9]$
+           & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ \cCode{$+$ ld $+$}
+             \cVar{c}[b] $\mNT{R}[8]$ $\mNT{R}[9]$
            & \cCode{\$}
-           & reduce rule 1 ($\mNT{R}[2]$ $\rightarrow$ \cCode{$+$ ld $+$ C} $\mNT{R}[1]$
-                            $\mNT{R}[2]$)\\
-           & & & & emit \instrCode{``add r9,B,r8''}\\
+           & reduce rule 1 ($\mNT{R}[2]$ $\rightarrow$ \cCode{$+$ ld $+$ c}
+             $\mNT{R}[1]$ $\mNT{R}[2]$)\\
+           & & & & emit \instrCode{add $\mNT{R}[9]$,b,$\mNT{R}[8]$}\\
            & & & & shift to 32\\
              16
            & 0 1 4 12 23 32
            & \cCode{$=$ $+$} \cVar{c}[a] $\mNT{R}[7]$ $\mNT{R}[2]$
            & \cCode{\$}
-           & reduce rule 8 (\quad $\rightarrow$ \cCode{$=$ $+$ C} $\mNT{R}[1]$ $\mNT{R}[2]$)\\
-           & & & & emit \instrCode{``store r9,A,r7''}\\
+           & reduce rule 8 (\quad $\rightarrow$ \cCode{$=$ $+$ c} $\mNT{R}[1]$
+             $\mNT{R}[2]$)\\
+           & & & & emit \instrCode{store $\mNT{R}[9]$,a,$\mNT{R}[7]$}\\
              17
            & 0
            &
@@ -1186,46 +1177,56 @@ into their parser, thus constituting an entire \gls{code generator}.
 
       \caption[Execution walk-through of the Glanville-Graham approach]%
         {%
-          A walk-through of executing \citeauthor{Glanville1978}'s instruction
-          selector on an expression \irCode*{a = b + c}, where~\irVar*{a},
-          \irVar*{b} and \irVar*{c} are constants residing in memory, which
-          yielded the IR~code \mbox{\cCode*{$=$ $+$} \cCode*{C}[a] $\mNT{R}[7]$ \cCode*{$+$}
-            \cCode*{ld $+$} \cCode*{C}[b] \cCode*{ld} $\mNT{R}[7]$ \cCode*{ld} \cCode*{C}[c]}, where
-          $\mNT{R}[7]$ is the base address register.
-  %
-  The execution is based on the
-          precomputed table from \refFigure{glanville-graham-table}.
-  %
-  The
-          proceedings of the reduction steps may need some explanation.
-  %
-  A rule
-          reduction may involve two operations: the mandatory reduce operation,
-          followed by an optional operation which may be a shift or another rule
-          reduction.
-  %
-  Let us examine step~11.
-  %
-  First, a reduce is executed using
-          rule~15, which pops \mbox{\cCode{ld} $\mNT{R}[7]$} from the symbol
-          stack.
-  %
-  This is followed by pushing the result of the rule, $\mNT{R}[8]$,
-          on top.
-  %
-  At the same time, states~9 and~14 are popped from the stack,
-          which leaves state~34 on top.
-  %
-  The top elements of both stacks are now
-          used to consult the state table for inferring the next, additional
-          action (if any).
-  %
-  In this case, input symbol $\mNT{R}[8]$ at state~34 leads
-          to a shift to state~38~\cite{GlanvilleGraham:1978}}%
+          A walk-through of executing the table from
+          \refFigure{glanville-graham-table} on a sequence \mbox{\cCode*{$=$
+              $+$} \cVar*{c}[a] $\mNT{R}[7]$ \cCode*{$+$} \cCode*{ld $+$}
+            \cVar*{c}[b] \cCode*{ld} $\mNT{R}[7]$ \cCode*{ld} \cVar*{c}[c]} (for
+          simplicity, registers in the sequence are represented directly as
+          nonterminals).
+          %
+          Note that a rule reduction may involve two operations: the mandatory
+          reduce operation, followed by an optional operation which may be a
+          shift or another rule reduction.
+          %
+          For example, let us examine step~$11$.
+          %
+          First, a reduce is executed using rule~$15$, which pops
+          \mbox{\cCode{ld} $\mNT{R}[7]$} from the symbol stack.
+          %
+          This is followed by pushing the result of the rule, $\mNT{R}[8]$, on
+          top.
+          %
+          At the same time, states~$9$ and~$14$ are popped from the stack, which
+          leaves state~$34$ on top.
+          %
+          The top elements of both stacks are now used to consult the state
+          table for inferring the next, additional action (if any).
+          %
+          In this case, input symbol $\mNT{R}[8]$ at state~$34$ leads to a shift
+          to state~$38$%
+        }%
       \labelFigure{glanville-graham-execution}
     \end{minipage}%
   \end{adjustbox}
 \end{figure}
+
+The subscripts that appear in some of the \glspl{production} in
+\refFigure{glanville-graham-machine-grammar} are \glspl{semantic qualifier},
+which are used to express restrictions that may appear for some of the
+\glspl{instruction}.
+%
+For example, all two-address arithmetic \glspl{instruction} store the result in
+one of the \glspl{register} provided as input, and using semantic quantifiers
+this could be expressed as \mbox{$\mNT{R}[1]$ $\rightarrow$ \irCode*{$+$}
+  $\mNT{R}[1]$ $\mNT{R}[2]$}, indicating that the destination \gls{register}
+must be the same as that of the first operand.
+%
+To make this information available during parsing, the parser pushes it onto the
+stacking along with its corresponding \gls{terminal} or \gls{nonterminal}
+\gls{symbol}.
+%
+\citeauthor{GlanvilleGraham:1978} also incorporated a \gls{register allocator}
+into their parser, thus constituting an entire \gls{code generator}.
 
 
 \subsubsection{Resolving Conflicts and Avoiding Blocking}
