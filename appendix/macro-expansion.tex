@@ -203,6 +203,7 @@ task of the \gls{instruction selector}. However, the basic \gls{principle} of
 
 
 \subsubsection{Using IR Instead of ASTs}
+\labelSection{me-expression-tree}
 
 \glsreset{IR}
 
@@ -646,14 +647,13 @@ We settle with this distinction for now as we will resume and deepen the
 discussion of bottom-up \versus top-down \gls{instruction selection} in
 \refAppendix{tree-covering}.
 
-\labelPage{branch-and-bound}
-
 Enumerating all valid combinations in code generation leads to a combinatorial
 explosion, thus making it impossible to actually produce and check each and
 every one of them.
 %
 To curb this immense complexity, \citeauthor{KrummeAckley:1982} applied a
-variant of \gls!{branch and bound} as \gls{search} strategy.\!
+variant of \gls{branch and bound} as \gls{search} strategy (see
+\refChapter{constraint-programming} on \refPage{cp-branch-and-bound}).\!
 %
 \footnote{%
   In their paper, \citeauthor{KrummeAckley:1982} actually call this \gls{AB
@@ -811,7 +811,6 @@ Because of its narrow window of observation, this technique became known as
 
 \subsubsection{Modeling Instructions with Register Transfer Lists}
 \labelSection{register-transfer-lists}
-\labelPage{register-transfer-lists}
 
 Since this kind of optimization is tailored for a particular \gls{target
   machine}, the earliest implementations were (and still often are) done ad hoc
