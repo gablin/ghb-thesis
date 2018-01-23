@@ -1,0 +1,33 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/hoffmann-odonnell-example-styles}%
+\begin{tikzpicture}[
+    every node/.style={%
+      draw=none,
+      rectangle,
+      minimum size=0,
+      inner sep=3pt,
+      node distance=2\opNodeDist,
+    },
+  ]
+
+  \node [circle] (v) {$v$};
+  \node [position=-130 degrees from v] (b) {$b$};
+  \node [position=-50  degrees from v] (avv) {$a(v,v)$};
+  \node [position=-130 degrees from avv] (aavvb) {$a(a(v,v), b)$};
+  \node [position=-50  degrees from avv] (abv)   {$a(b,v)$};
+  \begin{scope}[data flow]
+    \draw (b)                -- (v);
+    \draw (avv)              -- (v);
+    \draw (aavvb)            -- (avv);
+    \draw (v |- aavvb.north) -- (v);
+    \draw (abv)              -- (avv);
+    \draw (abv) to [bend right=40] (v);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

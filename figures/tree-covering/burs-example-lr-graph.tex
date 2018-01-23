@@ -1,0 +1,59 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+%\setlength{\opNodeSize}{12pt}%
+%\setlength{\opNodeDist}{12pt}%
+\begin{tikzpicture}[%
+    op node/.append style={
+    },
+    middle node/.append style={
+      op node,
+      rectangle,
+      draw=none,
+      minimum size=0,
+      inner sep=1mm,
+      node distance=1.5\opNodeDist,
+    },
+    start node/.style={
+      op node,
+      circle,
+      dash pattern=on 2pt off 2pt,
+      node distance=0.8\opNodeDist,
+    },
+    end node/.style={
+      op node,
+      node distance=1.5\opNodeDist,
+    },
+    rule label/.style={
+      nothing,
+      above,
+      minimum size=0,
+      inner sep=0,
+      outer sep=1mm,
+    },
+  ]
+
+  % Tree
+  \node [start node] (n1) {\cCode{$+$} \cVar{c} $\mNT{R}$};
+  \node [start node, below=of n1] (n3) {\cCode{$+$} \cVar{0} $\mNT{R}$};
+  \node [middle node, right=of n3] (n4) {\cCode{$+$} $\mNT{R}$ \cVar{0}};
+  \node [end node, right=of n4] (n7) {$\mNT{R}$};
+  \node [start node, below=of n3] (n5) {\cCode{$+$} $\mNT{R}$ $\mNT{R}$};
+  \node [middle node, right=of n5] (n6) {$\mNT{Op}$ $\mNT{R}$ $\mNT{R}$};
+  \node [end node] (n2) at (n1 -| n7) {$\mNT{A}$};
+  \begin{scope}[data flow]
+    \draw (n1) -- node [rule label] {6} (n2);
+    \draw (n3) -- node [rule label] {9} (n4);
+    \draw (n5) -- node [rule label] {10} (n6);
+    \draw (n4) -- node [rule label] {8} (n7);
+    \draw (n6) -- node [rule label, xshift=-2pt] {1} (n7);
+    \draw (n2) to [bend left] node [rule label, right] {3} (n7);
+    \draw (n7) to [bend left] node [rule label, left] {4} (n2);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

@@ -1,0 +1,16 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/horspool-node-breakdown-example-styles}%
+\begin{tikzpicture}
+  \coordinate [edge point] (n1o);
+  \node [op node, below=of n1o] (n1) {\opVar{int}};
+  \begin{scope}[data flow]
+    \draw (n1) -- node [storage class horizontal] {$\mNT{Imm}$} (n1o);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

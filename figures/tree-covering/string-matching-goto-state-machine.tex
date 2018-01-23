@@ -1,0 +1,51 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{14pt}%
+\setlength{\opNodeSize}{12pt}%
+\begin{tikzpicture}[
+    state/.style={
+      op node,
+    },
+    state shift/.style={
+      ->,
+      rounded corners=3pt,
+    },
+    input/.style={
+      above,
+    },
+  ]
+
+  \node [state] (n0) {0};
+  \node [state, right=of n0] (n1) {1};
+  \node [state, right=of n1] (n2) {2};
+  \node [state, right=of n2] (n8) {8};
+  \node [state, right=of n8] (n9) {9};
+  \node [state, below=of n2] (n6) {6};
+  \node [state, right=of n6] (n7) {7};
+  \node [state, below=of n6] (n4) {4};
+  \node [state, right=of n4] (n5) {5};
+  \node [state, left= of n4] (n3) {3};
+
+  \begin{scope}[state shift]
+    \draw (n0) -- node [input] {h} (n1);
+    \draw (n1) -- node [input] {e} (n2);
+    \draw (n2) -- node [input] {r} (n8);
+    \draw (n8) -- node [input] {s} (n9);
+    \draw (n6) -- node [input] {s} (n7);
+    \draw (n3) -- node [input] {h} (n4);
+    \draw (n4) -- node [input] {e} (n5);
+    \draw (n1) |- coordinate (li) (n6);
+    \node [input] at ($(li) !.5! (n6.west)$) {i};
+    \draw (n0) |- coordinate (ls) (n3);
+    \node [input] at ($(ls) !.5! (n3.west)$) {s};
+    \path (n0) edge [in=140, out=-140, looseness=7]
+      node [input, left] {$\neg \{$h,s$\}$} (n0);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

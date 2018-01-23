@@ -1,0 +1,23 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/hoffmann-odonnell-example-styles}%
+\begin{tikzpicture}
+  \node [op node] (n0) {$a$};
+  \node [op node, position=-135 degrees from n0] (n1) {$a$};
+  \node [op node, position=- 45 degrees from n0] (n2) {$b$};
+  \node [v node, position=-135 degrees from n1] (n3) {$v$};
+  \node [v node, position=- 45 degrees from n1] (n4) {$v$};
+
+  \begin{scope}[data flow]
+    \draw (n4) -- (n1);
+    \draw (n3) -- (n1);
+    \draw (n1) -- (n0);
+    \draw (n2) -- (n0);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

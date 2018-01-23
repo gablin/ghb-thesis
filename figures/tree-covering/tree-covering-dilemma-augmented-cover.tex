@@ -1,0 +1,37 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/tree-covering-dilemma-styles}%
+\begin{tikzpicture}
+  % Graph
+  \node [computation node] (add) {\opAdd};
+  \node [value node, position=-135 degrees from add] (n1) {};
+  \node [value node, position=- 45 degrees from add] (n2) {};
+  \node [value node, below=of n1] (a) {\opVar{a}};
+  \node [value node, below=of n2] (b) {\opVar{b}};
+  \begin{scope}[data flow]
+    \draw (a) -- (n1);
+    \draw (b) -- (n2);
+    \draw (n1) -- (add);
+    \draw (n2) -- (add);
+  \end{scope}
+
+  % Covers
+  \begin{pgfonlayer}{background}
+    \node [match node, fit=(add)] (m1) {};
+    \node [match node, fit=(a)] (m2) {};
+    \node [match node, fit=(b)] (m3) {};
+    \node [match node, fit=(n1)] (m4) {};
+    \node [match node, fit=(n2)] (m5) {};
+  \end{pgfonlayer}
+  \node [match label, above=of m1] {3};
+  \node [match label, left= of m2] {1};
+  \node [match label, right=of m3] {1};
+  \node [match label, left= of m4] {2};
+  \node [match label, right=of m5] {2};
+\end{tikzpicture}%
+\endgroup%

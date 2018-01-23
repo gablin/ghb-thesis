@@ -1,0 +1,31 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+%\setlength{\opNodeSize}{14pt}%
+%\setlength{\opNodeDist}{14pt}%
+\tikzset{%
+  every picture/.append style={%
+    auto, % Needed to get automatic positioning of edge labels
+  },
+  op node/.append style={%
+    minimum size=\opNodeSize,
+    node distance=\opNodeDist,
+  },
+  edge point/.style={%
+    node distance=\opNodeDist,
+  },
+  storage class/.style={%
+    nothing,
+    outer sep=.6mm,
+    pos=0.35,
+  },
+  storage class horizontal/.style={%
+    storage class,
+    outer sep=1.5mm,
+    pos=0.4,
+  },
+}%

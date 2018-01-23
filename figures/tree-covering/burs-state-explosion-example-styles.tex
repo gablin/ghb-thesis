@@ -1,0 +1,33 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\setlength{\opNodeDist}{24pt}%
+\tikzset{%
+  root node/.style={
+    computation node,
+  },
+  etcetera/.style={
+    decorate,
+    decoration={%
+                 shape backgrounds,
+                 shape=circle,
+                 shape size=2pt,
+                 shape sep=5pt,
+                 pre=moveto,
+                 pre length=7pt,
+                 post length=5pt,
+                 post=moveto,
+               },
+    draw=black,
+    fill=black,
+  },
+  state/.style={
+    nothing,
+    node distance=2mm,
+    font=\relsize{-.5},
+  },
+}%

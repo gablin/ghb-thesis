@@ -5,26 +5,25 @@
 % of the license).
 %
 \begingroup%
-\figureFont\figureFontSize%
-\setlength{\opNodeSize}{12pt}%
-\setlength{\opNodeDist}{12pt}%
-\begin{tikzpicture}[%
-    value node/.style={%
-      computation node,
-    },
-  ]
-
+\input{figures/tree-covering/tree-covering-dilemma-styles}%
+\begin{tikzpicture}
   % Graph
-  \node [computation node] (mul) {\opMul};
-  \node [computation node, position=-135 degrees from mul] (add) {\opAdd};
-  \node [value node, position=-45 degrees from mul] (const) {\opVar{2}};
+  \node [computation node] (add) {\opAdd};
   \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
   \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
   \begin{scope}[data flow]
-    \draw (const) -- (mul);
-    \draw (add) -- (mul);
     \draw (a) -- (add);
     \draw (b) -- (add);
   \end{scope}
+
+  % Covers
+  \begin{pgfonlayer}{background}
+    \node [match node, fit=(add)] (m1) {};
+    \node [match node, fit=(a)] (m2) {};
+    \node [match node, fit=(b)] (m3) {};
+  \end{pgfonlayer}
+  \node [match label, above=of m1] {3};
+  \node [match label, left= of m2] {1};
+  \node [match label, right=of m3] {1};
 \end{tikzpicture}%
 \endgroup%

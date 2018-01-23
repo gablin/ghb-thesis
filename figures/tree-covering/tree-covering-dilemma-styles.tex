@@ -1,0 +1,23 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\setlength{\opNodeSize}{12pt}%
+\setlength{\opNodeDist}{12pt}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\tikzset{%
+  value node/.style={%
+    computation node,
+  },
+  match node/.append style={
+    fill=shade1,
+  },
+  match label/.append style={
+    node distance=1mm,
+    inner xsep=.5mm,
+  },
+}%
