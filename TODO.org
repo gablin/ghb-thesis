@@ -14,6 +14,7 @@
 ** TODO In appendices, replace 'linear form' with 'normal form'
 ** TODO Check overflowing of bib entries
 ** TODO Check for bad use of past tense
+** TODO Check for long paragraphs
 ** TODO Check for long sentences
 ** TODO Check for paragraphs ending with only one word on last line
 ** TODO Check for missing references
