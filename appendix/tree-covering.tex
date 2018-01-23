@@ -186,7 +186,7 @@ OR m MAJ 4FCOID 4FCOIN if-equal2 1 J + transfer
           ]%
           {%
             Example of a program expressed using \citeauthor{Wasilew:1972}'s
-            IR \cite{Lunell:1983}%
+            IR~\cite{Lunell:1983}%
           }
   \labelFigure{wasilew-code-example}
 \end{figure}
@@ -319,7 +319,7 @@ ASG OPSIM,   INAREG|FORCC,
   \caption[A machine description sample for \glsentrytext{PCC}]%
           {%
             A machine description sample for \glsentrytext{PCC}, consisting of
-            two patterns.
+            two patterns~\cite{Johnson:1981}.
             %
             The first line specifies the node type of the root (\cCode*{+=}, for
             the first pattern) together with its cookie (``result must appear in
@@ -344,7 +344,7 @@ ASG OPSIM,   INAREG|FORCC,
             %
             In the second pattern we see that multiple restrictions can be
             or'ed together, thus allowing multiple patterns to be
-            expressed in a more concise manner~\cite{Johnson:1981}%
+            expressed in a more concise manner%
           }
           \labelFigure{pcc-machine-description-sample}
 \end{figure}
@@ -475,10 +475,14 @@ resource-efficient.
 \subsection{The Glanville-Graham Approach}
 \labelSection{tc-glanville-graham}
 
-In 1978, \textcite{GlanvilleGraham:1978} presented a seminal paper that describes how
-techniques of \gls{syntactic analysis} can be adapted to \gls{instruction
-  selection}\footnote{This had also been vaguely hinted at ten years earlier in
-  an article by \textcite{FeldmanGries:1968}.}.
+In 1978, \textcite{GlanvilleGraham:1978} presented a seminal paper that
+describes how techniques of \gls{syntactic analysis} can be adapted to
+\gls{instruction selection}.\!%
+%
+\footnote{%
+  This had also been vaguely hinted at ten years earlier in an article by
+  \textcite{FeldmanGries:1968}.%
+}
 %
 Subsequent experiments and evaluations showed that this design -- which we will
 refer to as the \gls!{Glanville-Graham approach} -- proved simpler and more
@@ -959,7 +963,7 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
 
     \caption[Machine grammar example]%
             {%
-              Example of a machine grammar.
+              Example of a machine grammar~\cite{GlanvilleGraham:1978}.
               %
               \cCode*{c} (``const''), \cCode*{ld} (``load''), \cCode*{$+$}, and
               \cCode*{$=$} are all terminals, $\mNT{R}$ is a nonterminal
@@ -967,7 +971,12 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
               subscripts denote the semantic
               qualifiers.
               %
-              All rules have the same unit cost~\cite{GlanvilleGraham:1978}%
+              All rules have the same unit cost.
+              %
+              Rules 7--11 do not have a nonterminal on the left-hand side as
+              memory store instructions do not produce anything.
+              %
+              A dummy nonterminal can also be used if needed%
             }
     \labelFigure{glanville-graham-machine-grammar}
   \end{minipage}%
@@ -1035,11 +1044,12 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
             ]%
             {%
               State table generated from the machine grammar given in
-              \refFigure{glanville-graham-machine-grammar}.
+              \refFigure{glanville-graham-machine-grammar}%
+              ~\cite{GlanvilleGraham:1978}.
               %
               {\figureFont s$i$} indicates a shift to the next state $i$,
               {\figureFont r$j$} indicates the reduction of rule~$j$, and a
-              blank entry indicates an error~\cite{GlanvilleGraham:1978}%
+              blank entry indicates an error%
             }
     \labelFigure{glanville-graham-table}
   \end{minipage}
@@ -1251,10 +1261,10 @@ stack.\!%
   The approach of always selecting the largest possible \gls{pattern} is a
   scheme commonly known as \gls!{maximum munch}, which was coined by
   \citeauthor{Cattell:1978} in his doctoral dissertation~\cite{Cattell:1978}.%
-}.
-%
+}
+
 Unfortunately, this scheme can cause the \gls{instruction selector} to fail even
-though a valid \gls{parse tree} exists
+though a valid \gls{parse tree} exists.
 %
 This is called \gls!{syntactic blocking} and requires the \gls{grammar} designer
 to augment the \gls{machine grammar} with auxiliary \glspl{rule} that patch the
@@ -1266,18 +1276,18 @@ Likewise, there is also the possibility of \glspl{reduce-reduce conflict}, where
 the parser has the option of choosing between two or more \glspl{rule} in a
 \glsshort{rule reduction}.
 %
-\citeauthor{GlanvilleGraham:1978} resolved these by selecting the \gls{rule} with the
-longest \gls{pattern}.
+\citeauthor{GlanvilleGraham:1978} resolved these by selecting the \gls{rule}
+with the longest \gls{pattern}.
 %
 If the \gls{grammar} contains \glspl{rule} that differ only in their semantic
 quantifiers, then there may still exist more than one \gls{rule} to reduce (in
-\refFigure{glanville-graham-instruction-grammar}, \glspl{rule}~5 and~6 are two
-such \glspl{rule}).
+\refFigure{glanville-graham-machine-grammar}, \glspl{rule}~5 and~6 are two such
+\glspl{rule}).
 %
 These are resolved at parse time by checking the semantic restrictions in the
 order in which they appear in the \gls{grammar} (see for example state~20 in
 \refFigure{glanville-graham-table}).
-%
+
 If all \glspl{rule} in this set are semantically constrained, then situations
 can arise where the parser is unable to apply any \gls{rule} due to semantic
 mismatch.
@@ -1301,12 +1311,16 @@ implementation of the fallback \gls{rule} for~$r$.
 By relying on a state table, \glsshort{Glanville-Graham approach}-style
 \glspl{instruction selector} are completely table-driven and implemented by a
 core that basically consists of a series of table
-lookups\footnote{\textcite{Pennello:1986} developed a technique to express the
-  state table directly as \gls{assembly code}, thus eliminating even the need to
-  perform table lookups.
+lookups.\!%
 %
-This was reported to improve the efficiency of \gls{LR parsing} by six to ten
-times.}.
+\footnote{%
+  \textcite{Pennello:1986} developed a technique to express the state table
+  directly as \gls{assembly code}, thus eliminating even the need to perform
+  table lookups.
+  %
+  This was reported to improve the efficiency of \gls{LR parsing} by six to ten
+  times.%
+}
 %
 Consequently, the time it takes for the \gls{instruction selector} to generate
 the \gls{assembly code} is linearly proportional to the size of the
@@ -1324,18 +1338,22 @@ the time that the state table is generated, thus reducing compilation time.
 Another advantage of the \gls{Glanville-Graham approach} is its formal
 foundation, which enables means of automatic verification.
 %
-For instance, \textcite{Emmelmann:1992:Testing} presented one of the first methods of
-proving the completeness of an \gls{machine grammar}\footnote{Note, however,
-  that even though an \gls{machine grammar} has been proven to be complete, a
-  greedy \gls{instruction selector} may still fail to use a necessary
-  \gls{rule}.
+For instance, \textcite{Emmelmann:1992:Testing} presented one of the first
+methods of proving the completeness of an \gls{machine grammar}.\!%
 %
-Consequently, \citeauthor{Emmelmann:1992:Testing}'s checker assumes that an optimal
-\gls{instruction selector} will be used for the proven \gls{machine grammar}.}.
+\footnote{%
+  Note, however, that even though an \gls{machine grammar} has been proven to be
+  complete, a greedy \gls{instruction selector} may still fail to use a
+  necessary \gls{rule}.
+  %
+  Consequently, \citeauthor{Emmelmann:1992:Testing}'s checker assumes that an
+  optimal \gls{instruction selector} will be used for the proven \gls{machine
+    grammar}.%
+}
 %
-The intuition behind \citeauthor{Emmelmann:1992:Testing}'s automatic prover is to find
-all \glspl{expression tree} that can appear in the \gls{program} but cannot be
-handled by the \gls{instruction selector}.
+The intuition behind \citeauthor{Emmelmann:1992:Testing}'s automatic prover is
+to find all \glspl{expression tree} that can appear in the \gls{program} but
+cannot be handled by the \gls{instruction selector}.
 %
 Let us denote an \gls{machine grammar} by $G$ and a \gls{grammar} describing the
 \glspl{expression tree} by $T$.
@@ -1344,9 +1362,9 @@ If we further use $L(X)$ to represent the set of all \glspl{tree} accepted by a
 \gls{grammar}~$X$, we can then determine whether the \gls{machine grammar} is
 incomplete by checking if $L(T) \backslash L(G)$ yields a nonempty set.
 %
-\citeauthor{Emmelmann:1992:Testing} recognized that this intersection can be computed by
-creating a \gls{product automaton} which essentially implements the language
-that accepts only the \glspl{tree} in this set of counterexamples.
+\citeauthor{Emmelmann:1992:Testing} recognized that this intersection can be
+computed by creating a \gls{product automaton} which essentially implements the
+language that accepts only the \glspl{tree} in this set of counterexamples.
 %
 From this automaton it is also possible to derive the \glspl{rule} that are
 missing from the \gls{machine grammar}.
@@ -2353,9 +2371,12 @@ Consequently, commutative operations, such as addition, must be handled through
 We continue with some definitions concerning \glspl{pattern}.
 %
 First, let us denote by $\mMTrees(p)$ the set of trees that can be matched by
-the \gls{pattern}~$p$ at the \gls{root} of any valid tree\footnote{This
-  definition is not used by \citeauthor{HoffmannODonnell:1982} in their paper, but having
-  it will simplify the discussion to come.}.
+the \gls{pattern}~$p$ at the \gls{root} of any valid tree.\!%
+%
+\footnote{%
+  This definition is not used by \citeauthor{HoffmannODonnell:1982} in their
+  paper, but having it will simplify the discussion to come.%
+}
 %
 Depending on the \gls{alphabet}, this set could be infinite.
 %
@@ -2394,9 +2415,12 @@ such that
 \end{inlinelist}.
 
 \Glspl{pattern set} that contain no \gls{independent.pt} \glspl{pattern} are
-known as \gls{simple.ps}[ \glspl{pattern set}]\footnote{In
-  \citeauthor{HoffmannODonnell:1982}'s paper these are called \emph{\gls{simple.ps}
-    \gls{pattern} \glspl{forest}}.}.
+known as \gls{simple.ps}[ \glspl{pattern set}].\!%
+%
+\footnote{
+  In \citeauthor{HoffmannODonnell:1982}'s paper these are called
+  \emph{\gls{simple.ps} \gls{pattern} \glspl{forest}}.%
+}
 %
 For example, the \gls{pattern set} consisting of \glspl{pattern}~\patI and
 \patII is \gls{simple.ps} as there exists no \gls{tree} for which both match.
@@ -2681,12 +2705,17 @@ Next we form the \gls{subsumption graph} for~$S$, denoted by~$\mGS$, where each
 \gls{subsume}[s]~$s_j$.
 %
 For our \gls{pattern set}, we get the \gls{subsumption graph} illustrated in
-\refFigure{hoffmann-odonnell-example-subsumption}\footnote{There is also a
-  corresponding \gls{immediate subsumption graph} $\mGImmS$.
+\refFigure{hoffmann-odonnell-example-subsumption},\!%
 %
-In general, $\mGImmS$ is shaped like a \glsdesc{DAG}, but for \gls{simple.ps}
-\glspl{pattern set} it is always a \gls{tree}.}, which we produce using the
-algorithm given in \refFigure{hoffmann-odonnell-subsumption-algorithm}.
+\footnote{%
+  There is also a corresponding \gls{immediate subsumption graph} $\mGImmS$.
+  %
+  In general, $\mGImmS$ is shaped like a \glsdesc{DAG}, but for \gls{simple.ps}
+  \glspl{pattern set} it is always a \gls{tree}.%
+}
+%
+which we produce using the algorithm given in
+\refFigure{hoffmann-odonnell-subsumption-algorithm}.
 %
 The algorithm basically works as follows.
 %
@@ -2952,10 +2981,15 @@ An excerpt of such a \gls{machine description} is shown in
   tree}.
 %
 The first pass is a top-down labeling pass that finds all \glspl{match set} for
-every \gls{node} in the \gls{expression tree}\footnote{Remember that, when using
-  \glspl{machine grammar}, a \gls{pattern} found in the \gls{match set} during
-  \gls{pattern matching} corresponds to the right-hand side of a
-  \gls{production}.} using an implementation of the Aho-Corasick string matching
+every \gls{node} in the \gls{expression tree}%
+%
+\footnote{%
+  Remember that, when using \glspl{machine grammar}, a \gls{pattern} found in
+  the \gls{match set} during \gls{pattern matching} corresponds to the
+  right-hand side of a \gls{production}.%
+}
+%
+using an implementation of the Aho-Corasick string matching
 algorithm~\cite{AhoCorasick:1975}.
 %
 The second pass is a bottom-up cost computation pass that gives the cost of

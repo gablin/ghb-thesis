@@ -350,9 +350,9 @@ macro designer has to manage can be immense.
 
 The first attempt to address this problem was made by \textcite{Miller:1971}.
 %
-In his master's thesis from~1971, \citeauthor{Miller:1971} introduces a \gls{code
-  generation} system called \gls!{Dmacs} that automatically infers the necessary
-data transfers between memory and different \glspl{register class}.
+In his master's thesis from~1971, \citeauthor{Miller:1971} introduces a
+\gls{code generation} system called \gls!{Dmacs} that automatically infers the
+necessary data transfers between memory and different \glspl{register class}.
 %
 By encapsulating this information in a separate \gls{machine description},
 \gls{Dmacs} was also the first system to allow the details of the \gls{target
@@ -379,15 +379,14 @@ set of procedural two-argument commands that serves as the \gls{IR} format (see
 
   \caption[MIML example]%
           {%
-            An example on how an arithmetic expression
-            \cCode*{A[I] = B + C[J] * D} is represented using MIML
-            commands.
+            An example on how an arithmetic expression \cCode*{A[I] = B + C[J] *
+              D} is represented using MIML commands~\cite{Miller:1971}.
             %
             The \cCode*{SS} command is used for data referencing and the
             \cCode*{ASSG} command assigns a value to a variable.
             %
-            The arguments to the MIML commands are referred to
-            either by a variable symbol or by line number \cite{Miller:1971}%
+            The arguments to the MIML commands are referred to either by a
+            variable symbol or by line number%
           }
           \labelFigure{miml-example}
 \end{figure}
@@ -440,12 +439,12 @@ from FREG(m1),WORD(m2) emit ME m1,m2   result FREG(m1)
 
   \caption[OMML example]%
           {%
-            Partial machine description for IBM-360 in OMML.
+            Partial machine description for IBM-360 in OMML~\cite{Miller:1971}.
             %
             The \cCode*{rclass} command declares a register class, and the
             \cCode*{rpath} command declares a permissible transfer between a
             register class and memory (or vice versa) along with the instruction
-            that implements the transfer~\cite{Miller:1971}%
+            that implements the transfer%
           }
   \labelFigure{omml-example}
 \end{figure}
@@ -592,13 +591,12 @@ methods for \gls{code generation}.
     \bottomrule
   \end{tabular}
 
-  \caption[]%
+  \caption[Example of instruction bit strings]%
           {%
-            Example of instruction bit strings.
+            Example of instruction bit strings~\cite{LowryMedlock:1969}.
             %
-            An \cVar*{X} means that it will always match any bit in a given
-            bit string
-            \cite{LowryMedlock:1969}%
+            An \cVar*{X} means that it will always match any bit in a given bit
+            string%
           }
   \labelTable{instruction-bit-strings}
 \end{table}
