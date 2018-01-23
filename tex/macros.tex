@@ -1293,7 +1293,7 @@
 \makeatletter
 \newcommand{\DeclFunction}[3]{%
   \ifbool{InsideDeclFunction}{}{\nonl}%
-  \KwSty{function} #1\,(#2):
+  \KwSty{function} #1\,(#2):%
   \begingroup%
     \booltrue{InsideDeclFunction}%
     \algocf@block{#3}{}{}
