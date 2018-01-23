@@ -895,12 +895,12 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
     $r$ \Assign $\mMatrix{C}[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
       $s$ \Assign result of $r$\;
-      \Call{Select}{$T$, $s$, $C$}\;
+      \Call{Select}{$T$, $s$, $\mMatrix{C}$}\;
     }{%
       \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
-        \Call{Select}{expression tree rooted at $m$, $s$}\;
+        \Call{Select}{expression tree rooted at $m$, $s$, $\mMatrix{C}$}\;
       }
     }
     execute actions associated with $r$\;
