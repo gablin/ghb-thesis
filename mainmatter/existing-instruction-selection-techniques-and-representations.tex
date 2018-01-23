@@ -862,8 +862,8 @@ It first constructs a cost matrix~$\mMatrix{C}$, where rows represent
   handle \glspl{rule} of arbitrary form.%
 }
 %
-The cost in each element~\mbox{$C[i][j]$} is initialized to infinity, indicating
-that there exists no sequence of \glspl{rule reduction} which reduces
+The cost in each element~\mbox{$\mMatrix{C}[i][j]$} is initialized to infinity,
+indicating that there exists no sequence of \glspl{rule reduction} which reduces
 \gls{node}~$i$ to \gls{nonterminal}~$j$.
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
@@ -892,7 +892,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
                         cost matrix $\mMatrix{C}$}%
   {%
     $n$ \Assign root node of $T$\;
-    $r$ \Assign $C[n][g]$.rule\;
+    $r$ \Assign $\mMatrix{C}[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
       $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $C$}\;
