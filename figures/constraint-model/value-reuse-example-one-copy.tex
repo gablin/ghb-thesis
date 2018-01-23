@@ -19,13 +19,13 @@
     },
   ]
 
-  \node [value node] (v) {\strut\opVar{v}};
-  \node [computation node, position=-135 degrees from v] (cp1) {\opCopy};
+  \node [value node] (v) {\strut\nVar{v}};
+  \node [computation node, position=-135 degrees from v] (cp1) {\nCopy};
   \node [computation node, position=- 45 degrees from v, dead] (cp2)
-        {\opCopy};
-  \node [value node, below=of cp1] (v1) {\strut\opVar{v}[\hspace{-1pt}1]};
+        {\nCopy};
+  \node [value node, below=of cp1] (v1) {\strut\nVar{v}[\hspace{-1pt}1]};
   \node [value node, below=of cp2, dead] (v2)
-        {\strut\opVar{v}[\hspace{-1pt}2]};
+        {\strut\nVar{v}[\hspace{-1pt}2]};
   \node [computation node, below=of v1] (op1) {};
   \node [computation node, below=of v2] (op2) {};
 

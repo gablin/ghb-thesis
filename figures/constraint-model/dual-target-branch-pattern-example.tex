@@ -8,7 +8,7 @@
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \providecommand{\fallthruString}{fall-thru}
 \begin{tikzpicture}[
     block node/.append style={
@@ -16,14 +16,14 @@
     },
   ]
 
-  \node [block node] (entry) {\strut\opBlock{entry}};
-  \node [control node, below=of entry] (c) {\opCondBr};
-  \node [block node, node distance=1.33\opNodeDist,
+  \node [block node] (entry) {\strut\nBlock{entry}};
+  \node [control node, below=of entry] (c) {\nCondBr};
+  \node [block node, node distance=1.33\nodeDist,
          position=-135 degrees from c] (true)
-        {\strut\opBlock{true}};
-  \node [block node, node distance=1.33\opNodeDist,
+        {\strut\nBlock{true}};
+  \node [block node, node distance=1.33\nodeDist,
          position=- 45 degrees from c] (false)
-        {\strut\opBlock{false}};
+        {\strut\nBlock{false}};
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
       \draw (entry) -- (c);

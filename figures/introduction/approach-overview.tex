@@ -6,7 +6,7 @@
 %
 \begingroup%
 \figureFont\figureFontSize\relsize{-0.5}%
-\def\nodeDist{14mm}%
+\setlength{\nodeDist}{14mm}%
 \def\rowSep{2.5pt}%
 \begin{tikzpicture}[
     input/.style={
@@ -52,31 +52,31 @@
             IR
           \end{tabular}%
         };
-  \node [tool, right=0.5*\nodeDist of ir] (graph-builder)
+  \node [tool, right=0.5\nodeDist of ir] (graph-builder)
         {\begin{tabular}{@{}c@{}}
           graph\\
           builder
          \end{tabular}%
         };
-  \node [tool, below=0.5*\nodeDist of graph-builder] (g-transformations)
+  \node [tool, below=0.5\nodeDist of graph-builder] (g-transformations)
         {transformations};
-  \node [tool, right=0.8*\nodeDist of g-transformations] (matcher) {matcher};
-  \node [tool, right=1.1*\nodeDist of matcher] (modeler) {modeler};
-  \node [tool, right=1.1*\nodeDist of modeler] (solver) {solver};
-  \node [tool, right=0.9*\nodeDist of solver] (code-emitter)
+  \node [tool, right=0.8\nodeDist of g-transformations] (matcher) {matcher};
+  \node [tool, right=1.1\nodeDist of matcher] (modeler) {modeler};
+  \node [tool, right=1.1\nodeDist of modeler] (solver) {solver};
+  \node [tool, right=0.9\nodeDist of solver] (code-emitter)
         {\begin{tabular}{@{}c@{}}
           code\\
           emitter
          \end{tabular}%
         };
-  \node [output, inner sep=0, below=0.25*\nodeDist of code-emitter] (code)
+  \node [output, inner sep=0, below=0.25\nodeDist of code-emitter] (code)
         {%
           \begin{tabular}{@{}c@{}}
             code
           \end{tabular}%
         };
 
-  \node [input, above right=1.9*\nodeDist and 0 of ir.west]
+  \node [input, above right=1.9\nodeDist and 0 of ir.west]
         (machine-description)
         {%
           \begin{tabular}{@{}c@{}}
@@ -90,7 +90,7 @@
           builder
          \end{tabular}%
         };
-  \node [tool, below=0.5*\nodeDist of pattern-set-builder] (ps-transformations)
+  \node [tool, below=0.5\nodeDist of pattern-set-builder] (ps-transformations)
         {transformations};
 
   \begin{scope}[flow]
@@ -107,7 +107,7 @@
     \draw [rounded corners=4pt]
           (between-g-transformations-and-matcher)
           |-
-          ([yshift=-0.2*\nodeDist] matcher.south)
+          ([yshift=-0.2\nodeDist] matcher.south)
           -|
           (modeler);
 
@@ -122,16 +122,16 @@
           --
           (matcher);
     \coordinate (below-ps-transformations)
-                at ([yshift=-.5*\nodeDist] ps-transformations.south);
+                at ([yshift=-.5\nodeDist] ps-transformations.south);
     \draw [rounded corners=4pt]
-          ([yshift=-.25*\nodeDist] below-ps-transformations)
+          ([yshift=-.25\nodeDist] below-ps-transformations)
           -|
           ($(modeler.north west) !.33! (modeler.north east)$);
 
     \draw [rounded corners=4pt]
           (between-machine-description-and-pattern-set-builder)
           |-
-          ([yshift=0.2*\nodeDist] pattern-set-builder.north)
+          ([yshift=0.2\nodeDist] pattern-set-builder.north)
           [rounded corners=8pt]
           -|
           ($(modeler.north west) !.66! (modeler.north east)$);

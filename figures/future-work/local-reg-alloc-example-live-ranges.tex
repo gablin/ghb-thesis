@@ -41,18 +41,18 @@
   % Live ranges
   \begin{scope}[live range]
     \draw (0-1)
-          -- node [range label] {\opVar{a}}
+          -- node [range label] {\nVar{a}}
           (3-1);
     \draw (1-2)
-          -- node [range label] {\opVar{b}}
+          -- node [range label] {\nVar{b}}
           (3-2);
     \draw [<-]
           (2-3)
-          -- node [range label] {\opVar{c}}
+          -- node [range label] {\nVar{c}}
           (4-3);
     \draw [<-]
           (3-4)
-          -- node [range label] {\opVar{d}}
+          -- node [range label] {\nVar{d}}
           (4-4);
   \end{scope}
 \end{tikzpicture}%

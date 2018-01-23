@@ -30,17 +30,17 @@
 
   \node [sym] (r1) {$\mNT{Reg}[\irVar{y}]$};
   \node [sym, below=of r1] (r2) {$\mNT{Reg}[\irVar{a}]$};
-  \node [sym, left=2*\nodeDist of r2] (op1) {\opAdd};
+  \node [sym, left=2*\nodeDist of r2] (op1) {\nAdd};
   \node [sym, right=4*\nodeDist of r2] (r3) {$\mNT{Reg}[\irVar{x}]$};
 
-  \node [sym, below=of r2] (reg-a) {\opVar{reg}[a]};
+  \node [sym, below=of r2] (reg-a) {\nVar{reg}[a]};
 
   \node [sym, below=of r3] (r4) {$\mNT{Reg}[\irVar{b}]$};
-  \node [sym, left =2*\nodeDist of r4] (op2) {\opMul};
+  \node [sym, left =2*\nodeDist of r4] (op2) {\nMul};
   \node [sym, right=2*\nodeDist of r4] (r5) {$\mNT{Reg}[\irVar{2}]$};
 
-  \node [sym, below=of r4] (reg-b) {\opVar{reg}[b]};
-  \node [sym, below=of r5] (int-2) {\opVar{int}[2]};
+  \node [sym, below=of r4] (reg-b) {\nVar{reg}[b]};
+  \node [sym, below=of r5] (int-2) {\nVar{int}[2]};
 
   \begin{scope}[edge]
     \draw (r1.south west) -- (op1.north east);

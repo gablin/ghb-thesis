@@ -8,7 +8,7 @@
 \figureFont\figureFontSize%
 \begin{tikzpicture}[%
     every node/.style={%
-      op node,
+      node,
       inner sep=1pt,
     },
     interference/.style={%
@@ -18,9 +18,9 @@
   ]
 
   \node (m1) {$m_1$};
-  \node [right=.5\opNodeDist of m1] (m2) {$m_2$};
-  \node [right=.5\opNodeDist of m2] (m3) {$m_3$};
-  \node [right=2\opNodeDist of m3] (m4) {$m_4$};
+  \node [right=.5\nodeDist of m1] (m2) {$m_2$};
+  \node [right=.5\nodeDist of m2] (m3) {$m_3$};
+  \node [right=2\nodeDist of m3] (m4) {$m_4$};
   \node [position= 140 degrees from m4] (m5) {$m_5$};
   \node [position=-140 degrees from m4] (m6) {$m_6$};
   \node [position=  40 degrees from m4] (m7) {$m_7$};

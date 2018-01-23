@@ -5,7 +5,7 @@
 % of the license).
 %
 \begingroup%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background2}%
 \pgfdeclarelayer{background}%
@@ -19,11 +19,11 @@
     },
   ]
 
-  \node [block node] (entry) {\opBlock{entry}};
-  \node [control node, below=of entry] (entry-c) {\opCondBr};
-  \node [block node, below=of entry-c] (body) {\opBlock{body}};
-  \node [control node, below=of body] (body-c) {\opBr};
-  \node [block node, below=of body-c] (end) {\opBlock{end}};
+  \node [block node] (entry) {\nBlock{entry}};
+  \node [control node, below=of entry] (entry-c) {\nCondBr};
+  \node [block node, below=of entry-c] (body) {\nBlock{body}};
+  \node [control node, below=of body] (body-c) {\nBr};
+  \node [block node, below=of body-c] (end) {\nBlock{end}};
 
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
@@ -34,7 +34,7 @@
       \draw [rounded corners=4pt]
             (entry-c.east)
             --
-            +(0:.75\opNodeDist)
+            +(0:.75\nodeDist)
             |- node [control-flow label, pos=.093, swap] {F}
             ($(end.north east) !.33! (end.south east)$);
       \draw (body) -- (body-c);
@@ -42,22 +42,22 @@
     \end{scope}
   \end{pgfonlayer}
 
-  \node [value node, node distance=.5\opNodeDist,
-         position=45 degrees from entry-c] (p) {\opVar{p}};
+  \node [value node, node distance=.5\nodeDist,
+         position=45 degrees from entry-c] (p) {\nVar{p}};
 
-  \node [value node, left=3.5\opNodeDist of body] (a) {\opVar{a}};
-  \node [computation node, above=of a] (add-a) {\opAdd};
-  \node [value node, position=135 degrees from add-a] (x) {\opVar{x}};
-  \node [value node, position= 45 degrees from add-a] (y) {\opVar{y}};
-  \node [computation node, position=-135 degrees from a] (phi-a) {\opPhi};
+  \node [value node, left=3.5\nodeDist of body] (a) {\nVar{a}};
+  \node [computation node, above=of a] (add-a) {\nAdd};
+  \node [value node, position=135 degrees from add-a] (x) {\nVar{x}};
+  \node [value node, position= 45 degrees from add-a] (y) {\nVar{y}};
+  \node [computation node, position=-135 degrees from a] (phi-a) {\nPhi};
   \node [value node, position=135 degrees from phi-a] (phi-a-arg) {};
   \node [value node, below=of phi-a] (phi-a-out) {};
 
-  \node [value node, right=3.5\opNodeDist of body] (b) {\opVar{b}};
-  \node [computation node, above=of b] (add-b) {\opAdd};
-  \node [value node, position=135 degrees from add-b] (v) {\opVar{v}};
-  \node [value node, position= 45 degrees from add-b] (w) {\opVar{w}};
-  \node [computation node, position=-45 degrees from b] (phi-b) {\opPhi};
+  \node [value node, right=3.5\nodeDist of body] (b) {\nVar{b}};
+  \node [computation node, above=of b] (add-b) {\nAdd};
+  \node [value node, position=135 degrees from add-b] (v) {\nVar{v}};
+  \node [value node, position= 45 degrees from add-b] (w) {\nVar{w}};
+  \node [computation node, position=-45 degrees from b] (phi-b) {\nPhi};
   \node [value node, position=45 degrees from phi-b] (phi-b-arg) {};
   \node [value node, below=of phi-b] (phi-b-out) {};
 

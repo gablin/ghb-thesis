@@ -25,16 +25,16 @@
           (f2) |- (end-c);
 
     \coordinate (df-point-head-c) at
-                ([xshift=.5\opNodeDist, yshift=.5\opNodeDist] head-c.45);
+                ([xshift=.5\nodeDist, yshift=.5\nodeDist] head-c.45);
     \path [name path=right-from-above-head-c]
-          ([xshift=-\opNodeDist] df-point-head-c)
+          ([xshift=-\nodeDist] df-point-head-c)
           --
           +(0:.5\textwidth);
     \path [name path=diagonal-from-head-c]
           (head-c)
           --
-          +(45:2\opNodeDist);
-    \coordinate (left-of-bool) at ([xshift=-\opNodeDist] bool.west);
+          +(45:2\nodeDist);
+    \coordinate (left-of-bool) at ([xshift=-\nodeDist] bool.west);
     \path [name path=diagonal-from-bool]
           (left-of-bool)
           --
@@ -67,10 +67,10 @@
       \coordinate (entry+\n) at (df-point-from-entry -| \n);
     }
     \draw [rounded corners=8pt]
-          ([xshift=-.5\opNodeDist] entry+n1) -| (n1);
+          ([xshift=-.5\nodeDist] entry+n1) -| (n1);
     \foreach \n in {leq-1, sub-1} {
       \draw [rounded corners=16pt]
-            ([xshift=-\opNodeDist] entry+\n) -| (\n);
+            ([xshift=-\nodeDist] entry+\n) -| (\n);
     }
   \end{scope}
 
@@ -85,11 +85,11 @@
     \path [name path=diagonal-from-n1]
           (n1.north west)
           --
-          +(135:\opNodeDist);
+          +(135:\nodeDist);
     \path [name path=diagonal-from-1-phi-f]
           (1-phi-f.north west)
           --
-          +(135:\opNodeDist);
+          +(135:\nodeDist);
     \draw [name intersections={
              of=right-from-entry and diagonal-from-1-phi-f,
              name=c1-intersection,
@@ -111,7 +111,7 @@
           (n1);
 
     \coordinate (def-point-above-head) at
-                ([xshift=.5\opNodeDist, yshift=.5\opNodeDist] head.north east);
+                ([xshift=.5\nodeDist, yshift=.5\nodeDist] head.north east);
     \path [name path=right-from-above-head]
           (def-point-above-head)
           --
@@ -119,11 +119,11 @@
     \path [name path=diagonal-from-n2]
           (n2.north west)
           --
-          +(135:\opNodeDist);
+          +(135:\nodeDist);
     \path [name path=diagonal-from-f2]
           (f2.north west)
           --
-          +(135:\opNodeDist);
+          +(135:\nodeDist);
     \draw [name intersections={
              of=right-from-above-head and diagonal-from-f2,
              name=c1-intersection,
@@ -147,7 +147,7 @@
           (n2);
 
     \coordinate (def-point-below-body) at
-                ([xshift=.5\opNodeDist, yshift=-.5\opNodeDist] body.south east);
+                ([xshift=.5\nodeDist, yshift=-.5\nodeDist] body.south east);
     \path [name path=right-from-below-body]
           (def-point-below-body)
           --
@@ -155,7 +155,7 @@
     \path [name path=diagonal-from-n3]
           (n3.south west)
           --
-          +(-135:\opNodeDist);
+          +(-135:\nodeDist);
     \draw [name intersections={
              of=right-from-below-body and diagonal-from-n3,
              name=c1-intersection,
@@ -173,16 +173,16 @@
     \path [name path=diagonal-from-def-start-point-for-f3]
           (def-start-point-for-f3)
           --
-          +(-45:2\opNodeDist);
-    \coordinate (below-n3) at ([yshift=-\opNodeDist] n3.south);
+          +(-45:2\nodeDist);
+    \coordinate (below-n3) at ([yshift=-\nodeDist] n3.south);
     \path [name path=right-from-below-n3]
-          ([xshift=-\opNodeDist] below-n3)
+          ([xshift=-\nodeDist] below-n3)
           --
-          +(0:4\opNodeDist);
+          +(0:4\nodeDist);
     \path [name path=diagonal-from-f3]
           (f3.south west)
           --
-          +(-135:3\opNodeDist);
+          +(-135:3\nodeDist);
     \draw [name intersections={
              of=right-from-below-n3 and diagonal-from-def-start-point-for-f3,
              name=c1-intersection,

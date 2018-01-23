@@ -6,7 +6,7 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-\setlength{\opNodeDist}{10pt}%
+\setlength{\nodeDist}{10pt}%
 \def\matchPadding{4pt}%
 \def\matchRounding{5pt}%
 \pgfdeclarelayer{background}%
@@ -31,18 +31,18 @@
   ]
 
   % SSA
-  \node [value node] (q1) {\opVar{q}[1]};
-  \node [computation node, position=-45 degrees from q1] (add-q) {\opAdd};
-  \node [value node, below=of add-q] (q2) {\opVar{q}[2]};
-  \node [computation node, below=1.75\opNodeDist of q2]
-        (store-q) {\opStore};
-  \node [computation node, right=3.75\opNodeDist of add-q] (add-p) {\opAdd};
-  \node [value node, position=45 degrees from add-p] (p1) {\opVar{p}[1]};
-  \node [value node, below=of add-p] (p2) {\opVar{p}[2]};
-  \node [computation node, below=1.75\opNodeDist of p2]
-        (store-p) {\opStore};
+  \node [value node] (q1) {\nVar{q}[1]};
+  \node [computation node, position=-45 degrees from q1] (add-q) {\nAdd};
+  \node [value node, below=of add-q] (q2) {\nVar{q}[2]};
+  \node [computation node, below=1.75\nodeDist of q2]
+        (store-q) {\nStore};
+  \node [computation node, right=3.75\nodeDist of add-q] (add-p) {\nAdd};
+  \node [value node, position=45 degrees from add-p] (p1) {\nVar{p}[1]};
+  \node [value node, below=of add-p] (p2) {\nVar{p}[2]};
+  \node [computation node, below=1.75\nodeDist of p2]
+        (store-p) {\nStore};
   \coordinate (between-adds) at ($(add-q) !.5! (add-p)$);
-  \node [value node] (c4) at (between-adds |- q1) {\opVar{4}};
+  \node [value node] (c4) at (between-adds |- q1) {\nVar{4}};
 
   \begin{scope}[data flow]
     \draw (q1) -- (add-q);
@@ -57,7 +57,7 @@
     \path [overlay, name path=from-add-q]
           (add-q.45)
           --
-          +(45:2\opNodeDist);
+          +(45:2\nodeDist);
     \draw [name intersections={of=from-add-q and left-of-c4},
            rounded corners=3pt]
           (c4)
@@ -73,7 +73,7 @@
     \path [overlay, name path=from-add-p]
           (add-p.135)
           --
-          +(135:2\opNodeDist);
+          +(135:2\nodeDist);
     \draw [name intersections={of=from-add-p and right-of-c4},
            rounded corners=3pt]
           (c4)
@@ -85,7 +85,7 @@
     \path [overlay, name path=from-store-q]
           (store-q.135)
           --
-          +(135:2\opNodeDist);
+          +(135:2\nodeDist);
     \path [overlay, name path=from-q]
           (q1)
           --
@@ -101,7 +101,7 @@
     \path [overlay, name path=from-store-p]
           (store-p.45)
           --
-          +(45:2\opNodeDist);
+          +(45:2\nodeDist);
     \path [overlay, name path=from-p]
           (p1)
           --
@@ -117,7 +117,7 @@
     \path [overlay, name path=from-store-q-2]
           (store-q.45)
           --
-          +(45:4\opNodeDist);
+          +(45:4\nodeDist);
     \path [overlay, name path=from-p2]
           (p2)
           --
@@ -133,7 +133,7 @@
     \path [overlay, name path=from-store-p-2]
           (store-p.135)
           --
-          +(135:4\opNodeDist);
+          +(135:4\nodeDist);
     \path [overlay, name path=from-q2]
           (q2)
           --

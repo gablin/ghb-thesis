@@ -9,8 +9,8 @@
 \begin{tikzpicture}
   % Tree
   \node [computation node] (n1) {\cCode{int}};
-  \node [computation node, above=of n1] (n2) {\opLoad};
-  \node [root node, above=of n2] (nn) {\opLoad};
+  \node [computation node, above=of n1] (n2) {\nLoad};
+  \node [root node, above=of n2] (nn) {\nLoad};
   \begin{scope}[data flow]
     \draw (n1) -- (n2);
   \end{scope}

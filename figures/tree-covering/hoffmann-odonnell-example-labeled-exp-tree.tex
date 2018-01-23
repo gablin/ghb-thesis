@@ -14,13 +14,13 @@
   ]
 
   % Tree
-  \node [op node] (n0) {$a$};
-  \node [op node, position=-135 degrees from n0] (n1) {$a$};
-  \node [op node, position=- 45 degrees from n0] (n2) {$c$};
-  \node [op node, position=-135 degrees from n1] (n3) {$a$};
-  \node [op node, position=- 45 degrees from n1] (n4) {$b$};
-  \node [op node, position=-135 degrees from n3] (n5) {$b$};
-  \node [op node, position=- 45 degrees from n3] (n6) {$c$};
+  \node [node] (n0) {$a$};
+  \node [node, position=-135 degrees from n0] (n1) {$a$};
+  \node [node, position=- 45 degrees from n0] (n2) {$c$};
+  \node [node, position=-135 degrees from n1] (n3) {$a$};
+  \node [node, position=- 45 degrees from n1] (n4) {$b$};
+  \node [node, position=-135 degrees from n3] (n5) {$b$};
+  \node [node, position=- 45 degrees from n3] (n6) {$c$};
   \begin{scope}[data flow]
     \draw (n6) -- (n3);
     \draw (n5) -- (n3);

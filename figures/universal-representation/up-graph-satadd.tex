@@ -6,7 +6,7 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
 \begin{tikzpicture}[
@@ -16,12 +16,12 @@
   ]
 
   % Control flow
-  \node [block node] (entry) {\opBlock{entry}};
-  \node [control node, below=of entry] (entry-c) {\opCondBr};
-  \node [block node, right=1.25\opNodeDist of entry-c]
-        (clamp) {\opBlock{clamp}};
-  \node [control node, below=of clamp] (clamp-c) {\opBr};
-  \node [block node, below=of clamp-c] (end) {\opBlock{end}};
+  \node [block node] (entry) {\nBlock{entry}};
+  \node [control node, below=of entry] (entry-c) {\nCondBr};
+  \node [block node, right=1.25\nodeDist of entry-c]
+        (clamp) {\nBlock{clamp}};
+  \node [control node, below=of clamp] (clamp-c) {\nBr};
+  \node [block node, below=of clamp-c] (end) {\nBlock{end}};
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
       \foreach \b in {entry, clamp} {
@@ -42,18 +42,18 @@
 
   % Data flow
   \coordinate (cf-north-east) at (entry.north -| clamp-c.east);
-  \node [value node, right=3\opNodeDist of cf-north-east,
-         yshift=-.225\opNodeSize]
-        (s) {\opVar{s}};
-  \node [computation node, position=-45 degrees from s] (add) {\opAdd};
-  \node [value node, position= 45 degrees from add] (t) {\opVar{t}};
-  \node [value node, below=of add] (d1) {\opVar{d}[1]};
-  \node [computation node, position=- 45 degrees from d1] (phi) {\opPhi};
-  \node [computation node, position=-135 degrees from d1] (cmp) {\opLT};
-  \node [value node, position=135 degrees from cmp] (MAX-1) {\opVar{MAX}};
-  \node [value node, position=45 degrees from phi] (MAX-2) {\opVar{MAX}};
+  \node [value node, right=3\nodeDist of cf-north-east,
+         yshift=-.225\nodeSize]
+        (s) {\nVar{s}};
+  \node [computation node, position=-45 degrees from s] (add) {\nAdd};
+  \node [value node, position= 45 degrees from add] (t) {\nVar{t}};
+  \node [value node, below=of add] (d1) {\nVar{d}[1]};
+  \node [computation node, position=- 45 degrees from d1] (phi) {\nPhi};
+  \node [computation node, position=-135 degrees from d1] (cmp) {\nLT};
+  \node [value node, position=135 degrees from cmp] (MAX-1) {\nVar{MAX}};
+  \node [value node, position=45 degrees from phi] (MAX-2) {\nVar{MAX}};
   \node [value node, below=of cmp] (bool) {};
-  \node [value node, below=of phi] (d3) {\opVar{d}[3]};
+  \node [value node, below=of phi] (d3) {\nVar{d}[3]};
   \begin{scope}[data flow]
     \draw (s) -- (add);
     \draw (t) -- (add);
@@ -65,7 +65,7 @@
     \draw (MAX-2) -- (phi);
     \draw (phi) -- (d3);
 
-    \coordinate (above-entry-c) at ([shift=(45:\opNodeDist)] entry-c.45);
+    \coordinate (above-entry-c) at ([shift=(45:\nodeDist)] entry-c.45);
     \coordinate (between-clamp-and-MAX-1) at ($(clamp.east) !.5! (MAX-1.west)$);
     \draw [rounded corners=8pt]
           (bool)
@@ -84,7 +84,7 @@
     \path [name path=from-MAX-2]
           (MAX-2.north west)
           --
-          +(135:1.5\opNodeDist);
+          +(135:1.5\nodeDist);
     \draw [rounded corners=3pt,
            name intersections={of=from-clamp and from-MAX-2}]
           (clamp)
@@ -110,15 +110,15 @@
     \path [name path=from-end]
           (end.south east)
           --
-          +(-45:.5\opNodeDist);
+          +(-45:.5\nodeDist);
     \path [name path=from-d3]
           (d3.south west)
           --
-          +(-135:\opNodeDist);
+          +(-135:\nodeDist);
     \path [name path=right-from-below-end]
-          ([yshift=-.25\opNodeDist] end.south)
+          ([yshift=-.25\nodeDist] end.south)
           --
-          +(0:8\opNodeDist);
+          +(0:8\nodeDist);
     \draw [name intersections={
              of=right-from-below-end and from-end, name=c1-intersection,
            },

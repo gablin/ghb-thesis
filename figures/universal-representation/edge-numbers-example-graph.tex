@@ -8,7 +8,7 @@
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
-\setlength{\opNodeDist}{18pt}%
+\setlength{\nodeDist}{18pt}%
 \begin{tikzpicture}[
     control-flow label/.append style={
       inner xsep=.5\controlFlowLabelXSep,
@@ -30,14 +30,14 @@
 
   % Control-flow graph
   \node [block node] (check) {\irBlock{check}};
-  \node [control node, below=of check] (check-c) {\opCondBr};
-  \node [block node, node distance=1.5\opNodeDist,
+  \node [control node, below=of check] (check-c) {\nCondBr};
+  \node [block node, node distance=1.5\nodeDist,
          position=-135 degrees from check-c] (inc) {\irBlock{inc}};
-  \node [block node, node distance=1.5\opNodeDist,
+  \node [block node, node distance=1.5\nodeDist,
          position=-45 degrees from check-c] (dec) {\irBlock{dec}};
-  \node [control node, below=of inc] (inc-c) {\opBr};
-  \node [control node, below=of dec] (dec-c) {\opBr};
-  \node [block node, node distance=.5\opNodeDist,
+  \node [control node, below=of inc] (inc-c) {\nBr};
+  \node [control node, below=of dec] (dec-c) {\nBr};
+  \node [block node, node distance=.5\nodeDist,
          below=of $(inc-c.south) !.5! (dec-c.south)$] (join)
         {\irBlock{join}};
 
@@ -72,18 +72,18 @@
   \end{pgfonlayer}
 
   % Data-flow graph
-  \node [value node, below right=-.2\opNodeDist and 4\opNodeDist of check]
-        (add-1) {\opVar{1}};
-  \node [computation node, position=-45 degrees from add-1] (add) {\opAdd};
-  \node [value node, position=45 degrees from add] (x-1) {\opVar{x}[1]};
-  \node [value node, below=of add] (x-2) {\opVar{x}[2]};
-  \node [computation node, position=-45 degrees from x-1] (sub) {\opSub};
-  \coordinate [node distance=\opNodeDist, position=45 degrees from sub] (sub-1);
-  \node [value node, below=of sub] (x-3) {\opVar{x}[3]};
-  \node [computation node, position=-45 degrees from x-2] (phi) {\opPhi};
-  \node [value node, below=of phi] (x-4) {\opVar{x}[4]};
-  \node [value node, below right=.5\opNodeDist and .9\opNodeDist of check]
-        (b) {\opVar{b}};
+  \node [value node, below right=-.2\nodeDist and 4\nodeDist of check]
+        (add-1) {\nVar{1}};
+  \node [computation node, position=-45 degrees from add-1] (add) {\nAdd};
+  \node [value node, position=45 degrees from add] (x-1) {\nVar{x}[1]};
+  \node [value node, below=of add] (x-2) {\nVar{x}[2]};
+  \node [computation node, position=-45 degrees from x-1] (sub) {\nSub};
+  \coordinate [node distance=\nodeDist, position=45 degrees from sub] (sub-1);
+  \node [value node, below=of sub] (x-3) {\nVar{x}[3]};
+  \node [computation node, position=-45 degrees from x-2] (phi) {\nPhi};
+  \node [value node, below=of phi] (x-4) {\nVar{x}[4]};
+  \node [value node, below right=.5\nodeDist and .9\nodeDist of check]
+        (b) {\nVar{b}};
 
 
   \begin{scope}[
@@ -130,7 +130,7 @@
              node [inbound edge number, pos=.72] {0}
           (x-4);
 
-    \coordinate (above-add-1) at ([shift=(45:.5\opNodeDist)] add-1.north east);
+    \coordinate (above-add-1) at ([shift=(45:.5\nodeDist)] add-1.north east);
     \draw [-, rounded corners=3pt]
           (add-1)
           -- node [outbound edge number] {1}
@@ -149,11 +149,11 @@
     \path [name path=from-check-c]
           (check-c)
           --
-          +(45:2\opNodeDist);
+          +(45:2\nodeDist);
     \path [name path=from-b]
           (b)
           --
-          +(180:3\opNodeDist);
+          +(180:3\nodeDist);
     \draw [name intersections={of=from-check-c and from-b},
            rounded corners=3pt,
           ]
@@ -170,7 +170,7 @@
           --
           (dec -| x-2);
     \path [overlay, name path=left-from-x-2]
-          ([xshift=-.5\opNodeDist] x-2.south west)
+          ([xshift=-.5\nodeDist] x-2.south west)
           --
           +(-45:2cm);
     \path [overlay, name path=right-from-x-2]
@@ -213,7 +213,7 @@
           --
           +(45:4cm);
     \path [overlay, name path=above-dec]
-          ([yshift=.75\opNodeDist, xshift=-1cm] dec.north)
+          ([yshift=.75\nodeDist, xshift=-1cm] dec.north)
           --
           +(0:4cm);
     \path [overlay, name path=from-x-2]

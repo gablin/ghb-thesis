@@ -1,4 +1,5 @@
 * BEFORE SUBMISSION
+** TODO Reduce vertical space between list items
 ** TODO Remove 'electronic' document class option
 ** TODO Update TRITA number
 ** TODO Update ISBN

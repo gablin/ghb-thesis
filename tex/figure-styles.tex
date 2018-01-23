@@ -25,10 +25,10 @@
 \colorlet{shade4}{black!80!white}
 \newlength{\normalLineWidth}
 \setlength{\normalLineWidth}{.6pt}
-\newlength{\opNodeDist}
-\setlength{\opNodeDist}{16pt}
-\newlength{\opNodeSize}
-\setlength{\opNodeSize}{14pt}
+\newlength{\nodeDist}
+\setlength{\nodeDist}{16pt}
+\newlength{\nodeSize}
+\setlength{\nodeSize}{14pt}
 \newlength{\dataFlowLineWidth}
 \setlength{\dataFlowLineWidth}{.6pt}
 \newlength{\controlFlowLineWidth}
@@ -52,35 +52,35 @@
     inner sep=0,
     outer sep=0,
   },
-  op node/.style={%
+  node/.style={%
     draw,
     fill=shade0,
     circle,
-    minimum size=\opNodeSize,
+    minimum size=\nodeSize,
     inner sep=0,
     outer sep=0,
-    node distance=\opNodeDist,
+    node distance=\nodeDist,
     font=\relsize{-.5},
   },
   computation node/.style={%
-    op node,
+    node,
     circle,
     line width=\dataFlowLineWidth,
   },
   control node/.style={%
-    op node,
+    node,
     diamond,
-    minimum size=1.5\opNodeSize,
+    minimum size=1.5\nodeSize,
     line width=\controlFlowLineWidth,
   },
   value node/.style={%
     rectangle,
     draw,
     fill=shade0,
-    minimum size=0.7\opNodeSize,
+    minimum size=0.7\nodeSize,
     inner sep=0,
     outer sep=0,
-    node distance=\opNodeDist,
+    node distance=\nodeDist,
     line width=\dataFlowLineWidth,
     font=\relsize{-.5},
   },
@@ -92,11 +92,11 @@
     rectangle,
     draw,
     fill=shade0,
-    minimum size=0.8\opNodeSize,
+    minimum size=0.8\nodeSize,
     inner xsep=4pt,
     inner ysep=0,
     outer sep=0,
-    node distance=\opNodeDist,
+    node distance=\nodeDist,
     line width=\controlFlowLineWidth,
     font=\relsize{-.5}\strut,
   },

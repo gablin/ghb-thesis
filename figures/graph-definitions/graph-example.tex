@@ -6,13 +6,12 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-\setlength{\opNodeDist}{20pt}
-\setlength{\opNodeSize}{16pt}
+\setlength{\nodeDist}{20pt}
+\setlength{\nodeSize}{16pt}
 \begin{tikzpicture}[
-    node/.style={
-      op node,
-      minimum size=0.8\opNodeSize,
-      node distance=0.8\opNodeDist,
+    node/.append style={
+      minimum size=0.8\nodeSize,
+      node distance=0.8\nodeDist,
     },
     edge/.style={
       data flow,
@@ -40,7 +39,7 @@
   \node [graph label, above=of m1] {$G_m$};
 
   % Graph n
-  \node [node, right=3\opNodeDist of m1] (n1) {$n_1$};
+  \node [node, right=3\nodeDist of m1] (n1) {$n_1$};
   \node [node, below=of n1] (n2) {$n_2$};
   \node [node, position=-120 degrees from n2] (n3) {$n_3$};
   \node [node, position=-60 degrees from n2] (n4) {$n_4$};

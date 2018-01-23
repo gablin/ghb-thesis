@@ -7,12 +7,12 @@
 \begingroup%
 \figureFont\figureFontSize%
 \begin{tikzpicture}
-  \node [computation node] (phi) {\opPhi};
-  \node [value node, position=135 degrees from phi] (i1) {\strut\opVar{i}[$1$]};
-  \node [value node, position= 45 degrees from phi] (ik) {\strut\opVar{i}[$k$]};
+  \node [computation node] (phi) {\nPhi};
+  \node [value node, position=135 degrees from phi] (i1) {\strut\nVar{i}[$1$]};
+  \node [value node, position= 45 degrees from phi] (ik) {\strut\nVar{i}[$k$]};
   \node [value node, below=of phi] (d) {};
-  \node [block node, above=of i1] (b1) {\strut$\opBlock{b}_{1}$};
-  \node [block node, above=of ik] (bk) {\strut$\opBlock{b}_{k}$};
+  \node [block node, above=of i1] (b1) {\strut$\nBlock{b}_{1}$};
+  \node [block node, above=of ik] (bk) {\strut$\nBlock{b}_{k}$};
 
   \begin{scope}[data flow]
     \draw (i1) -- (phi);

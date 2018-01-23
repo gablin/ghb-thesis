@@ -13,11 +13,11 @@
   ]
 
   % Graph
-  \node [computation node] (mul) {\opMul};
-  \node [computation node, position=-135 degrees from mul] (add) {\opAdd};
-  \node [value node, position=-45 degrees from mul] (const) {\opVar{2}};
-  \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
-  \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \node [computation node] (mul) {\nMul};
+  \node [computation node, position=-135 degrees from mul] (add) {\nAdd};
+  \node [value node, position=-45 degrees from mul] (const) {\nVar{2}};
+  \node [value node, position=-135 degrees from add] (a) {\nVar{a}};
+  \node [value node, position=- 45 degrees from add] (b) {\nVar{b}};
   \begin{scope}[data flow]
     \draw (mul) -- (const);
     \draw (mul) -- (add);

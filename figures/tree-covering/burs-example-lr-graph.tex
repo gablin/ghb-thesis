@@ -6,28 +6,24 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-%\setlength{\opNodeSize}{12pt}%
-%\setlength{\opNodeDist}{12pt}%
 \begin{tikzpicture}[%
-    op node/.append style={
-    },
     middle node/.append style={
-      op node,
+      node,
       rectangle,
       draw=none,
       minimum size=0,
       inner sep=1mm,
-      node distance=1.5\opNodeDist,
+      node distance=1.5\nodeDist,
     },
     start node/.style={
-      op node,
+      node,
       circle,
       dash pattern=on 2pt off 2pt,
-      node distance=0.8\opNodeDist,
+      node distance=0.8\nodeDist,
     },
     end node/.style={
-      op node,
-      node distance=1.5\opNodeDist,
+      node,
+      node distance=1.5\nodeDist,
     },
     rule label/.style={
       nothing,

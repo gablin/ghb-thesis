@@ -22,14 +22,14 @@
   ]
 
   % Graph
-  \node [computation node] (add1) {\opAdd};
-  \node [value node, position=-135 degrees from add1] (i) {\opVar{i}};
-  \node [value node, position=- 45 degrees from add1] (c1) {\opVar{1}};
-  \node [computation node, position=45 degrees from add1] (mul) {\opMul};
-  \node [value node, position=-45 degrees from mul] (c4) {\opVar{4}};
-  \node [computation node, position=45 degrees from mul] (add2) {\opAdd};
-  \node [value node, position=-45 degrees from add2] (A) {\opVar{A}};
-  \node [computation node, above=of add2] (load) {\opLoad};
+  \node [computation node] (add1) {\nAdd};
+  \node [value node, position=-135 degrees from add1] (i) {\nVar{i}};
+  \node [value node, position=- 45 degrees from add1] (c1) {\nVar{1}};
+  \node [computation node, position=45 degrees from add1] (mul) {\nMul};
+  \node [value node, position=-45 degrees from mul] (c4) {\nVar{4}};
+  \node [computation node, position=45 degrees from mul] (add2) {\nAdd};
+  \node [value node, position=-45 degrees from add2] (A) {\nVar{A}};
+  \node [computation node, above=of add2] (load) {\nLoad};
   \begin{scope}[data flow]
     \draw (i) -- (add1);
     \draw (c1) -- (add1);

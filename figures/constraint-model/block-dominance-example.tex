@@ -8,26 +8,26 @@
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
-\setlength{\opNodeDist}{14pt}%
+\setlength{\nodeDist}{14pt}%
 \begin{tikzpicture}[
     block node/.append style={
       minimum width=4em,
     },
   ]
 
-  \node [block node] (entry) {\opBlock{entry}};
-  \node [block node, below=of entry] (A) {\opBlock{A}};
-  \node [block node, position=-135 degrees from A] (B) {\opBlock{B}};
-  \node [block node, position=- 45 degrees from A] (C) {\opBlock{C}};
-  \node [block node, position=- 45 degrees from B] (D) {\opBlock{D}};
-  \node [block node, below=of D] (E) {\opBlock{E}};
+  \node [block node] (entry) {\nBlock{entry}};
+  \node [block node, below=of entry] (A) {\nBlock{A}};
+  \node [block node, position=-135 degrees from A] (B) {\nBlock{B}};
+  \node [block node, position=- 45 degrees from A] (C) {\nBlock{C}};
+  \node [block node, position=- 45 degrees from B] (D) {\nBlock{D}};
+  \node [block node, below=of D] (E) {\nBlock{E}};
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
       \draw (entry) -- (A);
       \draw [rounded corners=6pt]
             (entry)
             -|
-            ([xshift=-.75\opNodeDist] B.west)
+            ([xshift=-.75\nodeDist] B.west)
             |-
             (E);
       \draw (A) -- (B);

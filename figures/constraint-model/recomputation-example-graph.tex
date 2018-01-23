@@ -5,7 +5,7 @@
 % of the license).
 %
 \begingroup%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
@@ -17,12 +17,12 @@
     },
   ]
 
-  \node [computation node] (add) {\opAdd};
-  \node [value node, position=135 degrees from add] (x) {\opVar{x}};
-  \node [value node, position= 45 degrees from add] (y) {\opVar{y}};
-  \node [value node, below=of add] (a) {\opVar{a}};
-  \node [computation node, position=-135 degrees from a] (st1) {\opStore};
-  \node [computation node, position=- 45 degrees from a] (st2) {\opStore};
+  \node [computation node] (add) {\nAdd};
+  \node [value node, position=135 degrees from add] (x) {\nVar{x}};
+  \node [value node, position= 45 degrees from add] (y) {\nVar{y}};
+  \node [value node, below=of add] (a) {\nVar{a}};
+  \node [computation node, position=-135 degrees from a] (st1) {\nStore};
+  \node [computation node, position=- 45 degrees from a] (st2) {\nStore};
   \node [value node, position=135 degrees from st1] (v1) {};
   \node [value node, position= 45 degrees from st2] (v2) {};
 

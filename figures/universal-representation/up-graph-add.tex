@@ -6,13 +6,13 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \begin{tikzpicture}
   % Data flow
-  \node [value node] (s) {\opVar{s}};
-  \node [computation node, position=-45 degrees from s] (add) {\opAdd};
-  \node [value node, position=45 degrees from add] (t) {\opVar{t}};
-  \node [value node, below=of add] (d) {\opVar{d}};
+  \node [value node] (s) {\nVar{s}};
+  \node [computation node, position=-45 degrees from s] (add) {\nAdd};
+  \node [value node, position=45 degrees from add] (t) {\nVar{t}};
+  \node [value node, below=of add] (d) {\nVar{d}};
   \begin{scope}[data flow]
     \draw (s) -- (add);
     \draw (t) -- (add);

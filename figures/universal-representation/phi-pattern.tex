@@ -7,9 +7,9 @@
 \begingroup%
 \figureFont\figureFontSize%
 \begin{tikzpicture}
-  \node [computation node] (phi) {\opPhi};
-  \node [value node, position=135 degrees from phi] (i1) {\strut\opVar{i}[$1$]};
-  \node [value node, position= 45 degrees from phi] (ik) {\strut\opVar{i}[$k$]};
+  \node [computation node] (phi) {\nPhi};
+  \node [value node, position=135 degrees from phi] (i1) {\strut\nVar{i}[$1$]};
+  \node [value node, position= 45 degrees from phi] (ik) {\strut\nVar{i}[$k$]};
   \node [value node, below=of phi] (d) {};
 
   \begin{scope}[data flow]

@@ -17,15 +17,15 @@
   ]
 
   \node [block node] (entry) {\irBlock{entry}};
-  \node [control node, below=of entry] (entry-c) {\opBr};
+  \node [control node, below=of entry] (entry-c) {\nBr};
   \node [block node, below=of entry-c] (head) {\irBlock{head}};
-  \node [control node, below=of head] (head-c) {\opCondBr};
-  \node [block node, node distance=1.5\opNodeDist,
+  \node [control node, below=of head] (head-c) {\nCondBr};
+  \node [block node, node distance=1.5\nodeDist,
          position=-135 degrees from head-c] (body) {\irBlock{body}};
-  \node [block node, node distance=1.5\opNodeDist,
+  \node [block node, node distance=1.5\nodeDist,
          position=-45 degrees from head-c] (end) {\irBlock{end}};
-  \node [control node, below=of body] (body-c) {\opBr};
-  \node [control node, below=of end] (end-c) {\opRet};
+  \node [control node, below=of body] (body-c) {\nBr};
+  \node [control node, below=of end] (end-c) {\nRet};
 
   \begin{pgfonlayer}{background}
     \begin{scope}[control flow]
@@ -38,7 +38,7 @@
       \draw [rounded corners=8pt]
             (body-c.west)
             -|
-            ([xshift=-.75\opNodeDist] body.west)
+            ([xshift=-.75\nodeDist] body.west)
             |-
             (head);
     \end{scope}

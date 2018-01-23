@@ -6,12 +6,12 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
-\def\nodeSep{4mm}%
+\setlength{\nodeDist}{4mm}%
 \def\belowstrut{\vrule height 0pt depth 2pt width 0pt}%
 \begin{tikzpicture}[%
     every node/.style={
       nothing,
-      node distance=\nodeSep,
+      node distance=\nodeDist,
       inner sep=1mm,
       font=\belowstrut,
     },
@@ -35,7 +35,7 @@
 
   \node (graphs) {\namerefAppendix{graph-definitions}};
 
-  \node [below=2.5*\nodeSep of graphs] (ex-isel-techs)
+  \node [below=2.5\nodeDist of graphs] (ex-isel-techs)
         {%
           \parbox{4.3cm}{%
             \centering%
@@ -51,18 +51,18 @@
   \node [below=of dag-covering]
         (graph-covering)  {\namerefAppendix{graph-covering}};
 
-  \node [right=3*\nodeSep of ex-isel-techs.east |- macro-expansion] (uni-rep)
+  \node [right=3\nodeDist of ex-isel-techs.east |- macro-expansion] (uni-rep)
         {%
           \parbox{2.1cm}{%
             \centering%
             \namerefChapter{universal-representation}%
           }%
         };
-  \node [below=2.*\nodeSep of uni-rep]
+  \node [below=2.\nodeDist of uni-rep]
         (model) {\namerefChapter{constraint-model}};
-  \node [below right=1.5*\nodeSep and 1.5*\nodeSep of model.south]
+  \node [below right=1.5\nodeDist and 1.5\nodeDist of model.south]
         (solv-techs) {\namerefChapter{solving-techniques}};
-  \node [below right=\nodeSep and \nodeSep of solv-techs.south]
+  \node [below right=\nodeDist and \nodeDist of solv-techs.south]
         (minizinc)
         {%
           \parbox{2.1cm}{%
@@ -78,7 +78,7 @@
           }%
         };
 
-  \node [below=2*\nodeSep of evaluation.south west, xshift=-1.5*\nodeSep]
+  \node [below=2\nodeDist of evaluation.south west, xshift=-1.5\nodeDist]
         (prop-model-exts)
         {%
           \parbox{2.6cm}{%
@@ -87,10 +87,10 @@
           }
         };
 
-  \node [below=1.5*\nodeSep of prop-model-exts.south -| evaluation]
+  \node [below=1.5\nodeDist of prop-model-exts.south -| evaluation]
         (conclusions-fw) {\namerefChapter{conclusions-future-work}};
 
-  \coordinate (next-to-uni-rep) at ([xshift=1.5*\nodeSep] uni-rep.east);
+  \coordinate (next-to-uni-rep) at ([xshift=1.5\nodeDist] uni-rep.east);
   \node at (graphs -| next-to-uni-rep)
         (cp) {\namerefChapter{constraint-programming}};
 
@@ -105,20 +105,20 @@
           (background-y -| right-border);
     \coordinate (tmp-a) at (background-y -| left-border);
     \coordinate (tmp-b) at (tmp-a |- graphs.north);
-    \coordinate (tmp-c) at ([yshift=\nodeSep] tmp-b);
+    \coordinate (tmp-c) at ([yshift=\nodeDist] tmp-b);
     \node [category label, right=of tmp-c, inner ysep=0] {background};
 
     \node [category label, below right=of tmp-a] {literature survey};
 
-    \coordinate (survey-y) at ([yshift=-\nodeSep] graph-covering.south);
-    \coordinate (survey-x) at ([xshift=\nodeSep] ex-isel-techs.east);
+    \coordinate (survey-y) at ([yshift=-\nodeDist] graph-covering.south);
+    \coordinate (survey-x) at ([xshift=\nodeDist] ex-isel-techs.east);
     \coordinate (survey-x-y) at (survey-x |- survey-y);
     \draw [rounded corners=6pt]
           (survey-y -| left-border)
           --
-          ([xshift=-3*\nodeSep] survey-x-y)
+          ([xshift=-3\nodeDist] survey-x-y)
           --
-          ([yshift= 3*\nodeSep] survey-x-y)
+          ([yshift= 3\nodeDist] survey-x-y)
           --
           (survey-x |- background-y);
 

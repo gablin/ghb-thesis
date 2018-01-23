@@ -5,18 +5,16 @@
 % of the license).
 %
 \figureFont\figureFontSize%
-%\setlength{\opNodeSize}{14pt}%
-%\setlength{\opNodeDist}{14pt}%
 \tikzset{%
   every picture/.append style={%
     auto, % Needed to get automatic positioning of edge labels
   },
-  op node/.append style={%
-    minimum size=\opNodeSize,
-    node distance=\opNodeDist,
+  node/.append style={%
+    minimum size=\nodeSize,
+    node distance=\nodeDist,
   },
   edge point/.style={%
-    node distance=\opNodeDist,
+    node distance=\nodeDist,
   },
   storage class/.style={%
     nothing,

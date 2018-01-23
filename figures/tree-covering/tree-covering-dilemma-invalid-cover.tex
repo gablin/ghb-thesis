@@ -8,9 +8,9 @@
 \input{figures/tree-covering/tree-covering-dilemma-styles}%
 \begin{tikzpicture}
   % Graph
-  \node [computation node] (add) {\opAdd};
-  \node [value node, position=-135 degrees from add] (a) {\opVar{a}};
-  \node [value node, position=- 45 degrees from add] (b) {\opVar{b}};
+  \node [computation node] (add) {\nAdd};
+  \node [value node, position=-135 degrees from add] (a) {\nVar{a}};
+  \node [value node, position=- 45 degrees from add] (b) {\nVar{b}};
   \begin{scope}[data flow]
     \draw (a) -- (add);
     \draw (b) -- (add);

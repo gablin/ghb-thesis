@@ -5,7 +5,7 @@
 % of the license).
 %
 \begingroup%
-\setlength{\opNodeDist}{12pt}%
+\setlength{\nodeDist}{12pt}%
 \figureFont\figureFontSize%
 \pgfdeclarelayer{background}%
 \pgfsetlayers{background,main}%
@@ -17,12 +17,12 @@
     },
   ]
 
-  \node [computation node] (eq) {\opEQ};
-  \node [value node, position=135 degrees from eq] (a) {\opVar{a}};
-  \node [value node, position= 45 degrees from eq] (b) {\opVar{b}};
-  \node [value node, below=of eq] (c) {\opVar{c}};
-  \node [computation node, above=of a] (call) {\opCall{foo}};
-  \node [computation node, above=of b] (load) {\opLoad};
+  \node [computation node] (eq) {\nEQ};
+  \node [value node, position=135 degrees from eq] (a) {\nVar{a}};
+  \node [value node, position= 45 degrees from eq] (b) {\nVar{b}};
+  \node [value node, below=of eq] (c) {\nVar{c}};
+  \node [computation node, above=of a] (call) {\nCall{foo}};
+  \node [computation node, above=of b] (load) {\nLoad};
 
   \begin{scope}[data flow]
     \draw (call) -- (a);

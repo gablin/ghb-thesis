@@ -8,18 +8,18 @@
 \figureFont\figureFontSize%
 \begin{tikzpicture}
   \node [state node] (st1) {};
-  \node [computation node, position=-45 degrees from st1] (store-1) {\opStore};
-  \node [value node, position=-135 degrees from store-1] (p1) {\strut\opVar{p}};
+  \node [computation node, position=-45 degrees from st1] (store-1) {\nStore};
+  \node [value node, position=-135 degrees from store-1] (p1) {\strut\nVar{p}};
   \node [state node, position=45 degrees from store-1] (st2) {};
   \node [value node, position=-45 degrees from store-1, opacity=0] (p2) {};
-  \node [computation node, position=-45 degrees from st2] (foo) {\opCall{foo}};
+  \node [computation node, position=-45 degrees from st2] (foo) {\nCall{foo}};
   \node [state node, position=45 degrees from foo] (st3) {};
   \node [value node, position=-45 degrees from foo, opacity=0] (p3) {};
-  \node [computation node, position=-45 degrees from st3] (store-2) {\opStore};
+  \node [computation node, position=-45 degrees from st3] (store-2) {\nStore};
   \node [state node, right= of store-2] (st4) {};
-  \node [block node, above=.75\opNodeDist of
+  \node [block node, above=.75\nodeDist of
                            $(st1.north west) !.5! (st4.east |- st1.north)$]
-        (block) {\opBlock{block}};
+        (block) {\nBlock{block}};
 
   \begin{scope}[data flow]
     \draw (p1) -- (store-1);

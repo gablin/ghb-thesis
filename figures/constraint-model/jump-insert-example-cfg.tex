@@ -34,18 +34,18 @@
             (A)
             -| node [control-flow label, pos=.25,
                      inner sep=.5\controlFlowLabelXSep] {F}
-            ([xshift=\opNodeDist] B.east)
+            ([xshift=\nodeDist] B.east)
             |-
             (C);
       \draw [rounded corners=3pt]
             ($(B.south) !.5! (B.south east)$)
             --
-            +(-90:.33\opNodeDist)
+            +(-90:.33\nodeDist)
             -| node [control-flow label, pos=.25, swap,
                      inner sep=.5\controlFlowLabelXSep] {T}
-            ([xshift=.5\opNodeDist] B.east)
+            ([xshift=.5\nodeDist] B.east)
             |-
-            ([yshift=.33\opNodeDist] B.north east)
+            ([yshift=.33\nodeDist] B.north east)
             -|
             ($(B.north) !.5! (B.north east)$);
     \end{scope}
