@@ -21,3 +21,4 @@
 ** TODO Check for bad page breaks
 ** TODO Check for unused glossary terms
 ** TODO Check for undefined (!) glossary terms
+** TODO Check that all floats are declared after first reference
