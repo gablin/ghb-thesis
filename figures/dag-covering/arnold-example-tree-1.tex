@@ -1,0 +1,18 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/arnold-example-styles}%
+\begin{tikzpicture}
+  \node [node] (add) {\nAdd};
+  \node [node, position=-135 degrees from add] (x) {\nVar{x}};
+  \node [node, position=- 45 degrees from add] (y) {\strut\nVar{y}};
+  \begin{scope}[data flow]
+    \draw (x) -- (add);
+    \draw (y) -- (add);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

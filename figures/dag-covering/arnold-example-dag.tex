@@ -1,0 +1,25 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/arnold-example-styles}%
+\begin{tikzpicture}
+  \node [node] (x) {\nVar{x}};
+  \node [node, right=of x] (y) {\strut\nVar{y}};
+  \node [output node, above=of x] (add-output) {\nAdd};
+  \node [node, above=of y] (add-not-output) {\nAdd};
+  \node [node, right=of add-not-output] (zero) {\nVar{0}};
+  \node [output node, above=of $(add-not-output) !.5! (zero)$] (eq) {\nEQ};
+  \begin{scope}[data flow]
+    \draw (add-not-output) -- (eq);
+    \draw (zero) -- (eq);
+    \draw (x) -- (add-not-output);
+    \draw (y) -- (add-not-output);
+    \draw (x) -- (add-output);
+    \draw (y) -- (add-output);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

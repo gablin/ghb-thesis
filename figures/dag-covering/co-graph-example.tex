@@ -1,0 +1,170 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\nodeSize}{4pt}%
+\setlength{\nodeDist}{16pt}%
+\begin{tikzpicture}[
+    node/.append style={
+      fill=black,
+    },
+    label/.style={
+      nothing,
+      outer sep=2pt,
+      node distance=1mm,
+    },
+    dots label/.style={
+      label,
+      outer sep=1mm,
+      node distance=0.5\nodeDist,
+    },
+    flow/.style={
+      data flow,
+      -
+    },
+  ]
+
+  % Nodes
+  \node [node] (root) {};
+  \node [node, node distance=3.5\nodeDist, position=165 degrees from root] (r0)
+        {};
+  \node [node, node distance=3.5\nodeDist, position=15  degrees from root] (r1)
+        {};
+  \foreach \i in {0, 1} {%
+    \node [node, position=120 degrees from r\i] (r\i load) {};
+    \node [node, position=60  degrees from r\i] (r\i noload) {};
+    \node [node, position=120 degrees from r\i load] (r\i loadi) {};
+    \node [node, position=60  degrees from r\i load] (r\i loadct) {};
+    \node [node, position=60  degrees from r\i noload] (r\i noloadct) {};
+    \node [node, above=1.5\nodeDist of r\i loadct] (r\i loadctif) {};
+    \node [node, right=2\nodeDist of r\i loadctif] (r\i noloadctif) {};
+  }
+  \node [node] at ($(r0) !.5! (r1)$) (r2) {};
+  \node [node, above=2\nodeDist of r2 |- r0noloadctif] (alu) {};
+  \node [node, node distance=8\nodeDist, position=170 degrees from alu]
+        (viaplus) {};
+  \node [node, node distance=8\nodeDist, position=10  degrees from alu]
+        (dat) {};
+  \node [node] at ($(viaplus) !.33! (dat)$) (plus) {};
+  \node [node] at ($(viaplus) !.66! (dat)$) (sub) {};
+  \foreach \i in {viaplus, plus, sub, dat} {%
+    \node [node, node distance=1.5\nodeDist, position=40  degrees from \i]
+          (\i ct) {};
+    \ifthenelse{\equal{\i}{sub}}{%
+      \node [node, node distance=1.5\nodeDist, position=140 degrees from \i]
+            (\i i2) {};
+    }{%
+      \node [node, node distance=1.5\nodeDist, position=140 degrees from \i]
+            (\i i1) {};
+    }
+    \ifthenelse{\equal{\i}{dat}}{%
+      % Add nothing
+    }{%
+      \ifthenelse{\equal{\i}{sub}}{%
+        \node [node] at ($(\i i2) !.5! (\i ct)$) (\i i1) {};
+      }{%
+        \node [node] at ($(\i i1) !.5! (\i ct)$) (\i i2) {};
+      }
+    }
+    \node [node, above=1.5\nodeDist of \i ct] (\i ctif) {};
+  }
+  \node [node, above=2.5\nodeDist of plusi2] (top r1) {};
+  \node [node, above=3.5\nodeDist of plusi1] (mux) {};
+
+  % Labels
+  \node [dots label, above=of r2] (r2 dots) {$\ldots$};
+  \node [dots label, above=of mux] (mux dots) {$\ldots$};
+  \node [label, left=of r0] {R0};
+  \node [label, right=of r2] {R2};
+  \node [label, right=of r1] {R1};
+  \foreach \i in {r0, r1} {%
+    \node [label, left=of \i load] {load};
+    \node [label, right=of \i noload] {noload};
+    \node [label, left=of \i loadi] {i};
+    \node [label, right=of \i loadct] {ct};
+    \node [label, right=of \i noloadct] {ct};
+
+  }
+  \foreach \i in {0, 1} {%
+    \node [label, right=of r\i loadctif] {I.f.R\i};
+    \node [label, right=of r\i noloadctif] {I.f.R\i};
+  }
+  \node [label, right=of alu, yshift=-1mm] {ALU};
+  \node [label, left=of viaplus] {via($+$)};
+  \node [label, left=of plus] {$+$};
+  \node [label, right=of sub] {$-$};
+  \node [label, right=of dat] {dat};
+  \foreach \i in {viaplus, plus, sub, dat} {%
+    \node [label, right=of \i i1] {i1};
+    \ifthenelse{\equal{\i}{dat}}{%
+      % Add nothing
+    }{%
+      \node [label, right=of \i i2] {i2};
+    }
+    \node [label, right=of \i ct] {ct};
+    \node [label, right=of \i ctif] {I.f.ALU};
+  }
+  \node [label, above=of top r1] {R1};
+  \node [label, left=of mux, yshift=-2mm] {MUX};
+
+  % Edges
+  \begin{scope}[flow]
+    \foreach \i in {0, 1, 2} {%
+      \draw (root) -- (r\i);
+    }
+    \foreach \i in {0, 1} {%
+      \draw (r\i) -- (r\i load);
+      \draw (r\i) -- (r\i noload);
+      \draw (r\i load) -- (r\i loadi);
+      \draw (r\i load) -- (r\i loadct);
+      \draw (r\i noload) -- (r\i noloadct);
+      \draw (r\i loadct) -- (r\i loadctif);
+      \draw (r\i noloadct) -- (r\i noloadctif);
+    }
+    \draw (r0loadi) -- (r0loadi |- r0loadctif) -- (alu);
+    \draw (r1loadi) -- (alu);
+    \foreach \i in {viaplus, plus, sub, dat} {%
+      \draw (alu) -- (\i);
+      \draw (\i) -- (\i i1);
+      \draw (\i) -- (\i ct);
+      \ifthenelse{\equal{\i}{dat}}{%
+        % Draw nothing
+      }{%
+        \draw (\i) -- (\i i2);
+      }
+      \draw (\i ct) -- (\i ctif);
+    }
+    \foreach \i in {viaplus, plus, sub, dat} {%
+      \ifthenelse{\equal{\i}{viaplus}}{%
+        \coordinate (halfmark) at ([xshift=\nodeDist] \i i1 |- mux);
+      }{%
+        \ifthenelse{\equal{\i}{plus}}{%
+          \coordinate (halfmark) at (mux);
+        }{%
+          \coordinate (halfmark) at ([xshift=-\nodeDist] \i i1 |- mux);
+        }
+      }
+      \draw (\i i1) -- ([yshift=\nodeDist] \i i1 |- viaplusctif) -- (halfmark)
+        -- (mux);
+    }
+    \foreach \i in {viaplus, plus, sub} {%
+      \ifthenelse{\equal{\i}{viaplus}}{%
+        \coordinate (halfmark) at ([xshift=\nodeDist] \i i2 |- top r1);
+      }{%
+        \ifthenelse{\equal{\i}{plus}}{%
+          \coordinate (halfmark) at (top r1);
+        }{%
+          \coordinate (halfmark) at ([xshift=-\nodeDist] \i i2 |- top r1);
+        }
+      }
+      \draw (\i i2) -- (\i i2 |- viaplusctif) -- (halfmark) -- (top r1);
+    }
+    \draw (r2) -- (r2 dots);
+    \draw (mux) -- (mux dots);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

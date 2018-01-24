@@ -1,0 +1,85 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\figureFont\figureFontSize%
+\setlength{\nodeDist}{28pt}%
+%\setlength{\nodeSize}{12pt}%
+\pgfdeclarelayer{b2}%
+\pgfdeclarelayer{b1}%
+\pgfsetlayers{b2,b1,main}%
+\colorlet{m1shade}{shade1}%
+\colorlet{m2shade}{shade2!25!shade3}%
+\begin{tikzpicture}[
+    reduction label/.style={
+      nothing,
+      inner xsep=2pt,
+      auto,
+    },
+    outer match node/.style={
+      match node,
+      inner sep=-1pt,
+    },
+  ]
+
+  % DAG
+  \node [node] (n1) {\nMul};
+  \node [node, position=-130 degrees from n1] (n2) {\nLoad};
+  \node [node, position=-50  degrees from n2] (n3) {\nAdd};
+  \node [node, position=-130 degrees from n3] (n4) {\nVar{4}};
+  \node [node, position=-50  degrees from n3] (n5) {\nVar{a}};
+  \begin{scope}[data flow]
+    \draw (n5)
+          -- node [reduction label, swap] {$\mNT{Reg}, \mNT{Reg}$}
+          (n3);
+    \draw (n4)
+          -- node [reduction label, auto=none, above, sloped, inner ysep=2pt]
+                  {$\mNT{Reg}$}
+          (n3);
+    \draw (n3)
+          -- node [reduction label] {$\mNT{Addr}$}
+          (n2);
+    \draw (n3)
+          to [bend right=45]
+          node [reduction label, swap, pos=.26] {$\mNT{Reg}$}
+          (n1);
+    \draw (n2)
+          -- node [reduction label, inner xsep=1pt] {$\mNT{Reg}$}
+          (n1);
+  \end{scope}
+
+  % Matches
+  \begin{pgfonlayer}{b1}
+    \node [match node, fit=(n1), shading=axis, shading angle=90,
+           left color=m2shade, right color=m1shade]
+          (m1) {};
+    \node [match node, fit=(n2), fill=m2shade] (m2) {};
+    \node [match node, fit=(n3), fill=m1shade] (m3) {};
+    \node [match node, fit=(n4), fill=m1shade] (m4) {};
+    \node [match node, fit=(n5), fill=m1shade] (m5) {};
+  \end{pgfonlayer}
+  \begin{pgfonlayer}{b2}
+    \node [outer match node, fit=(m5), fill=m2shade] (m5) {};
+
+    \node [outer match node, fit=(m4), draw=none] (m5a) {};
+    \node [outer match node, fit=(m3), draw=none] (m5b) {};
+    \draw [match line, bend left=45, fill=m2shade]
+          (m5a.south east)
+          to
+          (m5a.south west)
+          to
+          (m5a.north west)
+          --
+          (m5b.north west)
+          to
+          (m5b.north east)
+          to
+          (m5b.south east)
+          --
+          cycle;
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

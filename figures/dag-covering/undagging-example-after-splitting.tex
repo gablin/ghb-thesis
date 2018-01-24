@@ -1,0 +1,29 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/undagging-example-styles}%
+\begin{tikzpicture}
+  % First tree
+  \node [node] (add) {\nAdd};
+  \node [node, position=-135 degrees from add] (t1) {\nVar{t}};
+  \node [node, position=- 45 degrees from add] (t2) {\nVar{t}};
+  \begin{scope}[data flow]
+    \draw (t1) -- (add);
+    \draw (t2) -- (add);
+  \end{scope}
+
+  % Second tree
+  \node [node, left=2cm of add] (mul) {\nMul};
+  \node [node, position=-135 degrees from mul] (x) {\nVar{x}};
+  \node [node, position=- 45 degrees from mul] (y) {\nVar{y}};
+  \begin{scope}[data flow]
+    \draw (x) -- (mul);
+    \draw (y) -- (mul);
+  \end{scope}
+  \node [label, above=of mul] {store result in \irVar{t}};
+\end{tikzpicture}%
+\endgroup%

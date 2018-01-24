@@ -1,0 +1,22 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/arnold-example-styles}%
+\begin{tikzpicture}
+  \node [node] (eq) {\nEQ};
+  \node [node, position=-130 degrees from eq] (add) {\nAdd};
+  \node [node, position=- 50 degrees from eq] (zero) {\nVar{0}};
+  \node [node, position=-130 degrees from add] (x) {\nVar{x}};
+  \node [node, position=- 50 degrees from add] (y) {\strut\nVar{y}};
+  \begin{scope}[data flow]
+    \draw (add) -- (eq);
+    \draw (zero) -- (eq);
+    \draw (x) -- (add);
+    \draw (y) -- (add);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

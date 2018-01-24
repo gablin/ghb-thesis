@@ -1,0 +1,21 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/undagging-example-styles}%
+\begin{tikzpicture}
+  \node [node] (add) {\nAdd};
+  \node [node, below=of add] (mul) {\nMul};
+  \node [node, position=-135 degrees from mul] (x) {\nVar{x}};
+  \node [node, position=- 45 degrees from mul] (y) {\nVar{y}};
+  \begin{scope}[data flow, bend angle=50]
+    \draw (x) -- (mul);
+    \draw (y) -- (mul);
+    \draw (mul) to [bend right] (add);
+    \draw (mul) to [bend left]  (add);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

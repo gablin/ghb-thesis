@@ -1,0 +1,27 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/undagging-example-styles}%
+\begin{tikzpicture}
+  \node [node] (add) {\nAdd};
+  \node [node, node distance=1.5\nodeDist, position=-150 degrees from add]
+        (mul1) {\nMul};
+  \node [node, node distance=1.5\nodeDist, position=- 30 degrees from add]
+        (mul2) {\nMul};
+  \foreach \i in {1, 2} {
+    \node [node, position=-135 degrees from mul\i] (x\i) {\nVar{x}};
+    \node [node, position=- 45 degrees from mul\i] (y\i) {\nVar{y}};
+  }
+  \begin{scope}[data flow]
+    \foreach \i in {1, 2} {%
+      \draw (x\i) -- (mul\i);
+      \draw (y\i) -- (mul\i);
+      \draw (mul\i) -- (add);
+    }
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
