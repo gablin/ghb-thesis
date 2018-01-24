@@ -2833,8 +2833,8 @@ which we produce using the algorithm given in
       add edge $\mEdge{s}{s}$ to $\mGS$\;
     }
     \ForEach{%
-      $\text{subpattern $s$} = \mSigmaTree{a}{s_1, \ldots, s_m} \in S$ in
-      increasing height order%
+      $\text{subpattern $s$}$ \Assign $\mSigmaTree{a}{s_1, \ldots, s_m} \in S$
+      in increasing height order%
     }{%
       \ForEach{%
         subpattern $s' \in S$ \st $\text{height of $s'$} \leq \text{height of
@@ -2898,7 +2898,7 @@ given in \refAlgorithm{hoffmann-odonnell-lookup-table-generation}.
     $T_a$ \Assign matrix of size $|\mSigma| \times |\mSigma|$,
                   initialized to $v \in S$\;
     \ForEach{%
-      $\text{subpattern $s$} = \mSigmaTree{a}{s_1, \ldots, s_m} \in S$
+      $\text{subpattern $s$}$ \Assign $\mSigmaTree{a}{s_1, \ldots, s_m} \in S$
       in increasing subsumption order%
     }{%
       \ForEach{%
@@ -3272,7 +3272,7 @@ particular \gls{nonterminal}.
         $c$ \Assign $c$ $+$ $\mMatrix{C}[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
-        \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
+        \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th nonterminal in pattern of $r$\;
           $c$ \Assign $c$ $+$ $\mMatrix{C}[m][s]$.cost\;
@@ -3340,7 +3340,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
       $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $\mMatrix{C}$}\;
     }{%
-      \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
+      \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
         \Call{Select}{expression tree rooted at $m$, $s$, $\mMatrix{C}$}\;
@@ -3700,7 +3700,7 @@ very similar to the one used in Hoffmann-O'Donnell (compare with
   {%
     $n$ \Assign root node of $T$\;
     $k$ \Assign number of children for $n$\;
-    \For{$i \leftarrow 1$ \KwTo $k$}{%
+    \For{$i$ \Assign $1$ \KwTo $k$}{%
       $m_i$ \Assign $i$th child of $n$\;
       \Call{Label}{expression tree rooted at $m_i$, $L$}\;
     }
@@ -3735,7 +3735,7 @@ costs directly (compare with \refAlgorithm{aho-etal-select-algorithm} on
       $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $L$}\;
     }{%
-      \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
+      \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
         \Call{Select}{expression tree rooted at $m$, $s$, $L$}\;

@@ -830,7 +830,7 @@ particular \gls{nonterminal}.
         $c$ \Assign $c$ $+$ $\mMatrix{C}[n][s]$.cost
         \cmt*{here cost of node itself is taken instead of its children}
       }{%
-        \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
+        \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
           $m$ \Assign $i$th child of $n$\;
           $s$ \Assign $i$th nonterminal in pattern of $r$\;
           $c$ \Assign $c$ $+$ $\mMatrix{C}[m][s]$.cost\;
@@ -898,7 +898,7 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
       $s$ \Assign result of $r$\;
       \Call{Select}{$T$, $s$, $\mMatrix{C}$}\;
     }{%
-      \For{$i \leftarrow 1$ \KwTo number of children for $n$}{%
+      \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
         \Call{Select}{expression tree rooted at $m$, $s$, $\mMatrix{C}$}\;
@@ -967,7 +967,7 @@ leading to a finite number of \glspl{state}.
   {%
     $n$ \Assign root node of $T$\;
     $k$ \Assign number of children for $n$\;
-    \For{$i \leftarrow 1$ \KwTo $k$}{%
+    \For{$i$ \Assign $1$ \KwTo $k$}{%
       $m_i$ \Assign $i$th child of $n$\;
       \Call{Label}{expression tree rooted at $m_i$, $L$}\;
     }
