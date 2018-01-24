@@ -375,13 +375,13 @@ completeness.
 \subsection{Instruction Selection as a Graph Problem}
 
 First, the \gls{IR} code is transformed into a \gls!{data-flow graph}, where
-\glspl{node} represent \glspl{operation} in the function and \glspl{edge}
+\glspl{node} represent \glspl{operation} in the \gls{function} and \glspl{edge}
 represent data dependencies between the \glspl{operation}.
 %
 \Glspl{data-flow graph} are called \glspl!{expression tree} if they are limited
 to single, tree-shaped expressions, \glspl!{block DAG} if they capture many
 expressions in a \gls{block} as a \gls{DAG}, and \glspl!{function graph} if they
-capture the data flow of entire functions.
+capture the data flow of entire \glspl{function}.
 %
 An \gls{instruction selector} is \gls!{local.is} if it selects
 \glspl{instruction} for \glspl{expression tree} or \glspl{block DAG}, and
