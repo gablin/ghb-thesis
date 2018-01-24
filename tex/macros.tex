@@ -541,10 +541,30 @@
 \newcommand{\mVFTwoAttrCmp}{\mNodeMatchRel}
 
 \newcommand{\mAnchor}{\bullet}
-\newcommand{\mBox}{\square}
-\newcommand{\mStop}{\todo{fix}}
-
-
+\newlength{\boxSize}
+\setlength{\boxSize}{1.08ex}
+\newlength{\boxLineWidth}
+\setlength{\boxLineWidth}{.13ex}
+\newlength{\hexagonEdgeLength}
+\pgfmathsetlengthmacro{\hexagonEdgeLength}{\boxSize/(2*sin(60))}
+\newcommand{\mBox}{%
+  \tikz%
+  \draw [line width=\boxLineWidth]%
+        (0,0) -- (0, \boxSize) -- (\boxSize, \boxSize) -- (\boxSize, 0) --
+        cycle;%
+  \mkern 1mu%
+}
+\newcommand{\mStop}{%
+  \tikz%
+  \draw [line width=\boxLineWidth]%
+        (0,0) --
+        ++(120:\hexagonEdgeLength) --
+        ++(60:\hexagonEdgeLength) --
+        ++(0:\hexagonEdgeLength) --
+        ++(-60:\hexagonEdgeLength) --
+        ++(-120:\hexagonEdgeLength) --
+        cycle;
+}
 % Constraint model-related commands
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\mStronger}{\leq}
