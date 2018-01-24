@@ -1,0 +1,132 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/sat-pattern-styles}%
+\pgfdeclarelayer{background}%
+\pgfsetlayers{background,main}%
+\begin{tikzpicture}[
+    match fill/.style={
+      fill=shade2,
+    },
+    box match node/.style={
+      match node,
+      inner sep=2.8pt,
+    },
+    stop match node/.style={
+      match node,
+      inner sep=1.4pt,
+    },
+  ]
+
+  % DAG
+  \node [stop node] (stop) {};
+  \node [box node, below=of stop] (and box) {};
+  \node [op node, below=of and box] (and) {$\mAnd$};
+  \node [box node, position=-130 degrees from and] (or box) {};
+  \node [box node, position=-50  degrees from and] (not box) {};
+  \node [op node, below=of or box] (or) {$\mOr$};
+  \node [op node, below=of not box] (not) {$\mNot$};
+  \node [box node, position=-130 degrees from or] (x1 box) {};
+  \node [box node, position=-50  degrees from or] (x2 box) {};
+  \node [var node, below=of x1 box] (x1) {$\mVar{x}_1$};
+  \node [var node, below=of x2 box] (x2) {$\mVar{x}_2$};
+  \begin{scope}[data flow]
+    \draw (x1) -- (x1 box);
+    \draw (x2) -- (x2 box);
+    \draw (x1 box) -- (or);
+    \draw (x2 box) -- (or);
+    \draw (x2 box) -- (not);
+    \draw (or) -- (or box);
+    \draw (not) -- (not box);
+    \draw (or box) -- (and);
+    \draw (not box) -- (and);
+    \draw (and) -- (and box);
+    \draw (and box) -- (stop);
+  \end{scope}
+
+  % Matches
+  \begin{pgfonlayer}{background}
+    \node [match node, fit=(x1), match fill] {};
+    \node [match node, fit=(not), match fill] {};
+
+    \begin{scope}[match line]
+      \node [match node, draw=none, fill=none, fit=(x2)] (ma) {};
+      \node [box match node, draw=none, fill=none, fit=(x2 box)] (mb) {};
+      \draw [match line, bend left=45, match fill]
+            (ma.west)
+            --
+            (mb.west)
+            to
+            (mb.north)
+            to
+            (mb.east)
+            --
+            (ma.east)
+            to
+            (ma.south)
+            to
+            cycle;
+
+      \node [box match node, draw=none, fill=none, fit=(x1 box)] (ma) {};
+      \node [match node, draw=none, fill=none, fit=(or)] (mb) {};
+      \draw [match line, bend left=45, match fill]
+            (ma.south east)
+            to
+            (ma.south west)
+            to
+            (ma.north west)
+            --
+            (mb.north west)
+            to
+            (mb.north east)
+            to
+            (mb.south east)
+            --
+            cycle;
+
+      \node [box match node, draw=none, fill=none, fit=(or box)] (ma) {};
+      \node [match node, draw=none, fill=none, fit=(and)] (mb) {};
+      \node [box match node, draw=none, fill=none, fit=(not box)] (mc) {};
+      \draw [match line, bend left=45, match fill]
+            (ma.north west)
+            --
+            (mb.north west)
+            to
+            (mb.north east)
+            --
+            (mc.north east)
+            to
+            (mc.south east)
+            to [bend angle=90]
+            (mc.south)
+            --
+            (ma.south)
+            to [bend angle=90]
+            (ma.south west)
+            to
+            cycle;
+
+      \node [box match node, draw=none, fill=none, fit=(and box)] (ma) {};
+      \node [stop match node, draw=none, fill=none, fit=(stop)] (mb) {};
+      \draw [match line, bend left=45, match fill]
+            (ma.west)
+            --
+            (mb.west)
+            to
+            (mb.north)
+            to
+            (mb.east)
+            --
+            (ma.east)
+            to
+            (ma.south)
+            to
+            (ma.west);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}%
+\endgroup%

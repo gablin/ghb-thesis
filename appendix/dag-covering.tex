@@ -33,19 +33,6 @@ To not disturb the flow of reading, material already presented in
 
 \section{The Principle}
 
-\todo{fix inline figure}
-
-%\def\inparfigwidth{2.5cm}
-%\begin{inParFigure}{\inparfigwidth}[r]%
-%  \centering%
-%  \input{\figurePath/dag-covering/dag-covering-example}%
-%
-%  % LAYOUT FIX:
-%  % Add some space below
-%  \vspace*{\baselineskip}
-%\end{inParFigure}%
-%\noindent
-%
 By lifting the restriction that every \gls{node} in the \gls{expression tree}
 have exactly one \gls{parent}, we attain a \gls!{block DAG}.
 %
@@ -53,29 +40,27 @@ Because \glspl{DAG} permit \glspl{node} to have multiple \glspl{parent}, the
 intermediate values in an expression can be shared and reused within the same
 \gls{block DAG}.
 %
-This also enables \glspl{pattern DAG} to contain multiple \gls{root}
-\glspl{node}, which signify the production of multiple output values and thus
-extend the \gls{instruction} support to include \gls{multi-output.ic}
-\glspl{instruction}.
-
-%\begin{inParFigure}{\inparfigwidth}[r]%
-%  \vspace*{2\baselineskip}
-%\end{inParFigure}%
+This also enables \glspl!{pattern DAG} that contain multiple \gls{root}
+\glspl{node}, which signify the production of multiple output values.
 %
+Hence the \gls{instruction set} support is extended to include
+\gls{multi-output.ic} \glspl{instruction}.
+
 Since \glspl{DAG} are less restrictive compared to \glspl{tree}, transitioning
 from \gls{tree covering} to \gls{DAG covering} requires new methods for solving
 the problems of \gls{pattern matching} and \gls{pattern selection}.
 %
 \Gls{pattern matching} is typically addressed using one of the following
 methods:
+%
 \begin{itemize}
   \item First split the \glspl{pattern DAG} into \glspl{tree}, then match these
     individually, and then recombine the matched \glspl{pattern tree} into their
     original \gls{DAG} form.
     %
     In general, matching \glspl{tree} on \glspl{DAG} is
-    NP-complete~\cite{GareyJohnson:1979}, but designs applying this technique typically
-    sacrifice completeness to retain linear time complexity.
+    NP-complete~\cite{GareyJohnson:1979}, but designs applying this technique
+    typically sacrifice completeness to retain linear time complexity.
   \item Match the \glspl{pattern DAG} directly using a generic \gls{subgraph
     isomorphism} algorithm.
     %
@@ -98,7 +83,7 @@ As we saw in \refAppendix{tree-covering}, selecting an \gls{optimal.ps} set of
 doing the same for \glspl{block DAG} is an NP-complete problem.
 %
 Proofs were given in 1976 by \textcite{BrunoSethi:1976} and
-\textcite{AhoEtal:1976}, but these were most concerned with the optimality of
+\textcite{AhoEtAl:1976}, but these were most concerned with the optimality of
 \gls{instruction scheduling} and \gls{register allocation}.
 %
 In 1995, \textcite{Proebsting:1995:Proof} gave a very concise proof for optimal
@@ -120,18 +105,18 @@ A \gls{CNF} formula is an expression consisting of Boolean variables and the
 Boolean operations $\mOr$ (or) and $\mAnd$ (and) with the following structure:
 %
 \begin{displaymath}
-  (x_{1,1} \mOr x_{1,2} \mOr \ldots) \mAnd
-  (x_{\,2,1} \mOr x_{\,2,2} \mOr \ldots) \mAnd
+  (\mVar{x}_{1,1} \mOr \mVar{x}_{1,2} \mOr \ldots) \mAnd
+  (\mVar{x}_{\,2,1} \mOr \mVar{x}_{\,2,2} \mOr \ldots) \mAnd
   \ldots
 \end{displaymath}
 %
-A variable~$x$ can also be negated, written as \mbox{$\mNot x$}.
+A variable~$\mVar{x}$ can also be negated, written as \mbox{$\mNot \mVar{x}$}.
 
 Since the \gls{SAT} problem is NP-complete, all polynomial-time transformations
 from \gls{SAT} to any other problem $P$ must also render $P$ NP-complete.
 
 
-\subsubsection{Modeling SAT as a Covering Problem}
+\paragraph{Modeling SAT as a Covering Problem}
 
 First, we transform an instance~$S$ of the \gls{SAT} problem into a \gls{block
   DAG}.
@@ -154,13 +139,13 @@ and add these to the \gls{block DAG}.
 At the same time we also add an \gls{edge}~$\mEdge{n_1}{n_2}$.
 %
 The same is done for each binary Boolean operator~\mbox{$\mathit{op} \in S$} by
-creating two \glspl{node}~$n'_1$ and $n'_2$ such that \mbox{$\mType{n'_1} = op$}
-and \mbox{$\mType{n'_2} = \mBox$}, along with an
+creating two \glspl{node}~$n'_1$ and $n'_2$ such that \mbox{$\mType(n'_1) = op$}
+and \mbox{$\mType(n'_2) = \mBox$}, along with an
 \gls{edge}~$\mEdge{n'_1}{n'_2}$.
-%
+
 To model the connection between the $\mathit{op}$ operation and its two input
 operands~$x$ and $y$, we add two \glspl{edge}~$\mEdge{n_x}{n'_1}$ and
-$\mEdge{n_y}{n'_1}$ such that \mbox{$\mType{n_x} = \mType{n_y} = \mBox$}.
+$\mEdge{n_y}{n'_1}$ such that \mbox{$\mType(n_x) = \mType(n_y) = \mBox$}.
 %
 For the unary operation~$\neg$ we obviously only need one such \gls{edge}, and
 since $\mOr$ and $\mAnd$ are commutative it does not matter in what order the
@@ -173,118 +158,100 @@ An example of such a \gls{DAG} is shown in \refFigure{sat-example}, which can be
 constructed in linear time simply by traversing the Boolean formula.
 
 
-\subsubsection{Boolean Operations as Patterns}
+\paragraph{Boolean Operations as Patterns}
 
-%\begin{figure}[b]
-%
-%  \begin{subfigure}[The SAT patterns.
-%%
-%For brevity, the patterns for the
-%                    $\mAnd$~operation are omitted (but these can be easily
-%                    inferred from the $\mOr$~patterns) All patterns are
-%                    assumed to have the same unit cost]%
-%                   [sat-patterns]
-%    \begin{minipage}{8cm}
-%      % LAYOUT FIX:
-%      % Make this subfigure align properly with the next subfigure
-%      \vspace*{20pt}
-%
-%      \centering%
-%      \begin{minipage}[t]{1cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-v-F}
-%
-%        $x: F$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{1cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-v-T}
-%
-%        $x: T$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{1.5cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-satisfied}
-%
-%        \textit{satisfied}
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{1cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-not-F}
-%
-%        $F: \mNot T$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{1cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-not-T}
-%
-%        $T: \mNot F$
-%      \end{minipage}
-%
-%      \vspace{14pt}
-%
-%      \begin{minipage}[t]{2cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-or-T1}
-%
-%        $T: T \mOr T$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{2cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-or-T2}
-%
-%        $T: T \mOr F$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{2cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-or-T3}
-%
-%        $T: F \mOr T$
-%      \end{minipage}%
-%      \hfill%
-%      \begin{minipage}[t]{2cm}
-%        \centering%
-%        \input{\figurePath/dag-covering/sat-pattern-or-F}
-%
-%        $F: F \mOr F$
-%      \end{minipage}%
-%
-%    \end{minipage}%
-%  \end{subfigure}
-%  \hfill%
-%  \begin{subfigure}[Example of a SAT problem represented as a DAG
-%                    covering problem][sat-example]
-%    \begin{minipage}{3cm}
-%      \centering%
-%      \input{\figurePath/dag-covering/sat-example}
-%
-%      $(x_1 \mOr x_2) \mAnd (\mNot x_2)$
-%    \end{minipage}
-%  \end{subfigure}
-%
-%  \figCaption{Transforming SAT to DAG covering}[KoesGoldstein:2008]
-%  \labelFigure{sat-to-instruction-selection-reduction}
-%\end{figure}
-
-\def\mPSat{P_\text{\smaller SAT}}%
+\def\mPSat{P_{\mathsc{sat}}}
 
 To cover the \gls{block DAG}, we will use the \glspl{pattern tree} given in
 \refFigure{sat-patterns}, and we will refer to this \gls{pattern set}
 as~$\mPSat$.
 %
+\begin{figure}
+  \subcaptionbox{%
+                  The SAT patterns.
+                  %
+                  For brevity, the patterns for the $\mAnd$~operation are
+                  omitted as these can be easily inferred from the
+                  $\mOr$~patterns.
+                  %
+                  All patterns are assumed to have the same unit cost%
+                  \labelFigure{sat-patterns}%
+                }{%
+                  \begin{minipage}{87mm}%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-x-F}\\
+                      $\mVar{x} = F$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-x-T}\\
+                      $\mVar{x} = T$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-satisfied}\\
+                      satisfied
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-not-F}\\
+                      $\mNot T = F$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-not-T}\\
+                      $\mNot F = T$
+                    }
+
+                    \vspace{\betweensubfigures}
+
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-or-T1}\\
+                      $T \mOr T = T$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-or-T2}\\
+                      $T \mOr F = T$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-or-T3}\\
+                      $F \mOr T = T$
+                    }%
+                    \hfill%
+                    \adjustbox{stack}{%
+                      \input{figures/dag-covering/sat-pattern-or-F}\\
+                      $F \mOr F = F$
+                    }%
+                  \end{minipage}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Example of a SAT problem represented as a DAG covering
+                  problem%
+                  \labelFigure{sat-instance}%
+                }%
+                [34mm]%
+                {%
+                  \adjustbox{stack}{%
+                    \input{figures/dag-covering/sat-instance}\\
+                    $(\mVar{x}_1 \mOr \mVar{x}_2) \mAnd (\mNot \mVar{x}_2)$
+                  }%
+                }
+
+  \caption[Transforming SAT into DAG covering]
+          {Transforming SAT to DAG covering~\cite{KoesGoldstein:2008}}
+  \labelFigure{sat-to-dag-covering-reduction}
+\end{figure}
+%
 Every \gls{pattern} in $\mPSat$ adheres to the following invariant:
 %
 \begin{enumerate}
-  \item If a variable~$x$ is set to~$T$~(true), then the selected \gls{pattern}
-    covering the $x$~\gls{node} will also cover the corresponding \gls{box node}
-    of~$x$.
-  \item If the result of an operation $\mathit{op}$ evaluates to~$F$~(false),
+  \item If a variable~$\mVar{x}$ is set to true ($T$), then the selected
+    \gls{pattern} covering the $\mVar{x}$~\gls{node} will also cover the
+    corresponding \gls{box node} of~$\mVar{x}$.
+  \item If the result of an operation $\mathit{op}$ evaluates to false ($F$),
     then that \gls{pattern} will not cover the corresponding \gls{box node}
     of~$\mathit{op}$.
 \end{enumerate}
@@ -312,9 +279,9 @@ We now say that a \gls{pattern}~$p$, with \gls{root} \gls{node}~$p_r$,
 rooted at a \gls{node}~\mbox{$n \in N$} if and only if:
 %
 \begin{enumerate}
-  \item $\mType(n) = \mType{p_r}$,
+  \item $\mType(n) = \mType(p_r)$,
   \item $\mNumChildren(n) = \mNumChildren(p_r)$, and
-  \item $\forall 1 \leq i \leq \mNumChildren(n) : \mType{\mChild(i, n)} =
+  \item $\forall 1 \leq i \leq \mNumChildren(n) : \mType(\mChild(i, n)) =
     \mAnchor \mOr \text{$\mChild(i, n)$ matches $\mChild(i, p_r)$}$.
 \end{enumerate}
 %
@@ -338,9 +305,9 @@ Lastly, we say that $G$ is \emph{covered} by a function~\mbox{$f : N \rightarrow
 %
 \begin{enumerate}
   \item $\forall p \in f(n) : \text{$p$ matches $n$}$,
-  \item $\mType(n) = \mStop \implies f(n) \neq \emptyset$, and
+  \item $\mType(n) = \mStop \mImp f(n) \neq \emptyset$, and
   \item $\forall p = \mTuple{N_p, E_p} \in f(v), n_p \in N_p :
-    \mType{n_p} = \mAnchor \implies f(\mMatched(n, n_p)) \neq
+    \mType(n_p) = \mAnchor \mImp f(\mMatched(n, n_p)) \neq
     \emptyset$.
 \end{enumerate}
 %
@@ -356,13 +323,16 @@ An \gls{optimal.ps} cover is thus a mapping~$f$ which covers the \gls{block
   DAG}~\mbox{$\mTuple{N, E}$} and also minimize
 %
 \begin{displaymath}
-  \sum_{n \, \in \, N} \sum_{p \, \in \, f(n)} \mCost{p},
+  \sum_{\mathclap{n \, \in \, N}}
+  \hspace{.8em}
+  \sum_{\mathclap{p \, \in \, f(n)}}
+  \mCost(p),
 \end{displaymath}
 %
-where $\mCost{p}$ is the cost of \gls{pattern}~$p$.
+where $\mCost(p)$ is the cost of \gls{pattern}~$p$.
 
 
-\subsubsection{Optimal Solution to DAG Covering $\Rightarrow$ Solution to SAT}
+\paragraph{Optimal Solution to DAG Covering $\Rightarrow$ Solution to SAT}
 
 We now postulate that if the \gls{optimal.ps} cover has a total cost equal to
 the number of non-\glspl{box node} in the~\gls{block DAG}, then the
@@ -486,8 +456,8 @@ Twenty years after \citeauthor{Newcomer:1975} and \citeauthor{CattellEtAl:1979}
 made two major improvements.
 %
 First, \citeauthor{YuHu:1994a}'s design supports \glsshort{block DAG} and
-\glspl{pattern DAG} whereas those by~\citeauthor{Newcomer:1975} and Cattell~\etal
-are both limited to \glspl{tree}.
+\glspl{pattern DAG} whereas those by~\citeauthor{Newcomer:1975} and
+Cattell~\etal are both limited to \glspl{tree}.
 %
 Second, it combines \gls{means-end analysis} with \gls{hierarchical
   planning}~\cite{Sacerdoti:1973}, which is a \gls{search} strategy that relies
@@ -512,10 +482,10 @@ complex \glspl{instruction} such as \gls{inter-block.ic} and
 
 \subsection{Relying on Semantic-Preserving Transformations}
 
-In 1996, \textcite{HooverZadeck:1996} developed a system called \gls!{Toast} with the
-goal of automating the generation of entire \gls{compiler} frameworks --
-including \gls{instruction scheduling} and \gls{register allocation} -- from a
-declarative \gls{machine description}.
+In 1996, \textcite{HooverZadeck:1996} developed a system called \gls!{Toast}
+with the goal of automating the generation of entire \gls{compiler} frameworks
+-- including \gls{instruction scheduling} and \gls{register allocation} -- from
+a declarative \gls{machine description}.
 %
 In \gls{Toast} the \gls{instruction selection} is done by applying
 semantic-preserving transformations during \gls{pattern selection} to make
@@ -537,8 +507,8 @@ First, the \gls{frontend} emits \glspl{block DAG} consisting of \glspl{semantic
 The \gls{block DAG} is then semantically matched using \gls{single-output.ic}
 \glspl{pattern} derived from the \glspl{instruction}.
 %
-Semantic \glspl{match} -- which \citeauthor{HooverZadeck:1996} call \glspl!{toe print}
--- and are found by a \gls{semantic comparator}.
+Semantic \glspl{match} -- which \citeauthor{HooverZadeck:1996} call \glspl!{toe
+  print} -- and are found by a \gls{semantic comparator}.
 %
 The \gls{semantic comparator} first performs syntactic matching -- that is,
 checking that the \glspl{node} are of the same type, which is done using a
@@ -566,9 +536,9 @@ where each selected \gls{foot print} syntactically matches at least one
 the \gls{block DAG} (for example constants) may be included in more than one
 \gls{foot print}.
 
-Using a prototype implementation, \citeauthor{HooverZadeck:1996} reported that almost
-$10^{70}$~``implied \gls{instruction} \glspl{match}'' were found for one of the
-test cases, but it is unclear how many of them were actually useful.
+Using a prototype implementation, \citeauthor{HooverZadeck:1996} reported that
+almost $10^{70}$~``implied \gls{instruction} \glspl{match}'' were found for one
+of the test cases, but it is unclear how many of them were actually useful.
 %
 Moreover, in its current form the design appears to be unpractical for
 generating \gls{assembly code} for all but very small \glspl{program}.
@@ -622,7 +592,7 @@ produced with \gls{edge splitting}.
 %  \begin{subfigure}[DAG][undagging-example-dag]
 %    \begin{minipage}{2.5cm}
 %      \centering%
-%      \input{\figurePath/dag-covering/undagging-1}
+%      \input{figures/dag-covering/undagging-1}
 %    \end{minipage}%
 %  \end{subfigure}
 %  \hfill%
@@ -633,7 +603,7 @@ produced with \gls{edge splitting}.
 %      \vspace*{18pt}
 %
 %      \centering%
-%      \input{\figurePath/dag-covering/undagging-2}
+%      \input{figures/dag-covering/undagging-2}
 %    \end{minipage}%
 %  \end{subfigure}
 %  \hfill%
@@ -644,7 +614,7 @@ produced with \gls{edge splitting}.
 %      \vspace*{4pt}
 %
 %      \centering%
-%      \input{\figurePath/dag-covering/undagging-3}
+%      \input{figures/dag-covering/undagging-3}
 %    \end{minipage}
 %  \end{subfigure}
 %
@@ -808,7 +778,7 @@ With appropriate data structures, a linear-time implementation can be achieved.
 %  \centering
 %
 %  \begin{minipage}{3.5cm}
-%    \input{\figurePath/dag-covering/ertl-example}
+%    \input{figures/dag-covering/ertl-example}
 %  \end{minipage}
 %  \hfill%
 %  \begin{minipage}{7.5cm}
@@ -921,7 +891,7 @@ An example is given in \refFigure{arnold-example}.
 %  \begin{subfigure}[Original \glsentrytext{pattern DAG}][arnold-example-dag]
 %    \begin{minipage}{2.5cm}%
 %      \centering%
-%      \input{\figurePath/dag-covering/arnold-example-dag}%
+%      \input{figures/dag-covering/arnold-example-dag}%
 %    \end{minipage}%
 %  \end{subfigure}
 %  \hspace{40pt}%
@@ -935,12 +905,12 @@ An example is given in \refFigure{arnold-example}.
 %      \centering%
 %      \begin{minipage}{1cm}%
 %        \centering%
-%        \input{\figurePath/dag-covering/arnold-example-tree1}%
+%        \input{figures/dag-covering/arnold-example-tree1}%
 %      \end{minipage}%
 %      \hfill%
 %      \begin{minipage}{2cm}%
 %        \centering%
-%        \input{\figurePath/dag-covering/arnold-example-tree2}%
+%        \input{figures/dag-covering/arnold-example-tree2}%
 %      \end{minipage}%
 %    \end{minipage}
 %  \end{subfigure}
@@ -1000,14 +970,14 @@ solution for the original \gls{pattern selection} problem.
 %  \begin{subfigure}[Matched DAG][mis-example-dag]
 %    \begin{minipage}{3.3cm}
 %      \centering%
-%      \input{\figurePath/dag-covering/mis-example-dag}%
+%      \input{figures/dag-covering/mis-example-dag}%
 %    \end{minipage}%
 %  \end{subfigure}
 %  \hspace{40pt}%
 %  \begin{subfigure}[Conflict graph][mis-example-conflict]
 %    \begin{minipage}{3cm}
 %      \centering%
-%      \input{\figurePath/dag-covering/mis-example-conflict}%
+%      \input{figures/dag-covering/mis-example-conflict}%
 %    \end{minipage}
 %  \end{subfigure}
 %
@@ -1341,7 +1311,7 @@ overview).
 %  \begin{subfigure}[Graph to cover][unate-covering-example-graph]
 %    \begin{minipage}{6cm}%
 %      \centering%
-%      \input{\figurePath/graph-covering/unate-covering-example-graph}%
+%      \input{figures/graph-covering/unate-covering-example-graph}%
 %    \end{minipage}%
 %  \end{subfigure}
 %  \hfill%
@@ -2192,7 +2162,7 @@ of \gls!{MSSC}~\cite{NowakMarwedel:1989}, which in turn is an extension of the
 
 %\begin{figure}[b]
 %  \centering%
-%  \input{\figurePath/dag-covering/co-graph-example}
+%  \input{figures/dag-covering/co-graph-example}
 %  \figCaption[The \glsentrytext{CO graph} of a simple processor]%
 %    {The \glsentrytext{CO graph} of a simple processor containing an arithmetic
 %     logic unit,

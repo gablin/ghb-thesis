@@ -1,0 +1,20 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/dag-covering/sat-pattern-styles}%
+\begin{tikzpicture}
+  \node [box node] (or box) {};
+  \node [op node, below=of or box] (or) {$\mOr$};
+  \node [anchor node, position=-135  degrees from or] (anchor1) {};
+  \node [anchor node, position=-45 degrees from or] (anchor2) {};
+  \begin{scope}[data flow]
+    \draw (anchor1) -- (or);
+    \draw (anchor2) -- (or);
+    \draw (or) -- (or box);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

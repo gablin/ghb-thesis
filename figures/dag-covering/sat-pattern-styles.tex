@@ -1,0 +1,30 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\figureFont\figureFontSize%
+\setlength{\nodeDist}{14pt}%
+\setlength{\nodeSize}{12pt}%
+\tikzset{%
+  var node/.style={%
+    node,
+  },
+  op node/.style={%
+    node,
+  },
+  box node/.style={%
+    value node,
+  },
+  stop node/.style={%
+    node,
+    regular polygon,
+    regular polygon sides=6,
+  },
+  anchor node/.style={%
+    node,
+    minimum size=0.3\nodeSize,
+    fill=black,
+  },
+}%
