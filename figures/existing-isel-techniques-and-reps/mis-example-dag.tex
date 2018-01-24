@@ -6,6 +6,7 @@
 %
 \begingroup%
 \figureFont\figureFontSize%
+\setlength{\nodeDist}{20pt}%
 \pgfdeclarelayer{background1}%
 \pgfdeclarelayer{background2}%
 \pgfdeclarelayer{background3}%
@@ -25,10 +26,9 @@
   \node [computation node] (add) {\nAdd};
   \node [value node, position=-135 degrees from add] (a) {\nVar{a}};
   \node [value node, position=- 45 degrees from add] (b) {\nVar{b}};
-  \node [computation node, node distance=1.2\nodeDist,
-         position=135 degrees from add]
+  \node [computation node, position=135 degrees from add]
         (mul) {\nMul};
-  \node [value node, node distance=1.2\nodeDist, position=45 degrees from add]
+  \node [value node, position=45 degrees from add]
         (load) {\nLoad};
   \node [value node, position=-135 degrees from mul] (c) {\nVar{c}};
   \begin{scope}[data flow]
