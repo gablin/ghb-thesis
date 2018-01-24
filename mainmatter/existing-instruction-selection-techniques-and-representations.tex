@@ -1476,6 +1476,7 @@ Formally, an \gls{IP} problem is defined as follows.
       \text{and} & \mVector{\mVar{x}} \in \mathbb{N}^n\!. \\
     \end{array}
   \end{displaymath}
+  \labelDefinition{ip}
 \end{definition}
 
 Such problems are NP-complete in general, but extensive research in the field
@@ -1650,7 +1651,7 @@ Assume that $M$ denotes the \gls{match set} and $\mCovers(m)$ denotes the set of
 \glspl{node} covered by \gls{match}~$m$.
 %
 Then, for each node~$n$ to be covered, \gls{variable} \mbox{$\mVar{match}_n \in
-  \mSetBuilder{m}{m \in M, i \in \mCovers(m)}$} decides which \gls{match}
+  \mSetBuilder{m}{m \in M, n \in \mCovers(m)}$} decides which \gls{match}
 covers~$n$.
 %
 Also, for each match~$m$, \gls{variable} \mbox{$\mVar{count}_m \in \mSet{0,
