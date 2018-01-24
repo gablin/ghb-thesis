@@ -10,7 +10,7 @@
 ** DONE Add labels to optimal-solutions-over-time plot
 ** TODO Add minizinc model as appendix
 ** TODO Add references in the minizinc model to refer to the corresponding Eq in the dissertation
-** TODO Fix bad figure placements
+** TODO Add List of Techniques appendix
 ** TODO In appendices, swap typesetting convention of terminals and nonterminals
 ** TODO In appendices, replace 'linear form' with 'normal form'
 ** TODO Check overflowing of bib entries
@@ -24,3 +24,4 @@
 ** TODO Check for unused glossary terms
 ** TODO Check for undefined (!) glossary terms
 ** TODO Check that all floats are declared after first reference
+** TODO Check for bad figure placements
