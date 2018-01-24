@@ -1495,6 +1495,9 @@ where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
 match~$m$, and $\mVector{\mVar{x}}[m]$ is a Boolean (\mbox{$\mSet{0, 1}$})
 \gls{decision variable} indicating whether match~$m$ is selected.
+%
+When there is no risk of confusion, we refer to \glspl{decision variable} simply
+as \glspl!{variable}.
 
 
 \paragraph{Applications}
@@ -1530,9 +1533,9 @@ Unlike all other \gls{instruction selection} approaches,
 \gls{pattern selection}.
 %
 Consequently, in addition to the \glspl{variable} that decide which
-\glspl{match} are selected, their \gls{IP}~model also has \glspl{decision
-  variable} that, for each \gls{match}, maps \glspl{node} and \glspl{edge} in
-the \gls{block DAG} to \glspl{node} and \glspl{edge} in a \gls{pattern}.
+\glspl{match} are selected, their \gls{IP}~model also has \glspl{variable} that,
+for each \gls{match}, maps \glspl{node} and \glspl{edge} in the \gls{block DAG}
+to \glspl{node} and \glspl{edge} in a \gls{pattern}.
 %
 An upper bound on the number of \glspl{match} needed is computed using a
 heuristic.
@@ -1610,9 +1613,9 @@ where \glspl{Horn clause} are applied to model \gls{register allocation}
 which is discussed in detail in \refChapter{constraint-programming} (and
 therefore only a brief introduction will be given here).
 %
-Like \gls{IP}, a \gls{constraint model} consists of a set of \glspl{decision
-  variable}, a set of \glspl{constraint} over the \glspl{variable}, and
-typically also an \gls{objective function} to either minimize or maximize.
+Like \gls{IP}, a \gls{constraint model} consists of a set of \glspl{variable}, a
+set of \glspl{constraint} over the \glspl{variable}, and typically also an
+\gls{objective function} to either minimize or maximize.
 %
 A crucial difference, however, is that \glspl{constraint} are not limited to
 linear equations.
@@ -1628,8 +1631,8 @@ solving.
 called the \gls!{global cardinality constraint}.
 %
 The \gls{constraint}, referred to as $\mGCC$, constrains the number of
-\glspl{decision variable} assigned a particular value (which may also be a
-\gls{decision variable}).
+\glspl{variable} assigned a particular value (which may also be a
+\gls{variable}).
 %
 We say that \mbox{$\mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds if
 exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
@@ -1638,26 +1641,25 @@ exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
 %
 For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 = \mSet{4}, \mVar{x}_2 =
   \mSet{5}, \mVar{x}_3 = \mSet{6}, \mVar{y} = \mSet{1})$} holds as exactly one
-\glsshort{decision variable} is assigned the value~4.
+\gls{variable} is assigned the value~4.
 
-To model \gls{pattern selection} using $\mGCC$, two new sets of
-\glspl{decision variable} are needed.
+To model \gls{pattern selection} using $\mGCC$, two new sets of \glspl{variable}
+are needed.
 %
 Assume that $M$ denotes the \gls{match set} and $\mCovers(m)$ denotes the set of
 \glspl{node} covered by \gls{match}~$m$.
 %
-Then, for each node~$n$ to be covered, \glsshort{decision variable}
-\mbox{$\mVar{match}_n \in \mSetBuilder{m}{m \in M, i \in \mCovers(m)}$} decides
-which \gls{match} covers~$n$.
+Then, for each node~$n$ to be covered, \gls{variable} \mbox{$\mVar{match}_n \in
+  \mSetBuilder{m}{m \in M, i \in \mCovers(m)}$} decides which \gls{match}
+covers~$n$.
 %
-Also, for each match~$m$, \glsshort{decision variable} \mbox{$\mVar{count}_m \in
-  \mSet{0, |\mCovers(m)|}$} decides how many \glspl{node} are covered by $m$.
+Also, for each match~$m$, \gls{variable} \mbox{$\mVar{count}_m \in \mSet{0,
+    |\mCovers(m)|}$} decides how many \glspl{node} are covered by $m$.
 %
 Hence each match covers either no \glspl{node} or all \glspl{node} in its
 \gls{pattern}.
 %
-With these \glsplshort{decision variable}, \gls{pattern selection} can be
-modeled as
+With these \glspl{variable}, \gls{pattern selection} can be modeled as
 %
 \begin{equation}
   \forall m \in M :
@@ -2099,8 +2101,8 @@ Formally, a \gls{PBQP} is defined as follows.
     \ldots, n$} and \mbox{$j = i, \ldots, n$}.
   %
   Let also \mbox{$\mVector{\mVar{x}}_1, \ldots, \mVector{\mVar{x}}_n$} be
-  vectors of integer \glspl{decision variable}, where \mbox{$\mVar{x}_i \in
-    \mSet{0, 1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
+  vectors of integer \glspl{variable}, where \mbox{$\mVar{x}_i \in \mSet{0,
+      1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
   %
   Then
   %
@@ -2123,11 +2125,11 @@ Intuitively, one can interpret this definition as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVector{\mVar{x}}_i$ is a \gls!{decision variable} with $k$~elements,
-where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
-selected for decision~$i$.
+Then $\mVector{\mVar{x}}_i$ is a \gls!{variable} with $k$~elements, where
+\mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been selected for
+decision~$i$.
 %
-For each \gls{decision variable}, the condition
+For each \gls{variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
 ensures that exactly one choice is selected.
 %
@@ -2314,8 +2316,8 @@ For each combination of \glspl{match} derived from \gls{proxy.r} \glspl{rule}
 that can be combined into an instance of a \gls{complex.r} \gls{rule}, a
 \gls!{complex.m}[ \gls{match}] is created.
 %
-Each \gls{complex.m} \gls{match}~$i$ in turn introduces a \gls{decision
-  variable}~\raisebox{0pt}[\height-2pt]{$\mVector{\mVar{x}}_i \in \mSet{0,
+Each \gls{complex.m} \gls{match}~$i$ in turn introduces a
+\gls{variable}~\raisebox{0pt}[\height-2pt]{$\mVector{\mVar{x}}_i \in \mSet{0,
     1}^2$} to decide whether $i$ is selected.
 %
 Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp}
@@ -2331,7 +2333,7 @@ In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
 \glspl{rule} must also be selected.
 %
 This is achieved by first extending, for each node~$i$, the domain of its
-\gls{decision variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived from
+\gls{variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived from
 \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
