@@ -8,8 +8,8 @@
 \input{figures/dag-covering/sat-pattern-styles}%
 \begin{tikzpicture}
   \node [op node] (or) {$\mOr$};
-  \node [anchor node, position=-130  degrees from or] (anchor1) {};
-  \node [box node, position=-50 degrees from or] (box) {};
+  \node [anchor node, position=-135 degrees from or] (anchor1) {};
+  \node [box node, position=-45 degrees from or] (box) {};
   \node [anchor node, below=of box] (anchor2) {};
   \begin{scope}[data flow]
     \draw (anchor1) -- (or);

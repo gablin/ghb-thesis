@@ -17,10 +17,10 @@
   ]
 
   \node [circle] (v) {$v$};
-  \node [position=-130 degrees from v] (b) {$b$};
-  \node [position=-50  degrees from v] (avv) {$a(v,v)$};
-  \node [position=-130 degrees from avv] (aavvb) {$a(a(v,v), b)$};
-  \node [position=-50  degrees from avv] (abv)   {$a(b,v)$};
+  \node [position=-135 degrees from v] (b) {$b$};
+  \node [position=- 45 degrees from v] (avv) {$a(v,v)$};
+  \node [position=-135 degrees from avv] (aavvb) {$a(a(v,v), b)$};
+  \node [position=- 45 degrees from avv] (abv)   {$a(b,v)$};
   \begin{scope}[data flow]
     \draw (b)                -- (v);
     \draw (avv)              -- (v);

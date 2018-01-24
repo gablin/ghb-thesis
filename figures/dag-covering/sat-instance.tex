@@ -26,12 +26,12 @@
   \node [stop node] (stop) {};
   \node [box node, below=of stop] (and box) {};
   \node [op node, below=of and box] (and) {$\mAnd$};
-  \node [box node, position=-130 degrees from and] (or box) {};
-  \node [box node, position=-50  degrees from and] (not box) {};
+  \node [box node, position=-135 degrees from and] (or box) {};
+  \node [box node, position=- 45 degrees from and] (not box) {};
   \node [op node, below=of or box] (or) {$\mOr$};
   \node [op node, below=of not box] (not) {$\mNot$};
-  \node [box node, position=-130 degrees from or] (x1 box) {};
-  \node [box node, position=-50  degrees from or] (x2 box) {};
+  \node [box node, position=-135 degrees from or] (x1 box) {};
+  \node [box node, position=- 45 degrees from or] (x2 box) {};
   \node [var node, below=of x1 box] (x1) {$\mVar{x}_1$};
   \node [var node, below=of x2 box] (x2) {$\mVar{x}_2$};
   \begin{scope}[data flow]
