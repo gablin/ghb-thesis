@@ -17,10 +17,9 @@ Hence exploitation of many \glspl{instruction} is excluded, resulting in low
 code quality.
 %
 Another problem is that \gls{macro}-expanding \glspl{instruction selector}
-typically combine \gls{pattern matching} and \gls{pattern selection} into a
-single step, thus making it very difficult to consider combinations of
-\glspl{instruction} and then pick the one that yields the ``best'' \gls{assembly
-  code}.
+typically combine \gls{matching} and \gls{selection} into a single step, thus
+making it very difficult to consider combinations of \glspl{instruction} and
+then pick the one that yields the best \gls{assembly code}.
 
 These problems can be solved by employing another \gls{principle} of
 \gls{instruction selection} called \gls{tree covering}, which is also the most
@@ -36,35 +35,105 @@ To not disturb the flow of reading, material already presented in
 
 \section{The Principle}
 
-Let us assume that the \gls{program} is represented as a set of
-\glspl{expression tree}, which we are already familiar with from
-\refAppendix{macro-expansion} (see \refSection{me-expression-tree}).
+First, the \gls{IR} code is transformed into an \gls{expression tree}, as we saw
+in \refAppendix{macro-expansion} (see \refSection{me-expression-tree} on
+\refPageOfSection{me-expression-tree}).
 %
-Let us further assume that each \gls{instruction} can be modeled similarly to a
-\gls{pattern tree}.
+Corresponding \glspl{data-flow graph}, called \glspl!{pattern tree}, are also
+built to represent the \gls{instruction} provided by the \gls{target machine}.
 %
-When there is no risk of confusion, we will refer to these as simply
-\glspl{pattern}.
+When the shape is clear from the context, they are simply called
+\glspl!{pattern}.
 %
-We also say that the set of all \glspl{pattern} available during tree covering
-constitute the \gls{pattern set}.
+The set of \glspl{pattern} for a particular \gls{target machine} constitute a
+\gls!{pattern set}.
+
+The \gls{matching} problem can be reduced to finding all instances where a
+\gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to the
+\gls{expression tree}.
 %
-The task of \gls{instruction selection} can then be reduced to finding a subset
-of the \gls{pattern set} such that every \gls{node} in the \gls{expression tree}
-is \emph{covered} by at least one \gls{pattern}.
+Each such instance is called a \gls!{match}, and the set of all \glspl{match}
+constitute a \gls!{match set}.
 %
-Here we see clearly how \gls{pattern matching} and \gls{pattern selection}
-constitute two separate problems in \gls{instruction selection}.
+Hence, in this context the subproblem is referred to as the \gls!{pattern
+  matching}[ problem].
+
+Having found the \gls{match set}, the \gls{selection} problem -- which in this
+context is referred to as the \gls!{pattern selection}[ problem] -- can be
+reduced to selecting a set of \glspl{match} that \gls{cover}[s] the
+\gls{expression tree}.
 %
-In the former we need to find which \glspl{pattern} are applicable for a given
-\gls{expression tree} and where they are applicable.
+A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
+$G$ if every \gls{node} in the \gls{expression tree} appears in exactly one
+match from~$C$.
 %
-We call each such instance a \gls!{match}, and there may exist multiple
-\glspl{match} for the same \gls{pattern} and \gls{expression tree}.
-%
-In the latter problem we then select from these \glspl{match} a subset which
-results in a valid and efficient cover of the \gls{expression tree}.
-%
+Such a subset is called a \gls!{cover}, and examples are shown in
+\refFigure{p-match-sel-example}.
+
+\begin{filecontents*}{p-match-sel-example.c}
+x = A[i + 1];
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{p-match-sel-example-c}}%
+                {%
+                  \begin{lstpage}{2.6cm}%
+                    \lstinputlisting[language=c]{p-match-sel-example.c}%
+                  \end{lstpage}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Instructions. The $*s$ \mbox{notation} means ``get value at
+                  address $s$ in memory''%
+                  \labelFigure{p-match-sel-example-instrs}%
+                }{%
+                  \figureFontSize%
+                  \begin{tabular}{%
+                                   >{\instrFont{}}r@{\hspace{4pt}}%
+                                   >{$}l<{$}@{ $\leftarrow$ }%
+                                   >{$}l<{$}%
+                                 }
+                    \toprule
+                    mv     & r & \mathit{int}\\
+                    add    & r & s + t\\
+                    mul    & r & s \times t\\
+                    muladd & r & s \times t + u\\
+                    load   & r & *s\\
+                    maload & r & *(s \times t + u)\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Expression tree and its matches%
+                  \labelFigure{p-match-sel-example-tree}%
+                }{%
+                  \input{figures/tree-covering/p-match-sel-example-tree}%
+                }
+
+  \caption[Example of the pattern matching and selection problem]%
+          {%
+            Example demonstrating the pattern matching and selection problem for
+            a program that loads a value from integer array \irVar*{A} at offset
+            \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
+            %
+            It is assumed that \irVar*{i} is
+            stored in register and that \irVar*{A} is stored in memory and that
+            an integer is 4~bytes.
+            %
+            Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
+            \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
+            a dummy pattern for covering nodes representing variables.
+            %
+            Variable assignments need not explicitly represented as nodes as
+            this information can be propagated from the root node after having
+            found a cover%
+          }
+  \labelFigure{p-match-sel-example}
+\end{figure}
+
 For most \glspl{target machine} there will be a tremendous amount of overlap
 among the \glspl{pattern}, meaning that one \gls{pattern} may match (either
 partially or fully) the \glspl{node} matched by another \gls{pattern} in the
@@ -74,7 +143,7 @@ Typically we want to use as few \glspl{pattern} as possible to cover the
 \gls{expression tree}.
 %
 This is for two reasons:
-
+%
 \begin{itemize}
   \item Striving for the smallest number of \glspl{pattern} means favoring
     larger \glspl{pattern} over smaller ones.
@@ -89,7 +158,7 @@ This is for two reasons:
     performance as well as for reducing code size.
 \end{itemize}
 
-In general, an \gls{optimal.ps} solution to the \gls{pattern selection} problem
+In general, an \gls!{optimal.ps} solution to the \gls{pattern selection} problem
 is not defined as the one that minimizes the \emph{number} of selected
 \glspl{pattern}, but as the one that minimizes the \emph{total cost} of the
 selected \glspl{pattern}.
@@ -101,20 +170,13 @@ the number of \glspl{pattern} and the total cost.
 Note, however, that an \gls{optimal.ps} solution to the \gls{pattern selection}
 problem need not necessarily be an \gls{optimal.ps} solution for the final
 \gls{assembly code}.
-%
-But unlike optimal \emph{\glsshort{instruction selection}} selection, whose
-problematic definition was criticized in \refAppendix{introduction},
-\gls{optimal.ps} \emph{\glsshort{pattern selection}} selection is less
-controversial since it is clear that we will only consider the \glspl{pattern}
-currently available in the \gls{pattern set} instead of all \glspl{pattern} that
-could potentially be derived from the~\gls{instruction set}.
 
-Finding the \gls{optimal.ps} solution to a \gls{tree covering} problem is not a
-trivial task, and it becomes even less so if only certain combinations of
+Finding the \gls{optimal.ps} solution to a \gls{pattern selection} problem is
+not a trivial task, and it becomes even less so if only certain combinations of
 \glspl{pattern} are allowed.
 %
-To be sure, most of us would be hard-pressed just to come up with an efficient
-method that finds all valid \glspl{match} of the entire \gls{pattern set}.
+To be sure, most would be hard-pressed just to come up with an efficient method
+that finds all valid \glspl{match} of the entire \gls{pattern set}.
 %
 We therefore begin by exploring the first methods that address the \gls{pattern
   matching} problem, but do not necessarily address the \gls{pattern selection}
