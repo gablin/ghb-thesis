@@ -1998,13 +1998,9 @@ the \glspl{operation} may belong to different \glspl{block}.
 %
 For the example above, this results in the \gls{SSA graph} shown in
 \refFigure{sea-of-nodes-example-ssa-graph}.
-
+%
 Since \glspl{operation} are not pre-assigned to specific \glspl{block}, the same
 \gls{IR} can be used for performing \gls{global code motion}.
-%
-If an \gls{operation} should not be allowed to be moved to another \gls{block}
--- like with \glspl{phi-function} and returns -- then an \gls{edge} can be used
-to connect the \gls{operation} with its original \gls{block} placement.
 
 
 \paragraph{Capturing Both Data And Control Flow}
