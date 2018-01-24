@@ -1,0 +1,30 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/trellis-example-styles}%
+\begin{tikzpicture}[%
+    value node/.style={%
+      computation node,
+    },
+  ]
+
+  % Graph
+  \node [computation node] (sub1) {\nSub};
+  \node [computation node, position=-135 degrees from sub1] (sub2) {\nSub};
+  \node [value node, position=-45 degrees from sub1] (c) {\nVar{c}};
+  \node [computation node, below=of sub2] (mul) {\nMul};
+  \node [value node, position=-135 degrees from mul] (a) {\nVar{a}};
+  \node [value node, position=- 45 degrees from mul] (b) {\nVar{b}};
+  \begin{scope}[data flow]
+    \draw (a) -- (mul);
+    \draw (b) -- (mul);
+    \draw (mul) -- (sub2);
+    \draw (sub2) -- (sub1);
+    \draw (c) -- (sub1);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%

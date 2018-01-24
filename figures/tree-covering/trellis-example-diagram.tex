@@ -1,0 +1,197 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/tree-covering/trellis-example-styles}%
+\def\drawTrellisNode#1#2{%
+  \matrix (#1) [ampersand replacement=\&, matrix of nodes, nodes={ova cell},
+                nodes in empty cells, ova matrix style, #2] {
+    \& \& \& \& \\
+  };
+  \begin{pgfonlayer}{b2}
+    \node [matrix wrapper, fit=(#1)] (#1 wrapper) {};
+  \end{pgfonlayer}
+}%
+\def\makeJoinCoordinates#1#2{%
+  \let\matrixcontent\empty
+  \foreach \i in {1,...,#2} {
+    \expandafter\gappto\expandafter\matrixcontent{ \& }%
+  }
+  \matrix (#1-j) [ampersand replacement=\&, matrix of nodes,
+                  nodes in empty cells,
+                  nodes={minimum size=0, inner sep=0, outer sep=0},
+                  join matrix style, below=of #1] {
+    \matrixcontent \\
+  };
+}%
+\def\connectSingle#1#2{%
+  \draw (#1.north) -- (#2.south);
+}%
+\def\connectPair#1#2#3#4{%
+  \draw (#1.north) -- (#3-j-1-#4);
+  \draw (#2.north) -- (#3-j-1-#4);
+  \draw (#3-j-1-#4) -- (#3);
+}%
+\pgfdeclarelayer{b2}%
+\pgfdeclarelayer{b1}%
+\pgfsetlayers{b2,b1,main}%
+\begin{tikzpicture}[
+    node/.append style={%
+      node distance=0.6\nodeDist,
+    },
+    ova matrix style/.style={%
+      column sep=3mm,
+      node distance=20mm,
+    },
+    matrix wrapper/.style={%
+      draw,
+      line width=\normalLineWidth,
+      minimum size=0,
+      inner sep=1mm,
+      outer sep=0,
+    },
+    join matrix style/.style={%
+      column sep=2.5pt,
+      node distance=4mm,
+    },
+    ova cell/.style={%
+      draw,
+      fill=black,
+      minimum size=1mm,
+      inner sep=0,
+      outer sep=0,
+    },
+    path/.style={%
+      -,
+      draw=shade2,
+    },
+    optimal path/.style={%
+      path,
+      draw=black,
+      very thick,
+    },
+    selected rule/.style={%
+      node distance=0,
+    },
+    data location/.style={%
+      node distance=2.5mm,
+    },
+    ova label/.style={%
+      node distance=3.5mm,
+    },
+  ]
+
+  % Diagram
+  \drawTrellisNode{n1}{}
+  \drawTrellisNode{n2}{position=-130 degrees from n1 wrapper}
+  \drawTrellisNode{n3}{position=-50  degrees from n1 wrapper}
+  \drawTrellisNode{n4}{below=of n2 wrapper}
+  \drawTrellisNode{n5}{below=of n3 wrapper}
+  \drawTrellisNode{n6}{position=-130 degrees from n4 wrapper}
+  \drawTrellisNode{n7}{position=-50  degrees from n4 wrapper}
+  \drawTrellisNode{n8}{below=of n6 wrapper}
+  \drawTrellisNode{n9}{below=of n7 wrapper}
+
+  \makeJoinCoordinates{n4-1-1}{9}
+  \makeJoinCoordinates{n4-1-3}{9}
+  \makeJoinCoordinates{n4-1-5}{9}
+  \makeJoinCoordinates{n1-1-1}{4}
+  \makeJoinCoordinates{n1-1-2}{2}
+  \makeJoinCoordinates{n1-1-3}{4}
+  \makeJoinCoordinates{n1-1-5}{4}
+
+  \begin{pgfonlayer}{b1}
+    \begin{scope}[path]
+      % Variable transfer nodes
+      \foreach \i in {2, ..., 5} {
+        \connectSingle{n5-1-1}{n3-1-\i}
+      }
+      \foreach \i in {1, 2, 4, 5} {
+        \connectSingle{n8-1-1}{n6-1-\i}
+      }
+      \foreach \i in {1, 2, 3, 5} {
+        \connectSingle{n9-1-1}{n7-1-\i}
+      }
+
+      % Multiply node
+      \foreach \i in {1,...,3} {
+        \pgfmathtruncatemacro{\skipTwo}{1 + 2*(\i-1)}
+
+        \foreach \j in {1, 3, 5} {
+          \connectPair{n6-1-1}{n7-1-\skipTwo}{n4-1-\j}{\i}
+        }
+
+        \connectPair{n6-1-2}{n7-1-5}{n4-1-\skipTwo}{4}
+
+        \connectPair{n6-1-3}{n7-1-1}{n4-1-\skipTwo}{5}
+
+        \connectPair{n6-1-4}{n7-1-3}{n4-1-\skipTwo}{7}
+        \connectPair{n6-1-5}{n7-1-1}{n4-1-\skipTwo}{8}
+        \connectPair{n6-1-5}{n7-1-2}{n4-1-\skipTwo}{9}
+      }
+      \foreach \i in {1, 5} {
+        \connectPair{n6-1-3}{n7-1-4}{n4-1-\i}{6}
+      }
+
+      % Unary negate node
+      \foreach \i in {1, 2, 3, 5} {
+        \connectSingle{n4-1-1}{n2-1-\i}
+      }
+      \connectSingle{n4-1-2}{n2-1-2}
+      \foreach \i in {1, 5} {
+        \connectSingle{n4-1-3}{n2-1-\i}
+      }
+
+      % Subtract node
+      \foreach \i in {1, 3, 5} {
+        \connectPair{n2-1-1}{n3-1-1}{n1-1-\i}{1}
+        \connectPair{n2-1-1}{n3-1-5}{n1-1-\i}{2}
+        \connectPair{n2-1-3}{n3-1-4}{n1-1-\i}{3}
+      }
+      \foreach \i in {3, 5} {
+        \connectPair{n2-1-3}{n3-1-1}{n1-1-\i}{4}
+      }
+      \connectPair{n2-1-1}{n3-1-1}{n1-1-2}{1}
+      \connectPair{n2-1-2}{n3-1-1}{n1-1-2}{2}
+
+      % Optimal path selection
+      \begin{scope}[optimal path]
+        \connectSingle{n5-1-1}{n3-1-1}
+        \connectSingle{n8-1-1}{n6-1-3}
+        \connectSingle{n9-1-1}{n7-1-4}
+        \connectSingle{n4-1-3}{n2-1-3}
+        \connectPair{n6-1-3}{n7-1-4}{n4-1-3}{6}
+        \connectPair{n2-1-3}{n3-1-1}{n1-1-1}{4}
+      \end{scope}
+    \end{scope}
+  \end{pgfonlayer}
+
+  % Annotations
+  \node [data location, below=of n5-1-1] {\cVar{m}};
+  \node [data location, below=of n5-1-2] {\cVar{r}[1]};
+  \node [data location, below=of n5-1-3] {\cVar{r}[1]};
+  \node [data location, below=of n5-1-4] {\cVar{r}[2]};
+  \node [data location, below=of n5-1-5] {\cVar{r}[2]};
+  \node [ova label, below=of n5 wrapper] {OVA};
+  \node [node, right=of n8 wrapper] {\nVar{a}};
+  \node [node, right=of n9 wrapper] {\nVar{b}};
+  \node [node, left=of n5 wrapper]  {\nVar{c}};
+  \node [node, left=of n4 wrapper]  {\nMul};
+  \node [node, left=of n2 wrapper]  {\nSub};
+  \node [node, left=of n1 wrapper]  {\nSub};
+  \node [selected rule, xshift=4mm] at ($(n8 wrapper) !.5! (n6 wrapper)$) {5};
+  \node [selected rule, xshift=4mm] at ($(n9 wrapper) !.5! (n7 wrapper)$) {6};
+  \node [selected rule, xshift=-14mm] at ($(n4 wrapper) !.5! (n6 wrapper)$) {1};
+  \node [selected rule, xshift=-15mm] at ($(n2 wrapper) !.5! (n4 wrapper)$) {4};
+  \node [selected rule, left=of $(n1 wrapper) !.5! (n2 wrapper)$, xshift=-10mm]
+        {%
+          \begin{tabular}{c}
+            Instructions \\
+            3 and 7 \\
+          \end{tabular}%
+        };
+\end{tikzpicture}%
+\endgroup%

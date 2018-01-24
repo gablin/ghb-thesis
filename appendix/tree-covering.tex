@@ -4505,49 +4505,64 @@ the use of \glspl{trellis diagram}.
 A \gls!{trellis diagram} is a graph where each \gls{node} consists of an
 \gls!{OVA}.
 %
+\def\mTL{\mathit{TL}}%
+\def\mRA{\mathit{RA}}%
+%
 An element in an \gls{OVA} represents that the data is stored either in
 memory~(\cVar*{m}) or in a particular \gls{register}~(\cVar*{r}[x]), and its
 value indicates the lowest accumulated cost from the \glspl{leaf} to the
 \gls{node}.
 %
+An example is shown in \refTable{ova-example}, where $\mTL$ denotes the target
+location of the data produced at a given \gls{node}, and $\mRA$ denotes the set
+of \glspl{register} that may be used when producing the data.
+%
+\begin{table}
+  \figureFont\figureFontSize%
+  \begin{displaymath}
+    \begin{array}{c}
+      \toprule
+        \begin{array}{@{}cccccc@{}}
+              \mathtabhead{i}
+            & \text{0}
+            & \text{1}
+            & \text{2}
+            & \text{3}
+            & \text{4} \\
+          \cline{2-6}
+              \text{\tabhead OVA}
+            & \multicolumn{1}{|m{10mm}}{}
+            & \multicolumn{1}{|m{10mm}}{}
+            & \multicolumn{1}{|m{10mm}}{}
+            & \multicolumn{1}{|m{10mm}}{}
+            & \multicolumn{1}{|m{10mm}|}{} \\
+          \cline{2-6}
+              \mathtabhead{\mTL}
+            & \text{\cVar{m}}
+            & \text{\cVar{r}[1]}
+            & \text{\cVar{r}[1]}
+            & \text{\cVar{r}[2]}
+            & \text{\cVar{r}[2]} \\
+              \mathtabhead{\mRA}
+            & \mSet{\text{\cVar{r}[1]}, \text{\cVar{r}[2]}}
+            & \mSet{\text{\cVar{r}[1]}}
+            & \mSet{\text{\cVar{r}[1]}, \text{\cVar{r}[2]}}
+            & \mSet{\text{\cVar{r}[2]}}
+            & \mSet{\text{\cVar{r}[1]}, \text{\cVar{r}[2]}}
+        \end{array} \\
+      \bottomrule
+    \end{array}
+  \end{displaymath}
+
+  \caption[Example of an OVA]%
+          {%
+            Example of an OVA for a target machine with two registers
+            \cVar*{r}[1] and \cVar*{r}[2]~\cite{Wess:1992}%
+          }
+  \labelTable{ova-example}
+\end{table}
+%
 The cost is computed similarly as in the \gls{DP}-based techniques.
-%
-For example, let us assume a \gls{target machine} with two \glspl{register}
-\cVar*{r}[1] and \cVar*{r}[2] yields the following \gls{OVA}
-%
-\def\mTL{\text{TL}}
-\def\mRA{\text{RA}}
-%
-%\begin{displaymath}
-%  \small
-%  \begin{array}{l@{~~}|*{5}{m{1cm}|}}
-%    \multicolumn{1}{c}{i}
-%      & \multicolumn{1}{c}{0}
-%      & \multicolumn{1}{c}{1}
-%      & \multicolumn{1}{c}{2}
-%      & \multicolumn{1}{c}{3}
-%      & \multicolumn{1}{c}{4}\\
-%    \cline{2-6}
-%    \text{\glsentrytext{OVA}} &   &   &   &   &\\
-%    \cline{2-6}
-%    \multicolumn{1}{c}{\mTL}
-%      & \multicolumn{1}{c}{\text{\dT{m}}}
-%      & \multicolumn{1}{c}{\text{\dT{r}[1]}}
-%      & \multicolumn{1}{c}{\text{\dT{r}[1]}}
-%      & \multicolumn{1}{c}{\text{\dT{r}[2]}}
-%      & \multicolumn{1}{c}{\text{\dT{r}[2]}}\\
-%    \multicolumn{1}{c}{\mRA}
-%      & \multicolumn{1}{c}{\{\text{\dT{r}[1]}, \text{\dT{r}[2]}\}}
-%      & \multicolumn{1}{c}{\{\text{\dT{r}[1]}\}}
-%      & \multicolumn{1}{c}{\{\text{\dT{r}[1]}, \text{\dT{r}[2]}\}}
-%      & \multicolumn{1}{c}{\{\text{\dT{r}[2]}\}}
-%      & \multicolumn{1}{c}{\{\text{\dT{r}[1]}, \text{\dT{r}[2]}\}}\\
-%  \end{array}
-%\end{displaymath}
-%
-where $\mTL$ denotes the target location of the data produced at this
-\gls{node}, and $\mRA$ denotes the set of \glspl{register} that may be used when
-producing the data.
 %
 To facilitate the following discussion, let us denote by \mbox{$\mTL(i, n)$} and
 \mbox{$\mRA(i, n)$} the target location and set of available \glspl{register},
@@ -4580,79 +4595,97 @@ implements the operation of~$o$, stores the result in \mbox{$\mTL(k, o)$}, takes
 as input the two values stored in \mbox{$\mTL(i, n)$} and \mbox{$\mTL(j, m)$},
 and exclusively uses the \glspl{register} in \mbox{$\mRA(k, o)$}.
 %
-This can be generalized to \mbox{$n$-ary} operations, and a complete example is
-given in \refFigure{trellis-example}.
+This can be generalized to \mbox{$n$-ary} operations.
+%
+An example is given in \refFigure{trellis-example}.
 
-%\begin{figure}[t]
-%  \begin{minipage}{3.9cm}
-%    \begin{subfigure}[expression tree][trellis-example-exp-tree]
-%      \begin{minipage}{\textwidth}
-%        \centering%
-%        \input{\figurePath/tree-covering/trellis-exp-example}
-%      \end{minipage}
-%    \end{subfigure}
-%
-%    \vspace{\betweensubfigures}
-%
-%    \begin{subfigure}[An instruction set where all instructions are assumed to
-%                      have equal cost.
-%%
-%Note that this is not an instruction set
-%                      grammar]%
-%                     [trellis-example-instruction-set]
-%      \begin{minipage}{\textwidth}
-%        \centering%
-%        \begin{framedBoxWI}{3cm}
-%          \centering%
-%          \mathDisplayFontSize\figureFontStyle%
-%          \begin{tabular}{r@{~~}|@{~~}r@{$\;\; \leftarrow \;\;$}l}
-%               & \multicolumn{2}{c}{INSTRUCTION}\\
-%             \hline
-%             % LAYOUT FIX: prevent first row from touching the line above
-%             \rule{0pt}{2ex}%
-%             1 & \dT{r}[1] & \dT{r}[1] \tT{$*$} \dT{r}[2]\\
-%             2 & \dT{r}[1] & \dT{r}[1] \tT{$*$} \dT{m}\\
-%             3 & \dT{r}[1] & \dT{r}[1] \tT{$-$} \dT{m}\\
-%             4 & \dT{r}[1] &            \tT{$-$}\dT{r}[1]\\
-%             5 & \dT{r}[1] &                       \dT{m}\\
-%             6 & \dT{r}[2] &                       \dT{m}\\
-%             7 & \dT{m}    &                    \dT{r}[1]\\
-%             8 & \dT{m}    &                    \dT{r}[2]\\
-%             9 & \dT{r}[2] &                    \dT{r}[1]\\
-%            10 & \dT{r}[1] &                    \dT{r}[2]\\
-%          \end{tabular}
-%        \end{framedBoxWI}
-%      \end{minipage}%
-%    \end{subfigure}
-%  \end{minipage}%
-%  \hfill%
-%  \begin{minipage}{7cm}
-%    \begin{subfigure}[Resulting trellis diagram.
-%%
-%Gray edges represent available
-%                      paths, and black edges indicate the (selected) optimal
-%                      path]%
-%                     [trellis-example-diagram]
-%      \begin{minipage}{\textwidth}
-%        \centering%
-%        \input{\figurePath/tree-covering/trellis-diagram-example}
-%      \end{minipage}
-%    \end{subfigure}
-%  \end{minipage}
-%
-%  \figCaption[Trellis diagram example]%
-%    {A trellis diagram corresponding to an expression \mbox{$-(\dataTerm{a} *
-%        \dataTerm{b})-\dataTerm{c}$} and a two-register target machine.
-%%
-%The
-%      variables~\dataTerm{a}, \dataTerm{b}, and~\dataTerm{c} are assumed to be
-%      initially stored in memory.
-%%
-%Note that two instructions are selected for
-%      the root as the result is required to be stored in memory}%
-%    [Wess:1992]
-%    \labelFigure{trellis-example}
-%\end{figure}
+\begin{figure}
+  \begin{minipage}[b]{40mm}
+    \centering%
+    \subcaptionbox{Expression tree\labelFigure{trellis-example-expr-tree}}%
+                  [\linewidth]%
+                  {%
+                    \input{figures/tree-covering/trellis-example-expr-tree}%
+                  }
+
+    \vspace{\betweensubfigures}
+
+    \subcaptionbox{%
+                    Instruction set.
+                    %
+                    All instructions are assumed to have equal cost.
+                    %
+                    Note that this is not a machine grammar%
+                    \labelFigure{trellis-example-instruction-set}%
+                  }%
+                  [\linewidth]%
+                  {%
+                    \begin{tabular}{rr@{$\; \leftarrow \;$}l}
+                      \toprule
+                           \tabhead \#
+                         & \multicolumn{2}{c}{\tabhead production}\\
+                      \midrule
+                          1
+                        & \cVar{r}[1]
+                        & \cCode{\cVar{r}[1] \irMulText{} \cVar{r}[2]}\\
+                          2
+                        & \cVar{r}[1]
+                        & \cCode{\cVar{r}[1] \irMulText{} \cVar{m}}\\
+                          3
+                        & \cVar{r}[1]
+                        & \cCode{\cVar{r}[1] \irSubText{} \cVar{m}}\\
+                          4
+                        & \cVar{r}[1]
+                        & \cCode{\irSubText{} \cVar{r}[1]}\\
+                          5
+                        & \cVar{r}[1]
+                        & \cVar{m}\\
+                          6
+                        & \cVar{r}[2]
+                        & \cVar{m}\\
+                          7
+                        & \cVar{m}
+                        & \cVar{r}[1]\\
+                          8
+                        & \cVar{m}
+                        & \cVar{r}[2]\\
+                          9
+                        & \cVar{r}[2]
+                        & \cVar{r}[1]\\
+                          10
+                        & \cVar{r}[1]
+                        & \cVar{r}[2]\\
+                      \bottomrule
+                    \end{tabular}%
+                  }%
+  \end{minipage}%
+  \hfill%
+  \subcaptionbox{%
+                  Trellis diagram.
+                  %
+                  Gray edges represent available paths, and black edges indicate
+                  the (selected) optimal path%
+                  \labelFigure{trellis-example-diagram}%
+                }%
+                [78mm]%
+                {%
+                  \input{figures/tree-covering/trellis-example-diagram}%
+                }
+
+  \caption[Example of Trellis diagram]%
+          {%
+            A trellis diagram corresponding to an expression
+            \mbox{\cCode{\irSubText{}(a \irMulText{} b) \irSubText{} c}} for a
+            two-register target machine.
+            %
+            The variables~\cVar{a}, \cVar{b}, and~\cVar{c} are assumed to
+            initially be stored in memory.
+            %
+            Note that two instructions are selected for the root as the result
+            is also required to be stored in memory~\cite{Wess:1992}%
+          }
+  \labelFigure{trellis-example}
+\end{figure}
 
 The \glspl{edge} in the \gls{trellis diagram} thus correspond to the possible
 combinations of \glspl{instruction} and \glspl{register} that implement a
@@ -4690,49 +4723,28 @@ effective.\!%
 }
 
 
-\section{Summary}
+\section{Restrictions That Come with Trees}
 
-In this appendix, we have looked at numerous techniques that are based on the
-\gls{principle} of \gls{tree covering}.
-%
-In contrast to \gls{macro expansion}, \gls{tree covering} enables use of more
-complex \glspl{pattern}, allowing a wider range of \glspl{instruction} to be
-selected.
-%
-By applying \glsdesc{DP}, \gls{optimal.ps} covers can be found in linear time,
-which further improve the quality of the generated \gls{assembly code}, and
-several techniques also incorporate \gls{offline cost analysis} into the
-\gls{instruction selector} generator to reduce compilation time.
-%
-In other words, this kind of implementation is very fast and efficient while
-also supporting a wide array of \glspl{target machine}.
-%
-Consequently, \gls{tree covering} has become the most known -- although perhaps
-no longer the most applied -- \gls{principle} of \gls{instruction selection}.
-%
-However, restricting oneself to \glspl{tree} has several inherent disadvantages.
+While \gls{tree covering} enables use of more complex \glspl{pattern} compared
+to \gls{macro expansion}, \gls{tree covering} has several disadvantages of its
+own.
 
+\begin{filecontents*}{tree-limitation-example.c}
+x = a + b
+y = x + x
+\end{filecontents*}
+%
+\begin{inParFigure}{17mm}[r]
+  \centering
 
-\subsection{Restrictions That Come with Trees}
+  % LAYOUT FIX:
+  % Put figure in the middle of paragraph
+  \vspace{1.25\baselineskip}
 
-%\begin{inParFigure}{3cm}[r]%
-%  \centering%
-%
-%  % LAYOUT FIX:
-%  % Create a bit of space below
-%  \vspace{0.1\baselineskip}%
-%
-%  \begin{framedBoxWI}{0.95\textwidth}[0.7]
-%    \codeFontStyle%
-%    x = a + b;\\
-%    y = x + x;
-%  \end{framedBoxWI}
-%
-%  % LAYOUT FIX:
-%  % Create a bit of space below
-%%  \vspace{0.5\baselineskip}%
-%\end{inParFigure}%
-%\noindent
+  \begin{lstpage}{\linewidth}%
+    \lstinputlisting{tree-limitation-example.c}%
+  \end{lstpage}%
+\end{inParFigure}%
 %
 The first disadvantage of \glspl{tree} has to do with expression modeling.
 %
@@ -4754,7 +4766,12 @@ the following workarounds:
       \irCode*{$=$ y $+$ x x}.
     \end{center}
 \end{enumerate}
-%
+
+% LAYOUT FIX:
+% The lower paragraph cannot be joined with the one above or else the in-par
+% figure will interfere (for some reason)
+
+\noindent
 The first approach leads to additional \glspl{instruction} in the \gls{assembly
   code}, while the second hinders the use of more complex \glspl{instruction}.
 %
@@ -4791,6 +4808,28 @@ improves code quality over the \gls{principle} of pure \gls{macro expansion}
 (ignoring peephole optimization, that is), the inherent restrictions of
 \glspl{tree} prevent exploitation of many \glspl{instruction} provided by modern
 \glspl{target machine}.
+
+
+\section{Summary}
+
+In this appendix, we have looked at numerous techniques that are based on the
+\gls{principle} of \gls{tree covering}.
 %
-In the next appendix we will look at a more general \gls{principle} that
-addresses some of these issues.
+In contrast to \gls{macro expansion}, \gls{tree covering} enables use of more
+complex \glspl{pattern}, allowing a wider range of \glspl{instruction} to be
+selected.
+%
+By applying \glsdesc{DP}, \gls{optimal.ps} covers can be found in linear time,
+which further improve the quality of the generated \gls{assembly code}, and
+several techniques also incorporate \gls{offline cost analysis} into the
+\gls{instruction selector} generator to reduce compilation time.
+%
+In other words, this kind of implementation is very fast and efficient while
+also supporting a wide array of \glspl{target machine}.
+%
+Consequently, \gls{tree covering} has become the most known -- although perhaps
+no longer the most applied -- \gls{principle} of \gls{instruction selection}.
+
+Restricting oneself to \glspl{tree}, however, has several inherent
+disadvantages, and in the next appendix we will look at a more general
+\gls{principle} that addresses some of these issues.
