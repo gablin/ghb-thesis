@@ -1746,14 +1746,14 @@ same \gls{constraint model}, and \citeauthor{Beg:2013} also applied
 in order to improve solving.
 
 
-\subsection{Limitations of DAG covering}
+\subsection{Limitations of DAG Covering}
 
 Although \glspl{DAG covering} addresses the issue of whether to \glsshort{edge
   splitting} or \glsshort{node duplication}[e] common subexpressions within a
 \gls{block}, the problem still remains for expressions that are spread across
 multiple \glspl{block}.
 %
-To fully address this problem, one must resort to \glspl{graph covering}.
+To fully address this problem, one must resort to \gls{graph covering}.
 
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
