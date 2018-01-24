@@ -2203,6 +2203,125 @@ In \refAppendix{graph-covering} we will see another design that also models the
 entire processor but applies a more powerful technique.
 
 
+\section{Limitations of DAG Covering}
+\labelSection{dc-limitations}
+
+Although \glspl{DAG covering} addresses the issue of whether to \glsshort{edge
+  splitting} or \glsshort{node duplication}[e] common subexpressions within a
+\gls{block}, the problem still remains for expressions that are spread across
+multiple \glspl{block}.
+%
+To fully address this problem, one must resort to \gls{graph covering}.
+
+\begin{filecontents*}{block-dags-limit-example.c}
+int f(int* A, int* B, int N) {
+  int s = 0;
+  for (int i = 0; i < N; i++) {
+    s = s + A[i] * B[i];
+  }
+  return s;
+}
+\end{filecontents*}
+
+\begin{figure}
+  \centering%
+  \subcaptionbox{C code\labelFigure{block-dags-limit-example-2-c}}%
+                {%
+                  \begin{lstpage}{56mm}%
+                    \lstinputlisting[language=c]{block-dags-limit-example.c}%
+                  \end{lstpage}%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Block graphs involving variable~\irVar*{s}.
+                  %
+                  For brevity, the subtrees concerning \irCode*{A[i]}
+                  and \irCode*{B[i]} are not included%
+                  \labelFigure{block-dags-limit-dags}%
+                }%
+                [60mm]%
+                {%
+                  \input{figures/dag-covering/block-dags-limit-example-dags}%
+                }
+
+  \vspace{\betweensubfigures}
+
+  \subcaptionbox%
+    {%
+      Rules.
+      %
+      For brevity, the actions are not included.
+      %
+      $\mNT{Null}$ is a dummy nonterminal since \irCode*{\irRetText} does not
+      return anything, yet all productions must have a result.
+      %
+      All rules are assumed to have equal cost%
+    }%
+    [\textwidth]%
+    {%
+      \figureFontSize%
+      \newcolumntype{L}{@{}l@{}}%
+      \begin{tabular}{r@{ $\rightarrow$ }l@{\hspace{3em}}r@{ $\rightarrow$ }lc}
+        \toprule
+        \multicolumn{5}{c}{\tabhead rules}\\
+        \midrule
+        $\mNT{Reg}$ & \irCode{const}
+          & $\mNT{SReg}$
+          & \multicolumn{2}{L}{%
+              $\irCode{\irMulText} \; \mNT{Reg} \; \mNT{Reg}$%
+            }\\
+        $\mNT{SReg}$ & \irCode{const}
+          & $\mNT{Null}$ & \multicolumn{2}{L}{%
+              $\irCode{\irRetText} \; \mNT{Reg}$%
+            }\\
+        $\mNT{Reg}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{Reg}$
+          & $\mNT{Reg}$  & $\mNT{SReg}$ & $(r \ll 1)$\\
+        $\mNT{SReg}$ & $\irCode{\irAddText} \; \mNT{SReg} \; \mNT{SReg}$
+          & $\mNT{SReg}$ & $\mNT{Reg}$  & $(r \gg 1)$\\
+        \bottomrule
+      \end{tabular}%
+    }
+
+  \caption{Example illustrating the limitation of block DAGs}
+  \labelFigure{block-dags-limit-example-2}
+\end{figure}
+
+This also applies to other situations where decisions made for one \gls{block}
+can inhibit subsequent decisions for other \glspl{block}, such as enforcing
+specific storage locations or value modes.
+%
+For example, \refFigure{block-dags-limit-example-2} shows a \gls{function} that
+multiplies the elements of two arrays and sums the results.
+%
+Assume that the arrays consist of fixed-point values.
+%
+For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
+of two fixed-point values return a value that is shifted one bit to the left.
+%
+For such \glspl{target machine}, both the value~\irCode*{0} and the accumulator
+\gls{variable}~\irVar*{s} should be in shifted mode throughout the entire
+\gls{function}, and only restored into normal mode upon return.
+%
+Otherwise the accumulated value would be needlessly shifted back and forth
+within the loop.
+%
+Achieving this, however, is difficult when limited to covering only a single
+\gls{block DAG} at a time.
+%
+Assume for example that the function had no multiplication.
+%
+In that case, deciding to load value~\irCode*{0} in shifted mode would instead
+lower code quality as the value would needlessly have to be shifted back before
+returning, which takes an extra \gls{instruction}.
+
+Lastly, most of these approaches are restricted to tree-shaped \glspl{pattern},
+meaning they only support \gls{single-output.ic} \glspl{instruction}.
+%
+Many \glspl{instruction set}, however, contain \gls{multi-output.ic}
+\glspl{instruction} and require \gls{DAG}-shaped \glspl{pattern}, which violate
+underlying assumptions made by many of the aforementioned approaches.
+
+
 \section{Summary}
 
 In this appendix, we have investigated several methods that rely on the
