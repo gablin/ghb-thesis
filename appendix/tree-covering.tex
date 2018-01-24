@@ -115,8 +115,8 @@ x = A[i + 1];
   \caption[Example of the pattern matching and selection problem]%
           {%
             Example demonstrating the pattern matching and selection problem for
-            a program that loads a value from integer array \irVar*{A} at offset
-            \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
+            a function that loads a value from integer array \irVar*{A} at
+            offset \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
             %
             It is assumed that \irVar*{i} is
             stored in register and that \irVar*{A} is stored in memory and that
@@ -199,7 +199,7 @@ We will briefly cover both in this dissertation, as described by
 dissertation.
 
 To begin with, \citeauthor{Wasilew:1972} devised an \glsdesc{IR} where the
-\glspl{program} are represented using \gls!{postfix notation} (or
+\glspl{function} are represented using \gls!{postfix notation} (or
 \gls!{reverse.pn}[ \gls{Polish notation}] as this is also called; we will
 discuss more on \gls{Polish notation} in \refSection{tc-glanville-graham}).
 %
@@ -227,11 +227,11 @@ OR m MAJ 4FCOID 4FCOIN if-equal2 1 J + transfer
   \end{lstpage}
 
   \caption[%
-            Example of a program expressed using \citeauthor{Wasilew:1972}'s
+            Example of a function expressed using \citeauthor{Wasilew:1972}'s
             IR%
           ]%
           {%
-            Example of a program expressed using \citeauthor{Wasilew:1972}'s
+            Example of a function expressed using \citeauthor{Wasilew:1972}'s
             IR~\cite{Lunell:1983}%
           }
   \labelFigure{wasilew-code-example}
@@ -243,9 +243,9 @@ transformed into \gls{IR} code as part of compilation.
 The \glspl{instruction} of the \gls{target machine} are described in a table,
 where each \gls{instruction} comprises execution time and code size information,
 a string constituting the \gls{assembly code}, and the \gls{pattern} to be
-matched against the \gls{program}.
+matched against the \gls{function}.
 %
-For each line in the \gls{program}, \gls{pattern matching} is done starting at a
+For each line in the \gls{function}, \gls{pattern matching} is done starting at a
 \gls{leaf} in the \gls{tree} corresponding to the current line.
 %
 For this \gls{subtree}, all \glspl{match} are found by comparing it against all
@@ -491,10 +491,10 @@ Like \citeauthor{Weingart:1973}, \citeauthor{Johnson:1981} used heuristic
 %
 Without formal methods of verification there was always the risk that the
 current set of \glspl{rule} would be inadequate and potentially cause the
-\gls{compiler} to never terminate for certain \glspl{program}.
+\gls{compiler} to never terminate for certain \glspl{function}.
 %
-\textcite{Reiser:1981} also noted that the investigated version of \gls{PCC} only
-supported unary and binary \glspl{pattern} with a maximum height of~1, thus
+\textcite{Reiser:1981} also noted that the investigated version of \gls{PCC}
+only supported unary and binary \glspl{pattern} with a maximum height of~1, thus
 excluding many \glspl{instruction}, such as those with complex \glspl{addressing
   mode}.
 %
@@ -1496,7 +1496,7 @@ methods of proving the completeness of an \gls{machine grammar}.\!%
 }
 %
 The intuition behind \citeauthor{Emmelmann:1992:Testing}'s automatic prover is
-to find all \glspl{expression tree} that can appear in the \gls{program} but
+to find all \glspl{expression tree} that can appear in the \gls{function} but
 cannot be handled by the \gls{instruction selector}.
 %
 Let us denote an \gls{machine grammar} by $G$ and a \gls{grammar} describing the
@@ -1798,7 +1798,7 @@ of steps.
 %
 Hence the \gls{instruction selector} essentially keeps track of multiple
 \glspl{parse tree}, allowing it to gather enough information about the
-\gls{program} before committing to a decision that could turn out to be
+\gls{function} before committing to a decision that could turn out to be
 suboptimal.
 %
 In other words, as in the case of \citeauthor{ChristopherEtAl:1984} the design
@@ -1881,7 +1881,7 @@ The \glspl{attribute} describe various restrictions, such as which
 \glspl{register} can be used for the operands.
 %
 There is also a set of \glspl{T-operator} that the \gls{instruction selector}
-uses to perform necessary transformations of the \gls{program} -- its need will
+uses to perform necessary transformations of the \gls{function} -- its need will
 become clear as the discussion continues.
 %
 The scheme takes an \gls{AST} as expected input and then covers it following the
@@ -1925,8 +1925,8 @@ selected, followed by \gls{assembly code} emission.
 
 \citeauthor{Newcomer:1975}'s design was pioneering as its application of
 \gls{means-end analysis} made it possible to guide the process of modifying the
-\gls{program} until it could be implemented on the \gls{target machine}, without
-have to resort to target-specific mechanisms.
+\gls{function} until it could be implemented on the \gls{target machine},
+without have to resort to target-specific mechanisms.
 %
 But the design also had several significant flaws.
 %
@@ -1937,7 +1937,7 @@ Second, the \glspl{T-operator} used for modeling the \glspl{instruction} as well
 as transformations had to be constructed by hand -- a task that was far from
 trivial -- which hindered \gls{compiler} retargetability.
 %
-Third, the process of transforming the \gls{program} could end prematurely due
+Third, the process of transforming the \gls{function} could end prematurely due
 to the search space cut-off, causing the \gls{instruction selector} to fail to
 generate any \gls{assembly code} whatsoever.
 %
@@ -1953,7 +1953,7 @@ work into a more practical framework which was implemented in the \gls!{PQCC}, a
 derivation of the \gls{Bliss-11} \gls{compiler} originally written by
 \textcite{WulfEtAl:1975}.
 %
-Instead of performing the \gls{means-end analysis} as the \gls{program} is
+Instead of performing the \gls{means-end analysis} as the \gls{function} is
 compiled, their design does it as a preprocessing step when generating the
 \gls{compiler} itself -- much as with the \gls{Glanville-Graham approach}.
 
@@ -1980,9 +1980,9 @@ an \gls{instruction}, \gls{CGG} also produces a set of single-\gls{node}
 \glspl{instruction}.
 %
 The former ensures that the \gls{instruction selector} is capable of generating
-\gls{assembly code} for all \glspl{program} (since any \gls{expression tree} can
-thereby be trivially covered), while the latter reduces compilation time as it
-is quicker to match a large \gls{pattern} than many smaller ones.
+\gls{assembly code} for all \glspl{function} (since any \gls{expression tree}
+can thereby be trivially covered), while the latter reduces compilation time as
+it is quicker to match a large \gls{pattern} than many smaller ones.
 %
 To do this, \gls{CGG} uses a combination of \gls{means-end analysis} and
 heuristic \glspl{rule} which apply a set of axioms (such as \mbox{$\mNot \mNot E
@@ -2005,7 +2005,7 @@ Compared to the \gls{LR parsing}-based methods discussed previously, the design
 by \citeauthor{CattellEtAl:1979} has both advantages and disadvantages.
 %
 The main advantage is that the \glspl{instruction selector} is less at risk of
-failing to generate \gls{assembly code} for some \gls{program}.
+failing to generate \gls{assembly code} for some \gls{function}.
 %
 There is the possibility that the set of predefined \glspl{template} is
 insufficient to produce all necessary single-node \glspl{pattern}, but then
@@ -4262,7 +4262,7 @@ handwritten pass in the \gls{pattern matcher}.
 \subsection{Generating States Lazily}
 
 The two main approaches achieving \gls{optimal.ps} \gls{pattern selection} --
-those that dynamically compute the costs as the \gls{program} is compiled, and
+those that dynamically compute the costs as the \gls{function} is compiled, and
 those that rely on statically computed costs via \gls{state} tables -- both have
 their respective advantages and drawbacks.
 %
@@ -4278,13 +4278,13 @@ support \gls{grammar} \glspl{rule} with fixed costs.
 
 \subsubsection{Combining the Best of State Tables and DP}
 
-In 2006, \textcite{ErtlEtAl:2006} introduced a method that allows the \gls{state}
-tables to be generated lazily and on demand.
+In 2006, \textcite{ErtlEtAl:2006} introduced a method that allows the
+\gls{state} tables to be generated lazily and on demand.
 %
 The intuition is that instead of generating the \glspl{state} for \emph{all}
 possible \glspl{expression tree} in advance, one can get away with only
 generating the \glspl{state} needed for the \glspl{expression tree} that
-actually appear in the \gls{program}.
+actually appear in the \gls{function}.
 
 The scheme can be outlined as follows.
 %
@@ -4296,7 +4296,7 @@ Once the \glspl{state} have been generated, the \gls{subtree} is labeled and
 \glspl{pattern} are selected using the familiar table-driven techniques.
 %
 Then, if an identical \gls{subtree} is encountered elsewhere -- either in the
-same \gls{expression tree} or in another \gls{tree} of the \gls{program} -- the
+same \gls{expression tree} or in another \gls{tree} of the \gls{function} -- the
 same \glspl{state} can be reused.
 %
 This allows the cost of \gls{state} generation to be amortized as the
@@ -4350,7 +4350,7 @@ which essentially entails the specification and implementation of a mechanism
   \gamma: T(Q) \rightarrow T(Z),
 \end{displaymath}
 %
-where $T(Q)$ and $T(Z)$ denote the term algebras for expressing \glspl{program}
+where $T(Q)$ and $T(Z)$ denote the term algebras for expressing \glspl{function}
 in an intermediate language and \gls{target machine} language, respectively.
 %
 Hence $\gamma$ can be viewed as the resulting \gls{instruction selector}.
@@ -4453,7 +4453,7 @@ Similar designs were later proposed by \textcite{Borchardt:2004} and
 \subsubsection{Rewriting Strategies}
 
 In 2002, \citeauthor{BravenboerVisser:2002} presented a design where
-\gls{rule}-based \gls{program} transformation systems~\cite{Visser:2005} are
+\gls{rule}-based \gls{function} transformation systems~\cite{Visser:2005} are
 adapted to \gls{instruction selection}.
 %
 Through a system called \gls!{Stratego}~\cite{Visser:2001}, a \gls{machine

@@ -19,7 +19,8 @@ be modeled as \glspl{pattern tree}.
 %
 As these shortcomings are primarily due to the restricted use of \glspl{tree},
 we can achieve a more powerful approach to \gls{instruction selection} by
-extending \gls{tree covering} to \gls{DAG covering}.
+operating \glspl{DAG}, thereby extending \gls{tree covering} to \gls!{DAG
+  covering}.
 
 This appendix is based on material presented in
 \cite[Chap.\thinspace4]{HjortBlindell:2016:Survey} that has been adapted for
@@ -545,7 +546,7 @@ almost $10^{70}$~``implied \gls{instruction} \glspl{match}'' were found for one
 of the test cases, but it is unclear how many of them were actually useful.
 %
 Moreover, in its current form the design appears to be unpractical for
-generating \gls{assembly code} for all but very small \glspl{program}.
+generating \gls{assembly code} for all but very small \glspl{function}.
 
 
 \section{Extending Tree Covering Techniques to DAGs}
@@ -560,7 +561,7 @@ This can be achieved either by transforming the \glspl{block DAG} into
 We begin by discussing designs that apply the first technique.
 
 
-\subsection{Undagging Program DAGs}
+\subsection{Undagging Block DAGs}
 
 The simplest approach for reusing \gls{tree covering} techniques is to transform
 the \gls{block DAG} into several \glspl{expression tree}.
@@ -670,8 +671,8 @@ transformed into \glspl{expression tree} using just one method.
 
 In 2001, \textcite{SarkarEtAl:2001} developed an \gls{instruction selection}
 technique that attempts to reduce the \gls!{register pressure} -- that is, the
-number of \glspl{register} needed by the \gls{program} -- in order to facilitate
-\gls{register allocation}.\!%
+number of \glspl{register} needed by the \gls{function} -- in order to
+facilitate \gls{register allocation}.\!%
 %
 \footnote{%
   Another register-aware \gls{instruction selection} technique was developed in
@@ -1239,12 +1240,13 @@ which we will discuss in \refAppendix{conclusions}).
 The intuition behind this design is to use \glspl{echo instruction} where code
 duplication is most prominent.
 %
-To find these cases in a given \gls{program}, \citeauthor{BriskEtAl:2004} first
+To find these cases in a given \gls{function}, \citeauthor{BriskEtAl:2004} first
 enumerate all \glspl{subgraph} from the \glspl{block DAG}, and then match each
 \gls{subgraph} over the \glspl{block DAG}.
 %
 \Gls{pattern matching} is done using \gls{VF2}, which is a generic \gls{subgraph
-  isomorphism} algorithm that we will describe in \refAppendix{graph-covering}.
+  isomorphism} algorithm (see \refChapter{existing-isel-techniques-and-reps} on
+\refPageOfSection{ex-isel-rep-vf2-algorithm}).
 %
 Summing the sizes of the resulting \glspl{match set} gives a measure of code
 duplication for each \gls{subgraph}, but this value will be an overestimation as
@@ -1417,7 +1419,7 @@ architectures.
 \Gls{unate covering} was applied by \textcite{ClarkEtAl:2006} in generating
 \gls{assembly code} for acyclic computation accelerators, which can be partially
 customized in order to increase performance of the currently executed
-\gls{program}.
+\gls{function}.
 %
 Described in a paper from~2006, the \glspl{target machine} are presumably
 homogeneous enough that \glspl{implication clause} are unnecessary.
@@ -1511,7 +1513,7 @@ But the trade-off for longer compilation time is higher code quality;
 \gls{assembly code}.
 %
 In theory, optimal \gls{assembly code} can be generated, although this is in
-practice only feasible for small enough \glspl{program}.
+practice only feasible for small enough \glspl{function}.
 %
 Another much-valued feature is the ability to extend the model with additional
 \glspl{constraint} in order to support complicated \glspl{target machine}, which
@@ -1673,7 +1675,7 @@ But since this technique assumes that each individual operation of the
 \gls{SIMD.i} \glspl{instruction} is expressed as a single \gls{node} in the
 \gls{block DAG}, it is unclear whether the method can be extended to more
 complex \gls{SIMD.i} \glspl{instruction}, and whether it scales to larger
-\glspl{program}.
+\glspl{function}.
 %
 \textcite{TanakaEtAl:2003} later expanded \citeauthor{Leupers:2000:SIMD}'s work
 for selecting \gls{SIMD.i} \glspl{instruction} while also taking the cost of
@@ -1893,7 +1895,7 @@ Moreover, \citeauthor{Beg:2013} noticed only a negligible improvement (less than
   machine} (\gls{MIPS} and \gls{ARM}) were simple enough that greedy heuristics
 generate near-optimal \gls{assembly code}.
 %
-In addition, the \glspl{block DAG} of the benchmark \glspl{program} were fairly
+In addition, the \glspl{block DAG} of the benchmark \glspl{function} were fairly
 \gls{tree}-shaped~\cite{VanBeek:2014}, for which \gls{optimal.ps} code can be
 generated in linear time.
 %
@@ -2176,7 +2178,7 @@ A \gls{pattern matcher} then attempts to find \glspl{subgraph} within the
 %
 Because the \gls{CO graph} contains explicit \glspl{node} for every
 \gls{register}, a \gls{match} found on this \gls{graph} -- called a
-\gls!{version} -- is also an assignment of \gls{program} variables (and
+\gls!{version} -- is also an assignment of \gls{function} variables (and
 \glspl{temporary}) to \glspl{register}.
 %
 If a \gls{match} cannot be found (due to a lack of \glspl{register}), the
@@ -2224,15 +2226,16 @@ that \gls{optimal.ps} \gls{pattern selection} can no longer be achieved in
 linear time as it is NP-complete.
 %
 At the same time, \glspl{DAG} are not expressive enough to allow the proper
-modeling of all aspects featured in the \glspl{program} and \glspl{instruction}.
+modeling of all aspects featured in the \glspl{function} and
+\glspl{instruction}.
 %
 For example, statements such as \mbox{for loops} incur \glspl{loop} in the
-\gls{graph} representing the \gls{program}, restricting \gls{DAG covering} to
+\gls{graph} representing the \gls{function}, restricting \gls{DAG covering} to
 the scope of \glspl{block} and excluding the modeling of \gls{inter-block.ic}
 \glspl{instruction}.
 %
 Another disadvantage is that optimization opportunities for storing
-\gls{program} variables and \glspl{temporary} in different forms and at
+\gls{function} variables and \glspl{temporary} in different forms and at
 different locations across the \gls{function} are forfeited.
 
 In the next appendix, we will discuss the last and most general \gls{principle}

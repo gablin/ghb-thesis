@@ -186,7 +186,7 @@ was used in a \gls{PL/1} \gls{compiler} for generating \gls{assembly code} from
 that are always shaped like \glspl{tree}.
 %
 The most important feature of these \glspl{tree} is that only a syntactically
-valid \gls{program} can be transformed into an~\gls{AST}, which simplifies the
+valid \gls{function} can be transformed into an~\gls{AST}, which simplifies the
 task of the \gls{instruction selector}. However, the basic \gls{principle} of
 \gls{macro expansion} remains the same.
 
@@ -488,7 +488,7 @@ and portable \gls{C}~\glspl{compiler}, where the \gls{target machine}-dependent
 parts could be automatically generated from a \gls{machine description}.
 %
 The design is similar to \citeauthor{Miller:1971}'s in that the \gls{frontend}
-first transforms the \gls{program} into an equivalent representation for an
+first transforms the \gls{function} into an equivalent representation for an
 abstract machine.
 %
 In \citeauthor{Snyder:1975}'s design this representation consists of
@@ -514,7 +514,7 @@ recognized the need for human knowledge to guide the \gls{code generation}
 process, and implemented a system with the aim of facilitating the addition of
 handwritten rules when these are required.
 %
-First the \gls{program} is transformed into a representation based on a
+First the \gls{function} is transformed into a representation based on a
 programming language called \gls!{XL}, which is akin to high-level \gls{assembly
   code}.
 %
@@ -524,7 +524,7 @@ As in the cases of \citeauthor{Miller:1971} and \citeauthor{Snyder:1975}, the
 \glspl{instruction} are provided via a separate description that maps directly
 to a distinct \gls{XL}~primitive.
 %
-If some portion of the \gls{program} cannot be implemented by any of the
+If some portion of the \gls{function} cannot be implemented by any of the
 available \glspl{instruction}, the \gls{instruction selector} will invoke a set
 of rules to rewrite the \gls{XL}~code until a solution is found.
 %
@@ -535,7 +535,7 @@ same rule base can also be used to improve the code quality of the generated
 Since these rules are provided as a separate \gls{machine description}, they can
 be customized and augmented as needed to fit a particular \gls{target machine}.
 
-As we will see, this idea of ``massaging'' the \gls{program} until a solution
+As we will see, this idea of ``massaging'' the \gls{function} until a solution
 can be found has been applied, in one form or another, by many
 \glspl{instruction selector} that both predate and succeed
 \citeauthor{Fraser:1977:Paper}'s design.
@@ -552,12 +552,13 @@ Moreover, such rules tend to be hard to reuse for other \glspl{target machine}.
 
 Despite their already simplistic nature, \gls{macro}-expanding
 \glspl{instruction selector} can be made even more so by representing the
-\mbox{1-to-1} or \mbox{1-to-$n$} mappings as sets of tables. This further
-emphasizes the separation between the machine-independent core of the
-\gls{instruction selector} from the machine-dependent mappings, as well as
+\mbox{1-to-1} or \mbox{1-to-$n$} mappings as sets of tables.
+%
+This further emphasizes the separation between the machine-independent core of
+the \gls{instruction selector} from the machine-dependent mappings, as well as
 allows for denser implementations that require less memory and potentially
 reduce the compilation time, which is the time it takes to compile a given
-\gls{program}.
+\gls{function}.
 
 
 \subsubsection{Instruction Selection Using Bit Strings}
@@ -720,15 +721,15 @@ Having fallen out of fashion, \gls{naive.me}[ly] \gls{macro}-expanding
 dynamic \gls{code generation} systems that were developed in the 1980s and
 1990s.
 %
-In such systems the \gls{program} is first compiled into \gls!{byte code}, which
-is a kind of target-independent \gls{machine code} that can be interpreted by an
-underlying runtime environment.
+In such systems the \gls{function} is first compiled into \gls!{byte code},
+which is a kind of target-independent \gls{machine code} that can be interpreted
+by an underlying runtime environment.
 %
 By providing an identical environment on every \gls{target machine}, the same
 \gls{byte code} can be executed on multiple systems without having to be
 recompiled.
 
-The cost of this portability is that running a \gls{program} in interpretive
+The cost of this portability is that running a \gls{function} in interpretive
 mode is typically much slower than executing native \gls{machine code}.
 %
 This performance loss can be mitigated by incorporating a \gls{compiler} into
@@ -850,7 +851,7 @@ The first pass runs backwards across the \gls{assembly code} to determine the
 observable effects (that is, the \gls{RTL}) of each \gls{instruction} in the
 \gls{assembly code}.
 %
-This allows effects that have no impact on the \gls{program}'s observable
+This allows effects that have no impact on the \gls{function}'s observable
 behavior to be removed.
 %
 For example, if the value of a \gls{status flag} is not read by any subsequent
@@ -905,19 +906,19 @@ Another scheme was developed by \textcite{Massalin:1987} who implemented a
 system called the \gls!{Superoptimizer}, and similar systems have subsequently
 been referred to as \glspl!{superoptimizer}.
 %
-The \gls{Superoptimizer} accepts small \glspl{program} written in \gls{assembly
+The \gls{Superoptimizer} accepts small \glspl{function} written in \gls{assembly
   code}, and then exhaustively combines sequences of \glspl{instruction} to find
 shorter implementations that exhibit the same behavior as the original
-\gls{program}.\!%
+\gls{function}.\!%
 %
 \footnote{%
   The same idea has also been applied by \textcite{El-KhalilKeromytis:2004} and
   \textcite{AnckaertEtAl:2005}, where the \gls{assembly code} of compiled
-  \glspl{program} is modified in order to support \gls!{steganography} (the
+  \glspl{function} is modified in order to support \gls!{steganography} (the
   covert insertion of secret messages).
   %
   For example, \citeauthor{AnckaertEtAl:2005} used this technique on nine
-  \glspl{program} from the \gls{SPECint 2000} benchmark suite in order to embed
+  \glspl{function} from the \gls{SPECint 2000} benchmark suite in order to embed
   and extract William Shakespeare's play \textit{King Lear}.%
 }
 %
@@ -932,7 +933,7 @@ Moreover, neither makes any guarantees on correctness.
 A technique for automatically generating \gls{peephole optimization}-based
 \glspl{superoptimizer} was developed by \textcite{BansalAiken:2006}, where the
 \gls{superoptimizer} learns to optimize short sequences of \glspl{instruction}
-from a set of training \glspl{program}.
+from a set of training \glspl{function}.
 %
 A couple of designs that guarantee correctness have been developed by
 \citeauthor{JoshiEtAl:2002}~\cite{JoshiEtAl:2002, JoshiEtAl:2006} and
@@ -982,11 +983,11 @@ two parts: an \gls!{expander} and a \gls!{combiner} (see
   \labelFigure{davidson-fraser-approach}
 \end{figure}
 %
-The task of the \gls{expander} is to transform the \gls{program} into a series
+The task of the \gls{expander} is to transform the \gls{function} into a series
 of \glspl{RTL}.
 %
 The transformation is done by executing simple \glspl{macro} that expand every
-\gls{node} in the \gls{expression tree} (assuming the \gls{program} is
+\gls{node} in the \gls{expression tree} (assuming the \gls{function} is
 represented as such) into a corresponding \gls{RTL} that describes the effects
 of that \gls{node}.
 %
@@ -1006,13 +1007,13 @@ After expansion, but before \gls{register allocation}, the \gls{combiner} is
 run.
 %
 Using the same technique as that behind \gls{PO}, the \gls{combiner} tries to
-improve code quality by combining several \glspl{RTL} in the \gls{program} into
+improve code quality by combining several \glspl{RTL} in the \gls{function} into
 a single, larger \gls{RTL} that corresponds to some \gls{instruction} on the
 \gls{target machine}.
 %
 For this to work, both the \gls{expander} and the \gls{combiner} must at every
 step adhere to a rule, called the \gls!{machine invariant}, which dictates that
-every \gls{RTL} in the \gls{program} must be implementable by a single
+every \gls{RTL} in the \gls{function} must be implementable by a single
 \gls{instruction}.
 
 By using a subsequent \gls{peephole optimizer} to combine the effects of
@@ -1141,11 +1142,11 @@ suitable for automated tool generation and verification.
 The latter has been explored by \textcite{FernandezRamsey:1997} and
 \textcite{BaileyDavidson:2003}.
 
-The \gls{recognizer} checks whether an \gls{RTL} in the \gls{program} fulfills
+The \gls{recognizer} checks whether an \gls{RTL} in the \gls{function} fulfills
 the \gls{machine invariant} by performing a syntactic comparison between that
 \gls{RTL} and the \glspl{RTL} of the \glspl{instruction}.
 %
-However, if a given \gls{RTL} in the \gls{program} has $n$~operations, and a
+However, if a given \gls{RTL} in the \gls{function} has $n$~operations, and a
 given \gls{lambdaRTL} description contains $m$~\glspl{instruction} whose
 \gls{RTL} contains $l$~operations, then a naive implementation would take
 $\mBigO(nml)$ time to check a single \gls{RTL}.
@@ -1185,7 +1186,7 @@ A \gls!{tile} represents a simple operation which is required for any
 For example, stack-based machines require \glspl{tile} for push and pop
 operations, which are not necessary on \gls{register}-based machines.
 %
-Then, instead of expanding each \gls{IR} \gls{node} in the \gls{program} into a
+Then, instead of expanding each \gls{IR} \gls{node} in the \gls{function} into a
 sequence of~\glspl{RTL}, the \gls{expander} expands it into a sequence of
 \glspl{tile}.
 %
@@ -1240,7 +1241,7 @@ But in a scheme developed in 1989 by \textcite{GeninEtAl:1989}, a similar
 routine is executed \emph{before} \gls{code generation}.
 %
 Targeting digital signal processors, their \gls{compiler} first transforms the
-\gls{program} into an \gls!{ISFG}, and then executes a routine --
+\gls{function} into an \gls!{ISFG}, and then executes a routine --
 \citeauthor{GeninEtAl:1989} called it a \gls!{pattern matcher} -- which attempts
 to find several low-level operations in the \gls{ISFG} that can be merged into
 single \glspl{node}.\!%
@@ -1267,7 +1268,7 @@ According to \citeauthor{GeninEtAl:1989}, experiments show that their
 faster than that produced by other, contemporary \gls{DSP} \glspl{compiler}, and
 comparable with manually optimized \gls{assembly code}.
 %
-A disadvantage of this design is that it is limited to \glspl{program} where
+A disadvantage of this design is that it is limited to \glspl{function} where
 prior knowledge about the application area, in this case digital signal
 processing, can be encoded into specific optimization routines, which most
 likely has to be done manually.
@@ -1289,7 +1290,7 @@ system called \gls{Vista}, which is an interactive compilation environment where
 the user is given greater control over the \gls{compiler}.
 %
 Among other things, the user can alter \glspl{RTL} derived from the
-\gls{program}'s source code and add new customized \gls{peephole optimization}
+\gls{function}'s source code and add new customized \gls{peephole optimization}
 \glspl{pattern}.
 %
 Hence optimization privileges which normally are limited to low-level
@@ -1299,11 +1300,11 @@ language users.
 In addition, \citeauthor{KulkarniEtAl:2006} employed genetic algorithms -- these
 will be explained in \refAppendix{tree-covering} -- in an attempt to
 automatically derive a combination of user-provided optimization guidelines to
-improve the code quality of a particular \gls{program}.
+improve the code quality of a particular \gls{function}.
 %
 Experiments show that this scheme reduced code size on average by
 \SI{4}{\percent} and up to \SI{12}{\percent} for a selected set of
-\glspl{program}.
+\glspl{function}.
 
 
 \section{Summary}
