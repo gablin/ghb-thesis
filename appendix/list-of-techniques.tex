@@ -7,4 +7,1289 @@
 \chapter{List of Techniques}
 \labelAppendix{list-of-techniques}
 
-\todo{add code}
+The list starts on the next page, and its legend appears at the end of the list.
+The techniques are ordered chronologically.
+
+Note that the capabilities of all techniques have been set to reflect those
+exhibited by current implementation prototypes and known applications, not the
+capabilities that could potentially be achieved through extensions of the
+technique.
+
+\begingroup
+\small
+
+\def\abbvPrinciple{PR}
+\def\abbvScope{SC}
+\def\abbvOptimal{OP}
+\def\abbvMultiOutOp{MO}
+\def\abbvDisjointOutOp{DO}
+\def\abbvIntBlockOp{IB}
+\def\abbvIntDepOp{IN}
+
+\def\pME{ME}
+\def\pMEPlusAppend{$^{+}$}
+\def\pMEPlusInText{\pME\pMEPlusAppend}
+\def\pMEPlus{%
+  % Use only in table
+  \pME\rlap{\pMEPlusAppend}%
+}
+\def\pTC{TC}
+\def\pDC{DC}
+\def\pTD{TD}
+\def\pGC{GC}
+\def\pMS{MS}
+\tikzset{
+  circle radius/.initial=3pt,
+  not supported/.style={
+    draw=black,
+    line width=\normalLineWidth,
+    circle,
+    minimum size=2*\pgfkeysvalueof{/tikz/circle radius},
+    inner sep=0,
+    outer sep=0,
+  },
+  fully supported/.style={
+    not supported,
+    fill=black,
+  },
+}
+\def\notSupported{%
+  \tikz{%
+    \node [not supported] {};
+  }%
+}
+\def\partSupported{%
+  \tikz{%
+    \node [not supported] (c) {};
+    \draw [draw=none, fill=black]
+          (c.south) arc (270:90:\pgfkeysvalueof{/tikz/circle radius})
+          --
+          cycle;
+  }%
+}
+\def\fullySupported{%
+  \tikz{%
+    \node [fully supported] {};
+  }%
+}
+\newcommand{\shrinkSupportCircle}[1]{%
+  \maxsizebox{6pt}{6pt}{#1}%
+}
+\def\notSupportedSmall{%
+  \shrinkSupportCircle{\notSupported}%
+}
+\def\partSupportedSmall{%
+  \shrinkSupportCircle{\partSupported}%
+}
+\def\fullySupportedSmall{%
+  \shrinkSupportCircle{\fullySupported}%
+}
+\def\localScope{L}
+\def\globalScope{G}
+
+\let\oldtabhead\tabhead
+\renewcommand{\tabhead}[1]{%
+  {\oldtabhead\relsize{.5}\textsc{\MakeLowercase{#1}}}%
+}
+
+\rowcolors{2}{shade1}{white}
+\begin{landscape}%
+  \newcolumntype{C}{>{\centering}p{2mm}}
+  \begin{longtable}{%
+                     >{\raggedright}p{52mm}%
+                     >{\centering}p{6mm}%
+                     >{\centering}p{6mm}%
+                     >{\centering}p{6mm}%
+                     CCCC%
+                     >{\raggedright\quad}p{65mm}%
+                   }
+    \toprule
+        \tabhead{References}
+      & \tabhead{\abbvPrinciple}
+      & \tabhead{\abbvScope}
+      & \tabhead{\clap{\abbvOptimal}}
+      & \tabhead{\clap{\abbvMultiOutOp}}
+      & \tabhead{\clap{\abbvDisjointOutOp}}
+      & \tabhead{\clap{\abbvIntBlockOp}}
+      & \tabhead{\clap{\abbvIntDepOp}}
+      & \tabhead{Known applications} \tabularnewline
+    \specialrule{\lightrulewidth}{\aboverulesep}{0pt}
+    \endhead
+    \specialrule{\heavyrulewidth}{0pt}{\belowrulesep}
+    \endfoot
+    \specialrule{\heavyrulewidth}{0pt}{\belowrulesep}
+    \multicolumn{9}{p{177mm}}{%
+      \footnotesize%
+      Fundamental \gls{principle} (\abbvPrinciple) on which each technique is
+      based:
+      %
+      \begin{inlinelist}[itemjoin={, }, itemjoin*={, or}]
+        \item \gls{macro expansion}~(\pME)
+        \item \gls{macro expansion} with \gls{peephole
+          optimization}~(\pMEPlusInText)
+        \item \gls{tree covering}~(\pTC)
+        \item \glspl{trellis diagram}~(\pTD)
+        \item \gls{DAG covering}~(\pDC)
+        \item \gls{graph covering}~(\pGC)
+        \item \gls{mutation scheduling}~(\pMS)
+      \end{inlinelist}.
+      %
+      Scope of \gls{instruction selection} (\abbvScope):
+      %
+      \begin{inlinelist}[itemjoin={, }, itemjoin*={, or}]
+        \item \gls{local.is}~(\localScope, isolated to a single \gls{block})
+        \item \gls{global.is}~(\globalScope, considers entire \glspl{function})
+      \end{inlinelist}.
+      %
+      Whether the technique is claimed to be \gls{optimal.ps} (\abbvOptimal).
+      %
+      Supported \glspl{instruction characteristic}:
+      %
+      \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+        \item \gls{single-output.ic} (supported by all techniques)
+        \item \gls{multi-output.ic}~(\abbvMultiOutOp)
+        \item \gls{disjoint-output.ic}~(\abbvDisjointOutOp)
+        \item \gls{inter-block.ic}~(\abbvIntBlockOp)
+        \item \gls{interdependent.ic}~(\abbvIntDepOp) \glspl{instruction}
+      \end{inlinelist}.
+      %
+      The symbols \notSupportedSmall{}, \partSupportedSmall{}, and
+      \fullySupportedSmall{} indicate no, partial, and full support,
+      respectively.%
+    }
+    \tabularnewline
+    \endlastfoot
+
+       \textcite{LowryMedlock:1969}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{FHC}\tabularnewline
+
+       \textcite{OrgassWaite:1969}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Simcmp}\tabularnewline
+
+       \textcite{ElsonRake:1970}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Miller:1971}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Dmacs}\tabularnewline
+
+        \textcite{Wilcox:1971}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Wasilew:1972}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Donegan:1973}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Tirrell:1973}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Weingart:1973}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{AmmannEtAl:1974}
+        \cite{AmmannEtAl:1974, AmmannEtAl:1977}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Young:1974}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Newcomer:1975}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Simoneaux:1975}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Snyder:1975}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{Fraser:1977:Paper}
+        \cite{Fraser:1977:Paper, Fraser:1977:Thesis}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Ripken:1977}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{GlanvilleGraham:1978}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{Johnson:1978}
+        \cite{Johnson:1978, Johnson:1981}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{PCC}\tabularnewline
+
+        \textcite{Harrison:1979}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{CattellEtAl:1979}
+        \cite{CattellEtAl:1979, Cattell:1980, LeverettEtAl:1980}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{PQCC}\tabularnewline
+
+        \textcite{AuslanderHopkins:1982}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{GanapathiEtAl:1982:AttrGr}
+        \cite{Ganapathi:1980, GanapathiEtAl:1982:AttrGr, GanapathiFischer:1984,
+           GanapathiFischer:1985}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{KrummeAckley:1982}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{DeutschSchiffman:1984}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{ChristopherEtAl:1984}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{DavidsonFraser:1984}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{ACK}, \gls{GCC}, \gls{ZephyrVPO}\tabularnewline
+
+        \textcite{Henry:1984}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{AhoEtAl:1989}
+        \cite{AhoGanapthi:1985, AhoEtAl:1989, Tjiang:1986}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Twig}\tabularnewline
+
+        \textcite{HatcherChristopher:1986}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Horspool:1987}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{FraserWendt:1988}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{GeigerichSchmal:1988}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{HatcherTuller:1988}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{UNH-Codegen}\tabularnewline
+
+        \textcite{Pelegri-LlopartGraham:1988}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{YatesSchwartz:1988}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{EmmelmannEtAl:1989}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{BEG}, \gls{CoSy}\tabularnewline
+
+        \textcite{Ganapathi:1989}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{GeninEtAl:1989}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{NowakMarwedel:1989}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{MSSC}\tabularnewline
+
+        \textcite{BalachandranEtAl:1990}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{DesplandEtAl:1987}
+        \cite{DesplandEtAl:1987, DesplandEtAl:1990, CanaldaEtAl:1995}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Pagode}\tabularnewline
+
+        \textcite{Wendt:1990}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Hatcher:1991}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{UCG}\tabularnewline
+
+        \textcite{FraserEtAl:1992:IBurg}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{IBurg}, \gls{Record}, \gls{Redaco}\tabularnewline
+
+        \citeauthor{FraserEtAl:1992:Burg}
+        \cite{FraserEtAl:1992:Burg, Proebsting:1992:Thesis,
+          Proebsting:1992:BURS, Proebsting:1995:BURS, ProebstingWhaley:1996}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Burg}, \gls{HBurg}, \gls{JBurg}, \gls{WBurg}, \gls{OCamlBurg}
+         \tabularnewline
+
+        \textcite{Emmelmann:1992:Rewriting}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{Wess:1992}
+        \cite{Wess:1992, Wess:1995}
+      & \pTD
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Marwedel:1993}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{MSSV}\tabularnewline
+
+        \textcite{Tjiang:1993}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Olive}, \gls{Spam}\tabularnewline
+
+        \textcite{EnglerProebsting:1994}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{DCG}\tabularnewline
+
+        \citeauthor{FauthEtAl:1994}
+        \cite{FauthEtAl:1994, Muller:1994}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{CBC}\tabularnewline
+
+        \textcite{FerdinandEtAl:1994}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{LiemEtAl:1994}
+        \cite{LiemEtAl:1994, PaulinEtAl:1994, PaulinEtAl:1995}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{CodeSyn}\tabularnewline
+
+        \citeauthor{LanneerEtAl:1990}
+        \cite{LanneerEtAl:1990, VanPraetEtAl:1994, VanPraetEtAl:2001}
+      & \pGC
+      & \globalScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{Chess}\tabularnewline
+
+        \textcite{WilsonEtAl:1994}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{YuHu:1994a}
+        \cite{YuHu:1994a, YuHu:1994b}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{NovackEtAl:2002}
+        \cite{NovackNicolau:1994, NovackEtAl:2002}
+      & \pMS
+      & \globalScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{HansonFraser:1995}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{LBurg}, \gls{LCC}\tabularnewline
+
+        \citeauthor{LiaoEtAl:1995}
+        \cite{LiaoEtAl:1995, LiaoEtAl:1998}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Adl-TabatabaiEtAl:1996}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Omniware}\tabularnewline
+
+        \textcite{Engler:1996}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Vcode}\tabularnewline
+
+        \textcite{HooverZadeck:1996}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{LeupersMarwedel:1995}
+        \cite{LeupersMarwedel:1995, LeupersMarwedel:1996}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{NymeyerEtAl:1996}
+        \cite{NymeyerEtAl:1996, NymeyerKatoen:1997}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{ShuEtAl:1996}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{Gough:1995}
+        \cite{Gough:1995, GoughLedermann:1997, Gough:2012}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{MBurg}, \gls{GPBurg}\tabularnewline
+
+        \textcite{Gebotys:1997}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{HanonoDevadas:1998}
+        \cite{HanonoDevadas:1998, Hanono:1999}
+      & \pTD
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Aviv}\tabularnewline
+
+        \textcite{LeupersMarwedel:1998}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{MSSQ}\tabularnewline
+
+        \textcite{BashfordLeupers:1999}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Ertl:1999}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{DBurg}\tabularnewline
+
+        \textcite{FraserProebsting:1999}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{GBurg}\tabularnewline
+
+        \textcite{FrohlichEtAl:1999}
+      & \pTD
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Visser:1999}
+      & \pGC
+      & \globalScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Leupers:2000:SIMD}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{MadhavanEtAl:2000}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{ArnoldCorporaal:1999}
+        \cite{Arnold:1999, ArnoldCorporaal:1999, ArnoldCorporaal:2001}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{SarkarEtAl:2001}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Jalapeno}\tabularnewline
+
+        \textcite{PalecznyEtAl:2001}
+      & \pGC
+      & \globalScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{JHSC}\tabularnewline
+
+        \citeauthor{LorenzEtAl:2001}
+        \cite{LorenzEtAl:2001, LorenzMarwedel:2004}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{BravenboerVisser:2002}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{KrishnaswamyGupta:2002}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{EcksteinEtAl:2003}
+      & \pGC
+      & \globalScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{TanakaEtAl:2003}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Borchardt:2004}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{BriskEtAl:2004}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{CongEtAl:2004}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{LattnerAdve:2004}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{LLVM}\tabularnewline
+
+        Kessler \etal
+        \cite{BednarskiKessler:2006, ErikssonEtAl:2008, ErikssonKessler:2012}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Optimist}\tabularnewline
+
+        \textcite{ClarkEtAl:2006}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{DiasRamsey:2006}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{ErtlEtAl:2006}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{FarfelederEtAl:2006}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \partSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{KulkarniEtAl:2006}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{Vista}\tabularnewline
+
+        \textcite{HormatiEtAl:2007}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{ScharwaechterEtAl:2007}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \gls{CBurg}\tabularnewline
+
+        \textcite{EbnerEtAl:2008}
+      & \pGC
+      & \globalScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{KoesGoldstein:2008}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Noltis}\tabularnewline
+
+        \textcite{AhnEtAl:2009}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{MartinEtAl:2009}
+        \cite{MartinEtAl:2009, MartinEtAl:2012}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{BuchwaldZwinkau:2010}
+      & \pGC
+      & \globalScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{DiasRamsey:2010}
+        \cite{DiasRamsey:2010, RamseyDias:2011}
+      & \pMEPlus
+      & \localScope
+      & \notSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{EdlerVonKochEtAl:2010}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{FlochEtAl:2010}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{Yang:2010}
+      & \pTC
+      & \localScope
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{YounEtAl:2011}
+      & \pDC
+      & \localScope
+      & \notSupported
+      & \partSupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \citeauthor{ArslanKuchcinski:2013}
+        \cite{ArslanKuchcinski:2013, ArslanKuchcinski:2014, Arslan:2016}
+      & \pDC
+      & \localScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{JanousekJaroslav:2014}
+      & \pTC
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \tabularnewline
+
+        \textcite{GNUlightning}
+      & \pME
+      & \localScope
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \notSupported
+      & \gls{Gnu Lightning}\tabularnewline
+
+        \citeauthor{HjortBlindellEtAl:2015:CP}
+        \cite{HjortBlindellEtAl:2015:CP, HjortBlindellEtAl:2017:CASES}
+      & \pGC
+      & \globalScope
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \fullySupported
+      & \notSupported
+      & \tabularnewline
+  \end{longtable}%
+\end{landscape}
+\rowcolors{2}{}{}% Otherwise it has unwanted affects on the tables appearing
+                 % in the following appendices
+\endgroup
