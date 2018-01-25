@@ -297,7 +297,7 @@
     \@getField{kthLogo}\par
     \vskip 2em
     \begin{tabular}{c}
-      School of Information and Communication Technology\\
+      School of Electrical Engineering and Computer Science\\
       KTH Royal Institute of Technology\\
       Stockholm, Sweden
     \end{tabular}\par
@@ -324,9 +324,9 @@
     \end{tabular}%
     \hfill%
     \begin{tabular}[b]{@{}r@{}}
-      School of ICT\\
+      School of EECS\\
       KTH Royal Institute of Technology\\
-      SE-164 40 Kista\\
+      SE-100 44 Stockholm\\
       SWEDEN
     \end{tabular}%
   \end{minipage}
