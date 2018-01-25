@@ -2144,11 +2144,12 @@ such \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 %
 For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
 %
-Assume further that the \glspl{instruction} are represented as a \gls{machine
-  grammar}, and that~$i$ and~$j$ can be covered using two \glspl{rule}, $r_i$
-and $r_j$, with \glspl{production} \mbox{$\mNT{A} \rightarrow
-  \irCode*{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and \mbox{$\mNT{B}
-  \rightarrow \irCode*{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$}, respectively.
+Assume further that the \glspl{instruction} are represented as a
+\glshyphened{normal form.g} \gls{machine grammar}, and that~$i$ and~$j$ can be
+covered using two \glspl{rule}, $r_i$ and $r_j$, with \glspl{production}
+\mbox{$\mNT{A} \rightarrow \irCode*{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and
+\mbox{$\mNT{B} \rightarrow \irCode*{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$},
+respectively.
 %
 Since the result of $r_i$ does not match the operands of $r_j$, this \gls{rule}
 combination requires a \gls{chain.r} \gls{rule} -- or a chain of these, if
