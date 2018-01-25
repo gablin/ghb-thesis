@@ -28,4 +28,3 @@
 ** TODO Check for redundant uses of ! in glossary terms
 ** DONE Check that all floats are declared after first reference
 ** TODO Check for bad figure placements
-** TODO Check overflowing entries in references
