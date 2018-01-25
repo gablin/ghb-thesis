@@ -247,6 +247,7 @@
 \setlist[publications]{%
   label=P\arabic*,
   labelsep=8pt,
+  itemsep=.5\baselineskip,
 }
 
 \NewDocumentCommand{\labelPublication}{m}{%
@@ -310,8 +311,8 @@
 
 \NewDocumentEnvironment{authorsContribution}{}{%
 
-  \vspace{\itemsep}
-  \textit{Contribution}\quad%
+  \vspace{.5\baselineskip}
+  {\sffamily\bfseries Contribution}\quad%
 }{%
 }
 
