@@ -6,7 +6,7 @@
 ** DONE Update hall
 ** DONE Add mention of status of tool and availability (github)
 ** DONE Remove misuse of glossary terms "variable" and "operation"
-** TODO Replace 'x\%' with '\SI{x}{\percent}'
+** DONE Replace 'x\%' with '\SI{x}{\percent}'
 ** DONE Add labels to optimal-solutions-over-time plot
 ** DONE Add minizinc model as appendix
 ** DONE Add references in the minizinc model to refer to the corresponding Eq in the dissertation

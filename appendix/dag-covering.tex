@@ -714,10 +714,10 @@ found.
 in \gls{Jalapeno}, a \gls{register}-based \gls{Java} virtual machine developed
 by \gls{IBM}.
 %
-For a small set of problems the performance increased by about 10\%, which
-\citeauthor{SarkarEtAl:2001} claim to be due to fewer \glspl{instruction} needed
-for \gls{register} \gls{spilling.r} compared to the default \gls{instruction
-  selector}.
+For a small set of problems the performance increased by about
+\SI{10}{\percent}, which \citeauthor{SarkarEtAl:2001} claim to be due to fewer
+\glspl{instruction} needed for \gls{register} \gls{spilling.r} compared to the
+default \gls{instruction selector}.
 %
 Although innovative, it is doubtful that the technique can be extended much
 further.
@@ -871,7 +871,7 @@ For evaluation purposes \citeauthor{KoesGoldstein:2008} compared their own
 implementation, called \gls!{Noltis}, against an implementation based on
 \glsdesc{IP} -- we will discuss such techniques later in this appendix -- and
 found that \gls{Noltis} achieved \gls{optimal.ps} \gls{pattern selection} in
-99.7\% of the test cases.
+\SI{99.7}{\percent} of the test cases.
 %
 More details are given in \citeauthor{Koes:2009}'s doctoral
 dissertation~\cite{Koes:2009}.
@@ -1187,9 +1187,9 @@ as an extension of \gls{Olive} (see \refSection{olive}), and then ran some
 experiments by targeting a \gls{MIPS}-like architecture.
 %
 In these experiments \gls{CBurg} generated \gls{assembly code} which improved
-performance by almost 25\%, and reduced code size by nearly 22\%, compared to
-\gls{assembly code} which was only allowed to make use of \gls{single-output.ic}
-\glspl{instruction}.
+performance by almost \SI{25}{\percent}, and reduced code size by nearly
+\SI{22}{\percent}, compared to \gls{assembly code} which was only allowed to
+make use of \gls{single-output.ic} \glspl{instruction}.
 %
 Measurements of \gls{CBurg} also indicate that this technique exhibits
 near-linear time complexity.
@@ -1266,7 +1266,7 @@ This process of matching and collapsing is then repeated until no new
 %
 \citeauthor{BriskEtAl:2004} performed experiments on a prototype using a
 selected set of benchmark applications, which showed code size reductions of
-25\% to 36\% on average.
+\SI{25}{\percent} to \SI{36}{\percent} on average.
 
 
 \section[Modeling Instruction Selection as a Unate/Binate Covering Problem]%
@@ -1589,8 +1589,8 @@ is still manageable.
 %
 When compared against a then-contemporary industrial \gls{DSP} \gls{compiler},
 \citeauthor{Gebotys:1997} demonstrated that an implementation based on \gls{IP}
-yielded a performance improvement mean of 44\% for a select set of functions,
-while attaining reasonable compilation times.
+yielded a performance improvement mean of \SI{44}{\percent} for a select set of
+functions, while attaining reasonable compilation times.
 %
 However, the solving time increased by orders of magnitude when
 \citeauthor{Gebotys:1997} augmented the \gls{IP}~model with the complete set of
@@ -1669,8 +1669,8 @@ and defined the objective function so as to maximize the use of \gls{SIMD.i}
 \glspl{instruction}.
 
 In the paper, \citeauthor{Leupers:2000:SIMD} reports experiments where the use
-of \gls{SIMD.i} \glspl{instruction} reduced code size by up to 75\% for the
-selected test cases and \glspl{target machine}.
+of \gls{SIMD.i} \glspl{instruction} reduced code size by up to \SI{75}{\percent}
+for the selected test cases and \glspl{target machine}.
 %
 But since this technique assumes that each individual operation of the
 \gls{SIMD.i} \glspl{instruction} is expressed as a single \gls{node} in the
@@ -1892,9 +1892,9 @@ However, the \gls{constraint model} mainly deals with the problem of
 \gls{pattern matching} rather than \gls{pattern selection}.
 %
 Moreover, \citeauthor{Beg:2013} noticed only a negligible improvement (less than
-1\%) in code quality compared to \gls{LLVM}, mainly because the \glspl{target
-  machine} (\gls{MIPS} and \gls{ARM}) were simple enough that greedy heuristics
-generate near-optimal \gls{assembly code}.
+\SI{1}{\percent}) in code quality compared to \gls{LLVM}, mainly because the
+\glspl{target machine} (\gls{MIPS} and \gls{ARM}) were simple enough that greedy
+heuristics generate near-optimal \gls{assembly code}.
 %
 In addition, the \glspl{block DAG} of the benchmark \glspl{function} were fairly
 \gls{tree}-shaped~\cite{VanBeek:2014}, for which \gls{optimal.ps} code can be
@@ -2069,8 +2069,9 @@ and later extended the design to also incorporate \gls{instruction compaction}
 and \gls{address generation}.
 %
 Experiments indicate that the technique for a selected set of test cases
-resulted in energy savings of 18 to 36\% compared to a traditional \gls{tree
-  covering}-based \gls{compiler}, and reduced execution time by up to 51\%.
+resulted in energy savings of \SI{18}{\percent} to \SI{36}{\percent} compared to
+a traditional \gls{tree covering}-based \gls{compiler}, and reduced execution
+time by up to \SI{51}{\percent}.
 %
 According to \citeauthor{LorenzEtAl:2001}, the major contribution to this
 reduction is due to improved usage of \glspl{register} for common subexpression
