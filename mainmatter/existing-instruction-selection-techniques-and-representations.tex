@@ -1498,7 +1498,7 @@ In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
 match~$m$, and $\mVector{\mVar{x}}[m]$ is a Boolean (\mbox{$\mSet{0, 1}$})
-\gls{decision variable} indicating whether match~$m$ is selected.
+\gls!{decision variable} indicating whether match~$m$ is selected.
 %
 When there is no risk of confusion, we refer to \glspl{decision variable} simply
 as \glspl!{variable}.
@@ -2117,15 +2117,16 @@ Formally, a \gls{PBQP} is defined as follows.
           \mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1. \\
     \end{array}
   \end{displaymath}
+  \labelDefinition{pbqp}
 \end{definition}
 
 Intuitively, one can interpret this definition as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVector{\mVar{x}}_i$ is a \gls!{variable} with $k$~elements, where
-\mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been selected for
-decision~$i$.
+Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
+where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
+selected for decision~$i$.
 %
 For each \gls{variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
@@ -2135,9 +2136,9 @@ The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
 decisions~$i$ and~$j$ are represented through a cost matrix~$\mMatrix{C}_{ij}$.
 
-In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular \gls{match}
-to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
-\gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
+In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular
+\gls{match} to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each
+such \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 \glspl{instruction} that may need to be selected due to certain combinations of
 \glspl{match}.
 %
