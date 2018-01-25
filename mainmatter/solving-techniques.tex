@@ -283,21 +283,21 @@ First, for each \gls{match}~$m$, evenly divide the cost of $m$ over each
 %
 If a strict partial order $<$ exists over the set of \glspl{operation}, and
 $\mCovers(m)$ returns an ordered list that can be indexed starting from~$1$,
-then the cost can be divided as follows.
-%
-Given a match~$m$, if \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)}
-  \rfloor$} and \mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}, then
+then the cost can be computed as
 %
 \begin{equation}
   \mOpCost(m, o) =
   \left\{
   \begin{array}{ll}
     q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
-    q     & \text{otherwise}. \\
+    q     & \text{otherwise}, \\
   \end{array}
   \right.
-  \labelEquation{op-cost-function}
+  \labelEquation{div-mul-op-cost-function}
 \end{equation}
+%
+where \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)} \rfloor$} and
+\mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}.
 %
 Then, for each \gls{block}~$b$, weigh \mbox{$\mOpCost(m, o)$} with the execution
 frequency of~$b$.
@@ -311,8 +311,9 @@ This information can be represented as a cost matrix
       & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
     \end{array}
   \end{bmatrix}
-  \labelEquation{cost-matrix}
+  \labelEquation{div-mul-cost-matrix}
 \end{equation}
+%
 where each row denotes the cost of an \gls{operation}~$o$ if covered by a
 \gls{match}~$m$ and placed in a \gls{block}~$b$.
 %
@@ -323,35 +324,46 @@ and~40 respectively between~1 and~20 (\refFigure{cost-example-matrix}).
 Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
 much tighter bound compared to that achieved using the naive \gls{objective
   function}.
-%
-This in turn has a tremendous impact on solving time, for reasons that will
-become clear in \refSection{st-cost-bounds}.
 
-Instead of first evenly dividing the \gls{match} cost over the covered
-\glspl{operation} and then multiplying each \gls{operation} cost with the
-execution frequency, an alternative method is to first multiply the \gls{match}
-cost with the execution frequency and then evenly divide the product over the
-covered \glspl{operation}.
+An alternative method for computing the cost is to first multiply the
+\gls{match} cost with the execution frequency and then evenly divide the product
+over the covered \glspl{operation}.
 %
 We call the first method the \gls!{divide-then-multiply method}, and the second
 method the \gls!{multiply-then-divide method}.
 %
+For the latter, the cost matrix is computed as
+%
+\begin{equation}
+  \begin{bmatrix}
+    \begin{array}{@{\:}c|c@{\:}}
+        o, m, b, \mOpCost(m, o, b)
+      & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
+    \end{array}
+  \end{bmatrix}
+  \labelEquation{mul-div-cost-matrix}
+\end{equation}
+%
+where
+%
+\begin{equation}
+  \mOpCost(m, o, b) =
+  \left\{
+  \begin{array}{ll}
+    q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
+    q     & \text{otherwise}, \\
+  \end{array}
+  \right.
+  \labelEquation{mul-div-op-cost-function}
+\end{equation}
+%
+where \mbox{$q = \lfloor d / \mCard{\!\mCovers(m)} \rfloor$}, \mbox{$r =
+  d \hspace{-2pt} \mod \mCard{\!\mCovers(m)}$}, and \mbox{$d = \mCost(m) \times
+  \mFreq(b)$}.
+
 At first glace this design decision would appear to make no difference, but as
 will be seen later in the experimental evaluation, they unexpectedly exhibit
 significantly different solving time characteristics.
-%
-One possible explanation is that they may yield different bounds.
-%
-For instance, for the example given in \refFigure{cost-example} the
-\gls{multiply-then-divide method} bounds the total cost as \mbox{$4 <
-  \mVar{cost} < 65$}, whereas the \gls{divide-then-multiply method} bounds it to
-\mbox{$4 < \mVar{cost} < 60$}.
-%
-Another possible explanation is that the \gls{divide-then-multiply method}
-results in \gls{operation} costs that are even multiples of the execution
-frequencies, whereas the \gls{multiply-then-divide method} potentially results
-in arbitrary cost values and consequently leads to larger \glspl{domain} for the
-\gls{cost variable}.
 
 
 \paragraph{Variables}
@@ -1124,8 +1136,8 @@ $\mVar{omatch}$, $\mVar{opcosts}$, $\mVar{sel}$, $\mVar{succ}$, and
 $\mVar{cost}$ variables, \refEquation{operation-coverage}, relaxed versions of
 \refEquationList{block-order, fall-through} that allow fall-throughs via
 non-empty \glspl{block}, and modified versions of
-\refEquationRange{cost-matrix}{total-cost} that do not take the execution
-frequencies into account.
+\refEquationList{div-mul-op-cost-function, div-mul-cost-matrix, total-cost} that
+do not take the execution frequencies into account.
 
 If $\mRelaxedCost$ and $\mHeuristicCost$ denote the cost computed from the
 relaxation and by the heuristic, respectively, then the \gls{cost variable} is
@@ -1662,8 +1674,10 @@ comparing the solving times exhibited by two versions of the \gls{constraint
 \begin{modelList}
   \item \labelModel{obj-fun-mul-div}
     one based on the \gls{multiply-then-divide method}
+    (\refEquationList{div-mul-op-cost-function, div-mul-cost-matrix})
   \item \labelModel{obj-fun-div-mul}
     one based on \glspl{divide-then-multiply method}
+    (\refEquationList{mul-div-cost-matrix, mul-div-op-cost-function})
 \end{modelList}.
 %
 No hypothesis is attempted on which \glsshort{constraint model} is better.
@@ -1738,7 +1752,9 @@ The \gls{GMI} is \printGMI{%
 
 We see clearly that \glsshort{constraint model}~\refModel{obj-fun-div-mul}
 results in significantly shorter solving times than \glsshort{constraint
-  model}~\refModel{obj-fun-mul-div}.
+  model}~\refModel{obj-fun-mul-div}, thus underscoring the fact that seemingly
+trivial changes to a \gls{constraint model} may have considerable impact on
+solving time.
 %
 For one \gls{function} (\cCode*{build\_ycc\_rgb\_t}) the solving time is
 improved by
@@ -1746,8 +1762,22 @@ improved by
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }, and for no \glspl{function} is the solving time degraded.
 %
-This also underscores the fact that seemingly trivial changes to a
-\gls{constraint model} may have considerable impact on solving time.
+One possible explanation is that they yield different bounds.
+%
+For the example given in \refFigure{cost-example} on
+\refPageOfFigure{cost-example}, the \gls{multiply-then-divide method} bounds the
+total cost as \mbox{$4 < \mVar{cost} < 65$}, whereas the
+\gls{divide-then-multiply method} bounds it to \mbox{$4 < \mVar{cost} < 60$}.
+%
+However, this does not hold for all problem instances as
+\gls{divide-then-multiply method} may yield a tighter bound than the
+\gls{multiply-then-divide method} for other examples.
+%
+Another possible explanation is that the \gls{divide-then-multiply method}
+results in \gls{operation} costs that are even multiples of the execution
+frequencies, whereas the \gls{multiply-then-divide method} potentially results
+in arbitrary cost values and consequently leads to larger \glspl{domain} for the
+\gls{cost variable}.
 
 Based on the observation above, we conclude that the \gls{divide-then-multiply
   method} is a better design choice over \gls{multiply-then-divide method} when
