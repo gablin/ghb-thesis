@@ -217,7 +217,7 @@ Instead, individual \glspl{instruction} are supported either via customized
 \gls{program} optimization routines or through \glspl{compiler intrinsic}.
 %
 If no such routine or \gls{compiler intrinsic} is available, making use of these
-\glspl{instruction} requires the \gls{program} to be written directly in
+\glspl{instruction} requires the \gls{function} to be written directly in
 \gls{assembly code}.
 
 
@@ -493,7 +493,7 @@ x = A[i + 1];
   \labelFigure{p-match-sel-example}
 \end{figure}
 
-For a given \gls{program} and \gls{target machine}, there often exists many
+For a given \gls{function} and \gls{target machine}, there often exists many
 valid combinations of \glspl{instruction} -- in terms of $G$ and $M$, this means
 there exist many \glspl{cover} of~$G$ -- which may result in code where quality
 differs significantly.
@@ -1907,7 +1907,7 @@ an extension of the first in order to also capture control flow.
 \paragraph{Capturing Data Flow of Entire Functions}
 
 In order to simply many \gls{compiler} tasks, \textcite{CytronEtAl:1991}
-introduced a \gls{program} representation called \gls!{SSA}[ form].
+introduced a \gls{function} representation called \gls!{SSA}[ form].
 
 \begin{filecontents*}{fact.c}
 int factorial(int n) {
@@ -1979,12 +1979,12 @@ int factorial(int $\irVar{n}[1]$) {
   \labelFigure{ssa-example}
 \end{figure}
 
-A \gls{program} is said to be in \gls{SSA}~form if every \gls{variable} is
-defined exactly once.
+A \gls{function} is said to be in \gls{SSA}~form if every variable is defined
+exactly once.
 %
-For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c}
-is not in \gls{SSA}~form as \glspl{variable}~\irCode*{f} and~\irCode*{n} are
-redefined within the loop.
+For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c} is
+not in \gls{SSA}~form as variables~\irCode*{f} and~\irCode*{n} are redefined
+within the loop.
 %
 By introducing new variables and connecting these using \glspl!{phi-function}
 where the value depends on control flow, the \gls{function} can be rewritten
@@ -2031,7 +2031,7 @@ An example of the \gls{Click-Paleczny graph} is shown in
 
   \caption[Example of a Click-Paleczny graph]%
           {%
-            Example of a Click-Paleczny graph, corresponding to the program
+            Example of a Click-Paleczny graph, corresponding to the function
             shown in \refFigure{ssa-example}.
             %
             Thin-lined nodes and edges denote data operations and data flow.
