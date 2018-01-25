@@ -1,10 +1,10 @@
 * BEFORE SUBMISSION
-** TODO Reduce vertical space between list items
+** DONE Reduce vertical space between list items
 ** TODO Remove 'electronic' document class option
 ** TODO Update TRITA number
 ** TODO Update ISBN
 ** TODO Update hall
-** TODO Add mention of status of tool and availability (github)
+** DONE Add mention of status of tool and availability (github)
 ** TODO Remove misuse of glossary terms "variable" and "operation"
 ** TODO Replace 'x\%' with '\SI{x}{\percent}'
 ** DONE Add labels to optimal-solutions-over-time plot
@@ -12,7 +12,7 @@
 ** TODO Add references in the minizinc model to refer to the corresponding Eq in the dissertation
 ** TODO Add List of Techniques appendix
 ** TODO In appendices, swap typesetting convention of terminals and nonterminals
-** TODO In appendices, replace 'linear form' with 'normal form'
+** DONE In appendices, replace 'linear form' with 'normal form'
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check overflowing of bib entries
 ** TODO Check for bad use of past tense
