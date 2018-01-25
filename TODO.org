@@ -1,9 +1,9 @@
 * BEFORE SUBMISSION
 ** DONE Reduce vertical space between list items
 ** TODO Remove 'electronic' document class option
-** TODO Update TRITA number
+** DONE Update TRITA number
 ** TODO Update ISBN
-** TODO Update hall
+** DONE Update hall
 ** DONE Add mention of status of tool and availability (github)
 ** TODO Remove misuse of glossary terms "variable" and "operation"
 ** TODO Replace 'x\%' with '\SI{x}{\percent}'
@@ -11,7 +11,7 @@
 ** TODO Add minizinc model as appendix
 ** TODO Add references in the minizinc model to refer to the corresponding Eq in the dissertation
 ** DONE Add List of Techniques appendix
-** TODO In appendices, swap typesetting convention of terminals and nonterminals
+** DONE In appendices, swap typesetting convention of terminals and nonterminals
 ** DONE In appendices, replace 'linear form' with 'normal form'
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check overflowing of bib entries
