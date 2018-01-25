@@ -50,8 +50,10 @@
         (dag-covering)    {\namerefAppendix{dag-covering}};
   \node [below=of dag-covering]
         (graph-covering)  {\namerefAppendix{graph-covering}};
+  \node [below=of graph-covering]
+        (list-of-techniques)  {\namerefAppendix{list-of-techniques}};
 
-  \node [right=3\nodeDist of ex-isel-techs.east |- macro-expansion] (uni-rep)
+  \node [right=3\nodeDist of ex-isel-techs.east |- tree-covering] (uni-rep)
         {%
           \parbox{2.1cm}{%
             \centering%
@@ -110,7 +112,7 @@
 
     \node [category label, below right=of tmp-a] {literature survey};
 
-    \coordinate (survey-y) at ([yshift=-\nodeDist] graph-covering.south);
+    \coordinate (survey-y) at ([yshift=-\nodeDist] list-of-techniques.south);
     \coordinate (survey-x) at ([xshift=\nodeDist] ex-isel-techs.east);
     \coordinate (survey-x-y) at (survey-x |- survey-y);
     \draw [rounded corners=6pt]
@@ -143,11 +145,12 @@
     \draw (macro-expansion) -- (tree-covering);
     \draw (tree-covering) -- (dag-covering);
     \draw (dag-covering) -- (graph-covering);
+    \draw (graph-covering) -- (list-of-techniques);
 
     \draw [rounded corners=12pt]
           (ex-isel-techs) -| (uni-rep);
     \draw (cp.south)
-          .. controls +(down:2.5cm) and +(40:1.5cm) ..
+          .. controls +(down:3cm) and +(40:1.5cm) ..
           (model.20);
     \draw (uni-rep) -- (model);
     \draw (model) -- (evaluation);
