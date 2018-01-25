@@ -1199,7 +1199,7 @@ as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
 All \glspl{function} are solved to optimality.
 %
 The solving times range from
-\printMinSolvingTime{
+\printMinSolvingTime[round-precision=1]{
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
 }
@@ -1773,7 +1773,7 @@ All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
 %
 The solving times range from
-\printMinSolvingTime{%
+\printMinSolvingTime[round-precision=2]{%
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupSolvingTimeAvgMin,
   \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupBaselineSolvingTimeAvgMin
 }

@@ -1520,32 +1520,32 @@
   \SI[#1]{\pgfmathresult}{#3}%
 }
 
-\NewDocumentCommand{\printSolvingTime}{m}{%
-  \SI[round-mode=figures, round-precision=3]{#1}{\s}%
+\NewDocumentCommand{\printSolvingTime}{O{}m}{%
+  \SI[round-mode=figures, round-precision=3, #1]{#2}{\s}%
 }
 
-\NewDocumentCommand{\printMinSolvingTime}{m}{%
-  \minOf{#1}%
-  \printSolvingTime{\pgfmathresult}%
+\NewDocumentCommand{\printMinSolvingTime}{O{}m}{%
+  \minOf{#2}%
+  \printSolvingTime[#1]{\pgfmathresult}%
 }
 
-\NewDocumentCommand{\printMaxSolvingTime}{m}{%
-  \maxOf{#1}%
-  \printSolvingTime{\pgfmathresult}%
+\NewDocumentCommand{\printMaxSolvingTime}{O{}m}{%
+  \maxOf{#2}%
+  \printSolvingTime[#1]{\pgfmathresult}%
 }
 
-\NewDocumentCommand{\printCycles}{m}{%
-  \num[round-precision=0]{#1}~cycles%
+\NewDocumentCommand{\printCycles}{O{}m}{%
+  \num[round-precision=0, #1]{#2}~cycles%
 }
 
-\NewDocumentCommand{\printMinCycles}{m}{%
-  \minOf{#1}%
-  \printCycles{\pgfmathresult}%
+\NewDocumentCommand{\printMinCycles}{O{}m}{%
+  \minOf{#2}%
+  \printCycles[#1]{\pgfmathresult}%
 }
 
-\NewDocumentCommand{\printMaxCycles}{m}{%
-  \maxOf{#1}%
-  \printCycles{\pgfmathresult}%
+\NewDocumentCommand{\printMaxCycles}{O{}m}{%
+  \maxOf{#2}%
+  \printCycles[#1]{\pgfmathresult}%
 }
 
 \NewDocumentCommand{\printGMI}{O{}m}{%
