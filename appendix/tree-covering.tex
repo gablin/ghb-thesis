@@ -841,23 +841,27 @@ These will be our \glspl{terminal}.
 Because the result should be end up in a \gls{register}, we say that $\mNT{Reg}$
 is our \gls{goal.s} \gls{symbol}.
 
+After transforming the \gls{expression tree} into a sequence of \glspl{terminal}
+(as in \refFigure{tree-parsing-example-terminal-sequence}), we traverse the
+sequence from left to right.
+%
 \newcommand{\gS}{\mbox{\figureFont s}}
 \newcommand{\gR}[1]{\mbox{\figureFont r$_{\text{#1}}$}}
-
+%
 \begin{filecontents*}{tree-parsing-example-expression-tree.c}
 $\irAddText$ a $\irMulText$ b 2
 \end{filecontents*}
-
+%
 \begin{filecontents*}{tree-parsing-example-terminal-sequence.c}
 $\irAddText$ $\cVar{reg}[a]$ $\irMulText$ $\cVar{reg}[b]$ $\cVar{int}[2]$
 \end{filecontents*}
-
+%
 \begin{filecontents*}{tree-parsing-example-assembly-code.c}
 mv  $\$\mNT{Reg}[\irCode{2}]$, #2
 mul $\$\mNT{Reg}[\irCode{x}]$, $\$\mNT{Reg}[\irCode{b}]$, $\$\mNT{Reg}[\irCode{2}]$
 add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x}]$
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \subcaptionbox{%
@@ -972,10 +976,6 @@ add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x
   \caption{Example of tree parsing}
   \labelFigure{tree-parsing-example}
 \end{figure}
-
-After transforming the \gls{expression tree} into a sequence of \glspl{terminal}
-(as in \refFigure{tree-parsing-example-terminal-sequence}), we traverse the
-sequence from left to right.
 %
 When doing so, we either \gls!{shift} the just-traversed \gls{symbol} onto a
 stack, or replace \glspl{symbol} currently on the stack via a \gls!{rule
@@ -1623,6 +1623,9 @@ and which \gls{register} the result will be stored in.
 %
 Let us look at an example.
 
+In \refTable{ganapathi-fischer-machine-grammar} we see a set of \glspl{rule} for
+modeling three byte-adding \glspl{instruction}:
+%
 \begin{table}
   \centering%
   \figureFont\figureFontSize%
@@ -1673,9 +1676,6 @@ Let us look at an example.
           }
   \labelTable{ganapathi-fischer-machine-grammar}
 \end{table}
-
-In \refTable{ganapathi-fischer-machine-grammar} we see a set of \glspl{rule} for
-modeling three byte-adding \glspl{instruction}:
 %
 \begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
   \item an increment version \cCode*{incb} (increments a \gls{register} by~1,
@@ -3436,10 +3436,11 @@ infinite loop no longer need to be explicitly broken.
 Third, machine descriptions can be made more concise as \glspl{rule} differing
 only in cost can be combined into a single \gls{rule}.
 %
-Again taking the \gls{VAX}~machine as an example, \citeauthor{AhoEtAl:1989} reported
-that the entire \gls{Twig} specification could be implemented using only
-115~\glspl{rule}, which is about half the size of \citeauthor{GanapathiEtAl:1982:AttrGr}'s
-\gls{attribute}-based \gls{machine grammar} for the same \gls{target machine}.
+Again taking the \gls{VAX}~machine as an example, \citeauthor{AhoEtAl:1989}
+reported that the entire \gls{Twig} specification could be implemented using
+only 115~\glspl{rule}, which is about half the size of
+\citeauthor{GanapathiEtAl:1982:AttrGr}'s \gls{attribute}-based \gls{machine
+  grammar} for the same \gls{target machine}.
 
 However, the \gls{DP}~approach requires that the \gls{code generation} problem
 exhibit properties of optimal substructure, meaning that it is possible to

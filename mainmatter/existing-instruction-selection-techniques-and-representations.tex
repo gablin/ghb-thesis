@@ -15,6 +15,9 @@ one of four fundamental \glspl!{principle} of \gls{instruction selection}:
 \gls{macro expansion}, \gls{tree covering}, \gls{DAG covering}, and \gls{graph
   covering}.
 %
+The trend of applying these \glspl{principle} over time is shown in
+\refFigure{principles-timeline}.
+%
 \begin{figure}
   \centering%
   \def\numTotalPublications{?}% Will be redefined in the file included below
@@ -37,9 +40,6 @@ one of four fundamental \glspl!{principle} of \gls{instruction selection}:
           }
   \labelFigure{principles-timeline}
 \end{figure}
-%
-The trend of applying these \glspl{principle} over time is shown in
-\refFigure{principles-timeline}.
 %
 It was also discovered that the capabilities of these techniques can be compared
 in terms of handling \glspl{instruction} with five \glsplshort!{instruction
@@ -692,6 +692,15 @@ A \gls{grammar} is in \gls{normal form.g} if every \gls{rule} in the
     Such rules are called \gls!{chain.r}[ \glspl{rule}].
 \end{enumerate}
 
+A \gls{grammar} can be mechanically rewritten into \gls{normal form.g} by
+introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule} into
+multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{normal
+  form.g}.
+%
+For example, rewriting the \gls{grammar} shown in
+\refTable{grammar-rules-example} into \gls{normal form.g} results in the
+\gls{grammar} shown in \refTable{normal-form-grammar-example}.
+%
 \begin{table}[t]
   \centering%
   \figureFontSize%
@@ -733,15 +742,6 @@ A \gls{grammar} is in \gls{normal form.g} if every \gls{rule} in the
           }
   \labelTable{normal-form-grammar-example}
 \end{table}
-
-A \gls{grammar} can be mechanically rewritten into \gls{normal form.g} by
-introducing new \glspl{nonterminal} and breaking down illegal \glspl{rule} into
-multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{normal
-  form.g}.
-%
-For example, rewriting the \gls{grammar} shown in
-\refTable{grammar-rules-example} into \gls{normal form.g} results in the
-\gls{grammar} shown in \refTable{normal-form-grammar-example}.
 %
 Note that the new \glspl{rule} have zero cost and no \gls{action} as these are
 only intermediary steps towards enabling reduction of the original \gls{rule}.
@@ -964,6 +964,9 @@ Fortunately, it is sufficient to only consider the relative cost differences
 between \glspl{rule} for any given \gls{node} in the \gls{expression tree},
 leading to a finite number of \glspl{state}.
 %
+The algorithm for labeling an \gls{expression tree} is shown in
+\refAlgorithm{opt-pat-sel-labeling-algorithm}.
+%
 \begin{algorithm}[t]
   \DeclFunction{LabelTree}%
                {expression tree $T$, list $L$ of state tables}%
@@ -986,9 +989,6 @@ leading to a finite number of \glspl{state}.
           }
   \labelAlgorithm{opt-pat-sel-labeling-algorithm}
 \end{algorithm}
-%
-The algorithm for labeling an \gls{expression tree} is shown in
-\refAlgorithm{opt-pat-sel-labeling-algorithm}.
 %
 To derive the \gls{rule} selection algorithm, one only needs to adapt line~2 in
 \refAlgorithm{aho-etal-select-algorithm} to perform the appropriate table
@@ -1035,12 +1035,15 @@ These transformations are referred to as \gls!{edge splitting} and \gls!{node
 decisions can prevent selection of \glspl{instruction} that would lead to higher
 code quality.
 
+An example illustrating this effect is shown in
+\refFigure{exp-trees-limit-example}.
+%
 \begin{filecontents*}{exp-trees-limit-example.c}
 t = a + b;
 x = c * t;
 y = *((int*) t);
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \mbox{}%
@@ -1116,9 +1119,6 @@ y = *((int*) t);
           }
   \labelFigure{exp-trees-limit-example}
 \end{figure}
-
-An example illustrating this effect is shown in
-\refFigure{exp-trees-limit-example}.
 %
 If the \gls{IR} is represented as trees, where the common subexpression for
 computing \irVar*{t} has its own \gls{expression tree} (see
@@ -1157,7 +1157,8 @@ But unlike \gls{tree covering}, which can be solved optimally in linear time,
 finding the \gls{least-cost.c} \gls{cover} of a \gls{block DAG} is
 NP-complete~\cite{KoesGoldstein:2008, Proebsting:1995:Proof}.
 %
-The proof is also available in \refAppendix{dag-covering}.
+The proof is also available in \refAppendix{dag-covering} on
+\refPageOfSection{dc-proof}.
 %
 Consequently, \gls{DAG covering} started to gain traction in the beginning of
 the 1990s when exponential increase in compute power and significant progress
@@ -1757,6 +1758,13 @@ multiple \glspl{block}.
 %
 To fully address this problem, one must resort to \gls{graph covering}.
 
+This also applies to other situations where decisions made for one \gls{block}
+can inhibit subsequent decisions for other \glspl{block}, such as enforcing
+specific storage locations or value modes.
+%
+For example, \refFigure{block-dags-limit-example} shows a \gls{function} that
+multiplies the elements of two arrays and sums the results.
+%
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
   int s = 0;
@@ -1766,7 +1774,7 @@ int f(int* A, int* B, int N) {
   return s;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \subcaptionbox{C code\labelFigure{block-dags-limit-example-c}}%
@@ -1832,13 +1840,6 @@ int f(int* A, int* B, int N) {
   \caption{Example illustrating the limitation of block DAGs}
   \labelFigure{block-dags-limit-example}
 \end{figure}
-
-This also applies to other situations where decisions made for one \gls{block}
-can inhibit subsequent decisions for other \glspl{block}, such as enforcing
-specific storage locations or value modes.
-%
-For example, \refFigure{block-dags-limit-example} shows a \gls{function} that
-multiplies the elements of two arrays and sums the results.
 %
 Assume that the arrays consist of fixed-point values.
 %
@@ -1909,6 +1910,13 @@ an extension of the first in order to also capture control flow.
 In order to simply many \gls{compiler} tasks, \textcite{CytronEtAl:1991}
 introduced a \gls{function} representation called \gls!{SSA}[ form].
 
+A \gls{function} is said to be in \gls{SSA}~form if every variable is defined
+exactly once.
+%
+For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c} is
+not in \gls{SSA}~form as variables~\irCode*{f} and~\irCode*{n} are redefined
+within the loop.
+%
 \begin{filecontents*}{fact.c}
 int factorial(int n) {
   entry:
@@ -1923,7 +1931,7 @@ int factorial(int n) {
     return f;
 }
 \end{filecontents*}
-
+%
 \begin{filecontents*}{fact-ssa.c}
 int factorial(int $\irVar{n}[1]$) {
   entry:
@@ -1940,7 +1948,7 @@ int factorial(int $\irVar{n}[1]$) {
     return $\irVar{f}[2]$;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \mbox{}%
@@ -1978,13 +1986,6 @@ int factorial(int $\irVar{n}[1]$) {
   \caption{Example of an SSA graph}
   \labelFigure{ssa-example}
 \end{figure}
-
-A \gls{function} is said to be in \gls{SSA}~form if every variable is defined
-exactly once.
-%
-For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c} is
-not in \gls{SSA}~form as variables~\irCode*{f} and~\irCode*{n} are redefined
-within the loop.
 %
 By introducing new variables and connecting these using \glspl!{phi-function}
 where the value depends on control flow, the \gls{function} can be rewritten
@@ -2388,6 +2389,10 @@ transformations~\cite{LoweEhrig:1991}.
 For \gls{pattern matching}, most combinatorial approaches apply the
 \gls{VF2}~algorithm~\cite{CordellaEtAl:2001}.
 %
+The algorithm, given in \refAlgorithm{vf2-algorithm}, recursively checks every
+\gls{node}-mapping candidate and applies a set of rules for checking whether the
+current mapping will yield a \gls{match}.
+%
 \def\fG{G_{\mathsc{f}}}%
 \def\pG{G_{\mathsc{p}}}%
 \def\fN{N_{\mathsc{f}}}%
@@ -2431,10 +2436,6 @@ For \gls{pattern matching}, most combinatorial approaches apply the
   \caption{The VF2 algorithm}
   \labelAlgorithm{vf2-algorithm}
 \end{algorithm}
-%
-The algorithm, given in \refAlgorithm{vf2-algorithm}, recursively checks every
-\gls{node}-mapping candidate and applies a set of rules for checking whether the
-current mapping will yield a \gls{match}.
 %
 The rules are categorized into \emph{syntactic} and \emph{semantic} rules.
 %
@@ -2653,7 +2654,7 @@ Second, all combinatorial approaches only handle \gls{tree}- and
 \gls{inter-block.ic} \glspl{instruction} as these extend over multiple
 \glspl{block} and must therefore be modeled as generic \glspl{graph} (one such
 example is given in \refChapter{introduction}
-on \refPage{saturated-arithmetic}).
+on \refPageOfSection{intro-saturated-arithmetic}).
 
 Third, with the exception of \textcite{TanakaEtAl:2003}, no combinatorial
 approach takes the cost of \gls{data copying} into account.

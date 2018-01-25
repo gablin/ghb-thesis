@@ -455,6 +455,9 @@ follows.
   \labelDefinition{cumulative}
 \end{definition}
 
+For example, the schedule shown in \refFigure{cumulative-example-solution} is a
+\gls{solution} to this \gls{constraint}.
+%
 \begin{figure}
   \subcaptionbox{A solution\labelFigure{cumulative-example-solution}}%
                 {%
@@ -482,9 +485,6 @@ follows.
           }
   \labelFigure{cumulative-example}
 \end{figure}
-
-For example, the schedule shown in \refFigure{cumulative-example-solution} is a
-\gls{solution} to this \gls{constraint}.
 %
 Likewise, the schedule shown in \refFigure{cumulative-example-failure} is not a
 \gls{solution} because tasks~$t_4$ and~$t_5$ exceed the capacity when scheduled
@@ -539,6 +539,9 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
   \labelDefinition{no-overlap}
 \end{definition}
 
+$\MNoOverlap$ is used in \refChapter{future-work} to model \gls{register
+  allocation}.
+
 \begin{figure}
   \mbox{}%
   \hfill\hfill%
@@ -563,9 +566,6 @@ We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
           {Examples for the no-overlap constraint}
   \labelFigure{no-overlap-example}
 \end{figure}
-
-$\MNoOverlap$ is used in \refChapter{future-work} to model \gls{register
-  allocation}.
 
 
 \subsection{Optimization}
@@ -663,6 +663,10 @@ A \gls{propagator} is \glshyphened!{value consistency} if it only
 \gls{assigned.v}, \glshyphened!{bounds consistency} if it only reduces the
 bounds of a \gls{domain}, and \glshyphened!{domain consistency} if it removes
 all values that do not appear in any \gls{solution} to the \gls{constraint}.
+%
+For example, \refTable{cp-prop-strengths-example} shows solving of two versions
+of the \glsshort{constraint model} given in \refTable{cp-model-example}, one
+using $\mAllDifferent$ and another using inequality \glspl{constraint}.
 %
 \begin{table}
   \centering%
@@ -767,10 +771,6 @@ all values that do not appear in any \gls{solution} to the \gls{constraint}.
   \labelTable{cp-prop-strengths-example}
 \end{table}
 %
-For example, \refTable{cp-prop-strengths-example} shows solving of two versions
-of the \glsshort{constraint model} given in \refTable{cp-model-example}, one
-using $\mAllDifferent$ and another using inequality \glspl{constraint}.
-%
 Because only \gls{value consistency} can be achieved for inequality
 \glspl{constraint}, they cannot \glsshort{propagation}[e] anything until at
 least one \gls{variable} becomes \gls{assigned.v}.
@@ -832,9 +832,6 @@ These decisions constitute a \gls!{branching strategy} which arranges the
 %
 An example is given in \refFigure{cp-search-tree-sat-example}.
 %
-Since the \glspl{solution} (and \glspl{failure}) appear at the leaf
-\glspl{node}, the \gls{search tree} is typically explored depth-first.
-
 \begin{figure}
   \centering%
   \input{figures/constraint-programming/search-tree-sat-example}
@@ -848,6 +845,10 @@ Since the \glspl{solution} (and \glspl{failure}) appear at the leaf
           }
   \labelFigure{cp-search-tree-sat-example}
 \end{figure}
+%
+Since the \glspl{solution} (and \glspl{failure}) appear at the leaf
+\glspl{node}, the \gls{search tree} is typically explored depth-first.
+
 
 For \gls{search} to be well-behaved, a \gls{branching strategy} must preserve
 all \glspl{solution} in the \gls{search space} and must not duplicate any
@@ -894,6 +895,8 @@ continuous time scale.
 When the entire \gls{search space} has been explored, the last found
 \gls{solution} is guaranteed to be optimal.
 %
+An example of shown in \refFigure{cp-search-tree-opt-example}.
+%
 \begin{figure}
   \centering%
   \input{figures/constraint-programming/search-tree-opt-example}
@@ -911,8 +914,6 @@ When the entire \gls{search space} has been explored, the last found
           }
   \labelFigure{cp-search-tree-opt-example}
 \end{figure}
-%
-An example of shown in \refFigure{cp-search-tree-opt-example}.
 %
 Assuming the \gls{search tree} is explored depth first, left to right, the first
 solution to be found is \mbox{$S_1 = \mTuple{\mVar{x} = \mSet{1}, \mVar{y} =
@@ -1010,6 +1011,10 @@ removes \glspl{solution} known to be dominated by another \gls{solution}.
 \Gls{dominance breaking.c} is therefore a generalization of \gls{symmetry
   breaking.c}.
 %
+For an example, let us revisit the \glsshort{constraint model} capturing the
+square packing problem and assume the two partial \glspl{solution} shown in
+\refFigure{square-packing-partial-sol}~\cite{Korf:2004}.
+%
 \begin{figure}
   \centering%
   \mbox{}%
@@ -1030,10 +1035,6 @@ removes \glspl{solution} known to be dominated by another \gls{solution}.
           }
   \labelFigure{square-packing-partial-sol}
 \end{figure}
-%
-For an example, let us revisit the \glsshort{constraint model} capturing the
-square packing problem and assume the two partial \glspl{solution} shown in
-\refFigure{square-packing-partial-sol}~\cite{Korf:2004}.
 %
 In the left-most \gls{solution}, the positioning of the two squares form an
 empty \mbox{$2 \times 3$} rectangle in the corner.

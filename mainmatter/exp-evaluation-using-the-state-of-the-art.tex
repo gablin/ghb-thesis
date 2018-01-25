@@ -56,6 +56,10 @@ As upper bound for a given \gls{function}, we take the cost for the
 
 \input{\expDir/unison-vs-llvm-hexagon5-cycles-speedup.stats}
 
+\RefFigure{unison-vs-llvm-cycles-plot} shows the normalized \gls{solution} costs
+for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
+\gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -88,10 +92,6 @@ As upper bound for a given \gls{function}, we take the cost for the
           }
   \labelFigure{unison-vs-llvm-cycles-plot}
 \end{figure}
-
-\RefFigure{unison-vs-llvm-cycles-plot} shows the normalized \gls{solution} costs
-for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
-\gls{subject}.
 %
 The size of the \glspl{UF graph} range from \num{189} to
 \num{1524}~\glspl{node}.
@@ -205,6 +205,11 @@ is performed on any of the \glspl{function} prior to \gls{instruction
 
 \input{\expDir/simd-vs-without-cycles-speedup.stats}
 
+\RefFigure{simd-vs-without-cycles-plot} shows the normalized \gls{solution}
+costs for the two \glspl{pattern set} describe above, with \gls{pattern
+  set}~\refPattern{no-simd} as \gls{baseline} and \gls{pattern
+  set}~\refPattern{with-simd} as \gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -232,11 +237,6 @@ is performed on any of the \glspl{function} prior to \gls{instruction
           }
   \labelFigure{simd-vs-without-cycles-plot}
 \end{figure}
-
-\RefFigure{simd-vs-without-cycles-plot} shows the normalized \gls{solution}
-costs for the two \glspl{pattern set} describe above, with \gls{pattern
-  set}~\refPattern{no-simd} as \gls{baseline} and \gls{pattern
-  set}~\refPattern{with-simd} as \gls{subject}.
 %
 The costs range from
 \printMinCycles{%

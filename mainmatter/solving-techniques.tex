@@ -191,6 +191,8 @@ The straightforward implementation of the \gls{objective function}
 how cost is distributed across the \glspl{operation} that need to be covered,
 which in turn results in poor \gls{propagation}.
 %
+See for example \refFigure{cost-example}.
+%
 \begin{figure}
   \mbox{}%
   \hfill%
@@ -250,8 +252,6 @@ which in turn results in poor \gls{propagation}.
           }
   \labelFigure{cost-example}
 \end{figure}
-%
-See for example \refFigure{cost-example}.
 %
 Assume a \gls{UF graph} that can be covered by three \glspl{match} -- $m_1$,
 $m_2$, and~$m_3$ -- which have costs~4, 1, and~5, respectively, and that they
@@ -892,6 +892,9 @@ As described in \refSection{modeling-value-reuse}, \glspl{datum} in the \gls{UF
   graph} that are copies of the same value are \gls{copy-related.d} and
 therefore interchangeable.
 %
+This is another source for symmetric \glspl{solution}, which is illustrated in
+\refFigure{interchangeable-data-example}.
+
 \begin{figure}
   \begin{minipage}[b]{58mm}%
     \centering%
@@ -974,9 +977,6 @@ therefore interchangeable.
           }
   \labelFigure{interchangeable-data-example}
 \end{figure}
-%
-This is another source for symmetric \glspl{solution}, which is illustrated in
-\refFigure{interchangeable-data-example}.
 
 Assume a \gls{UF graph} containing two \gls{copy-related.d} values,
 \irVar*{v}[1] and~\irVar*{v}[2], that may both be connected to two
@@ -1260,6 +1260,8 @@ check whether the above conditions for \glsshort{dominate.m}[ance] apply with
 the additional check that none of intermediate values of $m$ are used by other
 \glspl{match}.
 %
+An example is shown in \refFigure{dominated-matches-example}.
+
 \begin{figure}
   \centering%
   \input{figures/solving-techniques/dominated-matches-example}
@@ -1274,8 +1276,6 @@ the additional check that none of intermediate values of $m$ are used by other
           }
   \labelFigure{dominated-matches-example}
 \end{figure}
-%
-An example is shown in \refFigure{dominated-matches-example}.
 
 
 \subsection{Illegal Matches}
@@ -1289,6 +1289,11 @@ Such \glspl{match} are said to be \gls!{illegal.m}.
 One set of \gls{illegal.m} \glspl{match} are those which would leave some
 \gls{operation} uncoverable if selected.
 %
+In \refFigure{uncovered-operations-example}, for example, selecting
+\gls{match}~$m_1$ would leave \gls{operation}~$o_2$ uncovered since it can only
+be covered by match~$m_2$, but selection of this \gls{match} is inhibited if
+$m_1$ is selected.
+%
 \begin{figure}
   \centering%
   \input{figures/solving-techniques/uncovered-operations-example}
@@ -1300,11 +1305,6 @@ One set of \gls{illegal.m} \glspl{match} are those which would leave some
           }
   \labelFigure{uncovered-operations-example}
 \end{figure}
-%
-In \refFigure{uncovered-operations-example}, for example, selecting
-\gls{match}~$m_1$ would leave \gls{operation}~$o_2$ uncovered since it can only
-be covered by match~$m_2$, but selection of this \gls{match} is inhibited if
-$m_1$ is selected.
 %
 Hence this set of \gls{illegal.m} \glspl{match} is computed as
 %
@@ -1548,6 +1548,8 @@ symmetric to one another.
 The idea is to select a \gls{location} as a representative for each distinct
 intersection made by the storage requirements.
 %
+See for example \refFigure{canonical-locations-example}.
+%
 \begin{figure}
   \centering%
   \input{figures/solving-techniques/canonical-locations-example}
@@ -1559,8 +1561,6 @@ intersection made by the storage requirements.
           }
   \labelFigure{canonical-locations-example}
 \end{figure}
-%
-See for example \refFigure{canonical-locations-example}.
 %
 For sake of discussion, each storage requirment has been labeled with a tag.
 %
@@ -1685,6 +1685,12 @@ No hypothesis is attempted on which \glsshort{constraint model} is better.
 
 \input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
 
+\RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
+(including \gls{presolving} time) for the two \glspl{constraint model} described
+above in the first experiment, with \glsshort{constraint
+  model}~\refModel{obj-fun-mul-div} as \gls{baseline} and \glsshort{constraint
+  model}~\refModel{obj-fun-div-mul} as \gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1714,12 +1720,6 @@ No hypothesis is attempted on which \glsshort{constraint model} is better.
           }
   \labelFigure{new-op-cost-fun-vs-old-plot}
 \end{figure}
-
-\RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
-(including \gls{presolving} time) for the two \glspl{constraint model} described
-above in the first experiment, with \glsshort{constraint
-  model}~\refModel{obj-fun-mul-div} as \gls{baseline} and \glsshort{constraint
-  model}~\refModel{obj-fun-div-mul} as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -1825,6 +1825,12 @@ and~\refModel{obj-fun-refined-lb-ub}{} to outperform \glsshort{constraint
   model}~\refModel{obj-fun-refined-lb-ub} to outperform \glsplshort{constraint
   model}~\refModel{obj-fun-refined-lb} and~\refModel{obj-fun-refined-ub}.
 
+\input{\expDir/obj-fun-refined-vs-naive-opt-proofs-over-time.stats}
+
+\RefFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot} shows the
+percentage of optimal \glspl{solution} found over time for the five
+\glspl{constraint model} described above in the second experiment.
+%
 \begin{figure}
   \renewcommand{\plotPercentageFont}{\large}
   \renewcommand{\plotSecondsFont}{\large}
@@ -1855,12 +1861,6 @@ and~\refModel{obj-fun-refined-lb-ub}{} to outperform \glsshort{constraint
           }
   \labelFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot}
 \end{figure}
-
-\input{\expDir/obj-fun-refined-vs-naive-opt-proofs-over-time.stats}
-
-\RefFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot} shows the
-percentage of optimal \glspl{solution} found over time for the five
-\glspl{constraint model} described above in the second experiment.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -1941,6 +1941,12 @@ compared with those produced by \glsshort{constraint
 
 \input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
 
+\RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
+\gls{solution} costs for the two \glspl{constraint model} described above in the
+third experiment, with \glsshort{constraint
+  model}~\refModel{obj-fun-naive-lb-ub} as \gls{baseline} and
+\glsshort{constraint model}~\refModel{obj-fun-refined-ub} as \gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1981,12 +1987,6 @@ compared with those produced by \glsshort{constraint
           }
   \labelFigure{obj-fun-refined-vs-naive-cycles-speedup-plot}
 \end{figure}
-
-\RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
-\gls{solution} costs for the two \glspl{constraint model} described above in the
-third experiment, with \glsshort{constraint
-  model}~\refModel{obj-fun-naive-lb-ub} as \gls{baseline} and
-\glsshort{constraint model}~\refModel{obj-fun-refined-ub} as \gls{subject}.
 %
 The costs range from
 \printMinCycles{
@@ -2156,6 +2156,12 @@ As described in \refChapter{constraint-programming}, this is because some
 \includeSolvTechStats{impl-cons-locs-of-defs}
 \includeSolvTechStats{impl-cons-fix-fall-throughs}
 
+\RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
+solving times (including \gls{presolving} time) for the two \glspl{constraint
+  model} described above in the first experiment, with \glsshort{constraint
+  model}~\refModel{impl-ex-wo-single-con} as \gls{baseline} and
+\glsshort{constraint model}~\refModel{impl-ex-w-single-con} as \gls{subject}.
+%
 \NewDocumentCommand{\mkFigureCaption}{s}{%
   \def\capToCText{%
     Set of plots for evaluating each implied constraint's impact on solving
@@ -2172,7 +2178,7 @@ As described in \refChapter{constraint-programming}, this is because some
     \caption[\capToCText]{\capText}%
   }%
 }
-
+%
 \begin{figure}
   \centering
 
@@ -2219,10 +2225,10 @@ As described in \refChapter{constraint-programming}, this is because some
   \mkFigureCaption
   \labelFigure{single-impl-con-vs-no-con-solving-time-plots}
 \end{figure}
-
+%
 \let\oldthefigure\thefigure
 \renewcommand{\thefigure}{\oldthefigure{} (cont.)}
-
+%
 \begin{figure}
   \ContinuedFloat
   \centering
@@ -2243,14 +2249,8 @@ As described in \refChapter{constraint-programming}, this is because some
 
   \mkFigureCaption*
 \end{figure}
-
+%
 \renewcommand{\thefigure}{\oldthefigure}
-
-\RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
-solving times (including \gls{presolving} time) for the two \glspl{constraint
-  model} described above in the first experiment, with \glsshort{constraint
-  model}~\refModel{impl-ex-wo-single-con} as \gls{baseline} and
-\glsshort{constraint model}~\refModel{impl-ex-w-single-con} as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2353,6 +2353,13 @@ and~\refModel{impl-ex-all-cons}.
 \includeSolvTechStats[enable]{only-good-implied-cons}
 \includeSolvTechStats{all-implied-cons}
 
+\RefFigure{diff-impl-cons-comb-solving-time-plot} shows the normalized solving
+times (including \gls{presolving} time) for three of the \glspl{constraint
+  model} described above, with \glsshort{constraint
+  model}~\refModel{impl-ex-no-cons} as \gls{baseline} and \glsplshort{constraint
+  model}~\refModel{impl-ex-only-good-cons} and~\refModel{impl-ex-all-cons} as
+\glspl{subject}.
+%
 \begin{figure}
   \centering%
 
@@ -2390,13 +2397,6 @@ and~\refModel{impl-ex-all-cons}.
           }
   \labelFigure{diff-impl-cons-comb-solving-time-plot}
 \end{figure}
-
-\RefFigure{diff-impl-cons-comb-solving-time-plot} shows the normalized solving
-times (including \gls{presolving} time) for three of the \glspl{constraint
-  model} described above, with \glsshort{constraint
-  model}~\refModel{impl-ex-no-cons} as \gls{baseline} and \glsplshort{constraint
-  model}~\refModel{impl-ex-only-good-cons} and~\refModel{impl-ex-all-cons} as
-\glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2520,6 +2520,12 @@ others may degrade solving time.
 \includeSolvTechStats{dom-cons-null-copy-match-selection}
 \includeSolvTechStats{dom-cons-kill-match-selection}
 
+\RefFigure{single-dom-con-vs-no-con-solving-time-plots} shows the normalized
+solving times (including \gls{presolving} time) for two \glspl{constraint model}
+described above in the first experiment, with \glsshort{constraint
+  model}~\refModel{dom-ex-wo-single-con} as \gls{baseline} and
+\glsshort{constraint model}~\refModel{dom-ex-w-single-con} as \gls{subject}.
+%
 \begin{figure}
   \centering
 
@@ -2557,12 +2563,6 @@ others may degrade solving time.
           }
   \labelFigure{single-dom-con-vs-no-con-solving-time-plots}
 \end{figure}
-
-\RefFigure{single-dom-con-vs-no-con-solving-time-plots} shows the normalized
-solving times (including \gls{presolving} time) for two \glspl{constraint model}
-described above in the first experiment, with \glsshort{constraint
-  model}~\refModel{dom-ex-wo-single-con} as \gls{baseline} and
-\glsshort{constraint model}~\refModel{dom-ex-w-single-con} as \gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2637,6 +2637,13 @@ and~\refModel{dom-ex-all-cons}.
 \includeSolvTechStats[enable]{only-good-dom-cons}
 \includeSolvTechStats{all-dom-cons}
 
+\RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
+times (including \gls{presolving} time) for the three \glspl{constraint model}
+described, with \glsshort{constraint model}~\refModel{dom-ex-no-cons} as
+\gls{baseline} and \glsplshort{constraint
+  model}~\refModel{dom-ex-only-good-cons} and~\refModel{dom-ex-all-cons} as
+\glspl{subject}.
+%
 \begin{figure}
   \centering%
 
@@ -2674,13 +2681,6 @@ and~\refModel{dom-ex-all-cons}.
           }
   \labelFigure{diff-dom-cons-comb-solving-time-plot}
 \end{figure}
-
-\RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
-times (including \gls{presolving} time) for the three \glspl{constraint model}
-described, with \glsshort{constraint model}~\refModel{dom-ex-no-cons} as
-\gls{baseline} and \glsplshort{constraint
-  model}~\refModel{dom-ex-only-good-cons} and~\refModel{dom-ex-all-cons} as
-\glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2805,6 +2805,13 @@ to an overall solving time improvement while others may degrade solving time.
 \includeSolvTechStats{redun-non-null-copy-matches}
 \includeSolvTechStats{canonical-locs}
 
+\RefFigure{single-presolving-vs-no-presolving-solving-time-plots} shows the
+normalized solving times (including \gls{presolving} time) for the two
+\glspl{constraint model} described above in the first experiment, with
+\glsshort{constraint model}~\refModel{pre-ex-wo-single-tech} as \gls{baseline}
+and \glsshort{constraint model}~\refModel{pre-ex-w-single-tech} as
+\gls{subject}.
+%
 \begin{figure}
   \centering
 
@@ -2858,13 +2865,6 @@ to an overall solving time improvement while others may degrade solving time.
           }
   \labelFigure{single-presolving-vs-no-presolving-solving-time-plots}
 \end{figure}
-
-\RefFigure{single-presolving-vs-no-presolving-solving-time-plots} shows the
-normalized solving times (including \gls{presolving} time) for the two
-\glspl{constraint model} described above in the first experiment, with
-\glsshort{constraint model}~\refModel{pre-ex-wo-single-tech} as \gls{baseline}
-and \glsshort{constraint model}~\refModel{pre-ex-w-single-tech} as
-\gls{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -2957,6 +2957,13 @@ No hypothesis is attempted regarding the relative performance between
 \includeSolvTechStats{bad-presolving}
 \includeSolvTechStats{all-presolving}
 
+\RefFigure{diff-presolving-comb-solving-time-plot} shows the normalized solving
+times (including \gls{presolving} time) for the four \glspl{constraint model}
+described above in the second experiment, with \glsshort{constraint
+  model}~\refModel{pre-ex-no-techs} as \gls{baseline} and \glsplshort{constraint
+  model}~\refModel{pre-ex-only-good-techs}, \refModel{pre-ex-no-bad-techs},
+and~\refModel{pre-ex-all-techs} as \glspl{subject}.
+%
 \begin{figure}
   \centering%
 
@@ -3007,13 +3014,6 @@ No hypothesis is attempted regarding the relative performance between
           }
   \labelFigure{diff-presolving-comb-solving-time-plot}
 \end{figure}
-
-\RefFigure{diff-presolving-comb-solving-time-plot} shows the normalized solving
-times (including \gls{presolving} time) for the four \glspl{constraint model}
-described above in the second experiment, with \glsshort{constraint
-  model}~\refModel{pre-ex-no-techs} as \gls{baseline} and \glsplshort{constraint
-  model}~\refModel{pre-ex-only-good-techs}, \refModel{pre-ex-no-bad-techs},
-and~\refModel{pre-ex-all-techs} as \glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{
@@ -3144,6 +3144,13 @@ No hypothesis is attempted regarding the relative performance between
 \includeSolvTechStats{all-bad}
 \includeSolvTechStats{all}
 
+\RefFigure{diff-solv-tech-comb-solving-time-plot} shows the normalized solving
+times (including \gls{presolving} time) for the five \glspl{constraint model}
+described above, with \glsshort{constraint model}~\refModel{st-ex-no-techs} as
+\gls{baseline} and \glsplshort{constraint
+  model}~\refModel{st-ex-only-good-techs}, \refModel{st-ex-no-bad-techs},
+and~\refModel{st-ex-all-techs} as \glspl{subject}.
+%
 \begin{figure}
   \centering%
 
@@ -3201,13 +3208,6 @@ No hypothesis is attempted regarding the relative performance between
           }
   \labelFigure{diff-solv-tech-comb-solving-time-plot}
 \end{figure}
-
-\RefFigure{diff-solv-tech-comb-solving-time-plot} shows the normalized solving
-times (including \gls{presolving} time) for the five \glspl{constraint model}
-described above, with \glsshort{constraint model}~\refModel{st-ex-no-techs} as
-\gls{baseline} and \glsplshort{constraint
-  model}~\refModel{st-ex-only-good-techs}, \refModel{st-ex-no-bad-techs},
-and~\refModel{st-ex-all-techs} as \glspl{subject}.
 %
 The solving times range from
 \printMinSolvingTime{

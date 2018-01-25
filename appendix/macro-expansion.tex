@@ -566,6 +566,14 @@ reduce the compilation time, which is the time it takes to compile a given
 In 1969 \textcite{LowryMedlock:1969} introduced one of the first table-driven
 methods for \gls{code generation}.
 
+In their implementation of \gls{FHC}, \citeauthor{LowryMedlock:1969} essentially
+perform \gls{instruction selection} after \gls{register allocation} depending on
+the status of the operands to a computation.
+%
+These statuses are represented as bit strings, which are then matched against
+the corresponding bit strings for the \glspl{instruction} (see
+\refTable{instruction-bit-strings} for examples).
+%
 \begin{table}
   \centering%
   \figureFont\figureFontSize%
@@ -591,14 +599,6 @@ methods for \gls{code generation}.
           }
   \labelTable{instruction-bit-strings}
 \end{table}
-
-In their implementation of \gls{FHC}, \citeauthor{LowryMedlock:1969} essentially
-perform \gls{instruction selection} after \gls{register allocation} depending on
-the status of the operands to a computation.
-%
-These statuses are represented as bit strings, which are then matched against
-the corresponding bit strings for the \glspl{instruction} (see
-\refTable{instruction-bit-strings} for examples).
 %
 The bits represent restrictions applied by the \glspl{instruction}, for example
 that the first operand must be fetched from memory, the second operand must

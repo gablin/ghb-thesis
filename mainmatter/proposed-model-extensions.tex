@@ -181,6 +181,9 @@ We begin by discussing the \gls{local.ra} problem and then extend it into the
 
 \subsection{Local Register Allocation}
 
+We will describe the problem using the example is shown in
+\refFigure{local-reg-alloc-example}.
+%
 \begin{figure}
   \mbox{}%
   \hfill%
@@ -240,9 +243,6 @@ We begin by discussing the \gls{local.ra} problem and then extend it into the
           }
   \labelFigure{local-reg-alloc-example}
 \end{figure}
-
-We will describe the problem using the example is shown in
-\refFigure{local-reg-alloc-example}.
 %
 Assume a set of \glspl{instruction} in a given \gls{block} that have been
 scheduled (\refFigure{local-reg-alloc-example-ir}).
@@ -411,6 +411,8 @@ to be taken into consideration.
 Furthermore, the \glspl{live range} are no longer necessarily limited within a
 single \gls{block} but may span multiple \glspl{block}.
 %
+An example is shown in \refFigure{global-reg-alloc-example}.
+%
 \begin{figure}
   \mbox{}%
   \hfill%
@@ -453,8 +455,6 @@ single \gls{block} but may span multiple \glspl{block}.
   \caption{Example of global register allocation}
   \labelFigure{global-reg-alloc-example}
 \end{figure}
-%
-An example is shown in \refFigure{global-reg-alloc-example}.
 %
 Assume a \gls{function} where a variable~\irVar*{x} is defined in one
 \gls{block}~\irBlock*{A} and used in another \gls{block}~\irBlock*{D}

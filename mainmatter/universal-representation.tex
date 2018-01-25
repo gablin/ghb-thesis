@@ -237,6 +237,17 @@ int factorial(int $\irVar{n}[1]$) {
   \labelFigure{function-example}
 \end{figure}%
 %
+For the conditional control flow originating from the \irBlock*{head}
+\gls{block}, a \gls{control node} representing a conditional branch is inserted
+and connected to the \irBlock*{head} \gls{node}, and the labeled \glspl{edge}
+are redirected to the new \gls{node}.
+%
+Lastly, a \gls{control node} representing \gls{function} return is inserted and
+connected to the \irBlock*{end} \gls{node}.
+%
+This results in the \gls{graph} shown in
+\refFigure{uf-graph-example-extended-cf-graph}.
+
 \begin{figure}
   \centering
 
@@ -309,18 +320,7 @@ int factorial(int $\irVar{n}[1]$) {
             Dotted lines represent definition edges%
           }
   \labelFigure{uf-graph-example}
-\end{figure}%
-%
-For the conditional control flow originating from the \irBlock*{head}
-\gls{block}, a \gls{control node} representing a conditional branch is inserted
-and connected to the \irBlock*{head} \gls{node}, and the labeled \glspl{edge}
-are redirected to the new \gls{node}.
-%
-Lastly, a \gls{control node} representing \gls{function} return is inserted and
-connected to the \irBlock*{end} \gls{node}.
-%
-This results in the \gls{graph} shown in
-\refFigure{uf-graph-example-extended-cf-graph}.
+\end{figure}
 
 An invariant here is that each \gls{control node} has exactly one \gls{edge}
 flowing \emph{from} a \gls{block node}, and each \gls{block node} has exactly

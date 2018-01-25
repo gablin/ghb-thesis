@@ -78,6 +78,10 @@ This dissertation introduces \gls!{universal instruction selection},\!%
 %
 a new approach that addresses the problems recently described.
 %
+Outlined in \refFigure{approach-overview}, the approach is the first to combine
+\gls{instruction selection} with \gls{global code motion} and \gls{block
+  ordering}.
+%
 \begin{figure}
   \centering%
   \input{figures/introduction/approach-overview}
@@ -85,10 +89,6 @@ a new approach that addresses the problems recently described.
   \caption{Overview of the approach}
   \labelFigure{approach-overview}
 \end{figure}
-%
-Outlined in \refFigure{approach-overview}, the approach is the first to combine
-\gls{instruction selection} with \gls{global code motion} and \gls{block
-  ordering}.
 %
 In doing so, the approach alleviates selection of sophisticated
 \glspl{instruction} that would otherwise not have been selectable.
@@ -149,6 +149,9 @@ A \gls!{compiler} is a tool that takes a \gls{program}, written in some
 programming language, as input and produces equivalent \gls{assembly code} for a
 specific processor, called the \gls!{target machine}, as output.
 %
+As shown in \refFigure{compiler-overview}, a \gls{compiler} typically consists
+of three parts:%
+%
 \begin{figure}
   \centering%
   \input{figures/introduction/compiler-overview}
@@ -156,9 +159,6 @@ specific processor, called the \gls!{target machine}, as output.
   \caption{Overview of a typical compiler}
   \labelFigure{compiler-overview}
 \end{figure}
-%
-As shown in \refFigure{compiler-overview}, a \gls{compiler} typically consists
-of three parts:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item a \gls!{frontend}, which performs syntactic and semantic analysis and
@@ -194,7 +194,11 @@ Another code generation task of interest is \gls!{block ordering}, where the
 
 
 \subsection{The Need for New Techniques and Representations}
+\labelSection{intro-saturated-arithmetic}
 
+\RefFigure{isel-gcmotion-example} shows a program that computes the saturated
+sums of two integer arrays.
+%
 \begin{filecontents*}{isel-gcmotion-example.c}
 int i = 0;
 while (i < N) {
@@ -206,7 +210,7 @@ while (i < N) {
   i++;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
 
@@ -244,11 +248,6 @@ while (i < N) {
           }
   \labelFigure{isel-gcmotion-example}%
 \end{figure}
-
-\labelPage{saturated-arithmetic}
-
-\RefFigure{isel-gcmotion-example} shows a program that computes the saturated
-sums of two integer arrays.
 %
 In \gls!{saturation arithmetic}, the result of an arithmetic \gls{operation}
 will always stay within a range fixed by a minimum and maximum value.
@@ -351,6 +350,9 @@ effective use of \gls{SIMD.i} \glspl{instruction}.
 
 \subsection{For Combining Instruction Selection and Block Ordering}
 
+\RefFigure{isel-blorder-example} shows a \gls{function} that keeps calling
+another \gls{function} (with side effects) until it returns a non-zero value.
+%
 \begin{filecontents*}{isel-blorder-example.c}
 int f() {
   int a;
@@ -360,7 +362,7 @@ int f() {
   return a;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \subcaptionbox{C code\labelFigure{isel-blorder-example-c}}%
@@ -462,9 +464,6 @@ int f() {
           }
   \labelFigure{isel-blorder-example}%
 \end{figure}
-
-\RefFigure{isel-blorder-example} shows a \gls{function} that keeps calling
-another \gls{function} (with side effects) until it returns a non-zero value.
 %
 Assume that the \gls{target machine} has three \glspl{instruction} for handling
 control flow:%
@@ -1144,6 +1143,9 @@ we compute the \gls{CI} using \gls{percentile bootstrapping} with
 \section{Outline}
 \labelSection{intro-outline}
 
+As shown in \refFigure{dissertation-structure}, the dissertation is structured
+into four parts:
+%
 \begin{figure}
   \centering%
   \input{figures/introduction/dissertation-structure}
@@ -1151,9 +1153,6 @@ we compute the \gls{CI} using \gls{percentile bootstrapping} with
   \caption{Structure of the dissertation}
   \labelFigure{dissertation-structure}
 \end{figure}
-
-As shown in \refFigure{dissertation-structure}, the dissertation is structured
-into four parts:
 %
 \begin{description}
   \item[Background]

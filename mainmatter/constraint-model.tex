@@ -167,6 +167,8 @@ multiple results -- for example, many modern processors provide memory
 \glspl{instruction} that automatically increment or decrement the address value
 -- could lead to cyclic data dependencies~\cite{EbnerEtAl:2008}.
 %
+An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
+%
 \begin{filecontents*}{cyclic-data-deps-example-ir.c}
 $\ldots$
 $\irAssign{\irVar{p}[2]}{\irAdd{\irVar{p}[1]}{\irVar{4}}}$
@@ -212,8 +214,6 @@ $\irStore{\irVar{p}[1]}{\irVar{q}[2]}$
   \caption{Example illustrating cyclic data dependencies}%
   \labelFigure{cyclic-data-deps-example}%
 \end{figure}
-%
-An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
 %
 If both \glspl{match} are selected, then either value~\irVar*{p}[2] or
 value~\irVar*{q}[2] will be \gls{use.d}[d] before it is available (depending on
@@ -618,6 +618,8 @@ emitted whose cost will be accounted for.
 In order to retain matching of \glspl{pattern}, we also need to perform
 \gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
 %
+See for example \refFigure{copy-extending-pattern-example}.
+%
 \begin{figure}
   \setlength{\nodeDist}{12pt}%
 
@@ -652,8 +654,6 @@ In order to retain matching of \glspl{pattern}, we also need to perform
   \caption{Example of copy-extending a pattern}
   \labelFigure{copy-extending-pattern-example}
 \end{figure}
-%
-See for example \refFigure{copy-extending-pattern-example}.
 %
 The \gls{UP graph} captures the behavior of an \gls{instruction} that adds two
 values~\irVar*{r} and~\irVar*{s} and then shifts the result by one bit to the
@@ -728,6 +728,8 @@ Code quality can be increased if \glspl{instruction} are allowed to reuse copies
 of values, which is a crucial feature to be expected in the code emitted by any
 modern \gls{instruction selector}.
 %
+See for example \refFigure{value-reuse-example}.
+%
 \begin{figure}
   \setlength{\nodeDist}{12pt}%
 
@@ -782,8 +784,6 @@ modern \gls{instruction selector}.
   \labelFigure{value-reuse-example}
 \end{figure}
 %
-See for example \refFigure{value-reuse-example}.
-%
 Originally, the \gls{UF graph} has a value~\irVar*{v} which is used by two
 \glspl{operation} coverable by \glspl{match}~$m_1$ and~$m_2$
 (\refFigure{value-reuse-example-uf-graph}).
@@ -830,6 +830,8 @@ of \glspl{datum} that are \gls{copy-related.d} to the \glspl{input datum} in
 $m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
 \gls{define.d}[d] by~$m$.
 %
+See for example \refFigure{match-duplication-example}.
+%
 \begin{figure}
   \setlength{\nodeDist}{12pt}%
 
@@ -862,8 +864,6 @@ $m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
   \caption{Example of match duplication}
   \labelFigure{match-duplication-example}
 \end{figure}
-%
-See for example \refFigure{match-duplication-example}.
 %
 The \gls{match set} contains a \gls{match}~$m$ that uses value~\irVar*{v}[1],
 which is \gls{copy-related.d} with value~\irVar*{v}[2]
@@ -904,6 +904,8 @@ In other words, unlike before when a \gls{match} was \mbox{1-to-1} mapping
 between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
   graph}, we now allow certain mappings to be a \mbox{1-to-$n$} mapping.
 %
+See for example \refFigure{alt-values-example}.
+%
 \begin{figure}
   \setlength{\nodeDist}{12pt}%
 
@@ -936,8 +938,6 @@ between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
   \caption{Example of alternative values}
   \labelFigure{alt-values-example}
 \end{figure}
-%
-See for example \refFigure{alt-values-example}.
 %
 Again, the \gls{match set} contains a \gls{match}~$m$ that uses
 value~\irVar*{v}[1], which is \gls{copy-related.d} with value~\irVar*{v}[2]
@@ -1160,6 +1160,12 @@ Since \gls{match duplication} yields an exponential increase in number of
 
 \input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
 
+\RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
+solving times (including \gls{presolving} time) for the two \glspl{constraint
+  model} described above, with \glsshort{constraint model}~\refModel{match-dup}
+as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
+\gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1189,12 +1195,6 @@ Since \gls{match duplication} yields an exponential increase in number of
           }
   \labelFigure{alt-values-vs-match-dup-solving-time-plot}
 \end{figure}
-
-\RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
-solving times (including \gls{presolving} time) for the two \glspl{constraint
-  model} described above, with \glsshort{constraint model}~\refModel{match-dup}
-as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
-\gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1257,6 +1257,11 @@ we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
 
 \input{\expDir/alt-values-vs-without-cycles-speedup.stats}
 
+\RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
+\gls{solution} costs for the two \glspl{constraint model} describe above, with
+\glsshort{constraint model}~\refModel{wo-value-reuse} as \gls{baseline} and
+\glsshort{constraint model}~\refModel{w-value-reuse} as \gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1282,11 +1287,6 @@ we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
           }
   \labelFigure{alt-values-vs-without-cycles-plot}
 \end{figure}
-
-\RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
-\gls{solution} costs for the two \glspl{constraint model} describe above, with
-\glsshort{constraint model}~\refModel{wo-value-reuse} as \gls{baseline} and
-\glsshort{constraint model}~\refModel{w-value-reuse} as \gls{subject}.
 %
 All \glspl{function} are solved to optimality.
 %
@@ -1355,6 +1355,8 @@ For some combinations of \glspl{function} and \glspl{target machine} with
 \gls{fall-through} \glspl{instruction}, there exist no valid \gls{block}
 sequence without inserting one or more additional jump \glspl{instruction}.
 %
+See for example \refFigure{jump-insert-example}.
+%
 \begin{figure}
   \setlength{\nodeDist}{20pt}%
   \tikzset{
@@ -1394,8 +1396,6 @@ sequence without inserting one or more additional jump \glspl{instruction}.
           }
   \labelFigure{jump-insert-example}
 \end{figure}
-%
-See for example \refFigure{jump-insert-example}.
 %
 \Glspl{block}~\irBlock*{A} and~\irBlock*{B} both contain control-flow
 \glspl{instruction} that branches to the beginning of \irBlock*{B} if the
@@ -1543,6 +1543,8 @@ target \gls{block}.
 Like with \gls{copy extension}, to retain matching \gls{branch extension} must
 also be performed on each \gls{UF graph} in the \gls{pattern set}.
 %
+An example is shown in \refFigure{branch-extension-example}.
+
 \begin{figure}
   \mbox{}%
   \hfill%
@@ -1573,8 +1575,6 @@ also be performed on each \gls{UF graph} in the \gls{pattern set}.
   \caption{Example of branch extension}%
   \labelFigure{branch-extension-example}
 \end{figure}
-%
-An example is shown in \refFigure{branch-extension-example}.
 
 The disadvantage of \gls{branch extension} is that it inflates the \gls{search
   space}.
@@ -1618,6 +1618,8 @@ jump \gls{instruction} that falls through to a given block~$b$, add to $S$ a new
 \gls{pattern}~$p'$ that is a copy of $p$ but has no \gls{fall-through}
 \gls{constraint}, emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and has
 cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
+%
+An example is shown in \refFigure{dual-target-branch-pattern-example}.
 %
 \begin{figure}
   \subcaptionbox{%
@@ -1671,8 +1673,6 @@ cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
   \caption{Example of creating a DTB pattern}%
   \labelFigure{dual-target-branch-pattern-example}
 \end{figure}
-%
-An example is shown in \refFigure{dual-target-branch-pattern-example}.
 %
 Because a \gls{DTB pattern} has no \gls{fall-through} \gls{constraint}, it
 essentially models a conditional jump \gls{instruction} capable of directly
@@ -1729,6 +1729,12 @@ larger.
   \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
 }
 
+\RefFigure{dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
+shows the normalized solving times (including \gls{presolving} time) for the two
+\glspl{constraint model} described above, with \glsshort{constraint
+  model}~\refModel{branch-ext} as \gls{baseline} and \glsshort{constraint
+  model}~\refModel{dual-target} as \gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1762,12 +1768,6 @@ larger.
     dual-target-branch-patterns-vs-branch-extension-solving-time-plot%
   }
 \end{figure}
-
-\RefFigure{dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
-shows the normalized solving times (including \gls{presolving} time) for the two
-\glspl{constraint model} described above, with \glsshort{constraint
-  model}~\refModel{branch-ext} as \gls{baseline} and \glsshort{constraint
-  model}~\refModel{dual-target} as \gls{subject}.
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
@@ -1814,6 +1814,12 @@ implementing insertion of jump \glspl{instruction}.
 
 \input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
 
+\RefFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot} shows
+the normalized \gls{solution} costs for the two \glspl{constraint model}
+described above, with \glsshort{constraint model}~\refModel{branch-ext} as
+\gls{baseline} and \glsshort{constraint model}~\refModel{dual-target} as
+\gls{subject}.
+%
 \begin{figure}
   \centering%
   \maxsizebox{\textwidth}{!}{%
@@ -1842,12 +1848,6 @@ implementing insertion of jump \glspl{instruction}.
           }
   \labelFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot}
 \end{figure}
-
-\RefFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot} shows
-the normalized \gls{solution} costs for the two \glspl{constraint model}
-described above, with \glsshort{constraint model}~\refModel{branch-ext} as
-\gls{baseline} and \glsshort{constraint model}~\refModel{dual-target} as
-\gls{subject}.
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
 of number of conditional branch \glspl{instruction}.
@@ -1976,6 +1976,8 @@ For some combinations of \glspl{function} and \glspl{target machine}, it may be
 beneficial to \glsshort!{recomputation} values appearing in common
 subexpressions instead of reusing them.
 %
+See for example \refFigure{recomputation-example}.
+%
 \begin{filecontents*}{recomputation-example-ir.c}
 $\irAssign{a}{x + y}$
 store a, $\ldots$
@@ -2016,8 +2018,6 @@ store a, $\ldots$
   \labelFigure{recomputation-example}
 \end{figure}
 %
-See for example \refFigure{recomputation-example}.
-%
 The \gls{function} performs two memory stores using the same address
 value~\irVar*{a} (\refFigure{recomputation-example-ir}).
 %
@@ -2055,6 +2055,8 @@ This process is called \gls!{if-conversion}.
 Although the \gls{universal representation} enables predicated versions of the
 \glspl{instruction} to be captured as \glspl{pattern}, selection of such
 \glspl{pattern} is typically prevented by the \gls{constraint model}.
+%
+See for example \refFigure{if-conversions-example}.
 %
 \begin{filecontents*}{if-conversions-example-ir.c}
 entry:
@@ -2123,8 +2125,6 @@ entry:
   \labelFigure{if-conversions-example}
 \end{figure}
 %
-See for example \refFigure{if-conversions-example}.
-%
 Assume a \gls{function} containing two sums, \irVar*{a} and~\irVar*{b}, which
 are conditionally computed given a certain predicate~\irVar*{p}
 (\refFigure{if-conversions-example-ir}).
@@ -2161,6 +2161,10 @@ In cases where the \gls{function} contains sign or zero extensions, depending on
 the hardware the \gls{constraint model} may produce code with redundant
 \glspl{instruction}.
 %
+See for example \refFigure{implicit-extensions-example}, which depicts a
+\glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
+and~$m_3$.
+%
 \begin{figure}
   \centering%
   \input{figures/constraint-model/implicit-extensions-graph}
@@ -2168,10 +2172,6 @@ the hardware the \gls{constraint model} may produce code with redundant
   \caption{Example illustrating implicit sign or zero extensions}%
   \labelFigure{implicit-extensions-example}
 \end{figure}
-%
-See for example \refFigure{implicit-extensions-example}, which depicts a
-\glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
-and~$m_3$.
 %
 Assume that \irCode*{foo} represents a \gls{function} call and that \irVar*{a},
 \irVar*{b}, and \irVar*{c} represent 8-bit values stored in 32-bit
