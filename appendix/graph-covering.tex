@@ -799,9 +799,10 @@ generated (hence \gls{instruction selection}, \gls{instruction scheduling}, and
 \footnote{%
   Although it is depicted here primarily as a post-step to \gls{code
     generation}, one could just as well design a \glsshort{Davidson-Fraser
-    approach}-style \gls{compiler} (see \refAppendix{macro-expansion}) where
-  simple methods are applied to generate correct but naive \gls{assembly code},
-  and then rely on \gls{mutation scheduling} to improve the code quality.%
+    approach}-style \gls{compiler} (see \refAppendix{macro-expansion} on
+  \refPageOfSection{macro-expansion-with-peephole-optimization}) where simple
+  methods are applied to generate correct but naive \gls{assembly code}, and
+  then rely on \gls{mutation scheduling} to improve the code quality.%
 }
 %
 This is done by progressively moving the computations, one at a time, such that
