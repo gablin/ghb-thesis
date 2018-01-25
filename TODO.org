@@ -8,8 +8,8 @@
 ** TODO Remove misuse of glossary terms "variable" and "operation"
 ** TODO Replace 'x\%' with '\SI{x}{\percent}'
 ** DONE Add labels to optimal-solutions-over-time plot
-** TODO Add minizinc model as appendix
-** TODO Add references in the minizinc model to refer to the corresponding Eq in the dissertation
+** DONE Add minizinc model as appendix
+** DONE Add references in the minizinc model to refer to the corresponding Eq in the dissertation
 ** DONE Add List of Techniques appendix
 ** DONE In appendices, swap typesetting convention of terminals and nonterminals
 ** DONE In appendices, replace 'linear form' with 'normal form'
