@@ -1,4 +1,6 @@
 * BEFORE SUBMISSION
+** TODO Rewrite introduction to appendices
+** TODO Write acknowledgements
 ** DONE Reduce vertical space between list items
 ** TODO Remove 'electronic' document class option
 ** DONE Update TRITA number
