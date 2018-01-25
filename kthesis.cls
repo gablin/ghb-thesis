@@ -133,6 +133,7 @@
 \@mkFieldCommand{subtitle}
 \@mkFieldCommand{degreeEng}
 \@mkFieldCommand{degreeSwe}
+\@mkFieldCommand{tritaName}
 \@mkFieldCommand{tritaYear}
 \@mkFieldCommand{tritaNumber}
 \@mkFieldCommand{issn}
@@ -312,7 +313,7 @@
   \setlength{\parindent}{0pt}%
   \begin{minipage}{\textwidth}%
     \begin{tabular}[b]{@{}l@{}}
-      TRITA-ICT \@getField{tritaYear}:\@getField{tritaNumber}\\
+      \@getField{tritaName}-\@getField{tritaYear}:\@getField{tritaNumber}\\
       \@ifHasField{issn}{%
         ISSN: \@getField{issn}\\
       }{}%
