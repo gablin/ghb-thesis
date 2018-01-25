@@ -97,6 +97,38 @@
     \IfBooleanTF{##1}{\refcmd*{##2}{\prefix}}%
                      {\refcmd{##2}{\prefix}}%
   }%
+  \expandafter\NewDocumentCommand\csname @refPagesOf#1List\endcsname{smm}{%
+    \setcounter{refListLength}{0}%
+    \foreach \r in {##2} {\stepcounter{refListLength}}%
+    \edef\numRefs{\arabic{refListLength}}%
+    \IfBooleanF{##1}{##3}%
+    \foreach \r [count=\ri] in {##2} {%
+      \ifnum \ri=\numRefs
+        \ifnum \numRefs>1
+          and~%
+        \fi%
+      \fi%
+      \pageref{#1:\r}%
+      \ifnum \ri<\numRefs
+        \ifnum \numRefs>2
+          ,%
+        \fi
+        \ %
+      \fi%
+    }%
+  }%
+  \expandafter\NewDocumentCommand\csname refPagesOf#1List\endcsname{sm}{%
+    \def\refcmd{\csname @refPagesOf#1List\endcsname}%
+    \def\prefix{pp.\thinspace}%
+    \IfBooleanTF{##1}{\refcmd*{##2}{\prefix}}%
+                     {\refcmd{##2}{\prefix}}%
+  }%
+  \expandafter\NewDocumentCommand\csname RefPagesOf#1List\endcsname{sm}{%
+    \def\refcmd{\csname @refPagesOf#1List\endcsname}%
+    \def\prefix{Pages~}%
+    \IfBooleanTF{##1}{\refcmd*{##2}{\prefix}}%
+                     {\refcmd{##2}{\prefix}}%
+  }%
   \expandafter\NewDocumentCommand\csname nameref#1\endcsname{sm}{%
     \def\refcmd{\csname ref#1\endcsname}%
     \IfBooleanF{##1}{\refcmd*{##2}.\thinspace}%
