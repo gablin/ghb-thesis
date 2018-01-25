@@ -63,12 +63,12 @@ Depending on the \gls{instruction set}, the latter problem permits
 \glspl{solution} with potentially higher code quality.
 %
 For example, assume a \gls{UF graph} where a sum is used as address in two
-memory operations and a \gls{target machine} where the address can be computed
-as part of the memory instructions.
+memory \glspl{operation} and a \gls{target machine} where the address can be
+computed as part of the memory instructions.
 %
 A \gls{solution} to the latter problem would therefore only need two
 instructions, whereas the former problem would require three instructions -- one
-to compute the sum and two to perform the memory operations -- since the
+to compute the sum and two to perform the memory \glspl{operation} -- since the
 addition is not allowed to be covered by both memory instructions.
 %
 In certain conditions, however, an add instruction may still be required.
@@ -884,7 +884,7 @@ If a \gls{match} has $k$~\glspl{input datum}, each with $n$~\gls{copy-related.d}
 values, then $\mBigO(n^k)$ new \glspl{match} will be created.
 %
 Although the decision of \gls{value reuse} is intuitively orthogonal to the
-decisions of selecting a \gls{match} and placing it into a \glspl{block}, these
+decisions of selecting a \gls{match} and placing it into a \gls{block}, these
 decisions must be remade for each new \gls{match}, thereby enlarging the
 \gls{search space} with many symmetric \glspl{solution}.
 

@@ -131,9 +131,9 @@ particular constant loads, out of \glspl{block} with high execution frequency
 into \glspl{block} with lower frequency, thereby reducing the cost.
 %
 In \cCode*{alloc\_save\_spac}, our approach is also able to move an addition and
-memory operation into the same \gls{block} and implement both using a single
-auto-increment memory \gls{instruction}, whereas \gls{LLVM} must implement these
-computations using two \glspl{instruction}.
+memory \gls{operation} into the same \gls{block} and implement both using a
+single auto-increment memory \gls{instruction}, whereas \gls{LLVM} must
+implement these computations using two \glspl{instruction}.
 %
 These improvements are only possible due to integrating \gls{global.is}
 \gls{instruction selection} with \gls{global code motion}.

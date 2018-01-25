@@ -91,7 +91,7 @@ following requirements:
     as every such \gls{node} will incur a \gls{variable} in the \gls{constraint
       model}.
   \item \labelRequirement{uni-rep-exactly-one-inbound-edge-for-values}
-    \typesetReq{In a \glspl{function graph}, every \gls{node} representing a
+    \typesetReq{In a \gls{function graph}, every \gls{node} representing a
       value must have exactly one inbound \gls{data-flow edge}.}
     %
     This ensures that every value has exactly one \gls{match} defining that
@@ -562,12 +562,12 @@ is a subset of the value range of~$c$.
 Common subexpressions may appear as part of legalizing the \gls{function} before
 passing it to the \gls{instruction selector}.
 %
-For example, in \gls{LLVM} there is an operation called
+For example, in \gls{LLVM} there is an \gls{operation} called
 \instrCode*{getelementptr} which takes care of computing the address when
 accessing an array element or object field.
 %
-To construct the corresponding \gls{UF graph}, these operations first need to be
-lowered into a series of additions and multiplications.
+To construct the corresponding \gls{UF graph}, these \glspl{operation} first
+need to be lowered into a series of additions and multiplications.
 %
 However, if two or more \instrCode*{getelementptr}s compute the same address
 then these expressions will be duplicated, thus resulting in redundant
@@ -591,7 +591,7 @@ These dependencies are captured using \glspl!{state node}.
 A side-effect \gls{operation} takes, in addition to \glspl{value node}, exactly
 one \gls{state node} as input and produces another \gls{state node}.
 %
-Hence, if an \glspl{operation}~$o$ implicitly depends on another
+Hence, if an \gls{operation}~$o$ implicitly depends on another
 \gls{operation}~$p$, then $o$ takes as input the \gls{state node} produced by
 $p$.
 

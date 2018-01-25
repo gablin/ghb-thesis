@@ -113,10 +113,11 @@ The simplest kind of \gls{instruction} forms the set of
 These produce only a single observable output, in the sense that ``observable''
 means a value that can be accessed through the \gls{assembly code}.
 %
-This includes all \glspl{instruction} that implement a single operation (such as
-addition, multiplication, and bit operations), but it also includes more
-complicated \glspl{instruction} that implement several operations (such as
-memory operations with complicated \glspl{addressing mode}).
+This includes all \glspl{instruction} that implement a single \gls{operation}
+(such as addition, multiplication, and bit \glspl{operation}), but it also
+includes more complicated \glspl{instruction} that implement several
+\glspl{operation} (such as memory \glspl{operation} with complicated
+\glspl{addressing mode}).
 %
 As long as the observable output constitutes a single value, a
 \gls{single-output.ic} \gls{instruction} can be arbitrarily complex.
@@ -175,7 +176,7 @@ to each output -- this will be explained in
 disjoint from one another.
 %
 This typically includes \gls{SIMD.i} \glspl{instruction}, which execute the same
-operations simultaneously on many distinct input values.
+\glspl{operation} simultaneously on many distinct input values.
 
 \Glspl{disjoint-output.ic} \glspl{instruction} are common in high-throughput
 graphics architectures and \glspl{DSP}, but also appear in \gls{X86} as
@@ -195,8 +196,9 @@ Examples of such \glspl{instruction} are those implementing \gls{saturation
 %
 \footnote{%
   Recently, a request was made to extend the \gls{LLVM} \gls{compiler} with
-  \glspl!{compiler intrinsic} -- a kind of special \gls{IR} operations -- to
-  facilitate selection of such \glspl{instruction}~\cite{LLVM:2015:Intrinsics}.%
+  \glspl!{compiler intrinsic} -- a kind of special \gls{IR} \glspl{operation} --
+  to facilitate selection of such
+  \glspl{instruction}~\cite{LLVM:2015:Intrinsics}.%
 }
 %
 and hardware loop \glspl{instruction}, which repeat a fixed sequence of
@@ -309,8 +311,8 @@ in principle support all kinds of \gls{instruction}.
 %
 In practice, however, \glshyphened{macro expansion}[ding] \glspl{instruction
   selector} are typically limited to \gls{single-output.ic} \glspl{instruction}
-and often only expand one \gls{IR}~operation at at time, which results in poor
-code quality.
+and often only expand one \gls{IR}~\gls{operation} at at time, which results in
+poor code quality.
 %
 Another disadvantage is that because of idiosyncrasies of the dedicated
 language, the \glspl{macro} are often hard to read and understand, making them
@@ -325,22 +327,22 @@ To mitigate these problems, \gls{macro expansion} can be combined with
   A \gls!{peephole optimizer} is a \gls{program} that combines two or more
   adjacent \glspl{instruction} into a single \gls{instruction}.
   %
-  The term \emph{peephole} come from the narrow window of operation, as a
+  The term \emph{peephole} come from the narrow window of \gls{operation}, as a
   \gls{peephole optimizer} only considers a small number of \glspl{instruction}
   at a time.
 }
 %
 First, a \gls{naive.me} \gls{macro expander} expands the \gls{function} under
-compilation one \gls{IR}~operation at at time.
+compilation one \gls{IR}~\gls{operation} at at time.
 %
 Once fully expanded, a \gls{peephole optimizer} runs over the result and
 replaces inefficient sequences of \glspl{instruction} with more compentent
 equivalences.
 %
 Consequently, the \glspl{macro} can be divided up into those required for
-correctness -- that is, the simple, single-operation \gls{macro} which ensure
-that code can always be produced -- and those used for efficiency, which makes
-for a simpler and more incremental retargeting effort.
+correctness -- that is, the simple, single-\gls{operation} \gls{macro} which
+ensure that code can always be produced -- and those used for efficiency, which
+makes for a simpler and more incremental retargeting effort.
 %
 Due to the people who pioneered the idea, this scheme is known as the
 \gls!{Davidson-Fraser approach}~\cite{DavidsonFraser:1984}.
@@ -518,7 +520,7 @@ Assume further that the \gls{compiler} should maximize performance.
 %
 The corresponding matches \mbox{$m_1, m_2, \ldots, m_8, m_9, m_{10}$} are
 therefore assigned costs \mbox{$0, 1, \ldots, 1, 5, 5$}, respectively ($m_1$ has
-zero cost since \gls{variable}~\irVar*{i} is already in a \gls{register}).
+zero cost since variable~\irVar*{i} is already in a \gls{register}).
 %
 Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
 \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
@@ -1844,7 +1846,7 @@ For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
 of two fixed-point values return a value that is shifted one bit to the left.
 %
 For such \glspl{target machine}, both the value~\irCode*{0} and the accumulator
-\gls{variable}~\irVar*{s} should be in shifted mode throughout the entire
+variable~\irVar*{s} should be in shifted mode throughout the entire
 \gls{function}, and only restored into normal mode upon return.
 %
 Otherwise the accumulated value would be needlessly shifted back and forth
@@ -1984,10 +1986,9 @@ For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c}
 is not in \gls{SSA}~form as \glspl{variable}~\irCode*{f} and~\irCode*{n} are
 redefined within the loop.
 %
-By introducing new \glspl{variable} and connecting these using
-\glspl!{phi-function} where the value depends on control flow, the
-\gls{function} can be rewritten into \gls{SSA}~form, as shown in
-\refFigure{sea-of-nodes-example-ssa-c}.
+By introducing new variables and connecting these using \glspl!{phi-function}
+where the value depends on control flow, the \gls{function} can be rewritten
+into \gls{SSA}~form, as shown in \refFigure{sea-of-nodes-example-ssa-c}.
 
 From an \gls{SSA}-based \gls{function}, we can construct a \gls{data-flow graph}
 called the \gls!{SSA graph}~\cite{GerlekEtAl:1995}.
