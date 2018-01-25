@@ -9,8 +9,6 @@
 
 \todo{rewrite introduction}
 
-\todo{add figures}
-
 Although \gls{DAG covering} is more general than \gls{tree covering} -- and thus
 offers a more powerful approach to \gls{instruction selection} -- it is still
 not enough for handling all aspects featured in the \glspl{function} and
@@ -318,10 +316,16 @@ using this approach.
 
 \section{Modeling Instruction Selection as a PBQP}
 
-\todo{rewrite introduction}
+In 2003, \textcite{EcksteinEtAl:2003} recognized that limiting \gls{instruction
+  selection} to \gls{local.is} scope can decrease code quality of \gls{assembly
+  code} generated for fixed-point arithmetic \glspl{DSP}.
+%
+For more details, see \refAppendix{dag-covering} on
+\refPageOfSection{dc-limitations}.
 
-Similar to \gls{IP}-based approaches, another method of modeling
-\gls{instruction selection} is to model it as a \gls!{PBQP}.
+To overcome this problem, \citeauthor{EcksteinEtAl:2003} developed a design that
+takes \glspl{SSA graph} as input -- making this technique the first to do so --
+and transforms the \gls{pattern selection} problem into a \gls!{PBQP}.
 %
 First introduced by \textcite{ScholzEckstein:2002} to model and solve
 \gls{register allocation}, \gls{PBQP} is a variant of the \gls!{QAP}, which is a
@@ -332,43 +336,15 @@ Although both problems are NP-complete in general, a subclass of \gls{PBQP} can
 be solved in linear time which inspired \citeauthor{ScholzEckstein:2002} in
 developing a greedy, linear-time solver.
 
-Formally, a \gls{PBQP} is defined as follows.
-%
-\begin{definition}[PBQP]
-  Let \mbox{$\mVector{c}_1, \ldots, \mVector{c}_n$} be integer vectors, and let
-  \mbox{$\mMatrix{C}_{1,1}, \mMatrix{C}_{1,2}, \ldots, \mMatrix{C}_{1,n}$},
-  \mbox{$\mMatrix{C}_{2,2}, \ldots, \mMatrix{C}_{n,n}$}
-  be integer matrices of size \mbox{$|c_i| \times |c_j|$} for \mbox{$i = 1,
-    \ldots, n$} and \mbox{$j = i, \ldots, n$}.
-  %
-  Let also \mbox{$\mVector{\mVar{x}}_1, \ldots, \mVector{\mVar{x}}_n$} be
-  vectors of integer \glspl{variable}, where \mbox{$\mVar{x}_i \in \mSet{0,
-      1}^{|c_i|}$} for \mbox{$i = 1, \ldots, n$}.
-  %
-  Then
-  %
-  \begin{displaymath}
-    \begin{array}{rl}
-      \text{minimize}
-        & \displaystyle
-          \sum_{\mathclap{1 \leq i < j \leq n}}
-          \mVector{\mVar{x}}_i^{\transp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
-          \sum_{\mathclap{1 \leq i \leq n}}
-          \mVector{c}_i^{\transp} \mVector{\mVar{x}}_i, \\
-      \text{subject to}
-        & \forall 1 \leq i \leq n :
-          \mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1. \\
-    \end{array}
-  \end{displaymath}
-\end{definition}
-
-Intuitively, one can interpret this definition as follows.
+A formal definition of \gls{PBQP} is given in
+\refChapter{existing-isel-techniques-and-reps} on \refPageOfDefinition{pbqp},
+which can intuitively be explained as follows.
 %
 Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
-Then $\mVector{\mVar{x}}_i$ is a \gls!{variable} with $k$~elements, where
-\mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been selected for
-decision~$i$.
+Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
+where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
+selected for decision~$i$.
 %
 For each \gls{variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
@@ -378,23 +354,31 @@ The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
 decisions~$i$ and~$j$ are represented through a cost matrix~$\mMatrix{C}_{ij}$.
 
-In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular \gls{match}
-to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each such
-\gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
+In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular
+\gls{match} to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each
+such \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 \glspl{instruction} that may need to be selected due to certain combinations of
 \glspl{match}.
 %
 For example, assume two nodes~$i$ and~$j$ where $j$ depends on $i$.
 %
-Assume further that the \glspl{instruction} are represented as a \gls{machine
-  grammar}, and that~$i$ and~$j$ can be covered using two \glspl{rule}, $r_i$
-and $r_j$, with \glspl{production} \mbox{$\mNT{A} \rightarrow
-  \irCode*{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and \mbox{$\mNT{B}
-  \rightarrow \irCode*{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$}, respectively.
+Assume further that the \glspl{instruction} are represented as a
+\glshyphened{normal form.g} \gls{machine grammar}, and that~$i$ and~$j$ can be
+covered using two \glspl{rule}, $r_i$ and $r_j$, with \glspl{production}
+\mbox{$\mNT{A} \rightarrow \irCode*{op}_{\mathit{i}} \; \mNT{A} \; \mNT{A}$} and
+\mbox{$\mNT{B} \rightarrow \irCode*{op}_{\mathit{j}} \; \mNT{B} \; \mNT{B}$},
+respectively.
 %
 Since the result of $r_i$ does not match the operands of $r_j$, this \gls{rule}
 combination requires a \gls{chain.r} \gls{rule} -- or a chain of these, if
 necessary -- that derives $\mNT{B}$ from $\mNT{A}$.
+%
+The $\mMatrix{C}_{ij}$ costs are calculated by computing the \gls{transitive
+  closure} for all \gls{chain.r} \glspl{rule}.
+%
+For this \citeauthor{EcksteinEtAl:2003} seem to have used the Floyd-Warshall
+algorithm~\cite{Floyd:1962}, and \textcite{SchaeferScholz:2007} later discovered
+a method that finds the optimal sequence of \gls{chain.r} \glspl{rule}.
 %
 Illegal combinations are prevented by assigning infinite cost.
 %
@@ -542,12 +526,37 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
   \labelFigure{pbqp-example}
 \end{figure}
 
-
-\paragraph{Handling DAG-shaped Patterns}
-
-The \gls{PBQP} model above assumes that all \glspl{pattern} are shaped as trees.
+Using a prototype implementation, \citeauthor{EcksteinEtAl:2003} ran experiments
+on a selected set of fixed-point \glspl{program} exhibiting the behavior
+discussed earlier.
 %
-To handle \gls{DAG}-shaped \glspl{pattern}, the model must be extended.
+The results indicate that their scheme improved performance by
+\mbox{\num{40}--\SI{60}{\percent}} on average -- and at most \SI{82}{\percent}
+for one \gls{function} -- compared to traditional \gls{tree covering}-based
+\glspl{instruction selector}.
+%
+According to \citeauthor{EcksteinEtAl:2003}, this considerable gain in
+performance comes from more efficient use of value modes to which \gls{tree
+  covering}-based techniques must make premature assignments, and thus could
+have a detrimental effect on code quality.
+%
+For example, if chosen poorly, the \gls{instruction selector} may need to emit
+additional \glspl{instruction} in order to undo decisions regarding value modes,
+which obviously reduces performance and needlessly increases the code
+size.
+%
+Although the technique by \citeauthor{EcksteinEtAl:2003} clearly mitigates these
+concerns, their design also has limitations of its own.
+%
+Most importantly, their \gls{PBQP} model can only support \glspl{pattern tree}
+and consequently hinders exploitation of many common \gls{target machine}
+features, such as \gls{multi-output.ic} \glspl{instruction}.
+
+
+\subsection{Handling DAG-shaped Patterns}
+
+To handle \gls{DAG}-shaped \glspl{pattern}, the \gls{PBQP} model must be
+extended.
 %
 First assume an extended \gls{grammar} where \gls{multi-output.ic}
 \glspl{instruction} are described using \gls{complex.r} \glspl{rule} (described
@@ -671,12 +680,13 @@ address the more traditional problem of \gls{instruction selection}.
 \subsubsection{\glsentrytext{Chess}}
 
 \textcite{LanneerEtAl:1990} developed in 1990 a design that was later adopted by
-\citeauthor{VanPraetEtAl:1994}~\cite{VanPraetEtAl:1994, VanPraetEtAl:2001} in their
-implementation of \gls{Chess}, a well-known compiler targeting \glspl{DSP} and
-\glspl{ASIP}.
+\citeauthor{VanPraetEtAl:1994}~\cite{VanPraetEtAl:1994, VanPraetEtAl:2001} in
+their implementation of \gls{Chess}, a well-known compiler targeting \glspl{DSP}
+and \glspl{ASIP}.
 
-Comparing \gls{Chess} to \gls{MSSQ} (see
-\refSection{modeling-entire-target-machines}), we find two striking differences.
+Comparing \gls{Chess} to \gls{MSSQ} (see \refAppendix{dag-covering} on
+\refPageOfSection{dc-modeling-entire-target-machines}), we find two striking
+differences.
 %
 First, in \gls{MSSQ} the data paths of the processor are given by a manually
 written \gls{machine description}, whereas \gls{Chess} derives these
@@ -713,11 +723,11 @@ This process iterates until no more \glspl{node} can be collapsed, and every
 remaining \gls{node} in the \gls{chaining graph} thus constitutes a
 \gls!{bundle}.
 %
-The same authors later extended this design in~\cite{VanPraetEtAl:2001} to consider
-selection between \emph{all} possible \glspl{bundle} using \glshyphened{branch
-  and bound} \gls{search}, and to enable some measure of code duplication by
-allowing the same operations in the \gls{function graph} to appear in multiple
-\glspl{bundle}.
+The same authors later extended this design in~\cite{VanPraetEtAl:2001} to
+consider selection between \emph{all} possible \glspl{bundle} using
+\glshyphened{branch and bound} \gls{search}, and to enable some measure of code
+duplication by allowing the same operations in the \gls{function graph} to
+appear in multiple \glspl{bundle}.
 
 Using this incremental scheme to form the \glspl{bundle}, the design by
 \citeauthor{VanPraetEtAl:1994} is capable of \gls{bundling} operations that
@@ -808,10 +818,10 @@ These operations are selected from a \gls!{mutation set}, which is conceptually
 a recursive data structure, as an expression in the \gls{mutation set} may use
 intermediate values that in turn necessitate \glspl{mutation set} of their own.
 %
-\citeauthor{NovackEtAl:2002} compute these \glspl{mutation set} by first taking the
-original operation and then applying a series of semantic-preserving functions
-that have been derived from various logical axioms, algebraic theorems, and the
-characteristics of the \gls{target machine}.
+\citeauthor{NovackEtAl:2002} compute these \glspl{mutation set} by first taking
+the original operation and then applying a series of semantic-preserving
+functions that have been derived from various logical axioms, algebraic
+theorems, and the characteristics of the \gls{target machine}.
 %
 For example, if the value~$X$ is computed as \mbox{$Y + 5$}, then $Y$ can later
 be obtained by computing \mbox{$X - 5$}.
