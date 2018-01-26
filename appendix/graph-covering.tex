@@ -150,7 +150,7 @@ the \gls{program} where the value of that variable must not be destroyed.
 This in turn means that each variable corresponds to a single value, which
 simplifies many \gls{program} optimization routines.
 
-For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-c} is
+For example, the \gls{function} shown in \refFigure{sea-of-nodes-example-2-c} is
 not in \gls{SSA}~form as \glspl{variable}~\irCode*{f} and~\irCode*{n} are
 redefined within the loop.
 %
@@ -192,7 +192,7 @@ int factorial(int $\irVar{n}[1]$) {
   \hfill%
   \subcaptionbox{%
                   C implementation of factorial%
-                  \labelFigure{sea-of-nodes-example-c}%
+                  \labelFigure{sea-of-nodes-example-2-c}%
                 }%
                 [50mm]%
                 {%
@@ -201,7 +201,7 @@ int factorial(int $\irVar{n}[1]$) {
                   \end{lstpage}%
                 }%
   \hfill\hfill%
-  \subcaptionbox{Code in SSA form\labelFigure{sea-of-nodes-example-ssa-c}}%
+  \subcaptionbox{Code in SSA form\labelFigure{sea-of-nodes-example-2-ssa-c}}%
                 {%
                   \begin{lstpage}{59mm}%
                     \lstinputlisting[language=c,mathescape]{fact-ssa.c}%
@@ -212,19 +212,19 @@ int factorial(int $\irVar{n}[1]$) {
 
   \vspace*{\betweensubfigures}
 
-  \subcaptionbox{SSA graph\labelFigure{sea-of-nodes-example-ssa-graph}}%
+  \subcaptionbox{SSA graph\labelFigure{sea-of-nodes-example-2-ssa-graph}}%
                 {%
                   \input{figures/graph-covering/sea-of-nodes-example-ssa-graph}%
                 }
 
   \caption{Example of an SSA graph}
-  \labelFigure{ssa-example}
+  \labelFigure{ssa-example-2}
 \end{figure}
 %
 By introducing new \glspl{variable} and connecting these using
 \glspl!{phi-function} where the value depends on control flow, the
 \gls{function} can be rewritten into \gls{SSA}~form, as shown in
-\refFigure{sea-of-nodes-example-ssa-c}.
+\refFigure{sea-of-nodes-example-2-ssa-c}.
 
 From an \gls{SSA}-based \gls{function}, we can construct a \gls{data-flow graph}
 called the \gls!{SSA graph}~\cite{GerlekEtAl:1995}.
@@ -236,7 +236,7 @@ These nodes are connected using \glspl{data-flow edge}, ignoring the fact that
 the \glspl{operation} may belong to different \glspl{block}.
 %
 For the example above, this results in the \gls{SSA graph} shown in
-\refFigure{sea-of-nodes-example-ssa-graph}, thus giving a complete view of the
+\refFigure{sea-of-nodes-example-2-ssa-graph}, thus giving a complete view of the
 data flow in the \gls{function}.
 
 But since the \gls{SSA graph} is devoid of any control-flow information, it is
@@ -260,7 +260,7 @@ the target of a jump depends on a Boolean value -- such jumps flow through
 special \emph{if}~\glspl{node}.
 %
 An example of the \gls{Click-Paleczny graph} is shown in
-\refFigure{click-paleczny-graph-example}.
+\refFigure{click-paleczny-graph-example-2}.
 
 \begin{figure}
   \centering%
@@ -269,7 +269,7 @@ An example of the \gls{Click-Paleczny graph} is shown in
   \caption[Example of a Click-Paleczny graph]%
           {%
             Example of a Click-Paleczny graph, corresponding to the program
-            shown in \refFigure{ssa-example}.
+            shown in \refFigure{ssa-example-2}.
             %
             Thin-lined nodes and edges denote data operations and data flow.
             %
@@ -278,7 +278,7 @@ An example of the \gls{Click-Paleczny graph} is shown in
             %
             Dashed edges indicate to which block an operation belongs%
           }
-  \labelFigure{click-paleczny-graph-example}
+  \labelFigure{click-paleczny-graph-example-2}
 \end{figure}
 
 
@@ -382,7 +382,7 @@ a method that finds the optimal sequence of \gls{chain.r} \glspl{rule}.
 %
 Illegal combinations are prevented by assigning infinite cost.
 %
-An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
+An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example-2}.
 
 \begin{figure}
   \centering%
@@ -414,7 +414,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
   \hfill%
   \subcaptionbox{%
                   SSA graph%
-                  \labelFigure{pbqp-example-ssa-graph}%
+                  \labelFigure{pbqp-example-2-ssa-graph}%
                 }{%
                   \input{%
                     figures/existing-isel-techniques-and-reps/%
@@ -434,7 +434,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   %
                   Cost matrices for uninteresting combinations are assumed to
                   consist of~0s%
-                  \labelFigure{pbqp-example-instance}%
+                  \labelFigure{pbqp-example-2-instance}%
                 }{%
                   \figureFontSize%
                   \apptocmd{\irFont}{\scriptsize}{}{}%
@@ -529,7 +529,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                 }
 
   \caption{Example of modeling instruction selection as a PBQP}
-  \labelFigure{pbqp-example}
+  \labelFigure{pbqp-example-2}
 \end{figure}
 
 Using a prototype implementation, \citeauthor{EcksteinEtAl:2003} ran experiments
@@ -566,7 +566,8 @@ extended.
 %
 First assume an extended \gls{grammar} where \gls{multi-output.ic}
 \glspl{instruction} are described using \gls{complex.r} \glspl{rule} (described
-on \refPage{extended-machine-grammars}, see also
+in \refAppendix{dag-covering} on
+\refPageOfSection{dc-rules-multiple-productions}, see also
 \refFigure{extended-machine-grammar-rule-anatomy}).
 %
 For each combination of \glspl{match} derived from \gls{proxy.r} \glspl{rule}

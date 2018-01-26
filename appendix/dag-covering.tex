@@ -988,7 +988,7 @@ Each \gls{node} in the \gls{conflict graph} represents a \gls{match}, and there
 exists an \gls{edge} between two \glspl{node} if and only if the corresponding
 \glspl{match} overlap.
 %
-An example of this is given in \refFigure{mis-example}.
+An example of this is given in \refFigure{mis-example-2}.
 %
 \begin{figure}
   \centering%
@@ -996,14 +996,14 @@ An example of this is given in \refFigure{mis-example}.
   \hfill%
   \subcaptionbox{%
                   Block DAG with matches%
-                  \labelFigure{mis-example-dag}%
+                  \labelFigure{mis-example-2-dag}%
                 }{%
                   \input{figures/dag-covering/mis-example-dag}%
                 }%
   \hfill%
   \subcaptionbox{%
                   Interference graph%
-                  \labelFigure{mis-example-int-graph}%
+                  \labelFigure{mis-example-2-int-graph}%
                 }{%
                   \input{figures/dag-covering/mis-example-int-graph}%
                 }%
@@ -1019,7 +1019,7 @@ An example of this is given in \refFigure{mis-example}.
                 m_5, m_8}$}, and \mbox{$\mSet{m_1, m_2, m_3, m_6, m_7}$}, which
             correspond to valid covers of the block DAG%
           }
-  \labelFigure{mis-example}
+  \labelFigure{mis-example-2}
 \end{figure}
 %
 By solving the \gls{MIS} problem for the \gls{conflict graph}, we obtain a
@@ -1065,8 +1065,6 @@ handle \gls{multi-output.ic} \glspl{instruction}.
 The idea is to model such \glspl{instruction} using \gls!{complex.r}[
   \glspl{rule}], which each consists of multiple \glspl{production} -- one for
 every result.
-%
-\labelPage{extended-machine-grammars}
 %
 In this dissertation, such \glspl{production} and their \glspl{pattern} are
 called \gls!{proxy.r}[ \glspl{rule}]%
@@ -2215,6 +2213,13 @@ multiple \glspl{block}.
 %
 To fully address this problem, one must resort to \gls{graph covering}.
 
+This also applies to other situations where decisions made for one \gls{block}
+can inhibit subsequent decisions for other \glspl{block}, such as enforcing
+specific storage locations or value modes.
+%
+For example, \refFigure{block-dags-limit-example-2} shows a \gls{function} that
+multiplies the elements of two arrays and sums the results.
+%
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
   int s = 0;
@@ -2224,7 +2229,7 @@ int f(int* A, int* B, int N) {
   return s;
 }
 \end{filecontents*}
-
+%
 \begin{figure}
   \centering%
   \subcaptionbox{C code\labelFigure{block-dags-limit-example-2-c}}%
@@ -2239,7 +2244,7 @@ int f(int* A, int* B, int N) {
                   %
                   For brevity, the subtrees concerning \irCode*{A[i]}
                   and \irCode*{B[i]} are not included%
-                  \labelFigure{block-dags-limit-dags}%
+                  \labelFigure{block-dags-limit-example-2-dags}%
                 }%
                 [60mm]%
                 {%
@@ -2287,13 +2292,6 @@ int f(int* A, int* B, int N) {
   \caption{Example illustrating the limitation of block DAGs}
   \labelFigure{block-dags-limit-example-2}
 \end{figure}
-
-This also applies to other situations where decisions made for one \gls{block}
-can inhibit subsequent decisions for other \glspl{block}, such as enforcing
-specific storage locations or value modes.
-%
-For example, \refFigure{block-dags-limit-example-2} shows a \gls{function} that
-multiplies the elements of two arrays and sums the results.
 %
 Assume that the arrays consist of fixed-point values.
 %

@@ -68,7 +68,7 @@ $G$ if every \gls{node} in the \gls{expression tree} appears in exactly one
 match from~$C$.
 %
 Such a subset is called a \gls!{cover}, and examples are shown in
-\refFigure{p-match-sel-example}.
+\refFigure{p-match-sel-example-2}.
 
 \begin{filecontents*}{p-match-sel-example.c}
 x = A[i + 1];
@@ -76,7 +76,7 @@ x = A[i + 1];
 
 \begin{figure}
   \centering%
-  \subcaptionbox{C code\labelFigure{p-match-sel-example-c}}%
+  \subcaptionbox{C code\labelFigure{p-match-sel-example-2-c}}%
                 {%
                   \begin{lstpage}{2.6cm}%
                     \lstinputlisting[language=c]{p-match-sel-example.c}%
@@ -86,7 +86,7 @@ x = A[i + 1];
   \subcaptionbox{%
                   Instructions. The $*s$ \mbox{notation} means ``get value at
                   address $s$ in memory''%
-                  \labelFigure{p-match-sel-example-instrs}%
+                  \labelFigure{p-match-sel-example-2-instrs}%
                 }{%
                   \figureFontSize%
                   \begin{tabular}{%
@@ -107,7 +107,7 @@ x = A[i + 1];
   \hfill%
   \subcaptionbox{%
                   Expression tree and its matches%
-                  \labelFigure{p-match-sel-example-tree}%
+                  \labelFigure{p-match-sel-example-2-tree}%
                 }{%
                   \input{figures/tree-covering/p-match-sel-example-tree}%
                 }
@@ -131,7 +131,7 @@ x = A[i + 1];
             this information can be propagated from the root node after having
             found a cover%
           }
-  \labelFigure{p-match-sel-example}
+  \labelFigure{p-match-sel-example-2}
 \end{figure}
 
 For most \glspl{target machine} there will be a tremendous amount of overlap
@@ -751,7 +751,7 @@ multiple, smaller \glspl{rule} until the \gls{grammar} is in \gls{normal
 %
 For example, rewriting the \gls{grammar} shown in
 \refTable{grammar-rules-example} into \gls{normal form.g} results in the
-\gls{grammar} shown in \refTable{normal-form-grammar-example}.
+\gls{grammar} shown in \refTable{normal-form-grammar-example-2}.
 %
 \begin{table}[t]
   \centering%
@@ -792,7 +792,7 @@ For example, rewriting the \gls{grammar} shown in
             rules~\mbox{4--6} are introduced in order to transform rules~1 and~2
             into base rules%
           }
-  \labelTable{normal-form-grammar-example}
+  \labelTable{normal-form-grammar-example-2}
 \end{table}
 %
 Note that the new \glspl{rule} have zero cost and no \gls{action} as these are
