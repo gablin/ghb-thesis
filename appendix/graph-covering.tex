@@ -7,24 +7,27 @@
 \chapter{Graph Covering}
 \labelAppendix{graph-covering}
 
-\todo{rewrite introduction}
+This appendix considers techniques based on \gls{graph covering}.
+%
+First, we introduce the principle in \refSection{gc-principle} and describe
+representations that enable this principle in \refSection{gc-representations}.
+%
+In \refSection{gc-extending-tree-covering-techniques-to-dags}, we describe
+techniques that extend methods from \gls{tree covering} to \glspl{graph}.
+%
+\glsunset{PBQP}
+%
+In \refSection{gc-pbqp-based-approaches}, we describe techniques that model
+\gls{instruction selection} as a \gls{PBQP}.
+%
+\glsreset{PBQP}
+%
+Other \gls{graph}-based approaches, that do not fit into any of the sections
+above, are discussed in \refSection{gc-other-approaches}.
+%
+Lastly, we summarize in \refSection{gc-summary}.
 
-Although \gls{DAG covering} is more general than \gls{tree covering} -- and thus
-offers a more powerful approach to \gls{instruction selection} -- it is still
-not enough for handling all aspects featured in the \glspl{function} and
-\glspl{instruction}.
-%
-For example, control flow incurred by loop statements cannot be modeled in a
-\gls{block DAG} as it requires the use of \glspl{cycle}, which violates the
-definition of \glspl{DAG}.
-%
-By resorting to full-fledged \glspl{graph} we attain \gls!{graph covering},
-which is the most general form of covering.
-%
-Unfortunately it also constitutes the shortest appendix among the
-\glspl{principle} discussed in this dissertation.
-
-This appendix is based on material presented in
+The appendix is based on material presented in
 \cite[Chap.\thinspace5]{HjortBlindell:2016:Survey} that has been adapted for
 this dissertation.
 %
@@ -33,6 +36,7 @@ To not disturb the flow of reading, material already presented in
 
 
 \section{The Principle}
+\labelSection{gc-principle}
 
 In \gls{DAG covering}-based \gls{instruction selection}, \glspl{function} can
 only be modeled one \gls{block} at a time as \glspl{cycle} are forbidden to
@@ -108,6 +112,7 @@ designated for \gls{graph covering}.
 
 
 \section{Sea-of-nodes IRs}
+\labelSection{gc-representations}
 
 With \glsshort{tree covering} and \gls{DAG covering}, it is sufficient to
 represent the \gls{function} on \gls{block} level.
@@ -282,7 +287,8 @@ An example of the \gls{Click-Paleczny graph} is shown in
 \end{figure}
 
 
-\section{Pattern Selection on the Click-Paleczny Graph}
+\section{Extending Tree Covering Techniques to Graphs}
+\labelSection{gc-extending-tree-covering-techniques-to-dags}
 
 \textcite{PalecznyEtAl:2001} introduced an approach for performing
 \gls{instruction selection} based on the \gls{Click-Paleczny graph}.
@@ -315,6 +321,7 @@ using this approach.
 
 
 \section{Modeling Instruction Selection as a PBQP}
+\labelSection{gc-pbqp-based-approaches}
 
 In 2003, \textcite{EcksteinEtAl:2003} recognized that limiting \gls{instruction
   selection} to \gls{local.is} scope can decrease code quality of \gls{assembly
@@ -672,6 +679,7 @@ none of the \glsshort{PBQP}-based techniques can support \gls{inter-block.ic}
 
 
 \section{Other Graph-Based Approaches}
+\labelSection{gc-other-approaches}
 
 \subsection{More Hardware Modeling Techniques}
 
@@ -880,6 +888,7 @@ Unfortunately the authors neglected to say anything about the time complexity of
 
 
 \section{Summary}
+\labelSection{gc-summary}
 
 In this appendix we have considered a number of techniques that are founded, in
 one form or another, on the \gls{principle} of \gls{graph covering}.

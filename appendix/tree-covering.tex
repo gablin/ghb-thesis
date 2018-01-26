@@ -7,11 +7,46 @@
 \chapter{Tree Covering}
 \labelAppendix{tree-covering}
 
-\todo{rewrite introduction}
+This appendix considers techniques based on \gls{tree covering}.
+%
+First, we introduce the principle in \refSection{tc-principle}.
+%
+We then describe the first \gls{tree}-based approaches in
+\refSection{first-techniques-to-use-tree-pattern-matching}.
+%
+In \refSection{tc-lr-parsing-based-approaches} we describe parser-based
+approaches, where methods typically used for \gls{syntactic analysis} is
+reinstrumented for \gls{instruction selection}.
+%
+The techniques thus far are all bottom-up-oriented, and in
+\refSection{tc-top-down-approaches} we describe the first top-down-oriented
+approaches.
+%
+In \refSection{tc-separating-matching-and-selection}, we describe the first
+techniques that separate the \gls{matching} and \gls{selection} problems,
+allowing the latter problem to be solved \gls{optimal.ps}[ly].
+%
+In \refSection{tc-other-tree-based-approaches}, we describe other
+\gls{tree}-based approaches that do not fit into any of the sections above.
+%
+Limitations of this principle are disccussed in \refSection{tc-limitations}, and
+we summarize in \refSection{tc-summary}.
 
-As we saw in \refAppendix{macro-expansion}, the main limitation of most
-\glspl{instruction selector} based on \gls{macro expansion} is that the scope of
-expansion is restricted to a single \gls{AST} or \gls{IR} \gls{node}.
+The appendix is based on material presented in
+\cite[Chap.\thinspace3]{HjortBlindell:2016:Survey} that has been adapted for
+this dissertation.
+%
+To not disturb the flow of reading, material already presented in
+\refChapter{existing-isel-techniques-and-reps} is duplicated in this appendix.
+
+
+\section{The Principle}
+\labelSection{tc-principle}
+
+As we saw in \refAppendix{macro-expansion} on \refPageOfSection{me-limitations},
+the main limitation of most \glspl{instruction selector} based on \gls{macro
+  expansion} is that the scope of expansion is restricted to a single \gls{AST}
+or \gls{IR} \gls{node}.
 %
 Hence exploitation of many \glspl{instruction} is excluded, resulting in low
 code quality.
@@ -24,16 +59,6 @@ then pick the one that yields the best \gls{assembly code}.
 These problems can be solved by employing another \gls{principle} of
 \gls{instruction selection} called \gls{tree covering}, which is also the most
 common \gls{principle} of techniques found in the current literature.
-
-This appendix is based on material presented in
-\cite[Chap.\thinspace3]{HjortBlindell:2016:Survey} that has been adapted for
-this dissertation.
-%
-To not disturb the flow of reading, material already presented in
-\refChapter{existing-isel-techniques-and-reps} is duplicated in this appendix.
-
-
-\section{The Principle}
 
 First, the \gls{IR} code is transformed into an \gls{expression tree}, as we saw
 in \refAppendix{macro-expansion} (see \refSection{me-expression-tree} on
@@ -245,8 +270,8 @@ where each \gls{instruction} comprises execution time and code size information,
 a string constituting the \gls{assembly code}, and the \gls{pattern} to be
 matched against the \gls{function}.
 %
-For each line in the \gls{function}, \gls{pattern matching} is done starting at a
-\gls{leaf} in the \gls{tree} corresponding to the current line.
+For each line in the \gls{function}, \gls{pattern matching} is done starting at
+a \gls{leaf} in the \gls{tree} corresponding to the current line.
 %
 For this \gls{subtree}, all \glspl{match} are found by comparing it against all
 \glspl{pattern} in the \gls{pattern set}.
@@ -504,6 +529,7 @@ to the \emph{first-matched-first-served} approach when selecting
 
 
 \section{Using LR Parsing to Cover Trees Bottom-Up}
+\labelSection{tc-lr-parsing-based-approaches}
 
 As already noted, a common flaw among the first designs is that they
 %
@@ -1823,6 +1849,7 @@ modeling of many typical \gls{target machine} features such as
 
 
 \section{Using Recursion to Cover Trees Top-Down}
+\labelSection{tc-top-down-approaches}
 
 The \gls{tree covering} techniques we have examined so far -- in particular
 those based on \gls{LR parsing} -- all operate \emph{bottom-up}: the
@@ -2044,7 +2071,7 @@ publish any experimental results, thus making it difficult to judge whether the
 technique in practice.
 
 
-\section{A Note on Tree Rewriting \versus Tree Covering}
+\subsection{A Note on Tree Rewriting \versus Tree Covering}
 
 At this point some readers may feel that \gls{tree rewriting} -- where
 \glspl{pattern} are iteratively selected for rewriting the \gls{expression tree}
@@ -2065,7 +2092,7 @@ It could therefore be argued that the two are interchangeable, but I regard
 problem, which I regard as the fundamental \emph{\gls{principle}}.
 
 
-\subsection{Handling Chain Rules in Purely Coverage-Driven Designs}
+\subsubsection{Handling Chain Rules in Purely Coverage-Driven Designs}
 
 Another objection that may arise is how \gls{tree covering}, as a
 \gls{principle}, can support \gls{chain.r} \glspl{rule}.
@@ -2223,7 +2250,7 @@ will discuss in the coming appendices).
 
 
 \section{Separating Pattern Matching from Pattern Selection}
-\labelSection{separating-matching-and-selection}
+\labelSection{tc-separating-matching-and-selection}
 
 In the previously discussed techniques based on \gls{tree covering}, the tasks
 of \gls{pattern matching} and \gls{pattern selection} are unified into a single
@@ -4324,7 +4351,7 @@ The authors noted that while this incurs an additional overhead, their
 
 
 \section{Other Tree-Based Approaches}
-\labelSection{other-techniques-for-covering-trees}
+\labelSection{tc-other-tree-based-approaches}
 
 So far we have discussed the conventional methods of covering \glspl{tree}:
 \gls{LR parsing}, top-down recursion, dynamic programming, and the use of
@@ -4771,7 +4798,8 @@ effective.\!%
 }
 
 
-\section{Restrictions That Come with Trees}
+\section{Limitations of Using Trees}
+\labelSection{tc-limitations}
 
 While \gls{tree covering} enables use of more complex \glspl{pattern} compared
 to \gls{macro expansion}, \gls{tree covering} has several disadvantages of its
@@ -4859,6 +4887,7 @@ improves code quality over the \gls{principle} of pure \gls{macro expansion}
 
 
 \section{Summary}
+\labelSection{tc-summary}
 
 In this appendix, we have looked at numerous techniques that are based on the
 \gls{principle} of \gls{tree covering}.

@@ -7,28 +7,37 @@
 \chapter{Macro Expansion}
 \labelAppendix{macro-expansion}
 
-\todo{rewrite introduction}
+This appendix considers techniques based on \gls{macro expansion}.
+%
+First, we introduce the principle in \refSection{me-principle}.
+%
+We then describe early applications in \refSection{me-naive-macro-expansion},
+moving on to more sophisticated techniques in
+\refSection{me-peephole-optimization}.
+%
+We discuss limitations of this principle in \refSection{me-limitations} and then
+summarize in \refSection{me-summary}.
 
-This appendix is based on material presented in
+The appendix is based on material presented in
 \cite[Chap.\thinspace2]{HjortBlindell:2016:Survey} that has been adapted for
 this dissertation.
 %
 To not disturb the flow of reading, material already presented in
 \refChapter{existing-isel-techniques-and-reps} is duplicated in this appendix.
 %
-The techniques discussed in this appendix includes all those discussed in
-earlier surveys by \textcite{Cattell:1977} and
-\textcite{GanapathiEtAl:1982:Survey}, several of which are also discussed in
-depth by \textcite{Lunell:1983}.
+The techniques described here includes all those covered in earlier surveys by
+\textcite{Cattell:1977} and \textcite{GanapathiEtAl:1982:Survey}, several of
+which are also discussed in depth by \textcite{Lunell:1983}.
 %
 In \cite{GanapathiEtAl:1982:Survey} this \gls{principle} is called
 \gls!{interpretative.cg}[ \gls{code generation}].
 
 
 \section{The Principle}
+\labelSection{me-principle}
 
-The first \gls{principle} to emerge was \gls!{macro expansion}, with
-applications starting to appear in the 1960s.
+The first \gls{principle} to emerge was \gls{macro expansion}, with applications
+starting to appear in the 1960s.
 %
 In \gls{macro expansion}, the \glspl{instruction} are expressed as
 \glspl!{macro} which consist of two parts: a \gls!{template} to be matched over
@@ -89,6 +98,7 @@ in order to simplify this task by raising the level of abstraction.
 
 
 \section{Naive Macro Expansion}
+\labelSection{me-naive-macro-expansion}
 
 \subsection{Early Applications}
 
@@ -768,6 +778,7 @@ such as \gls{tree covering}, which will be described in
 
 
 \section{Improving Code Quality with Peephole Optimization}
+\labelSection{me-peephole-optimization}
 
 An early but still applied method of improving the quality of generated
 \gls{assembly code} is to perform a subsequent \gls{program} optimization step
@@ -1307,7 +1318,40 @@ Experiments show that this scheme reduced code size on average by
 \glspl{function}.
 
 
+\section{Limitations of Macro Expansion}
+\labelSection{me-limitations}
+
+Because \gls{macro}-expanding \glspl{instruction selector} only visit and
+execute \glspl{macro} one \gls{IR} \gls{node} at a time, they require a
+\mbox{1-to-1} or \mbox{1-to-$n$} mapping between the \gls{IR} \glspl{node} and
+the \glspl{instruction} provided by the \gls{target machine} in order to
+generate efficient \gls{assembly code}.
+%
+The limitation can be mitigated by incorporating additional logic and
+bookkeeping into the \glspl{macro}, but this quickly becomes an unmanageable
+task for the \gls{macro} writer if done manually.
+%
+Consequently, the code quality yielded by such techniques will typically be low.
+%
+Moreover, as \glspl{instruction} are often emitted one at a time, it also
+becomes difficult to make use of \glspl{instruction} that can have unintended
+effects on other \glspl{instruction}.
+
+The \gls{Davidson-Fraser approach} is therefore a more robust approach, where
+the \gls{instruction selector} is augmented with a \gls{peephole optimizer}.
+%
+\Gls{Peephole optimization} is inherently only limited by the size of its window
+of observation and can in theory support \glspl{instruction} of arbitrary
+complexity.
+%
+Because of this versatility, the \gls{Davidson-Fraser approach} remains one of
+the most powerful \gls{instruction selection} techniques to date.
+%
+For example, a variant is still applied in \gls{GCC} as of version~4.8.2.
+
+
 \section{Summary}
+\labelSection{me-summary}
 
 In this appendix we have discussed techniques and designs based on a
 \gls{principle} known as \gls{macro expansion}, which was the first approach to
@@ -1319,39 +1363,13 @@ The idea behind the \gls{principle} is to expand the \glspl{node} in the
 The expansion is done via \gls{template} matching and \gls{macro} invocation,
 which yields \glspl{instruction selector} that are resource-effective and
 straightforward to implement.
-
-But because \gls{macro}-expanding \glspl{instruction selector} only visit and
-execute \glspl{macro} one \gls{IR} \gls{node} at a time, they require a
-\mbox{1-to-1} or \mbox{1-to-$n$} mapping between the \gls{IR} \glspl{node} and
-the \glspl{instruction} provided by the \gls{target machine} in order to
-generate efficient \gls{assembly code}.
 %
-The limitation can be mitigated by incorporating additional logic and
-bookkeeping into the \glspl{macro}, but this quickly becomes an unmanageable
-task for the \gls{macro} writer if done manually.
+Early techniques, however, applied this principle \gls{naive.me}[ly], yielding
+poor code quality.
 %
-Consequently, the code quality yielded by these techniques will typically be
-low.
-%
-Moreover, as \glspl{instruction} are often emitted one at a time, it also
-becomes difficult to make use of \glspl{instruction} that can have unintended
-effects on other \glspl{instruction}.
-
-A more robust remedy for improving code quality is to append a \gls{peephole
-  optimizer} into the component chain of the \gls{backend}.
-%
-A \gls{peephole optimizer} combines the effects of multiple \glspl{instruction}
-in the \gls{assembly code} with more efficient alternatives, thereby amending
-some of the poor decisions made by the \gls{instruction selector}.
-%
-\Gls{peephole optimization} can also be incorporated directly into the
-\gls{instruction selector} -- a scheme which has become known as the
-\gls{Davidson-Fraser approach} -- and thereby extend its \gls{instruction}
-support.
-%
-Because of this versatility, the \gls{Davidson-Fraser approach} remains one of
-the most powerful \gls{instruction selection} techniques to date (a variant is
-still applied in \gls{GCC} as of version 4.8.2).
+Later designs, based on the \gls{Davidson-Fraser approach}, mitigate this
+problem by combining \gls{instruction selection} with \gls{peephole
+  optimization}, and such techniques are still popular today.
 
 In \refAppendix{tree-covering} we will explore another \gls{principle} of
 \gls{instruction selection}, which solves the problem of implementing several

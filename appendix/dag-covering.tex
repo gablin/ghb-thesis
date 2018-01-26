@@ -7,7 +7,52 @@
 \chapter{DAG Covering}
 \labelAppendix{dag-covering}
 
-\todo{rewrite introduction}
+This appendix considers techniques based on \gls{DAG covering}.
+%
+First, we introduce the principle in \refSection{dc-principle}.
+%
+We then prove in \refSection{dc-proof} that \gls{optimal.ps} \gls{pattern
+  selection} using \glspl{DAG} is NP-complete.
+%
+We describe straightforward, greedy approaches in
+\refSection{dc-greedy-techniques}, moving on to exhaustive techniques in
+\refSection{dc-exhaustive-search-techniques}.
+%
+In \refSection{dc-extending-tree-covering-techniques-to-dags} we describe
+techniques that extend methods from \gls{tree covering} to \glspl{DAG}.
+%
+\glsunset{MIS}%
+\glsunset{MWIS}%
+%
+In \refSection{dc-mwis-based-approaches}, we describe techniques that model
+\gls{instruction selection} as a \gls{MIS} or \gls{MWIS} problem.
+%
+\glsreset{MIS}%
+\glsreset{MWIS}%
+%
+In \refSection{dc-unate-binate-covering}, we describe techniques that model
+\gls{instruction selection} as a \glsshort{unate covering} or \gls{binate
+  covering} problem.
+%
+In \refSectionList{dc-ip-based-approaches, dc-cp-based-approaches} we describe
+techniques on methods from combinatorial optimization.
+%
+Other \gls{DAG}-based approaches, that do not fit into any of the sections
+above, are discussed in \refSection{dc-other-approaches}.
+%
+Lastly, we discuss limitations of this principle in \refSection{dc-limitations}
+and summarize in \refSection{dc-summary}.
+
+The appendix is based on material presented in
+\cite[Chap.\thinspace4]{HjortBlindell:2016:Survey} that has been adapted for
+this dissertation.
+%
+To not disturb the flow of reading, material already presented in
+\refChapter{existing-isel-techniques-and-reps} is duplicated in this appendix.
+
+
+\section{The Principle}
+\labelSection{dc-principle}
 
 As we saw in \refAppendix{tree-covering}, the \gls{principle} of \gls{tree
   covering} has two significant disadvantages.
@@ -19,18 +64,8 @@ be modeled as \glspl{pattern tree}.
 %
 As these shortcomings are primarily due to the restricted use of \glspl{tree},
 we can achieve a more powerful approach to \gls{instruction selection} by
-operating \glspl{DAG}, thereby extending \gls{tree covering} to \gls!{DAG
+operating \glspl{DAG}, thereby extending \gls{tree covering} to \gls{DAG
   covering}.
-
-This appendix is based on material presented in
-\cite[Chap.\thinspace4]{HjortBlindell:2016:Survey} that has been adapted for
-this dissertation.
-%
-To not disturb the flow of reading, material already presented in
-\refChapter{existing-isel-techniques-and-reps} is duplicated in this appendix.xk
-
-
-\section{The Principle}
 
 By lifting the restriction that every \gls{node} in the \gls{expression tree}
 have exactly one \gls{parent}, we attain a \gls!{block DAG}.
@@ -73,6 +108,7 @@ offer the same range of choices in terms of complexity.
 
 
 \section{Optimal Pattern Selection on DAGs Is NP-Complete}
+\labelSection{dc-proof}
 
 The cost of the gain in generality and modeling capabilities that \glspl{DAG}
 give us is a substantial increase in complexity.
@@ -93,7 +129,6 @@ In this dissertation, we will paraphrase the longer proof.
 
 
 \subsection{The Proof}
-\labelSection{dc-proof}
 
 The idea behind the proof is to transform the \gls{SAT} problem into an
 \gls{optimal.ps} -- that is, \gls{least-cost.c} -- \gls{DAG covering} problem.
@@ -363,6 +398,7 @@ Hence \gls{optimal.ps} \gls{DAG covering} -- and therefore also optimal
 
 
 \section{Straightforward, Greedy Techniques}
+\labelSection{dc-greedy-techniques}
 
 Since \gls{instruction selection} on \glspl{DAG} with \gls{optimal.ps}
 \gls{pattern selection} is computationally difficult, most \glspl{instruction
@@ -444,6 +480,7 @@ In addition, the greedy scheme compromises code quality.
 
 
 \section{Techniques Based on Exhaustive Search}
+\labelSection{dc-exhaustive-search-techniques}
 
 Although \gls{optimal.ps} \gls{pattern selection} can be achieved through
 exhaustive search, in practice this is typically infeasible due to the
@@ -551,6 +588,7 @@ generating \gls{assembly code} for all but very small \glspl{function}.
 
 
 \section{Extending Tree Covering Techniques to DAGs}
+\labelSection{dc-extending-tree-covering-techniques-to-dags}
 
 Another common approach to \gls{DAG covering} is to reuse already-known,
 linear-time methods from \gls{tree covering}.
@@ -958,7 +996,7 @@ Hence code quality is compromised.
 
 
 \section{Modeling Instruction Selection as an M(W)IS Problem}
-\labelSection{maximum-independent-set}
+\labelSection{dc-mwis-based-approaches}
 
 In the techniques discussed so far, the \gls{instruction selector} operates
 directly on the \gls{block DAG} when performing \gls{pattern selection}.
@@ -1269,6 +1307,7 @@ selected set of benchmark applications, which showed code size reductions of
 
 \section[Modeling Instruction Selection as a Unate/Binate Covering Problem]%
         {Modeling Instruction Selection as a Unate/Binate Covering\\ Problem}
+\labelSection{dc-unate-binate-covering}
 
 Another approach to solving \gls{pattern selection} is to translate it to a
 corresponding \glsshort!{unate covering} or \gls!{binate covering}[ problem].
@@ -1442,6 +1481,7 @@ using heuristics, the \gls{assembly code} generated by
 
 
 \section{Modeling Instruction Selection Using IP}
+\labelSection{dc-ip-based-approaches}
 
 As explained in \refAppendix{introduction}, performing \gls{instruction
   selection}, \gls{instruction scheduling}, or \gls{register allocation} in
@@ -1734,6 +1774,7 @@ One reasonable cause could be that the \gls{IP}~model also attempts to solve
 
 
 \section{Modeling Instruction Selection Using CP}
+\labelSection{dc-cp-based-approaches}
 
 Although \glsdesc{IP} allows auxiliary \glspl{constraint} to be included into
 the \gls{IP}~model, they may be cumbersome to express as linear equations.
@@ -2006,6 +2047,7 @@ compromise code quality for more complicated \glspl{target machine}.
 
 
 \section{Other DAG-Based Approaches}
+\labelSection{dc-other-approaches}
 
 \subsection{More Genetic Algorithms}
 
@@ -2323,6 +2365,7 @@ underlying assumptions made by many of the aforementioned approaches.
 
 
 \section{Summary}
+\labelSection{dc-summary}
 
 In this appendix, we have investigated several methods that rely on the
 \gls{principle} of \gls{DAG covering}, which is a more general form of \gls{tree
