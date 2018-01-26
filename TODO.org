@@ -2,7 +2,6 @@
 ** DONE Rewrite introduction to appendices
 ** TODO Write acknowledgements
 ** DONE Reduce vertical space between list items
-** TODO Remove 'electronic' document class option
 ** DONE Update TRITA number
 ** TODO Update ISBN
 ** DONE Update hall
@@ -16,17 +15,18 @@
 ** DONE In appendices, swap typesetting convention of terminals and nonterminals
 ** DONE In appendices, replace 'linear form' with 'normal form'
 ** DONE Add equations for multiply-then-divide method
+** DONE Ensure that all floats are declared after first reference
+** TODO Break long paragraphs
+** TODO Break long sentences
 ** TODO Replace \subsubsection with \paragraph, where appropriate
-** TODO Check overflowing of bib entries
+** TODO Fix overflowing of bib entries
 ** TODO Check for bad use of past tense
-** TODO Check for long paragraphs
-** TODO Check for long sentences
-** TODO Check for paragraphs ending with only one word on last line
 ** TODO Check for missing references
 ** TODO Check bad kerning, especially in math
-** TODO Check for bad page breaks
 ** TODO Check for unused glossary terms
 ** TODO Check for undefined (!) glossary terms
 ** TODO Check for redundant uses of ! in glossary terms
-** DONE Check that all floats are declared after first reference
 ** TODO Check for bad figure placements
+** TODO Fix bad page breaks
+** TODO Fix paragraphs ending with only one word on last line
+** TODO Remove 'electronic' document class option
