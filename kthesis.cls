@@ -130,6 +130,7 @@
     \adjustbox{max width=2.2cm, max height=2.2cm}{#1}%
   }%
 }
+\@mkFieldCommand{dedication}
 \@mkFieldCommand{subtitle}
 \@mkFieldCommand{degreeEng}
 \@mkFieldCommand{degreeSwe}
@@ -346,6 +347,26 @@
   \@printMonthSubmitted{english} \@getField{tritaYear}\par
   \vskip 1em
   Printed by Universitetsservice US-AB
+  \endgroup%
+}
+
+\newcommand{\@dedicationFont}{%
+  \itshape%
+}
+\NewDocumentCommand{\makededication}{}{%
+  \cleardoublepage
+  \thispagestyle{empty}
+  \begingroup%
+  \setlength{\parindent}{0pt}%
+  \mbox{}
+  \vfill
+  \begin{flushright}%
+    \@dedicationFont%
+    \@getField{dedication}%
+  \end{flushright}
+  \vfill
+  \vfill
+  \mbox{}
   \endgroup%
 }
 
