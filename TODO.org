@@ -1,6 +1,6 @@
 * BEFORE SUBMISSION
 ** DONE Rewrite introduction to appendices
-** TODO Write acknowledgements
+** DONE Write acknowledgements
 ** DONE Reduce vertical space between list items
 ** DONE Update TRITA number
 ** DONE Update ISBN
