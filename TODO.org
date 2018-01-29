@@ -16,6 +16,8 @@
 ** DONE In appendices, replace 'linear form' with 'normal form'
 ** DONE Add equations for multiply-then-divide method
 ** DONE Ensure that all floats are declared after first reference
+** TODO Run spell check
+** TODO Run grammar check
 ** TODO Add list of acronyms
 ** TODO Break long paragraphs
 ** TODO Break long sentences
