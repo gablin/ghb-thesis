@@ -15,24 +15,24 @@
   \gls{program} \gls{block} at a time while \gls{global.is} \gls{instruction
     selection} does so for the entire \gls{function}.
   %
-  This dissertation introduces a new approach called \gls!{universal instruction
-    selection} that integrates \gls{global.is} \gls{instruction selection} with
-  \gls{global code motion} and \gls{block ordering}.
+  In this dissertation, I introduce a new approach called \gls!{universal
+    instruction selection} that integrates \gls{global.is} \gls{instruction
+    selection} with \gls{global code motion} and \gls{block ordering}.
   %
   By doing so, it addresses limitations of existing \gls{instruction selection}
   techniques that fail to exploit many of the \glspl{instruction} provided by
   modern processors.
 
-  To handle the combinatorial nature of these problems, the approach is based on
+  To handle the combinatorial nature of these problems, I base the approach on
   \glsdesc{CP}, a combinatorial optimization method.
   %
-  It relies on a novel model that is simpler and more flexible compared to the
+  I formulate a novel model that is simpler and more flexible compared to the
   techniques used in modern \glspl{compiler} and that captures crucial features
   ignored by other combinatorial approaches.
   %
-  The dissertation also proposes extensions to the model for integrating
-  \gls{instruction scheduling} and \gls{register allocation}, two other
-  important problems of \gls{code generation}.
+  I also proposes extensions to the model for integrating \gls{instruction
+    scheduling} and \gls{register allocation}, two other important problems of
+  \gls{code generation}.
 
   The model is enabled by a novel, \gls{graph}-based representation that unifies
   data and control flow for entire \glspl{function}.
@@ -41,19 +41,19 @@
   \gls{global code motion} and for modeling sophisticated \glspl{instruction},
   whose behavior contains both data and control flow, as \glspl{graph}.
 
-  Through experimental evaluation, \gls{universal instruction selection} is
-  demonstrated to handle architectures with a rich \gls{instruction set} and
+  Through experimental evaluation, I demonstrate that \gls{universal instruction
+    selection} can handle architectures with a rich \gls{instruction set} and
   scales up to \glspl{function} with hundreds of \glspl{operation}.
   %
   For these \glspl{function}, it generates code of equal or better quality
   compared to the state of the art.
   %
-  The dissertation also demonstrates that there is sufficient data parallelism
-  to be exploited through selection of
-  \glsunset{SIMD.i}\gls{SIMD.i}\glsreset{SIMD.i} \glspl{instruction} and that
-  this exploitation benefits from \gls{global code motion}.
+  I also demonstrate that there is sufficient data parallelism to be exploited
+  through selection of \glsunset{SIMD.i}\gls{SIMD.i}\glsreset{SIMD.i}
+  \glspl{instruction} and that this exploitation benefits from \gls{global code
+    motion}.
   %
-  With these results, it is argued that \glsdesc{CP} is a flexible, practical,
+  With these results, I argue that \glsdesc{CP} is a flexible, practical,
   competitive, and extensible approach for combining \gls{global.is}
   \gls{instruction selection}, \gls{global code motion}, and \gls{block
     ordering}.
