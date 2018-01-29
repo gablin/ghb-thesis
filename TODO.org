@@ -3,7 +3,7 @@
 ** TODO Write acknowledgements
 ** DONE Reduce vertical space between list items
 ** DONE Update TRITA number
-** TODO Update ISBN
+** DONE Update ISBN
 ** DONE Update hall
 ** DONE Add mention of status of tool and availability (github)
 ** DONE Remove misuse of glossary terms "variable" and "operation"
