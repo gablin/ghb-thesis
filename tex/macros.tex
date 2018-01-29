@@ -863,7 +863,7 @@
 
 % Add new field to glossary entries
 \glsaddkey{indextext}%
-          {\relax}%
+          {}%
           {\glsentryindextext}%
           {\Glsentryindextext}%
           {\glsindextext}%
@@ -879,12 +879,12 @@
      \item\glsentryitem{##1}%
        \glstreenamefmt{%
          \glstarget{##1}{%
-           \glsletentryfield{\tmp}{##1}{indextext}%
-           \if\tmp\relax%
+           \glsletentryfield{\tmpa}{##1}{indextext}%
+           \expandafter\ifblank\expandafter{\tmpa}{%
              \glsentryfirst{##1}%
-           \else%
+           }{%
              \glsentryindextext{##1}%
-           \fi%
+           }%
          }%
        }%
        \space\hfill\space##2%
