@@ -16,6 +16,7 @@
 ** DONE In appendices, replace 'linear form' with 'normal form'
 ** DONE Add equations for multiply-then-divide method
 ** DONE Ensure that all floats are declared after first reference
+** TODO Add list of acronyms
 ** TODO Break long paragraphs
 ** TODO Break long sentences
 ** TODO Replace \subsubsection with \paragraph, where appropriate
