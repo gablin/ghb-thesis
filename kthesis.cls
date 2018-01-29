@@ -271,7 +271,7 @@
   \Large%
 }
 \RenewDocumentCommand{\maketitle}{}{%
-  \newpage
+  \cleardoublepage
   \thispagestyle{empty}
   \begin{center}%
     \mbox{}
