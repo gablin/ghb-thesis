@@ -1932,8 +1932,8 @@ The \gls{instruction selector} first attempts to find all matching
 recursively cover the remaining \glspl{subtree} for each \gls{match}.
 %
 \Gls{pattern matching} is done using a straightforward technique that we know
-from before (see \refFigure{straight-forward-pattern-matching} on
-\refPageOfFigure{straight-forward-pattern-matching}), and for efficiency all
+from before (see \refAlgorithm{tree-based-pattern-matching} on
+\refAlgorithm{tree-based-pattern-matching}), and for efficiency all
 \glspl{pattern} are indexed according to the type of their \gls{root}.
 %
 The result of this procedure is thus a set of \gls{pattern} sequences each of
@@ -2536,12 +2536,13 @@ For example, binary operation \glspl{node} have two-dimensional tables while
 which simply consist of a single value.
 %
 A fully labeled example is shown in
-\refFigure{hoffmann-odonnell-example-subject}, and the \glspl{match set} are
-then retrieved via a subsequent top-down traversal of the labeled \gls{tree}.
+\refFigure{hoffmann-odonnell-example-labeled-exp-tree}, and the \glspl{match
+  set} are then retrieved via a subsequent top-down traversal of the labeled
+\gls{tree}.
 
-Since the bottom-up algorithm introduced by \citeauthor{HoffmannODonnell:1982} has had a
-historical impact on \gls{instruction selection}, we will spend some time
-discussing the details of how the lookup tables are produced.
+Since the bottom-up algorithm introduced by \citeauthor{HoffmannODonnell:1982}
+has had a historical impact on \gls{instruction selection}, we will spend some
+time discussing the details of how the lookup tables are produced.
 
 
 \subsubsection{Definitions}
@@ -3491,8 +3492,9 @@ exhibit properties of optimal substructure, meaning that it is possible to
 generate optimal \gls{assembly code} by solving each of its subproblems to
 optimality.
 %
-As explained in \refAppendix{introduction}, this is not always the case; some
-solutions, whose total sum is greater compared to another set of selected
+However, this is not always the case.
+%
+Some solutions, whose total sum is greater compared to another set of selected
 \glspl{pattern}, can actually lead to better \gls{assembly code} in the end.
 
 
@@ -4183,7 +4185,7 @@ renowned \gls{code generation} system called \gls{Burg},\!%
 \footnote{%
   The keen reader will notice that \citeauthor{FraserEtAl:1992:IBurg} also
   implemented the \gls{DP}-based system \gls{IBurg} which was introduced in
-  \refSection{tb-iburg}.
+  \refSection{tc-iburg}.
   %
   The connection between the two is that \gls{IBurg} began as a testbench for
   the \gls{grammar} specification to be used as input to \gls{Burg}.
