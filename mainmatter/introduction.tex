@@ -273,9 +273,11 @@ Hence the \gls{instruction} would implement the following five
 Selecting this \gls{instruction} can have tremendous impact on performance.
 %
 Assume, for example, that each \gls{operation} can be implemented using an
-\gls{instruction} that takes one cycle to execute. Hence executing one iteration
-of the loop takes \num{16}~cycles, and selecting the saturated-add
-\gls{instruction} reduces the execution time by \SI{25}{\percent}.
+\gls{instruction} that takes one cycle to execute.
+%
+Hence executing one iteration of the loop takes \num{16}~cycles, and selecting
+the saturated-add \gls{instruction} reduces the execution time by
+\SI{25}{\percent}.
 
 Existing \gls{instruction selection} techniques and representations, however, do
 not support selection of such \glspl{instruction}.
