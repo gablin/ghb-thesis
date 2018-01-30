@@ -109,8 +109,10 @@ x = A[i + 1];
                 }%
   \hfill%
   \subcaptionbox{%
-                  Instructions. The $*s$ \mbox{notation} means ``get value at
-                  address $s$ in memory''%
+                  Instructions.
+                  %
+                  The $*s$ \mbox{notation} means ``get value at address $s$ in
+                  memory''%
                   \labelFigure{p-match-sel-example-2-instrs}%
                 }{%
                   \figureFontSize%
@@ -1789,10 +1791,12 @@ decisions regarding one \gls{subtree} without any consideration of sibling
 %
 This can result in \gls{assembly code} that could have been improved if all
 \glspl{subtree} had been available beforehand, and this is again a limitation
-due to the use of \gls{LR parsing}.  \textcite{Ganapathi:1989} later made an
-attempt to resolve this problem by implementing an \gls{instruction selector} in
-\gls{Prolog} -- a logic-based programming language -- but this incurred
-exponential worst-case time complexity of the \gls{instruction selector}.
+due to the use of \gls{LR parsing}.
+%
+\textcite{Ganapathi:1989} later made an attempt to resolve this problem by
+implementing an \gls{instruction selector} in \gls{Prolog} -- a logic-based
+programming language -- but this incurred exponential worst-case time complexity
+of the \gls{instruction selector}.
 
 
 \subsection{Maintaining Multiple Parse Trees for Better Code Quality}

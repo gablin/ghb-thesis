@@ -125,8 +125,10 @@ As long as the observable output constitutes a single value, a
 This class comprises the majority of \glspl{instruction} in most
 \glspl{instruction set}, and in simple \glspl{RISC}, such as \gls{MIPS}
 architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
-\glspl{instruction}. Naturally, all \glspl{instruction selector} are expected to
-support this kind of \gls{instruction}.
+\glspl{instruction}.
+%
+Naturally, all \glspl{instruction selector} are expected to support this kind of
+\gls{instruction}.
 
 
 \paragraph{Multi-Output Instructions}
@@ -440,8 +442,10 @@ x = A[i + 1];
                 }%
   \hfill%
   \subcaptionbox{%
-                  Instructions. The $*s$ \mbox{notation} means ``get value at
-                  address $s$ in memory''%
+                  Instructions.
+                  %
+                  The $*s$ \mbox{notation} means ``get value at address $s$ in
+                  memory''%
                   \labelFigure{p-match-sel-example-instrs}%
                 }{%
                   \figureFontSize%
@@ -1056,8 +1060,10 @@ y = *((int*) t);
                 }%
   \hfill%
   \subcaptionbox{%
-                  Instructions. The $*s$ notation means ``get value at address
-                  $s$ in memory''%
+                  Instructions.
+                  %
+                  The $*s$ notation means ``get value at address $s$ in
+                  memory''%
                   \labelFigure{exp-trees-limit-example-instrs}%
                 }%
                 [50mm]%
