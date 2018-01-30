@@ -810,15 +810,23 @@ number of \glspl{variable}.
 The same can be achieved for the \gls{global cardinality constraint} at similar
 cost~\cite{QuimperEtAl:2005, Regin:1996}.
 
-Many \glshyphened{domain consistency} \gls{propagator} exist for the \gls{table
-  constraint} \cite{LecoutreSzymanek:2006, Lecoutre:2011, MairyEtAl:2014,
-  PerezRegin:2014, LecoutreEtAl:2015, DemeulenaereEtAl:2016}, although these
+\Gls{domain consistency} for \gls{circuit constraint} cannot be achieved in
+polynomial time as it involves finding Hamiltonian cycles, which is
+NP-complete~\cite{GareyJohnson:1979}.
+%
+An incomplete, polynomial-time \gls{filtering algorithm} is given
+in~\cite{KayaHooker:2006}.
+
+Several \glshyphened{domain consistency} \gls{propagator} exist for the
+\glsshort{table constraint} \cite{LecoutreSzymanek:2006, Lecoutre:2011,
+  MairyEtAl:2014, PerezRegin:2014, LecoutreEtAl:2015, DemeulenaereEtAl:2016},
+\glsshort{cumulative constraint}~\cite{BaptisteEtAl:2001}, and \gls{no-overlap
+  constraint}~\cite{BeldiceanuCarlsson:2001, VanHentenryckEtAl:1998}, but these
 exhibit exponential worst-case time complexity.
 %
-\Gls{domain consistency} for \gls{circuit constraint} cannot be achieved in
-polynomial time as it involves finding Hamiltonian cycles, which is an
-NP-complete problem~\cite{GareyJohnson:1979}, although an incomplete
-polynomial-time \gls{filtering algorithm} is given in~\cite{KayaHooker:2006}.
+For the \gls{value-precede-chain constraint}, there exist \glshyphened{domain
+  consistency} \glspl{propagator} with linear time
+complexity~\cite{LawLee:2004}.
 
 
 \subsection{Search}
