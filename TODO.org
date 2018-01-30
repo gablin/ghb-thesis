@@ -19,10 +19,10 @@
 ** TODO Run spell check
 ** TODO Run grammar check
 ** DONE Add list of acronyms
-** TODO Break long paragraphs
 ** TODO Break long sentences
-** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Fix overflowing of bib entries
+** TODO Replace \subsubsection with \paragraph, where appropriate
+** TODO Check for long paragraphs
 ** TODO Check for bad use of past tense
 ** TODO Check for missing references
 ** TODO Check bad kerning, especially in math
