@@ -12,8 +12,13 @@ With the first publications beginning to appear at the end of the 1960s,
 %
 When surveying these techniques, it was discovered that essentially all apply
 one of four fundamental \glspl!{principle} of \gls{instruction selection}:
-\gls{macro expansion}, \gls{tree covering}, \gls{DAG covering}, and \gls{graph
-  covering}.
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item \gls{macro expansion}
+  \item \gls{tree covering}
+  \item \gls{DAG covering}
+  \item \gls{graph covering}
+\end{inlinelist}.
 %
 The trend of applying these \glspl{principle} over time is shown in
 \refFigure{principles-timeline}.
@@ -96,8 +101,15 @@ subproblems can be solved in isolation without compromising code quality.
 \labelSection{ex-isel-rep-instruction-characteristics}
 
 An \gls{instruction} can be said to exhibit five \glsplshort{instruction
-  characteristic}: \gls{single-output.ic}, \gls{multi-output.ic},
-\gls{disjoint-output.ic}, \gls{inter-block.ic}, and \gls{interdependent.ic}.
+  characteristic}:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item \gls{single-output.ic}
+  \item \gls{multi-output.ic}
+  \item \gls{disjoint-output.ic}
+  \item \gls{inter-block.ic}
+  \item \gls{interdependent.ic}
+\end{inlinelist}.
 %
 The first three \glsplshort{instruction characteristic} form sets of
 \glspl{instruction} that are disjoint from one another, whereas the last two
@@ -250,10 +262,14 @@ The first \gls{principle} to emerge was \gls!{macro expansion}, with
 applications starting to appear in the 1960s.
 %
 In \gls{macro expansion}, the \glspl{instruction} are expressed as
-\glspl!{macro} which consist of two parts: a \gls!{template} to be matched over
-the \gls{function}, and an \gls!{expand procedure} to be executed upon the part
-of the \gls{function} that was matched (see \refFigure{macro-example} for an
-example).
+\glspl!{macro} which consist of two parts:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item a \gls!{template} to be matched over the \gls{function}
+  \item an \gls!{expand procedure} to be executed upon the part of the
+    \gls{function} that was matched (see \refFigure{macro-example} for an
+    example)
+\end{inlinelist}.
 %
 \begin{filecontents*}{macro-example.c}
 expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
@@ -770,10 +786,12 @@ height.
 \gls{cover} for any given \gls{expression tree} in linear time, which is also
 the most common and well known technique based on \gls{tree covering}.
 
-The technique is centered around the following assumption: the cost of reducing
-\gls{node}~$n$ in an \gls{expression tree} to \gls{nonterminal}~$s$ using
-\gls{rule}~$r$ is the cost of $r$ plus the costs of reducing all children of $n$
-to the appropriate \glspl{nonterminal} appearing on the right-hand side of~$r$.
+The technique is centered around the following assumption.
+%
+Given a \gls{node}~$n$ in an \gls{expression tree} and a \gls{rule}~$r$, the
+cost of applying $r$ on $n$ is the cost of $r$ plus the costs of reducing all
+children of $n$ to the appropriate \glspl{nonterminal} appearing on the
+right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
 $r$ plus the cost of reducing $n$ to the \glsshort{rule result} of~$r$.
@@ -1269,9 +1287,12 @@ and \citeauthor{Ertl:1999} by introducing a design that first uses
   duplication}[ed] \gls{expression tree}.
 %
 Then, at each \glspl{node}~$n$ where several \glspl{pattern} in the optimal
-\gls{cover} overlap in the \gls{block DAG}, two costs are estimated: the cost
-incurred by allowing overlap, and the cost incurred by \glsshort{edge
-  splitting}[ting] the \glspl{edge}.
+\gls{cover} overlap in the \gls{block DAG}, two costs are estimated:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item the cost incurred by allowing overlap
+  \item the cost incurred by \glsshort{edge splitting}[ting] the \glspl{edge}
+\end{inlinelist}.
 %
 If the latter cost is less then $n$ is marked as \gls!{fixed.n}, meaning it can
 only be covered by \glspl{pattern} where $n$ is the root \gls{node}.

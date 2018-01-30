@@ -40,10 +40,14 @@ The first \gls{principle} to emerge was \gls{macro expansion}, with applications
 starting to appear in the 1960s.
 %
 In \gls{macro expansion}, the \glspl{instruction} are expressed as
-\glspl!{macro} which consist of two parts: a \gls!{template} to be matched over
-the \gls{function}, and an \gls!{expand procedure} to be executed upon the part
-of the \gls{function} that was matched (see \refFigure{macro-example-2} for an
-example).
+\glspl!{macro} which consist of two parts:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item a \gls!{template} to be matched over the \gls{function}
+  \item an \gls!{expand procedure} to be executed upon the part of the
+    \gls{function} that was matched (see \refFigure{macro-example-2} for an
+    example)
+\end{inlinelist}.
 %
 \begin{filecontents*}{macro-example-2.c}
 expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
@@ -360,9 +364,15 @@ By encapsulating this information in a separate \gls{machine description},
   machine} to be declared separately instead of being implicitly embedded into
 the \glspl{macro}.
 
-\gls{Dmacs} relies on two proprietary languages: \gls!{MIML}, which declares a
-set of procedural two-argument commands that serves as the \gls{IR} format (see
-\refFigure{miml-example} for an example);
+\gls{Dmacs} relies on two proprietary languages.
+%
+The first language, \gls!{MIML}, declares a set of procedural two-argument
+commands that serves as the \gls{IR} format (see \refFigure{miml-example} for an
+example).
+%
+The second language, \gls!{OMML}, is a declarative language used for
+implementing the \glspl{macro} that will transform each \gls{MIML} command into
+\gls{assembly code}.
 %
 \begin{filecontents*}{miml-example.c}
 1:  SS    C,J
@@ -391,9 +401,6 @@ set of procedural two-argument commands that serves as the \gls{IR} format (see
           }
           \labelFigure{miml-example}
 \end{figure}
-%
-and a declarative language called \gls!{OMML} for implementing the \glspl{macro}
-that will transform each \gls{MIML} command into \gls{assembly code}.
 %
 So far this scheme is similar to the one applied by \citeauthor{Wilcox:1971}.
 
@@ -471,10 +478,15 @@ As the \gls{state machine} transitions from one state to another, the machine
 instructions appearing on the edges are emitted until the \gls{state machine}
 reaches a permissible state.
 
-The work by \citeauthor{Miller:1971} was pioneering but limited: \gls{Dmacs}
-only handled arithmetic expressions consisting of integer and floating-point
-values, its addressing mode support was limited, and it could not model other
-\gls{target machine} classes such as stack-based architectures.
+The work by \citeauthor{Miller:1971} was pioneering but limited:
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item \gls{Dmacs} only handled arithmetic expressions consisting of integer
+    and floating-point values
+  \item its addressing mode support was limited
+  \item it could not model other \gls{target machine} classes such as
+    stack-based architectures
+\end{inlinelist}.
 %
 In his 1973 doctoral dissertation, \textcite{Donegan:1973} extended
 \citeauthor{Miller:1971}'s ideas by proposing a new language called \gls!{CGPL}.
@@ -708,9 +720,10 @@ Thus \gls{naive.me} \glspl{macro expander} are effectively limited to supporting
 only \gls{single-output.ic} \glspl{instruction}.\!%
 %
 \footnote{%
-  This is a truth with modification: a \gls{macro expander} can emit
-  \gls{multi-output.ic} \glspl{instruction}, but only one of its output values
-  will be retained in the \gls{assembly code}.%
+  This is a truth with modification.
+  %
+  A \gls{macro expander} can emit \gls{multi-output.ic} \glspl{instruction}, but
+  only one of its output values will be retained in the \gls{assembly code}.%
 }
 %
 As this has a detrimental effect on code quality for \glspl{target machine}
@@ -984,8 +997,12 @@ variants of it have been used in several \glspl{compiler}, such as the
 \subsubsection{The Davidson-Fraser Approach}
 
 In the \gls{Davidson-Fraser approach} the \gls{instruction selector} consists of
-two parts: an \gls!{expander} and a \gls!{combiner} (see
-\refFigure{davidson-fraser-approach}).
+two parts:
+%
+\begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
+  \item an \gls!{expander}
+  \item a \gls!{combiner} (see \refFigure{davidson-fraser-approach})
+\end{inlinelist}.
 %
 \begin{figure}
   \centering%

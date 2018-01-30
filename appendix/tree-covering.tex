@@ -422,8 +422,9 @@ ASG OPSIM,   INAREG|FORCC,
           \labelFigure{pcc-machine-description-sample}
 \end{figure}
 
-The \gls{pattern matching} process is then relatively straightforward: for a
-given \gls{node} in the \gls{expression tree}, the \gls{node} is compared
+The \gls{pattern matching} process is then relatively straightforward.
+%
+For a given \gls{node} in the \gls{expression tree}, the \gls{node} is compared
 against the \gls{root} of each \gls{pattern}.
 %
 If these match, a similar check is done for each corresponding \gls{subtree} in
@@ -1365,9 +1366,13 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
           simplicity, registers in the sequence are represented directly as
           nonterminals).
           %
-          Note that a rule reduction may involve two operations: the mandatory
-          reduce operation, followed by an optional operation which may be a
-          shift or another rule reduction.
+          Note that a rule reduction may involve two operations:
+          %
+          \begin{inlinelist}[itemjoin={, }, itemjoin*={, }]
+            \item the mandatory reduce operation
+            \item followed by an optional operation which may be a shift or
+              another rule reduction
+          \end{inlinelist}.
           %
           For example, let us examine step~$11$.
           %
@@ -1750,9 +1755,10 @@ for the \gls{Glanville-Graham approach}, even without applying any extensive
 \gls{refactoring}~\cite{GanapathiFischer:1985}.
 %
 \Glspl{attribute grammar} also facilitate incremental development of the
-\glspl{machine description}: one can start by implementing the most general
-\glspl{rule} to achieve an \gls{machine grammar} that produces correct but
-inefficient code.
+\glspl{machine description}.
+%
+One can start by implementing the most general \glspl{rule} to achieve an
+\gls{machine grammar} that produces correct but inefficient code.
 %
 \Glspl{rule} for handling more complex \glspl{instruction} can then can be added
 incrementally, making it possible to balance implementation effort against code
@@ -1856,12 +1862,14 @@ modeling of many typical \gls{target machine} features such as
 \labelSection{tc-top-down-approaches}
 
 The \gls{tree covering} techniques we have examined so far -- in particular
-those based on \gls{LR parsing} -- all operate \emph{bottom-up}: the
-\gls{instruction selector} begins to cover the \glspl{leaf} in the
-\gls{expression tree}, and based on the decisions taken for the \glspl{subtree}
-it then progressively works it way upwards along the \gls{tree} until it reaches
-the \gls{root}, continually matching and selecting applicable \glspl{pattern}
-along the way.
+those based on \gls{LR parsing} -- all operate \emph{bottom-up}.
+%
+The \gls{instruction selector} begins to cover the \glspl{leaf} in the
+\gls{expression tree}.
+%
+Based on the decisions taken for the \glspl{subtree}, it then progressively
+works upwards along the \gls{tree} until it reaches the \gls{root}, continually
+matching and selecting applicable \glspl{pattern} along the way.
 %
 This is by no means the only method of covering, as it can also be done
 \emph{top-down}.
@@ -1870,11 +1878,12 @@ In such designs, the \gls{instruction selector} covers the \gls{expression tree}
 starting from the \gls{root}, and then recursively works its way downwards.
 %
 Consequently, the flow of semantic information, such as the particular
-\gls{register} in which a result will be stored, is also different: a bottom-up
-\gls{instruction selector} lets this information trickle upwards along the
-\gls{expression tree} -- either via auxiliary data structures or through
-\gls{tree rewriting} -- whereas a top-down implementation decides upon this
-beforehand and pushes this information downwards.
+\gls{register} in which a result will be stored, is also different.
+%
+A bottom-up \gls{instruction selector} lets this information trickle upwards
+along the \gls{expression tree} -- either via auxiliary data structures or
+through \gls{tree rewriting} -- whereas a top-down implementation decides upon
+this beforehand and pushes this information downwards.
 %
 The latter is therefore said to be \gls!{goal-driven.ps}, as \gls{pattern
   selection} is guided by a set of additional requirements which must be
@@ -1916,10 +1925,11 @@ uses to perform necessary transformations of the \gls{function} -- its need will
 become clear as the discussion continues.
 %
 The scheme takes an \gls{AST} as expected input and then covers it following the
-aforementioned top-down approach: the \gls{instruction selector} first attempts
-to find all matching \glspl{pattern} for the \gls{root} of the~\gls{AST}, and
-then proceeds to recursively cover the remaining \glspl{subtree} for each
-\gls{match}.
+aforementioned top-down approach.
+%
+The \gls{instruction selector} first attempts to find all matching
+\glspl{pattern} for the \gls{root} of the~\gls{AST}, and then proceeds to
+recursively cover the remaining \glspl{subtree} for each \gls{match}.
 %
 \Gls{pattern matching} is done using a straightforward technique that we know
 from before (see \refFigure{straight-forward-pattern-matching} on
@@ -2044,11 +2054,12 @@ insufficient to produce all necessary single-node \glspl{pattern}, but then
 \citeauthor{GanapathiEtAl:1982:AttrGr}'s design this correctness has to be
 ensured by the \gls{grammar} designer).
 %
-The disadvantage is that it is relatively slow: whereas the \gls{tree
-  parsing}-based \glspl{instruction selector} exhibit linear time complexity,
-both for \gls{pattern matching} and selection, the \gls{instruction selector} by
-Cattell~\etal has to match each \gls{template} individually, which could take
-quadratic time in the worst case.
+The disadvantage is that it is relatively slow.
+%
+Whereas the \gls{tree parsing}-based \glspl{instruction selector} exhibit linear
+time complexity -- both for \gls{pattern matching} and selection -- the
+\gls{instruction selector} by Cattell~\etal has to match each \gls{template}
+individually, which could take quadratic time in the worst case.
 
 
 \subsubsection{Recent Designs}
@@ -3282,10 +3293,12 @@ the \gls{expression tree}.
 This pass also executes the \glspl{action} associated with the selected
 \glspl{pattern}, which in turn emits the corresponding \gls{assembly code}.
 
-The design is centered around the following assumption: the cost of reducing
-\gls{node}~$n$ in an \gls{expression tree} to \gls{nonterminal}~$s$ using
-\gls{rule}~$r$ is the cost of $r$ plus the costs of reducing all children of $n$
-to the appropriate \glspl{nonterminal} appearing on the right-hand side of~$r$.
+The design is centered around the following assumption.
+%
+Given a \gls{node}~$n$ in an \gls{expression tree} and a \gls{rule}~$r$, the
+cost of applying $r$ on $n$ is the cost of $r$ plus the costs of reducing all
+children of $n$ to the appropriate \glspl{nonterminal} appearing on the
+right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
 $r$ plus the cost of reducing $n$ to the \glsshort{rule result} of~$r$.
@@ -3742,9 +3755,11 @@ of \glspl{state}.
 Instead, the \glspl{state} only convey enough information about how to cover the
 distinct key shapes that can appear in any \gls{expression tree}.
 %
-To explain this further, let us observe how most (if not all) \glspl{target
-  machine} operate: between the execution of two \glspl{instruction}, the data
-is synchronized by storing it in \glspl{register} or in memory.
+To explain this further, let us observe how most \glspl{target machine}
+typically operate.
+%
+Between the execution of two \glspl{instruction}, the data is synchronized by
+storing it in \glspl{register} or in memory.
 %
 The manner in which some data came to appear in a particular location has in
 general no impact on the execution of the subsequent \glspl{instruction}.
@@ -3988,10 +4003,12 @@ Using \gls{BURS} theory \citeauthor{Pelegri-LlopartGraham:1988} developed an
 algorithm that computes the tables needed for \gls{optimal.ps} \gls{pattern
   selection} based on a given \gls{BURS grammar}.
 %
-The idea is as follows: for a given \gls{expression tree}~$T$, a \gls!{LR graph}
-is formed where each \gls{node} represents a specific \gls{subtree} appearing
-in~$T$ and each \gls{edge} indicates the application of a particular
-\gls{rewrite.r} \gls{rule} on that \gls{subtree} (an example is shown in
+The idea is as follows.
+%
+For a given \gls{expression tree}~$T$, a \gls!{LR graph} is formed where each
+\gls{node} represents a specific \gls{subtree} appearing in~$T$ and each
+\gls{edge} indicates the application of a particular \gls{rewrite.r} \gls{rule}
+on that \gls{subtree} (an example is shown in
 \refFigure{burs-example-lr-graph}).
 %
 Setting some \glspl{node} as goals (that is, the desired results of \gls{tree
@@ -4189,14 +4206,21 @@ which since its publication in :1992 has sparked a naming convention within the
 \footnote{%
   During my research for this dissertation, I came across the following systems,
   all with equally creative naming schemes:
-  \gls{Burg}~\cite{FraserEtAl:1992:Burg},
-  \gls{CBurg}~\cite{ScharwaechterEtAl:2007}, \gls{DBurg}~\cite{Ertl:1999},
-  \gls{GBurg}~\cite{FraserProebsting:1999}, \gls{GPBurg}~\cite{Gough:2012},
-  \gls{HBurg}~\cite{HBURG}, \gls{IBurg}~\cite{FraserEtAl:1992:IBurg},
-  \gls{JBurg}~\cite{JBURG}, \gls{LBurg}~\cite{HansonFraser:1995},
-  \gls{MBurg}~\cite{Gough:1995, GoughLedermann:1997},
-  \gls{OCamlBurg}~\cite{OCamlBURG}, and
-  \gls{WBurg}~\cite{ProebstingWhaley:1996}.%
+  %
+  \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+    \item \gls{Burg}~\cite{FraserEtAl:1992:Burg}
+    \item \gls{CBurg}~\cite{ScharwaechterEtAl:2007}
+    \item \gls{DBurg}~\cite{Ertl:1999}
+    \item \gls{GBurg}~\cite{FraserProebsting:1999}
+    \item \gls{GPBurg}~\cite{Gough:2012}
+    \item \gls{HBurg}~\cite{HBURG}
+    \item \gls{IBurg}~\cite{FraserEtAl:1992:IBurg}
+    \item \gls{JBurg}~\cite{JBURG}
+    \item \gls{LBurg}~\cite{HansonFraser:1995}
+    \item \gls{MBurg}~\cite{Gough:1995, GoughLedermann:1997}
+    \item \gls{OCamlBurg}~\cite{OCamlBURG}
+    \item \gls{WBurg}~\cite{ProebstingWhaley:1996}
+  \end{inlinelist}.%
 }
 %
 Although \citeauthor{BalachandranEtAl:1990} were first, we will continue with
@@ -4249,9 +4273,13 @@ by \citeauthor{Proebsting:1992:BURS}~\cite{Proebsting:1992:BURS,
   Proebsting:1995:BURS}.
 %
 \citeauthor{Proebsting:1992:BURS} developed two methods for reducing the number
-of generated \glspl{state}: \gls!{state trimming}, which extends and generalizes
-\citeauthor{Henry:1989}'s ideas; and a new technique called \gls!{chain rule
-  trimming}.
+of generated \glspl{state}:
+%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item \gls!{state trimming}, which extends and generalizes
+    \citeauthor{Henry:1989}'s ideas
+  \item a new technique called \gls!{chain rule trimming}
+\end{inlinelist}.
 %
 Without going into details, \gls{state trimming} increases the likelihood that
 two created \glspl{state} will be identical by removing the information about
@@ -4358,8 +4386,13 @@ The authors noted that while this incurs an additional overhead, their
 \labelSection{tc-other-tree-based-approaches}
 
 So far we have discussed the conventional methods of covering \glspl{tree}:
-\gls{LR parsing}, top-down recursion, dynamic programming, and the use of
-\gls{state} tables.
+%
+\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+  \item \gls{LR parsing}
+  \item top-down recursion
+  \item dynamic programming
+  \item the use of \gls{state} tables
+\end{inlinelist}.
 %
 In this section we will look at other designs which also rely on \glspl{tree},
 but solve the \gls{instruction selection} problem using alternative methods.

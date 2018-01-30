@@ -1702,9 +1702,12 @@ above in the first experiment, with \glsshort{constraint
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two constraint
-            models using different operation cost functions: one based on the
-            multiply-then-divide method (baseline), and one based on the
-            divide-then-multiply method (subject).
+            models using different operation cost functions:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one based on the multiply-then-divide method (baseline)
+              \item one based on the divide-then-multiply method (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
@@ -1957,9 +1960,12 @@ third experiment, with \glsshort{constraint
             code quality%
           ]%
           {%
-            Normalized optimal solution costs for two constraint models: one
-            implementing the naive objective function (baseline), and one
-            implementing the refined objective function (subject).
+            Normalized optimal solution costs for two constraint models:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one implementing the naive objective function (baseline)
+              \item one implementing the refined objective function (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupGmean%
@@ -2166,8 +2172,11 @@ solving times (including \gls{presolving} time) for the two \glspl{constraint
   }%
   \def\capText{%
     Normalized solving times (incl.\ presolving time) for two constraint models:
-    one without a particular implied constraint (baseline) and one with all
-    such constraints (subject)%
+    %
+    \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+      \item one without a particular implied constraint (baseline)
+      \item one with all such constraints (subject)
+    \end{inlinelist}%
   }%
   \IfBooleanTF{#1}{%
     \caption*{\capText}%
@@ -2554,9 +2563,12 @@ described above in the first experiment, with \glsshort{constraint
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models: one without a particular symmetry or dominance
-            breaking constraint (baseline) and one with all such
-            constraints (subject)%
+            constraint models:
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one without a particular symmetry or dominance breaking
+                constraint (baseline)
+              \item one with all such constraints (subject)
+            \end{inlinelist}%
           }
   \labelFigure{single-dom-con-vs-no-con-solving-time-plots}
 \end{figure}
@@ -2857,8 +2869,12 @@ and \glsshort{constraint model}~\refModel{pre-ex-w-single-tech} as
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models: one without a particular presolving technique
-            (baseline) and one with all such techniques (subject)%
+            constraint models:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one without a particular presolving technique (baseline)
+              \item one with all such techniques (subject)
+            \end{inlinelist}%
           }
   \labelFigure{single-presolving-vs-no-presolving-solving-time-plots}
 \end{figure}

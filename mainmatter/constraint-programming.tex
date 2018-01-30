@@ -1129,9 +1129,13 @@ An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
   \labelFigure{lcg-solver-overview}
 \end{figure}
 
-To begin with, every \glspl{variable} has two dual representations: one based on
-Booleans; and one based on integers, which is the \gls{domain} typically used in
-\gls{CP}.
+To begin with, every \glspl{variable} has two dual representations:
+%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item one based on Booleans
+  \item one based on integers, which is the \gls{domain} typically used in
+    \gls{CP}
+\end{inlinelist}.
 %
 Every integer variable~\mbox{$\mVar{x} \in [l, \ldots, u]$} results in a set
 \mbox{$\mBoolRepVar{\mVar{x} = l}, \ldots, \mBoolRepVar{\mVar{x} = u}$} and

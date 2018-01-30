@@ -220,8 +220,12 @@ costs for the two \glspl{pattern set} describe above, with \gls{pattern
 
   \caption[Plot for evaluating the impact of SIMD instructions on code quality]%
           {%
-            Normalized solution costs for two pattern sets: one without SIMD
-            instructions (baseline), and one with such instruction (subject).
+            Normalized solution costs for two pattern sets:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one without SIMD instructions (baseline)
+              \item one with such instruction (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%

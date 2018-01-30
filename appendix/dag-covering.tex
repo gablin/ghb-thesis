@@ -440,12 +440,17 @@ A tool called \gls!{Tablegen} expands the abstract \glspl{instruction} into
 \glspl{pattern tree}, which are then processed by a matcher generator.
 %
 To ensure a partial order among all \glspl{pattern}, the matcher generator first
-performs a lexicographical sort on the \gls{pattern set}: first by decreasing
-complexity, which is the sum of the \gls{pattern}'s size and a constant that can
-be tweaked to give higher priority for particular \glspl{instruction}; then by
-increasing cost; and lastly by increasing the size of the \gls{subgraph} that
-replaces the covered part in the \gls{block DAG} if the corresponding
-\gls{pattern} is selected.
+performs a lexicographical sort on the \gls{pattern set}, in the following
+order:
+%
+\begin{inlinelist}[label=(\roman*), itemjoin={; }, itemjoin*={; and\ }]
+  \item by decreasing complexity, which is the sum of the \gls{pattern}'s size
+    and a constant that can be tweaked to give higher priority for particular
+    \glspl{instruction}
+  \item by increasing cost
+  \item by increasing size of the \gls{subgraph} that replaces the covered part
+    in the \gls{block DAG} (if the corresponding \gls{pattern} is selected)
+\end{inlinelist}.
 %
 Once sorted, the \glspl{pattern} are converted into small recursive
 \glspl{program} which essentially check whether the corresponding \gls{pattern}
@@ -665,12 +670,16 @@ shared value, which is known as \gls!{node duplication}.
 This results in a single but larger \gls{expression tree} compared to those
 produced with \gls{edge splitting}.
 
-Common for both schemes is that they compromise code quality: too aggressive
-\gls{edge splitting} produces many small \glspl{tree} that cannot be covered
-using larger \glspl{pattern}, inhibiting use of more efficient
-\glspl{instruction}; and too aggressive \gls{node duplication} incurs a larger
-computational workload where many operations are needlessly re-executed in the
-final \gls{assembly code}.
+Common for both schemes is that they compromise code quality:
+%
+\begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
+  \item too aggressive \gls{edge splitting} produces many small \glspl{tree}
+    that cannot be covered using larger \glspl{pattern}, inhibiting use of more
+    efficient \glspl{instruction}
+  \item too aggressive \gls{node duplication} incurs a larger computational
+    workload where many operations are needlessly re-executed in the final
+    \gls{assembly code}
+\end{inlinelist}.
 %
 Moreover, the intermediate results of an edge-split \gls{block DAG} must be
 forcibly stored in specific locations, which can be troublesome for
@@ -886,7 +895,12 @@ selects \glspl{pattern} optimally by performing a \gls{tree}-like, bottom-up
 \gls{DP}~pass which ignores the fact that the input is a~\gls{DAG}.
 %
 Then, at points where multiple \glspl{pattern} overlap, two costs are
-calculated: an \emph{\overlapCost} and a \emph{\cseCost}.
+calculated:
+%
+\begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
+  \item an \emph{\overlapCost}
+  \item a \emph{\cseCost}
+\end{inlinelist}.
 %
 The \overlapCost is an estimate of the cost of letting the \glspl{pattern}
 overlap and thus incur duplication of operations in the final \gls{assembly

@@ -808,8 +808,12 @@ thus necessitating only one copy \gls{instruction}
 %
 We call this notion \gls!{value reuse}.
 
-In this dissertation, we discuss two methods for reusing values: \gls{match
-  duplication} and \glspl{alternative value}.
+In this dissertation, we discuss two methods for reusing values:
+%
+\begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
+  \item \gls{match duplication}
+  \item \glspl{alternative value}
+\end{inlinelist}.
 %
 We first introduce each in turn and then present experiments showing that one is
 superior to the other.
@@ -1180,9 +1184,12 @@ as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models that supports value reuse: one based on match
-            duplication (baseline), and one based on alternative values
-            (subject).
+            constraint models that supports value reuse:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one based on match duplication (baseline)
+              \item one based on alternative values (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
@@ -1272,9 +1279,11 @@ we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
 
   \caption[Plot for evaluating value reuse's impact on code quality]%
           {%
-            Normalized optimal solution costs for two constraint models: one
-            without value reuse support (baseline), and one with such support
-            (subject).
+            Normalized optimal solution costs for two constraint models:
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one without value reuse support (baseline)
+              \item one with such support (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -1410,8 +1419,12 @@ Hence an additional jump \gls{instruction} that directly branches to
 \irBlock*{A} or~\irBlock*{B} (\refFigure{jump-insert-example-solutions}).
 
 In this dissertation, we discuss two methods for inserting jump
-\glspl{instruction} when required: \gls{branch extension} and \glspllong{DTB
-  pattern}.
+\glspl{instruction} when required:
+%
+\begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
+  \item \gls{branch extension}
+  \item \glspllong{DTB pattern}
+\end{inlinelist}.
 %
 We first introduce the \glspl{variable} and \glspl{constraint} for modeling
 \gls{block ordering} before introducing each method in turn, and then present
@@ -1752,8 +1765,12 @@ shows the normalized solving times (including \gls{presolving} time) for the two
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models that supports jump insertion: one based on branch
-            extension (baseline), and one based on DTB patterns (subject).
+            constraint models that supports jump insertion:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one based on branch extension (baseline)
+              \item one based on DTB patterns (subject)
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
@@ -1834,8 +1851,12 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
           ]%
           {%
             Normalized optimal solution costs for two constraint models that
-            supports jump insertion: one based on branch extension (baseline),
-            and one based on DTB patterns (subject).
+            supports jump insertion:
+            %
+            \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+              \item one based on branch extension (baseline)
+              \item one based on DTB patterns (subject).
+            \end{inlinelist}.
             %
             GMI:~\printGMI{%
               \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
