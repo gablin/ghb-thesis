@@ -870,8 +870,8 @@
           {\Glsindextext}%
           {\GLSindextext}
 
-% Customize glossary style
-\newglossarystyle{myglossary}{%
+% Customize index style
+\newglossarystyle{myindex}{%
   \setglossarystyle{mcolindex}
   \setlength{\columnsep}{8mm}
   \renewcommand*{\glstreenamefmt}[1]{##1}
@@ -905,7 +905,12 @@
     \space\hfill\space##3%
   }%
 }
-\setglossarystyle{myglossary}
+
+\renewcommand{\printindex}[1][]{%
+  \setglossarystyle{myindex}
+  \printglossary[title={Index}, #1]
+}
+
 
 % Commands for introducing terms and acronyms
 \NewDocumentCommand{\newTerm}{omO{}}{%
