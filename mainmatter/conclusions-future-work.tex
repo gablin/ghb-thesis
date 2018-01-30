@@ -14,8 +14,7 @@ This chapter closes the dissertation by presenting conclusions in
 \section{Conclusions}
 \labelSection{conclusions}
 
-In this dissertation, I have introduced \gls!{universal instruction
-  selection},\!%
+This dissertation has introduced \gls!{universal instruction selection},\!%
 %
 \footnote{%
   The source code is freely available on
@@ -44,10 +43,10 @@ Consequently, the existing approaches fail to exploit many of the
 \glspl{instruction} provided by modern processors, thereby sacraficing code
 quality.
 
-To handle the combinatorial nature of these problems, I have based the approach
-on \glsdesc{CP}.
+To handle the combinatorial nature of these problems, the approach is based on
+\glsdesc{CP}.
 %
-I have formulated a novel combinatorial model that is simpler and more flexible
+It relies on a novel combinatorial model that is simpler and more flexible
 compared to the techniques currently used in modern \glspl{compiler}.
 %
 In addition to integrating \gls{global.c} \gls{instruction selection},
@@ -63,9 +62,9 @@ approaches.
 \Gls{value reuse} enables copies of values to be shared among
 \glspl{instruction}, which is crucial for code quality.
 %
-I have also proposed extensions to the \glsshort{constraint model} for
-integrating \gls{instruction scheduling} and \gls{register allocation}, which
-are two other important tasks of \gls{code generation}.
+The dissertation has also proposed extensions to the \glsshort{constraint model}
+for integrating \gls{instruction scheduling} and \gls{register allocation},
+which are two other important tasks of \gls{code generation}.
 
 The \glsshort{constraint model} is enabled by the \gls!{universal
   representation}, a novel \gls{graph}-based representation that unifies data
@@ -80,17 +79,17 @@ Hence there is no longer any need for hand-written routines to handle
 \glspl{instruction} that violate underlying assumptions about the
 \gls{instruction set}.
 
-To make the approach work in practice, I have introduced numerous solving
-techniques.
+To make the approach work in practice, numerous solving techniques have been
+introduced.
 %
-Through experimental evaluation, I have shown that these techniques collectively
-improve solving time up to \printSpeedup{%
+Through experimental evaluation, it has been shown that these techniques
+collectively improve solving time up to \printSpeedup{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }, with a \gls{GMI} of~\printGMI{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean
 }.
 %
-I have also discovered that two solving techniques
+It was also discovered that two solving techniques
 (\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}) have a
 negative impact on solving time, and rejecting them improves solving time up to
 \printSpeedup{%
@@ -102,7 +101,7 @@ negative impact on solving time, and rejecting them improves solving time up to
 Hence these solving techniques are crucial for scalability, enabling the
 approach to scale up to medium-sized \glspl{function}.
 
-I have experimentally evaluated my approach by comparing the code quality it
+The approach has been experimentally evaluated in comparing the code quality it
 produces for \gls{Hexagon} -- a \gls{DSP} with a rich \gls{instruction set} --
 with that produced by \gls{LLVM} -- a existing, state-of-the-art \gls{compiler}.
 %
@@ -117,7 +116,7 @@ Hence the approach can handle hardware architectures with rich
 \glspl{instruction set} and generates code of equal or better quality compared
 to the state of the art.
 
-I have also performed experiments to evaluate the impact of \gls{SIMD.i}
+Experiments have also been performed to evaluate the impact of \gls{SIMD.i}
 \gls{instruction} selection.
 %
 The results show that, when such \glspl{instruction} are available, the approach
@@ -137,7 +136,7 @@ Hence there is sufficient data parallelism to be exploited through selection of
 %
 Moreover, this exploitation is benefitted from \gls{global code motion}.
 
-With these results, I argue that \glsdesc{CP} is a flexible, practical,
+From these results, we conclude that \glsdesc{CP} is a flexible, practical,
 competitive, and extensible approach for combining \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 

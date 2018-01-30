@@ -69,7 +69,7 @@ performed in unison.
 
 \paragraph{Universal Instruction Selection}
 
-In this dissertation, I introduce \gls!{universal instruction selection},\!%
+This dissertation introduces \gls!{universal instruction selection},\!%
 %
 \footnote{%
   The source code is freely available on
@@ -93,18 +93,18 @@ Outlined in \refFigure{approach-overview}, the approach is the first to combine
 In doing so, the approach alleviates selection of sophisticated
 \glspl{instruction} that would otherwise not have been selectable.
 
-To handle the combinatorial nature of these problems, I base the approach on
+To handle the combinatorial nature of these problems, the approach is based on
 \glsdesc{CP}.
 %
-I formulate on a novel combinatorial model that is simpler and more flexible
+It relies on a novel combinatorial model that is simpler and more flexible
 compared to the techniques currently used by modern \glspl{compiler}.
 %
 In addition, it captures crucial features that are ignored by other, existing
 combinatorial approaches.
 %
-I also propose extensions for integrating \gls{instruction scheduling} and
-\gls{register allocation}, which are two other \gls{code generation} tasks known
-to impact \gls{instruction selection}.
+The dissertation also proposes extensions for integrating \gls{instruction
+  scheduling} and \gls{register allocation}, which are two other \gls{code
+  generation} tasks known to impact \gls{instruction selection}.
 
 The model is enabled by a novel, \gls{graph}-based representation that unifies
 data flow and control flow for entire \glspl{function}.
@@ -509,12 +509,12 @@ The \gls{instruction selector} must therefore be aware of additional jump
 \section{Contributions}
 \labelSection{intro-contributions}
 
-In this dissertation, I make six contributions to the areas of \gls{code
-  generation} and \glsdesc{CP}:
+The dissertation makes six contributions to the areas of \gls{code generation}
+and \glsdesc{CP}:
 %
 \begin{contributions}
   \item \labelContribution{survey}
-    I present a comprehensive and systematic survey that
+    It presents a comprehensive and systematic survey that
     \begin{contributions}
       \item \labelContribution{survey-spanning}
         examines over four decades of research on \gls{instruction selection},
@@ -544,7 +544,7 @@ In this dissertation, I make six contributions to the areas of \gls{code
         \gls{code generation} problems that have yet to be investigated.
     \end{contributions}
   \item \labelContribution{representations}
-    I introduce a novel \gls{program} and \gls{instruction} representation
+    It introduces a novel \gls{program} and \gls{instruction} representation
     that
     \begin{contributions}
       \item \labelContribution{rep-data-and-control-flow}
@@ -565,7 +565,7 @@ In this dissertation, I make six contributions to the areas of \gls{code
         another -- and solving these two problems in unison.
     \end{contributions}
   \item \labelContribution{constraint-model}
-    I introduce a \gls{constraint model} and related transformations for
+    It introduces a \gls{constraint model} and related transformations for
     \gls{universal instruction selection} which, for the first time, enables
     \begin{contributions}
       \item \labelContribution{cp-uniform-selection}
@@ -588,15 +588,15 @@ In this dissertation, I make six contributions to the areas of \gls{code
         \gls{block ordering}.
     \end{contributions}
   \item \labelContribution{solving-techniques}
-    I introduce techniques to improve solving of the \gls{constraint model}.
+    It introduces techniques to improve solving of the \gls{constraint model}.
   \item \labelContribution{experiments}
-    I present thorough experiments demonstrating that the approach scales to
+    It presents thorough experiments demonstrating that the approach scales to
     medium-sized \glspl{program} and yields equal or better code than the state
     of the art.
   \item \labelContribution{integration}
-    I propose extensions of the \gls{constraint model} for integrating
-    \gls{instruction scheduling} and \gls{register allocation}, two other
-    important problems of \gls{code generation}.
+    It outlines how the \gls{constraint model} can be extended to integrate
+    other \gls{code generation} tasks, such as \gls{instruction scheduling} and
+    \gls{register allocation}.
 \end{contributions}
 %
 \refTable{contributions-per-chapter} shows in which part of the dissertation
@@ -713,9 +713,10 @@ This dissertation is based on material presented in the following publications:
     \fullcite{HjortBlindellEtAl:2015:CP}.
     %
     \begin{authorsContribution}
-      I designed and implemented the work presented in the paper, oversaw the
-      writing of the paper, wrote the majority of the text, designed the
-      figures, and assisted in data gathering and analysis.
+      The author of this dissertation designed and implemented the work
+      presented in the paper, oversaw the writing of the paper, wrote the
+      majority of the text, designed the figures, and assisted in data gathering
+      and analysis.
     \end{authorsContribution}
 \end{publications}
 
@@ -727,9 +728,9 @@ This dissertation is based on material presented in the following publications:
     \fullcite{HjortBlindellEtAl:2017:CASES}.
     %
     \begin{authorsContribution}
-      I designed and implemented the work presented in the paper, gathered and
-      analyzed the experimental data, oversaw the writing of the paper, wrote
-      the majority of the text, and designed the figures.
+      The author designed and implemented the work presented in the paper,
+      gathered and analyzed the experimental data, oversaw the writing of the
+      paper, wrote the majority of the text, and designed the figures.
     \end{authorsContribution}
 \end{publications}
 %
@@ -806,8 +807,8 @@ dissertation and in none of the publications.
   \labelTable{contributions-per-publication}
 \end{table}
 
-I also participated in the following publications, not included in the
-dissertation:
+The author also participated in the following publications, which are out of
+scope for the dissertation:
 
 
 \paragraph{Book Chapters, Conference Papers, and Workshop Papers}
@@ -819,28 +820,28 @@ dissertation:
     \fullcite{CastanedaLozanoEtAl:2013:M-SCOPES}.
     %
     \begin{authorsContribution}
-      I assisted in writing the paper.
+      The author assisted in writing the paper.
     \end{authorsContribution}
   \item \labelPublication{lctes}
     \fullcite{CastanedaLozanoEtAl:2014:LCTES}.
     %
     \begin{authorsContribution}
-      I assisted in gathering and analyzing the experimental data, and
+      The author assisted in gathering and analyzing the experimental data, and
       to writing the paper.
     \end{authorsContribution}
   \item \labelPublication{cc}
     \fullcite{CastanedaLozanoEtAl:2016:CC}.
     %
     \begin{authorsContribution}
-      I assisted in writing the paper.
+      The author assisted in writing the paper.
     \end{authorsContribution}
   \item \labelPublication{fdl-2016}
     \fullcite{HjortBlindellEtAl:2016:FDL}.
     %
     \begin{authorsContribution}
-      I designed and implemented the work presented in the paper, gathered and
-      analyzed the experimental data, oversaw the writing of the paper, wrote
-      the majority of the text, and designed the figures.
+      The author designed and implemented the work presented in the paper,
+      gathered and analyzed the experimental data, oversaw the writing of the
+      paper, wrote the majority of the text, and designed the figures.
     \end{authorsContribution}
 \end{publications}
 %
@@ -859,7 +860,7 @@ entirely (high-level code generation for graphics processors).
 \section{Research Methodology}
 \labelSection{intro-research-methodology}
 
-I begin with a comprehensive and systematic literature survey to identify the
+We begin with a comprehensive and systematic literature survey to identify the
 strengths and limitations of existing \gls{instruction selection} techniques and
 common denominators among them.
 %
@@ -871,29 +872,29 @@ This classification enables us to recognize that certain classes of
 \glspl{instruction} are poorly supported by existing \gls{instruction selection}
 techniques.
 %
-This is especially due to lack of appropriate \gls{program} and
+In particular this is due to lack of appropriate \gls{program} and
 \gls{instruction} representations.
 
-Having established the need for new representations, I identify a set of
+Having established the need for new representations, we identify a set of
 requirements that such a representation must fulfill.
 %
-I then build a new representation by unifying two existing, well-established
+We then build a new representation by unifying two existing, well-established
 representations -- one for capturing data flow and another for capturing control
 flow -- and then augment the result as needed until all requirements are met.
 %
-As is common, I then apply a traditional \gls{subgraph isomorphism} algorithm
+As is common, we then apply a traditional \gls{subgraph isomorphism} algorithm
 for doing \gls{pattern matching} on this new representation.
 
-With the new representation at hand, I proceed with building the \gls{constraint
-  model}.
+With the new representation at hand, we proceed with building the
+\gls{constraint model}.
 %
-For each task to be integrated, I first identify what constitutes a
+For each task to be integrated, we first identify what constitutes a
 \gls{solution} to this task and then add the necessary \glspl{variable} and
 \glspl{constraint} to enforce such \glspl{solution}.
 %
-If more than one design choice exists for integrating the task, then I implement
-both as separate \glsplshort{constraint model} and evaluate which is better
-before proceeding.
+If more than one design choice exists for integrating the task, then we
+implement both as separate \glsplshort{constraint model} and evaluate which is
+better before proceeding.
 %
 This is because the tasks are orthogonal from one another and can therefore be
 evaluated in isolation.
@@ -901,44 +902,40 @@ evaluated in isolation.
 The evaluation methodology is described in
 \refSection{intro-evaluation-methodology}.
 
-Once all tasks are integrated, I apply a range of solving techniques in order to
-increase scalability and robustness.
+Once all tasks are integrated, we apply a range of solving techniques in order
+to increase scalability and robustness.
 %
-Because these techniques influence one another, I first evaluate the usefulness
+Because these techniques influence one another, we first evaluate the usefulness
 of each solving technique individually in order to form groups of solving
 techniques and then evaluate each group as a whole.
 %
 This is to avoid unreasonably long experiment runtimes.
 
 Using the \gls{constraint model} with the best design choices and solving
-techniques, I then evaluate the significance of \gls{universal instruction
+techniques, we then evaluate the significance of \gls{universal instruction
   selection} by comparing its \glspl{solution} with those produced by the state
 of the art.
 
 
-\section{Experimental Evaluation Methodology}
+\section{Evaluation Methodology}
 \labelSection{intro-evaluation-methodology}
-
-In this section, I describe how I produce and interpret the data for the
-experimental evaluation.
-
 
 \subsection{Experiment Setup}
 
-To evaluate a \gls{constraint model}, I implement it using \mbox{\gls{MiniZinc}
+To evaluate a \gls{constraint model}, we implement it using \mbox{\gls{MiniZinc}
   2.1.6}~\cite{NethercoteEtAl:2007} -- a high-level \gls{constraint} modeling
-language -- and then solve it using \gls{Chuffed}~\cite{Chu:2011} -- a
-\glsdesc{LCG}-based \glsshort{constraint solver}, which is included in
+language -- and then solve it using \gls{Chuffed}~\cite{Chu:2011} -- an
+\gls{LCG}-based \glsshort{constraint solver}, which is included in
 \gls{MiniZinc} -- on a Linux machine with an \gls{Intel} Xeon W3530 at
 \SI{2.80}{\GHz} and \SI{16}{\giga\byte} main memory.
 %
-To mitigate deviations in the measurments, I run each experiment ten times and
+To mitigate deviations in the measurments, we run each experiment ten times and
 then take the arithmetic average together with the \gls{CV}.
 %
-When summarizing ratios, I instead take the geometric mean since this is more
+When summarizing ratios, we instead take the geometric mean since this is more
 appropriate in such cases~\cite{FlemingWallace:1986}.
 
-As problem instances, I use the \glspl{function} provided by
+As problem instances, we use the \glspl{function} provided by
 \gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
 -- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
 \gls{instruction set}.
@@ -947,7 +944,7 @@ The \gls{MediaBench} suite consists of \num{6313}~\glspl{function}, which are
 compiled into \gls{LLVM} \gls{IR} code -- the intermediate format used by
 \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization flag~\texttt{-O3}.
 %
-Due to insuffiicent support in the current toolchain, I remove all
+Due to insuffiicent support in the current toolchain, we remove all
 \glspl{function} that operate on non-integer data types (such as floating point
 and vector data types).
 %
@@ -958,9 +955,9 @@ For all experiments in this dissertation, the remaining pool of \glspl{function}
 is too large for all to be included in the experiment as that would lead to
 intractable experiment runtimes.
 %
-I therefore draw a limited number of samples from this pool.
+We therefore draw a limited number of samples from this pool.
 %
-To get a diverse set of samples, I apply \gls{k-means
+To get a diverse set of samples, we apply \gls{k-means
   clustering}~\cite{PhansalkarEtAl:2005} to divide the \glspl{function} into
 twenty clusters based on three features.
 %
@@ -980,7 +977,7 @@ This is because, due to its many \glspl{addressing mode}, the memory
 \glspl{instruction} constitute a large part of the more sophisticated
 \glspl{instruction} in the \gls{instruction set}).
 %
-Based on these features, from each cluster I then randomly select one
+Based on these features, from each cluster we then randomly select one
 \gls{function}, giving a total of twenty \glspl{function}.
 
 
@@ -988,7 +985,7 @@ Based on these features, from each cluster I then randomly select one
 
 \newcommand{\speedupCase}[1]{\textrm{\textsc{#1}}}
 
-When we are interested in the relative difference between the measurements, I
+When we are interested in the relative difference between the measurements, we
 normalize all values to those obtained from one \glsshort{constraint model}
 which has been chosen as the \gls!{baseline}.
 %
@@ -999,7 +996,7 @@ For time measurements, the most typical method for normalization is to calculate
 the \gls!{speedup}, which is computed as
 %
 \begin{equation}
-  \frac{t_b}{t_a}
+  S = \frac{t_b}{t_a}
   \labelEquation{speedup-normalization}
 \end{equation}
 %
@@ -1077,10 +1074,11 @@ where $b$ is twice as fast as $a$.
   \labelFigure{speedup-comparison}%
 \end{figure}
 %
-When plotting such values, I therefore normalize the values using a different
+When plotting such values, we therefore normalize the values using a different
 method, called \gls!{zero-centered normalization}, which is computed as
 %
 \begin{equation}
+  S =
   \left\{
   \begin{array}{ll}
     \frac{t_b - t_a}{t_a} & \text{if $t_b \geq t_a$,} \\
@@ -1104,11 +1102,11 @@ costs as they represent an estimate of the time it would take to execute the
 code yielded by the \glspl{solution} (the current implementation is not yet able
 to hook back into \gls{LLVM} in order to generate executable code).
 
-When summarizing normalized values, however, I do not use \gls{zero-centered
+When summarizing normalized values, however, we do not use \gls{zero-centered
   normalization} as the geometric mean cannot be computed for such values.
 %
-In such cases, I instead use the values normalized using the \gls{speedup}
-method as the geometric mean can be computed for such values, which I call the
+In such cases, we instead use the values normalized using the \gls{speedup}
+method as the geometric mean can be computed for such values, which we call the
 \gls!{GMI}.
 %
 A result is considered positive or negative if the \gls{GMI} is greater than
@@ -1121,13 +1119,13 @@ greater than~\num{1}.
 
 \subsection{Attaining Statistically Significant Results}
 
-Because I can only run experiments on a small set of \glspl{function} sampled
-from much larger pool, the \gls{GMI} attained from the sampled set may not be
+Because we can only run experiments on a small set of \glspl{function} sampled
+from much larger pool, the \gls{GMI} we attain from the sampled set may not be
 representative for the pool as a whole.
 %
 In other words, the result may not be statistically significant.
-
-Therefore, for the \gls{GMI} value I also compute the \gls{CI}, which is a
+%
+Therefore, for the \gls{GMI} value we also compute the \gls{CI}, which is a
 method of estimating the uncertainty of a value computed from a set of
 samples~\cite{Neyman:1937}.
 %
@@ -1140,12 +1138,12 @@ $X\%$ confidence that the result is positive respectively negative.
 %
 If the \gls{CI} contains~\num{1}, then the result is inconclusive.
 
-For the experiments described in this dissertation, I compute the
+For the experiments described in this dissertation, we compute the
 \num{95}\textsuperscript{th} \gls{CI} as is common for most statistical
 experiments.
 %
 Since we know nothing about the underlying distributions for our observations,
-I compute the \gls{CI} using \gls{percentile bootstrapping} with
+we compute the \gls{CI} using \gls{percentile bootstrapping} with
 \num{100000}~iterations~\cite{EfronTibshirani:1994}.
 
 
@@ -1197,7 +1195,8 @@ into four parts:
       \item \refChapter{exp-evaluation-using-the-state-of-the-art} evaluates the
         approach using the state of the art
       \item \refAppendix{minizinc-implementation} provides an implementation of
-        the \gls{constraint model}, written in \gls{MiniZinc}
+        the \gls{constraint model}, written in \gls{MiniZinc} (a high-level
+        modeling language)
     \end{inlinelist}.
   \item[Ending]
     Closes the dissertation:
