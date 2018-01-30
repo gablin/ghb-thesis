@@ -64,33 +64,35 @@ Depending on the \gls{instruction set}, the latter problem permits
 %
 For example, assume a \gls{UF graph} where a sum is used as address in two
 memory \glspl{operation} and a \gls{target machine} where the address can be
-computed as part of the memory instructions.
+computed as part of the memory \glspl{instruction}.
 %
 A \gls{solution} to the latter problem would therefore only need two
-instructions, whereas the former problem would require three instructions -- one
-to compute the sum and two to perform the memory \glspl{operation} -- since the
-addition is not allowed to be covered by both memory instructions.
+\glspl{instruction}, whereas the former problem would require three
+\glspl{instruction} (one to compute the sum and two to perform the memory
+\glspl{operation}, since the addition is not allowed to be covered by both
+memory \glspl{instruction}).
 %
-In certain conditions, however, an add instruction may still be required.
+In certain conditions, however, an add \gls{instruction} may still be required.
 %
 For example, assume a \gls{UF graph} where the sum is also used in a
 subtraction.
 %
 For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
 performs both an addition and a subtraction, a \gls{solution} to either problem
-requires an add instruction to compute the sum.
+requires an add \gls{instruction} to compute the sum.
 %
 Due to the increased complexity of the relaxed version of the problem, we model
 exact \gls{cover}[age] in this dissertation.
 
-Similarly, every value and state must be produced by exactly one selected match.
+Similarly, every value and state must be produced by exactly one selected
+\gls{match}.
 %
 If a \gls!{datum}~$d$ denotes either a \glsshort{state node} or \gls{value node}
 in the \gls{UF graph}, then we say that a \gls{match}~$m$ \gls!{define.d}[s] $d$
-if there exists an inbound \glsshort{state-flow edge} or \gls{data-flow edge} to
-$d$ in the \gls{UP graph} from which $m$ was derived.
+if there exists an \gls{inbound.e} \glsshort{state-flow edge} or \gls{data-flow
+  edge} to $d$ in the \gls{UP graph} from which $m$ was derived.
 %
-Similarly, $m$ \gls!{use.d}[s] $d$ if there exists an outbound
+Similarly, $m$ \gls!{use.d}[s] $d$ if there exists an \gls{outbound.e}
 \glsshort{state-flow edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph}
 of $m$.
 
@@ -597,7 +599,7 @@ and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
   match}.
 %
 If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
-connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.en}
+connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.e}
 \gls{edge number} as the \gls{data-flow edge} -- is also moved to $v'$.
 %
 This is to ensure that the placement restrictions are applied only on the
