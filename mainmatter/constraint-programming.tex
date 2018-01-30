@@ -1213,6 +1213,104 @@ In this \gls{directed.g} \gls{graph}, each \gls{node} represents a \gls{literal}
 that resolves to true and each \gls{edge} between two \glspl{literal}~$l_1$
 and~$l_2$ represents the fact that $l_1$ caused $l_2$ to become true.
 %
+An example is given in \refFigure{implication-graph-example}.
+%
+\begin{figure}
+  \centering%
+
+  \mbox{}%
+  \hfill%
+  \subcaptionbox{%
+                  Search tree%
+                  \labelFigure{implication-graph-example-search-tree}%
+                }%
+                [20mm]%
+                {%
+                  \input{%
+                    figures/constraint-programming/%
+                    implication-graph-example-search-tree%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  Constraints%
+                  \labelFigure{implication-graph-example-constraints}%
+                }{%
+                  \begin{tabular}{>{$}c<{$}>{$}c<{$}}
+                    \toprule
+                        \text{\tabhead \#}
+                      & \text{\tabhead constraint}\\
+                    \midrule
+                        c_1
+                      & \mBoolRepVar{\mVar{z} \leq 3} \mOr
+                        \mBoolRepVar{\mVar{x} = 2} \mOr
+                        \mBoolRepVar{\mVar{y} = 2}\\
+                        c_2
+                      & \mNot\mBoolRepVar{\mVar{z} = 4} \mOr
+                        \mNot\mBoolRepVar{\mVar{z} \leq 3}\\
+                        c_3
+                      & \mNot\mBoolRepVar{\mVar{x} = 2} \mOr
+                        \mNot\mBoolRepVar{\mVar{y} = 2}\\
+                        c_4
+                      & \mNot\mBoolRepVar{\mVar{z} = 4} \mOr
+                        \mNot\mBoolRepVar{\mVar{x} = 2} \mOr
+                        \mBoolRepVar{\mVar{y} = 2}\\
+                    \bottomrule
+                  \end{tabular}%
+                }%
+  \hfill%
+  \mbox{}
+
+  \vspace{\betweensubfigures}
+
+  \mbox{}
+  \hfill%
+  \subcaptionbox{%
+                  Implication graph%
+                  \labelFigure{implication-graph-example-impl-graph}%
+                }{%
+                  \input{%
+                    figures/constraint-programming/%
+                    implication-graph-example-impl-graph%
+                  }%
+                }%
+  \hfill%
+  \subcaptionbox{%
+                  No-good%
+                  \labelFigure{implication-graph-example-no-good}%
+                }{%
+                  $\mNot\mBoolRepVar{\mVar{z} = 4} \mOr
+                   \mNot\mBoolRepVar{\mVar{x} = 2}$
+                }%
+  \hfill%
+  \mbox{}
+
+  \caption[Example of an implication graph]%
+          {%
+            Example of an implication graph.
+            %
+            First \mbox{$\mBoolRepVar{\mVar{z} = 4}$} is assigned to true ($T$)
+            through search.
+            %
+            This triggers unit propagation of constraint $c_2$, which assigns
+            \mbox{$\mNot\mBoolRepVar{\mVar{z} \leq 3}$ = T}.
+            %
+            Since no further propagation can be done, search is resumed by
+            assigning \mbox{$\mBoolRepVar{\mVar{z} = 4} = T$}.
+            %
+            This triggers unit propagation of constraint $c_3$, which assigns
+            \mbox{$\mNot\mBoolRepVar{\mVar{y} = 2}$ = T}.
+            %
+            This in turn causes constraint $c_4$ to fail.
+            %
+            By choosing the literals closest to the failure node such that
+            all decisions flow through those literals, we learn the no-good
+            \mbox{$\mNot\mBoolRepVar{\mVar{z} = 4} \mOr
+              \mNot\mBoolRepVar{\mVar{x} = 2}$}%
+          }
+  \labelFigure{implication-graph-example}
+\end{figure}
+%
 When \gls{failure} is reached, we can then use the \gls{implication graph} to
 derive an explanation for why a \gls{constraint} \glsshort{failure}, which can
 be captured as a clause, called \gls!{no-good}, and added to the existing body

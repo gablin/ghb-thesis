@@ -1,0 +1,67 @@
+% Copyright (c) 2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons 4.0 International License (see
+% LICENSE file or visit <http://creativecommons.org/licenses/by/4.0/> for a copy
+% of the license).
+%
+\begingroup%
+\input{figures/constraint-programming/implication-graph-example-styles}%
+\setlength{\nodeDist}{8mm}%
+\begin{tikzpicture}[
+    every node/.append style={
+      draw,
+      line width=\normalLineWidth,
+      minimum height=5mm,
+      inner sep=1mm,
+      rounded corners=3pt,
+      node distance=\nodeDist,
+    },
+    search label/.style={
+      nothing,
+      node distance=2mm,
+    },
+    flow/.style={
+      ->,
+      line width=\normalLineWidth,
+    },
+    flow label/.style={
+      nothing,
+      inner sep=2pt,
+      auto,
+    },
+  ]
+
+  \node (z4) {$\mBoolRepVar{\mVar{z} = 4}$};
+  \node [right=of z4] (not-z3) {$\mNot\mBoolRepVar{\mVar{z} \leq 3}$};
+  \node [below=1.1\nodeDist of z4] (x2) {$\mBoolRepVar{\mVar{x} = 2}$};
+  \node (not-y2) at (x2 -| not-z3) {$\mNot\mBoolRepVar{\mVar{y} = 2}$};
+  \node [right=of not-y2] (fail) {fail};
+
+  \node [search label, left=of z4] {1:};
+  \node [search label, left=of x2] {2:};
+
+  \begin{scope}[flow]
+    \draw (z4) -- node [flow label] {$c_2$} (not-z3);
+    \draw (x2) -- node [flow label] {$c_3$} (not-y2);
+    \draw (not-y2) -- node [flow label] {$c_4$} (fail);
+    \coordinate (z4-x2) at ($(z4) !.5! (x2)$);
+    \draw [rounded corners=6pt]
+          (z4)
+          --
+          (z4 |- z4-x2)
+          -- node [flow label] {$c_4$}
+          (fail |- z4-x2)
+          --
+          (fail);
+    \coordinate (below-x2) at ([yshift=-.55\nodeDist] x2.south);
+    \draw [rounded corners=6pt]
+          (x2)
+          --
+          (x2 |- below-x2)
+          -- node [flow label] {$c_4$}
+          (fail |- below-x2)
+          --
+          (fail);
+  \end{scope}
+\end{tikzpicture}%
+\endgroup%
