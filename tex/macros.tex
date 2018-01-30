@@ -872,11 +872,25 @@
           {\GLSindextext}
 \glsaddkey{isacronym}%
           {false}%
-          {\glsentryacronym}%
-          {\Glsentryacronym}%
-          {\glsacronym}%
-          {\Glsacronym}%
-          {\GLSacronym}
+          {\glsentryisacronym}%
+          {\Glsentryisacronym}%
+          {\glsisacronym}%
+          {\Glsisacronym}%
+          {\GLSisacronym}
+\glsaddkey{acronymlabel}%
+          {}%
+          {\glsentryacronymlabel}%
+          {\Glsentryacronymlabel}%
+          {\glsacronymlabel}%
+          {\Glsacronymlabel}%
+          {\GLSacronymlabel}
+\glsaddkey{acronymdesc}%
+          {}%
+          {\glsentryacronymdesc}%
+          {\Glsentryacronymdesc}%
+          {\glsacronymdesc}%
+          {\Glsacronymdesc}%
+          {\GLSacronymdesc}
 
 \newcommand{\glsIsAcronym}[3]{%
   \glsletentryfield{\tmpa}{#1}{isacronym}%
@@ -936,12 +950,12 @@
   }
   \renewcommand*{\glossentry}[2]{%
     \glsIsAcronym{##1}{%
-      \item[\glsentrytext{##1}] \glsentrydesc{##1}
+      \item[\glsentryacronymlabel{##1}] \glsentryacronymdesc{##1}
     }{}
   }%
   \renewcommand*{\subglossentry}[3]{%
    \glsIsAcronym{##2}{%
-      \item[\glsentrytext{##2}] \glsentrydesc{##2}
+      \item[\glsentryacronymlabel{##2}] \glsentryacronymdesc{##2}
     }{}
    }%
   \renewcommand*{\glsgroupskip}{}%
@@ -966,6 +980,8 @@
             {#2}%
             [%
               isacronym={true},
+              acronymlabel={#2},
+              acronymdesc={#3},
               indextext={#2},
               description={#3},
               first={#3 (#2)},
@@ -976,6 +992,8 @@
     \newTerm{#2}%
             [%
               isacronym={true},
+              acronymlabel={#2},
+              acronymdesc={#3},
               indextext={#2},
               description={#3},
               first={#3 (#2)},
