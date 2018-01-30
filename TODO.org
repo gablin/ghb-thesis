@@ -18,7 +18,7 @@
 ** DONE Ensure that all floats are declared after first reference
 ** TODO Run spell check
 ** TODO Run grammar check
-** TODO Add list of acronyms
+** DONE Add list of acronyms
 ** TODO Break long paragraphs
 ** TODO Break long sentences
 ** TODO Replace \subsubsection with \paragraph, where appropriate
