@@ -687,9 +687,9 @@
 \NewDocumentCommand{\mVar}{mo}{
   \mathbf{#1}{\IfValueTF{#2}{[#2]}{}}
 }
+\newcommand{\mBRVLine}{\vrule width 0.4pt height 1.6ex depth 2pt}
 \NewDocumentCommand{\mBoolRepVar}{m}{%
-  \def\vLine{\vrule width 0.4pt height 1.6ex depth 2pt}
-  [ \mathllap{\vLine\hspace*{.85pt}} #1 \mathrlap{\hspace*{.85pt}\vLine} ]
+  [ \mathllap{\mBRVLine\hspace*{.85pt}} #1 \mathrlap{\hspace*{.85pt}\mBRVLine} ]
 }
 \newcommand{\mResourceSet}{R}
 \newcommand{\mHeuristicCost}{C_{\mathsc{heur}}}
