@@ -861,7 +861,7 @@
 % Disable hyperlinks from terms to index
 \glsdisablehyper
 
-% Add new field to glossary entries
+% Add new fields to glossary entries
 \glsaddkey{indextext}%
           {}%
           {\glsentryindextext}%
@@ -869,6 +869,22 @@
           {\glsindextext}%
           {\Glsindextext}%
           {\GLSindextext}
+\glsaddkey{isacronym}%
+          {false}%
+          {\glsentryacronym}%
+          {\Glsentryacronym}%
+          {\glsacronym}%
+          {\Glsacronym}%
+          {\GLSacronym}
+
+\newcommand{\glsIsAcronym}[3]{%
+  \glsletentryfield{\tmpa}{#1}{isacronym}%
+  \expandafter\ifstrequal\expandafter{\tmpa}{true}{%
+    #2%
+  }{%
+    #3%
+  }%
+}
 
 % Customize index style
 \newglossarystyle{myindex}{%
@@ -911,20 +927,58 @@
   \printglossary[title={Index}, #1]
 }
 
+\newglossarystyle{myloa}{%
+  \setglossarystyle{list}
+  \setlist[description]{%
+    font=\sffamily,
+    labelwidth=2.5em,
+  }
+  \renewcommand*{\glossentry}[2]{%
+    \glsIsAcronym{##1}{%
+      \item[\glsentrytext{##1}] \glsdesc{##1}
+    }{}
+  }%
+  \renewcommand*{\subglossentry}[3]{%
+   \glsIsAcronym{##2}{%
+      \item[\glsentrytext{##2}] \glsdesc{##2}
+    }{}
+   }%
+  \renewcommand*{\glsgroupskip}{}%
+}
+
+\newcommand{\listofacronyms}[1][]{%
+  \setglossarystyle{myloa}
+  \printglossary[title={List of Acronyms}, #1]
+}
 
 % Commands for introducing terms and acronyms
 \NewDocumentCommand{\newTerm}{omO{}}{%
   \IfValueTF{#1}{%
-    \newglossaryentry{#1}{name={#2}, description={#2}, #3}%
+    \newglossaryentry{#1}{isacronym=false, name={#2}, description={#2}, #3}%
   }{%
-    \newglossaryentry{#2}{name={#2}, description={#2}, #3}%
+    \newglossaryentry{#2}{isacronym=false, name={#2}, description={#2}, #3}%
   }%
 }
 \NewDocumentCommand{\newAcronym}{ommO{}}{%
   \IfValueTF{#1}{%
-    \newTerm[#1]{#2}[description={#3}, indextext={#2}, first={#3 (#2)}, #4]%
+    \newTerm[#1]%
+            {#2}%
+            [%
+              isacronym=true,
+              description={#3},
+              indextext={#2},
+              first={#3 (#2)},
+              #4%
+            ]%
   }{%
-    \newTerm{#2}[description={#3}, indextext={#2}, first={#3 (#2)}, #4]%
+    \newTerm{#2}%
+            [%
+              isacronym=true,
+              description={#3},
+              indextext={#2},
+              first={#3 (#2)},
+              #4%
+            ]%
   }%
 }
 \NewDocumentCommand{\newToolTerm}{omO{}}{%
