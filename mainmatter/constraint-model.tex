@@ -164,10 +164,11 @@ This \gls{pattern} is needed for defining \glspl{datum} representing
 \subsection{Forbidding Cyclic Data Dependencies}
 \labelSection{forbidding-cyclic-data-dependencies}
 
-In certain cases, selecting \glspl{match} of \glspl{instruction} producing
-multiple results -- for example, many modern processors provide memory
-\glspl{instruction} that automatically increment or decrement the address value
--- could lead to cyclic data dependencies~\cite{EbnerEtAl:2008}.
+In certain cases, selecting \glspl{match} of \glspl{instruction} that produce
+multiple results could lead to cyclic data dependencies~\cite{EbnerEtAl:2008}.
+%
+For example, many modern processors provide memory \glspl{instruction} that load
+or store a value while also incrementing or decrementing the address.
 %
 An example of such a situation is given in \refFigure{cyclic-data-deps-example}.
 %
@@ -221,12 +222,13 @@ If both \glspl{match} are selected, then either value~\irVar*{p}[2] or
 value~\irVar*{q}[2] will be \gls{use.d}[d] before it is available (depending on
 the instruction order), thus resulting in incorrect code.
 %
-Consequently, such combinations must be identified and forbidden.
+Such combinations, which could involve more than two \glspl{match}, must
+therefore be identified and forbidden.
 
-We detect such combinations -- which could involve more than two \glspl{match}
--- by first constructing a \gls!{dependency graph}, where each \gls{node}
-represents a \gls{match} and each \gls{edge}~$\mEdge{n}{m}$ indicates
-that \gls{match}~$m$ \gls{use.d}[s] \glspl{datum} produced by \gls{match}~$n$.
+We detect such combinations by first constructing a \gls!{dependency graph},
+where each \gls{node} represents a \gls{match} and each
+\gls{edge}~$\mEdge{n}{m}$ indicates that \gls{match}~$m$ \gls{use.d}[s]
+\glspl{datum} produced by \gls{match}~$n$.
 %
 \Glspl{phi-match} are not taken into consideration as they always yield a
 \gls{cycle} but is not a true data dependency.
@@ -234,10 +236,12 @@ that \gls{match}~$m$ \gls{use.d}[s] \glspl{datum} produced by \gls{match}~$n$.
 A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
 which will lead to a cyclic data dependency if all \glspl{match} are selected.
 %
-Hence we find all \glspl{cycle} in the \gls{dependency graph} -- we applied
-\citeauthor{Johnson:1975}'s algorithm for this task~\cite{Johnson:1975} -- and
-add \glspl{constraint} forbidding selection of all \glspl{match} appearing in a
-\gls{cycle}.
+For each \gls{cycle} in the \gls{dependency graph}, we add a \gls{constraint} to
+the \gls{constraint model} that forbids selection of all \glspl{match} appearing
+in the \gls{cycle}.
+%
+The \glspl{cycle} are found using \citeauthor{Johnson:1975}'s
+algorithm~\cite{Johnson:1975}.
 
 
 \paragraph{Constraints}
@@ -828,8 +832,10 @@ The idea behind \gls!{match duplication} is to duplicating appropriate
 %
 We first say that two values~$v_1$ and~$v_2$ are \gls!{copy-related.d} if and
 only if they are copies of the same value and $v_1$ and $v_2$ have the same data
-type (the second clause is necessary as copies of constants may be of different
-data types and are therefore not interchangeable).
+type.
+%
+The second clause is necessary as copies of constants may be of different data
+types and are therefore not interchangeable.
 %
 Then, for each \gls{match}~$m$, we create a new \gls{match} for each permutation
 of \glspl{datum} that are \gls{copy-related.d} to the \glspl{input datum} in
@@ -891,8 +897,10 @@ values, then $\mBigO(n^k)$ new \glspl{match} will be created.
 %
 Although the decision of \gls{value reuse} is intuitively orthogonal to the
 decisions of selecting a \gls{match} and placing it into a \gls{block}, these
-decisions must be remade for each new \gls{match}, thereby enlarging the
-\gls{search space} with many symmetric \glspl{solution}.
+decisions must be remade for each new \gls{match}.
+%
+Consequently, the \gls{search space} is enlarged with many symmetric
+\glspl{solution}.
 
 
 \subsection{Alternative Values}
@@ -1138,10 +1146,11 @@ Based on the results, we then evaluate the impact of \gls{value reuse} using the
 superior method.
 
 When filtering, we remove all \glspl{function} that have less than less
-than ten~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
-likely not be benefitted by \gls{value reuse} -- and greater than
-\num{50}~\glspl{instruction} -- anything larger will lead to unreasonably long
-solving times.
+than ten~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+\num{50}~\glspl{instruction}.
+%
+Anything smaller will most likely not be benefitted by \gls{value reuse}, and
+anything larger will lead to unreasonably long solving times.
 %
 This leaves a pool of \num{453}~\glspl{function}, on which we then perform
 sampling.
@@ -1235,11 +1244,15 @@ We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case (\cCode*{reg2rsaref}), for example, the solving time differs by
-nearly a factor of~\num{50}, which is due to a high rate of \gls{copy-related.d}
-values for which \glspl{alternative value} results in only
-\num{94}~\glspl{match} whereas \gls{match duplication} results in
-\num{537}~\glspl{match}.
+In one case (\cCode*{reg2rsaref}), for example, the solving time differs by a
+factor
+of~\printSpeedup{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupMax%
+}.
+%
+This is due to a high rate of \gls{copy-related.d} values for which
+\glspl{alternative value} results in only \num{94}~\glspl{match} whereas
+\gls{match duplication} results in \num{537}~\glspl{match}.
 
 Based on the observations above, we conclude that \glspl{alternative value} is a
 better design choice over \gls{match duplication} when implementing \gls{value
@@ -1323,10 +1336,13 @@ We see clearly that \glsshort{constraint model}~\refModel{w-value-reuse}
 produces \glspl{solution} with significantly less cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
-In one case (\cCode*{putseqdispext}), for example, where two constants are
-frequently used as arguments to \gls{function} call \glspl{instruction} and thus
-cannot be loaded as immediates, the cycle count is reduced from \num{256}~cycles
-to \num{208}~cycles.
+In one case (\cCode*{putseqdispext}), for example, the cycle count is reduced
+from \num{256}~cycles to \num{208}~cycles (a speedup of \printSpeedup{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupMax%
+}).
+%
+This is because two constants are frequently used as arguments to \gls{function}
+call \glspl{instruction} and thus cannot be loaded as immediates.
 
 Hence we conclude that \gls{value reuse} is essential for reducing the number of
 copy \glspl{instruction} and, subsequently, lowering cost.
@@ -1723,10 +1739,12 @@ redundant jump \glspl{instruction}, we expect \glsshort{constraint
 and cost, than \glsshort{constraint model}~\refModel{branch-ext}.
 
 When filtering, we remove all \glspl{function} that have less than less than
-\num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
-likely not require any additional jump \glspl{instruction} -- and greater than
-\num{100}~\glspl{instruction} -- anything larger will lead to needlessly long
-experiment runtimes.
+\num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+\num{100}~\glspl{instruction}.
+%
+Anything smaller will most likely not require any additional jump
+\glspl{instruction}, anything larger will lead to needlessly long experiment
+runtimes.
 %
 This leaves a pool of \num{413}~\glspl{function}, on which we then perform
 sampling.

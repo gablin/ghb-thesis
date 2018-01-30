@@ -1627,10 +1627,11 @@ cannot be implemented on this experimental setup and therefore not be evaluated,
 we now evaluate the impact of the solving techniques introduced in this chapter.
 
 When filtering, we remove all \glspl{function} that have less than less than
-\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} -- anything smaller will most
-likely not show the impact of the given solving technique -- and greater than
-\num{150}~\glspl{instruction} -- anything larger will lead to unreasonably long
-experiment runtimes.
+\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+\num{150}~\glspl{instruction}.
+%
+Anything smaller will most likely not show the impact of the given solving
+technique, anything larger will lead to unreasonably long experiment runtimes.
 %
 This leaves a pool of \num{284}~\glspl{function}, on which we then perform
 sampling.
