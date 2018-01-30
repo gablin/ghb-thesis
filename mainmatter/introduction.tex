@@ -486,14 +486,18 @@ the other \glspl{instruction} in the \gls{target machine}, which take one cycle.
 
 At first glance it appears that only the first jump \gls{instruction} is
 selectable for implementing the conditional branch (see
-\refFigure{isel-blorder-example-code-1}), leading to a total of six cycles for
-the entire \gls{function}.
+\refFigure{isel-blorder-example-code-1}).
+%
+Selecting this \gls{instruction} leads to a total of six cycles for the entire
+\gls{function}.
 %
 But by flipping the condition and swapping block labels (conditionally jumping
 to \irBlock*{b2} instead of \irBlock*{b1}), the more complex jump
 \gls{instruction} becomes selectable (see
-\refFigure{isel-blorder-example-code-2}), bringing the cycle count to five
-cycles and thus reducing the execution time by almost \SI{17}{\percent}.
+\refFigure{isel-blorder-example-code-2}).
+%
+Selecting this \gls{instruction} brings the cycle count to five cycles, thus
+reducing the execution time by almost \SI{17}{\percent}.
 %
 However, although this decision may appear better at the point of
 \gls{instruction selection}, it necessitates an additional jump
@@ -928,11 +932,13 @@ of the art.
 \subsection{Experiment Setup}
 
 To evaluate a \gls{constraint model}, we implement it using \mbox{\gls{MiniZinc}
-  2.1.6}~\cite{NethercoteEtAl:2007} -- a high-level \gls{constraint} modeling
-language -- and then solve it using \gls{Chuffed}~\cite{Chu:2011} -- an
-\gls{LCG}-based \glsshort{constraint solver}, which is included in
-\gls{MiniZinc} -- on a Linux machine with an \gls{Intel} Xeon W3530 at
-\SI{2.80}{\GHz} and \SI{16}{\giga\byte} main memory.
+  2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level \gls{constraint}
+modeling language.
+%
+The model is solved using \gls{Chuffed}~\cite{Chu:2011} -- a \glsdesc{LCG}-based
+\glsshort{constraint solver} included in \gls{MiniZinc} -- on a Linux machine
+with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and \SI{16}{\giga\byte} main
+memory.
 %
 To mitigate deviations in the measurments, we run each experiment ten times and
 then take the arithmetic average together with the \gls{CV}.

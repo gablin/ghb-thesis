@@ -1312,12 +1312,13 @@ An example is given in \refFigure{implication-graph-example}.
 \end{figure}
 %
 When \gls{failure} is reached, we can then use the \gls{implication graph} to
-derive an explanation for why a \gls{constraint} \glsshort{failure}, which can
-be captured as a clause, called \gls!{no-good}, and added to the existing body
-of clauses.
+derive an explanation for why a \gls{constraint} \glsshort{failure}.
 %
-This effectively cuts away that part of the \gls{search space} and prevents the
-\glsshort{constraint solver} from making the same mistake again.
+This explanation can be captured as a clause, called \gls!{no-good}, to be added
+to the existing body of clauses.
+%
+The \gls{no-good} prevents the \glsshort{constraint solver} from making the same
+mistake again, effectively cutting away those parts of the \gls{search space}.
 %
 For more details, see~\cite{MarquesSilvaEtal:2014}.
 
