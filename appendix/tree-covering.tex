@@ -147,7 +147,7 @@ x = A[i + 1];
             %
             It is assumed that \irVar*{i} is
             stored in register and that \irVar*{A} is stored in memory and that
-            an integer is 4~bytes.
+            an integer is \num{4}~bytes.
             %
             Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
             \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
@@ -522,9 +522,9 @@ current set of \glspl{rule} would be inadequate and potentially cause the
 \gls{compiler} to never terminate for certain \glspl{function}.
 %
 \textcite{Reiser:1981} also noted that the investigated version of \gls{PCC}
-only supported unary and binary \glspl{pattern} with a maximum height of~1, thus
-excluding many \glspl{instruction}, such as those with complex \glspl{addressing
-  mode}.
+only supported unary and binary \glspl{pattern} with a maximum height
+of~\num{1}, thus excluding many \glspl{instruction}, such as those with complex
+\glspl{addressing mode}.
 %
 Lastly, \gls{PCC} -- and all other techniques discussed so far -- still adhered
 to the \emph{first-matched-first-served} approach when selecting
@@ -818,8 +818,8 @@ For example, rewriting the \gls{grammar} shown in
             The grammar from \refTable{grammar-rules-example} in normal form.
             %
             Nonterminals~$\mNT{A}$,~$\mNT{B}$ and~$\mNT{C}$ and
-            rules~\mbox{4--6} are introduced in order to transform rules~1 and~2
-            into base rules%
+            rules~\mbox{\num{4}--\num{6}} are introduced in order to transform
+            rules~\num{1} and~\num{2} into base rules%
           }
   \labelTable{normal-form-grammar-example-2}
 \end{table}
@@ -1145,8 +1145,9 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
               %
               All rules have the same unit cost.
               %
-              Rules 7--11 do not have a nonterminal on the left-hand side as
-              memory store instructions do not produce anything.
+              Rules \mbox{\num{7}--\num{11}} do not have a nonterminal on the
+              left-hand side as memory store instructions do not produce
+              anything.
               %
               A dummy nonterminal can also be used if needed%
             }
@@ -1374,22 +1375,22 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
               another rule reduction
           \end{inlinelist}.
           %
-          For example, let us examine step~$11$.
+          For example, let us examine step~\num{11}.
           %
-          First, a reduce is executed using rule~$15$, which pops
+          First, a reduce is executed using rule~\num{15}, which pops
           \mbox{\cCode{ld} $\mNT{R}[7]$} from the symbol stack.
           %
           This is followed by pushing the result of the rule, $\mNT{R}[8]$, on
           top.
           %
-          At the same time, states~$9$ and~$14$ are popped from the stack, which
-          leaves state~$34$ on top.
+          At the same time, states~\num{9} and~\num{14} are popped from the
+          stack, which leaves state~\num{34} on top.
           %
           The top elements of both stacks are now used to consult the state
           table for inferring the next, additional action (if any).
           %
-          In this case, input symbol $\mNT{R}[8]$ at state~$34$ leads to a shift
-          to state~$38$%
+          In this case, input symbol $\mNT{R}[8]$ at state~\num{34} leads to a
+          shift to state~\num{38}%
         }%
       \labelFigure{glanville-graham-execution}
     \end{minipage}%
@@ -1457,12 +1458,12 @@ with the longest \gls{pattern}.
 %
 If the \gls{grammar} contains \glspl{rule} that differ only in their semantic
 quantifiers, then there may still exist more than one \gls{rule} to reduce (in
-\refFigure{glanville-graham-machine-grammar}, \glspl{rule}~5 and~6 are two such
-\glspl{rule}).
+\refFigure{glanville-graham-machine-grammar}, \glspl{rule}~\num{5} and~\num{6}
+are two such \glspl{rule}).
 %
 These are resolved at parse time by checking the semantic restrictions in the
-order in which they appear in the \gls{grammar} (see for example state~20 in
-\refFigure{glanville-graham-table}).
+order in which they appear in the \gls{grammar} (see for example state~\num{20}
+in \refFigure{glanville-graham-table}).
 
 If all \glspl{rule} in this set are semantically constrained, then situations
 can arise where the parser is unable to apply any \gls{rule} due to semantic
@@ -1711,16 +1712,17 @@ modeling three byte-adding \glspl{instruction}:
 \end{table}
 %
 \begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
-  \item an increment version \cCode*{incb} (increments a \gls{register} by~1,
-    modeled by \glspl{rule}~1 and~2)
+  \item an increment version \cCode*{incb} (increments a \gls{register}
+    by~\num{1}, modeled by \glspl{rule}~\num{1} and~\num{2})
   \item a two-address version \cCode*{add2b} (adds two \glspl{register} and
-    stores the result in one of the operands, modeled by \glspl{rule}~3 and~4)
+    stores the result in one of the operands, modeled by \glspl{rule}~\num{3}
+    and~\num{4})
   \item a three-address version \cCode*{add3b} (the result can be stored
-    elsewhere, modeled by rule~5)
+    elsewhere, modeled by rule~\num{5})
 \end{enumerate*}.
 %
 Naturally, the \cCode*{incb} \gls{instruction} can only be used when one of the
-operands is a constant of value~1, which is checked by the
+operands is a constant of value~\num{1}, which is checked by the
 $\mPredicate{IsOne}$~\gls{predicate}.
 %
 In addition, since this \gls{instruction} destroys the previous value of the
@@ -1750,9 +1752,9 @@ The use of \glspl{predicate} removes the need of introducing new
 more concise \gls{machine grammar} compared to a \gls{context-free grammar}.
 %
 For example, for the \gls{VAX}~machine, the use of \glspl{attribute} leads to a
-\gls{grammar} half the size (around 600~\glspl{rule}) compared to that required
-for the \gls{Glanville-Graham approach}, even without applying any extensive
-\gls{refactoring}~\cite{GanapathiFischer:1985}.
+\gls{grammar} half the size (around \num{600}~\glspl{rule}) compared to that
+required for the \gls{Glanville-Graham approach}, even without applying any
+extensive \gls{refactoring}~\cite{GanapathiFischer:1985}.
 %
 \Glspl{attribute grammar} also facilitate incremental development of the
 \glspl{machine description}.
@@ -2064,9 +2066,9 @@ individually, which could take quadratic time in the worst case.
 
 \subsubsection{Recent Designs}
 
-To the best of my knowledge, the only recent technique (less than 20~years old)
-to use this kind of recursive top-down methodology for \gls{tree covering} is
-that of \citeauthor{NymeyerEtAl:1996}~\cite{NymeyerEtAl:1996,
+To the best of my knowledge, the only recent technique (less than \num{20}~years
+old) to use this kind of recursive top-down methodology for \gls{tree covering}
+is that of \citeauthor{NymeyerEtAl:1996}~\cite{NymeyerEtAl:1996,
   NymeyerKatoen:1997}.
 %
 In two papers from 1996 and~1997, \citeauthor{NymeyerEtAl:1996} introduce a
@@ -2357,13 +2359,13 @@ This is illustrated in \refTable{string-matching-example}, where the
 The arrow indicates the current character under consideration.
 %
 At first, the \gls{pattern} matches the beginning of the input string up until
-the last character (position~5).
+the last character (position~\num{5}).
 %
-When this fails, instead of returning to position~1 and restarting the matching
-from scratch, the matcher remembers that the first three characters of the
-\gls{pattern} (\cCode*{abc}) have already been matched at this point and
-therefore continues to position~6, attempting to match the fourth character in
-the \gls{pattern}.
+When this fails, instead of returning to position~\num{1} and restarting the
+matching from scratch, the matcher remembers that the first three characters of
+the \gls{pattern} (\cCode*{abc}) have already been matched at this point and
+therefore continues to position~\num{6}, attempting to match the fourth
+character in the \gls{pattern}.
 %
 Consequently all occurrences of the \gls{pattern} can be found in linear time.
 %
@@ -2451,9 +2453,9 @@ matching the strings \cCode*{he}, \cCode*{she}, \cCode*{his}, and~\cCode*{hers}.
 As a character is read from an input string, say \cCode*{shis}, it is first
 given as argument to the $\mFunFont{goto}$ function.
 %
-Having initialized to \gls{state machine} to state~0,
-$\mFunFont{goto}(\cVar*{s})$ first causes a transition to state~3, and
-$\mFunFont{goto}(\cVar*{h})$ causes a subsequent transition to state~4.
+Having initialized to \gls{state machine} to state~\num{0},
+$\mFunFont{goto}(\cVar*{s})$ first causes a transition to state~\num{3}, and
+$\mFunFont{goto}(\cVar*{h})$ causes a subsequent transition to state~\num{4}.
 %
 For each successful transition to some state~$i$ we invoke
 $\mFunFont{output}(i)$ to check whether some \gls{pattern} string has been
@@ -2464,12 +2466,12 @@ For the next input character \cVar*{i}, however, there exists no corresponding
 a failure).
 %
 At this point $\mFunFont{failure}(4)$ is invoked, which dictates that the
-\gls{state machine} should fall back to state~1.
+\gls{state machine} should fall back to state~\num{1}.
 %
-We then retry $\mFunFont{goto}(\cVar*{i})$, which takes us to state~6.
+We then retry $\mFunFont{goto}(\cVar*{i})$, which takes us to state~\num{6}.
 %
 With the last input character, $\mFunFont{goto}(\cVar*{s})$ causes a transition
-to state~7, where $\mFunFont{output}(7)$ indicates a \gls{match} with the
+to state~\num{7}, where $\mFunFont{output}(7)$ indicates a \gls{match} with the
 \gls{pattern} string \cCode*{his}.
 
 
@@ -2723,8 +2725,8 @@ Consequently, commutative operations, such as addition, must be handled through
             %
             The subpatterns $v$, $b$, \mbox{$\mSigmaTree{a}{v, v}$},
             \mbox{$\mSigmaTree{a}{b, v}$}, and
-            \mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v, v}, b}$} are labeled 0, 1,
-            2, 3, and 4, respectively%
+            \mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v, v}, b}$} are labeled
+            \num{0}, \num{1}, \num{2}, \num{3}, and \num{4}, respectively%
           }
   \labelFigure{hoffmann-odonnell-example}
 \end{figure}
@@ -2852,10 +2854,11 @@ its own table, we can produce the tables simply by finding, for each table
 entry, the \gls{base pattern} of the \gls{match set} for the \gls{tree}
 represented by that entry.
 %
-For example, if labels~1 and~2 respectively refer to the \glspl{pattern}~$b$ and
-\mbox{$\mSigmaTree{a}{v, v}$}, then the table entry \mbox{$T_c[2, 1]$} will
-denote the \gls{tree} \mbox{$\mSigmaTree{c}{\mSigmaTree{a}{v, v}, b}$}, and we
-are then interested in finding the \gls{match set} for that \gls{tree}.
+For example, if labels~\num{1} and~\num{2} respectively refer to the
+\glspl{pattern}~$b$ and \mbox{$\mSigmaTree{a}{v, v}$}, then the table entry
+\mbox{$T_c[2, 1]$} will denote the \gls{tree}
+\mbox{$\mSigmaTree{c}{\mSigmaTree{a}{v, v}, b}$}, and we are then interested in
+finding the \gls{match set} for that \gls{tree}.
 
 The next problem is thus to find the \gls{base pattern} of a given \gls{match
   set}.
@@ -2886,8 +2889,8 @@ In the case of patterns~\patI{} and \patII, this includes $v$, $b$,
 \glspl{subpattern} as~$S$.
 %
 We then assign each \gls{subpattern} in $S$ a sequential number, starting
-from~0, which will represent the labels (the order in which these are assigned
-is not important).
+from~\num{0}, which will represent the labels (the order in which these are
+assigned is not important).
 
 
 \paragraph{Building the Subsumption Graph}
@@ -3483,7 +3486,7 @@ only in cost can be combined into a single \gls{rule}.
 %
 Again taking the \gls{VAX}~machine as an example, \citeauthor{AhoEtAl:1989}
 reported that the entire \gls{Twig} specification could be implemented using
-only 115~\glspl{rule}, which is about half the size of
+only \num{115}~\glspl{rule}, which is about half the size of
 \citeauthor{GanapathiEtAl:1982:AttrGr}'s \gls{attribute}-based \gls{machine
   grammar} for the same \gls{target machine}.
 
@@ -3521,11 +3524,11 @@ called the \gls!{BEG}, and a modified version of this is currently used in the
 
 \textcite{FraserEtAl:1992:IBurg} made similar improvements in a system called
 \gls{IBurg} that is both simpler and faster than \gls{Twig} -- \gls{IBurg}
-requires only 950~lines of code compared to \gls{Twig}'s \mbox{3,000 lines} of
-\gls{C}~code, and generates \gls{assembly code} of comparable quality at a rate
-that is 25~times faster -- and has been used in several \glspl{compiler} (such
-as \gls!{Record}~\cite{LeupersMarwedel:1997, Marwedel:1997} and
-\gls!{Redaco}~\cite{KreuzerEtAl:1996}).
+requires only \num{950}~lines of code compared to \gls{Twig}'s \mbox{3,000
+  lines} of \gls{C}~code, and generates \gls{assembly code} of comparable
+quality at a rate that is \num{25}~times faster -- and has been used in several
+\glspl{compiler} (such as \gls!{Record}~\cite{LeupersMarwedel:1997,
+  Marwedel:1997} and \gls!{Redaco}~\cite{KreuzerEtAl:1996}).
 %
 \citeauthor{GoughLedermann:1997}~\cite{Gough:1995, GoughLedermann:1997} later
 extended the \gls{predicate} support of \gls{IBurg} in an implementation called
@@ -4150,7 +4153,7 @@ already committed to appear in the \gls{state} tables.
 %
 Remember that each \gls{state} represents a combination of \glspl{nonterminal},
 \glspl{rule}, and costs, where the costs have been normalized such that the
-lowest cost of any \gls{rule} appearing in that \gls{state} is~0.
+lowest cost of any \gls{rule} appearing in that \gls{state} is~\num{0}.
 %
 Hence two \glspl{state} are identical if the \glspl{rule} selected for all
 \glspl{nonterminal} and costs are the same.
@@ -4239,7 +4242,7 @@ First the states for all leaf \glspl{node} are built, considering only
 in the \gls{production}.
 %
 The costs and \gls{rule} decisions are computed using the same logic as in
-\refAlgorithm{aho-etal-cost-algorithm-2}, lines~8--21.
+\refAlgorithm{aho-etal-cost-algorithm-2}, lines~\mbox{\num{8}--\num{21}}.
 %
 The leaf \gls{state} are then pushed onto a queue.
 %
@@ -4559,11 +4562,11 @@ solution.
 %
 For a given \gls{expression tree} whose \glspl{match set} have been found using
 an \mbox{$\mBigO(nm)$} \gls{pattern matcher}, \citeauthor{ShuEtAl:1996}
-formulated each \gls{chromosome} as a binary bit string where a~1 indicates the
-selection of a particular \gls{pattern}.
+formulated each \gls{chromosome} as a binary bit string where a~\num{1}
+indicates the selection of a particular \gls{pattern}.
 %
-Likewise, a~0 indicates that the \gls{pattern} is not used in the \gls{tree
-  covering}.
+Likewise, a~\num{0} indicates that the \gls{pattern} is not used in the
+\gls{tree covering}.
 %
 The length of a \gls{chromosome} is therefore equal to the sum of the number of
 \glspl{pattern} appearing in all \glspl{match set}.
@@ -4578,9 +4581,10 @@ The objective is then to find the \gls{chromosome} which maximizes a
   f(c) = {\frac{1}{k * \numPats{c} + \multCov{c}}},
 \end{displaymath}
 %
-where $k$ is a tweakable constant greater than~1, $\numPats{c}$ is the number of
-selected \glspl{pattern} in the \gls{chromosome}~$c$, and $\multCov{c}$ is the
-number of \glspl{node} in $c$ which are covered by more than one \gls{pattern}.
+where $k$ is a tweakable constant greater than~\num{1}, $\numPats{c}$ is the
+number of selected \glspl{pattern} in the \gls{chromosome}~$c$, and
+$\multCov{c}$ is the number of \glspl{node} in $c$ which are covered by more
+than one \gls{pattern}.
 %
 Hence \glspl{pattern} are allowed to overlap in covering the \gls{expression
   tree}.
@@ -4594,7 +4598,7 @@ until a termination criterion is reached.
 %
 The authors claim to be able to find \gls{optimal.ps} \gls{tree} covers in
 ``reasonable'' time for medium-sized \glspl{expression tree}, but these include
-at most 50~\glspl{node}.
+at most \num{50}~\glspl{node}.
 %
 Moreover, due to the nature of \glspl{GA}, optimality cannot be guaranteed for
 all \glspl{expression tree}.

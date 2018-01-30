@@ -2215,14 +2215,14 @@ and~$m_3$.
 \end{figure}
 %
 Assume that \irCode*{foo} represents a \gls{function} call and that \irVar*{a},
-\irVar*{b}, and \irVar*{c} represent 8-bit values stored in 32-bit
+\irVar*{b}, and \irVar*{c} represent \num{8}-bit values stored in \num{32}-bit
 \glspl{register}.
 %
 As is common, $m_3$ will be derived from an \gls{instruction} that checks
 whether the full contents of two \glspl{register} are equal.
 %
 Consequently, as a precaution the upper bytes of the \glspl{register} need to be
-zero-extended (that is, those bits are all set to~0) before doing the
+zero-extended (that is, those bits are all set to~\num{0}) before doing the
 comparison.
 %
 While this is certainly necessary for the \gls{register} of \irVar*{a} as

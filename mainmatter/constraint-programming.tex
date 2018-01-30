@@ -209,12 +209,12 @@ For completeness, we give here the formal definition of the \gls{constraint}.
 For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
   \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
   \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
-assigned value~$5$ and exactly one $\mVar{x}$~\gls{variable} is assigned
-value~$3$.
+assigned value~\num{5} and exactly one $\mVar{x}$~\gls{variable} is assigned
+value~\num{3}.
 %
 Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
   \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
-either none or both $\mVar{x}$~\glspl{variable} must be assigned value~$3$.
+either none or both $\mVar{x}$~\glspl{variable} must be assigned value~\num{3}.
 
 
 \paragraph{The Circuit Constraint}
@@ -368,7 +368,8 @@ follows.
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
   \glspl{variable}.
   %
-  Let also $c$ be a list with $n$ elements that can be indexed starting from~1.
+  Let also $c$ be a list with $n$ elements that can be indexed starting
+  from~\num{1}.
   %
   Then
   %
@@ -390,16 +391,17 @@ follows.
 
 For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
   \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
-  \mSet{4})$} holds because the~4 is preceded by a~5, which in turn is preceded
-by a~6, in the permutation of $\mVar{x}$~\glspl{variable}.
+  \mSet{4})$} holds because the~\num{4} is preceded by a~\num{5}, which in turn
+is preceded by a~\num{6}, in the permutation of $\mVar{x}$~\glspl{variable}.
 %
 Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
-  \mVar{x}_2 \in \mSet{1})$} also holds because 4 does not appear among the
-$\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
+  \mVar{x}_2 \in \mSet{1})$} also holds because \num{4} does not appear among
+the $\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
 not matter).
 %
 However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
-  \mVar{x}_2 \in \mSet{4})$} does not hold because the~4 is not preceded by a~5.
+  \mVar{x}_2 \in \mSet{4})$} does not hold because the~\num{4} is not preceded
+by a~\num{5}.
 
 $\MValuePrec$ is used in \refChapter{solving-techniques} to implement a
 \gls{dominance breaking.c} \gls{constraint}.
@@ -790,8 +792,8 @@ resort to \gls{search}.
 In this case, the \gls{solver} makes a wrong guess and is forced to backtrack.
 %
 In comparison, a \glshyphened{domain consistency} \gls{propagator} for the
-\gls{all-different constraint} can remove values~1 and~2 from the \gls{domain}
-of \gls{variable}~$\mVar{z}$ as these values do not appear in any
+\gls{all-different constraint} can remove values~\num{1} and~\num{2} from the
+\gls{domain} of \gls{variable}~$\mVar{z}$ as these values do not appear in any
 \glspl{solution} (see \refTable{cp-model-example-solutions}).
 %
 Maximizing \gls{propagation} is key in making solving tractable, as the
@@ -944,7 +946,7 @@ The next solution to be found is \mbox{$S_2 = \mTuple{\mVar{x} =
 is clearly better than $S_1$, causing the \gls{constraint} \mbox{$\mVar{z} > 4$}
 to be posted.
 %
-Since the \gls{domain} of $\mVar{z}$ has no value greater than 4, the
+Since the \gls{domain} of $\mVar{z}$ has no value greater than~\num{4}, the
 \gls{constraint} \mbox{$\mVar{z} > 4$} causes a \gls{failure} when the exploring
 the other branch at the root.
 %
@@ -1184,12 +1186,12 @@ negated.
 %
 For example, if $\mAllDifferent$ \glsshort{propagation}[es] that two
 \glspl{variable} \mbox{$\mVar{x}, \mVar{y} \in \mSet{1, 2, 3}$} cannot be
-assigned value~$2$, then it will produce two clauses \mbox{$\mNot\mBoolRepVar{x
-    = 2} \mOr \mBoolRepVar{y = 1} \mOr \mBoolRepVar{y = 3}$} and
-\mbox{$\mNot\mBoolRepVar{y = 2} \mOr \mBoolRepVar{x = 1} \mOr \mBoolRepVar{x =
-    3}$} (these are equivalent to \mbox{$\mVar{x} = 2 \mImp \mVar{y} \in
-  \mSet{1, 3}$} and \mbox{$\mVar{y} = 2 \mImp \mVar{x} \in \mSet{1, 3}$},
-respectively).
+assigned value~\num{2}, then it will produce two clauses
+\mbox{$\mNot\mBoolRepVar{x = 2} \mOr \mBoolRepVar{y = 1} \mOr \mBoolRepVar{y =
+    3}$} and \mbox{$\mNot\mBoolRepVar{y = 2} \mOr \mBoolRepVar{x = 1} \mOr
+  \mBoolRepVar{x = 3}$} (these are equivalent to \mbox{$\mVar{x} = 2 \mImp
+  \mVar{y} \in \mSet{1, 3}$} and \mbox{$\mVar{y} = 2 \mImp \mVar{x} \in \mSet{1,
+    3}$}, respectively).
 %
 Hence the Boolean dual \glsshort{constraint model} is built lazily as solving
 proceeds.

@@ -157,7 +157,7 @@ more \glspl{status flag}.\!%
   A \gls!{status flag} (sometimes also known as a \gls!{condition flag} or a
   \gls!{condition code}) is a single bit that signifies additional information
   about the result of a computation, for example if there was a carry overflow
-  or the result was equal to~0.%
+  or the result was equal to~\num{0}.%
 }
 %
 For this reason such \glspl{instruction} are often said to have side effects,
@@ -499,7 +499,7 @@ x = A[i + 1];
             %
             It is assumed that \irVar*{i} is
             stored in register and that \irVar*{A} is stored in memory and that
-            an integer is 4~bytes.
+            an integer is \num{4}~bytes.
             %
             Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
             \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
@@ -545,8 +545,8 @@ zero cost since variable~\irVar*{i} is already in a \gls{register}).
 Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
 \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
     m_{10}}$}, only the last \gls{cover} is considered \gls{optimal.ps} as it
-has a total cost of~9 whereas the other two \glspl{cover} have costs~11 and~10,
-respectively.
+has a total cost of~\num{9} whereas the other two \glspl{cover} have
+costs~\num{11} and~\num{10}, respectively.
 %
 There is typically a strong correlation between the size of a \gls{cover} and
 its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
@@ -757,8 +757,8 @@ For example, rewriting the \gls{grammar} shown in
             The grammar from \refTable{grammar-rules-example} in normal form.
             %
             Nonterminals~$\mNT{A}$,~$\mNT{B}$ and~$\mNT{C}$ and
-            rules~\mbox{4--6} are introduced in order to transform rules~1 and~2
-            into base rules%
+            rules~\mbox{\num{4}--\num{6}} are introduced in order to transform
+            rules~\num{1} and~\num{2} into base rules%
           }
   \labelTable{normal-form-grammar-example}
 \end{table}
@@ -1012,9 +1012,9 @@ The algorithm for labeling an \gls{expression tree} is shown in
   \labelAlgorithm{opt-pat-sel-labeling-algorithm}
 \end{algorithm}
 %
-To derive the \gls{rule} selection algorithm, one only needs to adapt line~2 in
-\refAlgorithm{aho-etal-select-algorithm} to perform the appropriate table
-lookups.
+To derive the \gls{rule} selection algorithm, one only needs to adapt
+line~\num{2} in \refAlgorithm{aho-etal-select-algorithm} to perform the
+appropriate table lookups.
 
 The idea for computing the \glspl{state} -- which will only be described briefly
 -- works as follows.
@@ -1030,7 +1030,7 @@ First the states for all leaf \glspl{node} are built, considering only
 in the \gls{production}.
 %
 The costs and \gls{rule} decisions are computed using the same logic as in
-\refAlgorithm{aho-etal-cost-algorithm}, lines~8--21.
+\refAlgorithm{aho-etal-cost-algorithm}, lines~\mbox{\num{8}--\num{21}}.
 %
 The leaf \gls{state} are then pushed onto a queue.
 %
@@ -1678,12 +1678,12 @@ Given a set \mbox{$v_1, \ldots, v_k$} of values and two sets \mbox{$\mVar{x}_1,
 For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
   \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
   \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
-assigned value~$5$ and exactly one $\mVar{x}$~\gls{variable} is assigned
-value~$3$.
+assigned value~\num{5} and exactly one $\mVar{x}$~\gls{variable} is assigned
+value~\num{3}.
 %
 Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
   \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
-either none or both $\mVar{x}$~\glspl{variable} must be assigned value~$3$.
+either none or both $\mVar{x}$~\glspl{variable} must be assigned value~\num{3}.
 
 To model \gls{pattern selection} using $\mGCC$, two new sets of \glspl{variable}
 are needed.
@@ -2244,7 +2244,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example}.
                   labeled with the matches they represent.
                   %
                   Cost matrices for uninteresting combinations are assumed to
-                  consist of~0s%
+                  consist of~\num{0}s%
                   \labelFigure{pbqp-example-instance}%
                 }{%
                   \figureFontSize%
@@ -2379,7 +2379,7 @@ This is achieved by first extending, for each node~$i$, the domain of its
 \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
-and \gls{complex.m} \gls{match}~$j$, the costs are 0 if
+and \gls{complex.m} \gls{match}~$j$, the costs are \num{0} if
 \mbox{$\mVector{\mVar{x}}_j = \text{\emph{off}}$} or $\mVector{\mVar{x}}_i$ is
 set to a \gls{proxy.r} \gls{rule} associated with $j$.
 %
@@ -2406,9 +2406,9 @@ This is resolved by assigning an artificially large cost~$K$ to the selection of
 \gls{proxy.r} \glspl{rule}, which is offset when selecting the corresponding
 \gls{complex.r} \gls{rule}.
 %
-For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
-\gls{proxy.r} \glspl{rule}, then the new cost of selecting $r$ is \mbox{$2 -
-  3K$}.
+For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~\num{2} consists of
+three \gls{proxy.r} \glspl{rule}, then the new cost of selecting $r$ is \mbox{$2
+  - 3K$}.
 
 
 \paragraph{Applications}
@@ -2566,13 +2566,13 @@ the \gls{pattern graph}, then a corresponding \gls{edge} must also exist in the
   \refDefinition{pm-syntactic-rules}.
 }
 %
-The next two rules, $\mSynInRule$ and $\mSynOutRule$, are 1-look-ahead rules
-that check whether there exist a sufficient number of unmapped \glspl{node}
-adjacent to $n$ in the \gls{function graph} for mapping the remaining
-\glspl{node} adjacent to $m$ in the \gls{pattern graph}.
+The next two rules, $\mSynInRule$ and $\mSynOutRule$, are \num{1}-look-ahead
+rules that check whether there exist a sufficient number of unmapped
+\glspl{node} adjacent to $n$ in the \gls{function graph} for mapping the
+remaining \glspl{node} adjacent to $m$ in the \gls{pattern graph}.
 %
 The last rule, $\mSynNewRule$, is similar to $\mSynInRule$ and $\mSynOutRule$
-but perform a 2-look-ahead check.
+but perform a \num{2}-look-ahead check.
 %
 Formally, the rules are defined as follows.
 %

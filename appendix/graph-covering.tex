@@ -440,7 +440,7 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example-2}.
                   labeled with the matches they represent.
                   %
                   Cost matrices for uninteresting combinations are assumed to
-                  consist of~0s%
+                  consist of~\num{0}s%
                   \labelFigure{pbqp-example-2-instance}%
                 }{%
                   \figureFontSize%
@@ -602,7 +602,7 @@ This is achieved by first extending, for each node~$i$, the domain of its
 \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
-and \gls{complex.m} \gls{match}~$j$, the costs are 0 if
+and \gls{complex.m} \gls{match}~$j$, the costs are \num{0} if
 \mbox{$\mVector{\mVar{x}}_j = \text{\emph{off}}$} or $\mVector{\mVar{x}}_i$ is
 set to a \gls{proxy.r} \gls{rule} associated with $j$.
 %
@@ -629,9 +629,9 @@ This is resolved by assigning an artificially large cost~$K$ to the selection of
 \gls{proxy.r} \glspl{rule}, which is offset when selecting the corresponding
 \gls{complex.r} \gls{rule}.
 %
-For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~2 consists of three
-\gls{proxy.r} \glspl{rule}, then the new cost of selecting $r$ is \mbox{$2 -
-  3K$}.
+For example, if a \gls{complex.r} \gls{rule}~$r$ with cost~\num{2} consists of
+three \gls{proxy.r} \glspl{rule}, then the new cost of selecting $r$ is \mbox{$2
+  - 3K$}.
 
 
 \subsection{Using Rewrite Rules Instead of Production Rules}

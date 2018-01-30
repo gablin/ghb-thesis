@@ -233,21 +233,22 @@ See for example \refFigure{cost-example}.
           {%
             Example illustrating match cost distributed over operations.
             %
-            It is assumed that matches~$m_1$, $m_2$, and~$m_3$ have costs~4,
-            1, and~5, respectively, and that they can be placed in one of two
-            blocks, $b_1$ and $b_2$, with execution frequencies~10 and~1,
-            respectively.
+            It is assumed that matches~$m_1$, $m_2$, and~$m_3$ have
+            costs~\num{4}, \num{1}, and~\num{5}, respectively, and that they can
+            be placed in one of two blocks, $b_1$ and $b_2$, with execution
+            frequencies~\num{10} and~\num{1}, respectively.
             %
-            The cost of $m_3$ distributed over $o_1$ and $o_2$ is~3 and~2,
-            respectively%
+            The cost of $m_3$ distributed over $o_1$ and $o_2$ is~\num{3}
+            and~\num{2}, respectively%
           }
   \labelFigure{cost-example}
 \end{figure}
 %
 Assume a \gls{UF graph} that can be covered by three \glspl{match} -- $m_1$,
-$m_2$, and~$m_3$ -- which have costs~4, 1, and~5, respectively, and that they
-can be placed in one of two blocks, $b_1$ and $b_2$, with execution
-frequencies~10 and~1, respectively (\refFigure{cost-example-graph}).
+$m_2$, and~$m_3$ -- which have costs~\num{4}, \num{1}, and~\num{5},
+respectively, and that they can be placed in one of two blocks, $b_1$ and $b_2$,
+with execution frequencies~\num{10} and~\num{1}, respectively
+(\refFigure{cost-example-graph}).
 %
 Because \refEquation{naive-objective-function} is modeled as a summation, it can
 only \glsshort{propagation}[e] the bounds of the \gls{cost variable}.
@@ -257,11 +258,12 @@ yet to be decided, either all those \glspl{match} are selected and placed in the
 \gls{block} with highest execution frequency, or none are selected.
 %
 In the example above, this means the \gls{cost variable} is initially bounded as
-\mbox{$0 < \mVar{cost} < 100$}, which are very weak bounds as we know that the
-\gls{UF graph} must at least be covered at a cost of~5 (either both $m_1$ and
-$m_2$ are selected and placed in $b_2$, or $m_3$ is selected and placed in
-$b_2$) and can at most be covered at a cost of~\num{50} (the selected
-\glspl{match} are placed in $b_1$).
+\mbox{$0 < \mVar{cost} < 100$}.
+%
+These are very weak bounds as we know that the \gls{UF graph} must at least be
+covered at a cost of~\num{5} (either both $m_1$ and $m_2$ are selected and
+placed in $b_2$, or $m_3$ is selected and placed in $b_2$) and can at most be
+covered at a cost of~\num{50} (the selected \glspl{match} are placed in $b_1$).
 
 Instead of reasoning about the cost incurred by the \glspl{match} -- which may
 or may not be selected -- a better approach is to infer the cost incurred on the
@@ -273,7 +275,7 @@ First, for each \gls{match}~$m$, evenly divide the cost of $m$ over each
 \gls{operation}~$o$ covered by $m$.
 %
 If a strict partial order $<$ exists over the set of \glspl{operation}, and
-$\mCovers(m)$ returns an ordered list that can be indexed starting from~$1$,
+$\mCovers(m)$ returns an ordered list that can be indexed starting from~\num{1},
 then the cost can be computed as
 %
 \begin{equation}
@@ -310,7 +312,7 @@ where each row denotes the cost of an \gls{operation}~$o$ if covered by a
 %
 An example of this cost matrix is given in \refFigure{cost-example}, from which
 we can deduce that the cost of covering \glspl{operation}~$o_1$ and~$o_2$ is
-between~3 and~40 respectively between~1 and~20
+between~\num{3} and~\num{40} respectively between~\num{1} and~\num{20}
 (\refFigure{cost-example-matrix}).
 %
 Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
@@ -1560,15 +1562,15 @@ give rise to five intersections with respect to the locations:
 %
 \def\mReg#1{\text{\instrFont* r$_{\text{#1}}$}}%
 %
-\mbox{$\mSet{\mReg{1}, \ldots, \mReg{4}}$} due to tags~1 and~2,
+\mbox{$\mSet{\mReg{1}, \ldots, \mReg{4}}$} due to tags~\num{1} and~\num{2},
 %
-\mbox{$\mSet{\mReg{5}}$} due to tag~1,
+\mbox{$\mSet{\mReg{5}}$} due to tag~\num{1},
 %
-$\mSet{\mReg{6}}$ due to tag~1 and~3,
+$\mSet{\mReg{6}}$ due to tag~\num{1} and~\num{3},
 %
-\mbox{$\mSet{\mReg{7}, \mReg{8}}$} due to tags~3 and~4, and
+\mbox{$\mSet{\mReg{7}, \mReg{8}}$} due to tags~\num{3} and~\num{4}, and
 %
-$\mSet{\mReg{9}}$ due to tag~4.
+$\mSet{\mReg{9}}$ due to tag~\num{4}.
 %
 From each of these intersections we select a representative, and the union of
 these representative \glspl{location} constitute the set of \gls!{canonical.l}[

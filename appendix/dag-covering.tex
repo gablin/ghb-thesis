@@ -470,8 +470,8 @@ of the selected \gls{pattern}.
 This process repeats until there are no \glspl{node} remaining in the original
 \gls{block DAG}.
 
-Although in extensive use (as of version 3.4), \gls{LLVM}'s \gls{instruction
-  selector} has several drawbacks.
+Although in extensive use (as of \mbox{version 3.4}), \gls{LLVM}'s
+\gls{instruction selector} has several drawbacks.
 %
 The main disadvantage is that any \gls{pattern} that is not supported by
 \gls{Tablegen} has to be handled manually through custom \gls{C}~functions.
@@ -520,8 +520,8 @@ that may occur in straightforward implementations of \gls{means-end analysis}
 enforcing a cut-off when a certain depth in the search space had been reached).
 
 Although this technique exhibits a worst time execution that is exponential in
-the depth of the search, \citeauthor{YuHu:1994a} assert that a depth of~3 is
-sufficient to yield results of equal quality to that of handwritten
+the depth of the search, \citeauthor{YuHu:1994a} assert that a depth of~\num{3}
+is sufficient to yield results of equal quality to that of handwritten
 \gls{assembly code}.
 %
 This claim notwithstanding, it is unclear whether it can be extended to support
@@ -979,7 +979,7 @@ An example is given in \refFigure{arnold-example}.
             Example of converting a pattern DAG into partial pattern trees.
             %
             The pattern DAG represents an \instrCode*{add} instruction that also
-            sets a status flag if the result is equal to~0.
+            sets a status flag if the result is equal to~\num{0}.
             %
             The black nodes indicate the output nodes%
           }
@@ -1353,7 +1353,7 @@ If we denote $m_{ij}$ as row~$i$ and column~$j$ in~$\mMatrix{M}$, then
 \gls{pattern}~$j$.
 %
 Hence the \gls{pattern selection} problem is equivalent to finding a set of
-columns in $\mMatrix{M}$ such that the sum for every row is exactly~1.
+columns in $\mMatrix{M}$ such that the sum for every row is exactly~\num{1}.
 %
 An example is given in \refFigure{unate-covering-example}.
 %
@@ -1782,7 +1782,7 @@ nothing to do with the conventional \gls{DP}~algorithm by
 %
 \citeauthor{BednarskiKessler:2006} found that \gls{Optimist} substantially
 reduced compilation time while retaining code quality, but for several test
-cases -- the largest \gls{block DAG} containing only 33~\glspl{node} --
+cases -- the largest \gls{block DAG} containing only \num{33}~\glspl{node} --
 \gls{Optimist} failed to generate any \gls{assembly code} whatsoever within the
 set time limit.
 %
@@ -2001,12 +2001,12 @@ Given a set \mbox{$v_1, \ldots, v_k$} of values and two sets \mbox{$\mVar{x}_1,
 For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
   \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
   \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
-assigned value~$5$ and exactly one $\mVar{x}$~\gls{variable} is assigned
-value~$3$.
+assigned value~\num{5} and exactly one $\mVar{x}$~\gls{variable} is assigned
+value~\num{3}.
 %
 Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
   \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
-either none or both $\mVar{x}$~\glspl{variable} must be assigned value~$3$.
+either none or both $\mVar{x}$~\glspl{variable} must be assigned value~\num{3}.
 
 To model \gls{pattern selection} using $\mGCC$, two new sets of \glspl{variable}
 are needed.
