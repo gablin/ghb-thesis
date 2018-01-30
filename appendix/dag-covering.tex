@@ -1991,20 +1991,29 @@ The \gls{constraint}, referred to as $\mGCC$, constrains the number of
 \glspl{variable} assigned a particular value (which may also be a
 \gls{variable}).
 %
-We say that \mbox{$\mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})$} holds if
-exactly $\mVar{y}$ \glspl{variable} in the set \mbox{$\mVar{x}_1, \ldots,
-  \mVar{x}_k$} are assigned value~$v$ (for a formal definition, see
-\refDefinition{gcc} on \refPageOfDefinition{gcc}).
+Given a set \mbox{$v_1, \ldots, v_k$} of values and two sets \mbox{$\mVar{x}_1,
+  \ldots, \mVar{x}_n$} and \mbox{$\mVar{c}_1, \ldots, \mVar{c}_k$} of
+\glspl{variable}, the \gls{constraint} holds if, for each \mbox{$i = 1, \ldots,
+  k$}, exactly $\mVar{c}_i$ \glspl{variable} in the set \mbox{$\mVar{x}_1,
+  \ldots, \mVar{x}_n$} are assigned value~$v_i$ (see also \refDefinition{gcc} on
+\refPageOfDefinition{gcc}).
 %
-For example, the constraint \mbox{$\mGCC(4, \mVar{x}_1 = \mSet{4}, \mVar{x}_2 =
-  \mSet{5}, \mVar{x}_3 = \mSet{6}, \mVar{y} = \mSet{1})$} holds as exactly one
-\gls{variable} is assigned the value~4.
+For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
+  \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
+  \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
+assigned value~$5$ and exactly one $\mVar{x}$~\gls{variable} is assigned
+value~$3$.
+%
+Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
+  \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
+either none or both $\mVar{x}$~\glspl{variable} must be assigned value~$3$.
 
 To model \gls{pattern selection} using $\mGCC$, two new sets of \glspl{variable}
 are needed.
 %
-Assume that $M$ denotes the \gls{match set} and $\mCovers(m)$ denotes the set of
-\glspl{node} covered by \gls{match}~$m$.
+Assume that $N$ denotes the set of \glspl{node} to be covered, $M$ denotes the
+\gls{match set}, and $\mCovers(m)$ denotes the set of \glspl{node} covered by
+\gls{match}~$m$.
 %
 Then, \gls{variable} \mbox{$\mVar{match}_n \in \mSetBuilder{m}{m \in M, n \in
     \mCovers(m)}$} decides which \gls{match} covers \gls{node}~$n$, and
@@ -2017,11 +2026,9 @@ Hence each match covers either no \glspl{node} or all \glspl{node} in its
 With these \glspl{variable}, \gls{pattern selection} can be modeled as
 %
 \begin{displaymath}
-  \forall m \in M :
   \mGCC(
-    m,
-    \cup_{n \in \mCovers(m)} \, \mVar{match}_n,
-    \mVar{count}_m
+    \cup_{m \,\in\, M} \mTuple{m, \mVar{count}_m} \hspace{-1pt},
+    \cup_{n \,\in\, N} \, \mVar{match}_n
   ),
 \end{displaymath}
 %

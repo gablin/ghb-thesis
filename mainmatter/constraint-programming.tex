@@ -175,7 +175,7 @@ $\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$.
 \paragraph{The Global Cardinality Constraint}
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
-\gls{constraint} -- the \gls{global cardinality
+\gls{constraint} -- the \gls!{global cardinality
   constraint}~\cite{OplobeduEtAl:1989}, which is a generalization of the
 \gls{all-different constraint} -- and how it can be used to model the
 \gls{pattern selection} problem (see \refEquation{pattern-selection-using-gcc}
@@ -184,28 +184,37 @@ on \refPageOfEquation{pattern-selection-using-gcc}).
 For completeness, we give here the formal definition of the \gls{constraint}.
 
 \begin{definition}[$\mGCC$]
-  Let $v$ be a value, and let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y}$}
-  be a set of \glspl{variable}.
+  Let \mbox{$v_1, \ldots, v_k$} be a set of values, and let \mbox{$\mVar{x}_1,
+    \ldots, \mVar{x}_n$} and \mbox{$\mVar{c}_1, \ldots, \mVar{c}_k$} be sets of
+  \glspl{variable}.
   %
   Then
   %
   \begin{displaymath}
-    \mGCC(v, \mVar{x}_1, \ldots, \mVar{x}_k, \mVar{y})
+    \mGCC(
+      \mTuple{v_1, \mVar{c}_1} \hspace{-1pt},
+      \ldots,
+      \mTuple{v_k, \mVar{c}_k}  \hspace{-1pt},
+      \mVar{x}_1, \ldots, \mVar{x}_n
+    )
     \equiv
+    \mBigAnd_{\mathclap{1 \,\leq\, i \,\leq\, k}}
     \big|
-      \mSetBuilder{\mVar{x}_i}{\forall 1 \leq i \leq k : \mVar{x}_i = v}
-    \big| = \mVar{y}.
+      \mSetBuilder{\mVar{x}_j}{\forall 1 \leq j \leq n : \mVar{x}_j = v_i}
+    \big| = \mVar{c}_i.
   \end{displaymath}
   \labelDefinition{gcc}
 \end{definition}
 
-For example, \mbox{$\mGCC(3, \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3},
-  \mVar{y} \in \mSet{1})$} holds because exactly one of the
-$\mVar{x}$~\glspl{variable} is assigned value~$3$.
+For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
+  \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
+  \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
+assigned value~$5$ and exactly one $\mVar{x}$~\gls{variable} is assigned
+value~$3$.
 %
-Similarly, \mbox{$\mGCC(3, \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3},
-  \mVar{y} \in \mSet{0, 2})$} does not holds because either none or both of the
-$\mVar{x}$~\glspl{variable} must be assigned value~$3$.
+Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
+  \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
+either none or both $\mVar{x}$~\glspl{variable} must be assigned value~$3$.
 
 
 \paragraph{The Circuit Constraint}
@@ -922,9 +931,10 @@ solution to be found is \mbox{$S_1 = \mTuple{\mVar{x} = \mSet{1}, \mVar{y} =
 Since the value of $\mVar{z}$ is to be maximized, this causes the
 \gls{constraint} \mbox{$\mVar{z} > 3$} to be posted.
 %
-The next solution to be found is \mbox{$S_2 = \mTuple{\mVar{x} = \mSet{1},
-    \mVar{y} = \mSet{2}, \mVar{z} = \mSet{4}}$}, which is clearly better than
-$S_1$, causing the \gls{constraint} \mbox{$\mVar{z} > 4$} to be posted.
+The next solution to be found is \mbox{$S_2 = \mTuple{\mVar{x} =
+    \mSet{1} \hspace{-1pt}, \mVar{y} = \mSet{2}, \mVar{z} = \mSet{4}}$}, which
+is clearly better than $S_1$, causing the \gls{constraint} \mbox{$\mVar{z} > 4$}
+to be posted.
 %
 Since the \gls{domain} of $\mVar{z}$ has no value greater than 4, the
 \gls{constraint} \mbox{$\mVar{z} > 4$} causes a \gls{failure} when the exploring
@@ -968,8 +978,10 @@ Using the \gls{global cardinality constraint} and $n$~\glspl{variable}, this can
 be modeled as
 %
 \begin{equation}
-  \forall 0 \leq i < n :
-  \mGCC(i, \mVar{x}_0, \ldots, \mVar{x}_{n-1}, \mVar{x}_i).
+  \mGCC(
+    \cup_{0 \,\leq\, i \,<\, n} \mTuple{i, \mVar{x}_i} \hspace{-1pt},
+    \mVar{x}_0, \ldots, \mVar{x}_{n-1}
+  ).
 \end{equation}
 %
 While this \gls{constraint} is sufficient in capturing the problem,
