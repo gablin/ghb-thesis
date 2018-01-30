@@ -39,9 +39,9 @@ another is called a \gls!{path}.
 %
 More formally, we define a \gls{path} between two \glspl{node}~$n$ and $m$ in a
 \gls{directed.g} \gls{graph}~\mbox{$\mPair{N}{E}$} as an ordered
-sequence~\mbox{$p = \mSequence{e_1, \ldots, e_l}$} for which \mbox{$e_i \in E,
-  \forall e_i \in p$}, and \mbox{$\mTarget(e_i) = \mSource(e_{i+1}), \forall 1
-  \leq i < l-1$}.
+sequence~\mbox{$p = \mSequence{e_1, \ldots, e_l}$} for which \mbox{$\forall e_i
+  \in p : e_i \in E$}, and \mbox{$\forall 1 \leq i < l-1 : \mTarget(e_i) =
+  \mSource(e_{i+1})$}.
 %
 \Glspl{path} for \gls{undirected.g} \glspl{graph} are similarly defined and
 will thus be skipped.
@@ -140,10 +140,9 @@ If $f$ is a bijection, whose inverse function is also a \gls{graph
 
 Lastly we introduce the notion of \gls!{topological sort}, where the
 \glspl{node} of a \gls{graph}~\mbox{$\mPair{N}{E}$} are arranged in an ordered
-sequence~\mbox{$\mSequence{n_1, \ldots, n_n}$} such that \mbox{$n_i \in N,
-  \forall 1 \leq i \leq n$}, and for no pair of \glspl{node}~$n_i$ and $n_j$,
-where \mbox{$i < j$}, does there exist an \gls{edge} \mbox{$\mPair{n_j}{n_i} \in
-  E$}.
+sequence~\mbox{$\mSequence{n_1, \ldots, n_n}$} such that \mbox{$\forall 1 \leq i
+  \leq n : n_i \in N$}, and for no pair of \glspl{node}~$n_i$ and $n_j$, where
+\mbox{$i < j$}, does there exist an \gls{edge} \mbox{$\mPair{n_j}{n_i} \in E$}.
 %
 In other words, if the \glspl{edge} are added to the list then all \glspl{edge}
 will go point forward from left to right (hence \glspl{topological sort} are
