@@ -4237,6 +4237,12 @@ doctoral dissertation~\cite{Proebsting:1992:Thesis}.
 The idea for computing the \glspl{state} -- which will only be described briefly
 -- works as follows.
 %
+For each \gls{terminal} representing a $k$-argument \gls{operation}, an
+\mbox{$k$-dimensional} matrix is maintained.
+%
+This is called the \gls{terminal}'s \gls!{state table}, which indicates the
+state to assign such \glspl{node} given the labels of its \glspl{child}.
+%
 First the states for all leaf \glspl{node} are built, considering only
 \gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
 in the \gls{production}.
