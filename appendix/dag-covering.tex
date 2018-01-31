@@ -439,7 +439,7 @@ The \glspl{pattern} -- which are limited to \glspl{tree} -- are expressed in a
 \gls{machine description} that allows common features to be factored out into
 abstract \glspl{instruction}.
 %
-A tool called \gls!{Tablegen} expands the abstract \glspl{instruction} into
+A tool called \gls!{TableGen} expands the abstract \glspl{instruction} into
 \glspl{pattern tree}, which are then processed by a matcher generator.
 %
 To ensure a partial order among all \glspl{pattern}, the matcher generator first
@@ -476,7 +476,7 @@ Although in extensive use (as of \mbox{version 3.4}), \gls{LLVM}'s
 \gls{instruction selector} has several drawbacks.
 %
 The main disadvantage is that any \gls{pattern} that is not supported by
-\gls{Tablegen} has to be handled manually through custom \gls{C}~functions.
+\gls{TableGen} has to be handled manually through custom \gls{C}~functions.
 %
 Unlike \gls{GCC} -- which applies \gls{macro expansion} combined with
 \gls{peephole optimization} (see
