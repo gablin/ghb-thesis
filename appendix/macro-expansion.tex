@@ -113,8 +113,8 @@ reasons that will soon become apparent.
 In the first such implementations, the \glspl{macro} were either written by hand
 -- like in the \gls{Pascal} \gls{compiler} developed by
 \citeauthor{AmmannEtAl:1974}~\cite{AmmannEtAl:1974, AmmannEtAl:1977} -- or
-generated automatically from a \gls{machine description}, which was typically
-written in some dedicated language.
+generated automatically from a \gls{machine description}, typically written in
+some dedicated language.
 %
 Consequently, many such languages and related tools have appeared -- and then
 disappeared -- over the years (see for example \cite{Brown:1969} for an early
@@ -496,10 +496,11 @@ thesis by \textcite{Maltz:1978}, and was later extended by
 \textcite{Donegan:1979}.
 %
 Similar techniques have also been developed by \textcite{Tirrell:1973} and
-\textcite{Simoneaux:1975}, and in their survey
-\textcite{GanapathiEtAl:1982:Survey} describe another \gls{state machine}-based
-\gls{compiler} called \gls!{Ugen}, which was derived from a virtual machine
-called \gls!{U-Code}~\cite{PerkinsSites:1979}.
+\textcite{Simoneaux:1975}.
+%
+\textcite{GanapathiEtAl:1982:Survey} also describe in their survey another
+\gls{state machine}-based \gls{compiler} called \gls!{Ugen}, which was derived
+from a virtual machine called \gls!{U-Code}~\cite{PerkinsSites:1979}.
 
 
 \subsubsection{Further Improvements}
@@ -580,8 +581,7 @@ Despite their already simplistic nature, \gls{macro}-expanding
 This further emphasizes the separation between the machine-independent core of
 the \gls{instruction selector} from the machine-dependent mappings, as well as
 allows for denser implementations that require less memory and potentially
-reduce the compilation time, which is the time it takes to compile a given
-\gls{function}.
+reduce the compilation time.
 
 
 \subsubsection{Instruction Selection Using Bit Strings}
@@ -634,7 +634,7 @@ be written by hand in the case of \gls{FHC}.
 %
 More extensive designs were later developed by \textcite{Tirrell:1973} and
 \textcite{Donegan:1973}, but these also suffered from similar disadvantages of
-making too many assumptions about the \gls{target machine}, which hindered
+making too many assumptions about the \gls{target machine}, thus hindering
 \gls{compiler} retargetability.
 
 
@@ -703,9 +703,9 @@ consequently does not scale to larger \glspl{expression tree}.
 \subsection{Falling Out of Fashion}
 
 Despite the improvements we have just discussed, they still do not resolve the
-main disadvantage of \gls{macro}-expanding \glspl{instruction selector}, namely
-that they can only handle \glspl{macro} that expand a single \gls{AST} or
-\gls{IR}~\gls{node} at a time.
+main disadvantage of \gls{macro}-expanding \glspl{instruction selector} --
+namely, that they can only handle \glspl{macro} that expand a single \gls{AST}
+or \gls{IR}~\gls{node} at a time.
 %
 The limitation can be somewhat circumvented by allowing information about the
 visited \glspl{node} to be forwarded from one \gls{macro} to the next, thereby
@@ -726,14 +726,15 @@ only \gls{single-output.ic} \glspl{instruction}.\!%
   only one of its output values will be retained in the \gls{assembly code}.%
 }
 %
-As this has a detrimental effect on code quality for \glspl{target machine}
+This has a detrimental effect on code quality for \glspl{target machine}
 exhibiting more complicated features, such as \gls{multi-output.ic}
-\glspl{instruction}, \glspl{instruction selector} based solely on \gls{naive.me}
+\glspl{instruction}
+%
+Consequently, \glspl{instruction selector} based solely on \gls{naive.me}
 \gls{macro expansion} were quickly replaced by newer, more powerful techniques
-when these started to appear in the late 1970s.
+that started to appear in the late~1970s.
 %
 One of these we will discuss later in this appendix.
-
 
 
 \subsubsection{%
@@ -779,11 +780,12 @@ hardware resources were typically scarce, which made \gls{macro}-expanding
 %
 A few examples include interpreters for
 \gls{Smalltalk-80}~\cite{DeutschSchiffman:1984} and
-\gls{Omniware}~\cite{Adl-TabatabaiEtAl:1996} (a predecessor to \gls{Java}), and
-\gls{code generation} systems, such as \gls!{VCode}~\cite{Engler:1996},
-\gls!{GBurg}~\cite{FraserProebsting:1999} (which was used within a small virtual
-machine), and \gls!{Gnu Lightning}~\cite{GNUlightning} (which was directly
-inspired by \gls{VCode}).
+\gls{Omniware}~\cite{Adl-TabatabaiEtAl:1996} (a predecessor to \gls{Java}).
+%
+More examples include \gls{code generation} systems such as
+\gls!{VCode}~\cite{Engler:1996}, \gls!{GBurg}~\cite{FraserProebsting:1999} (used
+inside a small virtual machine), and \gls!{Gnu Lightning}~\cite{GNUlightning} (a
+\gls{code generation} library inspired by \gls{VCode}).
 
 As technology progressed, however, dynamic \gls{code generation} systems also
 began to transition to more powerful techniques for \gls{instruction selection}
@@ -806,26 +808,28 @@ soon become apparent.
 \subsection{What Is Peephole Optimization?}
 
 In 1965, \textcite{McKeeman:1965} advocated the use of a simple but often
-neglected \gls{program} optimization procedure which, as a post-step to
-\gls{code generation}, inspects a small sequence of \glspl{instruction} in the
-\gls{assembly code} and attempts to combine two or more adjacent
-\glspl{instruction} with a single instruction.
+neglected \gls{program} optimization procedure known as \gls!{peephole
+  optimization}.
 %
-Similar ideas were also suggested by \textcite{LowryMedlock:1969} around the
-same time.
+As a post-step to \gls{code generation}, \gls{peephole optimization} inspects a
+small sequence of \glspl{instruction} in the \gls{assembly code} and attempts to
+combine two or more adjacent \glspl{instruction} with a single instruction.
 %
-Doing this reduces code size and also improves performance as using complex
+The name is thus derived from its narrow window of observation, and similar
+ideas were also suggested by \textcite{LowryMedlock:1969} around the same time.
+%
+Doing this reduces code size and improves performance as using complex
 \glspl{instruction} is often more efficient than using several simpler
-\glspl{instruction} to implement the same functionality\footnote{On a related
-  note, this idea was applied by \textcite{ChoEtAl:2006} for reselecting
-  instructions in order to improve iterative modulo schedules for \glspl{DSP}.}.
+\glspl{instruction} to implement the same functionality.\!%
 %
-Because of its narrow window of observation, this technique became known as
-\gls!{peephole optimization}.
+\footnote{%
+  This idea was applied by \textcite{ChoEtAl:2006} for reselecting instructions
+  in order to improve iterative modulo schedules for \glspl{DSP}.%
+}
 
 
 \subsubsection{Modeling Instructions with Register Transfer Lists}
-\labelSection{register-transfer-lists}
+\labelSection{me-register-transfer-lists}
 
 Since this kind of optimization is tailored for a particular \gls{target
   machine}, the earliest implementations were (and still often are) done ad hoc
@@ -907,8 +911,10 @@ meaning that they had to belong to the same \gls{block}.
 %
 \textcite{DavidsonFraser:1984} later removed the limitation of lexicographical
 adjacency by making use of \glspl{data-flow graph} instead of operating directly
-on the \gls{assembly code}, and they also extended the size of the
-\gls{instruction} window from pairs to triples.
+on the \gls{assembly code}.
+%
+In addition, they extended the size of the \gls{instruction} window from pairs
+to triples.
 
 
 \subsubsection{Further Developments}
@@ -983,7 +989,7 @@ In 1984, however, \textcite{DavidsonFraser:1984} developed an \gls{instruction
 Similar yet unsuccessful strategies had already been proposed earlier by
 \textcite{AuslanderHopkins:1982} and \textcite{Harrison:1979}, but
 \citeauthor{DavidsonFraser:1984} struck the right balance between \gls{compiler}
-retargetability and code quality, which made their design a viable option for
+retargetability and code quality which made it a viable option for
 production-quality \glspl{compiler}.
 %
 This scheme has hence become known as the \gls!{Davidson-Fraser approach}, and
@@ -1030,7 +1036,7 @@ amount.
 A subsequent \gls{register allocator} then assigns each temporary to a
 \gls{register}, potentially inserting additional code that saves some values to
 memory for later retrieval when the number of available \glspl{register} is not
-enough (this is called \gls{spilling.r}).
+enough (this is called \gls!{spilling.r}).
 %
 After expansion, but before \gls{register allocation}, the \gls{combiner} is
 run.
@@ -1078,10 +1084,11 @@ The first step produces a \gls{naive.me} \gls{macro expander} that is capable of
 expanding a single \gls{IR} \gls{node} at a time.
 %
 Unlike \citeauthor{DavidsonFraser:1984}, who implemented the \gls{expander} by
-hand, \citeauthor{FraserWendt:1988} applied an elaborate scheme consisting of a
-series of switch and goto statements -- effectively implementing a \gls{state
-  machine} -- which allowed their \gls{expander} to be generated automatically
-from a \gls{machine description}.
+hand, \citeauthor{FraserWendt:1988} devised a design that can be automatically
+generated from a \gls{machine description}.
+%
+The design relies on an elaborate scheme consisting of a series of switch and
+goto statements, which effectively implement a \gls{state machine}.
 %
 Once produced, the \gls{macro expander} is executed on a carefully designed
 training set.
@@ -1188,11 +1195,10 @@ Instead, using techniques to be discussed in \refAppendix{tree-covering},
 
 \subsubsection{``One Program to Expand Them All''}
 
-In 2010, \citeauthor{DiasRamsey:2010} introduced a scheme, described in
-\cite{DiasRamsey:2010} and \cite{RamseyDias:2011}, where the \gls{macro
-  expander} only needs to be implemented once per every distinct
-\emph{architecture family} instead of once per every distinct
-\emph{\gls{instruction set}}.
+In 2010, \citeauthor{DiasRamsey:2010}~\cite{DiasRamsey:2010, RamseyDias:2011}
+introduced a scheme where the \gls{macro expander} only needs to be implemented
+once per every distinct \emph{architecture family} instead of once per every
+distinct \emph{\gls{instruction set}}.
 %
 For example, \gls{register}-based and stack-based machines are two separate
 architecture families, whereas \gls{X86}, \gls{PowerPC}, and \gls{Sparc} are
@@ -1269,11 +1275,10 @@ In the techniques just discussed, the \gls{peephole optimizer} runs after
 But in a scheme developed in 1989 by \textcite{GeninEtAl:1989}, a similar
 routine is executed \emph{before} \gls{code generation}.
 %
-Targeting digital signal processors, their \gls{compiler} first transforms the
-\gls{function} into an \gls!{ISFG}, and then executes a routine --
-\citeauthor{GeninEtAl:1989} called it a \gls!{pattern matcher} -- which attempts
-to find several low-level operations in the \gls{ISFG} that can be merged into
-single \glspl{node}.\!%
+Targeting \glspl{DSP}, their \gls{compiler} first transforms the \gls{function}
+into an \gls!{ISFG}, and then executes a routine -- \citeauthor{GeninEtAl:1989}
+called it a \gls!{pattern matcher} -- which attempts to find several low-level
+operations in the \gls{ISFG} that can be merged into single \glspl{node}.\!%
 %
 \footnote{%
   The paper is not clear on how this is done exactly, but presumably
@@ -1298,10 +1303,9 @@ faster than that produced by other, contemporary \gls{DSP} \glspl{compiler}, and
 comparable with manually optimized \gls{assembly code}.
 %
 A disadvantage of this design is that it is limited to \glspl{function} where
-prior knowledge about the application area, in this case digital signal
-processing, can be encoded into specific optimization routines, which most
+prior knowledge about the application area -- in this case digital signal
+processing -- can be encoded into specific optimization routines, which most
 likely has to be done manually.
-
 
 
 \subsection{Interactive Code Generation}
@@ -1342,8 +1346,7 @@ Experiments show that this scheme reduced code size on average by
 Because \gls{macro}-expanding \glspl{instruction selector} only visit and
 execute \glspl{macro} one \gls{IR} \gls{node} at a time, they require a
 \mbox{1-to-1} or \mbox{1-to-$n$} mapping between the \gls{IR} \glspl{node} and
-the \glspl{instruction} provided by the \gls{target machine} in order to
-generate efficient \gls{assembly code}.
+the \glspl{instruction} in order to generate efficient \gls{assembly code}.
 %
 The limitation can be mitigated by incorporating additional logic and
 bookkeeping into the \glspl{macro}, but this quickly becomes an unmanageable

@@ -74,9 +74,11 @@ important factors.
 
 However, when transitioning from \glspl{pattern DAG} to \glspl{pattern graph},
 we can no longer apply \gls{pattern matching} techniques designed for
-\glspl{tree} and \glspl{DAG} but must resort to methods from the field of
-\gls{subgraph isomorphism} in solving this problem (see
-\refTable{time-complexities} for time complexity comparison).
+\glspl{tree} and \glspl{DAG}.
+%
+Instead we must resort to methods from the field of \gls{subgraph isomorphism}
+in solving this problem (see \refTable{time-complexities} for time complexity
+comparison).
 %
 \begin{table}
   \centering%
@@ -730,10 +732,12 @@ Since the functional units on a \gls{DSP} are commonly grouped into
 pair of \glspl{node} that could potentially be executed on the same \gls{FBB}.
 %
 A heuristic algorithm then attempts to collapse the \glspl{node} in the
-\gls{chaining graph} by selecting an \gls{edge}, replacing the two \glspl{node}
-with a new \gls{node}, and then removing the \glspl{edge} between \glspl{node}
-of operations that can no longer be executed on the same \gls{FBB} as the
-operations of the new \gls{node}.
+\gls{chaining graph} by selecting an \gls{edge} and replacing the two
+\glspl{node} with a new \gls{node}.
+%
+Once replaced, the algorithm tries to remove the \glspl{edge} between
+\glspl{node} of \glspl{operation} that can no longer be executed on the same
+\gls{FBB} as the \gls{operation} of the new \gls{node}.
 %
 This process iterates until no more \glspl{node} can be collapsed, and every
 remaining \gls{node} in the \gls{chaining graph} thus constitutes a
@@ -741,9 +745,10 @@ remaining \gls{node} in the \gls{chaining graph} thus constitutes a
 %
 The same authors later extended this design in~\cite{VanPraetEtAl:2001} to
 consider selection between \emph{all} possible \glspl{bundle} using
-\glshyphened{branch and bound} \gls{search}, and to enable some measure of code
-duplication by allowing the same operations in the \gls{function graph} to
-appear in multiple \glspl{bundle}.
+\glshyphened{branch and bound} \gls{search}
+%
+The new design also allows some measure of code duplication by allowing the same
+operations in the \gls{function graph} to appear in multiple \glspl{bundle}.
 
 Using this incremental scheme to form the \glspl{bundle}, the design by
 \citeauthor{VanPraetEtAl:1994} is capable of \gls{bundling} operations that
@@ -766,9 +771,14 @@ Another, albeit unusual, \gls{code generation} technique was proposed by
 %
 Like \gls{MSSQ} and \gls{Chess}, \citeauthor{Visser:1999}'s approach is an
 \gls{integrated.cg} \gls{code generation} design but solves the problem using
-\gls!{simulated annealing}, which is a meta-heuristic to avoid getting stuck in
-a local maximum when searching for solutions (see for example
-\cite{KirkpatrickEtAl:1983} for an overview).
+\gls{simulated annealing}.\!%
+%
+\footnote{%
+  \Gls!{simulated annealing} is a meta-heuristic that avoids getting stuck in a
+  local maximum when searching for optimal solutions.
+  %
+  For an overview, see for example~\cite{KirkpatrickEtAl:1983}.%
+}
 %
 In brief terms, an initial solution is found by randomly mapping each \gls{node}
 in the \gls{function graph} to a \gls{node} in the hardware \gls{graph} -- which
@@ -817,9 +827,11 @@ generated (hence \gls{instruction selection}, \gls{instruction scheduling}, and
   Although it is depicted here primarily as a post-step to \gls{code
     generation}, one could just as well design a \glsshort{Davidson-Fraser
     approach}-style \gls{compiler} (see \refAppendix{macro-expansion} on
-  \refPageOfSection{macro-expansion-with-peephole-optimization}) where simple
-  methods are applied to generate correct but naive \gls{assembly code}, and
-  then rely on \gls{mutation scheduling} to improve the code quality.%
+  \refPageOfSection{macro-expansion-with-peephole-optimization}).
+  %
+  In such a design, simple methods are applied to generate correct but naive
+  \gls{assembly code}, and then \gls{mutation scheduling} is used to improve the
+  code quality.%
 }
 %
 This is done by progressively moving the computations, one at a time, such that
@@ -828,9 +840,10 @@ sooner.
 %
 If such a move cannot be made, for example due to violation of some resource
 constraint or data dependency, then \gls{mutation scheduling} tries to alter the
-value -- this is called \gls!{value mutation} -- which means that the current
-operation is replaced by other, equivalent operations that conform to the
-restrictions.
+value.
+%
+This is called \gls!{value mutation}, which means that the current operation is
+replaced by other, equivalent operations that conform to the restrictions.
 %
 These operations are selected from a \gls!{mutation set}, which is conceptually
 a recursive data structure, as an expression in the \gls{mutation set} may use
@@ -907,7 +920,9 @@ enforced by the underlying solving techniques.
 %
 Moreover, performing \gls{global.is} \gls{instruction selection} is
 computationally much harder compared to \gls{local.is} \gls{instruction
-  selection}, and therefore most likely we will only see these techniques
-applied in \glspl{compiler} whose users can afford very long compilation times
-(for example when targeting embedded systems with extremely high demands on
-performance, code size, power consumption, or a combination thereof).
+  selection}.
+%
+Therefore, we will most likely only see these techniques applied in
+\glspl{compiler} whose users can afford very long compilation times (for example
+when targeting embedded systems with extremely high demands on performance, code
+size, power consumption, or a combination thereof).
