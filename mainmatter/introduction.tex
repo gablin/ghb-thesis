@@ -189,7 +189,7 @@ expensive \glspl{operation} into \glspl{block} with lower execution frequency.
 Once optimized, the \gls{IR} code is then passed to the \gls{backend}.
 
 The \gls!{backend} performs \gls{code generation}, where three tasks are most
-promiment:%
+prominent:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item \gls{instruction selection}, which we are already familiar with
@@ -298,13 +298,13 @@ not support selection of such \glspl{instruction}.
 %
 Since the \glspl{operation} above reside in separate \glspl{block}
 (\irBlock*{b3} and \irBlock*{b4}), making use of the saturated-add
-\gls{instruction} requries an \gls{instruction selector} that is capable of
+\gls{instruction} requires an \gls{instruction selector} that is capable of
 processing multiple \glspl{basic block} simultaneously.
 %
 In comparison, traditional \gls{instruction selection} techniques only consider
 one \gls{basic block} at a time.
 %
-Morever, most approaches represent the \glspl{instruction} as \glspl{graph}.
+Moreover, most approaches represent the \glspl{instruction} as \glspl{graph}.
 %
 As the saturated-add \gls{instruction} contains \glspl{operation} for both data
 and control flow, modeling it as a \gls{graph} requires a representation that
@@ -541,7 +541,7 @@ and \glsdesc{CP}:
     \begin{contributions}
       \item \labelContribution{survey-spanning}
         examines over four decades of research on \gls{instruction selection},
-        covering a significantly wider scope and timespan compared to existing
+        covering a significantly wider scope and time span compared to existing
         surveys \cite{Cattell:1977, GanapathiEtAl:1982:Survey, Lunell:1983,
           Leupers:2000:Survey, BoulytchevLomov:2001} which are either too old
         or incomplete.
@@ -979,7 +979,7 @@ The model is solved using \gls!{Chuffed}~\cite{Chu:2011} -- a
 on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
 \SI{16}{\giga\byte} main memory.
 %
-To mitigate deviations in the measurments, we run each experiment ten times and
+To mitigate deviations in the measurements, we run each experiment ten times and
 then take the arithmetic average together with the \gls!{CV}.
 %
 When summarizing ratios, we instead take the geometric mean since this is more
@@ -994,7 +994,7 @@ The \gls{MediaBench} suite consists of \num{6313}~\glspl{function}, which are
 compiled into \gls{LLVM} \gls{IR} code -- the intermediate format used by
 \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization flag~\texttt{-O3}.
 %
-Due to insuffiicent support in the current toolchain, we remove all
+Due to insufficient support in the current tool chain, we remove all
 \glspl{function} that operate on non-integer data types (such as floating point
 and vector data types).
 %
@@ -1059,7 +1059,7 @@ A value greater than \num{1} means $a$ is faster than $b$, a value less than
 and $b$ take the same time to solve a given \gls{function}.
 
 This method, however, creates problems when plotting the normalized values as
-barcharts.
+bar charts.
 %
 Since the normalized values are centered around \num{1}, when $a$ is twice as
 fast as $b$ we intuitively expect the normalized value to be equally far away

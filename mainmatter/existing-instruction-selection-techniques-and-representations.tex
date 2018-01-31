@@ -327,7 +327,7 @@ Because the \gls{macro expander} is implemented separately from the
 made as customized as needed for the \gls{target machine}.
 %
 This also allows the \gls{macro expander} to be void of any \glsshort{target
-  machine}-specific details, thus necessiting only the \glspl{macro} to be
+  machine}-specific details, thus requiring only the \glspl{macro} to be
 rewritten when retargeting the \gls{compiler} to another machine.
 %
 To this end, the \glspl{macro} are typically written in some dedicated language
@@ -365,7 +365,7 @@ First, a \gls{naive.me} \gls{macro expander} expands the \gls{function} under
 compilation one \gls{IR}~\gls{operation} at at time.
 %
 Once fully expanded, a \gls{peephole optimizer} runs over the result and
-replaces inefficient sequences of \glspl{instruction} with more compentent
+replaces inefficient sequences of \glspl{instruction} with more competent
 equivalences.
 %
 Consequently, the \glspl{macro} can be divided up into those required for
@@ -376,7 +376,7 @@ makes for a simpler and more incremental retargeting effort.
 Due to the people who pioneered the idea, this scheme is known as the
 \gls!{Davidson-Fraser approach}~\cite{DavidsonFraser:1984}.
 
-Because this \gls{principle} has little relevence for our approach, we will not
+Because this \gls{principle} has little relevance for our approach, we will not
 examine applications of \gls{naive.me} \gls{macro expansion} and the
 \gls{Davidson-Fraser approach} in this chapter.
 
@@ -395,7 +395,7 @@ This gives several advantages over \gls{macro expansion}.
 %
 First, capturing the behavior of \glspl{instruction} becomes simpler.
 %
-Second, tradeoffs in selecting certain combinations of \glspl{match} can be
+Second, trade-offs in selecting certain combinations of \glspl{match} can be
 considered, which improves code quality.
 %
 Third, due to \glspl{machine grammar} (to be described shortly), \gls{tree
@@ -1642,7 +1642,7 @@ The last \gls{IP}-based approach to be discussed is that of
 \gls{code generation}.
 %
 A \gls!{Horn clause} is a disjunctive Boolean formula that contains at most one
-positive (unnegated) literal, and \gls{IP}~models built using \glspl{Horn
+positive (non-negated) literal, and \gls{IP}~models built using \glspl{Horn
   clause} can be solved in linear time~\cite{Hooker:1988}.
 %
 \citeauthor{Gebotys:1997} exploited this fact in developing an \gls{IP}~model
@@ -1899,7 +1899,7 @@ int f(int* A, int* B, int N) {
 %
 Assume that the arrays consist of fixed-point values.
 %
-For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
+For efficiency, a common idiosyncrasy in many \glspl{DSP} is that multiplication
 of two fixed-point values return a value that is shifted one bit to the left.
 %
 For such \glspl{target machine}, both the value~\irCode*{0} and the accumulator

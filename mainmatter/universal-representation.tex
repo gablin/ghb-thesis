@@ -25,7 +25,7 @@ In \refSection{uni-rep-pattern-matching}, we describe how to perform
 \gls{pattern matching} with the \gls{universal representation}.
 %
 In \refSection{uni-rep-ir-comparison}, we compare \gls{universal representation}
-with other, exising \glspl{sea-of-nodes IR}.
+with other, existing \glspl{sea-of-nodes IR}.
 %
 Lastly, a summary is given in \refSection{uni-rep-summary}.
 
@@ -539,14 +539,14 @@ in \refChapter{constraint-model}.
 Both \glspl{program} and \glspl{instruction} expect their argument values to be
 represented in a specific representation.
 %
-For example, in integer arithmetics the values are typically represented using
+For example, in integer arithmetic the values are typically represented using
 signed or unsigned two's complement values of a certain width.
 %
 It is also common that the result is given using the same representation as the
 argument values.
 %
 As this could lead to overflow, mechanisms are often in place to detect such
-occurrances.
+occurrences.
 %
 However, if the selected \gls{instruction} produces results of wider bit width
 than specified in the \gls{function graph}, the expected overflow may not occur.
@@ -681,8 +681,8 @@ This is needed for \gls{pattern matching}, which will be described in
 %
 For a given \gls{edge}~\mbox{$e = \mEdge{n}{m}$} of type~$t$, the
 \gls!{inbound.en} \gls{edge number}, denoted \mbox{$\mInEdgeNr(e)$}, indicates
-that $e$ is the $i$th ingoing \gls{edge} of type~$t$ connected to $m$, where
-\mbox{$i = \mInEdgeNr(e)$}.
+that $e$ is the $i$th \gls{ingoing.e} \gls{edge} of type~$t$ connected to $m$,
+where \mbox{$i = \mInEdgeNr(e)$}.
 %
 Similarly, the \gls!{outbound.en} \gls{edge number}, denoted
 \mbox{$\mOutEdgeNr(e)$}, indicates that $e$ is the $i$th outgoing \gls{edge} of
@@ -940,7 +940,7 @@ To curb the number of \glspl{match}, we prune away all \gls{SIMD.i}
 \glspl{match} where at least one of its arguments is a constant value.
 %
 This is such values will typically always require the \gls{SIMD.i}
-\gls{instruction} to be preceeded by a copy \gls{instruction}, thereby
+\gls{instruction} to be preceded by a copy \gls{instruction}, thereby
 nullifying the benefit of the \gls{SIMD.i} \gls{instruction}.
 
 

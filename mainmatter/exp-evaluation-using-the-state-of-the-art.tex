@@ -123,7 +123,7 @@ cost than those produced by \gls{LLVM} (up to~\printSpeedup{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 } improvement).
 %
-These improvements are predominatly due to the combination of \gls{global.is}
+These improvements are predominantly due to the combination of \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 %
 In three cases (\cCode*{alloc\_save\_spac}, \cCode*{gp\_enumerate\_fi}, and
@@ -303,6 +303,6 @@ Based on the observations above, we conclude that there is sufficient data
 parallelism to be exploited through selection of \gls{SIMD.i}
 \glspl{instruction} without having to resort to \gls{loop unrolling}.
 %
-In addition, this exploitation is benefitted from \gls{global code motion} as
+In addition, this exploitation is benefited from \gls{global code motion} as
 that allows computations to be gathered from different \glspl{block} and
 implemented using a single \gls{SIMD.i} \gls{instruction}.

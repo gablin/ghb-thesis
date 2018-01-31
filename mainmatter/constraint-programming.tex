@@ -352,7 +352,7 @@ Similarly, \mbox{$\mTable(\mVar{x}_1 \in \mSet{3}, \mVar{x}_2 \in \mSet{3}, A)$}
 does not hold because the tuple \mbox{$\mTuple{3, 3}$} appears as a row in~$A$.
 
 $\MTable$ is used in \refChapter{solving-techniques} to refine the
-\glsshort{constraint model} and to implement serveral of the \gls{implied.c}
+\glsshort{constraint model} and to implement several of the \gls{implied.c}
 \glspl{constraint}.
 
 
@@ -632,7 +632,7 @@ Performing \gls{propagation} requires an array of \gls{domain}-pruning
 algorithms and a system that allows these algorithms to interact.
 %
 \Gls{propagation} theory is discussed in detail by \textcite{Bessiere:2006}, and
-\glsdesc{CP} systems are throroughly discussed by
+\glsdesc{CP} systems are thoroughly discussed by
 \textcite{SchulteCarlsson:2006}.
 
 \Gls{constraint solver} typically keep track of \glspl{variable} and their
@@ -1157,7 +1157,7 @@ An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
 To begin with, every \glspl{variable} has two dual representations:
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item one based on Booleans
+  \item one based on Boolean values
   \item one based on integers, which is the \gls{domain} typically used in
     \gls{CP}
 \end{inlinelist}.
@@ -1329,7 +1329,7 @@ For more details, see~\cite{MarquesSilvaEtal:2014}.
 
 It is well known that the effectiveness of \gls{LCG} is heavily impacted by how
 the problem is modeled as that affects which \glspl{no-good} can be
-learnt~\cite{SchuttEtAl:2011, ChuStuckey:2013, SchuttEtAl:2016}.
+learned~\cite{SchuttEtAl:2011, ChuStuckey:2013, SchuttEtAl:2016}.
 %
 For the same reason, \gls{LCG} is also influenced by \gls{implied.c},
 \gls{symmetry breaking.c}, and \gls{dominance breaking.c} \glspl{constraint}

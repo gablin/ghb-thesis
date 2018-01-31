@@ -1047,7 +1047,7 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 %
 With these new definitions, \refEquationList{naive-dom, spanning,
   compatible-locations} are adjusted accordingly (the changes are highlighted in
-grey):
+gray):
 %
 \begin{equation}
   \forall m \in \mPhiMatchCompSet,
@@ -1149,7 +1149,7 @@ When filtering, we remove all \glspl{function} that have less than less
 than ten~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
 \num{50}~\glspl{instruction}.
 %
-Anything smaller will most likely not be benefitted by \gls{value reuse}, and
+Anything smaller will most likely not be benefited by \gls{value reuse}, and
 anything larger will lead to unreasonably long solving times.
 %
 This leaves a pool of \num{453}~\glspl{function}, on which we then perform
@@ -1875,7 +1875,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
 
   \caption[%
             Plot comparing optimal solution costs for two constraint models
-            supporing jump instruction insertion%
+            supporting jump instruction insertion%
           ]%
           {%
             Normalized optimal solution costs for two constraint models that
@@ -2097,7 +2097,7 @@ dissertation rely on exact \gls{cover}[age].
 In most cases, performing a branch incurs a performance penalty.
 %
 Some architectures therefore allow the \glspl{instruction} to be predicated with
-a boolean flag for optional execution, which allows \glspl{function} with
+a Boolean flag for optional execution, which allows \glspl{function} with
 if-then-else structures to be transformed into linear code.
 %
 This process is called \gls!{if-conversion}.
@@ -2179,8 +2179,8 @@ Assume a \gls{function} containing two sums, \irVar*{a} and~\irVar*{b}, which
 are conditionally computed given a certain predicate~\irVar*{p}
 (\refFigure{if-conversions-example-ir}).
 %
-Because this constitutes an if-then-else structure, this code snippet is eligble
-for \gls{if-conversion} (\refFigure{if-conversions-example-instrs}).
+Because this constitutes an if-then-else structure, this code snippet is
+eligible for \gls{if-conversion} (\refFigure{if-conversions-example-instrs}).
 %
 Representing the predicated versions of add~\glspl{instruction} as
 \glspl{pattern} gives rise to two \glspl{match}, $m_1$ and~$m_2$, which can
