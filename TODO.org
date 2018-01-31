@@ -28,6 +28,7 @@
 ** TODO Check bad kerning, especially in math
 ** DONE Check for unused glossary terms
 ** DONE Check for undefined (!) glossary terms
+** TODO Check for horizontal overflow
 ** TODO Check for redundant uses of ! in glossary terms
 ** TODO Check for bad figure placements
 ** TODO Fix bad page breaks
