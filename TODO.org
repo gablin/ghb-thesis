@@ -21,6 +21,8 @@
 ** DONE Add list of acronyms
 ** DONE Break long sentences
 ** DONE Fix overflowing of bib entries
+** TODO Fix inconsistencies between patterns and matches in tree-covering appendix
+** TODO Define notion of side effects?
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
 ** TODO Check for bad use of past tense
