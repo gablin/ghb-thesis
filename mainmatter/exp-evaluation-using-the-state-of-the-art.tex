@@ -127,9 +127,9 @@ These improvements are predominatly due to the combination of \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 %
 In three cases (\cCode*{alloc\_save\_spac}, \cCode*{gp\_enumerate\_fi}, and
-\cCode*{gpk\_open}), for example, our approach is able to lift computations, in
-particular constant loads, out of \glspl{block} with high execution frequency
-into \glspl{block} with lower frequency, thereby reducing the cost.
+\cCode*{gpk\_open}), for example, our approach is able to reduce cost by lifting
+computations, in particular constant loads, out of \glspl{block} with high
+execution frequency into \glspl{block} with lower frequency.
 %
 In \cCode*{alloc\_save\_spac}, our approach is also able to move an addition and
 memory \gls{operation} into the same \gls{block} and implement both using a

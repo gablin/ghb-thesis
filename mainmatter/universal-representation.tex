@@ -616,9 +616,10 @@ A new \gls{state node} is then created and set as last, and another
 %
 Once all \glspl{operation} in the \gls{block} has been processed, the first and
 last \glspl{state node} are connected to the \gls{block node} through a
-\gls{state-flow edge} and a \gls{definition edge}, respectively (note that,
-unlike with \glspl{value node}, the \gls{state-flow edge} must not be drawn from
-the \glsshort{entry block} \gls{block node}).
+\gls{state-flow edge} and a \gls{definition edge}, respectively.
+%
+Note that, unlike with \glspl{value node}, the \gls{state-flow edge} must not be
+drawn from the \glsshort{entry block} \gls{block node}.
 %
 Hence the same invariant for \glspl{value node} also apply for \glspl{state
   node}.
@@ -905,8 +906,7 @@ which would obviously break \gls{program} semantics.
 Similarly, in a \gls{match} where $e$ and $d$ are connected to \glspl{node} with
 multiple outgoing \gls{edge} of the same type -- such as conditional jump
 \glspl{operation} -- the \gls{outbound.en} \glspl{edge number} of $e$ and $d$
-must be identical, which prevents swapping of the target labels where
-appropriate.
+must be identical, which prevents swapping of target labels.
 
 
 \subsection{Matching SIMD Instructions Efficiently}
