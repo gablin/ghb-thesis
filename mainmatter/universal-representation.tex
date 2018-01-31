@@ -53,6 +53,7 @@ following requirements:
     This is also needed for uniform selection of data and control
     \glspl{instruction}, which requires both data and control flow must be
     captured in a single \gls{graph}.
+
   \item \labelRequirement{uni-rep-explicit-blocks}
     \typesetReq{\Glspl{block} must be explicitly represented as \glspl{node}.}
     %
@@ -77,12 +78,14 @@ following requirements:
     %
     This is also useful for modeling \gls{global code motion} as each such
     \gls{node} will incur a \gls{variable} in the \gls{constraint model}.
+
   \item \labelRequirement{uni-rep-explicit-ops}
     \typesetReq{Data and control \glspl{operation} must be explicitly
       represented as \glspl{node}.}
     %
     This is to retain the notion of \gls{cover}[age] and to uniformly treat
     \glspl{instruction} that operate on data or control flow.
+
   \item \labelRequirement{uni-rep-explicit-values}
     \typesetReq{Values produced and used by the \glspl{operation} must also be
       explicitly represented as \glspl{node}}
@@ -90,23 +93,27 @@ following requirements:
     This is useful for modeling \gls{global code motion} and \gls{data copying}
     as every such \gls{node} will incur a \gls{variable} in the \gls{constraint
       model}.
+
   \item \labelRequirement{uni-rep-exactly-one-inbound-edge-for-values}
     \typesetReq{In a \gls{function graph}, every \gls{node} representing a
       value must have exactly one inbound \gls{data-flow edge}.}
     %
     This ensures that every value has exactly one \gls{match} defining that
     value, which is helpful when modeling \gls{global code motion}.
+
   \item \labelRequirement{uni-rep-fixed-operations}
     \typesetReq{The \gls{block} in which a particular \gls{operation} in the
       \gls{function} is to be performed must not be fixed.}
     %
     Without this, \gls{global code motion} is not possible.
+
   \item \labelRequirement{uni-rep-preserve-semantics}
     \typesetReq{Data \gls{operation} must be forbidden to be placed in
       \glspl{block} that will break \gls{program} semantics.}
     %
     This is needed to ensure correctness when performing \gls{global code
       motion}.
+
   \item \labelRequirement{uni-rep-ssa}
     \typesetReq{The representation must be based on \gls{SSA}.}
     %
