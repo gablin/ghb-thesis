@@ -13,11 +13,18 @@ With the first publications beginning to appear at the end of the 1960s,
 When surveying these techniques, it was discovered that essentially all apply
 one of four fundamental \glspl!{principle} of \gls{instruction selection}:
 %
-\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+\begin{inlinelist}[itemjoin={, }]
   \item \gls{macro expansion}
   \item \gls{tree covering}
-  \item \gls{DAG covering}
-  \item \gls{graph covering}
+  \item \gls{DAG covering},\!%
+        %
+        \footnote{%
+          \glsunset{DAG}%
+          \Gls{DAG} stands for \glsdesc!{DAG}.
+        }
+        % These to items appear on the same \item in order to get the footnote
+        % to appear on the right place of the comma.
+        and \gls{graph covering}
 \end{inlinelist}.
 %
 The trend of applying these \glspl{principle} over time is shown in
