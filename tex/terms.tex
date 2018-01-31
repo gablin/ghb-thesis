@@ -31,8 +31,8 @@
 \newTerm{common subexpression elimination}
 \newTerm{compiler}
 \newTerm{compiler intrinsic}
-\newTerm{condition code}[see={status flag}]
-\newTerm{condition flag}[see={status flag}]
+\newTerm{condition code}[see=[\seename]{status flag}]
+\newTerm{condition flag}[see=[\seename]{status flag}]
 \newTerm{constant folding}
 \newTerm{data copying}
 \newTerm{dead code elimination}
@@ -63,19 +63,19 @@
 \newTerm{live range}
 \newTerm{loop unrolling}
 \newTerm{machine code}
-\newTerm{middle-end}[see={optimizer}]
-\newTerm{optimizer}[see={middle-end}]
+\newTerm{middle-end}[see=[\seename]{optimizer}]
+\newTerm{optimizer}[see=[\seename]{middle-end}]
 \newTerm{parse tree}
 \newTerm{peephole optimization}
 \newTerm{peephole optimizer}
-\newTerm{recomputation}[see={rematerialization}, user1={recompute}]
+\newTerm{recomputation}[see=[\seename]{rematerialization}, user1={recompute}]
 \newTerm{refactoring}
 \newTerm{register allocation}
 \newTerm[local.ra]{local}[parent={register allocation}]
 \newTerm[global.ra]{global}[parent={register allocation}]
 \newTerm{register allocator}
 \newTerm{register pressure}
-\newTerm{rematerialization}[see={recomputation}]
+\newTerm{rematerialization}[see=[\seename]{recomputation}]
 \newTerm{saturation arithmetic}
 \newTerm{semantic analysis}[user1={semantic}]
 \newAcronym{SSA}{static single assignment}
@@ -85,8 +85,8 @@
 \newTerm{superoptimizer}
 \newTerm{value reuse}[user1={reuse}]
 
-\newTerm{basic block}[see={block}]
-\newTerm{block}[see={basic block}]
+\newTerm{basic block}[see=[\seename]{block}]
+\newTerm{block}[see=[\seename]{basic block}]
 \newTerm[consume.b]{consume}[parent={block}, user1={consum}]
 \newTerm[dominate.b]{dominate}[parent={block}, user1={domin}]
 \newTerm[span.b]{span}[parent={block}]
@@ -103,9 +103,9 @@
 
 \newTerm{ARM}
 \newAcronym{ASIP}{application-specific instruction set processor}
-\newAcronym{AVX}{advanced vector extensions}[see={Intel}]
+\newAcronym{AVX}{advanced vector extensions}[see=[\seename]{Intel}]
 \newAcronym{CISC}{complex instruction-set computer}
-\newTerm{Cortex-M7}[see={ARM}]
+\newTerm{Cortex-M7}[see=[\seename]{ARM}]
 \newTerm{DEC-10}
 \newAcronym{DSP}{digital signal processor}
 \newTerm{echo instruction}
@@ -131,30 +131,30 @@
 \newAcronym{RISC}{reduced instruction-set computer}
 \newTerm{Sparc}
 \newToolTerm[SPECint 2000]{SPECint~2000}[sort={SPECint 2000}]
-\newAcronym{SSE}{streaming SIMD extensions}[see={Intel}]
+\newAcronym{SSE}{streaming SIMD extensions}[see=[\seename]{Intel}]
 \newTerm{target machine}[user1={target}]
 \newTerm{temporary}[plural={temporaries}]
 \newTerm[virtual.temp]{virtual}[parent={temporary}]
 \newTerm{TI}
-\newTerm{TMS320C55x}[see={TI}]
-\newTerm{TMS320C2x}[see={TI}]
+\newTerm{TMS320C55x}[see=[\seename]{TI}]
+\newTerm{TMS320C2x}[see=[\seename]{TI}]
 \newTerm{VAX}
 \newAcronym{VLIW}{very long instruction word}
-\newTerm{X86}[see={Intel}]
+\newTerm{X86}[see=[\seename]{Intel}]
 
 
 %=============
 % GRAPH TERMS
 %=============
 
-\newTerm{child}[see={node}]
+\newTerm{child}[see=[\seename]{node}]
 \newTerm{cycle}
 \newAcronym{DAG}{directed acyclic graph}
 \newTerm{edge}
-\newTerm[inbound.e]{inbound}[parent={edge}, see={ingoing.e}]
-\newTerm[ingoing.e]{ingoing}[parent={edge}, see={inbound.e}]
-\newTerm[outbound.e]{outbound}[parent={edge}, see={outgoing.e}]
-\newTerm[outgoing.e]{outgoing}[parent={edge}, see={outbound.e}]
+\newTerm[inbound.e]{inbound}[parent={edge}, see=[\seename]{ingoing.e}]
+\newTerm[ingoing.e]{ingoing}[parent={edge}, see=[\seename]{inbound.e}]
+\newTerm[outbound.e]{outbound}[parent={edge}, see=[\seename]{outgoing.e}]
+\newTerm[outgoing.e]{outgoing}[parent={edge}, see=[\seename]{outbound.e}]
 \newTerm{edge number}
 \newTerm[inbound.en]{inbound}[parent={edge number}]
 \newTerm[outbound.en]{outbound}[parent={edge number}]
@@ -168,14 +168,14 @@
 \newTerm[strongly connected.g]{strongly connected}[parent={graph}]
 \newTerm[undirected.g]{undirected}[parent={graph}]
 \newTerm[weakly connected.g]{weakly connected}[parent={graph}]
-\newTerm{graph homomorphism}[see={homomorphism}]
+\newTerm{graph homomorphism}[see=[\seename]{homomorphism}]
 \newTerm{graph isomorphism}
-\newTerm{homomorphism}[see={graph homomorphism}]
+\newTerm{homomorphism}[see=[\seename]{graph homomorphism}]
 \newTerm{independent set}
-\newTerm{isomorphism}[see={subgraph isomorphism}, user1={isomorphic}]
-\newTerm{leaf}[plural={leaves}, see={node}]
-\newTerm{loop edge}[see={loop}]
-\newTerm{loop}[see={loop edge}]
+\newTerm{isomorphism}[see=[\seename]{subgraph isomorphism}, user1={isomorphic}]
+\newTerm{leaf}[plural={leaves}, see=[\seename]{node}]
+\newTerm{loop edge}[see=[\seename]{loop}]
+\newTerm{loop}[see=[\seename]{loop edge}]
 \newTerm{multigraph}
 \newTerm{node}
 \newTerm[adjacent.n]{adjacent}[parent={node}]
@@ -187,25 +187,25 @@
                                             % ending 'e' in order to be used in
                                             % words like 'duplicate' and
                                             % 'duplicating'.
-\newTerm{parent}[see={node}]
+\newTerm{parent}[see=[\seename]{node}]
 \newTerm{path}
-\newTerm{root}[see={node}]
+\newTerm{root}[see=[\seename]{node}]
 \newTerm{source}
 \newTerm{subgraph}
 \newTerm{subgraph isomorphism}%
         [%
-          see={isomorphism},
+          see=[\seename]{isomorphism},
           user1={subgraph isomorphic},
           user3={subgraph-isomorphism}
         ]
-\newTerm{subtree}[see={tree}]
+\newTerm{subtree}[see=[\seename]{tree}]
 \newTerm{super node}
 \newTerm{target}
 \newTerm{topological sort}
 \newTerm{tree}
 \newTerm[directed.t]{directed}[parent={tree}]
 \newTerm[rooted directed.t]{rooted directed}[parent={tree}]
-\newTerm{vertex}[plural={vertices}, see={node}]
+\newTerm{vertex}[plural={vertices}, see=[\seename]{node}]
 
 
 %========================
@@ -229,7 +229,7 @@
 \newTerm[use.d]{use}[parent={datum}, user1={us}]
 \newTerm{definition edge}
 \newTerm{dependency graph}
-\newTerm{divide-then-multiply method}[see={multiply-then-divide method}]
+\newTerm{divide-then-multiply method}[see=[\seename]{multiply-then-divide method}]
 \newAcronym[DTB pattern]%
            {DTB~pattern}%
            {NOT USED}%
@@ -252,7 +252,7 @@
 \newTerm[canonical.l]{canonical}[parent={location}]
 \newTerm{location set}
 \newTerm{match duplication}
-\newTerm{multiply-then-divide method}[see={divide-then-multiply method}]
+\newTerm{multiply-then-divide method}[see=[\seename]{divide-then-multiply method}]
 \newTerm{null-copy match}[plural={null-copy matches}]
 \newTerm{null-copy pattern}
 \newTerm{null-def pattern}
@@ -297,7 +297,7 @@
 % CP TERMS
 %==========
 
-\newTerm{decision variable}[see={variable}, user1={variable}, user2={variables}]
+\newTerm{decision variable}[see=[\seename]{variable}, user1={variable}, user2={variables}]
 \newTerm{solver}
 
 \newTerm{all-different constraint}[user1={all-different}]
@@ -315,29 +315,29 @@
 \newTerm[symmetry breaking.c]%
         {symmetry breaking}%
         [parent={constraint}, user1={symmetry}]
-\newTerm{constraint propagation}[see={propagation}]
+\newTerm{constraint propagation}[see=[\seename]{propagation}]
 \newTerm{constraint model}[user1={model}, user2={models}]
 \newTerm[compositional.cm]{compositional}[parent={constraint model}]
-\newTerm{constraint solver}[user1={solver}, see={solver}]
-\newTerm{constraint store}[see={store}]
+\newTerm{constraint solver}[user1={solver}, see=[\seename]{solver}]
+\newTerm{constraint store}[see=[\seename]{store}]
 \newTerm[stronger.cs]{stronger}[parent={constraint store}]
 \newAcronym{CP}{constraint programming}
-\newTerm{diffn constraint}[see={no-overlap constraint}]
+\newTerm{diffn constraint}[see=[\seename]{no-overlap constraint}]
 \newTerm{domain}
-\newTerm{extensional constraint}[see={table constraint}]
+\newTerm{extensional constraint}[see=[\seename]{table constraint}]
 \newTerm{failure}[user1={failed}]
-\newTerm{filtering algorithm}[see={propagator}]
+\newTerm{filtering algorithm}[see=[\seename]{propagator}]
 \newTerm{first-fail principle}
 \newTerm{fixpoint}
 \newTerm{global cardinality constraint}
 \newTerm{global set covering constraint}
 \newTerm{minimax}
 \newToolTerm{MiniZinc}
-\newTerm{no-overlap constraint}[see={diffn constraint}]
+\newTerm{no-overlap constraint}[see=[\seename]{diffn constraint}]
 \newTerm{objective function}
 \newTerm{presolving}
-\newTerm{propagation}[see={constraint propagation}, user1={propagat}]
-\newTerm{propagator}[see={filtering algorithm}]
+\newTerm{propagation}[see=[\seename]{constraint propagation}, user1={propagat}]
+\newTerm{propagator}[see=[\seename]{filtering algorithm}]
 \newTerm{bounds consistency}[user1={bounds}, user3={bounds-consistent}]
 \newTerm[decreasing.p]{decreasing}[parent={propagator}]
 \newTerm{domain consistency}[user1={domain}, user3={domain-consistent}]
@@ -349,10 +349,10 @@
 \newTerm{search tree}
 \newTerm{solution}
 \newTerm{solution space}
-\newTerm{store}[see={constraint store}]
+\newTerm{store}[see=[\seename]{constraint store}]
 \newTerm{table constraint}[user1={table}]
 \newTerm{value-precede-chain constraint}
-\newTerm{variable}[see={decision variable}]
+\newTerm{variable}[see=[\seename]{decision variable}]
 \newTerm[assigned.v]{assigned}[parent={variable}]
 
 \newTerm{magic sequence problem}
@@ -395,13 +395,13 @@
 \newTerm[inherited.a]{inherited}[parent={attribute}]
 \newTerm[synthesized.a]{synthesized}[parent={attribute}]
 \newTerm{attribute grammar}
-\newTerm{context-free grammar}[see={grammar}]
-\newTerm{grammar}[see={machine grammar}]
+\newTerm{context-free grammar}[see=[\seename]{grammar}]
+\newTerm{grammar}[see=[\seename]{machine grammar}]
 \newTerm[ambiguous.g]{ambiguous}[parent={grammar}]
 \newTerm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
 \newTerm{LR parser}
 \newTerm{LR parsing}
-\newTerm{machine grammar}[see={grammar}]
+\newTerm{machine grammar}[see=[\seename]{grammar}]
 \newTerm{nonterminal}
 \newTerm{predicate}
 \newTerm{production}
@@ -449,7 +449,7 @@
 %======================
 
 \newTerm{block DAG}[user1={block}]
-\newTerm{conflict graph}[see={interference graph}]
+\newTerm{conflict graph}[see=[\seename]{interference graph}]
 \newTerm{control-flow edge}[user1={control-flow}]
 \newTerm{control-flow graph}[user1={control-flow}]
 \newTerm{cover}
@@ -458,34 +458,34 @@
 \newTerm{data-flow graph}[user1={data-flow}]
 \newTerm{expression tree}
 \newTerm{function graph}[user1={function}]
-\newTerm{interference graph}[see={conflict graph}]
+\newTerm{interference graph}[see=[\seename]{conflict graph}]
 \newTerm{match}[plural=matches]
 \newTerm[complex.m]{complex}[parent={match}]
 \newTerm[dominate.m]{dominate}[parent={match}, user1={domin}]
 \newTerm[illegal.m]{illegal}[parent={match}]
 \newTerm{match set}
-\newTerm{matching}[see={pattern matching}]
+\newTerm{matching}[see=[\seename]{pattern matching}]
 \newTerm{overlap}
-\newTerm{pattern}[see={pattern graph}]
+\newTerm{pattern}[see=[\seename]{pattern graph}]
 \newTerm[complex.p]{complex}[parent={pattern}]
 \newTerm[partial.p]{partial}[parent={pattern}]
 \newTerm[proxy.p]{proxy}[parent={pattern}]
 \newTerm[simple.p]{simple}[parent={pattern}]
 \newTerm[split.p]{split}[parent={pattern}]
-\newTerm{pattern DAG}[see={pattern}]
-\newTerm{pattern graph}[see={pattern}]
-\newTerm{pattern tree}[see={pattern}]
+\newTerm{pattern DAG}[see=[\seename]{pattern}]
+\newTerm{pattern graph}[see=[\seename]{pattern}]
+\newTerm{pattern tree}[see=[\seename]{pattern}]
 \newTerm[inconsistent.pt]{inconsistent}[parent={pattern tree}]
 \newTerm[independent.pt]{independent}[parent={pattern tree}]
-\newTerm{pattern matching}[user3={pattern-matching}, see={matching}]
+\newTerm{pattern matching}[user3={pattern-matching}, see=[\seename]{matching}]
 \newTerm{pattern matcher}
-\newTerm{pattern selection}[see={selection}]
+\newTerm{pattern selection}[see=[\seename]{selection}]
 \newTerm[goal-driven.ps]{goal-driven}[parent={pattern selection}]
 \newTerm[optimal.ps]{optimal}[parent={pattern selection}]
 \newTerm{pattern selector}
 \newTerm{pattern set}
 \newTerm[simple.ps]{simple}[parent={pattern set}]
-\newTerm{selection}[see={pattern selection}]
+\newTerm{selection}[see=[\seename]{pattern selection}]
 
 
 %====================
@@ -531,7 +531,7 @@
 \newTerm{base}
 \newTerm{base cost}
 \newTerm{base pattern}
-\newTerm{binate covering}[user1={binate}, see={unate covering}]
+\newTerm{binate covering}[user1={binate}, see=[\seename]{unate covering}]
 \newTerm{box node}
 \newTerm{built-in operation}
 \newTerm[BURGer phenomenon]%
@@ -542,7 +542,7 @@
 \newTerm{chain rule trimming}
 \newTerm{chaining graph}
 \newTerm{choice function}
-\newTerm{chromosome}[see={gene}]
+\newTerm{chromosome}[see=[\seename]{gene}]
 \newTerm{Click-Paleczny graph}
 \newAcronym[CO graph]%
            {CO~graph}%
@@ -567,14 +567,14 @@
 \newTerm{expander}
 \newTerm{finite tree automaton}[plural={finite tree automata}]
 \newTerm{finite state automaton}%
-        [plural={finite state automata}, see={state machine}]
+        [plural={finite state automata}, see=[\seename]{state machine}]
 \newTerm{fitness function}
 \newTerm{foot print}
 \newTerm{gated single assignment}
 \newTerm{gene}
 \newTerm{Glanville-Graham approach}[user1={Glanville-Graham}]
 \newTerm{hierarchical planning}
-\newTerm{immediately subsume}[see={subsume}]
+\newTerm{immediately subsume}[see=[\seename]{subsume}]
 \newTerm{index map}
 \newTerm{Knuth-Morris-Pratt algorithm}
 \newAcronym[LR graph]%
@@ -602,8 +602,8 @@
 \newTerm{nullary symbol}
 \newTerm{parser cactus}[plural={parser cactuses}]
 \newTerm{Polish notation}
-\newTerm[reverse.pn]{reverse}[parent={Polish notation}, see={postfix notation}]
-\newTerm{postfix notation}[see={reverse.pn}]
+\newTerm[reverse.pn]{reverse}[parent={Polish notation}, see=[\seename]{postfix notation}]
+\newTerm{postfix notation}[see=[\seename]{reverse.pn}]
 \newTerm{product automaton}[plural={product automata}]
 \newTerm{program-dependence web}
 \newTerm{pushdown automaton}[plural={pushdown automata}]
@@ -630,14 +630,14 @@
              indextext={SLM instruction},
            ]
 \newTerm{state trimming}
-\newTerm{strictly subsume}[see={subsume}]
-\newTerm{state machine}[see={finite state automaton}]
+\newTerm{strictly subsume}[see=[\seename]{subsume}]
+\newTerm{state machine}[see=[\seename]{finite state automaton}]
 \newTerm{stop node}
 \newTerm{storage class}[plural={storage classes}]
 \newTerm{storage location}
 \newTerm{subinstruction}
 \newTerm{subpattern}
-\newTerm{subsume}[see={strictly subsume}]
+\newTerm{subsume}[see=[\seename]{strictly subsume}]
 \newTerm{subsumption graph}
 \newTerm[immediate.sg]{immediate}[parent={subsumption graph}]
 \newTerm{subsumption order}
@@ -661,7 +661,7 @@
              acronymdesc={uniquely invertable},
              indextext={UI LR graph},
            ]
-\newTerm{unate covering}[user1={unate}, see={binate covering}]
+\newTerm{unate covering}[user1={unate}, see=[\seename]{binate covering}]
 \newTerm{undagging}[user1={undag}]
 \newTerm{value-dependence graph}
 \newTerm{value mutation}

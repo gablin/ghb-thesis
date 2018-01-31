@@ -1030,13 +1030,13 @@
 }
 \makeatother
 
+% Rename certain items
+\renewcommand{\seename}{see also}
+
 % Force 'see also' to appear on a new line in the index
 \renewcommand\glsseeformat[3][\seename]{%
   \\*\raggedleft\emph{#1} \glsseelist{#2}%
 }
-
-% Rename certain items
-\renewcommand{\seename}{see also}
 
 
 %===================
