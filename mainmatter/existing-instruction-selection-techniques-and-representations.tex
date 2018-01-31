@@ -801,7 +801,7 @@ The technique is centered around the following assumption.
 %
 Given a \gls{node}~$n$ in an \gls{expression tree} and a \gls{rule}~$r$, the
 cost of applying $r$ on $n$ is the cost of $r$ plus the costs of reducing all
-children of $n$ to the appropriate \glspl{nonterminal} appearing on the
+\glspl{child} of $n$ to the appropriate \glspl{nonterminal} appearing on the
 right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
@@ -1034,7 +1034,7 @@ For each \gls{terminal} representing a $k$-argument \gls{operation}, an
 \mbox{$k$-dimensional} matrix is maintained.
 %
 This is called the \gls{terminal}'s \gls!{state table}, which indicates the
-state to assign such \glspl{node} given the labels of its children.
+state to assign such \glspl{node} given the labels of its \glspl{child}.
 %
 First the states for all leaf \glspl{node} are built, considering only
 \gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
@@ -1045,7 +1045,7 @@ The costs and \gls{rule} decisions are computed using the same logic as in
 %
 The leaf \gls{state} are then pushed onto a queue.
 %
-Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
+Each popped \gls{state} is used as the $i$th \gls{child} to all \gls{base.r}
 \glspl{rule} with a non-leaf \glspl{terminal} in combination with all other
 existing \glspl{state}.
 %

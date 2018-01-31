@@ -3301,7 +3301,7 @@ The design is centered around the following assumption.
 %
 Given a \gls{node}~$n$ in an \gls{expression tree} and a \gls{rule}~$r$, the
 cost of applying $r$ on $n$ is the cost of $r$ plus the costs of reducing all
-children of $n$ to the appropriate \glspl{nonterminal} appearing on the
+\glspl{child} of $n$ to the appropriate \glspl{nonterminal} appearing on the
 right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
@@ -4246,7 +4246,7 @@ The costs and \gls{rule} decisions are computed using the same logic as in
 %
 The leaf \gls{state} are then pushed onto a queue.
 %
-Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
+Each popped \gls{state} is used as the $i$th \gls{child} to all \gls{base.r}
 \glspl{rule} with a non-leaf \glspl{terminal} in combination with all other
 existing \glspl{state} (see \refFigure{new-state-creation}).
 %
