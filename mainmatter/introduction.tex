@@ -360,8 +360,10 @@ In the case of the program shown in \refFigure{isel-gcmotion-example}, eight
 such \glspl{instruction} would be needed, leading to a slowdown of over
 \SI{31}{\percent}.
 %
-These restrictions must be known by the \gls{instruction selector} to make
-effective use of \gls{SIMD.i} \glspl{instruction}.
+The task of inserting these copy \glspl{instruction} is known as \gls!{data
+  copying}, and the \gls{instruction selector} must be aware of the cost of
+\gls{data copying} in order to make effective use of \gls{SIMD.i}
+\glspl{instruction}.
 
 
 \subsection{For Combining Instruction Selection and Block Ordering}
