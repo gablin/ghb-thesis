@@ -21,11 +21,12 @@ Such \glspl{instruction} are especially common in \glspl{DSP} that appear in
 most contemporary mobile phones.
 %
 But while the technology behind modern processors continues to advance, the
-techniques for automatically making use of the \glspl{instruction} have not.
+techniques for \gls!{instruction selection} -- the task of choosing the
+\glspl{instruction} for a given \gls{program} -- have not.
 %
-In fact, the state-of-the-art \glspl{compiler} -- these are tools for
-translating \glspl{program} into \gls{assembly code} -- essentially apply the
-same techniques for selecting \glspl{instruction} that were used in the 1980s.
+In fact, the state-of-the-art \glspl{compiler}, which are tools for translating
+\glspl{program} into \gls{assembly code}, essentially apply the same
+\gls{instruction selection} techniques that were used in the 1980s.
 
 
 \paragraph{Problem Statement}
@@ -52,14 +53,14 @@ shorter and shorter, there is a growing need for new and improved
 Furthermore, the set of selectable \glspl{instruction} is highly dependent on
 other \gls{compiler} tasks.
 %
-One such task is \gls{global code motion}, which involves moving computations
+One such task is \gls!{global code motion}, which involves moving computations
 from one part of the \gls{program} to another.
 %
 Integrating \gls{global code motion} with \gls{instruction selection} enables a
 larger set of combinations of computations, some of which may be implemented
 using sophisticated \glspl{instruction}.
 %
-Another task is \gls{block ordering}, which involves placing the \gls{program}
+Another task is \gls!{block ordering}, which involves placing the \gls{program}
 \glspl{block} in a consecutive sequence.
 %
 Depending on the processor, one set of selected \glspl{instruction} may impact
@@ -163,36 +164,47 @@ of three parts:%
 \end{figure}
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item a \gls!{frontend}, which performs syntactic and semantic analysis and
-    transforms the program into an \gls!{IR}
-  \item an \gls!{optimizer} (sometimes called \gls!{middle-end}), which performs
-    target-independent optimizations
-  \item a \gls!{backend}, which performs \gls{code generation}
+  \item a \gls{frontend}
+  \item an \gls{optimizer}
+  \item a \gls{backend}
 \end{inlinelist}.
 
-The \gls{optimizer} is arguably the largest component of any \gls{compiler},
-consisting of many tasks such as \gls{constant folding}, \gls{dead code
-  elimination}, and \gls{loop unrolling}.
+The \gls!{frontend} performs syntactic and semantic analysis on the
+\gls{program} under compilation, making sure that the \gls{program} is
+syntactically and semantically valid.
 %
-Another such optimization is \gls!{global code motion}, where \glspl{operation}
-are moved from one \gls{basic block} to another, which is done mainly to move
-expensive \glspl{operation} into \glspl{block} with lower execution frequency.
+After passing all checks, it then transforms the \gls{program} into an \gls!{IR}
+and passes the code to the \gls{optimizer}.
 
-The \gls{backend} also consists of several tasks, of which three
-typically are most promiment:%
+The \gls!{optimizer} (sometimes called \gls!{middle-end}) consists of many
+target-independent \gls{program} optimizations, such as \gls{constant folding},
+\gls{dead code elimination}, and \gls{loop unrolling}.
+%
+Consequently, it is often the largest component of most \glspl{compiler}.
+%
+\Gls{global code motion} is typically also included in this component, where
+\glspl{operation} are moved across \gls{block} boundaries in order to move
+expensive \glspl{operation} into \glspl{block} with lower execution frequency.
+%
+Once optimized, the \gls{IR} code is then passed to the \gls{backend}.
+
+The \gls!{backend} performs \gls{code generation}, where three tasks are most
+promiment:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item \gls!{instruction selection}, where \glspl{instruction} implementing the
-    given \gls{program} are selected
+  \item \gls{instruction selection}, which we are already familiar with
   \item \gls!{register allocation}, where \gls{virtual.temp} \glspl{temporary}
     are assigned to \glspl{register}
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
     to increase instruction-level parallelism
 \end{inlinelist}.
 %
-Another code generation task of interest is \gls!{block ordering}, where the
-\glspl{basic block} are rearranged in order to minimize the number of jump
-\glspl{instruction}.
+Among other things, the \gls{backend} then performs \gls{block ordering} in
+order to minimize the number of jump \glspl{instruction}.
+%
+After these steps the \gls{program} has been fully transformed into
+\gls{assembly code}, which can then be translated into machine code to be
+executed by the \gls{target machine}.
 
 
 \subsection{The Need for New Techniques and Representations}
