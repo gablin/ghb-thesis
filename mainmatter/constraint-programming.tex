@@ -226,21 +226,16 @@ which enforces that the \glspl{variable} representing adjacency forms a
 We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
 
 \begin{definition}[$\mCircuit$]
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable} with
-  \glspl{domain} \mbox{$\mDomain(\mVar{x}_i) \subseteq \mSet{1, \ldots, k}$} for
-  \mbox{$i = 1, \ldots, k$}.
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable}, and
+  let \mbox{$P = d_1, \ldots, d_k$} be a permutation of \gls{domain} values such
+  that \mbox{$d_i \in \mDomain(\mVar{x}_i)$} for all \mbox{$i = 1, \ldots, k$}.
   %
-  Let also a permutation~\mbox{$P = d_1, \ldots, d_k$} of \gls{domain} values be
-  considered \emph{cyclic} if the set $S_P$, defined as
+  Given $P$, form a \gls{graph}~\mbox{$G = \mPair{N}{E}$} such that there is
+  exactly one \gls{node} \mbox{$n_i \in N$} and exactly one \gls{edge}
+  \mbox{$\mEdge{n_i}{n_{d_i}}$} for all \mbox{$i = 1, \ldots, k$}.
   %
-  \begin{displaymath}
-    \begin{array}{c}
-      1 \in S_P,
-      i \in S_P \mImp d_i \in S_P,
-    \end{array}
-  \end{displaymath}
-  %
-  has $k$ elements.
+  $P$ is considered \emph{cyclic} if and only if $G$ contains a
+  \gls{Hamiltonian.c} \gls{cycle}.
   %
   Then
   %
