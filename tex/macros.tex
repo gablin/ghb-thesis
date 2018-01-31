@@ -828,11 +828,8 @@
   \markboth{#1}{#1}%
 }
 
-% Set URLs in smaller font in bibliography
-\DeclareFieldFormat{url}{URL:~\relsize{-.5}\url{#1}}
-
-% Set URL field in normal font
-\DeclareFieldFormat{url}{\textsc{url}:~#1}
+% Customize URL field
+\DeclareFieldFormat{url}{\textsc{url}:~\relsize{-.5}\url{#1}}
 
 % Use "Doctoral thesis" instead of "PhD thesis"
 \DefineBibliographyStrings{english}{%
