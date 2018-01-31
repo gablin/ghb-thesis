@@ -535,6 +535,7 @@ and \glsdesc{CP}:
 \begin{contributions}
   \item \labelContribution{survey}
     It presents a comprehensive and systematic survey that
+    %
     \begin{contributions}
       \item \labelContribution{survey-spanning}
         examines over four decades of research on \gls{instruction selection},
@@ -543,13 +544,16 @@ and \glsdesc{CP}:
           Leupers:2000:Survey, BoulytchevLomov:2001} which are either too old
         or incomplete.
     \end{contributions}
+    %
     The survey structures the approaches according to two dimensions:
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-principles}
         the fundamental \gls{principle} -- \gls{macro expansion}, \gls{tree
           covering}, \gls{DAG covering}, or \gls{graph covering} -- that they
         apply, and
     \end{contributions}
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-instruction-characteristics}
         the \glspl{instruction characteristic} -- \gls{single-output.ic},
@@ -558,47 +562,60 @@ and \glsdesc{CP}:
     \end{contributions}
     %
     In addition, the survey
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-problem-identification}
         identifies connections between \gls{instruction selection} and other
         \gls{code generation} problems that have yet to be investigated.
     \end{contributions}
+
   \item \labelContribution{representations}
     It introduces a novel \gls{program} and \gls{instruction} representation
     that
+    %
     \begin{contributions}
       \item \labelContribution{rep-data-and-control-flow}
         captures both data and control flow for entire \glspl{function} and
         \glspl{instruction},
     \end{contributions}
+    %
     which enables
+    %
     \begin{contributions}[resume]
       \item \labelContribution{rep-complex-instructions}
         an unprecedented range of instruction behaviors to be captured and
         modeled as \glspl{pattern}.
     \end{contributions}
+    %
     In addition, the representation is crucial for
+    %
     \begin{contributions}[resume]
       \item \labelContribution{rep-combining-problems}
         combining \gls{instruction selection} and \gls{global code motion} --
         two problems that have until now been considered separately from one
         another -- and solving these two problems in unison.
     \end{contributions}
+
   \item \labelContribution{constraint-model}
     It introduces a \gls{constraint model} and related transformations for
     \gls{universal instruction selection} which, for the first time, enables
+    %
     \begin{contributions}
       \item \labelContribution{cp-uniform-selection}
         uniform selection of data and control \glspl{instruction},
     \end{contributions}
+    %
     and integration of
+    %
     \begin{contributions}[resume]
       \item \labelContribution{cp-global-instruction-selection}
         \gls{global.is} \gls{instruction selection} with
       \item \labelContribution{cp-global-code-motion}
         \gls{global code motion}.
     \end{contributions}
+    %
     In addition, the \gls{constraint model} integrates
+    %
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
         \gls{data copying},
@@ -607,12 +624,14 @@ and \glsdesc{CP}:
       \item \labelContribution{cp-block-ordering}
         \gls{block ordering}.
     \end{contributions}
+
   \item \labelContribution{solving-techniques}
     It introduces techniques to improve solving of the \gls{constraint model}.
   \item \labelContribution{experiments}
     It presents thorough experiments demonstrating that the approach scales to
     medium-sized \glspl{program} and yields equal or better code than the state
     of the art.
+
   \item \labelContribution{integration}
     It outlines how the \gls{constraint model} can be extended to integrate
     other \gls{code generation} tasks, such as \gls{instruction scheduling} and
