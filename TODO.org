@@ -20,7 +20,7 @@
 ** TODO Run grammar check
 ** DONE Add list of acronyms
 ** TODO Break long sentences
-** TODO Fix overflowing of bib entries
+** DONE Fix overflowing of bib entries
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
 ** TODO Check for bad use of past tense
