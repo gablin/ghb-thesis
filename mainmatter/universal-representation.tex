@@ -34,9 +34,8 @@ Lastly, a summary is given in \refSection{uni-rep-summary}.
 \labelSection{uni-rep-design-requirements}
 
 As discussed in \refChapter{existing-isel-techniques-and-reps}, in order to
-address the limitations of existing approaches we necessitate a \gls{constraint
-  model} capable of capturing the problems described in
-\refSection{intro-motivation}.
+address the limitations of existing approaches we need a \gls{constraint model}
+capable of capturing the problems described in \refSection{intro-motivation}.
 %
 To this end, we require a \gls{graph}-based representation that fulfills the
 following requirements:
@@ -51,7 +50,7 @@ following requirements:
     which demands access to the entire \gls{function} under compilation.
     %
     This is also needed for uniform selection of data and control
-    \glspl{instruction}, which requires both data and control flow must be
+    \glspl{instruction}, which requires that both data and control flow be
     captured in a single \gls{graph}.
 
   \item \labelRequirement{uni-rep-explicit-blocks}
@@ -61,15 +60,15 @@ following requirements:
     match \glspl{pattern} whose control flow is inconsistent with the
     \gls{function graph}.
     %
-    For example, assume the \gls{pattern} derived from a saturated addition
-    \gls{instruction}.
+    For example, assume that the \gls{pattern} is derived from a saturated
+    addition \gls{instruction}.
     %
     Such a \gls{pattern} will consist of three \glspl{block}~$b_1$, $b_2$, and
     $b_3$, where $b_1$ represents the \gls{instruction}'s point of entry, $b_2$
     represents the part where clamping is performed, and $b_3$ represents the
     \gls{instruction}'s point of exit.
     %
-    The control flow in this \gls{pattern} will be such that there two
+    The control flow in this \gls{pattern} will be such that there are two
     conditional jumps from $b_1$ to either $b_2$ or $b_3$, and an unconditional
     jump from $b_2$ to $b_3$.
     %
@@ -77,7 +76,8 @@ following requirements:
     control flow structure.
     %
     This is also useful for modeling \gls{global code motion} as each such
-    \gls{node} will incur a \gls{variable} in the \gls{constraint model}.
+    \gls{node} will correspond to a \gls{variable} in the \gls{constraint
+      model}.
 
   \item \labelRequirement{uni-rep-explicit-ops}
     \typesetReq{Data and control \glspl{operation} must be explicitly
@@ -108,8 +108,8 @@ following requirements:
     Without this, \gls{global code motion} is not possible.
 
   \item \labelRequirement{uni-rep-preserve-semantics}
-    \typesetReq{Data \gls{operation} must be forbidden to be placed in
-      \glspl{block} that will break \gls{program} semantics.}
+    \typesetReq{Data \glspl{operation} must not be placed in \glspl{block} that
+      will break \gls{program} semantics.}
     %
     This is needed to ensure correctness when performing \gls{global code
       motion}.
@@ -125,7 +125,7 @@ following requirements:
     \glspl{compiler} are already based on \gls{SSA}.
 \end{requirements}
 
-While there exists many \gls{graph}-based representations (see
+While there exist many \gls{graph}-based representations (see
 \cite{StanierWatson:2013} for a survey), most fulfill only some of the
 requirements but not all.
 %
@@ -464,15 +464,15 @@ But according to the \gls{graph}, swapping the placement of these
 different \gls{program}.
 %
 We recognize that such problems occur exactly in situations where a value is
-expected to be produce in a particular \gls{block}, which are captured by the
+expected to be produced in a particular \gls{block}, which are captured by the
 \glspl{phi-function}.
 %
 Consequently, for each value-\gls{block} pair \mbox{$\mPair{v}{b}$} appearing as
 argument to a \gls{phi-function}, we add a \gls!{definition edge} between the
 corresponding \glsshort{value node} and \gls{block node}.
 %
-This forces $v$ to be produced in $b$, which in turn forbids the \gls{operation}
-producing $v$ from being moved out of $b$.
+This forces $v$ to be produced in $b$, which in turn prevents the
+\gls{operation} producing $v$ from being moved out of $b$.
 %
 Hence \refRequirement{uni-rep-preserve-semantics} is achieved.
 
@@ -516,8 +516,8 @@ in redundant \glspl{instruction} where the same constant is needlessly reloaded.
 %
 This can be avoided by using the latter together with a technique to be
 described in \refSection{modeling-value-reuse} in the next chapter, but this
-also necessitates the \gls{UF graph} to be transformed and extended with
-additional \glspl{operation} in order to guarantee correctness.
+also requires the \gls{UF graph} to be transformed and extended with additional
+\glspl{operation} in order to guarantee correctness.
 %
 For example, assume a \gls{function} containing two \glspl{phi-function}
 \irCode*{\irPhi{$\ldots$, 1:\irBlock{a}, $\ldots$}} and
@@ -717,8 +717,8 @@ with the same \glspl{edge number} as the \glspl{data-flow edge} connected to the
 same \gls{value node}.
 %
 This is to be able to identify which \gls{definition edge} belongs to which
-\gls{data-flow edge} when there exist multiple such \gls{edge}, which is needed
-when performing \gls{copy extension} (to be described in
+\gls{data-flow edge} when there exist multiple such \glspl{edge}, which is
+needed when performing \gls{copy extension} (to be described in
 \refChapter{constraint-model}).
 %
 In terms of restricting the definition placements, however, the orientation of
@@ -929,7 +929,7 @@ To this end, instead of matching the full \gls{SIMD.i} \gls{pattern} over the
 \gls{pattern}.
 %
 After having found all \glspl{match} for the \gls{subgraph}, we then compute all
-combinations of these \gls{match} and construct for each combination a
+combinations of these \glspl{match} and construct for each combination a
 \gls{match} of the full \gls{SIMD.i} \gls{pattern}.
 %
 We also ignore combinations that will lead to cyclic data dependencies by
@@ -939,9 +939,9 @@ applying a variant of the method to be described in
 To curb the number of \glspl{match}, we prune away all \gls{SIMD.i}
 \glspl{match} where at least one of its arguments is a constant value.
 %
-This is such values will typically always require the \gls{SIMD.i}
-\gls{instruction} to be preceded by a copy \gls{instruction}, thereby
-nullifying the benefit of the \gls{SIMD.i} \gls{instruction}.
+This is because such values will typically always require the \gls{SIMD.i}
+\gls{instruction} to be preceded by a copy \gls{instruction}, thereby nullifying
+the benefit of the \gls{SIMD.i} \gls{instruction}.
 
 
 \section{Comparison with Other Sea-of-Nodes IRs}

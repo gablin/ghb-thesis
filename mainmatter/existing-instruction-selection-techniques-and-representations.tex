@@ -191,7 +191,7 @@ Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
 different input values are called \gls!{disjoint-output.ic}[
   \glspl{instruction}].
 %
-These are similar to \glspl{multi-output.ic} \glspl{instruction} with the
+These are similar to \gls{multi-output.ic} \glspl{instruction} with the
 exception that all output values in the latter originate from the same input
 values.
 %
@@ -203,7 +203,7 @@ disjoint from one another.
 This typically includes \gls{SIMD.i} \glspl{instruction}, which execute the same
 \glspl{operation} simultaneously on many distinct input values.
 
-\Glspl{disjoint-output.ic} \glspl{instruction} are common in high-throughput
+\Gls{disjoint-output.ic} \glspl{instruction} are common in high-throughput
 graphics architectures and \glspl{DSP}, but also appear in \gls{X86} as
 extensions under names like \gls!{SSE} and \gls!{AVX}~\cite{Intel64:2015}.
 %
@@ -517,7 +517,7 @@ x = A[i + 1];
             \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
             a dummy pattern for covering nodes representing variables.
             %
-            Variable assignments need not explicitly represented as nodes as
+            Variable assignments need not be explicitly represented as nodes as
             this information can be propagated from the root node after having
             found a cover%
           }
@@ -600,8 +600,8 @@ as
   a \rightarrow b c \ldots
 \end{displaymath}
 %
-where the left-hand side is consists a \gls{nonterminal} and the right-hand side
-consists of a sequence of \glspl{terminal} and \glspl{nonterminal}.
+where the left-hand side is a single \gls{nonterminal} and the right-hand side
+is a sequence of \glspl{terminal} and \glspl{nonterminal}.
 %
 Each \gls{instruction} therefore gives rise to one or more \glspl{production},
 where the right-hand side of a \gls{production} captures a \gls{pattern} of the
@@ -1616,7 +1616,7 @@ Like before, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.i}
 \glspl{tree} are used for covering a \gls{block DAG} that has been transformed
 into \glspl{expression tree} through \gls{edge splitting}.
 %
-The potential of using \gls{disjoint-output.c} \glspl{instruction} can be
+The potential of using \gls{disjoint-output.ic} \glspl{instruction} can be
 increased by allowing them to cover \glspl{node} from multiple \glspl{expression
   tree}, but covering each \gls{tree} individually often leads to suboptimal
 code.
@@ -1819,7 +1819,7 @@ can inhibit subsequent decisions for other \glspl{block}, such as enforcing
 specific storage locations or value modes.
 %
 For example, \refFigure{block-dags-limit-example} shows a \gls{function} that
-multiplies the elements of two arrays and sums the results.
+multiplies the elements of two arrays and adds the results.
 %
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
@@ -2180,7 +2180,7 @@ Formally, a \gls{PBQP} is defined as follows.
 
 Intuitively, one can interpret this definition as follows.
 %
-Assume a problem consists of $n$~decisions, each with $k$~choices.
+Assume that a problem consists of $n$~decisions, each with $k$~choices.
 %
 Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
 where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
@@ -2730,7 +2730,6 @@ Problems concerning control flow, such as selection of branch
 \glspl{instruction} and \gls{block ordering}, must be handled separately, which
 could potentially result in suboptimal code.
 
-To summarize, we necessitate a more general combinatorial model that integrates
-the problems described in \refSection{intro-motivation} and, to that end, we
-necessitate a more powerful means of representing \glspl{function} and
-\glspl{instruction}.
+To summarize, we need a more general combinatorial model that integrates the
+problems described in \refSection{intro-motivation} and, to that end, we need a
+more powerful means of representing \glspl{function} and \glspl{instruction}.

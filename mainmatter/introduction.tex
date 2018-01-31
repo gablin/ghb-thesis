@@ -26,7 +26,7 @@ techniques for \gls!{instruction selection} -- the task of choosing the
 %
 In fact, the state-of-the-art \glspl{compiler}, which are tools for translating
 \glspl{program} into \gls{assembly code}, essentially apply the same
-\gls{instruction selection} techniques that were used in the 1980s.
+\gls{instruction selection} techniques as were used in the 1980s.
 
 
 \paragraph{Problem Statement}
@@ -196,7 +196,7 @@ prominent:%
   \item \gls!{register allocation}, where \gls{virtual.temp} \glspl{temporary}
     are assigned to \glspl{register}
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
-    to increase instruction-level parallelism
+    to increase instruction-level parallelism and avoid stalls
 \end{inlinelist}.
 %
 Among other things, the \gls{backend} then performs \gls{block ordering} in
@@ -269,7 +269,7 @@ will always stay within a range fixed by a minimum and maximum value.
 If the \gls{operation} would produce a value outside of this range, then the
 value is set (``clamped'') to the closest limit, thus becoming ``saturated''.
 
-Assume a \gls{target machine} that has an instruction capable of implementing
+Assume that the \gls{target machine} has an instruction capable of implementing
 the saturated-add \gls{operation} used in the \gls{program} shown in
 \refFigure{isel-gcmotion-example}.
 %
@@ -329,7 +329,7 @@ four additions in the \gls{program} (\irAdd*{\irVar*{A}}{\irTemp*{2}},
 \irAdd*{\irVar*{i}}{\irVar*{1}}) which are independent from one another and can
 therefore be executed in parallel.
 %
-Assuming again that all \glspl{instruction} takes one cycle to execute,
+Assuming again that all \glspl{instruction} take one cycle to execute,
 implementing these four additions using a single \gls{SIMD.i} \gls{instruction}
 would improve performance by almost \SI{19}{\percent}.
 %
@@ -1003,7 +1003,7 @@ performed as needed for the given experiment.
 
 For all experiments in this dissertation, the remaining pool of \glspl{function}
 is too large for all to be included in the experiment as that would lead to
-intractable experiment runtimes.
+unreasonable experiment runtimes.
 %
 We therefore draw a limited number of samples from this pool.
 %
@@ -1018,14 +1018,14 @@ different characteristics.
 The second feature is the size in number of \gls{LLVM} \gls{IR}
 \glspl{instruction}.
 %
-This is to evaluate how the \gls{constraint model} behave as the
+This is to evaluate how the \gls{constraint model} behaves as the
 \glspl{function} grow larger.
 %
 The third feature is the number of memory \glspl{instruction}.
 %
 This is because, due to its many \glspl{addressing mode}, the memory
 \glspl{instruction} constitute a large part of the more sophisticated
-\glspl{instruction} in the \gls{instruction set}).
+\glspl{instruction} in the \gls{instruction set}.
 %
 Based on these features, from each cluster we then randomly select one
 \gls{function}, giving a total of twenty \glspl{function}.

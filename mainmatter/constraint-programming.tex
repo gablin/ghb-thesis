@@ -136,7 +136,7 @@ extended to capture additional problems to be solved in unison.
 
 If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
 \glspl{variable}, then a \gls!{global.c}[ \gls{constraint}] is a
-\gls{constraint} involving three or more
+\gls{constraint} over an arbitrary number of
 \glspl{variable}~\cite{VanHoeveKatriel:2006}.
 %
 \Gls{global.c} \glspl{constraint} capture recurring problem structures and
@@ -366,8 +366,7 @@ We refer to this \gls{constraint} as $\mValuePrecChain$, which is defined as
 follows.
 
 \begin{definition}[$\mValuePrecChain$]
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
-  \glspl{variable}.
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a list of \glspl{variable}.
   %
   Let also $c$ be a list with $n$ elements that can be indexed starting
   from~\num{1}.
@@ -393,18 +392,18 @@ follows.
 For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
   \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
   \mSet{4})$} holds because the~\num{4} is preceded by a~\num{5}, which in turn
-is preceded by a~\num{6}, in the permutation of $\mVar{x}$~\glspl{variable}.
+is preceded by a~\num{6}, in the list of $\mVar{x}$~\glspl{variable}.
 %
 Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
   \mVar{x}_2 \in \mSet{1})$} also holds because \num{4} does not appear among
-the $\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
+the $\mVar{x}$~\glspl{variable} (the fact that \num{5} appears in the list does
 not matter).
 %
 However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
   \mVar{x}_2 \in \mSet{4})$} does not hold because the~\num{4} is not preceded
 by a~\num{5}.
 
-$\MValuePrec$ is used in \refChapter{solving-techniques} to implement a
+$\MValuePrecChain$ is used in \refChapter{solving-techniques} to implement a
 \gls{dominance breaking.c} \gls{constraint}.
 
 
@@ -421,12 +420,12 @@ follows.
 \begin{definition}[$\mCumulative$]
   Let \mbox{$c \in \mNatNumSet$} represent the capacity of a resource to be used
   by $k$ optional tasks.
-  %
-  For each task~$i$, let \mbox{$\mVar{s}_i \in \mNatNumSet$} be a \gls{variable}
-  representing the time at which $i$ is scheduled to start, \mbox{$l_i \in
-    \mNatNumSet$} represent its latency, \mbox{$u_i \in \mNatNumSet$} represent
-  the amount of resource required by~$i$, and \mbox{$\mVar{b}_i \in \mSet{0,
-      1}$} be a \gls{variable} representing whether $i$ is scheduled.
+  % For each task~$i$, let \mbox{$\mVar{s}_i \in \mNatNumSet$} be a
+  \gls{variable} representing the time at which $i$ is scheduled to start,
+  \mbox{$l_i \in \mNatNumSet$} represent its duration, \mbox{$u_i \in
+    \mNatNumSet$} represent the amount of resource required by~$i$, and
+  \mbox{$\mVar{b}_i \in \mSet{0, 1}$} be a \gls{variable} representing whether
+  $i$ is scheduled.
   %
   Let also \mbox{$t_{\mathsc{max}} = \mMax(\cup_{1 \,\leq\, j \,\leq\, k}
     \mDomain(\mVar{s}_j))$}.
@@ -512,7 +511,7 @@ $\MCumulative$ is used in \refChapter{proposed-model-extensions} to model
 The last \gls{global.c} \gls{constraint} we will look at is the \gls!{no-overlap
   constraint} (often also called the \gls!{diffn
   constraint}~\cite{BeldiceanuContejean:1994}), which is used in rectangle
-packing problems to enforce that no two rectangles may overlap
+packing problems to enforce that no two rectangles may overlap.
 %
 We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
 %
@@ -843,7 +842,7 @@ In exploring the \gls{search space}, two decisions need to be made repeatedly:
 %
 \begin{enumerate*}[label=(\arabic*), itemjoin*={, and\ }]
   \item select a \gls{variable} on which to branch
-  \item select a value from its \gls{domain}
+  \item select one or more values (but not all) from its \gls{domain}
 \end{enumerate*}.
 %
 These decisions constitute a \gls!{branching strategy} which arranges the
@@ -1154,7 +1153,7 @@ An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
   \labelFigure{lcg-solver-overview}
 \end{figure}
 
-To begin with, every \glspl{variable} has two dual representations:
+To begin with, every \gls{variable} has two dual representations:
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
   \item one based on Boolean values
