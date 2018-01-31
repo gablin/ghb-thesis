@@ -120,7 +120,7 @@ Consequently, many such languages and related tools have appeared -- and then
 disappeared -- over the years (see for example \cite{Brown:1969} for an early
 survey).
 
-One such example is \gls{Simcmp}, a \gls{macro expander} developed in 1969 by
+One such example is \gls!{Simcmp}, a \gls{macro expander} developed in 1969 by
 \textcite{OrgassWaite:1969}.
 %
 Designed to facilitate \gls{bootstrapping},\!%
@@ -515,7 +515,7 @@ first transforms the \gls{function} into an equivalent representation for an
 abstract machine.
 %
 In \citeauthor{Snyder:1975}'s design this representation consists of
-\glspl{AMOP}, which are then expanded into target-specific \glspl{instruction}
+\glspl!{AMOP}, which are then expanded into target-specific \glspl{instruction}
 via \glspl{macro}.
 %
 The abstract machine and \glspl{macro} are specified in a \gls{machine
@@ -589,9 +589,9 @@ reduce the compilation time, which is the time it takes to compile a given
 In 1969 \textcite{LowryMedlock:1969} introduced one of the first table-driven
 methods for \gls{code generation}.
 
-In their implementation of \gls{FHC}, \citeauthor{LowryMedlock:1969} essentially
-perform \gls{instruction selection} after \gls{register allocation} depending on
-the status of the operands to a computation.
+In their implementation of the \gls!{FHC}, \citeauthor{LowryMedlock:1969}
+essentially perform \gls{instruction selection} after \gls{register allocation}
+depending on the status of the operands to a computation.
 %
 These statuses are represented as bit strings, which are then matched against
 the corresponding bit strings for the \glspl{instruction} (see
@@ -780,9 +780,9 @@ hardware resources were typically scarce, which made \gls{macro}-expanding
 A few examples include interpreters for
 \gls{Smalltalk-80}~\cite{DeutschSchiffman:1984} and
 \gls{Omniware}~\cite{Adl-TabatabaiEtAl:1996} (a predecessor to \gls{Java}), and
-\gls{code generation} systems, such as \gls{VCode}~\cite{Engler:1996},
-\gls{GBurg}~\cite{FraserProebsting:1999} (which was used within a small virtual
-machine), and \gls{Gnu Lightning}~\cite{GNUlightning} (which was directly
+\gls{code generation} systems, such as \gls!{VCode}~\cite{Engler:1996},
+\gls!{GBurg}~\cite{FraserProebsting:1999} (which was used within a small virtual
+machine), and \gls!{Gnu Lightning}~\cite{GNUlightning} (which was directly
 inspired by \gls{VCode}).
 
 As technology progressed, however, dynamic \gls{code generation} systems also
@@ -821,7 +821,7 @@ Doing this reduces code size and also improves performance as using complex
   instructions in order to improve iterative modulo schedules for \glspl{DSP}.}.
 %
 Because of its narrow window of observation, this technique became known as
-\gls{peephole optimization}.
+\gls!{peephole optimization}.
 
 
 \subsubsection{Modeling Instructions with Register Transfer Lists}
@@ -943,8 +943,8 @@ shorter implementations that exhibit the same behavior as the original
   covert insertion of secret messages).
   %
   For example, \citeauthor{AnckaertEtAl:2005} used this technique on nine
-  \glspl{function} from the \gls{SPECint 2000} benchmark suite in order to embed
-  and extract William Shakespeare's play \textit{King Lear}.%
+  \glspl{function} from the \gls!{SPECint 2000} benchmark suite in order to
+  embed and extract William Shakespeare's play \textit{King Lear}.%
 }
 %
 \textcite{GranlundKenner:1992} later adapted \citeauthor{Massalin:1987}'s ideas
@@ -962,8 +962,8 @@ from a set of training \glspl{function}.
 %
 A couple of designs that guarantee correctness have been developed by
 \citeauthor{JoshiEtAl:2002}~\cite{JoshiEtAl:2002, JoshiEtAl:2006} and
-\textcite{CrickEtAl:2009}, who applied automatic theorem proving and \gls{answer
-  set programming}, respectively.
+\textcite{CrickEtAl:2009}, who applied automatic theorem proving and \gls!{ASP}
+(see \cite{GrassoEtAl:2013} for an overview of \gls{ASP}), respectively.
 %
 Recently, a similar technique based on \gls{quantifier-free
   bit-vector logic} formulas was introduced by \textcite{SrinivasanReps:2015}.
@@ -988,10 +988,10 @@ production-quality \glspl{compiler}.
 %
 This scheme has hence become known as the \gls!{Davidson-Fraser approach}, and
 variants of it have been used in several \glspl{compiler}, such as the
-\gls{YC}~\cite{DavidsonFraser:1982}, the
-\gls{ZephyrVPO}~system~\cite{AppelEtAl:1998}, the
-\gls{ACK}~\cite{TanenbaumEtAl:1983}, and, most famously the
-\gls{GCC}~\cite{Stallman:1988, Khedker:2012}.
+\gls!{YC}~\cite{DavidsonFraser:1982}, the
+\gls!{ZephyrVPO}~system~\cite{AppelEtAl:1998}, the
+\gls!{ACK}~\cite{TanenbaumEtAl:1983}, and, most famously the
+\gls!{GCC}~\cite{Stallman:1988, Khedker:2012}.
 
 
 \subsubsection{The Davidson-Fraser Approach}
@@ -1315,8 +1315,8 @@ A method to overcome this issue has been designed by
 knowledge.
 
 In a paper from~2006, \citeauthor{KulkarniEtAl:2006} describe a \gls{compiler}
-system called \gls{Vista}, which is an interactive compilation environment where
-the user is given greater control over the \gls{compiler}.
+system called \gls!{Vista}, which is an interactive compilation environment
+where the user is given greater control over the \gls{compiler}.
 %
 Among other things, the user can alter \glspl{RTL} derived from the
 \gls{function}'s source code and add new customized \gls{peephole optimization}

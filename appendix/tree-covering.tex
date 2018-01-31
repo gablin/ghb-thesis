@@ -351,7 +351,7 @@ Third, like its \glshyphened{macro expander}[ding] predecessors, the process
 immediately selects a \gls{pattern} as soon as a \gls{match} is found.
 
 Another early \gls{pattern matching} technique was developed by
-\textcite{Johnson:1978}, which was implemented in the \gls{PCC} -- a renowned
+\textcite{Johnson:1978}, which was implemented in the \gls!{PCC} -- a renowned
 system that was the first standard \gls{C}~\gls{compiler} to be shipped with
 \gls{Unix}.
 %
@@ -615,14 +615,13 @@ For example, \mbox{$1 + (2 + 3)$} can be written as \mbox{$+ \; 1 + 2 \; 3$} and
 still represent the same expression.
 %
 \citeauthor{GlanvilleGraham:1978} recognized that by using this form the
-\glspl{instruction} can be expressed as a \gls{context-free grammar} based on
-\gls!{BNF}.
+\glspl{instruction} can be expressed as a \gls{context-free grammar}.
 %
 This concept is already well described in most \gls{compiler} textbooks (see for
 example~\cite{AhoEtAl:2006}), so we will proceed with only a brief introduction.
 
-A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
-\glspl{rule}.
+A \gls!{context-free grammar} (or simply \gls!{grammar}) consists of
+\glspl{terminal}, \glspl{nonterminal}, and \glspl{rule}.
 %
 In this context, a \gls!{terminal} is a \gls{symbol} representing an
 \gls{operation} (e.g.\ \irAddText, \irLTText, \irLoadText), and a
@@ -1449,9 +1448,9 @@ top of the stack, thus allowing the parser to recover from situations when it
 greedily decides to \gls{shift} instead of applying a necessary \gls{rule
   reduction}.
 
-Likewise, there is also the possibility of \glspl{reduce-reduce conflict}, where
-the parser has the option of choosing between two or more \glspl{rule} in a
-\glsshort{rule reduction}.
+Likewise, there is also the possibility of \glspl!{reduce-reduce conflict},
+where the parser has the option of choosing between two or more \glspl{rule} in
+a \glsshort{rule reduction}.
 %
 \citeauthor{GlanvilleGraham:1978} resolved these by selecting the \gls{rule}
 with the longest \gls{pattern}.
@@ -1570,7 +1569,7 @@ to be duplicated for each such mode.
 %
 For most \glspl{target machine} this turned out to be impracticable.
 %
-For example, in the case of the \gls{VAX}~machine -- a \gls{CISC} architecture
+For example, in the case of the \gls{VAX}~machine -- a \gls!{CISC} architecture
 from the 1980s, where each \gls{instruction} accepted a multitude of operand
 modes~\cite{Ceruzzi:2003} -- the \gls{machine grammar} would contain over eight
 million \glspl{rule}~\cite{GrahamEtAl:1982}.
@@ -1610,7 +1609,7 @@ reason upon it using only simple equality comparisons.
   GanapathiEtAl:1982:AttrGr, GanapathiFischer:1984, GanapathiFischer:1985}
 addressed this problem by replacing the use of traditional, \glspl{context-free
   grammar} with the use of a more powerful set of \glspl{grammar} known as
-\glspl{attribute grammar}.
+\glspl!{attribute grammar}.
 %
 There are also \glspl!{affix grammar}, which can be thought of as a subset of
 \glspl{attribute grammar}.
@@ -1647,7 +1646,7 @@ written as \mbox{$\mNT{Reg}\uparrow\mAttr{x}$}).
 
 The \glspl{attribute} are then used within \glspl{predicate} and \glspl{action}.
 %
-\Glspl{predicate} are used for checking the applicability of a \gls{rule}, and,
+\Glspl!{predicate} are used for checking the applicability of a \gls{rule}, and,
 in addition to emitting \gls{assembly code}, \glspl{action} are used to produce
 new \gls{synthesized.a} \glspl{attribute}.
 %
@@ -1993,7 +1992,7 @@ except for very small \glspl{expression tree}.
 \citeauthor{CattellEtAl:1979}~\cite{CattellEtAl:1979, Cattell:1980,
   LeverettEtAl:1980} later improved and extended \citeauthor{Newcomer:1975}'s
 work into a more practical framework which was implemented in the \gls!{PQCC}, a
-derivation of the \gls{Bliss-11} \gls{compiler} originally written by
+derivation of the \gls!{Bliss-11} \gls{compiler} originally written by
 \textcite{WulfEtAl:1975}.
 %
 Instead of performing the \gls{means-end analysis} as the \gls{function} is
@@ -2066,6 +2065,8 @@ individually, which could take quadratic time in the worst case.
 
 \subsubsection{Recent Designs}
 
+\glsunset{BURS}
+
 To the best of my knowledge, the only recent technique (less than \num{20}~years
 old) to use this kind of recursive top-down methodology for \gls{tree covering}
 is that of \citeauthor{NymeyerEtAl:1996}~\cite{NymeyerEtAl:1996,
@@ -2086,6 +2087,8 @@ expressing the \glspl{instruction}, but unfortunately the authors did not
 publish any experimental results, thus making it difficult to judge whether the
 \mbox{\glsshort{A* search}-\gls{BURS}} theory combination would be an applicable
 technique in practice.
+
+\glsreset{BURS}
 
 
 \subsection{A Note on Tree Rewriting \versus Tree Covering}
@@ -2898,7 +2901,7 @@ assigned is not important).
 \def\mGS{\overline{G}_S}
 \def\mGImmS{G_S}
 
-Next we form the \gls{subsumption graph} for~$S$, denoted by~$\mGS$, where each
+Next we form the \gls!{subsumption graph} for~$S$, denoted by~$\mGS$, where each
 \gls{node} $n_i$ represents a \gls{subpattern} \mbox{$s_i \in S$} and each
 \gls{edge}~\mbox{$\mEdge{n_i}{n_j}$} indicates that $s_i$ \gls{subsume}[s]~$s_j$.
 %
@@ -3207,7 +3210,7 @@ described in a 1977 technical report.
 \glspl{instruction set} with multiple \glspl{register class} and
 \glspl{addressing mode}.
 %
-For brevity, we will henceforth abbreviate \glsdesc{DP}
+For brevity, we will henceforth abbreviate \glsdesc!{DP}
 as~\glsunset{DP}\gls{DP}.
 
 Although \citeauthor{Ripken:1977} appears to have been the first to propose a
@@ -3216,7 +3219,7 @@ that -- a proposal.
 %
 The first \emph{practical} attempt was instead made in 1986 by
 \citeauthor{AhoEtAl:1989}~\cite{AhoGanapthi:1985, Tjiang:1986, AhoEtAl:1989}
-with the introduction of a \gls{compiler} generator called \gls{Twig}.
+with the introduction of a \gls{compiler} generator called \gls!{Twig}.
 
 
 \subsubsection{\glsentrytext{Twig}}
@@ -3228,7 +3231,7 @@ As in \citeauthor{Ripken:1977}'s design, \gls{Twig} uses a version of
 %
 The \gls{machine description} is expressed as a \glsshort{normal form.g}
 \gls{machine grammar} (see \refSection{tc-glanville-graham}) using a language
-called \gls{CGL}, which as introduced by \textcite{AhoGanapthi:1985} in~1985.
+called \gls!{CGL}, which as introduced by \textcite{AhoGanapthi:1985} in~1985.
 %
 An excerpt of such a \gls{machine description} is shown in
 \refFigure{twig-example}.
@@ -3523,7 +3526,7 @@ called the \gls!{BEG}, and a modified version of this is currently used in the
 \gls!{CoSy} \gls{compiler}~\cite{ACE:2003}.
 
 \textcite{FraserEtAl:1992:IBurg} made similar improvements in a system called
-\gls{IBurg} that is both simpler and faster than \gls{Twig} -- \gls{IBurg}
+\gls!{IBurg} that is both simpler and faster than \gls{Twig} -- \gls{IBurg}
 requires only \num{950}~lines of code compared to \gls{Twig}'s \mbox{3,000
   lines} of \gls{C}~code, and generates \gls{assembly code} of comparable
 quality at a rate that is \num{25}~times faster -- and has been used in several
@@ -3532,12 +3535,12 @@ quality at a rate that is \num{25}~times faster -- and has been used in several
 %
 \citeauthor{GoughLedermann:1997}~\cite{Gough:1995, GoughLedermann:1997} later
 extended the \gls{predicate} support of \gls{IBurg} in an implementation called
-\gls{MBurg}.
+\gls!{MBurg}.
 %
 Both \gls{IBurg} and \gls{MBurg} have later been reimplemented in various
-programming languages, such as the \gls{Java}-based \gls{JBurg}~\cite{JBURG},
-\gls{OCamlBurg}~\cite{OCamlBURG}, which is written in~\gls{C--}, and
-\gls{GPBurg}~\cite{Gough:2012}, which is written in \gls{CSharp}.
+programming languages, such as the \gls{Java}-based \gls!{JBurg}~\cite{JBURG},
+\gls!{OCamlBurg}~\cite{OCamlBURG}, which is written in~\gls{C--}, and
+\gls!{GPBurg}~\cite{Gough:2012}, which is written in \gls{CSharp}.
 
 According to \textcite{LeupersMarwedel:2001} and \textcite{CaoEtAl:2011},
 \textcite{Tjiang:1993} later merged the ideas of \gls{Twig} and \gls{IBurg} into
@@ -3716,7 +3719,7 @@ It was later discovered that these calculations can also be done beforehand and
 represented as tables, improving the speed of the \gls{pattern selector} as it
 did for \gls{pattern matching}.
 %
-We will refer to this aspect as \gls{offline cost analysis}, which means that
+We will refer to this aspect as \gls!{offline cost analysis}, which means that
 the costs of covering any given \gls{expression tree} are precomputed as part of
 generating the \gls{compiler} instead at compile time.
 
@@ -3934,7 +3937,8 @@ developed by \textcite{Pelegri-LlopartGraham:1988}.
 %
 In a seminal paper from~:1988, \citeauthor{Pelegri-LlopartGraham:1988} prove
 that the methods of \gls{tree rewriting} can always arranged such that all
-rewrites occur at the \glspl{leaf} of the \gls{tree}, resulting in a \gls{BURS}.
+rewrites occur at the \glspl{leaf} of the \gls{tree}, resulting in a
+\gls!{BURS}.
 %
 We say that a collection of such \glspl{rule} constitute a \gls!{BURS grammar},
 which is similar to the \glspl{grammar} already seen, with the exception that
@@ -4183,7 +4187,7 @@ Another \gls{state}-generating algorithm similar to the one by
   Proebsting:1995:BURS}.
 %
 This algorithm was also implemented by \textcite{FraserEtAl:1992:Burg} in a
-renowned \gls{code generation} system called \gls{Burg}.\!%
+renowned \gls{code generation} system called \gls!{Burg}.\!%
 %
 \footnote{%
   The keen reader will notice that \citeauthor{FraserEtAl:1992:IBurg} also
@@ -4311,9 +4315,9 @@ The approach of extending \gls{pattern selection} with \gls{offline cost
   analysis} has been applied in numerous \gls{compiler}-related systems.
 %
 Some notable applications that we have not already mentioned include
-\gls{UNH-Codegen}~\cite{HatcherTuller:1988},
-\gls{DCG}~\cite{EnglerProebsting:1994}, \gls{LBurg}~\cite{HansonFraser:1995},
-and \gls{WBurg}~\cite{ProebstingWhaley:1996}.
+\gls!{UNH-Codegen}~\cite{HatcherTuller:1988},
+\gls!{DCG}~\cite{EnglerProebsting:1994}, \gls!{LBurg}~\cite{HansonFraser:1995},
+and \gls!{WBurg}~\cite{ProebstingWhaley:1996}.
 %
 \Gls{Burg} is also available as a Haskell clone called
 \gls!{HBurg}~\cite{HBURG}, and has been adapted by \textcite{Boulytchev:2007} to
@@ -4444,7 +4448,7 @@ $\gamma$ by inverting~$\delta$.
 %
 Usually this is achieved by resorting to \gls{pattern matching}, but for optimal
 \gls{instruction selection} the generator must also interleave the construction
-of the inverse $\delta^{-1}$ with a \gls{choice function}~$\xi$ whenever some
+of the inverse $\delta^{-1}$ with a \gls!{choice function}~$\xi$ whenever some
 \mbox{$q \in T(Q)$} has several \mbox{$z \in T(Z)$} such that \mbox{$\delta(q) =
   z$}.
 %
@@ -4468,8 +4472,8 @@ implementation called \gls!{Pagode}~\cite{CanaldaEtAl:1995}.
 
 Shortly after \citeauthor{GeigerichSchmal:1988}, \textcite{Hatcher:1991}
 developed a design similar to that of \citeauthor{Pelegri-LlopartGraham:1988}
-that relies on \gls{equational logic}~\cite{ODonnell:1985} instead of \gls{BURS}
-theory.
+that relies on \gls!{equational logic}~\cite{ODonnell:1985} instead of
+\gls{BURS} theory.
 %
 The two are closely related in that both apply a set of predefined \glspl{rule}
 to rewrite the \gls{expression tree} into a single goal term, but an equational
@@ -4520,9 +4524,9 @@ An experimental implementation demonstrated the feasibility of this technique,
 but the results were not compared to those of other techniques.
 %
 Similar designs were later proposed by \textcite{Borchardt:2004} and
-\textcite{JanousekJaroslav:2014}, who made use of \glspl{tree series transducer}
-(see for example~\cite{EngelfrietEtAl:2001} for an overview) and \glspl{pushdown
-  automaton}, respectively.
+\textcite{JanousekJaroslav:2014}, who made use of \glspl!{tree series
+  transducer} (see for example~\cite{EngelfrietEtAl:2001} for an overview) and
+\glspl{pushdown automaton}, respectively.
 
 
 \subsubsection{Rewriting Strategies}
@@ -4552,7 +4556,7 @@ provide an example of where this would be beneficial.
 \labelSection{tc-genetic-algorithms}
 
 To solve the \gls{pattern selection} problem, \textcite{ShuEtAl:1996} employed
-the theories of \glspl{GA}, which mimic the process of natural selection (see
+the theories of \glspl!{GA}, which mimic the process of natural selection (see
 for example \cite{Reeves:2010} for an overview).\!%
 %
 \footnote{%

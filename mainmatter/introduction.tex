@@ -17,7 +17,7 @@ To this end, CPU manufacturers continuously extend their processors with new,
 sophisticated \glspl{instruction} that allow complex computations to be executed
 using fewer \glspl{instruction}.
 %
-Such \glspl{instruction} are especially common in \glspl{DSP} that appear in
+Such \glspl{instruction} are especially common in \glspl!{DSP} that appear in
 most contemporary mobile phones.
 %
 But while the technology behind modern processors continues to advance, the
@@ -169,9 +169,9 @@ of three parts:%
   \item a \gls{backend}
 \end{inlinelist}.
 
-The \gls!{frontend} performs syntactic and semantic analysis on the
-\gls{program} under compilation, making sure that the \gls{program} is
-syntactically and semantically valid.
+The \gls!{frontend} performs \glsshort{syntactic analysis} and \gls{semantic
+  analysis} on the \gls{program} under compilation, making sure that the
+\gls{program} is syntactically and semantically valid.
 %
 After passing all checks, it then transforms the \gls{program} into an \gls!{IR}
 and passes the code to the \gls{optimizer}.
@@ -203,7 +203,7 @@ Among other things, the \gls{backend} then performs \gls{block ordering} in
 order to minimize the number of jump \glspl{instruction}.
 %
 After these steps the \gls{program} has been fully transformed into
-\gls{assembly code}, which can then be translated into machine code to be
+\gls{assembly code}, which can then be translated into \gls{machine code} to be
 executed by the \gls{target machine}.
 
 
@@ -970,23 +970,23 @@ of the art.
 
 \subsection{Experiment Setup}
 
-To evaluate a \gls{constraint model}, we implement it using \mbox{\gls{MiniZinc}
-  2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level \gls{constraint}
-modeling language.
+To evaluate a \gls{constraint model}, we implement it using
+\mbox{\gls!{MiniZinc} 2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level
+\gls{constraint} modeling language.
 %
-The model is solved using \gls{Chuffed}~\cite{Chu:2011} -- a \glsdesc{LCG}-based
-\glsshort{constraint solver} included in \gls{MiniZinc} -- on a Linux machine
-with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and \SI{16}{\giga\byte} main
-memory.
+The model is solved using \gls!{Chuffed}~\cite{Chu:2011} -- a
+\glsdesc{LCG}-based \glsshort{constraint solver} included in \gls{MiniZinc} --
+on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
+\SI{16}{\giga\byte} main memory.
 %
 To mitigate deviations in the measurments, we run each experiment ten times and
-then take the arithmetic average together with the \gls{CV}.
+then take the arithmetic average together with the \gls!{CV}.
 %
 When summarizing ratios, we instead take the geometric mean since this is more
 appropriate in such cases~\cite{FlemingWallace:1986}.
 
 As problem instances, we use the \glspl{function} provided by
-\gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
+\gls!{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
 -- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
 \gls{instruction set}.
 %
@@ -1175,7 +1175,7 @@ representative for the pool as a whole.
 %
 In other words, the result may not be statistically significant.
 %
-Therefore, for the \gls{GMI} value we also compute the \gls{CI}, which is a
+Therefore, for the \gls{GMI} value we also compute the \gls!{CI}, which is a
 method of estimating the uncertainty of a value computed from a set of
 samples~\cite{Neyman:1937}.
 %
@@ -1193,7 +1193,7 @@ For the experiments described in this dissertation, we compute the
 experiments.
 %
 Since we know nothing about the underlying distributions for our observations,
-we compute the \gls{CI} using \gls{percentile bootstrapping} with
+we compute the \gls{CI} using \gls!{percentile bootstrapping} with
 \num{100000}~iterations~\cite{EfronTibshirani:1994}.
 
 

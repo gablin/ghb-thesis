@@ -146,7 +146,7 @@ As long as the observable output constitutes a single value, a
 \gls{single-output.ic} \gls{instruction} can be arbitrarily complex.
 
 This class comprises the majority of \glspl{instruction} in most
-\glspl{instruction set}, and in simple \glspl{RISC}, such as \gls{MIPS}
+\glspl{instruction set}, and in simple \glspl!{RISC}, such as \gls{MIPS}
 architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
 \glspl{instruction}.
 %
@@ -309,8 +309,8 @@ expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
 \end{figure}%
 %
 A \gls!{macro expander} traverses the \gls{function} under compilation and
-attempts one \gls{macro} after another, typically in the order they are declared
-in the \gls{machine description}.
+attempts one \gls{macro} after another, typically in the order they are
+declared.
 %
 Upon a \gls{match} it executes the corresponding \gls{expand procedure} and then
 resumes the traversal with the next, unmatched part until the entire
@@ -564,7 +564,8 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 -- but this depends heavily on the properties of the \gls{target machine}.
 
 For practical reasons, the \gls{instruction set} of a \gls{target machine} must
-be described in a machine-readable format.
+be described in a machine-readable format, which we call the \gls!{machine
+  description}.
 %
 A common method is to model the \glspl{instruction} as a \gls{machine grammar},
 which we will now describe.
@@ -642,7 +643,7 @@ is given in \refTable{grammar-rules-example}.
   \labelFigure{machine-grammar-rule-anatomy}
 \end{figure}
 %
-The \glspl{production} are typically written in \gls{Polish notation} to avoid
+The \glspl{production} are typically written in \gls!{Polish notation} to avoid
 the need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as
 \mbox{$+ \; 1 + 2 \; 3$}).
 %
@@ -1769,11 +1770,11 @@ in~\cite{WolinskiKuchcinski:2007}.
 another \gls{constraint model}, which was later improved by
 \textcite{FlochEtAl:2010} who replaced the \gls{pattern selection}
 \glspl{constraint} with \refEquation{pattern-selection-using-gcc}, and then
-extended by \textcite{ArslanKuchcinski:2014} for targeting \gls{VLIW}
-processors%
+extended by \textcite{ArslanKuchcinski:2014} for targeting
+\glsunset{VLIW}\gls{VLIW} processors%
 %
 \footnote{%
-  A \gls!{VLIW}[ processor] is a processor that executes multiple
+  A \glsreset{VLIW}\gls!{VLIW}[ processor] is a processor that executes multiple
   \glspl{instruction} in parallel, where the schedule has been computed by the
   \gls{compiler} and is part of the assembly code.%
 }
@@ -1918,7 +1919,7 @@ underlying assumptions made by many of the aforementioned approaches.
 \section{Graph Covering}
 \labelSection{ex-isel-rep-graph-covering}
 
-The most general principle is called \gls{graph covering}, where entire
+The most general principle is called \gls!{graph covering}, where entire
 \glspl{function} are modeled as \glspl{function graph} and \glspl{instruction}
 are allowed to be modeled using any shape of \glspl{pattern}.
 %
@@ -2065,8 +2066,8 @@ To capture dependencies between the data and control flow -- for example, when
 the target of a jump depends on a Boolean value -- such jumps flow through
 special \emph{if}~\glspl{node}.
 %
-An example of the \gls{Click-Paleczny graph} is shown in
-\refFigure{click-paleczny-graph-example}.
+For lack of a better name, we will call this the \gls!{Click-Paleczny graph},
+and an example is shown in \refFigure{click-paleczny-graph-example}.
 
 \begin{figure}
   \centering%
@@ -2437,7 +2438,7 @@ transformations~\cite{LoweEhrig:1991}.
 \labelSection{ex-isel-rep-vf2-algorithm}
 
 For \gls{pattern matching}, most combinatorial approaches apply the
-\gls{VF2}~algorithm~\cite{CordellaEtAl:2001}.
+\gls!{VF2}[~algorithm]~\cite{CordellaEtAl:2001}.
 %
 The algorithm, given in \refAlgorithm{vf2-algorithm}, recursively checks every
 \gls{node}-mapping candidate and applies a set of rules for checking whether the

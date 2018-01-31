@@ -77,10 +77,11 @@
 \newTerm{register pressure}
 \newTerm{rematerialization}[see={recomputation}]
 \newTerm{saturation arithmetic}
+\newTerm{semantic analysis}[user1={semantic}]
 \newAcronym{SSA}{static single assignment}
 \newTerm{SSA graph}
 \newTerm{status flag}
-\newTerm{syntactic analysis}
+\newTerm{syntactic analysis}[user1={syntactic}]
 \newTerm{superoptimizer}
 \newTerm{value reuse}[user1={reuse}]
 
@@ -374,7 +375,6 @@
 
 \newAcronym{IP}{integer programming}
 \newTerm{Horn clause}
-\newTerm{implication clause}
 \newAcronym{ILP}{integer linear programming}
 
 \newAcronym{SAT}{Boolean satisfiability}
@@ -395,8 +395,7 @@
 \newTerm[inherited.a]{inherited}[parent={attribute}]
 \newTerm[synthesized.a]{synthesized}[parent={attribute}]
 \newTerm{attribute grammar}
-\newAcronym{BNF}{Backus-Naur form}
-\newTerm{context-free grammar}
+\newTerm{context-free grammar}[see={grammar}]
 \newTerm{grammar}[see={machine grammar}]
 \newTerm[ambiguous.g]{ambiguous}[parent={grammar}]
 \newTerm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
@@ -406,7 +405,6 @@
 \newTerm{nonterminal}
 \newTerm{predicate}
 \newTerm{production}
-\newTerm{production rule}[see={production}]
 \newTerm{reduce-reduce conflict}
 \newTerm{rule}
 \newTerm[base.r]{base}[parent={rule}]
@@ -521,13 +519,14 @@
 
 \newTerm{offline cost analysis}
 
-\newTerm[A* search]{A$^{*}$~search}[sort={A* search}, user1={A$^{*}$}]
+\newcommand{\Astar}{A\!$^{*}$}
+\newTerm[A* search]{\Astar~search}[sort={A* search}, user1={\Astar}]
 \newTerm[AB pruning]{{$\alpha$}-{$\beta$}~pruning}
 \newTerm{adjacency matrix}[plural={adjacency matrices}]
 \newTerm{alphabet}
 \newTerm[ranked.a]{ranked}[parent={alphabet}]
 \newTerm{anchor node}
-\newTerm{answer set programming}
+\newAcronym{ASP}{answer set programming}
 \newTerm{ant colony optimization}
 \newTerm{base}
 \newTerm{base cost}

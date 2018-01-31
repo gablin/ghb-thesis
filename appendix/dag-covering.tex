@@ -420,7 +420,7 @@ problem.
 \labelSection{llvm}
 
 A more flexible, but still greedy, heuristic is applied in the well-known
-\gls{LLVM} \gls{compiler} infrastructure~\cite{LattnerAdve:2004}.
+\gls!{LLVM} \gls{compiler} infrastructure~\cite{LattnerAdve:2004}.
 %
 According to a blog entry by \textcite{Bendersky:2013} -- which at the time of
 writing provides the only documentation, except for the source code itself --
@@ -508,7 +508,7 @@ First, \citeauthor{YuHu:1994a}'s design supports \glsshort{block DAG} and
 \glspl{pattern DAG} whereas those by~\citeauthor{Newcomer:1975} and
 Cattell~\etal are both limited to \glspl{tree}.
 %
-Second, it combines \gls{means-end analysis} with \gls{hierarchical
+Second, it combines \gls{means-end analysis} with \gls!{hierarchical
   planning}~\cite{Sacerdoti:1973}, which is a \gls{search} strategy that relies
 on the fact that many problems can be arranged in a hierarchical manner for
 handling larger and more complex problem instances.
@@ -559,7 +559,7 @@ The \gls{block DAG} is then semantically matched using \gls{single-output.ic}
 Semantic \glspl{match} -- which \citeauthor{HooverZadeck:1996} call \glspl!{toe
   print} -- and are found by a \gls{semantic comparator}.
 %
-The \gls{semantic comparator} first performs syntactic matching -- that is,
+The \gls!{semantic comparator} first performs syntactic matching -- that is,
 checking that the \glspl{node} are of the same type, which is done using a
 straightforward \mbox{$\mBigO(nm)$}~algorithm -- and then resorts to
 semantic-preserving transformations for when syntactic matching fails.
@@ -661,7 +661,7 @@ An implicit connection between the \glspl{expression tree} is maintained by
 forcing the values computed at the shared \glspl{node} to be stored and read
 from a specific location, typically in memory.
 %
-An example of such an implementation is \gls{Dagon}, a technology binder
+An example of such an implementation is \gls!{Dagon}, a technology binder
 developed by \textcite{Keutzer:1987}, which maps technology-independent
 descriptions onto circuits.
 %
@@ -759,7 +759,7 @@ The splits are then reverted and the process repeats until a legal cover is
 found.
 
 \citeauthor{SarkarEtAl:2001} implemented their \gls{register}-sensitive design
-in \gls{Jalapeno}, a \gls{register}-based \gls{Java} virtual machine developed
+in \gls!{Jalapeno}, a \gls{register}-based \gls{Java} virtual machine developed
 by \gls{IBM}.
 %
 For a small set of problems the performance increased by about
@@ -870,7 +870,7 @@ that use this \gls{nonterminal} in the \glspl{pattern}.
 As said earlier, however, this technique yields \gls{optimal.ps} \gls{pattern
   selection} only for certain \glspl{machine grammar}.
 %
-\citeauthor{Ertl:1999} therefore devised a checker, called \gls{DBurg}, that
+\citeauthor{Ertl:1999} therefore devised a checker, called \gls!{DBurg}, that
 detects when the \gls{grammar} does not belong into this category and thus
 cannot guarantee optimality.
 %
@@ -1233,7 +1233,7 @@ Lastly, \gls{proxy.p} \glspl{pattern} which have not been merged into
 \gls{complex.p} \glspl{pattern} are replaced by corresponding \gls{simple.p}
 \glspl{pattern} before \gls{assembly code} emission.
 
-\citeauthor{ScharwaechterEtAl:2007} implemented a prototype called \gls{CBurg}
+\citeauthor{ScharwaechterEtAl:2007} implemented a prototype called \gls!{CBurg}
 as an extension of \gls{Olive} (see \refAppendix{tree-covering} on
 \refPageOfSection{tc-olive}), and then ran some experiments by targeting a
 \gls{MIPS}-like architecture.
@@ -1448,7 +1448,7 @@ Hence \gls{binate covering} is equivalent to \gls{SAT}.
 According to \citeauthor{LiaoEtAl:1995}~\cite{LiaoEtAl:1995, LiaoEtAl:1998} and
 \textcite{CongEtAl:2004}, the pioneering use of \gls{binate covering} to solve
 \gls{DAG covering} was done by \textcite{Rudell:1989} in 1989 as a part of a
-\gls{VLSI} synthesis design.
+\gls!{VLSI} synthesis design.
 %
 \citeauthor{LiaoEtAl:1995}~\cite{LiaoEtAl:1995, LiaoEtAl:1998} later adapted it
 to \gls{instruction selection} in a method that optimizes code size for
@@ -1466,7 +1466,7 @@ constructed to minimize the costs of data transfers.
 %
 Although these two problems can be solved simultaneously,
 \citeauthor{LiaoEtAl:1995} chose not to do so as the number of necessary
-\glspl{implication clause} would become very large.
+implication clauses would become very large.
 %
 Recently, \textcite{CongEtAl:2004} also applied \gls{binate covering} as part of
 generating application-specific \glspl{instruction} for configurable processor
@@ -1478,7 +1478,7 @@ customized in order to increase performance of the currently executed
 \gls{function}.
 %
 Described in a paper from~2006, the \glspl{target machine} are presumably
-homogeneous enough that \glspl{implication clause} are unnecessary.
+homogeneous enough that implication clauses are unnecessary.
 %
 The work by \citeauthor{ClarkEtAl:2006} was later expanded by
 \textcite{HormatiEtAl:2007} to reduce the number of interconnects as well as
@@ -1855,9 +1855,10 @@ $\mVar{u}_i$ if these are assigned to different \glspl{register}, or that both
 are identical if one is a \gls{virtual.sl} \gls{storage location}.
 %
 $\mVar{f}$,~$\mVar{c}$, and $\mVar{t}$ are all \glspl{variable} which
-collectively represent the \gls{ERI} that specifies at which functional unit the
-operation will be executed~($\mVar{f}$); at what cost~($\mVar{c}$), which is the
-number of execution cycles; and by which \gls{instruction} type~($\mVar{t}$).
+collectively represent the \gls!{ERI} that specifies at which functional unit
+the operation will be executed~($\mVar{f}$); at what cost~($\mVar{c}$), which is
+the number of execution cycles; and by which \gls{instruction}
+type~($\mVar{t}$).
 %
 A combination of a functional unit and an \gls{instruction} type is later mapped
 to a particular \gls{instruction}.
@@ -2157,7 +2158,7 @@ proposed a technique that is similar to \citeauthor{Wess:1992}'s use of
 \glspl{trellis diagram}, which we discussed in \refAppendix{tree-covering} on
 \refPageOfSection{tc-trellis-diagrams-trees}.
 %
-Implemented in a system called \gls{Aviv}, \citeauthor{HanonoDevadas:1998}'s
+Implemented in a system called \gls!{Aviv}, \citeauthor{HanonoDevadas:1998}'s
 \gls{instruction selector} takes a \gls{block DAG} as input and duplicates each
 operation \gls{node} according to the number of functional units in the
 \gls{target machine} on which that operation can run.
@@ -2211,12 +2212,12 @@ This is commonly used for \glspl{DSP} where the processor is small but highly
 irregular.
 %
 Although \gls{MSS} consists of several tools, we will concentrate on the
-\gls{compiler} -- \gls{MSSQ} -- as its purpose is most aligned with
+\gls{compiler} -- \gls!{MSSQ} -- as its purpose is most aligned with
 \gls{instruction selection}.
 %
 \gls{MSSQ} was developed by \textcite{LeupersMarwedel:1998} as a faster version
-of \gls{MSSC}~\cite{NowakMarwedel:1989}, which in turn is an extension of the
-\gls{tree}-based \gls{MSSV}~\cite{Marwedel:1993}.
+of \gls!{MSSC}~\cite{NowakMarwedel:1989}, which in turn is an extension of the
+\gls{tree}-based \gls!{MSSV}~\cite{Marwedel:1993}.
 
 The \gls{MIMOLA} specification contains the processor \glspl{register} as well
 as all the operations that can be performed on these \glspl{register} within a
