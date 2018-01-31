@@ -19,7 +19,7 @@
 ** TODO Run spell check
 ** TODO Run grammar check
 ** DONE Add list of acronyms
-** TODO Break long sentences
+** DONE Break long sentences
 ** DONE Fix overflowing of bib entries
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
