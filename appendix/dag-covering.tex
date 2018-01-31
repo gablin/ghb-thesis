@@ -1911,28 +1911,6 @@ splitting the \gls{block DAG} into smaller pieces along \glspl{edge} where
 intermediate results are shared, and then performing \gls{instruction selection}
 on each \gls{expression tree} in isolation.
 
-Although the \glspl{constraint} in \citeauthor{BashfordLeupers:1999}'s
-\gls{constraint model} appear to be limited to involving only a single~\gls{FRT}
-at a time -- thus hindering support for \gls{interdependent.ic}
-\glspl{instruction} -- \glsdesc{CP} in general seems like a promising tool for
-performing \gls{instruction selection}.
-%
-As with \glsdesc{IP}, \glsdesc{CP} facilitates \gls{integrated.cg} and
-potentially optimal \gls{code generation}.
-%
-In addition, it allows additional restrictions of the \gls{target machine} to be
-included in the \gls{constraint model}, but without the need of expressing these
-\glspl{constraint} as linear equations.
-%
-At the time of writing, however, the existing techniques for solving
-\gls{IP}~models are more mature than those for solving \glspl{constraint model},
-which potentially makes \glsdesc{IP} a more powerful method than \glsdesc{CP}
-for solving \gls{instruction selection}.
-%
-Having said that, it is still unclear which technique of combinatorial
-optimization -- which also includes \gls{SAT} and other methods -- is best
-suited for \gls{instruction selection} (and code generation in general).
-
 
 \subsection{Taking Advantage of Global Constraints}
 
