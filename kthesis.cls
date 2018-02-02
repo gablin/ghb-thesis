@@ -164,7 +164,7 @@
   \expandafter\ifcsdef{@#1}{#2}{#3}%
 }
 
-% Get field and capitalizes the first letter
+% Get field and capitalizes the first letter of each word
 \NewDocumentCommand{\@getFieldCap}{m}{%
   \@ifHasField{#1}{%
     \MFUnocap{of}%
