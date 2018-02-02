@@ -315,22 +315,24 @@
     \end{tabular}%
     \hfill%
     \begin{tabular}[b]{@{}r@{}}
-      School of EECS\\
+      School of Electrical Engineering\\
+      and Computer Science\\
       KTH Royal Institute of Technology\\
       SE-100 44 Stockholm\\
       SWEDEN
     \end{tabular}%
   \end{minipage}
   \vskip 1em
-  Academic dissertation that with permission from KTH is presented for public
-  examination for completion of degree of \@getFieldLC{degreeEng} on
-  \@printDefenseDateEng\ at \@getField{defenseTime} in
-  \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
+  Academic dissertation which with permission from the Royal Institute of
+  Technology is presented for public examination for completing the degree of
+  \@getFieldLC{degreeEng} on \@printDefenseDateEng\ at \@getField{defenseTime}
+  in \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
   Sweden.\par
   \vskip 1em
-  Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
-  till offentlig granskning f\"or avl\"aggande av \@getFieldLC{degreeSwe}
-  p{\aa} \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
+  Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
+  framl\"agges till offentlig granskning f\"or avl\"aggande av
+  \@getFieldLC{degreeSwe} p{\aa}
+  \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
   \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
