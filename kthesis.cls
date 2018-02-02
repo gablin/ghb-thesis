@@ -127,13 +127,14 @@
 \undef{\@author}
 \NewDocumentCommand{\kthLogo}{m}{%
   \def\@kthLogo{%
-    \adjustbox{max width=2.2cm, max height=2.2cm}{#1}%
+    \adjustbox{max width=2.6cm, max height=2.6cm}{#1}%
   }%
 }
 \@mkFieldCommand{dedication}
 \@mkFieldCommand{subtitle}
 \@mkFieldCommand{degreeEng}
 \@mkFieldCommand{degreeSwe}
+\@mkFieldCommand{degreeThesis}
 \@mkFieldCommand{tritaName}
 \@mkFieldCommand{tritaYear}
 \@mkFieldCommand{tritaNumber}
@@ -259,10 +260,12 @@
 \if@kthesis@phd
   \degreeEng{doctor of philosophy}
   \degreeSwe{teknologie doktorsexamen}
+  \degreeThesis{Doctoral Thesis}
 \fi
 \if@kthesis@lic
   \degreeEng{licentiate of engineering}
   \degreeSwe{teknologie licentiatexamen}
+  \degreeThesis{Licentiate Thesis}
 \fi
 
 \newcommand{\@titleFont}{%
@@ -275,21 +278,18 @@
   \cleardoublepage
   \thispagestyle{empty}
   \begin{center}%
-    \mbox{}
-    \vfill\vfill
+    \@getField{kthLogo}
+    \vfill\vfill\vfill
     {\@titleFont\@getField{title}\par}
     \@ifHasField{subtitle}{%
       \vskip .75em
       {\@subtitleFont\@getField{subtitle}}
     }{}
-    \vskip 2em
+    \vfill
     {\Large\scshape\@getFieldLC{author}\par}
-    \vfill\vfill\vfill
-    \@getField{kthLogo}\par
-    \vskip 2em
+    \vfill\vfill\vfill\vfill\vfill\vfill\vfill
     \begin{tabular}{c}
-      School of Electrical Engineering and Computer Science\\
-      KTH Royal Institute of Technology\\
+      \@getField{degreeThesis} in Information and Communication Technology\\
       Stockholm, Sweden
     \end{tabular}\par
   \end{center}
