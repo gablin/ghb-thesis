@@ -284,16 +284,6 @@
     }{}
     \vskip 2em
     {\Large\scshape\@getFieldLC{author}\par}
-    \vskip 2em
-    {%
-      \itshape%
-      \begin{tabular}{c}
-        Submitted in Partial Fulfillment of the Requirements\\
-        for the Degree of \@getFieldCap{degreeEng}
-      \end{tabular}
-    }\par
-    \vskip 1em
-    \@printMonthSubmitted{english} \@getField{tritaYear}\par
     \vfill\vfill\vfill
     \@getField{kthLogo}\par
     \vskip 2em
