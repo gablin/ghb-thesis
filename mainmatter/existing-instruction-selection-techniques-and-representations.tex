@@ -1502,7 +1502,7 @@ Formally, an \gls{IP} problem is defined as follows.
   \begin{displaymath}
     \begin{array}{rl}
       \text{maximize} &
-        \multirow{2}{*}{$\mVector{c}^{\transp} \mVector{\mVar{x}}$} \\
+        \multirow{2}{*}{$\mVector{c}^{\mTransp} \mVector{\mVar{x}}$} \\
       \text{or minimize} & \\
       \text{subject to} & \mMatrix{A} \mVector{\mVar{x}} \leq \mVector{b}, \\
         & \mMatrix{A} \mVector{\mVar{x}} \in \mathbb{Z}^{n \times n}\!, \\
@@ -2145,12 +2145,12 @@ Formally, a \gls{PBQP} is defined as follows.
       \text{minimize}
         & \displaystyle
           \sum_{\mathclap{1 \leq i < j \leq n}}
-          \mVector{\mVar{x}}_i^{\transp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
+          \mVector{\mVar{x}}_i^{\mTransp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
           \sum_{\mathclap{1 \leq i \leq n}}
-          \mVector{c}_i^{\transp} \mVector{\mVar{x}}_i, \\
+          \mVector{c}_i^{\mTransp} \mVector{\mVar{x}}_i, \\
       \text{subject to}
         & \forall 1 \leq i \leq n :
-          \mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1. \\
+          \mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1. \\
     \end{array}
   \end{displaymath}
   \labelDefinition{pbqp}
@@ -2165,7 +2165,7 @@ where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
 selected for decision~$i$.
 %
 For each \gls{variable}, the condition
-\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
+\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1$}
 ensures that exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
@@ -2362,7 +2362,7 @@ Each \gls{complex.m} \gls{match}~$i$ in turn introduces a
 \gls{variable}~\raisebox{0pt}[\height-2pt]{$\mVector{\mVar{x}}_i \in \mSet{0,
     1}^2$} to decide whether $i$ is selected.
 %
-Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp}
+Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp}
   \mVector{\mVar{x}}_i = 1$} condition, every such \gls{variable} has exactly
 two elements (one representing \emph{on} and the other \emph{off}).
 %
@@ -2393,7 +2393,7 @@ The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
   \sum_{\mathclap{i \,\in\, N, \: j \,\in\, M}}
-  \mVector{\mVar{x}}_i^{\transp} D_{ij} \, \mVector{\mVar{x}}_j
+  \mVector{\mVar{x}}_i^{\mTransp} D_{ij} \, \mVector{\mVar{x}}_j
 \end{equation}
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes
