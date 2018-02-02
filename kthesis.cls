@@ -260,12 +260,12 @@
 \if@kthesis@phd
   \degreeEng{doctor of philosophy}
   \degreeSwe{teknologie doktorsexamen}
-  \degreeThesis{Doctoral Thesis}
+  \degreeThesis{doctoral thesis}
 \fi
 \if@kthesis@lic
   \degreeEng{licentiate of engineering}
   \degreeSwe{teknologie licentiatexamen}
-  \degreeThesis{Licentiate Thesis}
+  \degreeThesis{licentiate thesis}
 \fi
 
 \newcommand{\@titleFont}{%
@@ -289,7 +289,7 @@
     {\Large\scshape\@getFieldLC{author}\par}
     \vfill\vfill\vfill\vfill\vfill\vfill\vfill
     \begin{tabular}{c}
-      \@getField{degreeThesis} in Information and Communication Technology\\
+      \@getFieldCap{degreeThesis} in Information and Communication Technology\\
       Stockholm, Sweden
     \end{tabular}\par
   \end{center}
