@@ -438,11 +438,18 @@ Having found $M$, the \gls{selection} problem -- which in this context is
 referred to as the \gls!{pattern selection}[ problem] -- can be reduced to
 selecting a set of \glspl{match} that \gls{cover}[s]~$G$.
 %
-A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
-$G$ if every \gls{node} in $G$ appears in exactly one match from~$C$.
+A subset~\mbox{$M' \subseteq M$} \gls!{cover}[s] $G$ if every \gls{node} in $G$
+appears in at least one match in~$M'$.
 %
-Such a subset is called a \gls!{cover}, and examples are shown in
-\refFigure{p-match-sel-example}.
+Such a subset is called a \gls!{cover}.
+%
+A \gls{cover} is an \gls!{exact.c}[ \gls{cover}] if every \gls{node} in $G$
+appears in exactly one match in the \gls{cover}.
+%
+Most \gls{instruction selection} approaches assume \gls{exact.c}
+\gls{cover}[age].
+%
+Examples of \glspl{cover} are shown in \refFigure{p-match-sel-example}.
 
 \begin{filecontents*}{p-match-sel-example.c}
 x = A[i + 1];
@@ -497,18 +504,17 @@ x = A[i + 1];
             a program that loads a value from integer array \irVar*{A} at offset
             \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
             %
-            It is assumed that \irVar*{i} is
-            stored in register and that \irVar*{A} is stored in memory and that
-            an integer is \num{4}~bytes.
+            It is assumed that \irVar*{i} is stored in register, that \irVar*{A}
+            is stored in memory, and that an integer is \num{4}~bytes.
             %
-            Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
-            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
-            \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
-            a dummy pattern for covering nodes representing variables.
+            Exact covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, \mbox{$\mSet{m_1,
+                \ldots, m_5, m_{10}}$}, and \mbox{$\mSet{m_1, \ldots, m_5, m_8,
+                m_9}$} (non-exact covers are ignored for brevity).
             %
-            Variable assignments need not explicitly represented as nodes as
-            this information can be propagated from the root node after having
-            found a cover%
+            Variable assignments need not be explicitly represented as nodes
+            since this information can be propagated from the root node after
+            having found a cover%
           }
   \labelFigure{p-match-sel-example}
 \end{figure}
@@ -542,7 +548,7 @@ The corresponding matches \mbox{$m_1, m_2, \ldots, m_8, m_9, m_{10}$} are
 therefore assigned costs \mbox{$0, 1, \ldots, 1, 5, 5$}, respectively ($m_1$ has
 zero cost since variable~\irVar*{i} is already in a \gls{register}).
 %
-Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+Then, of the \gls{exact.c} \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
 \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
     m_{10}}$}, only the last \gls{cover} is considered \gls{optimal.ps} as it
 has a total cost of~\num{9} whereas the other two \glspl{cover} have
@@ -1363,7 +1369,7 @@ An example is shown in \refFigure{mis-example}.
           {%
             Example of modeling pattern selection as a MIS problem.
             %
-            Valid maximal independent sets of the interference graph are
+            Maximal independent sets of the interference graph are
             \mbox{$\mSet{m_1, \ldots, m_5, m_7}$}, \mbox{$\mSet{m_1, m_2, m_3,
                 m_5, m_8}$}, and \mbox{$\mSet{m_1, m_2, m_3, m_6, m_7}$}, which
             correspond to valid covers of the block DAG%

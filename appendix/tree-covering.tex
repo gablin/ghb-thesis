@@ -145,18 +145,17 @@ x = A[i + 1];
             a function that loads a value from integer array \irVar*{A} at
             offset \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
             %
-            It is assumed that \irVar*{i} is
-            stored in register and that \irVar*{A} is stored in memory and that
-            an integer is \num{4}~bytes.
+            It is assumed that \irVar*{i} is stored in register, that \irVar*{A}
+            is stored in memory, and that an integer is \num{4}~bytes.
             %
-            Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
-            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
-            \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
-            a dummy pattern for covering nodes representing variables.
+            Valid exact covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, \mbox{$\mSet{m_1,
+                \ldots, m_5, m_{10}}$}, \mbox{$\mSet{m_1, \ldots, m_5, m_8,
+                m_9}$} (for brevity, non-exact covers are ignored).
             %
-            Variable assignments need not explicitly represented as nodes as
-            this information can be propagated from the root node after having
-            found a cover%
+            Variable assignments need not be explicitly represented as nodes
+            since this information can be propagated from the root node after
+            having found a cover%
           }
   \labelFigure{p-match-sel-example-2}
 \end{figure}
