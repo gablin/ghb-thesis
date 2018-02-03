@@ -304,7 +304,7 @@
       School of Electrical Engineering\\
       and Computer Science\\
       KTH Royal Institute of Technology\\
-      SE-100 44 Stockholm\\
+      SE-164 40 Kista\\
       SWEDEN
     \end{tabular}%
   \end{minipage}
