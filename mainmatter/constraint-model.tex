@@ -1207,10 +1207,9 @@ We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case (\cCode*{reg2rsaref}), for example, the solving time differs by a
-factor
-of~\printSpeedup{%
-  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupMax%
+In one case (\cCode*{reg2rsaref}), for example, the solving time is improved
+by~\printZCNorm{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }.
 %
 This is due to a high rate of \gls{copy-related.d} values for which
@@ -1300,8 +1299,9 @@ produces \glspl{solution} with significantly less cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
 In one case (\cCode*{putseqdispext}), for example, the cycle count is reduced
-from \num{256}~cycles to \num{208}~cycles (a speedup of \printSpeedup{%
-  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupMax%
+from \num{256}~cycles to \num{208}~cycles (an improvement
+of~\printZCNorm{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }).
 %
 This is because two constants are frequently used as arguments to \gls{function}

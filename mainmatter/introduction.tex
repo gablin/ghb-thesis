@@ -1034,8 +1034,8 @@ where $b$ is twice as fast as $a$.
 %
 \begin{figure}
   \renewcommand{\functionName}[1]{{\Large\speedupCase{#1}}}%
-  \renewcommand{\plotSpeedupTicsFont}{\large}%
-  \renewcommand{\barValueFont}{\scriptsize}%
+  \renewcommand{\plotNormTicsFont}{\large}%
+  \renewcommand{\barNormValueFont}{\scriptsize}%
 
   \def\insertSpeedupExamplePlot#1{%
     \maxsizebox{30mm}{!}{%
@@ -1048,7 +1048,7 @@ where $b$ is twice as fast as $a$.
   \mbox{}%
   \hfill%
   \subcaptionbox{%
-                  Values normalized using speedup
+                  Values normalized using speedup method
                   (\refEquation{speedup-normalization})%
                   \labelFigure{speedup-comparison-regular}%
                 }%
@@ -1107,6 +1107,10 @@ and \speedupCase{ii}.
 A normalized value $v$ using \gls{zero-centered normalization} corresponds a
 \gls{speedup} of \mbox{$v + 1$} if \mbox{$v \geq 0$}, otherwise
 \mbox{$\frac{1}{1 - v}$}.
+%
+To distinguish between the two, we suffix \gls{speedup} and
+\glsshort{zero-centered normalization} values with a $\mSpeedupSuffix$ and
+$\mZCNormSuffix$, respectively (\eg \printSpeedup{3.5} and \printZCNorm{2.5}).
 
 \Gls{zero-centered normalization} is also applied when comparing \gls{solution}
 costs as they represent an estimate of the time it would take to execute the
