@@ -290,7 +290,9 @@
     \vfill\vfill\vfill\vfill\vfill\vfill\vfill
     \begin{tabular}{c}
       \@getFieldCap{degreeThesis} in Information and Communication Technology\\
-      Stockholm, Sweden
+      School of Electrical Engineering and Computer Science\\
+      KTH Royal Institute of Technology\\
+      Stockholm, Sweden \@getField{tritaYear}
     \end{tabular}\par
   \end{center}
 }
