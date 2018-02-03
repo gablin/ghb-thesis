@@ -132,7 +132,6 @@
 }
 \@mkFieldCommand{dedication}
 \@mkFieldCommand{subtitle}
-\@mkFieldCommand{degreeEng}
 \@mkFieldCommand{degreeSwe}
 \@mkFieldCommand{degreeThesis}
 \@mkFieldCommand{tritaName}
@@ -147,7 +146,6 @@
   \DTMsavedate{defensedate}{#1}%
 }
 \@mkFieldCommand{defenseTime}
-\@mkFieldCommand{defenseHallEng}
 \@mkFieldCommand{defenseHallSwe}
 
 % Gets a field if set, otherwise prints an error message
@@ -242,12 +240,10 @@
 \fi
 
 \if@kthesis@phd
-  \degreeEng{doctor of philosophy}
   \degreeSwe{teknologie doktorsexamen}
   \degreeThesis{doctoral thesis}
 \fi
 \if@kthesis@lic
-  \degreeEng{licentiate of engineering}
   \degreeSwe{teknologie licentiatexamen}
   \degreeThesis{licentiate thesis}
 \fi
