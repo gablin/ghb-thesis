@@ -1700,7 +1700,14 @@
 }
 
 \NewDocumentCommand{\printSpeedup}{sO{}m}{%
-  \num[round-mode=figures, round-precision=3, #2]{#3}%
+  \pgfmathparse{#3 < 10 ? 1 : 0}%
+  \ifnum \pgfmathresult=1
+    % Decimal rounding
+    \num[round-mode=places, round-precision=2, #2]{#3}%
+  \else
+    % Significant figure rounding
+    \num[round-mode=figures, round-precision=3, #2]{#3}%
+  \fi%
   \IfBooleanTF{#1}{}{$\mSpeedupSuffix$}%
 }
 
