@@ -216,22 +216,6 @@
   }%
 }
 
-% Prints the defense date in English to be used in the copyright page.
-\NewDocumentCommand{\@printDefenseDateEng}{}{%
-  \@ifHasField{defenseDate}{%
-    \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
-    \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
-    \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
-    \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
-    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday\ \@removeZeros{\@tday}\ \@tmonthalp\ \@tyear%
-  }{%
-    % Print appropriate error message
-    \@getField{defenseDate}%
-  }%
-}
-
 % Prints the defense date in Swedish to be used in the copyright page.
 \NewDocumentCommand{\@printDefenseDateSwe}{}{%
   \@ifHasField{defenseDate}{%
@@ -324,12 +308,6 @@
       SWEDEN
     \end{tabular}%
   \end{minipage}
-  \vskip 1em
-  Academic dissertation which with permission from the Royal Institute of
-  Technology is presented for public examination for completing the degree of
-  \@getFieldLC{degreeEng} on \@printDefenseDateEng\ at \@getField{defenseTime}
-  in \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
-  Sweden.\par
   \vskip 1em
   Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
   framl\"agges till offentlig granskning f\"or avl\"aggande av
