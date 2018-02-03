@@ -152,6 +152,10 @@
 \newcommand{\refPage}[1]{p.\thinspace\pageref{page:#1}}
 
 % Other text commands
+\NewDocumentCommand{\eg}{s}{%
+  e.g%
+  \IfBooleanF{#1}{.\ }%
+}
 \NewDocumentCommand{\etal}{s}{%
   et al%
   \IfBooleanF{#1}{.\ }%
