@@ -1568,7 +1568,7 @@
 \newcommand{\functionNameFont}{\LARGE}
 \newcommand{\functionName}[1]{{\functionNameFont\path{#1}}}
 \newcommand{\plotPercentageFont}{\huge}
-\newcommand{\plotPercentage}[1]{{\plotPercentageFont$#1$\%}}
+\newcommand{\plotPercentage}[1]{{\plotPercentageFont\SI{#1}{\percent}}}
 \newcommand{\normValue}[1]{%
   \pgfmathparse{and(-1 < #1, #1 < 1) ? 1 : 0}%
   \ifnum \pgfmathresult=1
@@ -1588,7 +1588,7 @@
   {\plotNormTicsFont$\normValue{#1}\mZCNormSuffix$}%
 }
 \newcommand{\plotSecondsFont}{\Large}
-\newcommand{\plotSeconds}[1]{{\plotSecondsFont$#1$\thinspace{}s}}
+\newcommand{\plotSeconds}[1]{{\plotSecondsFont\SI{#1}{\s}}}
 \newcommand{\barNormValueFont}{}
 \newcommand{\barSymbolFont}{\LARGE}
 \newcommand{\plotBarNormValue}[1]{%
