@@ -127,13 +127,13 @@
 \undef{\@author}
 \NewDocumentCommand{\kthLogo}{m}{%
   \def\@kthLogo{%
-    \adjustbox{max width=2.2cm, max height=2.2cm}{#1}%
+    \adjustbox{max width=2.6cm, max height=2.6cm}{#1}%
   }%
 }
 \@mkFieldCommand{dedication}
 \@mkFieldCommand{subtitle}
-\@mkFieldCommand{degreeEng}
 \@mkFieldCommand{degreeSwe}
+\@mkFieldCommand{degreeThesis}
 \@mkFieldCommand{tritaName}
 \@mkFieldCommand{tritaYear}
 \@mkFieldCommand{tritaNumber}
@@ -146,7 +146,6 @@
   \DTMsavedate{defensedate}{#1}%
 }
 \@mkFieldCommand{defenseTime}
-\@mkFieldCommand{defenseHallEng}
 \@mkFieldCommand{defenseHallSwe}
 
 % Gets a field if set, otherwise prints an error message
@@ -163,7 +162,7 @@
   \expandafter\ifcsdef{@#1}{#2}{#3}%
 }
 
-% Get field and capitalizes the first letter
+% Get field and capitalizes the first letter of each word
 \NewDocumentCommand{\@getFieldCap}{m}{%
   \@ifHasField{#1}{%
     \MFUnocap{of}%
@@ -215,22 +214,6 @@
   }%
 }
 
-% Prints the defense date in English to be used in the copyright page.
-\NewDocumentCommand{\@printDefenseDateEng}{}{%
-  \@ifHasField{defenseDate}{%
-    \DTMcomputedayofweekindex{\@defenseDate}{\dowindex}%
-    \protected@edef\@tweekday{\DTMenglishweekdayname{\dowindex}}%
-    \protected@edef\@tday{\DTMfetchday{defensedate}}%
-    \protected@edef\@tmonthnum{\DTMfetchmonth{defensedate}}%
-    \protected@edef\@tmonthalp{\DTMenglishmonthname{\@tmonthnum}}%
-    \protected@edef\@tyear{\DTMfetchyear{defensedate}}%
-    \@tweekday\ \@removeZeros{\@tday}\ \@tmonthalp\ \@tyear%
-  }{%
-    % Print appropriate error message
-    \@getField{defenseDate}%
-  }%
-}
-
 % Prints the defense date in Swedish to be used in the copyright page.
 \NewDocumentCommand{\@printDefenseDateSwe}{}{%
   \@ifHasField{defenseDate}{%
@@ -257,12 +240,12 @@
 \fi
 
 \if@kthesis@phd
-  \degreeEng{doctor of philosophy}
   \degreeSwe{teknologie doktorsexamen}
+  \degreeThesis{doctoral thesis}
 \fi
 \if@kthesis@lic
-  \degreeEng{licentiate of engineering}
   \degreeSwe{teknologie licentiatexamen}
+  \degreeThesis{licentiate thesis}
 \fi
 
 \newcommand{\@titleFont}{%
@@ -275,32 +258,21 @@
   \cleardoublepage
   \thispagestyle{empty}
   \begin{center}%
-    \mbox{}
-    \vfill\vfill
+    \@getField{kthLogo}
+    \vfill\vfill\vfill
     {\@titleFont\@getField{title}\par}
     \@ifHasField{subtitle}{%
       \vskip .75em
       {\@subtitleFont\@getField{subtitle}}
     }{}
-    \vskip 2em
+    \vfill
     {\Large\scshape\@getFieldLC{author}\par}
-    \vskip 2em
-    {%
-      \itshape%
-      \begin{tabular}{c}
-        Submitted in Partial Fulfillment of the Requirements\\
-        for the Degree of \@getFieldCap{degreeEng}
-      \end{tabular}
-    }\par
-    \vskip 1em
-    \@printMonthSubmitted{english} \@getField{tritaYear}\par
-    \vfill\vfill\vfill
-    \@getField{kthLogo}\par
-    \vskip 2em
+    \vfill\vfill\vfill\vfill\vfill\vfill\vfill
     \begin{tabular}{c}
+      \@getFieldCap{degreeThesis} in Information and Communication Technology\\
       School of Electrical Engineering and Computer Science\\
       KTH Royal Institute of Technology\\
-      Stockholm, Sweden
+      Stockholm, Sweden \@getField{tritaYear}
     \end{tabular}\par
   \end{center}
 }
@@ -325,23 +297,19 @@
     \end{tabular}%
     \hfill%
     \begin{tabular}[b]{@{}r@{}}
-      School of EECS\\
+      School of Electrical Engineering\\
+      and Computer Science\\
       KTH Royal Institute of Technology\\
-      SE-100 44 Stockholm\\
+      SE-164 40 Kista\\
       SWEDEN
     \end{tabular}%
   \end{minipage}
   \vskip 1em
-  Academic dissertation that with permission from KTH is presented for public
-  examination for completion of degree of \@getFieldLC{degreeEng} on
-  \@printDefenseDateEng\ at \@getField{defenseTime} in
-  \@getField{defenseHallEng}, Electrum, KTH, Kistag{\aa}ngen 16, Kista,
-  Sweden.\par
-  \vskip 1em
-  Akademisk avhandling som med tillst{\aa}nd av KTH i Stockholm framl\"agges
-  till offentlig granskning f\"or avl\"aggande av \@getFieldLC{degreeSwe}
-  p{\aa} \@printDefenseDateSwe\ kl.\ \@getField{defenseTime} i
-  \@getField{defenseHallSwe}, KTH, Electrum, Kistag{\aa}ngen 16, Kista.\par
+  Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
+  framl\"agges till offentlig granskning f\"or avl\"aggande av
+  \@getFieldLC{degreeSwe} p{\aa} \@printDefenseDateSwe{}
+  kl.\ \@getField{defenseTime} i \@getField{defenseHallSwe}, Electrum, Kungl
+  Tekniska Högskolan, Kistag{\aa}ngen~16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
   \@printMonthSubmitted{english} \@getField{tritaYear}\par

@@ -7,4 +7,7 @@
 \chapter{MiniZinc Implementation}
 \labelAppendix{minizinc-implementation}
 
-\lstinputlisting[language=minizinc]{minizinc/model.mzn}
+\NewDocumentCommand{\eqFormat}{m}{%
+  $\text{\codeFont#1}$%
+}
+\lstinputlisting[language=minizinc,mathescape]{minizinc/model.mzn}

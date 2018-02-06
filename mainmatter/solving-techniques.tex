@@ -1146,7 +1146,7 @@ bounded as
 %
 \begin{equation}
   \mRelaxedCost \leq \mVar{cost} < \mHeuristicCost.
-  \labelEquation{lower-bound}
+  \labelEquation{cost-bounds}
 \end{equation}
 
 
@@ -1768,7 +1768,7 @@ solving time.
 %
 For one \gls{function} (\cCode*{build\_ycc\_rgb\_t}) the solving time is
 improved by
-\printSpeedup{%
+\printZCNorm{%
   \NewOpCostFunVsOldPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }, and for no \glspl{function} is the solving time degraded.
 %
@@ -1980,7 +1980,7 @@ third experiment, with \glsshort{constraint
             GMI:~\printGMI{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupGmean%
             },
-            CI~\printGMICI[round-precision=5]{%
+            CI~\printGMICI[round-precision=4]{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMin%
             }{%
               \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMax%
@@ -1989,11 +1989,11 @@ third experiment, with \glsshort{constraint
             Both models uses an upper bound computed by LLVM and a lower bound
             computed using a relaxed model.
             %
-            \Glspl{function} marked with \barValueNoBaselineSolution{} are
+            \Glspl{function} marked with \barNormValueNoBaselineSolution{} are
             those for which the naive objective function fails to produce any
-            solution, and \glspl{function} marked with \barValueNoSolution{} are
-            those where the solution produced by \gls{LLVM} is already optimal
-            \wrt the model.
+            solution, and \glspl{function} marked with \barNormValueNoSolution{}
+            are those where the solution produced by \gls{LLVM} is already
+            optimal \wrt the model.
             %
             \Glspl{function} whose bars are marked with two dots are those
             for which the \gls{subject} does not find the optimal solution%
@@ -2017,7 +2017,7 @@ The costs range from
 %
 The \gls{GMI} is \printGMI{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI[round-precision=5]{%
+} with \gls{CI}~\printGMICI[round-precision=4]{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMin%
 }{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesRegularSpeedupCiMax%
@@ -2028,7 +2028,7 @@ We see clearly that \glsplshort{constraint model} based on the refined
 \gls{objective function}.
 %
 For one \gls{function} (\cCode*{gpk\_open}) the code quality is improved by
-\printSpeedup{%
+\printZCNorm{%
   \ObjFunRefinedVsNaiveCyclesSpeedupRefinedVsNaiveWLbUbCyclesZeroCenteredSpeedupMax%
 }, and for no \glspl{function} is code quality degraded.
 %
@@ -2212,7 +2212,7 @@ solving times (including \gls{presolving} time) for the two \glspl{constraint
   \mkSolvTechSubfigure{impl-cons-defs-dominate-entry-blocks}%
                       {ImplConsDefsDominateEntryBlocks}%
                       []%
-                      [round-precision=4]
+                      [round-precision=3]
 
   \vspace{\betweensubfigures}
 
@@ -2445,13 +2445,13 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
 Hence combining \refEquationList{impl-cons-defs-dominate-defs,
   impl-cons-defs-dominate-entry-blocks} yields a greater overall solving time
 improvement than when picked individually (up
-to~\printSpeedup{%
+to~\printZCNorm{%
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }).
 %
 However, we note that this combination yields a non-negligible solving time
 degradation for one \gls{function} (down
-to~\printSpeedup{%
+to~\printZCNorm{%
   \SolvTechEnableOnlyGoodImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 
@@ -2469,11 +2469,11 @@ In comparison, we observe that the \gls{GMI} for \glsshort{constraint
 %
 Although the maximum improvement is less than for \glsshort{constraint
   model}~\refModel{impl-ex-only-good-cons} (up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }), this combination yields no considerable degradation for any \gls{function}
 (down to at
-most~\printSpeedup{%
+most~\printZCNorm{%
   \SolvTechDisableAllImpliedConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 %
@@ -2734,11 +2734,11 @@ This means that combining only the \glsshort{symmetry breaking.c} or
 impact on solving time is not sufficient.
 %
 Although solving time is improved considerably for one \gls{function} (up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }), this combination also degrades solving time for several \glspl{function}
 (down
-to~\printSpeedup{%
+to~\printZCNorm{%
   \SolvTechEnableOnlyGoodDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 
@@ -2755,11 +2755,11 @@ is \printGMI{%
 %
 In addition, the maximum improvement is greater than for \glsshort{constraint
   model}~\refModel{dom-ex-only-good-cons} (up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }), and this combination yields no considerable degradation for any
 \gls{function} (down to at
-most~\printSpeedup{%
+most~\printZCNorm{%
   \SolvTechDisableAllDomConsPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 %
@@ -3070,11 +3070,11 @@ To begin with, we observe that the \gls{GMI} for \glsshort{constraint
 }, which is a statistically significant, positive impact.
 %
 But although the improvement is considerable for some \glspl{function} (up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }), we note that this combination yields a considerable degradation for others
 (down
-to~\printSpeedup{%
+to~\printZCNorm{%
   \SolvTechEnableOnlyGoodPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 
@@ -3092,11 +3092,11 @@ In comparison, we observe that the \gls{GMI} for \glsshort{constraint
 %
 In addition, the maximum improvement is greater than for \glsshort{constraint
   model}~\refModel{pre-ex-only-good-techs} (up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }), and this combination yields no considerable degradation for any
 \gls{function} (down to at
-most~\printSpeedup{%
+most~\printZCNorm{%
   \SolvTechDisableBadPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMin%
 }).
 
@@ -3115,7 +3115,7 @@ Lastly, we observe that the \gls{GMI} for \glsshort{constraint
 %
 In addition, the maximum improvement is less than for \glsshort{constraint
   model}~\refModel{pre-ex-no-bad-techs} (up to at
-most~\printSpeedup{%
+most~\printZCNorm{%
   \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }).
 %
@@ -3225,8 +3225,8 @@ and~\refModel{st-ex-all-techs} as \glspl{subject}.
               \item one with all techniques (subject)
             \end{modelList}.
             %
-            \Glspl{function} marked with \barValueNoBaselineSolution{} are those
-            for which model~\refModel{st-ex-no-techs} fails to produce any
+            \Glspl{function} marked with \barNormValueNoBaselineSolution{} are
+            those for which model~\refModel{st-ex-no-techs} fails to produce any
             solution%
           }
   \labelFigure{diff-solv-tech-comb-solving-time-plot}
@@ -3306,9 +3306,9 @@ which in turn considerably outperforms \glsshort{constraint
 %
 We also note that the maximum improvement for \glsshort{constraint
   model}~\refModel{st-ex-no-bad-techs} is greater than for \glsshort{constraint
-  model}~\refModel{st-ex-all-techs} (up to \printSpeedup{%
+  model}~\refModel{st-ex-all-techs} (up to \printZCNorm{%
   \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
-} \versus up to \printSpeedup{%
+} \versus up to \printZCNorm{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }).
 %

@@ -83,7 +83,7 @@ To make the approach work in practice, numerous solving techniques have been
 introduced.
 %
 Through experimental evaluation, it has been shown that these techniques
-collectively improve solving time up to \printSpeedup{%
+collectively improve solving time up to \printZCNorm{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }, with a \gls{GMI} of~\printGMI{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean
@@ -92,7 +92,7 @@ collectively improve solving time up to \printSpeedup{%
 It was also discovered that two solving techniques
 (\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}) have a
 negative impact on solving time, and rejecting them improves solving time up to
-\printSpeedup{%
+\printZCNorm{%
   \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }, with a \gls{GMI} of~\printGMI{%
   \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
@@ -106,7 +106,7 @@ produces for \gls{Hexagon} -- a \gls{DSP} with a rich \gls{instruction set} --
 with that produced by \gls{LLVM} -- a existing, state-of-the-art \gls{compiler}.
 %
 In these experiments, the approach improves the estimated execution time of
-\glspl{function} by up to~\printSpeedup{%
+\glspl{function} by up to~\printZCNorm{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }, with a \gls{GMI} of \printGMI{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -120,7 +120,7 @@ Experiments have also been performed to evaluate the impact of \gls{SIMD.i}
 \gls{instruction} selection.
 %
 The results show that, when such \glspl{instruction} are available, the approach
-improves code quality up to~\printSpeedup{%
+improves code quality up to~\printZCNorm{%
   \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }, with a \gls{GMI} of~\printGMI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%

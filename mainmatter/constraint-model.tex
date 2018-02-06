@@ -43,56 +43,19 @@ which must be forbidden.
 In \gls{global.is}[ \gls{instruction selection}], a set of \glspl{match} must be
 selected such that every \gls{operation} in a given \gls{UF graph} is covered.
 %
-There are two variants of this problem:
+We model \gls{exact.c} \gls{cover}[age] since it enables use of many solving
+techniques that are essential for curbing solving time and increasing
+scalability.
 %
-\begin{enumerate*}[label=(\arabic*)]
-  \item each \gls{operation} must appear in \emph{exactly} one selected
-    \gls{match}; and
-%
-  \item each \gls{operation} must appear in \emph{at least} one selected
-    \gls{match}, hence allowing matches to \gls{overlap}.
-\end{enumerate*}
-%
-The former problem is more common as it is stricter, resulting in simpler models
-with smaller \glspl{solution space}.
-%
-It also allows use of \glspl{constraint} that enable strong \gls{propagation},
-which is essential for curbing solving time and increasing scalability.
-
-Depending on the \gls{instruction set}, the latter problem permits
-\glspl{solution} with potentially higher code quality.
-%
-For example, assume a \gls{UF graph} where a sum is used as address in two
-memory \glspl{operation} and a \gls{target machine} where the address can be
-computed as part of the memory \glspl{instruction}.
-%
-A \gls{solution} to the latter problem would therefore only need two
-\glspl{instruction}, whereas the former problem would require three
-\glspl{instruction} (one to compute the sum and two to perform the memory
-\glspl{operation}, since the addition is not allowed to be covered by both
-memory \glspl{instruction}).
-%
-In certain conditions, however, an add \gls{instruction} may still be required.
-%
-For example, assume a \gls{UF graph} where the sum is also used in a
-subtraction.
-%
-For this \gls{UF graph}, unless the \gls{target machine} has an instruction that
-performs both an addition and a subtraction, a \gls{solution} to either problem
-requires an add \gls{instruction} to compute the sum.
-%
-Due to the increased complexity of the relaxed version of the problem, we model
-exact \gls{cover}[age] in this dissertation.
-
-Similarly, every value and state must be produced by exactly one selected
-\gls{match}.
+Similarly, we model that every value and state must be produced by exactly one
+selected \gls{match}.
 %
 If a \gls!{datum}~$d$ denotes either a \glsshort{state node} or \gls{value node}
 in the \gls{UF graph}, then we say that a \gls{match}~$m$ \gls!{define.d}[s] $d$
 if there exists an \gls{inbound.e} \glsshort{state-flow edge} or \gls{data-flow
   edge} to $d$ in the \gls{UP graph} from which $m$ was derived.
 %
-Similarly, $m$ \gls!{use.d}[s] $d$ if there exists an \gls{outbound.e}
+Likewise, $m$ \gls!{use.d}[s] $d$ if there exists an \gls{outbound.e}
 \glsshort{state-flow edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph}
 of $m$.
 
@@ -1244,10 +1207,9 @@ We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
 significantly shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case (\cCode*{reg2rsaref}), for example, the solving time differs by a
-factor
-of~\printSpeedup{%
-  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupMax%
+In one case (\cCode*{reg2rsaref}), for example, the solving time is improved
+by~\printZCNorm{%
+  \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }.
 %
 This is due to a high rate of \gls{copy-related.d} values for which
@@ -1303,7 +1265,7 @@ we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
             GMI:~\printGMI{%
               \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
             },
-            CI:~\printGMICI{%
+            CI:~\printGMICI[round-precision=3]{%
               \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
             }{%
               \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
@@ -1326,7 +1288,7 @@ The costs range from
 %
 The \gls{GMI} is \printGMI{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
+} with \gls{CI}~\printGMICI[round-precision=3]{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
@@ -1337,8 +1299,9 @@ produces \glspl{solution} with significantly less cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
 In one case (\cCode*{putseqdispext}), for example, the cycle count is reduced
-from \num{256}~cycles to \num{208}~cycles (a speedup of \printSpeedup{%
-  \AltValuesVsWithoutCyclesSpeedupCyclesRegularSpeedupMax%
+from \num{256}~cycles to \num{208}~cycles (an improvement
+of~\printZCNorm{%
+  \AltValuesVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }).
 %
 This is because two constants are frequently used as arguments to \gls{function}
@@ -1889,7 +1852,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
             GMI:~\printGMI{%
               \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
             },
-            CI~\printGMICI{%
+            CI~\printGMICI[round-precision=3]{%
               \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
             }{%
               \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
@@ -1913,7 +1876,7 @@ The costs range from
 %
 The \gls{GMI} is \printGMI{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
+} with \gls{CI}~\printGMICI[round-precision=3]{%
   \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
     \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesRegularSpeedupCiMax%
@@ -2197,10 +2160,10 @@ either is selected (due to \refEquation{consumption}).
 %
 This means either both or none of the \glspl{match} must be selected.
 %
-Together with the \gls{constraint} of exact \gls{cover}[age], in all
+Together with the \gls{constraint} of \gls{exact.c} \gls{cover}[age], in all
 \glspl{solution} neither of $m_1$ or $m_2$ is selected.
 %
-This problem can be fixed by relaxing the \gls{constraint} of exact
+This problem can be fixed by relaxing the \gls{constraint} of \gls{exact.c}
 \gls{cover}[age], but as in the case of \gls{recomputation} this inhibits many
 of the necessary solving techniques.
 

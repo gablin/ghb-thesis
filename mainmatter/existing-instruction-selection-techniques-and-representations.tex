@@ -449,11 +449,18 @@ Having found $M$, the \gls{selection} problem -- which in this context is
 referred to as the \gls!{pattern selection}[ problem] -- can be reduced to
 selecting a set of \glspl{match} that \gls{cover}[s]~$G$.
 %
-A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
-$G$ if every \gls{node} in $G$ appears in exactly one match from~$C$.
+A subset~\mbox{$M' \subseteq M$} \gls!{cover}[s] $G$ if every \gls{node} in $G$
+appears in at least one match in~$M'$.
 %
-Such a subset is called a \gls!{cover}, and examples are shown in
-\refFigure{p-match-sel-example}.
+Such a subset is called a \gls!{cover}.
+%
+A \gls{cover} is an \gls!{exact.c}[ \gls{cover}] if every \gls{node} in $G$
+appears in exactly one match in the \gls{cover}.
+%
+Most \gls{instruction selection} approaches assume \gls{exact.c}
+\gls{cover}[age].
+%
+Examples of \glspl{cover} are shown in \refFigure{p-match-sel-example}.
 
 \begin{filecontents*}{p-match-sel-example.c}
 x = A[i + 1];
@@ -508,18 +515,17 @@ x = A[i + 1];
             a program that loads a value from integer array \irVar*{A} at offset
             \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
             %
-            It is assumed that \irVar*{i} is
-            stored in register and that \irVar*{A} is stored in memory and that
-            an integer is \num{4}~bytes.
+            It is assumed that \irVar*{i} is stored in register, that \irVar*{A}
+            is stored in memory, and that an integer is \num{4}~bytes.
             %
-            Valid covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
-            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and
-            \mbox{$\mSet{m_1, \ldots, m_5, m_{10}}$}, where $m_1$ corresponds to
-            a dummy pattern for covering nodes representing variables.
+            Exact covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, \mbox{$\mSet{m_1,
+                \ldots, m_5, m_{10}}$}, and \mbox{$\mSet{m_1, \ldots, m_5, m_8,
+                m_9}$} (non-exact covers are ignored for brevity).
             %
-            Variable assignments need not be explicitly represented as nodes as
-            this information can be propagated from the root node after having
-            found a cover%
+            Variable assignments need not be explicitly represented as nodes
+            since this information can be propagated from the root node after
+            having found a cover%
           }
   \labelFigure{p-match-sel-example}
 \end{figure}
@@ -553,7 +559,7 @@ The corresponding matches \mbox{$m_1, m_2, \ldots, m_8, m_9, m_{10}$} are
 therefore assigned costs \mbox{$0, 1, \ldots, 1, 5, 5$}, respectively ($m_1$ has
 zero cost since variable~\irVar*{i} is already in a \gls{register}).
 %
-Then, of the valid \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+Then, of the \gls{exact.c} \glspl{cover} \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
 \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, and \mbox{$\mSet{m_1, \ldots, m_5,
     m_{10}}$}, only the last \gls{cover} is considered \gls{optimal.ps} as it
 has a total cost of~\num{9} whereas the other two \glspl{cover} have
@@ -582,9 +588,9 @@ A \gls{grammar} consists of \glspl{terminal}, \glspl{nonterminal}, and
 \glspl{rule}.
 %
 In this context, a \gls!{terminal} is a \gls{symbol} representing an
-\gls{operation} (e.g.\ \irCode*{\irAddText}, \irCode*{\irLTText},
+\gls{operation} (\eg \irCode*{\irAddText}, \irCode*{\irLTText},
 \irCode*{\irLoadText}), and a \gls!{nonterminal} is a \gls{symbol} representing
-an abstract result (e.g.\ $\mNT{Reg}$) produced by the \gls{instruction}.
+an abstract result (\eg $\mNT{Reg}$) produced by the \gls{instruction}.
 %
 To distinguish between the two, \glspl{terminal} are written entirely in lower
 case whereas \glspl{nonterminal} start with a capital letter and are set in
@@ -1375,7 +1381,7 @@ An example is shown in \refFigure{mis-example}.
           {%
             Example of modeling pattern selection as a MIS problem.
             %
-            Valid maximal independent sets of the interference graph are
+            Maximal independent sets of the interference graph are
             \mbox{$\mSet{m_1, \ldots, m_5, m_7}$}, \mbox{$\mSet{m_1, m_2, m_3,
                 m_5, m_8}$}, and \mbox{$\mSet{m_1, m_2, m_3, m_6, m_7}$}, which
             correspond to valid covers of the block DAG%
@@ -1515,7 +1521,7 @@ Formally, an \gls{IP} problem is defined as follows.
   \begin{displaymath}
     \begin{array}{rl}
       \text{maximize} &
-        \multirow{2}{*}{$\mVector{c}^{\transp} \mVector{\mVar{x}}$} \\
+        \multirow{2}{*}{$\mVector{c}^{\mTransp} \mVector{\mVar{x}}$} \\
       \text{or minimize} & \\
       \text{subject to} & \mMatrix{A} \mVector{\mVar{x}} \leq \mVector{b}, \\
         & \mMatrix{A} \mVector{\mVar{x}} \in \mathbb{Z}^{n \times n}\!, \\
@@ -2167,12 +2173,12 @@ Formally, a \gls{PBQP} is defined as follows.
       \text{minimize}
         & \displaystyle
           \sum_{\mathclap{1 \leq i < j \leq n}}
-          \mVector{\mVar{x}}_i^{\transp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
+          \mVector{\mVar{x}}_i^{\mTransp} \mMatrix{C}_{ij} \, \mVector{\mVar{x}}_j +
           \sum_{\mathclap{1 \leq i \leq n}}
-          \mVector{c}_i^{\transp} \mVector{\mVar{x}}_i, \\
+          \mVector{c}_i^{\mTransp} \mVector{\mVar{x}}_i, \\
       \text{subject to}
         & \forall 1 \leq i \leq n :
-          \mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1. \\
+          \mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1. \\
     \end{array}
   \end{displaymath}
   \labelDefinition{pbqp}
@@ -2187,7 +2193,7 @@ where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
 selected for decision~$i$.
 %
 For each \gls{variable}, the condition
-\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp} \mVector{\mVar{x}}_i = 1$}
+\raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1$}
 ensures that exactly one choice is selected.
 %
 The cost of selecting a particular choice for decision~$i$ is represented
@@ -2384,7 +2390,7 @@ Each \gls{complex.m} \gls{match}~$i$ in turn introduces a
 \gls{variable}~\raisebox{0pt}[\height-2pt]{$\mVector{\mVar{x}}_i \in \mSet{0,
     1}^2$} to decide whether $i$ is selected.
 %
-Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\transp}
+Because of the \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp}
   \mVector{\mVar{x}}_i = 1$} condition, every such \gls{variable} has exactly
 two elements (one representing \emph{on} and the other \emph{off}).
 %
@@ -2415,7 +2421,7 @@ The \gls{PBQP} model is thus augmented with another sum
 %
 \begin{equation}
   \sum_{\mathclap{i \,\in\, N, \: j \,\in\, M}}
-  \mVector{\mVar{x}}_i^{\transp} D_{ij} \, \mVector{\mVar{x}}_j
+  \mVector{\mVar{x}}_i^{\mTransp} D_{ij} \, \mVector{\mVar{x}}_j
 \end{equation}
 %
 where $N$ denotes the set of \glspl{node} in the \gls{SSA graph} and $M$ denotes

@@ -152,6 +152,10 @@
 \newcommand{\refPage}[1]{p.\thinspace\pageref{page:#1}}
 
 % Other text commands
+\NewDocumentCommand{\eg}{s}{%
+  e.g%
+  \IfBooleanF{#1}{.\ }%
+}
 \NewDocumentCommand{\etal}{s}{%
   et al%
   \IfBooleanF{#1}{.\ }%
@@ -502,7 +506,7 @@
 \NewDocumentCommand{\mPowerset}{m}{
   2^{#1}
 }
-\newcommand{\transp}{\mathsf{T}}
+\newcommand{\mTransp}{\mathsf{T}}
 \newcommand{\mNatNumSet}{\mathbb{N}}
 \newcommand{\mPhi}{\varphi}
 \newcommand{\mSigma}{\Sigma}
@@ -777,6 +781,12 @@
     #1 \xrightarrow{\raisebox{-2pt}[-6pt]{\scriptsize$*$}} #2
   )
 }
+
+% Get \udtimes symbol from 'mathdesign' package
+\DeclareFontEncoding{MDA}{}{}
+\DeclareFontSubstitution{MDA}{cmr}{m}{n}
+\DeclareSymbolFont{mathdesignA}{MDA}{mdugm}{m}{n}
+\DeclareMathSymbol{\udtimes}{\mathbin}{mathdesignA}{"5D}
 
 
 %============
@@ -1554,8 +1564,8 @@
 \newcommand{\functionNameFont}{\LARGE}
 \newcommand{\functionName}[1]{{\functionNameFont\path{#1}}}
 \newcommand{\plotPercentageFont}{\huge}
-\newcommand{\plotPercentage}[1]{{\plotPercentageFont$#1$\%}}
-\newcommand{\speedupValue}[1]{%
+\newcommand{\plotPercentage}[1]{{\plotPercentageFont\SI{#1}{\percent}}}
+\newcommand{\normValue}[1]{%
   \pgfmathparse{and(-1 < #1, #1 < 1) ? 1 : 0}%
   \ifnum \pgfmathresult=1
     % Decimal rounding
@@ -1566,28 +1576,31 @@
     \num[round-mode=figures, round-precision=3]{\tempa}%
   \fi%
 }
-\newcommand{\plotSpeedupTicsFont}{\huge}
+\newcommand{\plotNormTicsFont}{\huge}
 \newcommand{\plotSpeedupTics}[1]{%
-  {\plotSpeedupTicsFont$\speedupValue{#1}\times$}%
+  {\plotNormTicsFont$\normValue{#1}\mSpeedupSuffix$}%
+}
+\newcommand{\plotZCNormTics}[1]{%
+  {\plotNormTicsFont$\normValue{#1}\mZCNormSuffix$}%
 }
 \newcommand{\plotSecondsFont}{\Large}
-\newcommand{\plotSeconds}[1]{{\plotSecondsFont$#1$\thinspace{}s}}
-\newcommand{\barValueFont}{}
+\newcommand{\plotSeconds}[1]{{\plotSecondsFont\SI{#1}{\s}}}
+\newcommand{\barNormValueFont}{}
 \newcommand{\barSymbolFont}{\LARGE}
-\newcommand{\plotBarValue}[1]{%
-  {\barValueFont\speedupValue{#1}}%
+\newcommand{\plotBarNormValue}[1]{%
+  {\barNormValueFont\normValue{#1}}%
 }
-\newcommand{\barValueNotOptimal}{$*$}
-\newcommand{\plotBarValueNotOptimal}{%
-  {\barSymbolFont\barValueNotOptimal}%
+\newcommand{\barNormValueNotOptimal}{$*$}
+\newcommand{\plotBarNormValueNotOptimal}{%
+  {\barSymbolFont\barNormValueNotOptimal}%
 }
-\newcommand{\barValueNoBaselineSolution}{$**$}
-\newcommand{\plotBarValueNoBaselineSolution}{%
-  {\barSymbolFont\barValueNoBaselineSolution}%
+\newcommand{\barNormValueNoBaselineSolution}{$**$}
+\newcommand{\plotBarNormValueNoBaselineSolution}{%
+  {\barSymbolFont\barNormValueNoBaselineSolution}%
 }
-\newcommand{\barValueNoSolution}{$***$}
-\newcommand{\plotBarValueNoSolution}{%
-  {\barSymbolFont\barValueNoSolution}%
+\newcommand{\barNormValueNoSolution}{$***$}
+\newcommand{\plotBarNormValueNoSolution}{%
+  {\barSymbolFont\barNormValueNoSolution}%
 }
 \newcommand{\plotSubOptSymbol}{%
   \Huge\bfseries%
@@ -1677,16 +1690,21 @@
   \printCycles[#1]{\pgfmathresult}%
 }
 
-\NewDocumentCommand{\printGMI}{O{}m}{%
-  \num[round-mode=figures, round-precision=3, #1]{#2}%
+\newcommand{\mSpeedupSuffix}{\times}
+\newcommand{\mZCNormSuffix}{%
+  \udtimes%
 }
 
-\NewDocumentCommand{\printGMICI}{O{}mO{}m}{%
-  \mbox{$[\printGMI[#1]{#2}, \printGMI[#3]{#4}]$}%
-}
-
-\NewDocumentCommand{\printSpeedup}{O{}m}{%
-  \num[round-mode=figures, round-precision=3, #1]{#2}$\times$%
+\NewDocumentCommand{\printSpeedup}{sO{}m}{%
+  \pgfmathparse{#3 < 10 ? 1 : 0}%
+  \ifnum \pgfmathresult=1
+    % Decimal rounding
+    \num[round-mode=places, round-precision=2, #2]{#3}%
+  \else
+    % Significant figure rounding
+    \num[round-mode=figures, round-precision=3, #2]{#3}%
+  \fi%
+  \IfBooleanTF{#1}{}{$\mSpeedupSuffix$}%
 }
 
 \NewDocumentCommand{\printMaxSpeedup}{O{}m}{%
@@ -1697,6 +1715,33 @@
 \NewDocumentCommand{\printMinSpeedup}{O{}m}{%
   \minOf{#2}%
   \printSpeedup[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printZCNorm}{sO{}m}{%
+  \num[round-mode=figures, round-precision=3, #2]{#3}%
+  \IfBooleanTF{#1}{}{$\mZCNormSuffix$}%
+}
+
+\NewDocumentCommand{\printMaxZCNorm}{O{}m}{%
+  \maxOf{#2}%
+  \printZCNorm[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printMinZCNorm}{O{}m}{%
+  \minOf{#2}%
+  \printZCNorm[#1]{\pgfmathresult}%
+}
+
+\NewDocumentCommand{\printGMI}{sO{}m}{%
+  \IfBooleanTF{#1}{%
+    \printSpeedup*[#2]{#3}%
+  }{%
+    \printSpeedup[#2]{#3}%
+  }%
+}
+
+\NewDocumentCommand{\printGMICI}{O{}mO{}m}{%
+  \mbox{$[\printGMI*[#1]{#2}, \printGMI*[#3]{#4}]\mSpeedupSuffix$}%
 }
 
 \newcommand{\supportNo}{$\cdot$}

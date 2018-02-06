@@ -87,9 +87,9 @@ for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
             %
             \Glspl{function} whose bars are marked with two dots are those for
             which the \gls{subject} does not find the optimal solution, and
-            \glspl{function} marked with \barValueNoSolution{} are those where
-            the solution produced by \gls{LLVM} is already optimal \wrt the
-            model%
+            \glspl{function} marked with \barNormValueNoSolution{} are those
+            where the solution produced by \gls{LLVM} is already optimal \wrt
+            the model%
           }
   \labelFigure{unison-vs-llvm-cycles-plot}
 \end{figure}
@@ -119,7 +119,7 @@ The \gls{GMI} is \printGMI{%
 }.
 
 We see that our approach produces \glspl{solution} with significantly less
-cost than those produced by \gls{LLVM} (up to~\printSpeedup{%
+cost than those produced by \gls{LLVM} (up to~\printZCNorm{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 } improvement).
 %
@@ -282,7 +282,7 @@ The \gls{GMI} is \printGMI{%
 
 We see that the \gls{pattern set}~\refPattern{with-simd} yields \glspl{solution}
 with significantly less cost than those yielded by \gls{pattern
-  set}~\refPattern{no-simd} (up to~\printSpeedup{%
+  set}~\refPattern{no-simd} (up to~\printZCNorm{%
   \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 } improvement).
 %
