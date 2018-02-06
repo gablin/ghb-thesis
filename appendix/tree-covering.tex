@@ -388,7 +388,7 @@ ASG OPSIM,   INAREG|FORCC,
     \lstinputlisting{pcc-machine-description-sample.c}%
   \end{lstpage}
 
-  \caption[A machine description sample for \glsentrytext{PCC}]%
+  \caption[Example of a machine description for \glsentrytext{PCC}]%
           {%
             A machine description sample for \glsentrytext{PCC}, consisting of
             two patterns~\cite{Johnson:1981}.
@@ -1132,7 +1132,7 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
       \bottomrule
     \end{tabular}
 
-    \caption[Machine grammar example]%
+    \caption[Example of a machine grammar]%
             {%
               Example of a machine grammar~\cite{GlanvilleGraham:1978}.
               %
@@ -1210,10 +1210,7 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
       \bottomrule
     \end{tabular}
 
-    \caption[%
-              State table generated from grammar in
-              \refFigure{glanville-graham-machine-grammar}%
-            ]%
+    \caption[Example of a state table for a machine grammar]%
             {%
               State table generated from the machine grammar given in
               \refFigure{glanville-graham-machine-grammar}%
@@ -2212,7 +2209,7 @@ it will not be able to match and select the necessary \gls{chain.r} \glspl{rule}
                   }%
                 }
 
-  \caption[Examples on how chain rules can be supported]%
+  \caption[Examples illustrating how chain rules can be supported]%
           {%
             Examples illustrating how chain rules can be supported by tree
             covering-based techniques.
@@ -2715,9 +2712,9 @@ Consequently, commutative operations, such as addition, must be handled through
                 }%
   \mbox{}
 
-  \caption[Tree pattern matching example using Hoffmann-O'Donnell]%
+  \caption[Example of tree pattern matching using Hoffmann-O'Donnell]%
           {%
-            Tree pattern matching using
+            Example of tree pattern matching using
             Hoffmann-O'Donnell~\cite{HoffmannODonnell:1982}.
             %
             Nullary nodes~$v$ are indicated with a dashed border.
@@ -3260,9 +3257,9 @@ reg: plus(reg, ind(plus(const, reg)))           /* Rule 6 */
     \lstinputlisting{twig-example.c}%
   \end{lstpage}
 
-  \caption[Rule examples for \glsentrytext{Twig}]%
+  \caption[Examples of grammar rules for \glsentrytext{Twig}]%
           {%
-            Rule examples for \glsentrytext{Twig}, written in
+            Examples of grammar rules for \glsentrytext{Twig}, written in
             CGL~\cite{AhoEtAl:1989}%
           }%
   \labelFigure{twig-example}
@@ -3998,8 +3995,11 @@ correctness of \glspl{BURS grammar} using abstract \glspl{state machine}.
                   \input{figures/tree-covering/burs-example-lr-graph}%
                 }
 
-  \caption[BURS example]%
-          {BURS example~\cite{Pelegri-LlopartGraham:1988}}
+  \caption[Example of a BURS grammar and an LR~graph]%
+          {%
+            Example of a BURS grammar and an
+            LR~graph~\cite{Pelegri-LlopartGraham:1988}%
+          }
   \labelFigure{burs-example}
 \end{figure}
 
@@ -4839,7 +4839,7 @@ effective.\!%
 }
 
 
-\section{Limitations of Using Trees}
+\section{Limitations of Tree Covering}
 \labelSection{tc-limitations}
 
 While \gls{tree covering} enables use of more complex \glspl{pattern} compared

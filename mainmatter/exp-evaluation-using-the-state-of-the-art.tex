@@ -69,10 +69,13 @@ for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
     }%
   }
 
-  \caption[Plot for evaluating the impact of our approach on code quality]%
+  \caption[%
+            Plot for evaluating universal instruction selection's impact on code
+            quality in comparison with LLVM%
+          ]%
           {%
-            Solution costs produced by our approach, normalized to those
-            produced by LLVM.
+            Solution costs produced by universal instruction selection,
+            normalized to those produced by LLVM.
             %
             GMI:~\printGMI{%
               \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupGmean%
@@ -221,7 +224,7 @@ costs for the two \glspl{pattern set} describe above, with \gls{pattern
     }%
   }
 
-  \caption[Plot for evaluating the impact of SIMD instructions on code quality]%
+  \caption[Plot for evaluating SIMD instructions' impact on code quality]%
           {%
             Normalized solution costs for two pattern sets:
             %
