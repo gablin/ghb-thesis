@@ -1209,7 +1209,7 @@
   \IfBooleanTF{#1}{\irCode*{#2}}{\irCode{#2}}%
 }
 \newcommand{\irBrText}{br}
-\NewDocumentCommand{\irBr}{ms}{%
+\NewDocumentCommand{\irBr}{sm}{%
   \mbox{%
     \IfBooleanTF{#1}{%
       \irCode*{\bfseries\irBrText}%
