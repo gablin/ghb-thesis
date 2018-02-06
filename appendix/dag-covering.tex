@@ -1576,7 +1576,7 @@ Solving this monolithic \gls{IP}~model, however, typically requires considerably
 more time compared to the previously discussed techniques of \gls{instruction
   selection}.
 %
-But the trade-off for longer compilation time is higher code quality;
+But the trade-off for longer compilation time is better code quality;
 \citeauthor{WilsonEtAl:1994} reported that experiments showed that the generated
 \gls{assembly code} was of comparable code quality to that of manually optimized
 \gls{assembly code}.
@@ -1996,15 +1996,14 @@ Given a set \mbox{$v_1, \ldots, v_k$} of values and two sets \mbox{$\mVar{x}_1,
   \ldots, \mVar{x}_n$} are assigned value~$v_i$ (see also \refDefinition{gcc} on
 \refPageOfDefinition{gcc}).
 %
-For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 \in \mSet{0}} \hspace{-1pt},
-  \mTuple{3, \mVar{c}_2 \in \mSet{1}} \hspace{-1pt}, \mVar{x}_1 \in \mSet{2},
-  \mVar{x}_2 \in \mSet{3})$} holds because no $\mVar{x}$~\gls{variable} is
-assigned value~\num{5} and exactly one $\mVar{x}$~\gls{variable} is assigned
-value~\num{3}.
+For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 =0} \hspace{-1pt}, \mTuple{3,
+    \mVar{c}_2 = 1} \hspace{-1pt}, \mVar{x}_1 = 2, \mVar{x}_2 =3)$} holds
+because no $\mVar{x}$~\gls{variable} is assigned value~\num{5} and exactly one
+$\mVar{x}$~\gls{variable} is assigned value~\num{3}.
 %
 Similarly, \mbox{$\mGCC(\mTuple{3, \mVar{c}_1 \in \mSet{0, 2}} \hspace{-1pt},
-  \mVar{x}_1 \in \mSet{2}, \mVar{x}_2 \in \mSet{3})$} does not holds because
-either none or both $\mVar{x}$~\glspl{variable} must be assigned value~\num{3}.
+  \mVar{x}_1 = 2, \mVar{x}_2 = 3)$} does not holds because either none or both
+$\mVar{x}$~\glspl{variable} must be assigned value~\num{3}.
 
 To model \gls{pattern selection} using $\mGCC$, two new sets of \glspl{variable}
 are needed.

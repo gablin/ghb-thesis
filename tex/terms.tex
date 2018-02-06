@@ -146,7 +146,7 @@
 % GRAPH TERMS
 %=============
 
-\newTerm{child}[see=[\seename]{node}]
+\newTerm{child}[plural={children}, see=[\seename]{node}]
 \newTerm{cycle}
 \newTerm[Hamiltonian.c]{Hamiltonian}[parent={cycle}]
 \newAcronym{DAG}{directed acyclic graph}
@@ -397,7 +397,7 @@
 \newTerm{context-free grammar}[see=[\seename]{grammar}]
 \newTerm{grammar}[see=[\seename]{machine grammar}]
 \newTerm[ambiguous.g]{ambiguous}[parent={grammar}]
-\newTerm[normal form.g]{normal form}[parent={grammar}, user1={normal-form}]
+\newTerm[normal form.g]{normal form}[parent={grammar}, user3={normal-form}]
 \newTerm{LR parser}
 \newTerm{LR parsing}
 \newTerm{machine grammar}[see=[\seename]{grammar}]
@@ -413,9 +413,9 @@
 \newTerm[rewrite.r]{rewrite}[parent={rule}]
 \newTerm[simple.r]{simple}[parent={rule}]
 \newTerm[split.r]{split}[parent={rule}]
-\newTerm{rule pattern}[user1={pattern}]
+\newTerm{rule pattern}[user1={pattern}, user2={patterns}]
 \newTerm{rule reduction}
-\newTerm{rule result}[user1={result}]
+\newTerm{rule result}[user1={result}, user2={results}]
 \newTerm{semantic blocking}
 \newTerm{shift}
 \newTerm{shift-reduce conflict}
@@ -453,7 +453,7 @@
 \newTerm{control-flow graph}[user1={control-flow}]
 \newTerm{cover}
 \newTerm[exact.c]{exact}[parent={cover}]
-\newTerm[least-cost.c]{least-cost}[parent={cover}]
+\newTerm[least-cost.c]{least-cost}[parent={cover}, user4={least cover}]
 \newTerm{data-flow edge}[user1={data-flow}]
 \newTerm{data-flow graph}[user1={data-flow}]
 \newTerm{expression tree}
@@ -464,7 +464,8 @@
 \newTerm[dominate.m]{dominate}[parent={match}, user1={domin}]
 \newTerm[illegal.m]{illegal}[parent={match}]
 \newTerm{match set}
-\newTerm{matching}[see=[\seename]{pattern matching}]
+\newTerm{matching problem}%
+        [user1={matching}, see=[\seename]{pattern matching}]
 \newTerm{overlap}
 \newTerm{pattern}[see=[\seename]{pattern graph}]
 \newTerm[complex.p]{complex}[parent={pattern}]
@@ -477,15 +478,17 @@
 \newTerm{pattern tree}[see=[\seename]{pattern}]
 \newTerm[inconsistent.pt]{inconsistent}[parent={pattern tree}]
 \newTerm[independent.pt]{independent}[parent={pattern tree}]
-\newTerm{pattern matching}[user3={pattern-matching}, see=[\seename]{matching}]
+\newTerm{pattern matching}%
+        [user3={pattern-matching}, see=[\seename]{matching problem}]
 \newTerm{pattern matcher}
-\newTerm{pattern selection}[see=[\seename]{selection}]
+\newTerm{pattern selection}[see=[\seename]{selection problem}]
 \newTerm[goal-driven.ps]{goal-driven}[parent={pattern selection}]
 \newTerm[optimal.ps]{optimal}[parent={pattern selection}]
 \newTerm{pattern selector}
 \newTerm{pattern set}
 \newTerm[simple.ps]{simple}[parent={pattern set}]
-\newTerm{selection}[see=[\seename]{pattern selection}]
+\newTerm{selection problem}%
+        [user1={selection}, see=[\seename]{pattern selection}]
 
 
 %====================
@@ -591,9 +594,10 @@
 \newTerm{macro expander}[user3={macro-expan}]% The short term is without the
                                              % ending 'sion' in order to be used
                                              % in words like 'expanding'.
-\newTerm{maximum munch}
 \newTerm{machine invariant}
 \newTerm{machine operation}
+\newTerm{mapping candidate set}
+\newTerm{maximum munch}
 \newTerm{means-end analysis}
 \newTerm{microcode}
 \newTerm{microcode generation}
@@ -602,7 +606,9 @@
 \newTerm{nullary symbol}
 \newTerm{parser cactus}[plural={parser cactuses}]
 \newTerm{Polish notation}
-\newTerm[reverse.pn]{reverse}[parent={Polish notation}, see=[\seename]{postfix notation}]
+\newTerm[reverse.pn]%
+        {reverse}%
+        [parent={Polish notation}, see=[\seename]{postfix notation}]
 \newTerm{postfix notation}[see=[\seename]{Polish notation}]
 \newTerm{product automaton}[plural={product automata}]
 \newTerm{program-dependence web}

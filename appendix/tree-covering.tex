@@ -23,8 +23,8 @@ The techniques thus far are all bottom-up-oriented, and in
 approaches.
 %
 In \refSection{tc-separating-matching-and-selection}, we describe the first
-techniques that separate the \gls{matching} and \gls{selection} problems,
-allowing the latter problem to be solved \gls{optimal.ps}[ly].
+techniques that separate the \glsshort{matching problem} and \glspl{selection
+  problem}, allowing the latter problem to be solved \gls{optimal.ps}[ly].
 %
 In \refSection{tc-other-tree-based-approaches}, we describe other
 \gls{tree}-based approaches that do not fit into any of the sections above.
@@ -52,9 +52,10 @@ Hence exploitation of many \glspl{instruction} is excluded, resulting in low
 code quality.
 %
 Another problem is that \gls{macro}-expanding \glspl{instruction selector}
-typically combine \gls{matching} and \gls{selection} into a single step, thus
-making it very difficult to consider combinations of \glspl{instruction} and
-then pick the one that yields the best \gls{assembly code}.
+typically combine \glsshort{matching problem} and \glsshort{selection problem}
+into a single step, thus making it very difficult to consider combinations of
+\glspl{instruction} and then pick the one that yields the best \gls{assembly
+  code}.
 
 These problems can be solved by employing another \gls{principle} of
 \gls{instruction selection} called \gls{tree covering}, which is also the most
@@ -73,20 +74,19 @@ When the shape is clear from the context, they are simply called
 The set of \glspl{pattern} for a particular \gls{target machine} constitute a
 \gls!{pattern set}.
 
-The \gls{matching} problem can be reduced to finding all instances where a
+The \gls{matching problem} can be reduced to finding all instances where a
 \gls{pattern} from the \gls{pattern set} is \gls{subgraph} isomorphic to the
 \gls{expression tree}.
 %
 Each such instance is called a \gls!{match}, and the set of all \glspl{match}
 constitute a \gls!{match set}.
 %
-Hence, in this context the subproblem is referred to as the \gls!{pattern
-  matching}[ problem].
+Hence, in this context the \gls{matching problem} is referred to as
+\gls!{pattern matching}.
 
-Having found the \gls{match set}, the \gls{selection} problem -- which in this
-context is referred to as the \gls!{pattern selection}[ problem] -- can be
-reduced to selecting a set of \glspl{match} that \gls{cover}[s] the
-\gls{expression tree}.
+Having found the \gls{match set}, the \gls{selection problem} -- which in this
+context is referred to as \gls!{pattern selection} -- can be reduced to
+selecting a set of \glspl{match} that \gls{cover}[s] the \gls{expression tree}.
 %
 A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
 $G$ if every \gls{node} in the \gls{expression tree} appears in exactly one
@@ -122,7 +122,7 @@ x = A[i + 1];
                                    >{$}l<{$}%
                                  }
                     \toprule
-                    mv     & r & \mathit{int}\\
+                    mv     & r & \mathit{var}\\
                     add    & r & s + t\\
                     mul    & r & s \times t\\
                     muladd & r & s \times t + u\\
@@ -671,7 +671,7 @@ The \gls{rule} structure is also illustrated in
         \overbrace{\mNT{Reg}[1]}^{\text{result}}
         \rightarrow \;
         \overbrace{%
-          \irCode{\irAddText} \; \mNT{Reg}[2] \; \irCode{int}%
+          \irCode{\irAddText} \; \mNT{Reg}[2] \; \irCode{const}%
         }^{\text{pattern}}%
       }^{\text{production}}
       \qquad
@@ -702,11 +702,11 @@ The \gls{rule} structure is also illustrated in
     \midrule
     1 & $\mNT{Reg}[1]$
       & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \mNT{Reg}[2] \;
-         \irCode{int}$
+         \irCode{const}$
       & 1
       & emit {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
     2 & $\mNT{Reg}[1]$
-      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \irCode{int} \;
+      & $\irCode{\irLoadText} \; \irCode{\irAddText} \; \irCode{const} \;
          \mNT{Reg}[2]$
       & 1
       & emit {\instrFont load \$$\mNT{Reg}[1]$, const(\$$\mNT{Reg}[2]$)}\\
@@ -793,18 +793,18 @@ For example, rewriting the \gls{grammar} shown in
     1 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{A}$
       & 1
       & emit {\instrFont load \$$\mNT{Reg}$,
-                               $A.C.\text{int}$(\$$A.\mNT{Reg}$)}\\
+                               $A.C.\text{const}$(\$$A.\mNT{Reg}$)}\\
     4 & $\mNT{A}$ & $\irCode{\irAddText} \; \mNT{Reg} \; \mNT{C}$
       & 0
       & \\
     2 & $\mNT{Reg}$ & $\irCode{\irLoadText} \; \mNT{B}$
       & 1
       & emit {\instrFont load \$$\mNT{Reg}$,
-                               $B.C.\text{int}$(\$$B.\mNT{Reg}$)}\\
+                               $B.C.\text{const}$(\$$B.\mNT{Reg}$)}\\
     5 & $\mNT{B}$ & $\irCode{\irAddText} \; \mNT{C} \; \mNT{Reg}$
       & 0
       & \\
-    6 & $\mNT{C}$ & $\irCode{int}$
+    6 & $\mNT{C}$ & $\irCode{const}$
       & 0
       & \\
     3 & $\mNT{Reg}[1]$ & $\irCode{\irLoadText} \; \mNT{Reg}[2]$
@@ -863,7 +863,7 @@ We assume that \cVar*{a} and \cVar*{b} are variables already stored in
 \glspl{register} and that \cVar*{2} is an integer constant.
 %
 Hence each \gls{node} in the \gls{expression tree} is either of type
-\irCode*{\irAddText}, \irCode*{\irMulText}, \irCode*{reg}, or \irCode*{int}.
+\irCode*{\irAddText}, \irCode*{\irMulText}, \irCode*{reg}, or \irCode*{const}.
 %
 These will be our \glspl{terminal}.
 %
@@ -882,7 +882,7 @@ $\irAddText$ a $\irMulText$ b 2
 \end{filecontents*}
 %
 \begin{filecontents*}{tree-parsing-example-terminal-sequence.c}
-$\irAddText$ $\cVar{reg}[a]$ $\irMulText$ $\cVar{reg}[b]$ $\cVar{int}[2]$
+$\irAddText$ $\cVar{reg}[a]$ $\irMulText$ $\cVar{reg}[b]$ $\cVar{const}[2]$
 \end{filecontents*}
 %
 \begin{filecontents*}{tree-parsing-example-assembly-code.c}
@@ -922,9 +922,9 @@ add $\$\mNT{Reg}[\irCode{y}]$, $\$\mNT{Reg}[\irCode{a}]$, $\$\mNT{Reg}[\irCode{x
                                               \$$\mNT{Reg}[2]$,
                                               \$$\mNT{Reg}[3]$}\\
                         3
-                      & $\mNT{Reg}$ & \irCode{int}
+                      & $\mNT{Reg}$ & \irCode{const}
                       & 1
-                      & emit {\instrFont mv  \$$\mNT{Reg}$, \#\irCode{int}}\\
+                      & emit {\instrFont mv  \$$\mNT{Reg}$, \#\irCode{const}}\\
                         4
                       & $\mNT{Reg}$ & \irCode{reg}
                       & 1
@@ -3457,7 +3457,7 @@ is equivalent to the \gls{least-cost.c} \gls{cover} -- can be found using the
 algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
 %
 \begin{algorithm}[t]
-  \DeclFunction{Select}{expression tree $T$,
+  \DeclFunction{SelectRules}{expression tree $T$,
                         goal nonterminal $g$,
                         cost matrix $\mMatrix{C}$}%
   {%
@@ -3465,12 +3465,12 @@ algorithm shown in \refAlgorithm{aho-etal-select-algorithm}.
     $r$ \Assign $\mMatrix{C}[n][g]$.rule\;
     \eIf{$r$ is a chain rule}{%
       $s$ \Assign result of $r$\;
-      \Call{Select}{$T$, $s$, $\mMatrix{C}$}\;
+      \Call{SelectRules}{$T$, $s$, $\mMatrix{C}$}\;
     }{%
       \For{$i$ \Assign $1$ \KwTo number of children for $n$}{%
         $m$ \Assign $i$th child of $n$\;
         $s$ \Assign $i$th nonterminal in pattern of $r$\;
-        \Call{Select}{expression tree rooted at $m$, $s$, $\mMatrix{C}$}\;
+        \Call{SelectRules}{expression tree rooted at $m$, $s$, $\mMatrix{C}$}\;
       }
     }
     execute actions associated with $r$\;
@@ -3837,7 +3837,7 @@ very similar to the one used in Hoffmann-O'Donnell (compare with
     $k$ \Assign number of children for $n$\;
     \For{$i$ \Assign $1$ \KwTo $k$}{%
       $m_i$ \Assign $i$th child of $n$\;
-      \Call{Label}{expression tree rooted at $m_i$, $L$}\;
+      \Call{LabelTree}{expression tree rooted at $m_i$, $L$}\;
     }
     $S$ \Assign $L[\text{terminal corresponding to $n$}]$\;
     $n$.label \Assign $S[m_1.\text{label}, \ldots, m_k.\text{label}]$\;
@@ -4108,7 +4108,7 @@ An example where this occurs is given in
                     \midrule
                         1
                       & $\mNT{R}$
-                      & \cCode{int}
+                      & \cCode{var}
                       & 1\\
                         2
                       & $\mNT{R}$
@@ -4982,8 +4982,9 @@ selecting \glspl{instruction} for a single \gls{expression tree} at a time,
 which is known as \gls!{local.is}[ \gls{instruction selection}].
 %
 Moreover, handling of control flow must be done separately, which excludes
-\gls{matching} and \gls{selection} of \gls{inter-block.ic} \glspl{instruction},
-whose behavior incorporates control flow.
+\glshort{matching problem} and \glsshort{selection problem} of
+\gls{inter-block.ic} \glspl{instruction}, whose behavior incorporates control
+flow.
 
 To summarize, although the \gls{principle} of \gls{tree covering} greatly
 improves code quality over the \gls{principle} of pure \gls{macro expansion}

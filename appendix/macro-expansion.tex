@@ -43,11 +43,13 @@ In \gls{macro expansion}, the \glspl{instruction} are expressed as
 \glspl!{macro} which consist of two parts:
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
-  \item a \gls!{template} to be matched over the \gls{function}
+  \item a \gls!{template} to be matched over the \gls{function} under
+    compilation
   \item an \gls!{expand procedure} to be executed upon the part of the
-    \gls{function} that was matched (see \refFigure{macro-example-2} for an
-    example)
+    \gls{function} that was matched
 \end{inlinelist}.
+%
+An example of such a procedure is given in \refFigure{macro-example-2}.
 %
 \begin{filecontents*}{macro-example-2.c}
 expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
@@ -75,16 +77,17 @@ expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
   \labelFigure{macro-example-2}
 \end{figure}%
 %
-A \gls!{macro expander} traverses the \gls{function} under compilation and
-attempts one \gls{macro} after another, typically in the order they are declared
+A \gls!{macro expander} traverses the \gls{function} and tries to match the
+\glspl{template} of the \glspl{macro}, typically in the order they are declared
 in the \gls{machine description}.
 %
 Upon a \gls{match} it executes the corresponding \gls{expand procedure} and then
 resumes the traversal with the next, unmatched part until the entire
 \gls{function} has been expanded.
 %
-Consequently, \gls{matching} and \gls{selection} is combined into a single task
-as the first \gls{macro} matched is the \gls{macro} to be selected.
+Consequently, the \glsshort{matching problem} and \glspl{selection problem} are
+combined into a single task as the first \gls{macro} matched is also the
+selected \gls{macro}.
 
 The main benefit of \gls{macro expansion} is that it is intuitive and
 straightforward to apply.
