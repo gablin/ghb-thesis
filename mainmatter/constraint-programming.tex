@@ -1215,7 +1215,16 @@ In this \gls{directed.g} \gls{graph}, each \gls{node} represents a \gls{literal}
 that resolves to true and each \gls{edge} between two \glspl{literal}~$l_1$
 and~$l_2$ represents the fact that $l_1$ caused $l_2$ to become true.
 %
-An example is given in \refFigure{implication-graph-example}.
+When \gls{failure} is reached, we can then use the \gls{implication graph} to
+derive an explanation for why a \gls{constraint} \glsshort{failure}.
+%
+This explanation can be captured as a clause, called \gls!{no-good}, to be added
+to the existing body of clauses.
+%
+The \gls{no-good} prevents the \glsshort{constraint solver} from making the same
+mistake again, effectively cutting away those parts of the \gls{search space}.
+%
+An example is given in \refFigure{no-good-learning-example}.
 %
 \begin{figure}
   \centering%
@@ -1224,19 +1233,19 @@ An example is given in \refFigure{implication-graph-example}.
   \hfill%
   \subcaptionbox{%
                   Search tree%
-                  \labelFigure{implication-graph-example-search-tree}%
+                  \labelFigure{no-good-learning-example-search-tree}%
                 }%
                 [20mm]%
                 {%
                   \input{%
                     figures/constraint-programming/%
-                    implication-graph-example-search-tree%
+                    no-good-learning-example-search-tree%
                   }%
                 }%
   \hfill%
   \subcaptionbox{%
                   Constraints%
-                  \labelFigure{implication-graph-example-constraints}%
+                  \labelFigure{no-good-learning-example-constraints}%
                 }{%
                   \begin{tabular}{>{$}c<{$}>{$}c<{$}}
                     \toprule
@@ -1269,17 +1278,17 @@ An example is given in \refFigure{implication-graph-example}.
   \hfill%
   \subcaptionbox{%
                   Implication graph%
-                  \labelFigure{implication-graph-example-impl-graph}%
+                  \labelFigure{no-good-learning-example-impl-graph}%
                 }{%
                   \input{%
                     figures/constraint-programming/%
-                    implication-graph-example-impl-graph%
+                    no-good-learning-example-impl-graph%
                   }%
                 }%
   \hfill%
   \subcaptionbox{%
                   No-good%
-                  \labelFigure{implication-graph-example-no-good}%
+                  \labelFigure{no-good-learning-example-no-good}%
                 }{%
                   $\mNot\mBoolRepVar{\mVar{z} = 4} \mOr
                    \mNot\mBoolRepVar{\mVar{x} = 2}$
@@ -1287,9 +1296,9 @@ An example is given in \refFigure{implication-graph-example}.
   \hfill%
   \mbox{}
 
-  \caption[Example of an implication graph]%
+  \caption[Example of no-good learning]%
           {%
-            Example of an implication graph.
+            Example of no-good learning.
             %
             First \mbox{$\mBoolRepVar{\mVar{z} = 4}$} is assigned to true ($T$)
             through search.
@@ -1310,17 +1319,8 @@ An example is given in \refFigure{implication-graph-example}.
             \mbox{$\mNot\mBoolRepVar{\mVar{z} = 4} \mOr
               \mNot\mBoolRepVar{\mVar{x} = 2}$}%
           }
-  \labelFigure{implication-graph-example}
+  \labelFigure{no-good-learning-example}
 \end{figure}
-%
-When \gls{failure} is reached, we can then use the \gls{implication graph} to
-derive an explanation for why a \gls{constraint} \glsshort{failure}.
-%
-This explanation can be captured as a clause, called \gls!{no-good}, to be added
-to the existing body of clauses.
-%
-The \gls{no-good} prevents the \glsshort{constraint solver} from making the same
-mistake again, effectively cutting away those parts of the \gls{search space}.
 %
 For more details, see~\cite{MarquesSilvaEtal:2014}.
 
