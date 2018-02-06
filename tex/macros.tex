@@ -1071,8 +1071,11 @@
 % Reduce space between leading dots
 \renewcommand{\cftsectiondotsep}{4}
 
-% Set titles in ragged right mode
-\setrmarg{2.55em plus 1fil}
+% Increase width for page numbers (to prevent titles to run into them)
+\setpnumwidth{2.55em}
+
+% Set titles in ragged right mode (rmarg should be greater than numwidth)
+\setrmarg{3.55em plus 1fil}
 
 % Force same indentation for entries in List of Algorithms as other List of Fig.
 % https://tex.stackexchange.com/a/381303/2634
