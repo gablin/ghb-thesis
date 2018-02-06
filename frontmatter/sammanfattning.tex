@@ -7,12 +7,12 @@
 \begin{sammanfattning}
   \selectlanguage{swedish}
   %
-  Inom kodgenerering v\"aljer instruktionsselektering (eng.\ \emph{instruction
-    selection}) instruktioner f\"or att implementera ett givet program under
-  kompilering, global kodf\"orflyttning (eng.\ \emph{global code motion})
-  flyttar ber\"akningar fr\r{a}n en del av programmet till en annan, och
-  blockl\"aggning (eng.\ \emph{block ordering}) placerar programblock i en
-  sekventiell f\"oljd.
+  Inom kodgenerering v\"aljer instruktionsselektering
+  (eng.\ \emph{\gls{instruction selection}}) instruktioner f\"or att
+  implementera ett givet program under kompilering, global kodf\"orflyttning
+  (eng.\ \emph{\gls{global code motion}}) flyttar ber\"akningar fr\r{a}n en del
+  av programmet till en annan, och blockl\"aggning (eng.\ \emph{\gls{block
+      ordering}}) placerar programblock i en sekventiell f\"oljd.
   %
   Lokal instruktionsselektering v\"aljer instruktioner ett programblock i taget
   medan global instruktionsselektering g\"or s\r{a} f\"or hela funktionen.
@@ -21,20 +21,22 @@
     instruktionsselektering}, som integrerar global instruktionsselektering med
   global kodf\"orflyttning och blockl\"aggning.
   %
-  Genom detta \r{a}tg\"ardar den begr\"ansningar hos befintliga
+  P\r{a} s\r{a} vis \r{a}tg\"ardar den begr\"ansningar hos befintliga
   instruktionsselekteringsmetoder som misslyckas med att utnyttja m\r{a}nga av
-  instruktionerna som f\"orses av moderna processorer.
+  instruktionerna som erbjuds av moderna processorer.
 
   F\"or att hantera den kombinatoriska naturen av dessa problem till\"ampas
-  villkorsprogrammering, en teknik f\"or kombinatorisk optimering.
+  villkorsprogrammering (eng.\ \emph{\glsdesc{CP}}), en teknik f\"or
+  kombinatorisk optimering.
   %
   Metoden anv\"ander en innovativ model som \"ar enklare och mer flexibel
   j\"amf\"ort med metoderna som anv\"ands i moderna kompilatorer och som
   f\r{a}ngar viktiga s\"ardrag som ignoreras av andra kombinatoriska metoder.
   %
   Avhandlingen f\"oresl\r{a}r ocks\r{a} ut\"okningar av modellen f\"or att
-  integrera instruktionsschemal\"aggning och registerallokering, tv\r{a} andra
-  viktiga kodgenereringsproblem.
+  integrera instruktionsschemal\"aggning (eng.\ \emph{\gls{instruction
+      scheduling}}) och registerallokering (eng.\ \emph{\gls{register
+      allocation}}), tv\r{a} andra viktiga kodgenereringsproblem.
 
   Modellen m\"ojligg\"ors av en innovativ, grafbaserad representation som
   f\"orenar data- och kontrollfl\"ode f\"or hela funktioner.
