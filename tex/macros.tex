@@ -71,7 +71,7 @@
   }%
   \expandafter\NewDocumentCommand\csname ref#1Range\endcsname{smm}{%
     \def\refcmd{\csname @ref#1Range\endcsname}%
-    \def\prefix{#3.\thinspace}%
+    \def\prefix{#3s.\thinspace}%
     \IfBooleanTF{##1}{\refcmd*{##2}{##3}{\prefix}}%
                      {\refcmd{##2}{##3}{\prefix}}%
   }%
