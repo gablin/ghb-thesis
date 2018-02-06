@@ -214,7 +214,7 @@ array[allOperands] of int: matchOfP =
 % First, we split the cost incurred by selecting a given match over the
 % operations that it covers. As the latency of a match times the exeqution
 % frequency of a given block may not be evenly divisible by the number of
-% operations covered, some operations may have a higher cost than
+% operations covered, some operations may have a greater cost than
 % others. Then, we multiply each operation cost with the execution
 % frequency of the block wherein the operation may be placed.
 %
