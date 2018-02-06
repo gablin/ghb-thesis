@@ -13,11 +13,18 @@ With the first publications beginning to appear at the end of the 1960s,
 When surveying these techniques, it was discovered that essentially all apply
 one of four fundamental \glspl!{principle} of \gls{instruction selection}:
 %
-\begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
+\begin{inlinelist}[itemjoin={, }]
   \item \gls{macro expansion}
   \item \gls{tree covering}
-  \item \gls{DAG covering}
-  \item \gls{graph covering}
+  \item \gls{DAG covering},\!%
+        %
+        \footnote{%
+          \glsunset{DAG}%
+          \Gls{DAG} stands for \glsdesc!{DAG}.
+        }
+        % These to items appear on the same \item in order to get the footnote
+        % to appear on the right place of the comma.
+        and \gls{graph covering}
 \end{inlinelist}.
 %
 The trend of applying these \glspl{principle} over time is shown in
@@ -81,6 +88,10 @@ entry, called the \gls!{entry block}.
 %
 \Gls{instruction selection} can then be reduced into two subproblems:%
 %
+% LAYOUT FIX:
+% Prevent list to be broken over two pages
+\enlargethispage{1mm}%
+%
 \begin{enumerate}
   \item Finding all instances of instructions that can implement one or more
     \glspl{operation} in the \gls{function}.
@@ -135,7 +146,7 @@ As long as the observable output constitutes a single value, a
 \gls{single-output.ic} \gls{instruction} can be arbitrarily complex.
 
 This class comprises the majority of \glspl{instruction} in most
-\glspl{instruction set}, and in simple \glspl{RISC}, such as \gls{MIPS}
+\glspl{instruction set}, and in simple \glspl!{RISC}, such as \gls{MIPS}
 architectures, nearly all \glspl{instruction} are \gls{single-output.ic}
 \glspl{instruction}.
 %
@@ -180,7 +191,7 @@ Many architectures such as \gls{X86}, \gls{ARM}, and \gls{Hexagon} provide
 different input values are called \gls!{disjoint-output.ic}[
   \glspl{instruction}].
 %
-These are similar to \glspl{multi-output.ic} \glspl{instruction} with the
+These are similar to \gls{multi-output.ic} \glspl{instruction} with the
 exception that all output values in the latter originate from the same input
 values.
 %
@@ -192,7 +203,7 @@ disjoint from one another.
 This typically includes \gls{SIMD.i} \glspl{instruction}, which execute the same
 \glspl{operation} simultaneously on many distinct input values.
 
-\Glspl{disjoint-output.ic} \glspl{instruction} are common in high-throughput
+\Gls{disjoint-output.ic} \glspl{instruction} are common in high-throughput
 graphics architectures and \glspl{DSP}, but also appear in \gls{X86} as
 extensions under names like \gls!{SSE} and \gls!{AVX}~\cite{Intel64:2015}.
 %
@@ -298,8 +309,8 @@ expand($\irAssign{\text{\$3}}{\irAdd{\text{\$1}}{\text{\$2}}}$) {
 \end{figure}%
 %
 A \gls!{macro expander} traverses the \gls{function} under compilation and
-attempts one \gls{macro} after another, typically in the order they are declared
-in the \gls{machine description}.
+attempts one \gls{macro} after another, typically in the order they are
+declared.
 %
 Upon a \gls{match} it executes the corresponding \gls{expand procedure} and then
 resumes the traversal with the next, unmatched part until the entire
@@ -316,7 +327,7 @@ Because the \gls{macro expander} is implemented separately from the
 made as customized as needed for the \gls{target machine}.
 %
 This also allows the \gls{macro expander} to be void of any \glsshort{target
-  machine}-specific details, thus necessiting only the \glspl{macro} to be
+  machine}-specific details, thus requiring only the \glspl{macro} to be
 rewritten when retargeting the \gls{compiler} to another machine.
 %
 To this end, the \glspl{macro} are typically written in some dedicated language
@@ -354,7 +365,7 @@ First, a \gls{naive.me} \gls{macro expander} expands the \gls{function} under
 compilation one \gls{IR}~\gls{operation} at at time.
 %
 Once fully expanded, a \gls{peephole optimizer} runs over the result and
-replaces inefficient sequences of \glspl{instruction} with more compentent
+replaces inefficient sequences of \glspl{instruction} with more competent
 equivalences.
 %
 Consequently, the \glspl{macro} can be divided up into those required for
@@ -365,7 +376,7 @@ makes for a simpler and more incremental retargeting effort.
 Due to the people who pioneered the idea, this scheme is known as the
 \gls!{Davidson-Fraser approach}~\cite{DavidsonFraser:1984}.
 
-Because this \gls{principle} has little relevence for our approach, we will not
+Because this \gls{principle} has little relevance for our approach, we will not
 examine applications of \gls{naive.me} \gls{macro expansion} and the
 \gls{Davidson-Fraser approach} in this chapter.
 
@@ -384,7 +395,7 @@ This gives several advantages over \gls{macro expansion}.
 %
 First, capturing the behavior of \glspl{instruction} becomes simpler.
 %
-Second, tradeoffs in selecting certain combinations of \glspl{match} can be
+Second, trade-offs in selecting certain combinations of \glspl{match} can be
 considered, which improves code quality.
 %
 Third, due to \glspl{machine grammar} (to be described shortly), \gls{tree
@@ -559,7 +570,8 @@ its cost -- smaller \glspl{cover} lead to less cost, and ultimately better code
 -- but this depends heavily on the properties of the \gls{target machine}.
 
 For practical reasons, the \gls{instruction set} of a \gls{target machine} must
-be described in a machine-readable format.
+be described in a machine-readable format, which we call the \gls!{machine
+  description}.
 %
 A common method is to model the \glspl{instruction} as a \gls{machine grammar},
 which we will now describe.
@@ -594,8 +606,8 @@ as
   a \rightarrow b c \ldots
 \end{displaymath}
 %
-where the left-hand side is consists a \gls{nonterminal} and the right-hand side
-consists of a sequence of \glspl{terminal} and \glspl{nonterminal}.
+where the left-hand side is a single \gls{nonterminal} and the right-hand side
+is a sequence of \glspl{terminal} and \glspl{nonterminal}.
 %
 Each \gls{instruction} therefore gives rise to one or more \glspl{production},
 where the right-hand side of a \gls{production} captures a \gls{pattern} of the
@@ -637,7 +649,7 @@ is given in \refTable{grammar-rules-example}.
   \labelFigure{machine-grammar-rule-anatomy}
 \end{figure}
 %
-The \glspl{production} are typically written in \gls{Polish notation} to avoid
+The \glspl{production} are typically written in \gls!{Polish notation} to avoid
 the need for parentheses (for example, \mbox{$1 + (2 + 3)$} is written as
 \mbox{$+ \; 1 + 2 \; 3$}).
 %
@@ -796,7 +808,7 @@ The technique is centered around the following assumption.
 %
 Given a \gls{node}~$n$ in an \gls{expression tree} and a \gls{rule}~$r$, the
 cost of applying $r$ on $n$ is the cost of $r$ plus the costs of reducing all
-children of $n$ to the appropriate \glspl{nonterminal} appearing on the
+\glspl{child} of $n$ to the appropriate \glspl{nonterminal} appearing on the
 right-hand side of~$r$.
 %
 If $r$ is a \gls{chain.r} \gls{rule} then the cost is computed as the cost of
@@ -1026,7 +1038,7 @@ For each \gls{terminal} representing a $k$-argument \gls{operation}, an
 \mbox{$k$-dimensional} matrix is maintained.
 %
 This is called the \gls{terminal}'s \gls!{state table}, which indicates the
-state to assign such \glspl{node} given the labels of its children.
+state to assign such \glspl{node} given the labels of its \glspl{child}.
 %
 First the states for all leaf \glspl{node} are built, considering only
 \gls{base.r} \glspl{rule} with a single \glspl{terminal} on the right-hand side
@@ -1037,7 +1049,7 @@ The costs and \gls{rule} decisions are computed using the same logic as in
 %
 The leaf \gls{state} are then pushed onto a queue.
 %
-Each popped \gls{state} is used as the $i$th child to all \gls{base.r}
+Each popped \gls{state} is used as the $i$th \gls{child} to all \gls{base.r}
 \glspl{rule} with a non-leaf \glspl{terminal} in combination with all other
 existing \glspl{state}.
 %
@@ -1241,8 +1253,8 @@ The idea is to traverse the \gls{block DAG} top down, select the largest
 \gls{pattern} that matches the current \gls{node}, and repeat the process for
 remaining, uncovered parts of the \gls{block DAG}.
 %
-The approach -- which is used in, for example, LLVM~\cite{LattnerAdve:2004} --
-works well for architectures with a regular \gls{instruction set} and where
+The approach -- which is used in for example \gls{LLVM}~\cite{LattnerAdve:2004}
+-- works well for architectures with a regular \gls{instruction set} and where
 there is a strong correlation between the effectiveness of the \gls{instruction}
 and the size of its \gls{pattern}.
 %
@@ -1480,11 +1492,12 @@ The approach was later extended by \textcite{AhnEtAl:2009} to include scheduling
 dependency conflicts between \gls{complex.p} \glspl{pattern} in order to
 facilitate \gls{register allocation}.
 %
-Also, a shortcoming of both designs -- that \gls{complex.r} \glspl{rule} can
-only consist of disconnected \glspl{pattern}, hence forbidding sharing of values
-across the \gls{proxy.p} \glspl{pattern} -- was addressed by
-\textcite{YounEtAl:2011} by introducing the use of index subscripts for the
-\glspl{node} representing the input arguments.
+In both designs, however, the \gls{complex.r} \glspl{rule} can only consist of
+disconnected \glspl{pattern}, hence forbidding sharing of values across the
+\gls{proxy.p} \glspl{pattern}.
+%
+This shortcoming was addressed by \textcite{YounEtAl:2011} by introducing the
+use of index subscripts for the \glspl{node} representing the input arguments.
 
 
 \subsection{IP-based Approaches}
@@ -1581,8 +1594,8 @@ An \gls{IP}-based approach for selecting \gls{multi-output.ic} \gls{instruction}
 was introduced by \textcite{LeupersMarwedel:1995, LeupersMarwedel:1996}.
 %
 Each \gls{DAG}-shaped \gls{pattern} of a \gls{multi-output.ic} \gls{instruction}
-is first decomposed into trees, which are used for covering an \gls{expression
-  tree}.
+is first decomposed into \glspl{tree}, which are used for covering an
+\gls{expression tree}.
 %
 After having found a \gls{least-cost.c} \gls{cover} (using
 \refAlgorithm{opt-pat-sel-labeling-algorithm}), the \gls{expression tree} is
@@ -1594,27 +1607,28 @@ The problem is then to try to merge \glspl{super node} such that the combination
 can be implemented using a \gls{multi-output.ic} \gls{instruction}.
 %
 This is often called \gls!{instruction compaction}, and as there is an abundance
-of overlap between such combinations, \citeauthor{LeupersMarwedel:1995} solved
+of overlap between such combinations, \citeauthor{LeupersMarwedel:1995} solve
 this problem using \gls{IP}.
 
 \textcite{Leupers:2000:SIMD} later introduced another \gls{IP}-based approach
-for selecting \gls{SIMD.i} \glspl{instruction}.
+for selecting \gls{disjoint-output.ic} \glspl{instruction} like \gls{SIMD.i}
+\glspl{instruction}.
 %
-Again, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.i} \gls{instruction}
-is decomposed into trees -- making it a \gls{disjoint-output.ic}
-\gls{instruction} -- but in this approach they are used for covering a
-\gls{block DAG} that has been transformed into \glspl{expression tree} through
-\gls{edge splitting}.
+Like before, each \gls{DAG}-shaped \gls{pattern} of a \gls{SIMD.i}
+\gls{instruction} is first decomposed into \glspl{tree}, but now the
+\glspl{tree} are used for covering a \gls{block DAG} that has been transformed
+into \glspl{expression tree} through \gls{edge splitting}.
 %
-Since the potential of using \gls{SIMD.i} \glspl{instruction} can be increased
-by allowing them to cover \glspl{node} from multiple \glspl{expression tree},
-covering each tree individually often leads to suboptimal code.
+The potential of using \gls{disjoint-output.ic} \glspl{instruction} can be
+increased by allowing them to cover \glspl{node} from multiple \glspl{expression
+  tree}, but covering each \gls{tree} individually often leads to suboptimal
+code.
 %
 To address this problem, \citeauthor{Leupers:2000:SIMD} first extended a
 \gls{machine grammar} with additional \glspl{nonterminal} to indicate whether a
 \gls{SIMD.i} \gls{instruction} is used in covering a particular \gls{node} and
 then modified \refAlgorithm{opt-pat-sel-labeling-algorithm} to compute the all
-optimal \glspl{cover} instead of a single solution.
+optimal \glspl{cover} instead returning a single solution.
 %
 Once all \gls{least-cost.c} \glspl{cover} have been found for all
 \glspl{expression tree} in a \gls{block}, an \gls{IP}~model is built to decide
@@ -1622,16 +1636,16 @@ how to make the best use of \gls{SIMD.i} \glspl{instruction} for this
 \gls{block}.
 %
 \textcite{Leupers:2000:SIMD}'s model was later extended by
-\textcite{TanakaEtAl:2003} to take the cost of data transfers into account by
-extending the \gls{block DAG} with additional copy \glspl{node}, which is needed
-for architectures with irregular \glspl{instruction set}.
+\textcite{TanakaEtAl:2003} to take \gls{data copying} into account by extending
+the \gls{block DAG} with additional copy \glspl{node}, which is needed for
+architectures with irregular \glspl{instruction set}.
 
 The last \gls{IP}-based approach to be discussed is that of
 \textcite{Gebotys:1997}, who applied to the theory of \glspl{Horn clause} to
 \gls{code generation}.
 %
 A \gls!{Horn clause} is a disjunctive Boolean formula that contains at most one
-positive (unnegated) literal, and \gls{IP}~models built using \glspl{Horn
+positive (non-negated) literal, and \gls{IP}~models built using \glspl{Horn
   clause} can be solved in linear time~\cite{Hooker:1988}.
 %
 \citeauthor{Gebotys:1997} exploited this fact in developing an \gls{IP}~model
@@ -1753,6 +1767,13 @@ that integrates \gls{instruction selection} and \gls{instruction scheduling}.
 Because they target \glspl!{ASIP}, the \glspl{pattern} are not predefined but
 must be found prior to \gls{instruction selection}.
 %
+This is known as the \gls!{ISE}[ problem], which has been widely researched (see
+for example \cite{HuangDespain:1995, NiemannMarwedel:1997, BriskEtAl:2002,
+  KastnerEtAl:2002, AratoEtAl:2003, AtasuEtAl:2003, ClarkEtAl:2003,
+  YuMitra:2004, AtasuEtAl:2005, BennettEtAl:2007, Boulytchev:2007,
+  BauerEtAl:2008, AlmerEtAl:2009, MurrayFranke:2012, Murray:2012}, and see
+\cite{GaluzziBertels:2011} for a survey).
+%
 For this task \citeauthor{MartinEtAl:2009} applied a \gls{CP}-based
 \glshyphened{pattern matching} algorithm, described
 in~\cite{WolinskiKuchcinski:2007}.
@@ -1760,12 +1781,13 @@ in~\cite{WolinskiKuchcinski:2007}.
 \Gls{pattern selection} is modeled as \refEquation{pattern-selection-in-ip} in
 another \gls{constraint model}, which was later improved by
 \textcite{FlochEtAl:2010} who replaced the \gls{pattern selection}
-\glspl{constraint} with \refEquation{pattern-selection-using-gcc}, and then
-extended by \textcite{ArslanKuchcinski:2014} for targeting \gls{VLIW}
-processors%
+\glspl{constraint} with \refEquation{pattern-selection-using-gcc}.
+%
+The approach was also extended by \textcite{ArslanKuchcinski:2014} for targeting
+\glsunset{VLIW}\gls{VLIW} processors%
 %
 \footnote{%
-  A \gls!{VLIW}[ processor] is a processor that executes multiple
+  A \glsreset{VLIW}\gls!{VLIW}[ processor] is a processor that executes multiple
   \glspl{instruction} in parallel, where the schedule has been computed by the
   \gls{compiler} and is part of the assembly code.%
 }
@@ -1773,9 +1795,9 @@ processors%
 with \gls{SIMD.i} \glspl{instruction}.
 %
 Selection of such \glspl{instruction} is done by first splitting the
-\glspl{pattern} into multiple tree-shaped \glspl{pattern}, which are matched
-individually, and then enforcing that two selected \glspl{match} belonging to
-the same \gls{instruction} must be scheduled in the same cycle.
+\glspl{pattern} into multiple \gls{tree}-shaped \glspl{pattern}, which are
+matched individually, and then enforcing that two selected \glspl{match}
+belonging to the same \gls{instruction} must be scheduled in the same cycle.
 
 \textcite{Beg:2013} developed a \gls{constraint model} that, unlike the
 approaches above, only concerns \gls{instruction selection}.
@@ -1800,7 +1822,7 @@ can inhibit subsequent decisions for other \glspl{block}, such as enforcing
 specific storage locations or value modes.
 %
 For example, \refFigure{block-dags-limit-example} shows a \gls{function} that
-multiplies the elements of two arrays and sums the results.
+multiplies the elements of two arrays and adds the results.
 %
 \begin{filecontents*}{block-dags-limit-example.c}
 int f(int* A, int* B, int N) {
@@ -1880,7 +1902,7 @@ int f(int* A, int* B, int N) {
 %
 Assume that the arrays consist of fixed-point values.
 %
-For efficiency, a common idiosyncracy in many \glspl{DSP} is that multiplication
+For efficiency, a common idiosyncrasy in many \glspl{DSP} is that multiplication
 of two fixed-point values return a value that is shifted one bit to the left.
 %
 For such \glspl{target machine}, both the value~\irCode*{0} and the accumulator
@@ -1910,7 +1932,7 @@ underlying assumptions made by many of the aforementioned approaches.
 \section{Graph Covering}
 \labelSection{ex-isel-rep-graph-covering}
 
-The most general principle is called \gls{graph covering}, where entire
+The most general principle is called \gls!{graph covering}, where entire
 \glspl{function} are modeled as \glspl{function graph} and \glspl{instruction}
 are allowed to be modeled using any shape of \glspl{pattern}.
 %
@@ -1921,8 +1943,8 @@ The main advantage is that \gls{graph covering} support selection of
 \gls{inter-block.ic} \glspl{instruction}, whose behavior entail both control and
 data flow and must therefore be captured as \glspl{pattern graph}.
 %
-The representations typically used, however, only model data flow, which
-stresses the need for new representations in order to handle the
+The representations typically used, however, only model data flow, thus
+stressing the need for new representations in order to handle the
 \glspl{instruction} of modern and forthcoming processors, which grow
 increasingly complex.
 
@@ -2057,8 +2079,8 @@ To capture dependencies between the data and control flow -- for example, when
 the target of a jump depends on a Boolean value -- such jumps flow through
 special \emph{if}~\glspl{node}.
 %
-An example of the \gls{Click-Paleczny graph} is shown in
-\refFigure{click-paleczny-graph-example}.
+For lack of a better name, we will call this the \gls!{Click-Paleczny graph},
+and an example is shown in \refFigure{click-paleczny-graph-example}.
 
 \begin{figure}
   \centering%
@@ -2161,7 +2183,7 @@ Formally, a \gls{PBQP} is defined as follows.
 
 Intuitively, one can interpret this definition as follows.
 %
-Assume a problem consists of $n$~decisions, each with $k$~choices.
+Assume that a problem consists of $n$~decisions, each with $k$~choices.
 %
 Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
 where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
@@ -2429,7 +2451,7 @@ transformations~\cite{LoweEhrig:1991}.
 \labelSection{ex-isel-rep-vf2-algorithm}
 
 For \gls{pattern matching}, most combinatorial approaches apply the
-\gls{VF2}~algorithm~\cite{CordellaEtAl:2001}.
+\gls!{VF2}[~algorithm]~\cite{CordellaEtAl:2001}.
 %
 The algorithm, given in \refAlgorithm{vf2-algorithm}, recursively checks every
 \gls{node}-mapping candidate and applies a set of rules for checking whether the
@@ -2561,7 +2583,7 @@ the \gls{pattern graph}, then a corresponding \gls{edge} must also exist in the
   In the paper \cite{CordellaEtAl:2001}, $\mSynPredRule$ and $\mSynSuccRule$
   also check the inverse -- that is, an \gls{edge} between two mapped
   \glspl{node} in the \gls{function graph} must have a corresponding \gls{edge}
-  in the \gls{pattern graph} -- thus requiring that $\pG$ is an induced
+  in the \gls{pattern graph} -- which requires that $\pG$ is an induced
   \gls{subgraph} of $\fG$.
   %
   In this context, however, it is sufficient with only maintaining the structure
@@ -2692,11 +2714,12 @@ First, while many combinatorial approaches combine \gls{instruction
 clear how to extend the model to integrate this task.
 
 Second, all combinatorial approaches only handle \gls{tree}- and
-\gls{DAG}-shaped \glspl{pattern}, which excludes support for
-\gls{inter-block.ic} \glspl{instruction} as these extend over multiple
-\glspl{block} and must therefore be modeled as generic \glspl{graph} (one such
-example is given in \refChapter{introduction}
-on \refPageOfSection{intro-saturated-arithmetic}).
+\gls{DAG}-shaped \glspl{pattern}.
+%
+This excludes support for \gls{inter-block.ic} \glspl{instruction} as these
+extend over multiple \glspl{block} and must therefore be modeled as generic
+\glspl{graph} (one such example is given in \refChapter{introduction} on
+\refPageOfSection{intro-saturated-arithmetic}).
 
 Third, with the exception of \textcite{TanakaEtAl:2003}, no combinatorial
 approach takes the cost of \gls{data copying} into account.
@@ -2710,7 +2733,6 @@ Problems concerning control flow, such as selection of branch
 \glspl{instruction} and \gls{block ordering}, must be handled separately, which
 could potentially result in suboptimal code.
 
-To summarize, we necessitate a more general combinatorial model that integrates
-the problems described in \refSection{intro-motivation} and, to that end, we
-necessitate a more powerful means of representing \glspl{function} and
-\glspl{instruction}.
+To summarize, we need a more general combinatorial model that integrates the
+problems described in \refSection{intro-motivation} and, to that end, we need a
+more powerful means of representing \glspl{function} and \glspl{instruction}.

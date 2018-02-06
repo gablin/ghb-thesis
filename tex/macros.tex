@@ -752,7 +752,6 @@
 \mkGlobalConCommands{Increasing}
 \mkGlobalConCommands{NoOverlap}
 \mkGlobalConCommands{Table}
-\mkGlobalConCommands[ValuePrec]{ValuePre}
 \mkGlobalConCommands[ValuePrecChain]{VPC}
 
 % blkarray-related commands
@@ -838,11 +837,8 @@
   \markboth{#1}{#1}%
 }
 
-% Set URLs in smaller font in bibliography
-\DeclareFieldFormat{url}{URL:~\relsize{-.5}\url{#1}}
-
-% Set URL field in normal font
-\DeclareFieldFormat{url}{\textsc{url}:~#1}
+% Customize URL field
+\DeclareFieldFormat{url}{\textsc{url}:~\relsize{-.5}\url{#1}}
 
 % Use "Doctoral thesis" instead of "PhD thesis"
 \DefineBibliographyStrings{english}{%
@@ -1043,13 +1039,13 @@
 }
 \makeatother
 
+% Rename certain items
+\renewcommand{\seename}{see also}
+
 % Force 'see also' to appear on a new line in the index
 \renewcommand\glsseeformat[3][\seename]{%
   \\*\raggedleft\emph{#1} \glsseelist{#2}%
 }
-
-% Rename certain items
-\renewcommand{\seename}{see also}
 
 
 %===================

@@ -244,11 +244,12 @@ See for example \refFigure{cost-example}.
   \labelFigure{cost-example}
 \end{figure}
 %
-Assume a \gls{UF graph} that can be covered by three \glspl{match} -- $m_1$,
-$m_2$, and~$m_3$ -- which have costs~\num{4}, \num{1}, and~\num{5},
-respectively, and that they can be placed in one of two blocks, $b_1$ and $b_2$,
-with execution frequencies~\num{10} and~\num{1}, respectively
-(\refFigure{cost-example-graph}).
+Assume the \gls{UF graph} shown in \refFigure{cost-example-graph}, which can be
+covered by three \glspl{match}~$m_1$, $m_2$, and~$m_3$ with costs~\num{4},
+\num{1}, and~\num{5}, respectively.
+%
+Assume further that these \glspl{match} can be placed in one of two blocks,
+$b_1$ and $b_2$, with execution frequencies~\num{10} and~\num{1}, respectively.
 %
 Because \refEquation{naive-objective-function} is modeled as a summation, it can
 only \glsshort{propagation}[e] the bounds of the \gls{cost variable}.
@@ -261,9 +262,10 @@ In the example above, this means the \gls{cost variable} is initially bounded as
 \mbox{$0 < \mVar{cost} < 100$}.
 %
 These are very weak bounds as we know that the \gls{UF graph} must at least be
-covered at a cost of~\num{5} (either both $m_1$ and $m_2$ are selected and
+covered at a cost of~\num{5} (if either both $m_1$ and $m_2$ are selected and
 placed in $b_2$, or $m_3$ is selected and placed in $b_2$) and can at most be
-covered at a cost of~\num{50} (the selected \glspl{match} are placed in $b_1$).
+covered at a cost of~\num{50} (if the selected \glspl{match} are all placed in
+$b_1$).
 
 Instead of reasoning about the cost incurred by the \glspl{match} -- which may
 or may not be selected -- a better approach is to infer the cost incurred on the
@@ -310,10 +312,11 @@ This information can be represented as a cost matrix
 where each row denotes the cost of an \gls{operation}~$o$ if covered by a
 \gls{match}~$m$ and placed in a \gls{block}~$b$.
 %
-An example of this cost matrix is given in \refFigure{cost-example}, from which
-we can deduce that the cost of covering \glspl{operation}~$o_1$ and~$o_2$ is
-between~\num{3} and~\num{40} respectively between~\num{1} and~\num{20}
-(\refFigure{cost-example-matrix}).
+An example of this cost matrix is given in \refFigure{cost-example}.
+%
+From this example, we can deduce that the cost of covering
+\glspl{operation}~$o_1$ and~$o_2$ is between~\num{3} and~\num{40} respectively
+between~\num{1} and~\num{20} (\refFigure{cost-example-matrix}).
 %
 Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
 much tighter bound compared to that achieved using the naive \gls{objective
@@ -826,11 +829,12 @@ $\mVar{loc}$~\gls{variable} will be allocated for each individual \gls{state
 %
 However, since \glspl{state node} are abstract entities used only to capture
 implicit dependencies between certain \gls{operation}, the assignment to these
-\glspl{variable} has no actual bearing on the \gls{solution}, thus giving rise
-to many symmetric \glspl{solution}.
+\glspl{variable} has no actual bearing on the \gls{solution}.
 %
-Consequently, it makes sense to fix the \gls{location} for each \gls{state
-  node}, which is modeled as
+Hence many symmetric \glspl{solution} arise.
+%
+We remove these symmetries by always fixing the \gls{location} for each
+\gls{state node}, which is modeled as
 %
 \begin{equation}
   \forall d \in \mStateDataSet :
@@ -861,10 +865,13 @@ We therefore fix the $\mVar{alt}$ assignments in such cases, which is modeled as
 
 The \gls{symmetry breaking.c} \gls{constraint} above also implies that if an
 \gls{operand} representing input with multiple \glspl{datum} does not take its
-minimum value, then the corresponding \gls{match} must be selected, which means
-that the corresponding \gls{datum} must be in a usable \gls{location}.
+minimum value, then the corresponding \gls{match} must be selected.
 %
-This is modeled as
+This in turn means that means that the corresponding \gls{datum} must be in a
+usable \gls{location}.
+%
+We model this as
+%
 \begin{equation}
   \begin{array}{@{}c@{}}
     \forall m \in \mMatchSet,
@@ -1125,7 +1132,7 @@ A decent lower bound be computed by solving a relaxed version of the
   selection} and \gls{block ordering} problems, which obviously is simpler to
 solve than the complete \glsshort{constraint model}.
 %
-Hence the relaxed \glsshort{constraint model} consists of only the
+In this case, the relaxed \glsshort{constraint model} consists of only the
 $\mVar{omatch}$, $\mVar{opcosts}$, $\mVar{sel}$, $\mVar{succ}$, and
 $\mVar{cost}$ variables, \refEquation{operation-coverage}, relaxed versions of
 \refEquationList{block-order, fall-through} that allow fall-throughs via
@@ -1207,10 +1214,12 @@ solving.\!%
 }
 %
 In this dissertation, \gls{presolving} is used to remove \glspl{match} which can
-be safely removed without compromising code quality, which directly translates
-to fewer $\mVar{alt}$, $\mVar{sel}$, and $\mVar{uplace}$~\glspl{variable},
-smaller $\mVar{dplace}$ and $\mVar{oplace}$~\glspl{domain}, as well as fewer
-\glspl{constraint} that need to be managed by the \gls{constraint solver}.
+be safely removed without compromising code quality.
+%
+This directly translates to fewer $\mVar{alt}$, $\mVar{sel}$, and
+$\mVar{uplace}$~\glspl{variable}, smaller $\mVar{dplace}$ and
+$\mVar{oplace}$~\glspl{domain}, as well as fewer \glspl{constraint} that need to
+be managed by the \gls{constraint solver}.
 
 
 \subsection{Dominated Matches}
@@ -1395,10 +1404,12 @@ where
   \labelEquation{cup-use-locs-of-function}
 \end{equation}
 %
-Note that if \mbox{$\mCupUseLocsOf(d) = \mEmptySet$} holds then the
+Note that if \mbox{$\mCupUseLocsOf(d) = \mEmptySet$} holds, then the
 \glspl{match} \glsshort{use.d}[ing] \gls{datum}~$d$ have themselves conflicting
-\gls{location} requirements, and in such cases we cannot infer whether a
-\gls{match} \glsshort{define.d}[ing] $d$ is \gls{illegal.m}.
+\gls{location} requirements.
+%
+In such cases, we cannot infer whether a \gls{match} \glsshort{define.d}[ing]
+$d$ is \gls{illegal.m}.
 
 Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
 \gls{datum}~$d$ from a \gls{location} that cannot be written to by any of the
@@ -1472,15 +1483,15 @@ Hence this set of redundant \glspl{match} is computed as
   \labelEquation{redun-kills}
 \end{equation}
 
-Another case concerns \glspl{match} that cover a \gls{copy node} and are not
-\glspl{null match}.
+Another case concerns non-\glspl{null match} that cover a \gls{copy node}.
 %
-For each copy chain \mbox{$\mEdge{v_1}{\mEdge{c}{v_2}}$}, where $c$ is a
-\gls{copy node} and $v_1$ and $v_2$ are \glspl{value node}, if every \gls{match}
-\glsshort{define.d}[ing] $v_1$ writes the value to a \gls{location} that can be
-used by all \glspl{match} \glsshort{use.d}[ing]~$v_2$, then all non-\glspl{null
-  match} covering $c$ are redundant since a \gls{null-copy match} can always be
-selected.
+Assume a copy chain \mbox{$\mEdge{v_1}{\mEdge{c}{v_2}}$}, where $c$ is a
+\gls{copy node} and $v_1$ and $v_2$ are \glspl{value node}.
+%
+If every \gls{match} \glsshort{define.d}[ing] $v_1$ writes the value to a
+\gls{location} that can be used by all \glspl{match}
+\glsshort{use.d}[ing]~$v_2$, then all non-\glspl{null match} covering $c$ are
+redundant since a \gls{null-copy match} can always be selected.
 %
 We exclude, however, \glspl{copy node} that take a constant value as input since
 such \glspl{node} can never be covered by a \gls{null-copy match}.
@@ -1489,7 +1500,16 @@ We also exclude \glspl{copy node} whose \gls{define.d}[d] \gls{datum} is
 \gls{use.d}[d] by some \gls{phi-match} since an actual copy may be needed to
 satisfy \refEquation{phi-match-locations}.
 %
-Hence this set of redundant \glspl{match} is computed as
+Let \mbox{$\mCopyMatchSet \subseteq \mMatchSet$} denote the set of \glspl{copy
+  match} and \mbox{$\mConstDataSet \subseteq \mDataSet$} denote the set of
+\glspl{datum} representing constant values.
+%
+Let also \mbox{$\mCapUseLocsOf(d) \subseteq \mLocationSet$} and
+\mbox{$\mCapDefLocsOf(d) \subseteq \mLocationSet$} denote the intersection of
+all \glspl{location} for all \gls{match} where a \gls{datum}~$d$ is
+\gls{use.d}[d] respectively \gls{define.d}[d].
+%
+Using these definitions, this set of redundant \glspl{match} is computed as
 %
 \begin{equation}
   \mSetBuilder*{m}%
@@ -1507,17 +1527,9 @@ Hence this set of redundant \glspl{match} is computed as
                    \mbox{}\hspace{-2pt} \mAnd
                    \mCapUseLocsOf(d_1) \cap \mCapDefLocsOf(d_2) \neq \mEmptySet
                  \end{array}
-               }\!,
+               }\!.
   \labelEquation{redun-non-null-copy-matches}
 \end{equation}
-%
-where \mbox{$\mCopyMatchSet \subseteq \mMatchSet$} denotes the set of
-\glspl{copy match}, \mbox{$\mConstDataSet \subseteq \mDataSet$} denotes the set
-of \glspl{datum} representing constant values, and \mbox{$\mCapUseLocsOf(d)
-  \subseteq \mLocationSet$} and \mbox{$\mCapDefLocsOf(d) \subseteq
-  \mLocationSet$} denote the intersection of all \glspl{location} for all
-\gls{match} where a \gls{datum}~$d$ is \gls{use.d}[d] respectively
-\gls{define.d}[d].
 %
 As can be deduced from their name, $\mCapUseLocsOf$ and $\mCapDefLocsOf$ are
 defined similarly to $\mCupUseLocsOf$ and $\mCupDefLocsOf$ (see
@@ -1555,7 +1567,7 @@ See for example \refFigure{canonical-locations-example}.
   \labelFigure{canonical-locations-example}
 \end{figure}
 %
-For sake of discussion, each storage requirment has been labeled with a tag.
+For sake of discussion, each storage requirement has been labeled with a tag.
 %
 Given the \gls{location set} and storage requirements shown in the figure, they
 give rise to five intersections with respect to the locations:
@@ -1901,8 +1913,9 @@ computed by \gls{LLVM} is already optimal with respect to the
 Consequently, the \glsshort{constraint solver} need only prove that there exist
 no better \gls{solution} instead of exploring the entire \gls{search space}.
 
-Applying a lower bound, however, does not appear to be equally beneficial; in
-fact, using a lower bound causes \glsplshort{constraint
+Applying a lower bound, however, does not appear to be equally beneficial.
+%
+In fact, using a lower bound causes \glsplshort{constraint
   model}~\refModel{obj-fun-refined-lb} and~\refModel{obj-fun-refined-lb-ub} to
 fail to find the optimal \gls{solution} for two \glspl{function} whereas
 \glsplshort{constraint model}~\refModel{obj-fun-refined-no-b}
@@ -3299,7 +3312,7 @@ We also note that the maximum improvement for \glsshort{constraint
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }).
 %
-Hence, only picking solving techniques that have a statistically signficant,
+Hence, only picking solving techniques that have a statistically significant,
 positive effect on solving time when evaluated individually is too conservative.
 %
 Also, rejecting \gls{presolving} techniques that have an overall negative effect
@@ -3315,7 +3328,7 @@ From the results from this experiment, we conclude:
   \item that the solving techniques introduced in this chapter are crucial for
     scalability
   \item that picking only solving techniques that have a statistically
-    signficant, positive effect on solving time when evaluated individually is
+    significant, positive effect on solving time when evaluated individually is
     too conservative
   \item that rejecting \refEquationList{illegal-matches-def-locs,
     illegal-matches-use-locs} gives the \gls{constraint model} with best

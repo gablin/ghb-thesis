@@ -12,8 +12,8 @@
 This chapter describes \gls{CP}, which is a method for solving combinatorial
 problems.
 %
-Like similar methods such as \gls{IP} and \gls{SAT} (see \cite{Wolsey:1998} and
-\cite{BiereEtAl:2009} for overviews), in \gls{CP} we first \emph{model} the
+Like similar methods such as \gls!{IP} and \gls!{SAT} (see \cite{Wolsey:1998}
+and \cite{BiereEtAl:2009} for overviews), in \gls{CP} we first \emph{model} the
 problem and then we \emph{solve} the model.
 %
 The modeling and solving aspects are described in \refSectionList{cp-modeling,
@@ -136,7 +136,7 @@ extended to capture additional problems to be solved in unison.
 
 If a \gls!{binary.c}[ \gls{constraint}] is a \gls{constraint} involving two
 \glspl{variable}, then a \gls!{global.c}[ \gls{constraint}] is a
-\gls{constraint} involving three or more
+\gls{constraint} over an arbitrary number of
 \glspl{variable}~\cite{VanHoeveKatriel:2006}.
 %
 \Gls{global.c} \glspl{constraint} capture recurring problem structures and
@@ -176,12 +176,12 @@ $\mAllDifferent(\mVar{x}, \mVar{y}, \mVar{z})$.
 
 In \refChapter{existing-isel-techniques-and-reps} we saw another \gls{global.c}
 \gls{constraint} -- the \gls!{global cardinality
-  constraint}~\cite{OplobeduEtAl:1989}, which is a generalization of the
-\gls{all-different constraint} -- and how it can be used to model the
+  constraint}~\cite{OplobeduEtAl:1989} -- and how it can be used to model the
 \gls{pattern selection} problem (see \refEquation{pattern-selection-using-gcc}
 on \refPageOfEquation{pattern-selection-using-gcc}).
 %
-For completeness, we give here the formal definition of the \gls{constraint}.
+This \gls{constraint} is a generalization of the \gls{all-different constraint},
+and for completeness we give here the its formal definition.
 
 \begin{definition}[$\mGCC$]
   Let \mbox{$v_1, \ldots, v_k$} be a set of values, and let \mbox{$\mVar{x}_1,
@@ -226,21 +226,16 @@ which enforces that the \glspl{variable} representing adjacency forms a
 We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
 
 \begin{definition}[$\mCircuit$]
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable} with
-  \glspl{domain} \mbox{$\mDomain(\mVar{x}_i) \subseteq \mSet{1, \ldots, k}$} for
-  \mbox{$i = 1, \ldots, k$}.
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a set of \glspl{variable}, and
+  let \mbox{$P = d_1, \ldots, d_k$} be a permutation of \gls{domain} values such
+  that \mbox{$d_i \in \mDomain(\mVar{x}_i)$} for all \mbox{$i = 1, \ldots, k$}.
   %
-  Let also a permutation~\mbox{$P = d_1, \ldots, d_k$} of \gls{domain} values be
-  considered \emph{cyclic} if the set $S_P$, defined as
+  Given $P$, form a \gls{graph}~\mbox{$G = \mPair{N}{E}$} such that there is
+  exactly one \gls{node} \mbox{$n_i \in N$} and exactly one \gls{edge}
+  \mbox{$\mEdge{n_i}{n_{d_i}}$} for all \mbox{$i = 1, \ldots, k$}.
   %
-  \begin{displaymath}
-    \begin{array}{c}
-      1 \in S_P,
-      i \in S_P \mImp d_i \in S_P,
-    \end{array}
-  \end{displaymath}
-  %
-  has $k$ elements.
+  $P$ is considered \emph{cyclic} if and only if $G$ contains a
+  \gls{Hamiltonian.c} \gls{cycle}.
   %
   Then
   %
@@ -310,13 +305,14 @@ $\MCircuit$ is used in \refChapter{constraint-model} to model \gls{block
 
 \paragraph{The Table Constraint}
 
-Another \gls{global.c} \gls{constraint}, belonging to the group of so-called
-\glspl!{extensional constraint}~\cite[Sect.\thinspace11.5.4]{Smith:2006}, is the
-\gls!{table constraint}, which constrains a vector of \glspl{variable} such that
-the values appear as a row in a given matrix.
+Another \gls{global.c} \gls{constraint} is the \gls!{table constraint}, which
+constrains a vector of \glspl{variable} such that the values appear as a row in
+a given matrix.
 %
 By encoding legal \gls{variable} assignments into the matrix, any relation can
-be expressed using a \gls{table constraint}.
+be expressed using a \gls{table constraint}, thus belonging to a group of
+so-called \glspl!{extensional
+  constraint}~\cite[Sect.\thinspace11.5.4]{Smith:2006}.
 %
 We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
 
@@ -351,7 +347,7 @@ Similarly, \mbox{$\mTable(\mVar{x}_1 \in \mSet{3}, \mVar{x}_2 \in \mSet{3}, A)$}
 does not hold because the tuple \mbox{$\mTuple{3, 3}$} appears as a row in~$A$.
 
 $\MTable$ is used in \refChapter{solving-techniques} to refine the
-\glsshort{constraint model} and to implement serveral of the \gls{implied.c}
+\glsshort{constraint model} and to implement several of the \gls{implied.c}
 \glspl{constraint}.
 
 
@@ -365,8 +361,7 @@ We refer to this \gls{constraint} as $\mValuePrecChain$, which is defined as
 follows.
 
 \begin{definition}[$\mValuePrecChain$]
-  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a permutation of
-  \glspl{variable}.
+  Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a list of \glspl{variable}.
   %
   Let also $c$ be a list with $n$ elements that can be indexed starting
   from~\num{1}.
@@ -392,18 +387,18 @@ follows.
 For example, \mbox{$\mValuePrecChain(\langle 6, 5, 4 \rangle, \mVar{x}_1 \in
   \mSet{6}, \mVar{x}_2 \in \mSet{1}, \mVar{x}_3 \in \mSet{5}, \mVar{x}_4 \in
   \mSet{4})$} holds because the~\num{4} is preceded by a~\num{5}, which in turn
-is preceded by a~\num{6}, in the permutation of $\mVar{x}$~\glspl{variable}.
+is preceded by a~\num{6}, in the list of $\mVar{x}$~\glspl{variable}.
 %
 Likewise, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{5},
   \mVar{x}_2 \in \mSet{1})$} also holds because \num{4} does not appear among
-the $\mVar{x}$~\glspl{variable} (the fact that 5 appears in the permutation does
+the $\mVar{x}$~\glspl{variable} (the fact that \num{5} appears in the list does
 not matter).
 %
 However, \mbox{$\mValuePrecChain(\langle 5, 4 \rangle, \mVar{x}_1 \in \mSet{1},
   \mVar{x}_2 \in \mSet{4})$} does not hold because the~\num{4} is not preceded
 by a~\num{5}.
 
-$\MValuePrec$ is used in \refChapter{solving-techniques} to implement a
+$\MValuePrecChain$ is used in \refChapter{solving-techniques} to implement a
 \gls{dominance breaking.c} \gls{constraint}.
 
 
@@ -420,12 +415,12 @@ follows.
 \begin{definition}[$\mCumulative$]
   Let \mbox{$c \in \mNatNumSet$} represent the capacity of a resource to be used
   by $k$ optional tasks.
-  %
-  For each task~$i$, let \mbox{$\mVar{s}_i \in \mNatNumSet$} be a \gls{variable}
-  representing the time at which $i$ is scheduled to start, \mbox{$l_i \in
-    \mNatNumSet$} represent its latency, \mbox{$u_i \in \mNatNumSet$} represent
-  the amount of resource required by~$i$, and \mbox{$\mVar{b}_i \in \mSet{0,
-      1}$} be a \gls{variable} representing whether $i$ is scheduled.
+  % For each task~$i$, let \mbox{$\mVar{s}_i \in \mNatNumSet$} be a
+  \gls{variable} representing the time at which $i$ is scheduled to start,
+  \mbox{$l_i \in \mNatNumSet$} represent its duration, \mbox{$u_i \in
+    \mNatNumSet$} represent the amount of resource required by~$i$, and
+  \mbox{$\mVar{b}_i \in \mSet{0, 1}$} be a \gls{variable} representing whether
+  $i$ is scheduled.
   %
   Let also \mbox{$t_{\mathsc{max}} = \mMax(\cup_{1 \,\leq\, j \,\leq\, k}
     \mDomain(\mVar{s}_j))$}.
@@ -511,7 +506,7 @@ $\MCumulative$ is used in \refChapter{proposed-model-extensions} to model
 The last \gls{global.c} \gls{constraint} we will look at is the \gls!{no-overlap
   constraint} (often also called the \gls!{diffn
   constraint}~\cite{BeldiceanuContejean:1994}), which is used in rectangle
-packing problems to enforce that no two rectangles may overlap
+packing problems to enforce that no two rectangles may overlap.
 %
 We refer to this \gls{constraint} as $\mNoOverlap$, which is defined as follows.
 %
@@ -630,7 +625,7 @@ Performing \gls{propagation} requires an array of \gls{domain}-pruning
 algorithms and a system that allows these algorithms to interact.
 %
 \Gls{propagation} theory is discussed in detail by \textcite{Bessiere:2006}, and
-\glsdesc{CP} systems are throroughly discussed by
+\glsdesc{CP} systems are thoroughly discussed by
 \textcite{SchulteCarlsson:2006}.
 
 \Gls{constraint solver} typically keep track of \glspl{variable} and their
@@ -841,7 +836,7 @@ In exploring the \gls{search space}, two decisions need to be made repeatedly:
 %
 \begin{enumerate*}[label=(\arabic*), itemjoin*={, and\ }]
   \item select a \gls{variable} on which to branch
-  \item select a value from its \gls{domain}
+  \item select one or more values (but not all) from its \gls{domain}
 \end{enumerate*}.
 %
 These decisions constitute a \gls!{branching strategy} which arranges the
@@ -1065,11 +1060,13 @@ found by sliding the \mbox{$3 \times 3$} square all the way up and moving any
 squares packed above into the space created below.
 %
 Hence the left-most \gls{solution} is dominated by the right-most
-\gls{solution}, and such \glspl{solution} can be removed from the \gls{search
-  space} by forbidding each \mbox{$k \times k$} square from being placed a
-certain distance away from the edge of the enclosing square such that the
-\mbox{$k \times k$} square and the edge forms a rectangle wherein all smaller
-squares can be packed.
+\gls{solution}.
+%
+We can remove such dominated \glspl{solution} from the \gls{search space} by
+forbidding each \mbox{$k \times k$} square from being placed a certain distance
+away from the edge of the enclosing square such that the \mbox{$k \times k$}
+square and the edge forms a rectangle large enough to pack all smaller squares
+inside it.
 
 The benefit of a given \gls{implied.c}, \gls{symmetry breaking.c}, or
 \gls{dominance breaking.c} \gls{constraint} depends on the amount of \gls{search
@@ -1150,10 +1147,10 @@ An overview of a typical \gls{LCG}-based \gls{constraint solver} is shown in
   \labelFigure{lcg-solver-overview}
 \end{figure}
 
-To begin with, every \glspl{variable} has two dual representations:
+To begin with, every \gls{variable} has two dual representations:
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item one based on Booleans
+  \item one based on Boolean values
   \item one based on integers, which is the \gls{domain} typically used in
     \gls{CP}
 \end{inlinelist}.
@@ -1325,7 +1322,7 @@ For more details, see~\cite{MarquesSilvaEtal:2014}.
 
 It is well known that the effectiveness of \gls{LCG} is heavily impacted by how
 the problem is modeled as that affects which \glspl{no-good} can be
-learnt~\cite{SchuttEtAl:2011, ChuStuckey:2013, SchuttEtAl:2016}.
+learned~\cite{SchuttEtAl:2011, ChuStuckey:2013, SchuttEtAl:2016}.
 %
 For the same reason, \gls{LCG} is also influenced by \gls{implied.c},
 \gls{symmetry breaking.c}, and \gls{dominance breaking.c} \glspl{constraint}

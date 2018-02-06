@@ -16,18 +16,21 @@
 ** DONE In appendices, replace 'linear form' with 'normal form'
 ** DONE Add equations for multiply-then-divide method
 ** DONE Ensure that all floats are declared after first reference
-** TODO Run spell check
+** DONE Run spell check
 ** TODO Run grammar check
 ** DONE Add list of acronyms
-** TODO Break long sentences
-** TODO Fix overflowing of bib entries
+** DONE Break long sentences
+** DONE Fix overflowing of bib entries
+** TODO Fix inconsistencies between patterns and matches in tree-covering appendix
+** TODO Define notion of side effects?
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
 ** TODO Check for bad use of past tense
 ** TODO Check for missing references
 ** TODO Check bad kerning, especially in math
-** TODO Check for unused glossary terms
-** TODO Check for undefined (!) glossary terms
+** DONE Check for unused glossary terms
+** DONE Check for undefined (!) glossary terms
+** DONE Check for horizontal overflow
 ** TODO Check for redundant uses of ! in glossary terms
 ** TODO Check for bad figure placements
 ** TODO Fix bad page breaks

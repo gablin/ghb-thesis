@@ -10,26 +10,28 @@
 %  All rights reserved.
 %
 %  Redistribution and use in source and binary forms, with or without
-%  modification, are permitted provided that the following conditions are met:
+%  modification, are permitted provided that the following conditions are
+%  met:
 %  1. Redistributions of source code must retain the above copyright notice,
 %     this list of conditions and the following disclaimer.
-%  2. Redistributions in binary form must reproduce the above copyright notice,
-%     this list of conditions and the following disclaimer in the documentation
-%     and/or other materials provided with the distribution.
-%  3. Neither the name of the copyright holder nor the names of its contributors
-%     may be used to endorse or promote products derived from this software
-%     without specific prior written permission.
+%  2. Redistributions in binary form must reproduce the above copyright
+%     notice, this list of conditions and the following disclaimer in the
+%     documentation and/or other materials provided with the distribution.
+%  3. Neither the name of the copyright holder nor the names of its
+%     contributors may be used to endorse or promote products derived from
+%     this software without specific prior written permission.
 %
-%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
-%  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-%  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-%  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-%  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-%  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-%  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+%  IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+%  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+%  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE
+%  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+%  THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
@@ -45,7 +47,8 @@ int: numBlocksInFunction;
 int: entryBlockOfFunction;
 int: execFrequencyGCD;
 array[allBlocksInFunction] of set of int: domSetsOfBlocksInFunction;
-array[allOperationsInFunction] of set of int: depsOfOpsInFunction; % NOT IN USE
+array[allOperationsInFunction] of set of int: depsOfOpsInFunction; % NOT IN
+                                                                   % USE
 array[allDataInFunction] of set of int: depsOfDataInFunction; % NOT IN USE
 set of allOperationsInFunction: copiesInFunction;
 set of allOperationsInFunction: controlOpsInFunction;
@@ -123,7 +126,8 @@ int: numDataValues = numDataInFunction + 1;
 int: datumValueForNull = numDataValues;
 
 % Total number of blocks values. An additional value will be needed for
-% representing the null block (to which non-selected matches will be placed).
+% representing the null block (to which non-selected matches will be
+% placed).
 int: numBlockValues = numBlocksInFunction + 1;
 
 % Reference to the null block.
@@ -135,9 +139,10 @@ set of int: allDataInFunction = 1..numDataInFunction;
 set of int: allBlocksInFunction = 1..numBlocksInFunction;
 set of int: allMatches = 1..numMatches;
 set of int: allOperands = 1..numOperands;
-set of int: allLocValues = { x | x in canonicalDataLocs ++ [ locValueForInt
-                                                           , locValueForKilled
-                                                           ]
+set of int: allLocValues = { x | x in canonicalDataLocs
+                                      ++ [ locValueForInt
+                                         , locValueForKilled
+                                         ]
                            };
 
 % The 'domRelMatrix' matrix is a 2D matrix with 2 columns:
@@ -153,9 +158,10 @@ int: numDomMatrixRows =
 array[1..numDomMatrixRows, 1..2] of allBlocksInFunction: domRelMatrix =
   array2d( 1..numDomMatrixRows
          , 1..2
-         , [ if k = 1 then i else j endif | i in allBlocksInFunction
-                                          , j in domSetsOfBlocksInFunction[i]
-                                          , k in 1..2
+         , [ if k = 1 then i else j endif
+           | i in allBlocksInFunction
+           , j in domSetsOfBlocksInFunction[i]
+           , k in 1..2
            ]
          );
 
@@ -174,16 +180,16 @@ array[allDataInFunction] of set of allMatches: defsetOfDatum =
   | d in allDataInFunction
   ];
 
-% The set of matches that can define a particular datum and does not cover any
-% operations.
+% The set of matches that can define a particular datum and does not cover
+% any operations.
 array[int] of set of allMatches: defsetOfDatumOnly =
   [ M | M in defsetOfDatum
         where forall (i in index_set(matchsetOfOp))
               ( matchsetOfOp[i] != M )
   ];
 
-% Maps a match to an operation. This is only needed for figuring out in which
-% block a selected match is to be placed.
+% Maps a match to an operation. This is only needed for figuring out in
+% which block a selected match is to be placed.
 array[allMatches] of int: opOfM =
   [ min({ o | o in allOperationsInFunction where m in matchsetOfOp[o] })
   | m in allMatches
@@ -202,15 +208,15 @@ array[allOperands] of int: matchOfP =
 %   sum (m in allMatches)
 %   ( latencyOfMatch[m] * execFrequencyOfBlocks[place[m]] )
 %
-% but this implementation yields poor propagation. To improve propagation, we
-% use the cost per operation instead of cost per selected match.
+% but this implementation yields poor propagation. To improve propagation,
+% we use the cost per operation instead of cost per selected match.
 %
 % First, we split the cost incurred by selecting a given match over the
 % operations that it covers. As the latency of a match times the exeqution
 % frequency of a given block may not be evenly divisible by the number of
-% operations covered, some operations may have a higher cost than others. Then,
-% we multiply each operation cost with the execution frequency of the block
-% wherein the operation may be placed.
+% operations covered, some operations may have a higher cost than
+% others. Then, we multiply each operation cost with the execution
+% frequency of the block wherein the operation may be placed.
 %
 % This information is put in a matrix called 'costPerOpMatrix'.
 
@@ -288,8 +294,8 @@ array[allDataInFunction] of var allLocValues: loc;
 % Data selected for the operands.
 array[allOperands] of var allDataInFunction: alt;
 
-% Block ordering (succ[b] is the block appearing immeditely after block b in the
-% generated code).
+% Block ordering (succ[b] is the block appearing immeditely after block b
+% in the generated code).
 array[allBlocksInFunction] of var allBlocksInFunction: succ;
 
 % Cost.
@@ -327,14 +333,14 @@ include "globals.mzn";
 % FUNCTIONS
 %===========
 
-% Bypasses the alt[.] variable if the given operand only has one alternative.
-% Valid under the assumption that its match was selected.
+% Bypasses the alt[.] variable if the given operand only has one
+% alternative. Valid under the assumption that its match was selected.
 var allDataInFunction: Alt(allOperands: p) =
   let { allDataInFunction: d = min(operandAlternatives[p]) }
   in if card(operandAlternatives[p]) = 1 then d else alt[p] endif;
 
-% True if the value of a given operand for sure must not be in the intermediate
-% value nor in the killed location.
+% True if the value of a given operand for sure must not be in the
+% intermediate value nor in the killed location.
 test valueOfOpMustBeAvailable(allOperands: p) =
   exists (i in index_set_1of2(validDataLocRangesInMatch))
   ( validDataLocRangesInMatch[i, 2] = p /\
@@ -394,9 +400,9 @@ constraint
   forall (p in allOperands)
   ( alt[p] in operandAlternatives[p] );
 
-% All operands exterior to a match (excluding kill matches), and which are not
-% states, must not be located in the intermediate value location nor the killed
-% location.
+% All operands exterior to a match (excluding kill matches), and which are
+% not states, must not be located in the intermediate value location nor
+% the killed location.
 constraint
   forall ( m in allMatches diff killInstrMatches
          , p in operandsExteriorToMatch[m]
@@ -412,8 +418,8 @@ constraint
     endif
   );
 
-% All operands intermediate to a match must be located in the intermediate value
-% location.
+% All operands intermediate to a match must be located in the intermediate
+% value location.
 constraint
   forall ( m in allMatches
          , p in operandsIntermediateToMatch[m]
@@ -430,7 +436,9 @@ constraint
          , p1 in operandsExteriorToMatch[m]
          )
   ( let { int: p2 = min(operandsExteriorToMatch[m]) }
-    in if p1 != p2 then sel[m] -> loc[Alt(p1)] = loc[Alt(p2)] else true endif
+    in if p1 != p2 then sel[m] -> loc[Alt(p1)] = loc[Alt(p2)]
+       else true
+       endif
   );
 
 % Constrain locations of operands representing values for selected matches.
@@ -467,8 +475,10 @@ constraint
     in sel[m] -> loc[Alt(p)] in l..u
   );
 
-% For selected matches that require two or more of its operands to have the same
-% location, enforce them to be the same.
+% For selected matches that require two or more of its operands to have the
+% same location, enforce them to be the same.
+%
+% Eq 1.16 in dissertation
 constraint
   forall (i in index_set_1of2(sameDataLocsInMatch)) (
     let { int: m = sameDataLocsInMatch[i, 1]
@@ -478,8 +488,8 @@ constraint
     in sel[m] -> loc[Alt(p1)] = loc[Alt(p2)]
   );
 
-% If a match representing a phi instruction is selected, then its data must be
-% defined in the blocks indicated by the definition edges.
+% If a match representing a phi instruction is selected, then its data must
+% be defined in the blocks indicated by the definition edges.
 %
 % $\eqFormat{\refEquation{match-def-edges}}$ in dissertation
 constraint
@@ -521,8 +531,8 @@ constraint
          )
   ( sel[m] -> oplace[opOfM[m]] = oplace[o] );
 
-% If a selected match m has an entry block b, then all operations covered by m
-% must be placed in b.
+% If a selected match m has an entry block b, then all operations covered
+% by m must be placed in b.
 %
 % If a match has no entry block, then this set will be empty and hence there
 % will be no such constraint. It is assumed that there will be at most one
@@ -536,8 +546,9 @@ constraint
          )
   ( sel[m] -> oplace[o] = b );
 
-% Data defined by a selected match m must be defined either in one of the blocks
-% spanned by m, or the block wherein the operations covered by m are placed.
+% Data defined by a selected match m must be defined either in one of the
+% blocks spanned by m, or the block wherein the operations covered by m are
+% placed.
 %
 % $\eqFormat{\refEquation{spanning-alt}}$ in dissertation
 constraint
@@ -563,10 +574,11 @@ constraint
   ( sel[m] -> oplace[o] != b );
 
 % For each selected match m that apply fall-through, enforce either:
-%    - that the fall-through block of m is the immediate successor of the entry
-%      block of m, or
-%    - that the fall-through block of m is one block away from the entry block
-%      of m and the block in between contains no non-null-instructions.
+%    - that the fall-through block of m is the immediate successor of the
+%      entry block of m, or
+%    - that the fall-through block of m is one block away from the entry
+%      block of m and the block in between contains no
+%      non-null-instructions.
 %
 % $\eqFormat{\refEquationRange{block-order}{no-fall-through-to-fun-entry}}$ in dissertation
 constraint
@@ -591,14 +603,14 @@ predicate falls_through(allMatches: m, allBlocksInFunction: fall_b) =
        )
      );
 
-% Enforce that, for each operation o, exactly one match must be selected such
-% that o is covered.
+% Enforce that, for each operation o, exactly one match must be selected
+% such that o is covered.
 %
 % THIS HAS BEEN REPLACED WITH DUAL VARIABLE CONSTRAINT.
 
-% Enforce that every datum is defined in a block such that the block dominates
-% all blocks wherein the datum is used. This constraint shall not be applied to
-% the generic phi patterns, nor to null instructions.
+% Enforce that every datum is defined in a block such that the block
+% dominates all blocks wherein the datum is used. This constraint shall not
+% be applied to the generic phi patterns, nor to null instructions.
 %
 % This used to be enforced by the following constraint:
 %
@@ -609,11 +621,11 @@ predicate falls_through(allMatches: m, allBlocksInFunction: fall_b) =
 %            )
 %     ( dplace[alt[p]] in domSetsOfBlocksInFunction[place[m]] );
 %
-% but it has been reformulated using table constraints to avoid the use of set
-% variables.
+% but it has been reformulated using table constraints to avoid the use of
+% set variables.
 %
-% This assumes that matches which use some data cover at least one operation,
-% which should always hold.
+% This assumes that matches which use some data cover at least one
+% operation, which should always hold.
 %
 % $\eqFormat{\refEquation{refined-dom}}$ in dissertation
 constraint
@@ -640,8 +652,8 @@ constraint
   forall (p in allOperands diff nonPhiUseOperands)
   ( uplace[p] = 1 );
 
-% A kill match is selected if and only if the location of the defined datum is
-% in the killed location.
+% A kill match is selected if and only if the location of the defined datum
+% is in the killed location.
 %
 % $\eqFormat{\refEquation{killed-data}}$ in dissertation
 constraint
@@ -650,7 +662,8 @@ constraint
          )
   ( sel[m] <-> loc[Alt(p)] = locValueForKilled );
 
-% Ensure that succ forms a circuit (thus resulting in an ordering of blocks).
+% Ensure that succ forms a circuit (thus resulting in an ordering of
+% blocks).
 %
 % $\eqFormat{\refEquation{block-order}}$ in dissertation
 constraint
@@ -710,8 +723,9 @@ constraint
 %
 %   constraint
 %     forall (o in allOperationsInFunction)
-%     ( let { set of int: mset = { m | m in allMatches
-%                                      where o in operationsCoveredByMatch[m]
+%     ( let { set of int: mset = { m
+%                                | m in allMatches
+%                                  where o in operationsCoveredByMatch[m]
 %                                }
 %           }
 %       in sum (m in mset) (bool2int(sel[m])) = 1
@@ -726,10 +740,11 @@ constraint
     ( omatch[o] = m <-> sel[m] )
   );
 
-% For each datum d, exactly one match must be selected such that d is defined.
+% For each datum d, exactly one match must be selected such that d is
+% defined.
 %
-% This replaces the constraint that that, for each datum d, exactly one match
-% must be selected such that d is defined:
+% This replaces the constraint that that, for each datum d, exactly one
+% match must be selected such that d is defined:
 %
 %   constraint
 %     forall (d in allDataInFunction)
@@ -742,9 +757,9 @@ constraint
 %     );
 %
 % This is an implied constraint, but it also enforces that the patterns for
-% defining the function input and constants are selected. Such patterns do not
-% cover any operations, they are not entailed in the above constraint for
-% exactly covering each operation.
+% defining the function input and constants are selected. Such patterns do
+% not cover any operations, they are not entailed in the above constraint
+% for exactly covering each operation.
 %
 % $\eqFormat{\refEquation{data-definitions}}$ in dissertation
 constraint
@@ -780,8 +795,8 @@ constraint
 % Break symmetries introduced by interchangeable data.
 %
 % This could remove potential optimal solutions in situations where data is
-% interchangeable WITHIN a group of matches, but not BETWEEN groups of matches.
-% Have yet to see such an occurrance, though.
+% interchangeable WITHIN a group of matches, but not BETWEEN groups of
+% matches. Have yet to see such an occurrance, though.
 %
 % $\eqFormat{\refEquation{dom-cons-interch-data-chains}}$ in dissertation
 constraint
@@ -846,9 +861,10 @@ constraint
 % IMPLIED CONSTRAINTS
 %=====================
 
-% If all matches covering an operation o are not phi instruction, do not span
-% any blocks, use datum du, and define datum dd, then the block defining du must
-% dominate the block defining dd, and o must be placed in the block defining dd.
+% If all matches covering an operation o are not phi instruction, do not
+% span any blocks, use datum du, and define datum dd, then the block
+% defining du must dominate the block defining dd, and o must be placed in
+% the block defining dd.
 %
 % $\eqFormat{\refEquationList{impl-cons-defs-dominate-defs, data-of-function}}$ in dissertation
 constraint
@@ -935,8 +951,8 @@ constraint
        endif
   );
 
-% If all matches for an operation o have identical entry blocks, then o must be
-% placed in the entry block.
+% If all matches for an operation o have identical entry blocks, then o
+% must be placed in the entry block.
 %
 % $\eqFormat{\refEquation{impl-cons-identical-entry-blocks}}$ in dissertation
 constraint
@@ -969,8 +985,8 @@ constraint
   );
 
 % If for any two given blocks p and q, and fallThroughBlockOfMatch contains
-% [_, p, q] but does not contain [_, p, q'] or [_, p', q], then succ[p] = q can
-% only help, never hurt.
+% [_, p, q] but does not contain [_, p, q'] or [_, p', q], then succ[p] = q
+% can only help, never hurt.
 %
 % $\eqFormat{\refEquation{impl-cons-fix-fall-throughs}}$ in dissertation
 constraint
@@ -1087,9 +1103,9 @@ constraint
        )
   );
 
-% If all matches in the matchset that defines a non-state datum d, are active,
-% and define it in an exterior operand, then d must not be placed in the
-% intermediate value nor killed location.
+% If all matches in the matchset that defines a non-state datum d, are
+% active, and define it in an exterior operand, then d must not be placed
+% in the intermediate value nor killed location.
 %
 % This constraint does not dominate [MC 2], nor vice versa.
 %
@@ -1102,9 +1118,9 @@ constraint
     endif
   );
 
-% If an exterior operand does not take its min value, then its match must be
-% selected and hence the datum cannot be in the intermediate value nor killed
-% location.
+% If an exterior operand does not take its min value, then its match must
+% be selected and hence the datum cannot be in the intermediate value nor
+% killed location.
 %
 % $\eqFormat{\refEquation{impl-cons-input-operands-not-taking-min-value}}$ in dissertation
 constraint
@@ -1189,8 +1205,8 @@ constraint
 
 solve
   :: seq_search(
-       [ % Try the smallest cost for the operation with the largest difference
-         % between its two smallest values.
+       [ % Try the smallest cost for the operation with the largest
+         % difference between its two smallest values.
          int_search(opcosts, max_regret, indomain_min, complete)
          % Remaining decisions are left to the solver.
        ])

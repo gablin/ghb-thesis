@@ -7,8 +7,6 @@
 \chapter{Introduction}
 \labelChapter{introduction}
 
-\enlargethispage{3pt}
-
 Processors are built to execute a vast range of \glspl{program}, from tiny
 \emph{Hello, world!} samples to large-scale Earth simulations.
 %
@@ -19,18 +17,23 @@ To this end, CPU manufacturers continuously extend their processors with new,
 sophisticated \glspl{instruction} that allow complex computations to be executed
 using fewer \glspl{instruction}.
 %
-Such \glspl{instruction} are especially common in \glspl{DSP} that appear in
+Such \glspl{instruction} are especially common in \glspl!{DSP} that appear in
 most contemporary mobile phones.
 %
 But while the technology behind modern processors continues to advance, the
-techniques for automatically making use of the \glspl{instruction} have not.
+techniques for \gls!{instruction selection} -- the task of choosing the
+\glspl{instruction} for a given \gls{program} -- have not.
 %
-In fact, the state-of-the-art \glspl{compiler} -- these are tools for
-translating \glspl{program} into \gls{assembly code} -- essentially apply the
-same techniques for selecting \glspl{instruction} that were used in the 1980s.
+In fact, the state-of-the-art \glspl{compiler}, which are tools for translating
+\glspl{program} into \gls{assembly code}, essentially apply the same
+\gls{instruction selection} techniques as were used in the 1980s.
 
 
 \paragraph{Problem Statement}
+
+% LAYOUT FIX:
+% Make the problem statement fit on one page
+\enlargethispage{3pt}
 
 Due to underlying assumptions, many of the \glspl{instruction} currently
 available in modern processors cannot be handled by these techniques.
@@ -50,14 +53,14 @@ shorter and shorter, there is a growing need for new and improved
 Furthermore, the set of selectable \glspl{instruction} is highly dependent on
 other \gls{compiler} tasks.
 %
-One such task is \gls{global code motion}, which involves moving computations
+One such task is \gls!{global code motion}, which involves moving computations
 from one part of the \gls{program} to another.
 %
 Integrating \gls{global code motion} with \gls{instruction selection} enables a
 larger set of combinations of computations, some of which may be implemented
 using sophisticated \glspl{instruction}.
 %
-Another task is \gls{block ordering}, which involves placing the \gls{program}
+Another task is \gls!{block ordering}, which involves placing the \gls{program}
 \glspl{block} in a consecutive sequence.
 %
 Depending on the processor, one set of selected \glspl{instruction} may impact
@@ -161,36 +164,47 @@ of three parts:%
 \end{figure}
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item a \gls!{frontend}, which performs syntactic and semantic analysis and
-    transforms the program into an \gls!{IR}
-  \item an \gls!{optimizer} (sometimes called \gls!{middle-end}), which performs
-    target-independent optimizations
-  \item a \gls!{backend}, which performs \gls{code generation}
+  \item a \gls{frontend}
+  \item an \gls{optimizer}
+  \item a \gls{backend}
 \end{inlinelist}.
 
-The \gls{optimizer} is arguably the largest component of any \gls{compiler},
-consisting of many tasks such as \gls{constant folding}, \gls{dead code
-  elimination}, and \gls{loop unrolling}.
+The \gls!{frontend} performs \glsshort{syntactic analysis} and \gls{semantic
+  analysis} on the \gls{program} under compilation, making sure that the
+\gls{program} is syntactically and semantically valid.
 %
-Another such optimization is \gls!{global code motion}, where \glspl{operation}
-are moved from one \gls{basic block} to another, which is done mainly to move
-expensive \glspl{operation} into \glspl{block} with lower execution frequency.
+After passing all checks, it then transforms the \gls{program} into an \gls!{IR}
+and passes the code to the \gls{optimizer}.
 
-The \gls{backend} also consists of several tasks, of which three
-typically are most promiment:%
+The \gls!{optimizer} (sometimes called \gls!{middle-end}) consists of many
+target-independent \gls{program} optimizations, such as \gls{constant folding},
+\gls{dead code elimination}, and \gls{loop unrolling}.
+%
+Consequently, it is often the largest component of most \glspl{compiler}.
+%
+\Gls{global code motion} is typically also included in this component, where
+\glspl{operation} are moved across \gls{block} boundaries in order to move
+expensive \glspl{operation} into \glspl{block} with lower execution frequency.
+%
+Once optimized, the \gls{IR} code is then passed to the \gls{backend}.
+
+The \gls!{backend} performs \gls{code generation}, where three tasks are most
+prominent:%
 %
 \begin{inlinelist}[itemjoin={; }, itemjoin*={; and}]
-  \item \gls!{instruction selection}, where \glspl{instruction} implementing the
-    given \gls{program} are selected
+  \item \gls{instruction selection}, which we are already familiar with
   \item \gls!{register allocation}, where \gls{virtual.temp} \glspl{temporary}
     are assigned to \glspl{register}
   \item \gls!{instruction scheduling}, where \glspl{instruction} are reordered
-    to increase instruction-level parallelism
+    to increase instruction-level parallelism and avoid stalls
 \end{inlinelist}.
 %
-Another code generation task of interest is \gls!{block ordering}, where the
-\glspl{basic block} are rearranged in order to minimize the number of jump
-\glspl{instruction}.
+Among other things, the \gls{backend} then performs \gls{block ordering} in
+order to minimize the number of jump \glspl{instruction}.
+%
+After these steps the \gls{program} has been fully transformed into
+\gls{assembly code}, which can then be translated into \gls{machine code} to be
+executed by the \gls{target machine}.
 
 
 \subsection{The Need for New Techniques and Representations}
@@ -255,7 +269,7 @@ will always stay within a range fixed by a minimum and maximum value.
 If the \gls{operation} would produce a value outside of this range, then the
 value is set (``clamped'') to the closest limit, thus becoming ``saturated''.
 
-Assume a \gls{target machine} that has an instruction capable of implementing
+Assume that the \gls{target machine} has an instruction capable of implementing
 the saturated-add \gls{operation} used in the \gls{program} shown in
 \refFigure{isel-gcmotion-example}.
 %
@@ -284,13 +298,13 @@ not support selection of such \glspl{instruction}.
 %
 Since the \glspl{operation} above reside in separate \glspl{block}
 (\irBlock*{b3} and \irBlock*{b4}), making use of the saturated-add
-\gls{instruction} requries an \gls{instruction selector} that is capable of
+\gls{instruction} requires an \gls{instruction selector} that is capable of
 processing multiple \glspl{basic block} simultaneously.
 %
 In comparison, traditional \gls{instruction selection} techniques only consider
 one \gls{basic block} at a time.
 %
-Morever, most approaches represent the \glspl{instruction} as \glspl{graph}.
+Moreover, most approaches represent the \glspl{instruction} as \glspl{graph}.
 %
 As the saturated-add \gls{instruction} contains \glspl{operation} for both data
 and control flow, modeling it as a \gls{graph} requires a representation that
@@ -315,7 +329,7 @@ four additions in the \gls{program} (\irAdd*{\irVar*{A}}{\irTemp*{2}},
 \irAdd*{\irVar*{i}}{\irVar*{1}}) which are independent from one another and can
 therefore be executed in parallel.
 %
-Assuming again that all \glspl{instruction} takes one cycle to execute,
+Assuming again that all \glspl{instruction} take one cycle to execute,
 implementing these four additions using a single \gls{SIMD.i} \gls{instruction}
 would improve performance by almost \SI{19}{\percent}.
 %
@@ -336,7 +350,7 @@ code quality -- like in the previous example -- doing so carelessly may also
 have the opposite effect.
 %
 Assume, for example, that the \gls{SIMD.i} \gls{instruction} uses a limited set
-of registers.
+of \glspl{register}.
 %
 If the other selected \glspl{instruction} cannot directly write to and read from
 these registers, then additional \glspl{instruction} must be emitted to copy the
@@ -346,8 +360,10 @@ In the case of the program shown in \refFigure{isel-gcmotion-example}, eight
 such \glspl{instruction} would be needed, leading to a slowdown of over
 \SI{31}{\percent}.
 %
-These restrictions must be known by the \gls{instruction selector} to make
-effective use of \gls{SIMD.i} \glspl{instruction}.
+The task of inserting these copy \glspl{instruction} is known as \gls!{data
+  copying}, and the \gls{instruction selector} must be aware of the cost of
+\gls{data copying} in order to make effective use of \gls{SIMD.i}
+\glspl{instruction}.
 
 
 \subsection{For Combining Instruction Selection and Block Ordering}
@@ -521,21 +537,25 @@ and \glsdesc{CP}:
 \begin{contributions}
   \item \labelContribution{survey}
     It presents a comprehensive and systematic survey that
+    %
     \begin{contributions}
       \item \labelContribution{survey-spanning}
         examines over four decades of research on \gls{instruction selection},
-        covering a significantly wider scope and timespan compared to existing
+        covering a significantly wider scope and time span compared to existing
         surveys \cite{Cattell:1977, GanapathiEtAl:1982:Survey, Lunell:1983,
           Leupers:2000:Survey, BoulytchevLomov:2001} which are either too old
         or incomplete.
     \end{contributions}
+    %
     The survey structures the approaches according to two dimensions:
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-principles}
         the fundamental \gls{principle} -- \gls{macro expansion}, \gls{tree
           covering}, \gls{DAG covering}, or \gls{graph covering} -- that they
         apply, and
     \end{contributions}
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-instruction-characteristics}
         the \glspl{instruction characteristic} -- \gls{single-output.ic},
@@ -544,47 +564,60 @@ and \glsdesc{CP}:
     \end{contributions}
     %
     In addition, the survey
+    %
     \begin{contributions}[resume]
       \item \labelContribution{survey-problem-identification}
         identifies connections between \gls{instruction selection} and other
         \gls{code generation} problems that have yet to be investigated.
     \end{contributions}
+
   \item \labelContribution{representations}
     It introduces a novel \gls{program} and \gls{instruction} representation
     that
+    %
     \begin{contributions}
       \item \labelContribution{rep-data-and-control-flow}
         captures both data and control flow for entire \glspl{function} and
         \glspl{instruction},
     \end{contributions}
+    %
     which enables
+    %
     \begin{contributions}[resume]
       \item \labelContribution{rep-complex-instructions}
         an unprecedented range of instruction behaviors to be captured and
         modeled as \glspl{pattern}.
     \end{contributions}
+    %
     In addition, the representation is crucial for
+    %
     \begin{contributions}[resume]
       \item \labelContribution{rep-combining-problems}
         combining \gls{instruction selection} and \gls{global code motion} --
         two problems that have until now been considered separately from one
         another -- and solving these two problems in unison.
     \end{contributions}
+
   \item \labelContribution{constraint-model}
     It introduces a \gls{constraint model} and related transformations for
     \gls{universal instruction selection} which, for the first time, enables
+    %
     \begin{contributions}
       \item \labelContribution{cp-uniform-selection}
         uniform selection of data and control \glspl{instruction},
     \end{contributions}
+    %
     and integration of
+    %
     \begin{contributions}[resume]
       \item \labelContribution{cp-global-instruction-selection}
         \gls{global.is} \gls{instruction selection} with
       \item \labelContribution{cp-global-code-motion}
         \gls{global code motion}.
     \end{contributions}
+    %
     In addition, the \gls{constraint model} integrates
+    %
     \begin{contributions}[resume]
       \item \labelContribution{cp-data-copying}
         \gls{data copying},
@@ -593,12 +626,18 @@ and \glsdesc{CP}:
       \item \labelContribution{cp-block-ordering}
         \gls{block ordering}.
     \end{contributions}
+
   \item \labelContribution{solving-techniques}
     It introduces techniques to improve solving of the \gls{constraint model}.
+    %
+    These solving techniques are essential for scalability and making the
+    approach work in practice.
+
   \item \labelContribution{experiments}
     It presents thorough experiments demonstrating that the approach scales to
     medium-sized \glspl{program} and yields equal or better code than the state
     of the art.
+
   \item \labelContribution{integration}
     It outlines how the \gls{constraint model} can be extended to integrate
     other \gls{code generation} tasks, such as \gls{instruction scheduling} and
@@ -816,8 +855,8 @@ dissertation and in none of the publications.
   \labelTable{contributions-per-publication}
 \end{table}
 
-The author also participated in the following publications, which are out of
-scope for the dissertation:
+The author also participated in the following publications not included in the
+dissertation:
 
 
 \paragraph{Book Chapters, Conference Papers, and Workshop Papers}
@@ -931,23 +970,23 @@ of the art.
 
 \subsection{Experiment Setup}
 
-To evaluate a \gls{constraint model}, we implement it using \mbox{\gls{MiniZinc}
-  2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level \gls{constraint}
-modeling language.
+To evaluate a \gls{constraint model}, we implement it using
+\mbox{\gls!{MiniZinc} 2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level
+\gls{constraint} modeling language.
 %
-The model is solved using \gls{Chuffed}~\cite{Chu:2011} -- a \glsdesc{LCG}-based
-\glsshort{constraint solver} included in \gls{MiniZinc} -- on a Linux machine
-with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and \SI{16}{\giga\byte} main
-memory.
+The model is solved using \gls!{Chuffed}~\cite{Chu:2011} -- a
+\glsdesc{LCG}-based \glsshort{constraint solver} included in \gls{MiniZinc} --
+on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
+\SI{16}{\giga\byte} main memory.
 %
-To mitigate deviations in the measurments, we run each experiment ten times and
-then take the arithmetic average together with the \gls{CV}.
+To mitigate deviations in the measurements, we run each experiment ten times and
+then take the arithmetic average together with the \gls!{CV}.
 %
 When summarizing ratios, we instead take the geometric mean since this is more
 appropriate in such cases~\cite{FlemingWallace:1986}.
 
 As problem instances, we use the \glspl{function} provided by
-\gls{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
+\gls!{MediaBench}~\cite{LeeEtAl:1997} -- a benchmark suite for embedded systems
 -- and the \glspl{instruction} in \gls{Hexagon}~V5 -- a \gls{DSP} with a rich
 \gls{instruction set}.
 %
@@ -955,7 +994,7 @@ The \gls{MediaBench} suite consists of \num{6313}~\glspl{function}, which are
 compiled into \gls{LLVM} \gls{IR} code -- the intermediate format used by
 \gls{LLVM} -- using \mbox{\gls{LLVM} 3.8} with optimization flag~\texttt{-O3}.
 %
-Due to insuffiicent support in the current toolchain, we remove all
+Due to insufficient support in the current tool chain, we remove all
 \glspl{function} that operate on non-integer data types (such as floating point
 and vector data types).
 %
@@ -964,7 +1003,7 @@ performed as needed for the given experiment.
 
 For all experiments in this dissertation, the remaining pool of \glspl{function}
 is too large for all to be included in the experiment as that would lead to
-intractable experiment runtimes.
+unreasonable experiment runtimes.
 %
 We therefore draw a limited number of samples from this pool.
 %
@@ -979,14 +1018,14 @@ different characteristics.
 The second feature is the size in number of \gls{LLVM} \gls{IR}
 \glspl{instruction}.
 %
-This is to evaluate how the \gls{constraint model} behave as the
+This is to evaluate how the \gls{constraint model} behaves as the
 \glspl{function} grow larger.
 %
 The third feature is the number of memory \glspl{instruction}.
 %
 This is because, due to its many \glspl{addressing mode}, the memory
 \glspl{instruction} constitute a large part of the more sophisticated
-\glspl{instruction} in the \gls{instruction set}).
+\glspl{instruction} in the \gls{instruction set}.
 %
 Based on these features, from each cluster we then randomly select one
 \gls{function}, giving a total of twenty \glspl{function}.
@@ -1020,7 +1059,7 @@ A value greater than \num{1} means $a$ is faster than $b$, a value less than
 and $b$ take the same time to solve a given \gls{function}.
 
 This method, however, creates problems when plotting the normalized values as
-barcharts.
+bar charts.
 %
 Since the normalized values are centered around \num{1}, when $a$ is twice as
 fast as $b$ we intuitively expect the normalized value to be equally far away
@@ -1115,7 +1154,7 @@ $\mZCNormSuffix$, respectively (\eg \printSpeedup{3.5} and \printZCNorm{2.5}).
 \Gls{zero-centered normalization} is also applied when comparing \gls{solution}
 costs as they represent an estimate of the time it would take to execute the
 code yielded by the \glspl{solution} (the current implementation is not yet able
-to hook back into \gls{LLVM} in order to generate executable code).
+to hook back into the \gls{compiler} in order to generate executable code).
 
 When summarizing normalized values, however, we do not use \gls{zero-centered
   normalization} as the geometric mean cannot be computed for such values.
@@ -1140,7 +1179,7 @@ representative for the pool as a whole.
 %
 In other words, the result may not be statistically significant.
 %
-Therefore, for the \gls{GMI} value we also compute the \gls{CI}, which is a
+Therefore, for the \gls{GMI} value we also compute the \gls!{CI}, which is a
 method of estimating the uncertainty of a value computed from a set of
 samples~\cite{Neyman:1937}.
 %
@@ -1159,7 +1198,7 @@ For the experiments described in this dissertation, we compute the
 experiments.
 %
 Since we know nothing about the underlying distributions for our observations,
-we compute the \gls{CI} using \gls{percentile bootstrapping} with
+we compute the \gls{CI} using \gls!{percentile bootstrapping} with
 \num{100000}~iterations~\cite{EfronTibshirani:1994}.
 
 

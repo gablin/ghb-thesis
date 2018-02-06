@@ -105,7 +105,7 @@ If the \gls{target machine} is a \glsunset{VLIW}\gls{VLIW} architecture,\!%
 then special care must be taken to ensure that the resource capacities are not
 exceeded by the \glspl{instruction}.
 %
-In this context, a resource capacity could be the number of \glspl{issue slot}
+In this context, a resource capacity could be the number of \glspl!{issue slot}
 (that is, the number of \glspl{instruction} that can run in parallel; this is
 called \gls!{bundling}) or the number of functional units available.\!%
 %
@@ -119,12 +119,15 @@ To model these restrictions, we will apply the same approach as in
 which was introduced in \refChapter{constraint-programming} on
 \refPageOfSection{cp-cumulative}.
 
-If \mbox{$\mCapOf(r) \in \mNatNumSet$} denotes the capacity of a
+Let \mbox{$\mCapOf(r) \in \mNatNumSet$} denote the capacity of a
 resource~\mbox{$r \in \mResourceSet$}, where $\mResourceSet$ denotes the set of
-resources in the \gls{target machine}, \mbox{$\mLat(m) \in \mNatNumSet$} denotes
-the latency of a \gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r)
-  \in \mNatNumSet$} denotes the amount of $r$ used by $m$\hspace{-.8pt}, then
-the \gls{constraint} can be modeled as
+resources in the \gls{target machine}.
+%
+Let also \mbox{$\mLat(m) \in \mNatNumSet$} denote the latency of a
+\gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r) \in \mNatNumSet$}
+denote the amount of $r$ used by $m$\hspace{-.8pt}.
+%
+With these definitions, the \gls{constraint} can be modeled as
 %
 \begin{equation}
   \begin{array}{@{}c@{}}
@@ -491,12 +494,12 @@ occur.
 Even with multiple \glspl{block}, the start of a \gls{live range} is still
 determined by the \gls{match} defining the \gls{datum}.
 %
-Morever, the \gls{constraint} that no two rectangles belonging to the same
+Moreover, the \gls{constraint} that no two rectangles belonging to the same
 \gls{block} may overlap still apply.
 %
 Hence \refEquationList{local-live-range-start, local-killed-range-start,
   local-rect-packing} are adjusted accordingly (the changes are highlighted in
-grey):
+gray):
 %
 \begin{equation}
   \begin{array}{@{}c@{}}

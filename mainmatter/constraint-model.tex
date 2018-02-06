@@ -1010,7 +1010,7 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 %
 With these new definitions, \refEquationList{naive-dom, spanning,
   compatible-locations} are adjusted accordingly (the changes are highlighted in
-grey):
+gray):
 %
 \begin{equation}
   \forall m \in \mPhiMatchCompSet,
@@ -1112,7 +1112,7 @@ When filtering, we remove all \glspl{function} that have less than less
 than ten~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
 \num{50}~\glspl{instruction}.
 %
-Anything smaller will most likely not be benefitted by \gls{value reuse}, and
+Anything smaller will most likely not be benefited by \gls{value reuse}, and
 anything larger will lead to unreasonably long solving times.
 %
 This leaves a pool of \num{453}~\glspl{function}, on which we then perform
@@ -1522,7 +1522,7 @@ this \gls{constraint} is modeled as
 One method of inserting jump \glspl{instruction} is to extend the \gls{UF graph}
 with additional \glsshort{block node} and \glspl{control node}.
 %
-The idea is as follows.
+The idea, called \gls!{branch extension}, is as follows.
 %
 For each \gls{control-flow edge}~$\mPair{c}{b}$, where $c$ is a \gls{control
   node} and $b$ is a \gls{block node}, we remove this \gls{edge} and insert a
@@ -1607,11 +1607,13 @@ directly branches to a given label (it is reasonable to assume such a
 Let \mbox{$\mCost(p)$} and \mbox{$\mEmits(p)$} denote the cost of pattern~$p$
 respectively the sequence of \glspl{instruction} emitted by $p$ if selected.
 %
-Then, for each \gls{pattern}~\mbox{$p \in S$} which corresponds to a conditional
-jump \gls{instruction} that falls through to a given block~$b$, add to $S$ a new
-\gls{pattern}~$p'$ that is a copy of $p$ but has no \gls{fall-through}
-\gls{constraint}, emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and has
-cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
+Then, for each \gls{pattern}~\mbox{$p \in S$} corresponding to a conditional
+jump \gls{instruction} that falls through to a given block~$b$, we add a new
+\gls{pattern} add to $S$.
+%
+This new \gls{pattern} is a copy of $p$ but has no \gls{fall-through}
+\gls{constraint}, it emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and
+it has cost \mbox{$\mCost(p) + \mCost(\jmpPattern)$}.
 %
 An example is shown in \refFigure{dual-target-branch-pattern-example}.
 %
@@ -1696,10 +1698,16 @@ comparing the solving times exhibited and the cost of the optimal
 \end{modelList}.
 %
 Since \gls{branch extension} yields a larger number of \glspl{block} compared to
-\glspl{DTB pattern}, many of which will be empty and thereby causing emission of
-redundant jump \glspl{instruction}, we expect \glsshort{constraint
-  model}~\refModel{dual-target} perform better, both in terms of solving time
-and cost, than \glsshort{constraint model}~\refModel{branch-ext}.
+\glspl{DTB pattern}, we expect \glsshort{constraint
+  model}~\refModel{dual-target} to outperform \glsshort{constraint
+  model}~\refModel{branch-ext}.
+%
+Moreover, many of the \glspl{block} incurred by \gls{branch extension} will be
+empty and thereby causing emission of redundant jump \glspl{instruction}.
+%
+Consequently, we also expect \glsshort{constraint model}~\refModel{dual-target}
+to yield better code quality than \glsshort{constraint
+  model}~\refModel{branch-ext}.
 
 When filtering, we remove all \glspl{function} that have less than less than
 \num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
@@ -1830,7 +1838,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
 
   \caption[%
             Plot comparing optimal solution costs for two constraint models
-            supporing jump instruction insertion%
+            supporting jump instruction insertion%
           ]%
           {%
             Normalized optimal solution costs for two constraint models that
@@ -1893,10 +1901,12 @@ Based on the results from these experiments, we conclude that \glspl{DTB
 \section{Objective Function}
 \labelSection{cm-objective-function}
 
-In \gls{instruction selection} most \glspl{compiler} optimize for performance,
-meaning they attempt to minimize the total cost -- this is typically the
-\gls{instruction} latency -- of the selected \glspl{match} per \gls{block}~$b$
-while factoring in the execution frequency of~$b$.
+During \gls{instruction selection}, most \glspl{compiler} optimize for
+performance by using execution latency of \glspl{instruction} as \gls{match}
+costs.
+%
+In addition, they factor in the execution frequency of the \gls{block} in which
+the selected \glspl{match} are placed.
 %
 The intuition is that the \glspl{instruction} selected for ``hot'' \glspl{block}
 -- that is, those which are part of a loop with many iterations -- will have
@@ -2042,8 +2052,7 @@ every \gls{operation} and \gls{datum} must be covered respectively
 Although these \glspl{constraint} can be relaxed to allow \glspl{operation} and
 \glspl{datum} to be covered respectively \gls{define.d}[d] by at least one
 selected \gls{match}, many of the solving techniques introduced in this
-dissertation which are needed for scalability and robustness rely on
-\gls{exact.c} \gls{cover}[age].
+dissertation rely on exact \gls{cover}[age].
 
 
 \paragraph{If-Conversions}
@@ -2051,7 +2060,7 @@ dissertation which are needed for scalability and robustness rely on
 In most cases, performing a branch incurs a performance penalty.
 %
 Some architectures therefore allow the \glspl{instruction} to be predicated with
-a boolean flag for optional execution, which allows \glspl{function} with
+a Boolean flag for optional execution, which allows \glspl{function} with
 if-then-else structures to be transformed into linear code.
 %
 This process is called \gls!{if-conversion}.
@@ -2131,8 +2140,8 @@ Assume a \gls{function} containing two sums, \irVar*{a} and~\irVar*{b}, which
 are conditionally computed given a certain predicate~\irVar*{p}
 (\refFigure{if-conversions-example-ir}).
 %
-Because this constitutes an if-then-else structure, this code snippet is eligble
-for \gls{if-conversion} (\refFigure{if-conversions-example-instrs}).
+Because this constitutes an if-then-else structure, this code snippet is
+eligible for \gls{if-conversion} (\refFigure{if-conversions-example-instrs}).
 %
 Representing the predicated versions of add~\glspl{instruction} as
 \glspl{pattern} gives rise to two \glspl{match}, $m_1$ and~$m_2$, which can
