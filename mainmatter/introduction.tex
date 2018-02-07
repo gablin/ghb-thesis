@@ -975,11 +975,17 @@ To evaluate a \gls{constraint model}, we implement it using
 \mbox{\gls!{MiniZinc} 2.1.6}~\cite{NethercoteEtAl:2007}, which is a high-level
 \gls{constraint} modeling language.
 %
+The algorithms for transforming a given \gls{function} into a \gls{graph},
+performing \gls{pattern matching}, and producing the data to instantiate the
+\gls{constraint model} are implemented in \gls{Haskell}.
+%
+The presolving techniques are implemented in \gls{Python}.
+%
 The model is solved using \gls!{Chuffed}~\cite{Chu:2011} -- a
 \glsdesc{LCG}-based \glsshort{constraint solver} included in \gls{MiniZinc} --
 on a Linux machine with an \gls{Intel} Xeon W3530 at \SI{2.80}{\GHz} and
 \SI{16}{\giga\byte} main memory.
-%
+
 To mitigate deviations in the measurements, we run each experiment ten times and
 then take the arithmetic average together with the \gls!{CV}.
 %
