@@ -65,12 +65,10 @@ We first eliminate the set~\glspl{variable} by capturing the information in the
 $\mDom$~\gls{function} as a dominance relation matrix
 %
 \begin{equation}
-  \begin{bmatrix}
-    \begin{array}{@{\:}c|c@{\:}}
-        b_1, b_2
-      & b_1, b_2 \in \mBlockSet, b_1 \in \mDom(b_2)
-    \end{array}
-  \end{bmatrix}
+  \begin{aMatrix}{@{\:}c|c@{\:}}
+      b_1, b_2
+    & b_1, b_2 \in \mBlockSet, b_1 \in \mDom(b_2)
+  \end{aMatrix}
   \labelEquation{dominance-matrix}
 \end{equation}
 %
@@ -312,12 +310,10 @@ frequency of~$b$.
 This information can be represented as a cost matrix
 %
 \begin{equation}
-  \begin{bmatrix}
-    \begin{array}{@{\:}c|c@{\:}}
-        o, m, b, \big( \mOpCost(m, o) \times \mFreq(b) \big)
-      & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
-    \end{array}
-  \end{bmatrix}
+  \begin{aMatrix}{@{\:}c|c@{\:}}
+      o, m, b, \big( \mOpCost(m, o) \times \mFreq(b) \big)
+    & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
+  \end{aMatrix}
   \labelEquation{div-mul-cost-matrix}
 \end{equation}
 %
@@ -344,12 +340,10 @@ method the \gls!{multiply-then-divide method}.
 For the latter, the cost matrix is computed as
 %
 \begin{equation}
-  \begin{bmatrix}
-    \begin{array}{@{\:}c|c@{\:}}
-        o, m, b, \mOpCost(m, o, b)
-      & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
-    \end{array}
-  \end{bmatrix}
+  \begin{aMatrix}{@{\:}c|c@{\:}}
+      o, m, b, \mOpCost(m, o, b)
+    & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
+  \end{aMatrix}
   \labelEquation{mul-div-cost-matrix}
 \end{equation}
 %
