@@ -754,18 +754,15 @@
 \mkGlobalConCommands{Table}
 \mkGlobalConCommands[ValuePrecChain]{VPC}
 
-% blkarray-related commands
-\NewDocumentEnvironment{adjblockarray}{mm}{%
-  \begin{lrbox}{\adjblockarraybox}%
-    $\begin{blockarray}{#1}
-}{%
-    \end{blockarray}$%
-  \end{lrbox}%
-  \raisebox{-#2}[\dimexpr\height-#2][\dimexpr\depth-#2]{%
-    \usebox{\adjblockarraybox}%
-  }%
+% For typesetting matrices
+\newsavebox{\matrixBox}
+\NewDocumentEnvironment{aMatrix}{m}{
+  \left[
+    \begin{array}{@{\,}#1@{\,}}
+}{
+    \end{array}
+  \right]
 }
-\newsavebox{\adjblockarraybox}
 
 % Typesets a tree that appears in the sigma set.
 \NewDocumentCommand{\mSigmaTree}{mm}{%

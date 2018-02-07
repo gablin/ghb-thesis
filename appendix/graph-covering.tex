@@ -447,12 +447,24 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example-2}.
                 }{%
                   \figureFontSize%
                   \apptocmd{\irFont}{\scriptsize}{}{}%
-                  \newcommand{\lskip}{0.1ex}%
-                  \newcommand{\newlineskip}{-1em}%
+                  \newcommand{\newlineAndSep}[1][0pt]{%
+                    % Double-newline is to enforce equal spacing between
+                    % multi-row matrices (a single newline with offset does not
+                    % do the trick, apparently)
+                    \\[-1.5mm]
+                    \multicolumn{2}{c}{} \\[#1]
+                  }%
+                  \newcommand{\mLabel}[1]{{\scriptstyle #1}}%
+                  \newcommand{\mColLabel}[1]{%
+                    \raisebox{2mm}[0pt][0pt]{\clap{$\mLabel{#1}$}}%
+                  }%
+                  \newcommand{\mRowLabel}[1]{%
+                    \raisebox{.2ex}{$\mLabel{#1}$}%
+                  }%
+                  \def\Sstackgap{0pt}%
                   \newcolumntype{R}{r@{\;=\;}}%
-                  \BAnewcolumntype{C}{>{\;}c<{\:}}%
-                  \BAnewcolumntype{X}{@{\;\;\,}c}%
-                  \newcommand{\mlabel}[1]{\raisebox{.2ex}{$\scriptstyle #1$}}%
+                  \newdimen\labelHeight%
+                  \settoheight{\labelHeight}{$\mLabel{m_x}$}%
                   \begin{minipage}{22mm}%
                     \begin{displaymath}
                       \begin{array}{r@{\;\in\;}l}
@@ -466,72 +478,87 @@ An example of a \gls{PBQP} instance is shown in \refFigure{pbqp-example-2}.
                     \end{displaymath}%
                   \end{minipage}%
                   \hspace{5mm}%
-                  \trimbox{0 8pt 0 0}{%
-                    \begin{minipage}{27mm}%
-                      \begin{displaymath}
-                        \begin{array}{Rl}
+                  \begin{minipage}{27mm}%
+                    \begin{displaymath}
+                      \begin{array}{Rl}
                           \mVector{c}_{\irVar{a}}
-                            & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
-                                  0 & \mlabel{m_1} \\
-                                \end{block}
-                              \end{adjblockarray} \\[1.5ex]
+                        & \begin{aMatrix}{c}
+                            0
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_1}
+                          \end{array}
+                        \newlineAndSep
                           \mVector{c}_{\irVar{b}}
-                            & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
-                                  0 & \mlabel{m_2} \\
-                                \end{block}
-                              \end{adjblockarray} \\[1.5ex]
+                        & \begin{aMatrix}{c}
+                            0
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_2}
+                          \end{array}
+                        \newlineAndSep
                           \mVector{c}_{\irCode{\irAddText}}
-                            & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
-                                  1 & \mlabel{m_3} \\
-                                  5 & \mlabel{m_5} \\
-                                \end{block}
-                              \end{adjblockarray} \\[3ex]
+                        & \begin{aMatrix}{c}
+                            1 \\
+                            5
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_3} \\
+                            \mRowLabel{m_5}
+                          \end{array}
+                        \newlineAndSep
                           \mVector{c}_{\irCode{\irLoadText}}
-                            & \begin{adjblockarray}{cc}{1.3ex}
-                                \begin{block}{[C]X}
-                                  3 & \mlabel{m_4} \\
-                                  5 & \mlabel{m_5} \\
-                                \end{block}
-                              \end{adjblockarray}
-                        \end{array}
-                      \end{displaymath}%
-                    \end{minipage}%
-                  }%
+                        & \begin{aMatrix}{c}
+                            3 \\
+                            5
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_4} \\
+                            \mRowLabel{m_5}
+                          \end{array}
+                      \end{array}
+                    \end{displaymath}%
+                  \end{minipage}%
                   \hspace{5mm}%
                   \begin{minipage}{33mm}%
                     \begin{displaymath}
-                      \begin{array}{Rc}
-                        \mMatrix{C}_{\irVar{a} \irCode{\irAddText}}
-                          & \begin{adjblockarray}{ccc}{-0.1ex}
-                                \scriptstyle m_3
-                              & \scriptstyle m_5
-                              & \\[\lskip]
-                              \begin{block}{[cc]X}
-                                0 & 0 & \mlabel{m_1} \\
-                              \end{block}
-                            \end{adjblockarray} \\[-2.2ex]
-                        \mMatrix{C}_{\irVar{b} \irCode{\irAddText}}
-                          & \begin{adjblockarray}{ccc}{-0.1ex}
-                                \scriptstyle m_3
-                              & \scriptstyle m_5
-                              & \\[\lskip]
-                              \begin{block}{[cc]X}
-                                0 & 0 & \mlabel{m_1} \\
-                              \end{block}
-                            \end{adjblockarray} \\[-2.2ex]
-                        \mMatrix{C}_{\irCode{\irAddText} \irCode{\irLoadText}}
-                          & \begin{adjblockarray}{ccc}{0ex}
-                                \scriptstyle m_4
-                              & \scriptstyle m_5
-                              & \\[\lskip]
-                              \begin{block}{[cc]X}
-                                2      & \infty & \mlabel{m_3} \\
-                                \infty & 0      & \mlabel{m_5} \\
-                              \end{block}
-                            \end{adjblockarray}
+                      \begin{array}{Rl}
+                          \mMatrix{C}_{\irVar{a} \irCode{\irAddText}}
+                        & \begin{aMatrix}{cc}
+                              \Shortstack{$\mColLabel{m_3}$ $0$}
+                            & \Shortstack{$\mColLabel{m_5}$ $0$}
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_1}
+                          \end{array}
+                        \newlineAndSep[\labelHeight]
+                          \mMatrix{C}_{\irVar{b} \irCode{\irAddText}}
+                        & \begin{aMatrix}{cc}
+                              \Shortstack{$\mColLabel{m_3}$ $0$}
+                            & \Shortstack{$\mColLabel{m_5}$ $0$}
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_2}
+                          \end{array}
+                        \newlineAndSep[\labelHeight]
+                          \mMatrix{C}_{\irCode{\irAddText} \irCode{\irLoadText}}
+                        & \begin{aMatrix}{cc}
+                              \Shortstack{$\mColLabel{m_4}$ $2$}
+                            & \Shortstack{%
+                                $\mColLabel{m_5}$
+                                $\mathclap{\phantom{0}}% The \infty char is
+                                                       % shorter than a number,
+                                                       % so we need to make it
+                                                       % as tall as a number
+                                 \infty$%
+                              } \\
+                              \infty
+                            & 0
+                          \end{aMatrix}
+                          \begin{array}{@{}l@{}}
+                            \mRowLabel{m_3} \\
+                            \mRowLabel{m_5}
+                          \end{array}
                       \end{array}
                     \end{displaymath}%
                   \end{minipage}%

@@ -197,32 +197,44 @@ See for example \refFigure{cost-example}.
                   \figureFontSize%
                   \begin{minipage}{50mm}%
                     \centering%
+                    \def\Sstackgap{0pt}%
                     \begin{displaymath}
-                      \begin{adjblockarray}{cccccc}{1ex}
-                          \text{\tabhead op}
-                        & \text{\tabhead match}
-                        & \text{\tabhead block}
-                        & \multicolumn{3}{c}{%
-                            \text{%
-                              \parbox{20.5mm}{%
-                                % The parbox is used to create a bit of space
-                                % between the content and the right bracket
-                                \centering\tabhead opcost%
-                              }%
-                            }%
-                          } \\[-.5ex]
-                        \begin{block}{[cccc@{\;\times\;}c@{\;=\;}c]}
-                          \rule{0pt}{2.5ex}
-                          o_1 & m_1 & b_1 & 4 & 10 & 40 \\
-                          o_1 & m_1 & b_2 & 4 &  1 &  4 \\
-                          o_1 & m_3 & b_1 & 3 & 10 & 30 \\
-                          o_1 & m_3 & b_2 & 3 &  1 &  3 \\
-                          o_2 & m_2 & b_1 & 1 & 10 & 10 \\
-                          o_2 & m_2 & b_2 & 1 &  1 &  1 \\
-                          o_2 & m_3 & b_1 & 2 & 10 & 20 \\
-                          o_2 & m_3 & b_2 & 2 &  1 &  2 \\[.55ex]
-                        \end{block}
-                      \end{adjblockarray}
+                      \begin{aMatrix}{cccr@{\;\times\;}r@{\;=\;}r}
+                          \Shortstack{%
+                            \raisebox{1mm}[0pt][0pt]{\tabhead op}
+                            $\mathclap{\phantom{b}}% Needed to horizontally
+                                                   % align labels
+                             o_1$%
+                          }
+                        & \Shortstack{%
+                            \raisebox{1mm}[0pt][0pt]{\tabhead match}
+                            $\mathclap{\phantom{b}}% Needed to horizontally
+                                                   % align labels
+                             m_1$%
+                          }
+                        & \Shortstack{%
+                            \raisebox{1mm}[0pt][0pt]{\tabhead block}
+                            $b_1$%
+                          }
+                        & 4
+                        & \Shortstack{%
+                            \raisebox{1mm}[0pt][0pt]{%
+                              \hspace{3pt}% Needed to vertically align label
+                              \clap{\tabhead opcost}%
+                            }
+                            $\mathclap{\phantom{b}}% Needed to horizontally
+                                                   % align labels
+                             10$%
+                          }
+                        & 40 \\
+                        o_1 & m_1 & b_2 & 4 &  1 &  4 \\
+                        o_1 & m_3 & b_1 & 3 & 10 & 30 \\
+                        o_1 & m_3 & b_2 & 3 &  1 &  3 \\
+                        o_2 & m_2 & b_1 & 1 & 10 & 10 \\
+                        o_2 & m_2 & b_2 & 1 &  1 &  1 \\
+                        o_2 & m_3 & b_1 & 2 & 10 & 20 \\
+                        o_2 & m_3 & b_2 & 2 &  1 &  2
+                      \end{aMatrix}
                     \end{displaymath}
                   \end{minipage}%
                 }%
