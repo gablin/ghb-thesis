@@ -28,12 +28,10 @@
   \node [square, minimum size=4*\squareSize] (s4) {4};
   \node [square, minimum size=3*\squareSize,
          below left=0 and 0 of s4.north west] (s3) {3};
-  \begin{scope}[opacity=.5]
-    \node [square, minimum size=2*\squareSize,
-           below right=0 and 0 of s3.south west] (s2) {2};
-    \node [square, minimum size=1*\squareSize,
-           above right=0 and 0 of s2.south east] (s1) {1};
-  \end{scope}
+  \node [square, minimum size=2*\squareSize,
+         below right=0 and 0 of s3.south west] (s2) {2};
+  \node [square, minimum size=1*\squareSize,
+         above right=0 and 0 of s2.south east] (s1) {1};
 
   \begin{scope}[boundary]
     \draw ([yshift=-1.5*\squareSize] s2.south west)
