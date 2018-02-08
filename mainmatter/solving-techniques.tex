@@ -94,8 +94,7 @@ Note that unlike the $\mVar{dplace}$~\glspl{variable}, which are indexed using a
 Obviously, every \gls{use.d} of \glspl{datum} must be \gls{dominate.b}[d] by its
 definition.
 %
-Given a \glsshort{dominate.b}[ance] relation matrix~$\mDomMatrix$ computed using
-\refEquation{dominance-matrix}, this \gls{constraint} is modeled as
+This \gls{constraint} is modeled as
 %
 \begin{equation}
   \forall p \in \mPhiOperandCompSet :
@@ -107,7 +106,9 @@ Given a \glsshort{dominate.b}[ance] relation matrix~$\mDomMatrix$ computed using
 \end{equation}
 %
 where \mbox{$\mPhiOperandCompSet \subseteq \mOperandSet$} denotes the set of
-\glspl{operand} not appearing in any \gls{phi-match}.
+\glspl{operand} not appearing in any \gls{phi-match} and $\mDomMatrix$ is the
+\glsshort{dominate.b}[ance] relation matrix computed using
+\refEquation{dominance-matrix}.
 %
 We exclude such \glspl{operand} for the same reasons \glspl{phi-match} are
 excluded in \refEquation{naive-dom}.
@@ -272,12 +273,13 @@ $b_1$ and $b_2$, with execution frequencies~\num{10} and~\num{1}, respectively.
 Because \refEquation{naive-objective-function} is modeled as a summation, it can
 only \glsshort{propagation}[e] the bounds of the \gls{cost variable}.
 %
-Consequently, for any \glspl{match} whose $\mVar{sel}$~\gls{variable} has yet to
-be decided, either all those \glspl{match} are selected and placed in the
-\gls{block} with highest execution frequency or none are selected.
+Consequently, any \gls{match}~$m$ for which $\mVar{sel}[m]$ is still undecided
+incurs a cost between zero (if not selected) and \mbox{$\mCost(m) \times
+  \mMax(\cup_{b \,\in\, \mBlockSet} \mFreq(b))$} (if selected and placed in the
+\gls{block} with highest execution frequency).
 %
 In the example above, this means the \gls{cost variable} is initially bounded as
-\mbox{$0 < \mVar{cost} < 100$}.
+\mbox{$0 \leq \mVar{cost} \leq 100$}.
 %
 These are very weak bounds as we know that either both $m_1$ and $m_2$ are
 selected and placed in $b_2$, or $m_3$ is selected and placed in $b_2$,
@@ -333,9 +335,9 @@ From the cost matrix given in \refFigure{cost-example-matrix}, we can deduce
 that the cost of covering \glspl{operation}~$o_1$ and~$o_2$ is between~\num{3}
 and~\num{40} and between~\num{1} and~\num{20}, respectively.
 %
-Hence the total cost can be bounded as \mbox{$4 < \mVar{cost} < 60$}, which is a
-much tighter bound compared to that achieved using the naive \gls{objective
-  function}.
+Hence the total cost can be bounded as \mbox{$4 \leq \mVar{cost} \leq 60$},
+which is a much tighter bound compared to that achieved using the naive
+\gls{objective function}.
 
 An alternative method for computing the cost is to \emph{first} multiply the
 \gls{match} cost with the execution frequency and \emph{then} evenly divide the
@@ -390,7 +392,7 @@ For each \gls{operation}~$o$\hspace{-.8pt}, the combination
 \mbox{$o\hspace{-.8pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
 must appear as a row in the cost matrix.
 %
-Given a cost matrix~$\mCostMatrix$, computed using either
+Given a cost matrix~$\mCostMatrix$ computed using either
 \refEquation{div-mul-cost-matrix} or~\refEquation*{mul-div-cost-matrix}, this
 \gls{constraint} is modeled as
 %
@@ -414,6 +416,8 @@ The total cost is then modeled as
   \mVar{cost} = \sum_{\mathclap{o \in \mOpSet}} \mVar{ocost}[o].
   \labelEquation{total-cost}
 \end{equation}
+
+\todo{this is the same as naive, sketch proof}
 
 
 \section{Implied Constraints}
@@ -571,13 +575,16 @@ This is modeled as
                        \mEntry(m) = \mSet{b} \mAnd \mDataSet[p] = \mSet{d}
                      \end{array}
                    } : \\
-    \mTable(b \hspace{-.8pt}, \mVar{dplace}[d], \mDomMatrix).
+    \mTable(
+      \mTuple{b \hspace{-.8pt}, \mVar{dplace}[d]} \hspace{-1pt},
+      \mDomMatrix
+    ).
   \end{array}
   \labelEquation{impl-cons-defs-dominate-entry-blocks}
 \end{equation}
 
 From \refEquation{def-edges}, we can infer that if a \gls{datum}~$d$ appears in
-a \gls{definition edge}~$\mEdge{b}{d}$ and is \gls{define.d}[d] by
+a \gls{definition edge}~$\mEdge{d}{b}$ and is \gls{define.d}[d] by
 \glspl{phi-match} only, then the \gls{operation} covered by these \glspl{match}
 must be placed $b$.
 %
@@ -766,7 +773,7 @@ modeled as
                       \text{ \st }
                       d \in \mDataSet[p]
                     } : \\
-    \mVar{loc}[d] = S.
+    \mVar{loc}[d] \in S.
   \end{array}
   \labelEquation{impl-cons-locs-of-uses}
 \end{equation}
@@ -795,7 +802,7 @@ similarly modeled as
                     }
     \mAnd
     S \neq \mEmptySet : \\
-    \mVar{loc}[d] = S.
+    \mVar{loc}[d] \in S.
   \end{array}
   \labelEquation{impl-cons-locs-of-defs}
 \end{equation}
@@ -1051,7 +1058,7 @@ With these definitions, this \gls{constraint} is modeled as
 
 Additional symmetries may appear due to \glspl{null-copy match}.
 %
-Returning to the example above, if one of the two \glspl{copy node} need to be
+Returning to the example above, if one of the two \glspl{copy node} needs to be
 covered using a \gls{copy match} derived from actual copy \gls{instruction},
 then we are free to decide which.
 %
@@ -1123,6 +1130,8 @@ For this to be effective, however, the cost bounds must be tight.
 %
 A tight upper bound enables the \gls{constraint solver} to prune away parts of
 the \gls{search space} that only contains inferior \glspl{solution}.
+%
+This is most useful for proving whether a particular \gls{solution} is optimal.
 %
 Likewise, a tight lower bound enables the \gls{constraint solver} to prune away
 parts of the \gls{search space} that contains no \glspl{solution}.
@@ -1254,7 +1263,8 @@ A \gls{match}~$m_1$ is \gls!{dominate.m}[d] if there exists another
     \mDefines(m_1) : \exists p_2 \in \mUses(m_2) \cup \mDefines(m_2) :
     \mDataSet[p_1] \subseteq \mDataSet[p_2] \mAnd \mStores(m_1, p_1) \subseteq
     \mStores(m_2, p_2)$ -- and
-  \item both apply the same auxiliary \glspl{constraint} (if any).
+  \item both apply the same additional \glspl{constraint} (if any) when
+    selected.
 \end{itemize}
 %
 As a precaution, we assume that \glspl{null match}, \glspl{phi-match}, and
@@ -1353,7 +1363,7 @@ With similar reasoning, this set of \gls{illegal.m} \glspl{match} is computed as
   \labelEquation{illegal-matches-undefined-data}
 \end{equation}
 
-If a \gls{kill match}~$m$ \gls{define.d}[s] a \gls{datum}~$d$ and every other
+If a \gls{kill match}~$m$ \gls{define.d}[s] a \gls{datum}~$d$ and every
 \gls{match} using $d$ has no \glsshort{alternative value}[s] but~$d$, then $m$
 is \gls{illegal.m} as $d$ must be \gls{define.d}[d] by a non-\gls{kill match}.
 %
@@ -1792,8 +1802,9 @@ One possible explanation is that they yield different bounds.
 %
 For the example given in \refFigure{cost-example} on
 \refPageOfFigure{cost-example}, the \gls{multiply-then-divide method} bounds the
-total cost as \mbox{$4 < \mVar{cost} < 65$}, whereas the
-\gls{divide-then-multiply method} bounds it to \mbox{$4 < \mVar{cost} < 60$}.
+total cost as \mbox{$4 \leq \mVar{cost} \leq 65$}, whereas the
+\gls{divide-then-multiply method} bounds it to \mbox{$4 \leq \mVar{cost} \leq
+  60$}.
 %
 However, this does not always hold as the \gls{divide-then-multiply method} may
 yield a tighter bound than the \gls{multiply-then-divide method} for other
@@ -1980,7 +1991,7 @@ third experiment, with \glsshort{constraint
             code quality%
           ]%
           {%
-            Normalized optimal solution costs for two constraint models:
+            Normalized best solution costs for two constraint models:
             %
             \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
               \item one implementing the naive objective function (baseline)
@@ -2002,10 +2013,7 @@ third experiment, with \glsshort{constraint
             those for which the naive objective function fails to produce any
             solution, and \glspl{function} marked with \barNormValueNoSolution{}
             are those where the solution produced by \gls{LLVM} is already
-            optimal \wrt the model.
-            %
-            \Glspl{function} whose bars are marked with two dots are those
-            for which the \gls{subject} does not find the optimal solution%
+            optimal \wrt the model%
           }
   \labelFigure{obj-fun-refined-vs-naive-cycles-speedup-plot}
 \end{figure}
@@ -2896,6 +2904,8 @@ to an overall solving time degradation, and that
 For \gls{dominate.m}[d] \glspl{match} and
 \refEquationList{illegal-matches-undefined-data, illegal-matches-kills}, the
 results are inconclusive.
+
+\todo{discuss why some techniques lead to degradation}
 
 
 \paragraph{Impact of Groups of Techniques}
