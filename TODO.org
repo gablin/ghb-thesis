@@ -17,17 +17,16 @@
 ** DONE Add equations for multiply-then-divide method
 ** DONE Ensure that all floats are declared after first reference
 ** DONE Run spell check
-** TODO Run grammar check
 ** DONE Add list of acronyms
 ** DONE Break long sentences
 ** DONE Fix overflowing of bib entries
 ** TODO Fix inconsistencies between patterns and matches in tree-covering appendix
-** TODO Define notion of side effects?
+** DONE Fix missing notion of side effects
 ** TODO Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
-** TODO Check for bad use of past tense
-** TODO Check for missing references
-** TODO Check bad kerning, especially in math
+** DONE Check for bad use of past tense
+** DONE Check for missing references
+** DONE Check bad kerning, especially in math
 ** DONE Check for unused glossary terms
 ** DONE Check for undefined (!) glossary terms
 ** DONE Check for horizontal overflow
@@ -36,5 +35,6 @@
 ** TODO Fix bad page breaks
 ** TODO Fix paragraphs ending with only one word on last line
 ** TODO Check for any lingering TODOs in the document
-** TODO Run another spell and grammar check
+** TODO Run another spell check
+** TODO Run grammar check
 ** TODO Remove 'electronic' document class option
