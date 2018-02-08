@@ -10,7 +10,7 @@
 In this chapter, we discuss how the \gls{constraint model} can be extended to
 integrate other problems related to \gls{code generation}.
 %
-In \refSection{fw-isched}, we propose an extension for integrating
+In \refSection{fw-isched} we propose an extension for integrating
 \gls{instruction scheduling}.
 %
 Based on this idea, we propose in \refSection{fw-reg-alloc} an extension for
@@ -29,53 +29,57 @@ another.
 %
 For example, when discussing the experiments in \refChapter{solving-techniques}
 we observed that the \gls{constraint model} pushes loading of constants into
-\glspl{block} with low execution frequencies, thus resulting in less cost.
+\glspl{block} with low execution frequencies to decrease cost.
 %
 Such moves, however, may result in code where the definition and uses of a value
 are spread far apart, resulting in high \gls{register} pressure.
 %
 This in turn could force the \gls{register allocator} to perform lots of
 \gls{spilling.r}, which is potentially much more expensive than the cost saved
-by the moving the loads.
+by moving the loads.
 %
-Hence, future work includes extending the \gls{constraint model} introduced in
-this dissertation to integrate these problems.
+To take this cost into account, the \gls{constraint model} introduced in
+\refChapter{constraint-model} must be extended to integrate these problems.
 
 In this context, the \gls{instruction scheduling} problem can be defined as
 follows.
 %
-Given a \gls{block}~$b$ and a set of selected \glspl{match} placed in
-$b$\hspace{-1pt}, assign to each \gls{match}~$m$ an issue cycle $c_m$ such that
-\mbox{$c_m \!+ \mLat(m) \leq c_{m'}$}, where $\mLat(m)$ denotes the latency of
-$m$\hspace{-1pt}, holds for every \gls{match}~$m'$ that \gls{use.d}[s]
-\glspl{datum} \gls{define.d}[d] by $m$\hspace{-1pt}.
+Assume that we are given a set~$M'$ of selected \glspl{match}, all placed in a
+\gls{block}~$b$\hspace{-.8pt}.
 %
-To model this problem, we require two new \glspl{variable}.
+Let $\mLat(m)$ denote the \gls{instruction} latency of a \gls{match}~\mbox{$m
+  \in M'$}.
+%
+Then \gls{instruction scheduling} problem is to assign to each
+\gls{match}~\mbox{$m \in M'$} an issue cycle $c_m$ such that \mbox{$c_m \!+
+  \mLat(m) \leq c_{m'}$} holds for every \gls{match}~\mbox{$m' \in M'$},
+\mbox{$m \neq m'$}, that \gls{use.d}[s] \glspl{datum} \gls{define.d}[d] by
+$m$\hspace{-.8pt}.
+%
+To model this problem, we introduce two new \glspl{variable}.
 
 
 \paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{cycle}[m] \in \mNatNumSet$} models at
 which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
-\mbox{$\mVar{sched}[m, b] \in \mSet{0, 1}$} models whether $m$ is to be
-scheduled in \gls{block}~$b$\hspace{-1pt}.
+\mbox{$\mVar{sched}[m, b] \in \mSet{0, 1}$} models whether $m$ is scheduled in
+\gls{block}~$b$\hspace{-.8pt}.
 
 
 \paragraph{Constraints}
 
 If a selected \gls{match}~$m_1$ \gls{define.d}[s] a \gls{datum}~$d$ which is
-used by another selected \gls{match}~$m_2$ and $m_1$ and $m_2$ are both placed
+used by another selected \gls{match}~$m_2$, and $m_1$ and $m_2$ are both placed
 in the same \gls{block}, then $m_1$ must be scheduled before~$m_2$.
 %
 This can be modeled as
 %
 \begin{equation}
   \begin{array}{@{}c@{}}
-    \forall m_1 \hspace{-1pt}, m_2 \in \mMatchSet,
+    \forall m_1 \hspace{-1pt}, m_2 \in \mMatchSet \text{ \st } m_1 \neq m_2,
     \forall p_1 \in \mDefines(m_1),
-    \forall p_2 \in \mUses(m_2) \setminus \mDefines(m_2)
-    \text{ \st }
-    m_1 \neq m_2 : \\
+    \forall p_2 \in \mUses(m_2) \setminus \mDefines(m_2) : \\
     \big(
       \mVar{sel}[m_1] \mAnd \mVar{sel}[m_2]
       \mAnd \mBlockOf(m_1) = \mBlockOf(m_2)
@@ -116,18 +120,19 @@ called \gls!{bundling}) or the number of functional units available.\!%
 %
 To model these restrictions, we will apply the same approach as in
 \cite{CastanedaLozanoEtAl:2014:LCTES} and use the \gls{cumulative constraint}
-which was introduced in \refChapter{constraint-programming} on
+introduced in \refChapter{constraint-programming} on
 \refPageOfSection{cp-cumulative}.
 
 Let \mbox{$\mCapOf(r) \in \mNatNumSet$} denote the capacity of a
 resource~\mbox{$r \in \mResourceSet$}, where $\mResourceSet$ denotes the set of
 resources in the \gls{target machine}.
 %
-Let also \mbox{$\mLat(m) \in \mNatNumSet$} denote the latency of a
-\gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r) \in \mNatNumSet$}
-denote the amount of $r$ used by $m$\hspace{-.8pt}.
+Let also \mbox{$\mLat(m) \in \mNatNumSet$} denote the \gls{instruction} latency
+of a \gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r) \in
+  \mNatNumSet$} denote the amount of resource $r$ used by
+\gls{match}~$m$\hspace{-.8pt}.
 %
-With these definitions, the \gls{constraint} can be modeled as
+With these definitions, this \gls{constraint} can be modeled as
 %
 \begin{equation}
   \begin{array}{@{}c@{}}
@@ -142,23 +147,25 @@ With these definitions, the \gls{constraint} can be modeled as
       \mTuple{
         \mVar{cycle}[m],
         \mLat(m),
-        \mResourceUse(m, r),
+        \mResourceUse(m \hspace{-.8pt}, r),
         \mVar{sched}[m \hspace{-.8pt}, b]
       }
-    \right)\!.
+    \right)\!\!.
   \end{array}
   \labelEquation{resource-capacities}
 \end{equation}
 
 Lastly, a \gls{match}~$m$ must be scheduled in \gls{block}~$b$ if and only if
-$m$ is selected and placed in $b$, which can be modeled as
+$m$ is selected and placed in $b$\hspace{-.8pt}.
+%
+This can be modeled as
 %
 \begin{equation}
   \forall b \in \mBlockSet,
   \forall m \in \mMatchSet :
   \mVar{sched}[m, b]
   \mEq
-  \mVar{sel}[m] \mAnd \mBlockOf(m) = b \hspace{-1pt}.
+  \mVar{sel}[m] \mAnd \mBlockOf(m) = b \hspace{-.8pt}.
   \labelEquation{optional-scheduling}
 \end{equation}
 
@@ -171,14 +178,14 @@ assigning a location to each \gls{datum}~$d$ such that the value in the location
 is preserved until the last use of~$d$.
 %
 Like with \gls{instruction selection}, this problem can be considered either at
-\gls{local.ra} or \gls{global.ra}.
+\gls{local.ra} or \gls{global.ra} scope.
 %
-In \gls!{local.ra} \gls{register allocation}, \glspl{register} are allocated to
-the variables in the \gls{function} one \gls{block} at a time, whereas
-\gls!{global.ra} \gls{register allocation} does so for the entire
+In \gls!{local.ra}[ \gls{register allocation}], \glspl{register} are allocated
+to the variables in the \gls{function} one \gls{block} at a time, whereas
+\gls!{global.ra}[ \gls{register allocation}] does so for the entire
 \gls{function}.
 %
-We begin by discussing the \gls{local.ra} problem and then extend it into the
+We begin by modeling the \gls{local.ra} problem and then extend it into the
 \gls{global.ra} problem.
 
 
@@ -247,8 +254,8 @@ We will describe the problem using the example is shown in
   \labelFigure{local-reg-alloc-example}
 \end{figure}
 %
-Assume a set of \glspl{instruction} in a given \gls{block} that have been
-scheduled (\refFigure{local-reg-alloc-example-ir}).
+Assume that a set of \glspl{instruction} in a given \gls{block} have already
+been scheduled (\refFigure{local-reg-alloc-example-ir}).
 %
 From the schedule a \gls!{live range} is computed for each variable, which is
 the point in time where the variable is defined until the point where it is last
@@ -268,34 +275,35 @@ width corresponds to the size of the value (that is, the number of
 \glspl{register} it requires).
 
 For simplicity, let us assume for now that we only consider \glspl{function}
-containing a single \gls{block}, which removes the need of having to deal with
+containing a single \gls{block} as this removes the need of having to deal with
 \glspl{live range} spanning multiple \glspl{block}.
 %
-Also, since the \glspl{live range} depend on the schedule, we build upon the
-\gls{constraint model} proposed in \refSection{fw-isched}.
+Since the \glspl{live range} depend on \gls{instruction scheduling}, we build
+upon the \gls{constraint model} proposed in \refSection{fw-isched}.
 
 
 \paragraph{Variables}
 
 The two sets of \glspl{variable} \mbox{$\mVar{start}[d] \in \mNatNumSet$} and
-\mbox{$\mVar{end}[d] \in \mNatNumSet$} models the start respectively end of the
-\gls{live range} for a \gls{datum}~$d$\hspace{-1pt}.
-%
-Note that the \gls{register} to which $d$ is assigned is already modeled by the
-$\mVar{loc}$~\glspl{variable}.
+\mbox{$\mVar{end}[d] \in \mNatNumSet$} model the start respectively end of the
+\gls{live range} for a \gls{datum}~$d$\hspace{-.8pt}.
 %
 In addition, the set of \glspl{variable} \mbox{$\mVar{alive}[d] \in \mSet{0,
     1}$} models whether $d$ is alive (in other words, $d$ is not
 \gls{killed.d}), and the set of \glspl{variable}
-\mbox{$\mVar{using}[m \hspace{-1pt}, d] \in \mSet{0, 1}$} models whether
-\gls{match}~$m$ uses \gls{datum}~$d$\hspace{-1pt}.
+\mbox{$\mVar{using}[m \hspace{-.8pt}, d] \in \mSet{0, 1}$} models whether
+\gls{match}~$m$ uses \gls{datum}~$d$\hspace{-.8pt}.
+%
+The \gls{register} to which $d$ is assigned is already modeled by the
+$\mVar{loc}$~\glspl{variable}.
 
 
 \paragraph{Constraints}
 
 First, we constrain the $\mVar{alive}$~\glspl{variable} according to the
-definition of what it means for \glspl{datum} to be \gls{killed.d}, which is
-modeled as
+definition of what it means for \glspl{datum} to be \gls{killed.d}.
+%
+This can be modeled as
 %
 \begin{equation}
   \forall d \in \mDataSet :
@@ -307,7 +315,7 @@ modeled as
 
 Now, if a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live
   range} for a \gls{datum}~$d$ is determined by the \gls{match}
-\glsshort{define.d}[ing] $d$\hspace{-1pt}.
+\glsshort{define.d}[ing] $d$\hspace{-.8pt}.
 %
 Otherwise, the start is set to zero.
 %
@@ -331,10 +339,11 @@ This can be modeled as
 \end{equation}
 
 Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
-determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-1pt}.
+determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-.8pt}.
 %
-If there is no use of $d$, then $\mVar{end}[d]$ is set to $\mVar{start}[d]$ as
-to not affect \gls{register allocation} and \gls{instruction scheduling}.
+If there is no use of $d$, then $\mVar{end}[d]$ is set to $\mVar{start}[d]$ to
+not affect \gls{register allocation} and \gls{instruction scheduling} for other
+\glspl{datum}.
 %
 This can jointly be modeled as
 %
@@ -346,10 +355,10 @@ This can jointly be modeled as
     \cup_{m \,\in\, \mUsersOf(d)} \,
     \mVar{cycle}[m]
     \times
-    \mVar{using}[m \hspace{-1pt}, d]
+    \mVar{using}[m \hspace{-.8pt}, d]
     \cup
     \mSet{\mVar{start}[d]}
-  \right)\!,
+  \right)\!\!,
   \labelEquation{local-live-range-end}
 \end{equation}
 %
@@ -367,22 +376,23 @@ where
   \labelEquation{users-of-function}
 \end{equation}
 
-A \gls{match}~$m$ makes use of a \gls{datum}~$d$ if and only if $m$ is selected
-and one of its \glspl{operand} are connected to $d$\hspace{-1pt}, which can be
-modeled as
+A \gls{match}~$m$ \gls{use.d}[s] a \gls{datum}~$d$ if and only if $m$ is
+selected and one of its \glspl{operand} are connected to $d$\hspace{-.8pt}.
+%
+This can be modeled as
 %
 \begin{equation}
   \forall d \in \mDataSet \!,
   \forall m \in \mMatchSet,
   \forall p \in \mUses(m) :
-  \mVar{using}[m \hspace{-1pt}, d]
+  \mVar{using}[m \hspace{-.8pt}, d]
   \mEq
-  \mVar{sel}[m] \mAnd \mVar{alt}[p] = d \hspace{-1pt}.
+  \mVar{sel}[m] \mAnd \mVar{alt}[p] = d \hspace{-.8pt}.
   \labelEquation{local-m-using-d}
 \end{equation}
 
 To model the rectangle packing problem, we use the \gls{no-overlap constraint}
-which was introduced in \refChapter{constraint-programming} on
+introduced in \refChapter{constraint-programming} on
 \refPageOfSection{cp-no-overlap}.
 %
 Thus the rectangle packing problem can be modeled as
@@ -397,12 +407,12 @@ Thus the rectangle packing problem can be modeled as
          \mVar{loc}[d],
          \mVar{loc}[d] + \mWidthOf(d)
       }
-  \right)\!,
+  \right)\!\!,
   \labelEquation{local-rect-packing}
 \end{equation}
 %
 where \mbox{$\mWidthOf(d) \in \mNatNumSet$} denotes the number of
-\glspl{register} required for \gls{datum}~$d$\hspace{-1pt}.
+\glspl{register} required for \gls{datum}~$d$\hspace{-.8pt}.
 
 
 \subsection{Global Register Allocation}
@@ -469,24 +479,23 @@ Consequently, \irVar*{x} must be live to the end of \irBlock*{A}, through all
 \irBlock*{D} (\refFigure{global-reg-alloc-example-live-ranges}).
 
 We extend the \gls{constraint model} proposed for \gls{local.ra} \gls{register
-  allocation} by first creating $\mVar{start}$ and $\mVar{end}$~\glspl{variable}
-for each \gls{block} in the \gls{function} together with an additional set of
-\glspl{variable}, and then extending the \glspl{constraint} to handle multiple
-\glspl{block}.
+  allocation} by first introducing $\mVar{start}$ and
+$\mVar{end}$~\glspl{variable} for each \gls{block} in the \gls{function},
+together with an additional set of \glspl{variable}, and then extending the
+\glspl{constraint} to handle multiple \glspl{block}.
 
 
 \paragraph{Variables}
 
-The two sets of \glspl{variable} \mbox{$\mVar{start}[d \hspace{-1pt}, b] \in
-  \mNatNumSet$} and \mbox{$\mVar{end}[d \hspace{-1pt}, b] \in \mNatNumSet$}
-models the start respectively end of the \gls{live range} for a \gls{datum}~$d$
-in \gls{block}~$b$\hspace{-1pt}.
+The two sets of \glspl{variable} \mbox{$\mVar{start}[d \hspace{-.8pt}, b] \in
+  \mNatNumSet$} and \mbox{$\mVar{end}[d \hspace{-.8pt}, b] \in \mNatNumSet$}
+model the start respectively end of the \gls{live range} for a \gls{datum}~$d$
+in \gls{block}~$b$\hspace{-.8pt}.
 %
-In addition, the set of \glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-1pt},
-    b] \in \mSet{0, 1}$} models, given a \gls{datum}~$d$ and a
-\gls{block}~$b$\hspace{-1pt}, whether there exists some selected \gls{match}
-making use of $d$ in one of the \glspl{block} to which a branch from $b$ can
-occur.
+In addition, given a \gls{datum}~$d$ and a \gls{block}~$b$ the set of
+\glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-.8pt}, b] \in \mSet{0, 1}$}
+models whether there exists some selected \gls{match} \glsshort{use.d}[ing] $d$
+in one of the \glspl{block} to which a branch from $b$ can occur.
 
 
 \paragraph{Constraints}
@@ -514,14 +523,14 @@ gray):
         \mVar{dplace}[d] = b
     )}
     \mImp
-    \mVar{start}[d] = \mVar{cycle}[\mVar{dmatch}[m]],
+    \mVar{start}[d \hlDiff{\hspace{-.8pt}, b}] = \mVar{cycle}[\mVar{dmatch}[m]],
   \end{array}
   \labelEquation{global-live-range-start}
 \end{equation}
 %
 \begin{equation}
   \forall d \in \mDataSet \hspace{-1pt},
-  \hlDiff{\forall b \in \mBlockSet \hspace{-1pt},} :
+  \hlDiff{\forall b \in \mBlockSet \hspace{-1pt}} :
   \hlDiff{(}
     \mNot\mVar{alive}[d]
     \hlDiff{
@@ -547,24 +556,24 @@ gray):
            \mVar{loc}[d],
            \mVar{loc}[d] + \mWidthOf(d)
         }
-    \right)\!.
+    \right)\!\!.
   \end{array}
   \labelEquation{global-rect-packing}
 \end{equation}
 
-Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-1pt}, if $d$
+Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-.8pt}, if $d$
 is used in some \gls{block}~$b'$ following $b$ (meaning there is a jump from $b$
 to $b'$), then the \gls{live range} of $d$ must extend until the end of the
-schedule for $b$\hspace{-1pt}.
+schedule for $b$\hspace{-.8pt}.
 %
 This can be modeled as
 %
 \begin{equation}
   \forall d \in \mDataSet \!,
   \forall b \in \mBlockSet :
-  \mVar{useafter}[d \hspace{-1pt}, b]
+  \mVar{useafter}[d \hspace{-.8pt}, b]
   \mImp
-  \mVar{end}[d \hspace{-1pt}, b]
+  \mVar{end}[d \hspace{-.8pt}, b]
   =
   \mMax(
     \cup_{d' \,\in\, \mDataSet \text{ \st } d' \neq d} \,
@@ -573,16 +582,18 @@ This can be modeled as
   \labelEquation{global-live-range-end-def-and-int-blocks}
 \end{equation}
 %
-For every other \glspl{block}~$b''\!$, either $d$ is not used in
-$b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
+For every other \glspl{block}~$b''\!$, either $d$ is not used in $b''$ or the
+last use of $d$ occurs in $b''\!$.
+%
+This can jointly be modeled as
 %
 \begin{equation}
   \begin{array}{@{}c@{}}
     \forall d \in \mDataSet \!,
     \forall b \in \mBlockSet :
-    \mNot\mVar{useafter}[d \hspace{-1pt}, b]
+    \mNot\mVar{useafter}[d \hspace{-.8pt}, b]
     \mImp \mbox{} \\
-    \mVar{end}[d, b]
+    \mVar{end}[d \hspace{-.8pt}, b]
     =
     \mMax\!
     \left(
@@ -590,20 +601,20 @@ $b''$ or the last use of $d$ occurs in $b''\!$, which can jointly be modeled as
         \cup_{m \,\in\, \mUsersOf(d)} \,
         \mVar{cycle}[m]
         \times
-        \mVar{sched}[m \hspace{-1pt}, b]
+        \mVar{sched}[m \hspace{-.8pt}, b]
         \times
-        \mVar{using}[m \hspace{-1pt}, d] \\
+        \mVar{using}[m \hspace{-.8pt}, d] \\
         \mbox{} \cup
-        \mSet{\mVar{start}[d, b]}
+        \mSet{\mVar{start}[d \hspace{-.8pt}, b]}
       \end{array}
     \right)
   \end{array}
   \labelEquation{global-live-range-end-last-use-block}
 \end{equation}
 %
-Equations \refEquation*{global-live-range-end-def-and-int-blocks}
-and~\refEquation*{global-live-range-end-last-use-block} implicitly assume that
-\glspl{phi-match} are always scheduled first,%
+Moreover, \refEquationList{global-live-range-end-def-and-int-blocks,
+  global-live-range-end-last-use-block} implicitly assume that \glspl{phi-match}
+are always scheduled first.\!%
 %
 \footnote{%
   This is because \glspl{datum} \gls{define.d}[d] and \gls{use.d}[d] within
@@ -613,7 +624,8 @@ and~\refEquation*{global-live-range-end-last-use-block} implicitly assume that
   Since the \glspl{phi-match} \gls{define.d} the \glspl{datum} to be
   \gls{use.d}[d] within the loop, these must appear first in the schedule.
 }
-which can be enforced by
+%
+This can be modeled as
 %
 \begin{equation}
   \forall m \in \mPhiMatchSet :
@@ -622,20 +634,22 @@ which can be enforced by
 \end{equation}
 
 Lastly, we constrain the $\mVar{useafter}$~\glspl{variable} according to the
-definition above, which can be modeled as
+definition above.
+%
+This can be modeled as
 %
 \begin{equation}
   \begin{array}{@{}c@{}}
     \forall d \in \mDataSet \!,
-    \forall b_1, b_2 \in \mBlockSet
+    \forall b_1 \hspace{-1pt}, b_2 \in \mBlockSet
     \text{ \st }
     b_2 \in \mBranches(b_1) : \\
-    \mVar{useafter}[d \hspace{-1pt}, b_1]
+    \mVar{useafter}[d \hspace{-.8pt}, b_1]
     \mEq
     \exists m \in \mMatchSet :
-    \mVar{using}[m \hspace{-1pt}, d]
+    \mVar{using}[m \hspace{-.8pt}, d]
     \mAnd
-    \mVar{sched}[m \hspace{-1pt}, b_2],
+    \mVar{sched}[m \hspace{-.8pt}, b_2],
   \end{array}
   \labelEquation{global-use-after-block}
 \end{equation}
