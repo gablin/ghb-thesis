@@ -45,7 +45,7 @@ In this context, the \gls{instruction scheduling} problem can be defined as
 follows.
 %
 Assume that we are given a set~$M'$ of selected \glspl{match}, all placed in a
-\gls{block}~$b$\hspace{-.8pt}.
+\gls{block}~$b$\hspace{-1pt}.
 %
 Let $\mLat(m)$ denote the \gls{instruction} latency of a \gls{match}~\mbox{$m
   \in M'$}.
@@ -64,7 +64,7 @@ To model this problem, we introduce two new \glspl{variable}.
 The set of \glspl{variable} \mbox{$\mVar{cycle}[m] \in \mNatNumSet$} models at
 which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
 \mbox{$\mVar{sched}[m, b] \in \mSet{0, 1}$} models whether $m$ is scheduled in
-\gls{block}~$b$\hspace{-.8pt}.
+\gls{block}~$b$\hspace{-1pt}.
 
 
 \paragraph{Constraints}
@@ -156,7 +156,7 @@ With these definitions, this \gls{constraint} can be modeled as
 \end{equation}
 
 Lastly, a \gls{match}~$m$ must be scheduled in \gls{block}~$b$ if and only if
-$m$ is selected and placed in $b$\hspace{-.8pt}.
+$m$ is selected and placed in $b$\hspace{-1pt}.
 %
 This can be modeled as
 %
@@ -165,7 +165,7 @@ This can be modeled as
   \forall m \in \mMatchSet :
   \mVar{sched}[m, b]
   \mEq
-  \mVar{sel}[m] \mAnd \mBlockOf(m) = b \hspace{-.8pt}.
+  \mVar{sel}[m] \mAnd \mBlockOf(m) = b \hspace{-1pt}.
   \labelEquation{optional-scheduling}
 \end{equation}
 
@@ -561,10 +561,10 @@ gray):
   \labelEquation{global-rect-packing}
 \end{equation}
 
-Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-.8pt}, if $d$
+Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-1pt}, if $d$
 is used in some \gls{block}~$b'$ following $b$ (meaning there is a jump from $b$
 to $b'$), then the \gls{live range} of $d$ must extend until the end of the
-schedule for $b$\hspace{-.8pt}.
+schedule for $b$\hspace{-1pt}.
 %
 This can be modeled as
 %
