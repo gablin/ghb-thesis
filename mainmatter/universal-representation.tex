@@ -336,9 +336,9 @@ In other words, every control \gls{operation} belongs to exactly one
 \gls{block}, and every \gls{block} has exactly one point where changes in
 control occur.
 %
-This also means that the extended \gls{control-flow graph} forms a bipartite
-\gls{graph}, with \glspl{block node} on one end and \glspl{control node} on the
-other.
+This also means that the extended \gls{control-flow graph} forms a
+\gls{bipartite.g} \gls{graph}, with \glspl{block node} on one end and
+\glspl{control node} on the other.
 
 
 \paragraph{Capturing Data Flow}
@@ -393,8 +393,8 @@ Intuitively, this means that such values are produced at the point of entry to
 the \gls{function}.
 %
 Like with the extended \gls{control-flow graph}, the extended \gls{SSA graph}
-also forms a bipartite \gls{graph}, with \glspl{value node} on one end and
-\glspl{computation node} on the other.
+also forms a \gls{bipartite.g} \gls{graph}, with \glspl{value node} on one end
+and \glspl{computation node} on the other.
 
 Since there are no \glspl{edge} connecting \glspl{computation node} with
 \glspl{block node}, the assignment of data \glspl{operation} to \glspl{block} is

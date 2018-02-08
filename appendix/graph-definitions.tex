@@ -8,7 +8,7 @@
 \labelAppendix{graph-definitions}
 
 
-\paragraph{Nodes and Edges}
+\paragraph{Nodes, Edges, and Graphs}
 
 A \gls!{graph} is defined as a tuple~\mbox{$\mPair{N}{E}$} where $N$ is a set of
 \glspl!{node} (also known as \glspl!{vertex}) and $E$ is a set of \glspl!{edge},
@@ -36,12 +36,16 @@ $e$, and introduce two functions, \mbox{$\mSource \! : E \rightarrow N$} and
 %
 \Glspl{edge} for which \mbox{$\mSource(e) = \mTarget(e)$} are known as
 \glspl!{loop edge} (or simply \glspl!{loop}).
-%
+
 If there exists more than one \gls{edge} between the same pair of \glspl{node}
 then the \gls{graph} is a \gls!{multigraph}, otherwise it is a \gls!{simple.g}
 \gls{graph}.
-
-\todo{define bipartite graph}
+%
+A \gls!{bipartite.g}[ \gls{graph}] (or \gls!{bigraph}) is a \gls{graph} whose
+\glspl{node} can be divided into two disjoint sets~$N$ and $M$ such that every
+\gls{edge} connects a \gls{node} in $N$ with a \gls{node} in $M$.
+%
+Hence there are no \glspl{edge} between pairs drawn exclusively from $N$ or $M$.
 
 
 \paragraph{Paths and Connectivity}
