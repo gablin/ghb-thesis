@@ -8,12 +8,12 @@
         {Experimental Evaluation\\ Using the State of the Art}
 \labelChapter{exp-evaluation-using-the-state-of-the-art}
 
-This chapter evaluates how our approach compares against a state-of-the-art
-\gls{compiler}.
+This chapter evaluates how \gls{universal instruction selection} compares
+against a state-of-the-art \gls{compiler}.
 %
 This is done in \refSection{evaluation-unison-vs-llvm}.
 %
-Since our approach is able to leverage selection of \gls{SIMD.i}
+Since the approach is able to leverage selection of \gls{SIMD.i}
 \glspl{instruction}, we also evaluate this impact in
 \refSection{evaluation-with-or-without-simds}.
 
@@ -21,45 +21,43 @@ Since our approach is able to leverage selection of \gls{SIMD.i}
 \section{Unison \versus LLVM}
 \labelSection{evaluation-unison-vs-llvm}
 
-We evaluate the impact of our approach by comparing the cost (that is, the total
-number of cycles, as described in \refSection{cm-objective-function} on
-\refPageOfSection{cm-objective-function}) of \glspl{solution} produced by our
+We evaluate the impact of the approach by comparing the cost (that is, the total
+number of cycles, as described in \refChapter{constraint-model} on
+\refPageOfSection{cm-objective-function}) of \glspl{solution} produced by the
 approach with the \glspl{solution} produced by \mbox{\gls{LLVM} 3.8} -- an
 existing, state-of-the-art \gls{compiler}.
 
 
 \paragraph{Setup}
 
-When filtering, we remove all \glspl{function} that have less than
-\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+When filtering, we remove all \glspl{function} that have fewer than
+\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} and more than
 \num{200}~\glspl{instruction}.
 %
-Anything smaller will most likely not show any gain using our approach, and
+Anything smaller will most likely not show any gain using the approach, and
 anything larger will lead to unreasonably long experiment runtimes.
 %
-This leaves a pool of \num{284}~\glspl{function}, on which we then perform
-sampling.
+This leaves a pool of \num{284}~\glspl{function} up to medium size, from which
+we then draw \num{20}~samples.
 
-When solving, we apply a time limit of \SI{600}{\s} to the \gls{constraint
-  solver}.
-%
-This is to curb experiment runtimes.
+To curb experiment runtimes, we apply a time limit of \SI{600}{\s} to the
+\gls{constraint solver}.
 %
 For any given \gls{function}, the last \gls{solution} found is considered
 optimal if and only if the \glsshort{constraint solver} has finished its
 execution within the time limit.
 %
-As upper bound for a given \gls{function}, we take the cost for the
-\gls{solution} computed by \gls{LLVM}.
+When using an upper cost bound, we take the cost for the \gls{solution} computed
+by \gls{LLVM} for the given \gls{function}.
 
 
 \paragraph{Results}
 
 \input{\expDir/unison-vs-llvm-hexagon5-cycles-speedup.stats}
 
-\RefFigure{unison-vs-llvm-cycles-plot} shows the normalized \gls{solution} costs
-for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
-\gls{subject}.
+\RefFigure{unison-vs-llvm-cycles-plot} shows the normalized \gls{solution}
+costs, with \gls{LLVM} as \gls{baseline} and \gls{universal instruction
+  selection} as \gls{subject}.
 %
 \begin{figure}
   \centering%
@@ -85,8 +83,6 @@ for our approach, with \gls{LLVM} as \gls{baseline} and our approach as
             }{%
               \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMax%
             }.
-            %
-            The constraint model uses an upper bound computed by LLVM.
             %
             \Glspl{function} whose bars are marked with two dots are those for
             which the \gls{subject} does not find the optimal solution, and
@@ -121,51 +117,52 @@ The \gls{GMI} is \printGMI{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesRegularSpeedupCiMax%
 }.
 
-We see that our approach produces \glspl{solution} with significantly less
-cost than those produced by \gls{LLVM} (up to~\printZCNorm{%
+We see that \gls{universal instruction selection} produces \glspl{solution} with
+significantly less cost than those produced by \gls{LLVM} (up to~\printZCNorm{%
   \UnisonVsLlvmHexagonFiveCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 } improvement).
 %
-These improvements are predominantly due to the combination of \gls{global.is}
+This is predominantly due to the combination of \gls{global.is}
 \gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 %
 In three cases (\cCode*{alloc\_save\_spac}, \cCode*{gp\_enumerate\_fi}, and
-\cCode*{gpk\_open}), for example, our approach is able to reduce cost by lifting
+\cCode*{gpk\_open}), for example, the approach is able to reduce cost by lifting
 computations, in particular constant loads, out of \glspl{block} with high
 execution frequency into \glspl{block} with lower frequency.
 %
-In \cCode*{alloc\_save\_spac}, our approach is also able to move an addition and
+In \cCode*{alloc\_save\_spac}, the approach is also able to move an addition and
 memory \gls{operation} into the same \gls{block} and implement both using a
 single auto-increment memory \gls{instruction}, whereas \gls{LLVM} must
 implement these computations using two \glspl{instruction}.
 %
-These improvements are only possible due to integrating \gls{global.is}
+Such improvements are only possible when integrating \gls{global.is}
 \gls{instruction selection} with \gls{global code motion}.
 
 In three other cases (\cCode*{jpeg\_read\_header}, \cCode*{gl\_TexImage3DEX},
-and \cCode*{gl\_EnableClient}), our approach is able to reorder the
+and \cCode*{gl\_EnableClient}), the approach is able to reorder the
 \glspl{block} to remove one to two jump \glspl{instruction}.
 %
-These improvements are only possible when integrating \gls{global.is}
+Such improvements are only possible when integrating \gls{global.is}
 \gls{instruction selection} with \gls{block ordering}.
 
 
 \paragraph{Conclusions}
 
-Based on the observations above, we conclude that our approach generates code of
-equal or better quality compared to the state of the art for up to medium-sized
-\glspl{function}.
+From the results for these experiments, we conclude that \gls{universal
+  instruction selection} generates code of equal or better quality compared to
+the state of the art for up to medium-sized \glspl{function}.
 
 
 \section{Impact of SIMD instructions}
 \labelSection{evaluation-with-or-without-simds}
 
 We evaluate the impact of being able to select \gls{SIMD.i} \glspl{instruction}
-by comparing the cost of \glspl{solution} produced from two \glspl{pattern set}:
+by comparing the cost of \glspl{solution} produced from two \glspl{pattern set}
+derived from \gls{Hexagon}:
 %
 \begin{patternList}
   \item \labelPattern{no-simd}
-    one derived from \gls{Hexagon} with no \gls{SIMD.i} \glspl{instruction}
+    one with no \gls{SIMD.i} \glspl{instruction}
   \item \labelPattern{with-simd}
     one with \num{2}- and \num{4}-way \cCode*{add}, \cCode*{sub}, \cCode*{and},
     and \cCode*{or} \glspl{instruction}
@@ -174,32 +171,30 @@ by comparing the cost of \glspl{solution} produced from two \glspl{pattern set}:
 
 \paragraph{Setup}
 
-When filtering, we again all \glspl{function} that have less than
-\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+When filtering, we again all \glspl{function} that have fewer than
+\num{50}~\gls{LLVM} \gls{IR} \glspl{instruction} and more than
 \num{150}~\glspl{instruction}.
 %
 Anything smaller will most likely not have enough data parallelism for selection
-of \gls{SIMD.i} \glspl{instruction}, anything larger will lead to unreasonably
-long experiment runtimes.
+of \gls{SIMD.i} \glspl{instruction}, and anything larger will lead to
+unreasonably long experiment runtimes.
 %
-But to increase the chance of data parallelism, we also remove all
-\glspl{function} not containing at least two addition, subtraction, logical-and,
-or logical-or \glspl{instruction}.
+To increase the chance of data parallelism, we also remove all \glspl{function}
+not containing at least two addition, subtraction, logical-and, or logical-or
+\glspl{instruction}.
 %
-This leaves a pool of \num{221}~\glspl{function}, from which
-\num{20}~\glspl{function} are sampled using the same method as before.
-%
-In this experiment, we do not apply an upper bound in this case as that may
+This leaves a pool of \num{221}~\glspl{function}, from which we then draw
+\num{20}~samples.
+
+In this experiment we do not apply an upper bound in this case as that may
 prevent interesting \gls{solution} that make use of \gls{SIMD.i}
 \gls{instruction}.
-
+%
 Note that no \gls{loop unrolling}%
 %
 \footnote{%
   \Gls!{loop unrolling} is the task of duplicating the body of a loop in order
-  to increase data parallelism.
-  %
-  However, this is done at the cost of increased code size.%
+  to increase data parallelism at the cost of increasing code size.%
 }
 %
 is performed on any of the \glspl{function} prior to \gls{instruction
@@ -235,7 +230,7 @@ costs for the two \glspl{pattern set} describe above, with \gls{pattern
             GMI:~\printGMI{%
               \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
             },
-            CI:~\printGMICI{%
+            CI:~\printGMICI[round-precision=3]{%
               \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
             }{%
               \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
@@ -277,11 +272,11 @@ The solving times from
 %
 The \gls{GMI} is \printGMI{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
-} with \gls{CI}~\printGMICI{%
+} with \gls{CI}~\printGMICI[round-precision=3]{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMin%
 }{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupCiMax%
-}
+}.
 
 We see that the \gls{pattern set}~\refPattern{with-simd} yields \glspl{solution}
 with significantly less cost than those yielded by \gls{pattern
@@ -290,22 +285,22 @@ with significantly less cost than those yielded by \gls{pattern
 } improvement).
 %
 The five cases with less cost (\cCode*{debug\_print\_str},
-\cCode*{gl\_read\_alpha}, \cCode*{gx\_curve\_cursor}, \cCode*{mp\_dmul}, and
-\cCode*{zero}), our approach is able to combine pairs of additions or
-subtractions into \num{2}-way \gls{SIMD.i} \glspl{instruction}.
+\cCode*{gl\_read\_alpha\_s}, \cCode*{gx\_curve\_cursor}, \cCode*{mp\_dmul}, and
+\cCode*{zero}), \gls{universal instruction selection} is able to combine pairs
+of additions or subtractions into \num{2}-way \gls{SIMD.i} \glspl{instruction}.
 %
-In addition, in one of these cases (\cCode*{gl\_read\_alpha}) the additions
+In addition, in one of these cases (\cCode*{gl\_read\_alpha\_s}) the additions
 originally reside in different \glspl{block}, but due to \gls{global code
-  motion} our approach is able to move the computations to the same \gls{block}
+  motion} the approach is able to move the computations to the same \gls{block}
 and implement these using a single \gls{instruction}.
 
 
 \paragraph{Conclusions}
 
-Based on the observations above, we conclude that there is sufficient data
-parallelism to be exploited through selection of \gls{SIMD.i}
+From the results for these experiments, we conclude that there is sufficient
+data parallelism to be exploited through selection of \gls{SIMD.i}
 \glspl{instruction} without having to resort to \gls{loop unrolling}.
 %
-In addition, this exploitation is benefited from \gls{global code motion} as
-that allows computations to be gathered from different \glspl{block} and
-implemented using a single \gls{SIMD.i} \gls{instruction}.
+In addition, this exploitation is benefited by \gls{global code motion} as that
+allows computations to be gathered from different \glspl{block} and implemented
+using a single \gls{SIMD.i} \gls{instruction}.
