@@ -320,7 +320,10 @@ We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
   Then
   %
   \begin{displaymath}
-    \mTable(\mVar{x}_1, \ldots, \mVar{x}_k, T)
+    \mTable(
+      \mTuple{\mVar{x}_1, \ldots, \mVar{x}_k} \hspace{-1pt},
+      T
+    )
     \equiv
     \mTuple{\mVar{x}_1, \ldots, \mVar{x}_k} \in T.
   \end{displaymath}

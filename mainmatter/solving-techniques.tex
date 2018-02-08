@@ -66,7 +66,7 @@ $\mDom$~\gls{function} as a dominance relation matrix
 %
 \begin{equation}
   \begin{aMatrix}{@{\:}c|c@{\:}}
-      b_1, b_2
+      \mTuple{b_1, b_2}
     & b_1, b_2 \in \mBlockSet, b_1 \in \mDom(b_2)
   \end{aMatrix}
   \labelEquation{dominance-matrix}
@@ -99,7 +99,10 @@ Given a \glsshort{dominate.b}[ance] relation matrix~$\mDomMatrix$ computed using
 %
 \begin{equation}
   \forall p \in \mPhiOperandCompSet :
-  \mTable(\mVar{uplace}[p], \mVar{dplace}[\mVar{alt}[p]], \mDomMatrix),
+  \mTable(
+    \mTuple{\mVar{uplace}[p], \mVar{dplace}[\mVar{alt}[p]]} \hspace{-1pt},
+    \mDomMatrix
+  ),
   \labelEquation{refined-dom}
 \end{equation}
 %
@@ -345,7 +348,7 @@ For the latter, the cost matrix is computed as
 %
 \begin{equation}
   \begin{aMatrix}{@{\:}c|c@{\:}}
-      o, m, b, \mOpCost(m, o, b)
+      \mTuple{o, m, b, \mOpCost(m, o, b)}
     & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
   \end{aMatrix}
   \labelEquation{mul-div-cost-matrix}
@@ -394,10 +397,12 @@ Given a cost matrix~$\mCostMatrix$, computed using either
 \begin{equation}
   \forall o \in \mOpSet :
   \mTable(
-    o\hspace{-1pt},
-    \mVar{omatch}[o],
-    \mVar{oplace}[o],
-    \mVar{ocost}[o],
+    \mTuple{
+      o\hspace{-1pt},
+      \mVar{omatch}[o],
+      \mVar{oplace}[o],
+      \mVar{ocost}[o]
+    } \hspace{-1pt},
     \mCostMatrix
   ).
   \labelEquation{omatch-oplace-ocost-connection}
@@ -469,7 +474,10 @@ This is modeled as
                     \exists p \in \mUses(m) :
                     \mDataSet[p] = \mSet{d}
                   } : \\
-    \mTable(\mVar{dplace}[d_1], \mVar{dplace}[d_2], \mDomMatrix)
+    \mTable(
+      \mTuple{\mVar{dplace}[d_1], \mVar{dplace}[d_2]} \hspace{-1pt},
+      \mDomMatrix
+    )
     \mAnd
     \mVar{oplace}[o] = \mVar{dplace}[d_1].
   \end{array}
