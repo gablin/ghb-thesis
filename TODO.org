@@ -30,8 +30,6 @@
 ** DONE Check for unused glossary terms
 ** DONE Check for undefined (!) glossary terms
 ** DONE Check for horizontal overflow
-** TODO Check for redundant uses of ! in glossary terms
-** TODO Check for bad figure placements
 ** TODO Fix bad page breaks
 ** TODO Fix paragraphs ending with only one word on last line
 ** TODO Check for any lingering TODOs in the document
