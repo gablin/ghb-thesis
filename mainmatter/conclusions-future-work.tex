@@ -15,8 +15,8 @@ This chapter closes the dissertation by presenting conclusions in
 \labelSection{conclusions}
 
 This dissertation has introduced \gls!{universal instruction selection} -- a new
-approach that, for the first time, integrates \gls{global.is} \gls{instruction
-  selection}, \gls{global code motion}, and \gls{block ordering}.\!%
+approach that, for the first time, integrates \gls{instruction selection},
+\gls{global code motion}, and \gls{block ordering}.\!%
 %
 \footnote{%
   The source code is freely available on
@@ -48,9 +48,9 @@ To handle the combinatorial nature of these problems, the approach is based on
 It relies on a novel combinatorial model that is simpler and more flexible
 compared to the techniques currently used in modern \glspl{compiler}.
 %
-In addition to integrating \gls{global.c} \gls{instruction selection},
-\gls{global code motion}, and \gls{block ordering}, the \glsshort{constraint
-  model} also integrates \gls{data copying} and \gls{value reuse}.
+In addition to integrating \gls{instruction selection}, \gls{global code
+  motion}, and \gls{block ordering}, the \glsshort{constraint model} also
+integrates \gls{data copying} and \gls{value reuse}.
 %
 \Gls{data copying} takes the cost of moving data into account, which is crucial
 for avoiding greedy use of \gls{SIMD.i} \glspl{instruction}.
@@ -88,16 +88,7 @@ collectively improve solving time up to \printZCNorm{%
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean
 }.
 %
-It was also discovered that two solving techniques
-(\refEquationList{illegal-matches-def-locs, illegal-matches-use-locs}) have a
-negative impact on solving time, and rejecting them improves solving time up to
-\printZCNorm{%
-  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
-}, with a \gls{GMI} of~\printGMI{%
-  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
-}, for the same \glspl{function}.
-%
-These solving techniques are therefore crucial for scalability, enabling the
+Hence these solving techniques are crucial for scalability and enable the
 approach to scale up to medium-sized \glspl{function}.
 
 The approach has been experimentally evaluated in comparing the code quality it
@@ -118,12 +109,8 @@ to the state of the art.
 Experiments have also been performed to evaluate the impact of \gls{SIMD.i}
 \gls{instruction} selection.
 %
-The results show that, when such \glspl{instruction} are available, the approach
-improves code quality up to~\printZCNorm{%
-  \SimdVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
-}, with a \gls{GMI} of~\printGMI{%
-  \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
-}.
+The results show that the approach can improve code quality when such
+\glspl{instruction} are available.
 %
 In one case the computations originally reside in different \glspl{block}, but
 due to \gls{global code motion} the approach is able to move the computations to
@@ -133,7 +120,7 @@ Hence there is sufficient data parallelism to be exploited through selection of
 \gls{SIMD.i} \glspl{instruction} without having to resort to \gls{loop
   unrolling}
 %
-Moreover, this exploitation is benefited by \gls{global code motion}.
+Moreover, this exploitation benefits from \gls{global code motion}.
 
 With these results, the dissertation has shown that \glsdesc{CP} is a flexible,
 practical, competitive, and extensible approach for combining \gls{global.is}
@@ -158,8 +145,8 @@ its applicability.
 
 \paragraph{Selecting Instructions for X86}
 
-Since \gls{X86} is arguably the most common processor architecture today, it is
-of great interest to evaluate \gls{universal instruction selection} for this
+Since \gls{X86} is extremely common among today's processors, it is of great
+interest to evaluate \gls{universal instruction selection} for this
 architecture.
 %
 Like \gls{Hexagon}, \gls{X86} has a rich \gls{instruction set} that is
