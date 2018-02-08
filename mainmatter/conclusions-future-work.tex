@@ -14,21 +14,20 @@ This chapter closes the dissertation by presenting conclusions in
 \section{Conclusions}
 \labelSection{conclusions}
 
-This dissertation has introduced \gls!{universal instruction selection},\!%
+This dissertation has introduced \gls!{universal instruction selection} -- a new
+approach that, for the first time, integrates \gls{global.is} \gls{instruction
+  selection}, \gls{global code motion}, and \gls{block ordering}.\!%
 %
 \footnote{%
   The source code is freely available on
   {\relsize{-.5}{\url{github.com/unison-code/uni-instr-sel}}}.%
 }
-%
-a new approach that, for the first time, integrates \gls{global.is}
-\gls{instruction selection}, \gls{global code motion}, and \gls{block ordering}.
 
 By doing so, it addresses several limitations of existing \gls{instruction
   selection} techniques that have been identified through a comprehensive and
 systematic literature survey.
 %
-First, none of these can be readily extended for integrating \gls{global code
+First, none of these can readily be extended for integrating \gls{global code
   motion} or \gls{block ordering}.
 %
 Second, all existing combinatorial approaches are restricted to \gls{tree}- and
@@ -67,7 +66,7 @@ for integrating \gls{instruction scheduling} and \gls{register allocation},
 which are two other important tasks of \gls{code generation}.
 
 The \glsshort{constraint model} is enabled by the \gls!{universal
-  representation}, a novel \gls{graph}-based representation that unifies data
+  representation} -- a novel, \gls{graph}-based representation that unifies data
 flow and control flow for entire \glspl{function}.
 %
 Not only is the \gls{universal representation} crucial for combining
@@ -75,7 +74,7 @@ Not only is the \gls{universal representation} crucial for combining
 \glspl{instruction} whose behavior contains both data and control flow to be
 modeled as \glspl{graph}.
 %
-Hence there is no longer any need for hand-written routines to handle
+Hence there is no longer need for hand-written routines to handle
 \glspl{instruction} that violate underlying assumptions about the
 \gls{instruction set}.
 
@@ -98,7 +97,7 @@ negative impact on solving time, and rejecting them improves solving time up to
   \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeRegularSpeedupGmean%
 }, for the same \glspl{function}.
 %
-Hence these solving techniques are crucial for scalability, enabling the
+These solving techniques are therefore crucial for scalability, enabling the
 approach to scale up to medium-sized \glspl{function}.
 
 The approach has been experimentally evaluated in comparing the code quality it
@@ -126,7 +125,7 @@ improves code quality up to~\printZCNorm{%
   \SimdVsWithoutCyclesSpeedupCyclesRegularSpeedupGmean%
 }.
 %
-In one case, the computations originally reside in different \glspl{block}, but
+In one case the computations originally reside in different \glspl{block}, but
 due to \gls{global code motion} the approach is able to move the computations to
 the same \gls{block} and implement these using a single \gls{instruction}.
 %
@@ -134,7 +133,7 @@ Hence there is sufficient data parallelism to be exploited through selection of
 \gls{SIMD.i} \glspl{instruction} without having to resort to \gls{loop
   unrolling}
 %
-Moreover, this exploitation is benefited from \gls{global code motion}.
+Moreover, this exploitation is benefited by \gls{global code motion}.
 
 With these results, the dissertation has shown that \glsdesc{CP} is a flexible,
 practical, competitive, and extensible approach for combining \gls{global.is}
@@ -149,12 +148,12 @@ practical, competitive, and extensible approach for combining \gls{global.is}
 So far the quality of the code generated using \gls{universal instruction
   selection} has only been statically estimated.
 %
-For a more accurate evaluation -- and for putting the approach into actual use
--- the generated code must be hooked into the post-\gls{instruction selection}
-step of an existing \gls{compiler}.
+For a more accurate evaluation -- and for putting the approach into practical
+use -- the generated code must be hooked into the post-\gls{instruction
+  selection} step of an existing \gls{compiler}.
 %
-While this is primarily an engineering task, putting the approach into practice
-is also a method for evaluating its applicability.
+While this is primarily an engineering task, it is also a method for evaluating
+its applicability.
 
 
 \paragraph{Selecting Instructions for X86}
@@ -169,26 +168,26 @@ as its latest extension~\cite{Intel64:2015}.
 %
 The \gls{instruction set} also has many \glspl{instruction}, such as hardware
 loops, whose behavior contains control flow and can therefore not be modeled
-using other representations.
+using standard representations.
 %
 In addition, most modern \glspl{compiler} are highly optimized for generating
-code for this architecture, which means that even a minor improvement in code
-quality is considered a significant improvement.
+code for this architecture, which means that even a minor gain in code quality
+is considered a significant improvement.
 
 
 \paragraph{Integrating Recomputation}
 
 As discussed in \refChapter{constraint-model}, the \gls{constraint model} does
-not support \gls{recomputation} -- the task of recomputing values appearing in
-common subexpressions instead of reusing them -- which can have negative impact
+not support \gls{recomputation} (the task of recomputing values appearing in
+common subexpressions instead of reusing them), which can have negative impact
 on code quality.
 %
-Moreover, \gls{recomputation} is essential for supporting \gls{if-conversion} --
-the task of converting if-then-else statements into straight-line \gls{assembly
-  code}) -- which can improve code quality.
+Moreover, \gls{recomputation} is essential for supporting \gls{if-conversion}
+(the task of converting if-then-else statements into straight-line \gls{assembly
+  code}), which can improve code quality.
 
-However, adapting the \gls{constraint model} to integrate \gls{recomputation} is
-a complex undertaking since many of the solving techniques rely on the fact that
+Adapting the \gls{constraint model} to integrate \gls{recomputation} is a
+complex undertaking as many of the solving techniques rely on the fact that
 every \gls{operation} and \gls{datum} is \gls{cover}[ed] respectively
 \gls{define.d}[d] exactly once.
 %
