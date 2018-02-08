@@ -7,7 +7,8 @@
 \chapter{Tree Covering}
 \labelAppendix{tree-covering}
 
-This appendix considers techniques based on \gls{tree covering}.
+This appendix considers techniques based on \gls{tree covering}, which is the
+most common \gls{principle} of techniques found in the current literature.
 %
 First, we introduce the principle in \refSection{tc-principle}.
 %
@@ -56,10 +57,8 @@ typically combine \glsshort{matching problem} and \glsshort{selection problem}
 into a single step, thus making it very difficult to consider combinations of
 \glspl{instruction} and then pick the one that yields the best \gls{assembly
   code}.
-
-These problems can be solved by employing another \gls{principle} of
-\gls{instruction selection} called \gls{tree covering}, which is also the most
-common \gls{principle} of techniques found in the current literature.
+%
+These problems can be addressed by employing \gls{tree covering}.
 
 First, the \gls{IR} code is transformed into an \gls{expression tree}, as we saw
 in \refAppendix{macro-expansion} (see \refSection{me-expression-tree} on
@@ -88,12 +87,19 @@ Having found the \gls{match set}, the \gls{selection problem} -- which in this
 context is referred to as \gls!{pattern selection} -- can be reduced to
 selecting a set of \glspl{match} that \gls{cover}[s] the \gls{expression tree}.
 %
-A subset~\mbox{$C \subseteq M$}, where $M$ is a \gls{match set}, \gls!{cover}[s]
-$G$ if every \gls{node} in the \gls{expression tree} appears in exactly one
-match from~$C$.
+A subset~\mbox{$M' \subseteq M$}, where $M$ is a \gls{match set},
+\gls!{cover}[s] a \gls{data-flow graph}~$G$, derived from a \gls{function}, if
+every \gls{node} in $G$ appears in at least one match in~$M'$.
 %
-Such a subset is called a \gls!{cover}, and examples are shown in
-\refFigure{p-match-sel-example-2}.
+Such a subset is called a \gls!{cover}.
+%
+A \gls{cover} is an \gls!{exact.c}[ \gls{cover}] if every \gls{node} in $G$
+appears in exactly one match in the \gls{cover}.
+%
+Most \gls{instruction selection} approaches assume \gls{exact.c}
+\gls{cover}[age].
+%
+Examples of \glspl{cover} are shown in \refFigure{p-match-sel-example-2}.
 
 \begin{filecontents*}{p-match-sel-example.c}
 x = A[i + 1];
@@ -146,9 +152,9 @@ x = A[i + 1];
             offset \mbox{\irVar*{i} \irCode*{\irAddText{}} \irVar*{1}}.
             %
             It is assumed that \irVar*{i} is stored in register, that \irVar*{A}
-            is stored in memory, and that an integer is \num{4}~bytes.
+            is stored in memory, and that an integer is four~bytes.
             %
-            Valid exact covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
+            Exact covers are \mbox{$\mSet{m_1, \ldots, m_7, m_9}$},
             \mbox{$\mSet{m_1, \ldots, m_5, m_8, m_9}$}, \mbox{$\mSet{m_1,
                 \ldots, m_5, m_{10}}$}, \mbox{$\mSet{m_1, \ldots, m_5, m_8,
                 m_9}$} (for brevity, non-exact covers are ignored).
