@@ -1695,8 +1695,6 @@ comparing the solving times exhibited by two versions of the \gls{constraint
 %
 No hypothesis is attempted on which \glsshort{constraint model} is better.
 
-\input{\expDir/new-op-cost-fun-vs-old-pre+solving-time-speedup.stats}
-
 \RefFigure{new-op-cost-fun-vs-old-plot} shows the normalized solving times
 (including \gls{presolving} time) for the two \glspl{constraint model} described
 above in the first experiment, with \glsshort{constraint
@@ -1842,8 +1840,6 @@ and~\refModel{obj-fun-refined-lb-ub}{} to outperform \glsshort{constraint
   model}~\refModel{obj-fun-refined-lb-ub} to outperform \glsplshort{constraint
   model}~\refModel{obj-fun-refined-lb} and~\refModel{obj-fun-refined-ub}.
 
-\input{\expDir/obj-fun-refined-vs-naive-opt-proofs-over-time.stats}
-
 \RefFigure{obj-fun-refined-vs-naive-opt-proofs-over-time-plot} shows the
 percentage of optimal \glspl{solution} found over time for the five
 \glspl{constraint model} described above in the second experiment.
@@ -1956,8 +1952,6 @@ For the same reason as in the impact-on-solving-time experiment, we expect the
   model}~\refModel{obj-fun-refined-lb-ub} to be of significantly better quality
 compared with those produced by \glsshort{constraint
   model}~\refModel{obj-fun-naive-lb-ub}.
-
-\input{\expDir/obj-fun-refined-vs-naive-cycles-speedup.stats}
 
 \RefFigure{obj-fun-refined-vs-naive-cycles-speedup-plot} shows the normalized
 \gls{solution} costs for the two \glspl{constraint model} described above in the
@@ -2113,10 +2107,6 @@ From the results for these experiments, we conclude:
   \end{minipage}%
 }
 
-\NewDocumentCommand{\includeSolvTechStats}{O{disable}m}{%
-  \input{\expDir/solv-tech-#1-#2-pre+solving-time-speedup.stats}%
-}
-
 We first evaluate the \gls{implied.c} \glspl{constraint} individually.
 %
 Based on the results, we then arrange them into groups to find the best
@@ -2152,21 +2142,6 @@ time improvement while others may degrade solving time.
 As described in \refChapter{constraint-programming}, this is because some
 \glspl{constraint} may be too expensive to execute compared with the amount of
 \gls{propagation} they provide.
-
-\includeSolvTechStats{impl-cons-defs-dominate-defs}
-\includeSolvTechStats{impl-cons-defs-in-spanned-blocks}
-\includeSolvTechStats{impl-cons-identical-entry-blocks}
-\includeSolvTechStats{impl-cons-defs-dominate-entry-blocks}
-\includeSolvTechStats{impl-cons-place-phi-ops-same-as-def-edges}
-\includeSolvTechStats{impl-cons-no-span-uses}
-\includeSolvTechStats{impl-cons-no-span-defs}
-\includeSolvTechStats{impl-cons-no-span-use-defs}
-\includeSolvTechStats{impl-cons-spanned-input}
-\includeSolvTechStats{impl-cons-used-data-must-be-available}
-\includeSolvTechStats{impl-cons-exterior-data-must-be-available}
-\includeSolvTechStats{impl-cons-locs-of-uses}
-\includeSolvTechStats{impl-cons-locs-of-defs}
-\includeSolvTechStats{impl-cons-fix-fall-throughs}
 
 \RefFigure{single-impl-con-vs-no-con-solving-time-plots} shows the normalized
 solving times (including \gls{presolving} time) for the two \glspl{constraint
@@ -2365,9 +2340,6 @@ No hypothesis is attempted regarding the relative performance between
 \glsplshort{constraint model}~\refModel{impl-ex-only-good-cons}
 and~\refModel{impl-ex-all-cons}.
 
-\includeSolvTechStats[enable]{only-good-implied-cons}
-\includeSolvTechStats{all-implied-cons}
-
 \RefFigure{diff-impl-cons-comb-solving-time-plot} shows the normalized solving
 times (including \gls{presolving} time) for three of the \glspl{constraint
   model} described above, with \glsshort{constraint
@@ -2527,13 +2499,6 @@ For the same reason as with the \gls{implied.c} \glspl{constraint}, we expect
 some \glspl{constraint} to lead to an overall solving time improvement while
 others may degrade solving time.
 
-\includeSolvTechStats{dom-cons-locs-of-states}
-\includeSolvTechStats{dom-cons-operands-of-non-selected-matches}
-\includeSolvTechStats{impl-cons-input-operands-not-taking-min-value}
-\includeSolvTechStats{dom-cons-interch-data-chains}
-\includeSolvTechStats{dom-cons-null-copy-match-selection}
-\includeSolvTechStats{dom-cons-kill-match-selection}
-
 \RefFigure{single-dom-con-vs-no-con-solving-time-plots} shows the normalized
 solving times (including \gls{presolving} time) for two \glspl{constraint model}
 described above in the first experiment, with \glsshort{constraint
@@ -2650,9 +2615,6 @@ and~\refModel{dom-ex-all-cons} to all perform better than \glsshort{constraint
 No hypothesis is attempted regarding the relative performance between
 \glsplshort{constraint model}~\refModel{dom-ex-only-good-cons}
 and~\refModel{dom-ex-all-cons}.
-
-\includeSolvTechStats[enable]{only-good-dom-cons}
-\includeSolvTechStats{all-dom-cons}
 
 \RefFigure{diff-dom-cons-comb-solving-time-plot} shows the normalized solving
 times (including \gls{presolving} time) for the three \glspl{constraint model}
@@ -2811,16 +2773,6 @@ For the same reason as with the \gls{implied.c}, \gls{symmetry breaking.c},
 \gls{dominance breaking.c} \glspl{constraint}, we expect some techniques to lead
 to an overall solving time improvement while others may degrade solving time.
 
-\includeSolvTechStats{dom-matches}
-\includeSolvTechStats{illegal-matches-uncovered-ops}
-\includeSolvTechStats{illegal-matches-undefined-data}
-\includeSolvTechStats{illegal-matches-kills}
-\includeSolvTechStats{illegal-matches-def-locs}
-\includeSolvTechStats{illegal-matches-use-locs}
-\includeSolvTechStats{redun-kills}
-\includeSolvTechStats{redun-non-null-copy-matches}
-\includeSolvTechStats{canonical-locs}
-
 \RefFigure{single-presolving-vs-no-presolving-solving-time-plots} shows the
 normalized solving times (including \gls{presolving} time) for the two
 \glspl{constraint model} described above in the first experiment, with
@@ -2972,10 +2924,6 @@ in unison.
 No hypothesis is attempted regarding the relative performance between
 \glsplshort{constraint model}~\refModel{pre-ex-only-good-techs},
 \refModel{pre-ex-no-bad-techs}, and~\refModel{pre-ex-all-techs}.
-
-\includeSolvTechStats[enable]{only-good-presolving}
-\includeSolvTechStats{bad-presolving}
-\includeSolvTechStats{all-presolving}
 
 \RefFigure{diff-presolving-comb-solving-time-plot} shows the normalized solving
 times (including \gls{presolving} time) for the four \glspl{constraint model}
@@ -3158,10 +3106,6 @@ better than \glsshort{constraint model}~\refModel{st-ex-no-techs}.
 No hypothesis is attempted regarding the relative performance between
 \glsplshort{constraint model}~\refModel{st-ex-only-good-techs},
 \refModel{st-ex-no-bad-techs}, and~\refModel{st-ex-all-techs}.
-
-\includeSolvTechStats[enable]{only-all-good}
-\includeSolvTechStats{all-bad}
-\includeSolvTechStats{all}
 
 \RefFigure{diff-solv-tech-comb-solving-time-plot} shows the normalized solving
 times (including \gls{presolving} time) for the four \glspl{constraint model}

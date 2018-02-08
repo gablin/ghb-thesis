@@ -1144,8 +1144,6 @@ Since \gls{match duplication} yields an exponential increase in number of
 \glsshort{constraint model}~\refModel{alt-values} to perform better than
 \glsshort{constraint model}~\refModel{match-dup}.
 
-\input{\expDir/alt-values-vs-match-dup-pre+solving-time-speedup.stats}
-
 \RefFigure{alt-values-vs-match-dup-solving-time-plot} shows the normalized
 solving times (including \gls{presolving} time) for the two \glspl{constraint
   model} described above, with \glsshort{constraint model}~\refModel{match-dup}
@@ -1245,8 +1243,6 @@ Since \gls{value reuse} reduces the number of selected copy \glspl{instruction},
 we expect \glsshort{constraint model}~\refModel{w-value-reuse} to produce
 \glspl{solution} with less cost compared with \glsshort{constraint
   model}~\refModel{wo-value-reuse}.
-
-\input{\expDir/alt-values-vs-without-cycles-speedup.stats}
 
 \RefFigure{alt-values-vs-without-cycles-plot} shows the normalized
 \gls{solution} costs for the two \glspl{constraint model} describe above, with
@@ -1741,10 +1737,6 @@ larger.
 
 \paragraph{Impact on Solving Time}
 
-\input{%
-  \expDir/dual-target-patterns-vs-branch-ext-pre+solving-time-speedup.stats%
-}
-
 \RefFigure{dual-target-branch-patterns-vs-branch-extension-solving-time-plot}
 shows the normalized solving times (including \gls{presolving} time) for the two
 \glspl{constraint model} described above, with \glsshort{constraint
@@ -1836,8 +1828,6 @@ over \gls{branch extension} when implementing insertion of jump
 
 
 \paragraph{Impact on Code Quality}
-
-\input{\expDir/dual-target-patterns-vs-branch-ext-cycles-speedup.stats}
 
 \RefFigure{dual-target-branch-patterns-vs-branch-extension-cycles-plot} shows
 the normalized \gls{solution} costs for the two \glspl{constraint model}

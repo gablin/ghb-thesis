@@ -1561,6 +1561,10 @@
 
 \newcommand{\expDir}{experiments/20180111-113629}
 
+\NewDocumentCommand{\includeSolvTechStats}{O{disable}m}{%
+  \input{\expDir/solv-tech-#1-#2-pre+solving-time-speedup.stats}%
+}
+
 \newcommand{\functionNameFont}{\LARGE}
 \newcommand{\functionName}[1]{{\functionNameFont\path{#1}}}
 \newcommand{\plotPercentageFont}{\huge}
