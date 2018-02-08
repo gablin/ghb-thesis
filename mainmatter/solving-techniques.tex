@@ -302,7 +302,7 @@ $\mCovers(m)$ returns an ordered list that can be indexed starting from~\num{1},
 then the cost can be computed as
 %
 \begin{equation}
-  \mOpCost(m, o) =
+  \mOpCost(m \hspace{-.8pt}, o) =
   \left\{
   \begin{array}{ll}
     q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
@@ -315,6 +315,9 @@ then the cost can be computed as
 where \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)} \rfloor$} and
 \mbox{$r = \mCost(m) \! \mod \mCard{\!\mCovers(m)}$}.
 %
+Consequently, for any \gls{match}~$m$, \mbox{$\mCost(m) = \sum_{o \,\in\,
+    \mCovers(m)} \mCost(m \hspace{-.8pt}, o)$}.
+%
 Then, for each \gls{block}~$b$ we multiply \mbox{$\mOpCost(m, o)$} with the
 execution frequency of~$b$.
 %
@@ -322,7 +325,10 @@ This information can be represented as a cost matrix
 %
 \begin{equation}
   \begin{aMatrix}{@{\:}c|c@{\:}}
-      o, m, b, \big( \mOpCost(m, o) \times \mFreq(b) \big)
+      o \hspace{-1pt},
+      m \hspace{-.8pt},
+      b \hspace{-1pt},
+      \big( \! \mOpCost(m, o) \times \mFreq(b) \big)
     & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
   \end{aMatrix}
   \labelEquation{div-mul-cost-matrix}
@@ -350,7 +356,12 @@ For the latter, the cost matrix is computed as
 %
 \begin{equation}
   \begin{aMatrix}{@{\:}c|c@{\:}}
-      \mTuple{o, m, b, \mOpCost(m, o, b)}
+      \mTuple{
+        o \hspace{-1pt},
+        m \hspace{-.8pt},
+        b \hspace{-1pt},
+        \mOpCost(m \hspace{-.8pt}, o \hspace{-1pt}, b)
+      }
     & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
   \end{aMatrix}
   \labelEquation{mul-div-cost-matrix}
@@ -359,7 +370,7 @@ For the latter, the cost matrix is computed as
 where
 %
 \begin{equation}
-  \mOpCost(m, o, b) =
+  \mOpCost(m \hspace{-.8pt}, o \hspace{-1pt}, b) =
   \left\{
   \begin{array}{ll}
     q + 1 & \text{if $o < \mCovers(m)[r+1]$}, \\
@@ -372,6 +383,10 @@ where
 where \mbox{$q = \lfloor d / \mCard{\!\mCovers(m)} \rfloor$}, \mbox{$r =
   d \hspace{-2pt} \mod \mCard{\!\mCovers(m)}$}, and \mbox{$d = \mCost(m) \times
   \mFreq(b)$}.
+%
+Consequently, for any \gls{match}~$m$ and \gls{block}~$b$\hspace{-1pt},
+\mbox{$\mCost(m, o) \times \mFreq(b) = \sum_{o \,\in\, \mCovers(m)}
+  \mCost(m \hspace{-.8pt}, o \hspace{-1pt}, b)$}.
 
 At first glace this design decision would appear to make no difference, but they
 unexpectedly exhibit significantly different solving time characteristics, as
@@ -381,15 +396,15 @@ will be seen later in the experimental evaluation.
 \paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{ocost}[o] \in \mNatNumSet$} models the
-cost incurred by covering \gls{operation}~$o$\hspace{-.8pt}.
+cost incurred by covering \gls{operation}~$o$\hspace{-1pt}.
 %
 It is assumed the \gls{domain} is the same as for the \gls{cost variable}.
 
 
 \paragraph{Constraints}
 
-For each \gls{operation}~$o$\hspace{-.8pt}, the combination
-\mbox{$o\hspace{-.8pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
+For each \gls{operation}~$o$\hspace{-1pt}, the combination
+\mbox{$o\hspace{-1pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
 must appear as a row in the cost matrix.
 %
 Given a cost matrix~$\mCostMatrix$ computed using either
@@ -417,7 +432,30 @@ The total cost is then modeled as
   \labelEquation{total-cost}
 \end{equation}
 
-\todo{this is the same as naive, sketch proof}
+Note that the cost computed by \refEquation{total-cost} is exactly the same as
+that computed by \refEquation{naive-objective-function}.
+%
+The proof is as follows.
+%
+Because every \gls{operation} must be covered by exactly one selected
+\gls{match}, there is a one-to-one correspondence between a selected
+\gls{match}~$m$ and the set~$Q$ of \glspl{operation} covered by
+$m$\hspace{-.8pt}.
+%
+Consequently, the total cost incurred by $m$ -- which is \mbox{$\mCost(m) \times
+  \mFreq(b)$}, where $b$ is the \gls{block} wherein $m$ is placed -- should be
+exactly the same as that incurred by the \glspl{operation} in $Q$.
+%
+Due to \refEquation{total-cost}, the total cost incurred by the
+\glspl{operation} in $Q$ is \mbox{$\sum_{o \,\in\, Q} \mVar{ocost}[o]$}.
+%
+Due to \refEquationList{div-mul-cost-matrix, omatch-oplace-ocost-connection}, we
+know that for each \mbox{$o \in Q$}, \mbox{$\mVar{ocost}[o] =
+  \mCost(m \hspace{-.8pt}, o) \times \mFreq{b}$}.
+%
+Since \mbox{$\mCost(m) = \sum_{o \,\in\, \mCovers(m)} \mCost(m \hspace{-.8pt},
+  o)$}, the total cost incurred by \glspl{operation} in $Q$ is \mbox{$\mCost(m)
+  \times \mFreq(b)$}.
 
 
 \section{Implied Constraints}
@@ -576,7 +614,7 @@ This is modeled as
                      \end{array}
                    } : \\
     \mTable(
-      \mTuple{b \hspace{-.8pt}, \mVar{dplace}[d]} \hspace{-1pt},
+      \mTuple{b \hspace{-1pt}, \mVar{dplace}[d]} \hspace{-1pt},
       \mDomMatrix
     ).
   \end{array}
