@@ -554,7 +554,7 @@ In such situations, the \glspl{match} derived from the \gls{SIMD.i}
 %
 Henceselection of such \glspl{match} is prevented.
 
-Since non-overlapping \glspl{location} entails the need for copy
+Since non-overlapping \glspl{location} entail the need for copy
 \glspl{instruction}, we extend the \gls{UF graph} with \glspl!{copy node}
 through a process called \gls!{copy extension}.
 %
@@ -682,8 +682,8 @@ that emits a memory load \gls{instruction}.
 \Glspl{location} for caller arguments can be enforced either through
 \refEquation{function-args} or through \refEquation{compatible-locations}.
 %
-If the \gls{calling convention} depends on the \gls{instruction} selected, then
-the former is needed.
+If the \gls{calling convention} depends on the \gls{instruction} selected --
+which is an unlikely scenario -- then the former is needed.
 %
 Otherwise the latter is more suitable as the restrictions can be enforced before
 a \gls{match} is selected.\!%
@@ -796,7 +796,7 @@ superior to the other.
 
 \subsection{Match Duplication}
 
-The idea behind \gls!{match duplication} is to duplicating appropriate
+The idea behind \gls!{match duplication} is to duplicate appropriate
 \glspl{match} in the \gls{match set} where \gls{value reuse} is possible.
 %
 We first say that two values~$v_1$ and~$v_2$ are \gls!{copy-related.d} if and
@@ -807,7 +807,7 @@ The second clause is necessary as copies of constants may be of different data
 types and are therefore not interchangeable.
 %
 Then, for each \gls{match}~$m$ we create a new \gls{match} for each permutation
-of \glspl{datum} that are \gls{copy-related.d} to the \glspl{input datum} in
+of \glspl{datum} that are \gls{copy-related.d} with the \glspl{input datum} in
 $m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
 \gls{define.d}[d] by~$m$.
 %
@@ -1345,7 +1345,7 @@ This method of branching is called \gls!{fall-through}, and due to this $d$
 must be placed immediately after $b$ in $s$\hspace{-.8pt}.
 
 For some combinations of \glspl{function} and \glspl{target machine} with
-\gls{fall-through} \glspl{instruction}, there exist no valid \gls{block}
+\gls{fall-through} \glspl{instruction}, there exists no valid \gls{block}
 sequence without inserting one or more additional jump \glspl{instruction}.
 %
 See for example \refFigure{jump-insert-example}.
@@ -1391,7 +1391,7 @@ See for example \refFigure{jump-insert-example}.
 \end{figure}
 %
 \Glspl{block}~\irBlock*{A} and~\irBlock*{B} both contain control-flow
-\glspl{instruction} that branches to the beginning of \irBlock*{B} if the
+\glspl{instruction} that branch to the beginning of \irBlock*{B} if the
 condition holds, otherwise they branch to block~\irBlock*{C}
 (\refFigure{jump-insert-example-cfg}).
 %
@@ -1848,8 +1848,8 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
             supporting jump instruction insertion%
           ]%
           {%
-            Normalized optimal solution costs for two constraint models that
-            supports jump insertion:
+            Normalized optimal solution costs for two constraint models
+            supporting jump insertion:
             %
             \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
               \item one based on branch extension (baseline)
