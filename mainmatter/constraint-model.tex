@@ -14,15 +14,15 @@ We build the \glsshort{constraint model} by integrating one task a time.
 %
 To this end,
 \refSectionRange{modeling-global-instruction-selection}{modeling-block-ordering}
-describe the \glspl{variable} and \gls{constraint} for modeling \gls{global.is}
-\gls{instruction selection}, \gls{global code motion}, \gls{data copying},
-\gls{value reuse}, and \gls{block ordering}, respectively.
+describe the \glspl{variable} and \glspl{constraint} for modeling
+\gls{global.is} \gls{instruction selection}, \gls{global code motion}, \gls{data
+  copying}, \gls{value reuse}, and \gls{block ordering}, respectively.
 %
 We then add the \gls{objective function}, which is described in
 \refSection{cm-objective-function}.
 %
-With all crucial components in place, we discuss the limitations of this
-\gls{constraint model} in \refSection{cm-limitations}.
+With all crucial components in place, we discuss the limitations of the
+\glsshort{constraint model} in \refSection{cm-limitations}.
 %
 Lastly, a summary is given in \refSection{model-summary}.
 
@@ -31,11 +31,11 @@ Lastly, a summary is given in \refSection{model-summary}.
 \labelSection{modeling-global-instruction-selection}
 
 Modeling \gls{global.is} \gls{instruction selection} entails that all
-\glspl{operation} must be \gls{cover}[ed] and all \glspl{datum} must be
+\glspl{operation} are \gls{cover}[ed] and all \glspl{datum} are
 \gls{define.d}[d].
 %
 This could, however, lead to situations resulting in cyclic data dependencies,
-which must be forbidden.
+which must be prevented.
 
 
 \subsection{Covering Operations and Defining Data}
@@ -53,18 +53,17 @@ selected \gls{match}.
 If a \gls!{datum}~$d$ denotes either a \glsshort{state node} or \gls{value node}
 in the \gls{UF graph}, then we say that a \gls{match}~$m$ \gls!{define.d}[s] $d$
 if there exists an \gls{inbound.e} \glsshort{state-flow edge} or \gls{data-flow
-  edge} to $d$ in the \gls{UP graph} from which $m$ was derived.
+  edge} to $d$ in the \gls{UP graph} from which $m$ is derived.
 %
 Likewise, $m$ \gls!{use.d}[s] $d$ if there exists an \gls{outbound.e}
-\glsshort{state-flow edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph}
-of $m$.
+\glsshort{state-flow edge} or \gls{data-flow edge} to $d$ in the \gls{UP graph}.
 
 
 \paragraph{Variables}
 
-Given a \gls{UF graph}~$\mUFGraph$ and a set~$\mMatchSet$ of \glspl{match} found
-for $\mUFGraph$, the set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0,
-    1}$} models whether \gls{match}~\mbox{$m \in \mMatchSet$} is selected.
+Given a \gls{UF graph}~$\mUFGraph$ and a set~$\mMatchSet$ of \glspl{match}, the
+set of \glspl{variable} \mbox{$\mVar{sel}[m] \in \mSet{0, 1}$} models whether
+\gls{match}~\mbox{$m \in \mMatchSet$} is selected.
 %
 Hence $m$ is selected if \mbox{$\mVar{sel}[m] = 1$}, abbreviated
 $\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
@@ -73,23 +72,19 @@ $\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
 which selected \gls{match} covers \gls{operation}~\mbox{$o \in
   \mOpSet$\hspace{-1pt}}, where $\mOpSet$ denotes the set of \glspl{operation}
-in $\mUFGraph$, and \mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set
-of \glspl{match} that can cover~$o$.
+in $\mUFGraph$ and \mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set
+of \glspl{match} covering~$o$.
 %
 Similarly, the set of \glspl{variable} \mbox{$\mVar{dmatch}[d] \in
-  \mMatchSet[o]$} models which selected \gls{match} \gls{define.d}[s]
+  \mMatchSet[d]$} models which selected \gls{match} \gls{define.d}[s]
 \gls{datum}~\mbox{$d \in \mDataSet$\hspace{-1.5pt}}, where $\mDataSet$ denotes
-the set of \glspl{datum} in $\mUFGraph$, and \mbox{$\mMatchSet[d] \subseteq
-  \mMatchSet$} denotes the set of \glspl{match} that can \gls{define.d}~$d$.
+the set of \glspl{datum} in $\mUFGraph$ and \mbox{$\mMatchSet[d] \subseteq
+  \mMatchSet$} denotes the set of \glspl{match} \glsshort{define.d}[ing]~$d$.
 
 
 \paragraph{Constraints}
 
-If an \gls{operation}~$o$ is covered by a \gls{match}~$m$, then that entails
-selection of $m$, and vice versa.
-%
-Hence the \gls{constraint} that every \gls{operation} must be covered is modeled
-as
+The \gls{constraint} that every \gls{operation} must be covered is modeled as
 %
 \begin{equation}
   \forall o \in \mOpSet \hspace{-1pt},
@@ -102,10 +97,7 @@ This \gls{constraint} gives equally strong \gls{propagation} as
 \refEquation{pattern-selection-using-gcc}, making it redundant to add the latter
 as an \gls{implied.c} \gls{constraint} to the \glsshort{constraint model}.
 
-Likewise, if a \gls{datum}~$d$ is \gls{define.d}[d] by a \gls{match}~$m$, then
-that entails selection of $m$, and vice versa.
-%
-Hence the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
+Likewise, the \gls{constraint} that every \gls{datum} must be \gls{define.d}[d]
 is modeled as
 %
 \begin{equation}
@@ -115,16 +107,17 @@ is modeled as
   \labelEquation{data-definitions}
 \end{equation}
 %
-We assume the \gls{pattern set} has been extended with a special \gls!{null-def
-  pattern}, with \gls{graph} structure \mbox{$\mEdge{b}{d}$} where $b$ is a
-\gls{entry block} and $d$ is a \gls{datum}, that defines $d$ at zero cost.
+We assume that the \gls{pattern set} has been extended with a special
+\gls!{null-def pattern}, with \gls{graph} structure \mbox{$\mEdge{b}{d}$} where
+$b$ is a \gls{entry block} and $d$ is a \gls{datum}, that defines $d$ at zero
+cost.
 %
 This \gls{pattern} is needed for defining \glspl{datum} representing
 \gls{function} arguments and constants since these are not produced by any
 \gls{operation}.
 
 
-\subsection{Forbidding Cyclic Data Dependencies}
+\subsection{Preventing Cyclic Data Dependencies}
 \labelSection{forbidding-cyclic-data-dependencies}
 
 In certain cases, selecting \glspl{match} of \glspl{instruction} that produce
@@ -186,33 +179,34 @@ value~\irVar*{q}[2] will be \gls{use.d}[d] before it is available (depending on
 the instruction order), thus resulting in incorrect code.
 %
 Such combinations, which could involve more than two \glspl{match}, must
-therefore be identified and forbidden.
+therefore be identified and prevented.
 
 We detect such combinations by first constructing a \gls!{dependency graph},
 where each \gls{node} represents a \gls{match} and each
 \gls{edge}~$\mEdge{n}{m}$ indicates that \gls{match}~$m$ \gls{use.d}[s]
 \glspl{datum} produced by \gls{match}~$n$.
 %
-\Glspl{phi-match} are not taken into consideration as they always yield a
-\gls{cycle} but is not a true data dependency.
+\Glspl{phi-match} are not taken into consideration as they do not incur true
+cyclic data dependencies.
 %
-A \gls{cycle} in this \gls{graph} corresponds a combination of \glspl{match}
-which will lead to a cyclic data dependency if all \glspl{match} are selected.
+A \gls{cycle} in the \gls{dependency graph} corresponds a combination of
+\glspl{match} which will lead to a cyclic data dependency if all \glspl{match}
+are selected.
 %
 For each \gls{cycle} in the \gls{dependency graph}, we add a \gls{constraint} to
 the \gls{constraint model} that forbids selection of all \glspl{match} appearing
 in the \gls{cycle}.
 %
-The \glspl{cycle} are found using \citeauthor{Johnson:1975}'s
-algorithm~\cite{Johnson:1975}.
+The \glspl{cycle} can be found using any \gls{cycle}-finding algorithm (see for
+example~\cite{Johnson:1975}).
 
 
 \paragraph{Constraints}
 
 Given a set~\mbox{$\mForbiddenCombSet \subseteq \mPowerset{\mMatchSet}$} of
 \glspl{cycle} found for the \gls{dependency graph} built from a \gls{UF graph}
-and \gls{match set}, the \gls{constraint} forbidding cyclic data dependencies is
-modeled as
+and \gls{match set}~$\mMatchSet$, the \gls{constraint} forbidding cyclic data
+dependencies is modeled as
 %
 \begin{equation}
   \forall f \in \mForbiddenCombSet :
@@ -224,17 +218,19 @@ modeled as
 \section{Modeling Global Code Motion}
 \labelSection{modeling-global-code-motion}
 
-The \gls{global code motion} problem entails that \glspl{datum} must be placed
-in \glspl{block} such that each definition of a \gls{datum}~$d$ precedes all
+The \gls{global code motion} problem entails that \glspl{datum} are placed in
+\glspl{block} such that each definition of a \gls{datum}~$d$ precedes all
 \gls{use.d}[s] of~$d$.
 %
 This condition can be expressed in terms of \gls{block} dominance.
 %
-Given a \gls{function}~$f$, a \gls{block}~$b$ in $f$ \gls!{dominate.b}[s]
+Given a \gls{function}~$f$\!, a \gls{block}~$b$ in $f$ \gls!{dominate.b}[s]
 another \gls{block}~$c$ in $f$ if $b$ appears on every control-flow path from
-$f$'s \gls{entry block} to $c$ (see \refFigure{block-dominance-example} for an
-example).
+$f$'s \gls{entry block} to $c$.
 %
+By definition, a \gls{block} always \gls{dominate.b}[s] itself (see
+\refFigure{block-dominance-example} for an example).
+
 \begin{figure}
   \mbox{}%
   \hfill%
@@ -276,13 +272,11 @@ example).
 
   \caption{Example of block dominance}
   \labelFigure{block-dominance-example}
-\end{figure}%
-%
-By definition, a \gls{block} always \gls{dominate.b}[s] itself.
-%
+\end{figure}
+
 Hence a placement of \glspl{match} into \glspl{block} is a \gls{solution} to the
 \gls{global code motion} problem if each \gls{datum}~$d$ is \gls{define.d}[d] by
-some selected \gls{match} that is placed in a \gls{block}~$b$, and every
+some selected \gls{match} placed in a \gls{block}~$b$, and every
 non-\gls{phi-match} \glsshort{use.d}[ing] $d$ is placed in a \gls{block}
 \gls{dominate.b}[d] by~$b$.
 %
@@ -322,13 +316,13 @@ This also enables the placement of $m$ to be deduced from any of the
 corresponding $\mVar{oplace}$~\glspl{variable}.
 
 We prevent control-flow \glspl{operation} from being moved to another
-\gls{block}, which in all likelihood would break \gls{program} semantics, by
+\gls{block} -- which in all likelihood would break \gls{program} semantics -- by
 forcing selected \glspl{match} with control flow to be placed in the \gls{block}
 matched by the \gls{UP graph}'s \gls{entry block}.
 %
 Hence, if \mbox{$\mEntry(m) \subseteq \mBlockSet$} returns either the empty set
 or a set containing only the \gls{entry block} of match~$m$ (when the \gls{UP
-  graph} of $m$ has such a node), then this \gls{constraint} is modeled as
+  graph} has such a \gls{node}), then this \gls{constraint} is modeled as
 %
 \begin{equation}
   \forall m \in \mMatchSet,
@@ -343,15 +337,15 @@ As stated previously, each \gls{datum}~$d$ must be \gls{define.d}[d] in some
 \gls{block} wherein $d$ is \gls{use.d}[d], excluding \gls{use.d}[s] made by the
 \glspl{phi-match}.
 %
-To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
-\mbox{$\mUses(m) \subseteq \mOperandSet$} denote the set of \glspl{datum}
-\gls{define.d}[d] respectively \gls{use.d}[d] by \gls{match}~$m$.
+To this end, let \mbox{$\mDefines(m) \subseteq \mDataSet$} and \mbox{$\mUses(m)
+  \subseteq \mDataSet$} denote the set of \glspl{datum} \gls{define.d}[d]
+respectively \gls{use.d}[d] by \gls{match}~$m$.
 %
 Let also \mbox{$\mDom(b) \subseteq \mBlockSet$} denote the set of \glspl{block}
 \gls{dominate.b}[d] by \gls{block}~$b$.
 %
 With these definitions together with the fact that the placement of a
-\gls{match} is inferred via its $\mVar{oplace}$~\glspl{variable}, the
+\gls{match} is deduced from its $\mVar{oplace}$~\glspl{variable}, the
 \gls{constraint} can naively be modeled as
 %
 \begin{equation}
@@ -362,11 +356,11 @@ With these definitions together with the fact that the placement of a
   \labelEquation{naive-dom}
 \end{equation}
 %
-where $\mPhiMatchCompSet$ denotes the set~$\mMatchSet$ without the
-\glspl{phi-match}.
+where $\mPhiMatchCompSet \subseteq \mMatchSet$ denotes the \gls{match set}~$$
+without the \glspl{phi-match}.
 %
-This implementation, however, has a number of flaws that will be explained and
-addressed in \refChapter{solving-techniques}.
+This implementation has a number of flaws that will be explained and addressed
+in \refChapter{solving-techniques}.
 %
 We therefore only use \refEquation{naive-dom} for sake of describing the
 \glsshort{constraint model}, keeping in mind that a refined version is applied
@@ -394,11 +388,11 @@ the \irBlock*{A}~\gls{block}.
 %
 But because of \refEquation{def-edges}, one of its \glspl{value node} must be
 placed in the \irBlock*{B}~\gls{block}.
+
+Consequently, to allow such situations we relax the \gls{constraint} as follows.
 %
-Consequently, for such conditions the \gls{constraint} is relaxed as follows.
-%
-We say that a \gls{match} \gls!{span.b}[s] the \glspl{block} matched by the
-\gls{UP graph}'s \glspl{block node} (hence $m$ \gls{span.b}[s] \glspl{block}
+First, we say that a \gls{match} \gls!{span.b}[s] the \glspl{block} matched by
+the \gls{UP graph}'s \glspl{block node} (hence $m$ \gls{span.b}[s] \glspl{block}
 \irBlock*{A}, \irBlock*{B}, and~\irBlock*{C}).
 %
 We also say that a \gls{match} \gls!{consume.b}[s] any matched \glspl{block}
@@ -406,10 +400,12 @@ where the corresponding \gls{block node} has both \gls{inbound.e} and
 \gls{outbound.e} control-flow \glspl{edge} in the \gls{UP graph} (hence $m$
 \gls{consume.b}[s] \gls{block}~\irBlock*{B}).
 %
-Consequently, every \gls{datum}~$d$ \gls{define.d}[d] by a \gls{match}~$m$ must
-be placed in the same \gls{block} as $m$ only if $m$ \gls{span.b}[s] no
-\glspl{block}, otherwise $d$ may be \gls{define.d}[d] in any of the
-\glspl{block} \gls{span.b}[ned] by~$m$.
+Using these definitions, we now enforce that every \gls{datum}~$d$
+\gls{define.d}[d] by a \gls{match}~$m$ must be placed in the same \gls{block} as
+$m$ only if $m$ \gls{span.b}[s] no \glspl{block}.
+%
+Otherwise $d$ may be \gls{define.d}[d] in any of the \glspl{block}
+\gls{span.b}[ned] by~$m$ (one of which is equal to \mbox{$\mVar{oplace}[m]$}).
 %
 If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
 \gls{span.b}[ned] by \gls{match}~$m$, then this constraint is modeled as
@@ -426,10 +422,12 @@ If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
   \labelEquation{spanning}
 \end{equation}
 
-\Glsshort{consume.b}[ing] a \gls{block} entails that the corresponding
-\gls{instruction} assumes full control of the control flow to and from that
-\gls{block}, which in turn means no \glspl{operation} covered by other
-\glspl{match} may be placed in that \gls{block}.
+If a \gls{match} \gls{consume.b}[s] some \gls{block}, then it means that the
+corresponding \gls{instruction} assumes full control of the control flow to and
+from that \gls{block}.
+%
+Consequently, no \glspl{operation} covered by other \glspl{match} can be placed
+in that \gls{block}.
 %
 Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
 \gls{consume.b}[d] by \gls{match}~$m$, then this constraint is modeled as
@@ -472,15 +470,15 @@ storage requirements for the data used and produced by the selected
 The idea is as follows.
 %
 For each value~$v$ in the \gls{UF graph}, let a \gls{variable}~$\mVar{x}$ decide
-in which \gls{location} provided by the \gls{target machine} $v$ is stored.
+in which \gls{location} on the \gls{target machine} $v$ is stored.
 %
 In this context a \gls!{location} is an abstract representation, typically
 representing a \gls{register} but it could also indicate that the value is for
 example stored in memory.
 %
 A \gls{match}~$m$ that either \gls{use.d}[s] or \gls{define.d}[s] $v$ and
-requires $v$ to be in one of a set~$L$ of \glspl{location} can then enforce, if
-selected, that \mbox{$\mVar{x} \in L$}.
+requires $v$ to be in one of a set~$L$ of \glspl{location} can then enforce that
+\mbox{$\mVar{x} \in L$}.
 
 
 \paragraph{Variables}
@@ -496,8 +494,8 @@ values produced within an \gls{instruction} and can only be accessed by this
 very \gls{instruction}.
 %
 For example, the address computed by a memory load \gls{instruction} with a
-sophisticated \gls{addressing mode} is produced within the pipeline and thus
-cannot be reused by other \glspl{instruction}.
+sophisticated \gls{addressing mode} is produced within the pipeline and
+therefore cannot be reused by other \glspl{instruction}.
 %
 A value which is not an \gls{intermediate value} is called an \gls!{exterior
   value}, meaning it can be accessed by other \glspl{instruction}.
@@ -508,11 +506,12 @@ A value which is not an \gls{intermediate value} is called an \gls!{exterior
 Every \gls{datum} must be made available in a \gls{location} that is compatible
 for all selected \glspl{match}.
 %
-If \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mIntLocation}$}
-denotes the set of compatible \glspl{location} (including the special
-\gls{location} for intermediate values) for a \gls{datum}~$d$ which is either
-\gls{define.d}[d] or \gls{use.d}[d] by a \gls{match}~$m$, then this
-\gls{constraint} is modeled as
+Let \mbox{$\mStores(m, d) \subseteq \mLocationSet \cup \mSet{\mIntLocation}$}
+denote the set of compatible \glspl{location} (including the special
+\gls{location} for intermediate values) for a \gls{datum}~$d$ \gls{define.d}[d]
+or \gls{use.d}[d] by a \gls{match}~$m$.
+%
+With this definition, the \gls{constraint} is modeled as
 %
 \begin{equation}
   \forall m \in \mMatchSet,
@@ -523,10 +522,10 @@ denotes the set of compatible \glspl{location} (including the special
   \labelEquation{compatible-locations}
 \end{equation}
 
-As expected, \glspl{phi-match} require the \glspl{location} of all its
-\glspl{datum} to be the same.
+As expected, \glspl{phi-match} require all of its \glspl{datum} to be stored in
+the same \gls{location}.
 %
-This \gls{constraint} is modeled as
+This is modeled as
 %
 \begin{equation}
   \forall m \in \mPhiMatchSet \hspace{-.8pt},
@@ -551,7 +550,9 @@ In such situations, the \glspl{match} derived from the \gls{SIMD.i}
 \glspl{instruction} and the \glspl{match} derived from the general
 \glspl{instruction} will have non-overlapping \glspl{location} on the same
 \glspl{datum} (that is, \mbox{$\mStores(m_1, d) \cap \mStores(m_2, d) =
-  \mEmptySet$}), preventing selection of such \glspl{match}.
+  \mEmptySet$}).
+%
+Henceselection of such \glspl{match} is prevented.
 
 Since non-overlapping \glspl{location} entails the need for copy
 \glspl{instruction}, we extend the \gls{UF graph} with \glspl!{copy node}
@@ -559,11 +560,8 @@ through a process called \gls!{copy extension}.
 %
 For each \gls{data-flow edge}~$\mEdge{v}{o}$, where $v$ is a \gls{value node}
 and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a new
-\gls{copy node}~$c$, \gls{value node}~$v'$, and \glspl{data-flow edge} such that
-\mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}.
-%
-\Glspl{match} covering exactly one \gls{copy node} are called \glspl!{copy
-  match}.
+\gls{copy node}~$c$, a new \gls{value node}~$v'$, and new \glspl{data-flow edge}
+such that \mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}.
 %
 If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
 connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.e}
@@ -572,20 +570,23 @@ connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.e}
 This is to ensure that the placement restrictions are applied only on the
 \glspl{datum} actually used by the \glspl{phi-function} (that is, the copied
 value and not the original value).
-%
+
 We also extend the \gls{pattern set} with a special \gls!{null-copy pattern},
 with \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, that covers $c$ at
 zero cost provided that \mbox{$\mVar{loc}[v] = \mVar{loc}[v']$}.
 %
-Obviously, \glspl{match} derived from the \gls{null-copy pattern} -- we call
-these \glspl!{null-copy match} -- emit nothing if selected.
+\Glspl{match} covering exactly one \gls{copy node} are called \glspl!{copy
+  match}, and \glspl{match} derived from the \gls{null-copy pattern} are also
+called \glspl!{null-copy match}.
+%
+Obviously, \glspl{null-copy pattern} emit nothing if selected.
 %
 If the \gls{null-copy match} cannot be selected for covering a particular
 \gls{copy node}, then this means an appropriate copy \gls{instruction} must be
 emitted whose cost will be accounted for.
 
-In order to retain matching of \glspl{pattern}, we also need to perform
-\gls{copy extension} on every \gls{UP graph} in the \gls{pattern set}.
+In order to retain \gls{pattern matching}, we also need to perform \gls{copy
+  extension} on every \gls{UP graph} in the \gls{pattern set}.
 %
 See for example \refFigure{copy-extending-pattern-example}.
 %
@@ -642,8 +643,8 @@ The resulting \gls{UP graph} will now yield the same \glspl{match} as before
 
 \subsection{Handling Calling Conventions}
 
-The method for handling \gls{data copying} can also be used for handling
-\glspl{calling convention} of the specific \gls{target machine}.\!%
+The \gls{data copying} method can also be used for handling \glspl{calling
+  convention} of the specific \gls{target machine}.\!%
 %
 \footnote{%
   A \gls!{calling convention} is an implementation scheme that defines how
@@ -671,16 +672,21 @@ where \mbox{$\mArgSet \subseteq \mDataSet$} denotes the set of \gls{function}
 arguments in $\mUFGraph$ and \mbox{$\mArgLoc(d) \subseteq \mLocationSet$}
 denotes the set of \glspl{location} in which argument~$d$ resides.
 %
-Arguments residing on the stack can be signified by introducing another special
-\gls{location}, thus requiring a memory load \gls{instruction} in order to be
-used by other \glspl{instruction}.
+\Glspl{constraint} that certain arguments must reside on the stack can be
+captured by introducing another special \gls{location} representing memory.
+%
+Hence, if an \gls{instruction} requires the argument to reside in a
+\gls{register}, then the \gls{copy node} must be covered by a \gls{copy match}
+that emits a memory load \gls{instruction}.
 
 \Glspl{location} for caller arguments can be enforced either through
 \refEquation{function-args} or through \refEquation{compatible-locations}.
 %
-If the \gls{calling convention} depends on the \gls{instruction} selected then
-the former is needed, otherwise the latter is more suitable as the restrictions
-can be enforced before a \gls{match} is selected.\!%
+If the \gls{calling convention} depends on the \gls{instruction} selected, then
+the former is needed.
+%
+Otherwise the latter is more suitable as the restrictions can be enforced before
+a \gls{match} is selected.\!%
 %
 \footnote{%
   If exactly one \gls{match}~$m$ can cover a given \gls{function} call
@@ -694,8 +700,8 @@ can be enforced before a \gls{match} is selected.\!%
 \labelSection{modeling-value-reuse}
 
 Code quality can be increased if \glspl{instruction} are allowed to reuse copies
-of values, which is a crucial feature to be expected in the code emitted by any
-modern \gls{instruction selector}.
+of values, which is a crucial feature to be expected in the code generated by
+any modern \gls{instruction selector}.
 %
 See for example \refFigure{value-reuse-example}.
 %
@@ -757,13 +763,13 @@ Originally, the \gls{UF graph} has a value~\irVar*{v} which is used by two
 \glspl{operation} coverable by \glspl{match}~$m_1$ and~$m_2$
 (\refFigure{value-reuse-example-uf-graph}).
 %
-After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy --
-\irVar*{v}[1] and \irVar*{v}[2], respectively -- of \irVar*{v}
+After \gls{copy extension}, $m_1$ and $m_2$ use their own private copy of
+\irVar*{v} -- \irVar*{v}[1] and \irVar*{v}[2], respectively
 (\refFigure{value-reuse-example-after-ce}).
 %
 Assume that both $m_1$ and $m_2$ require its copy of \irVar*{v} to reside in a
-\gls{location} different from \irVar*{v} -- \irVar*{v} may reside on the stack,
-for instance -- which means that selection of $m_1$ or $m_2$ also entails
+\gls{location} different from \irVar*{v} -- for example, \irVar*{v} may reside
+on the stack -- which means that selection of $m_1$ or $m_2$ also entails
 emission of a copy \gls{instruction}.
 %
 With the \glsshort{constraint model} introduced thus far, two copy
@@ -772,12 +778,12 @@ With the \glsshort{constraint model} introduced thus far, two copy
 %
 However, if \irVar*{v}[1] and \irVar*{v}[2] could reside in the same
 \gls{location} then either of the values could be reused by either \gls{match},
-thus necessitating only one copy \gls{instruction}
+thus requiring only one copy \gls{instruction}
 (\refFigure{value-reuse-example-one-copy}).
 %
 We call this notion \gls!{value reuse}.
 
-In this dissertation, we discuss two methods for reusing values:
+In this dissertation we consider two methods for reusing values:
 %
 \begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
   \item \gls{match duplication}
@@ -800,7 +806,7 @@ type.
 The second clause is necessary as copies of constants may be of different data
 types and are therefore not interchangeable.
 %
-Then, for each \gls{match}~$m$, we create a new \gls{match} for each permutation
+Then, for each \gls{match}~$m$ we create a new \gls{match} for each permutation
 of \glspl{datum} that are \gls{copy-related.d} to the \glspl{input datum} in
 $m$, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d] but not
 \gls{define.d}[d] by~$m$.
@@ -958,24 +964,23 @@ There are two approaches to fixing this problem:
   \item either all \glspl{phi-match} are excluded from being extended with
     \glspl{alternative value}
   \item the \gls{phi-pattern} is extended with \glspl{block node} and
-    \glspl{definition edge}, as shown in \refFigure{ext-phi-pattern}, which
-    allows the value placement restrictions to be captured as part of the
-    \gls{match}
+    \glspl{definition edge} to allow the value placement restrictions to be
+    captured as part of the \gls{match}
 \end{inlinelist}.
 %
-The former is simpler but interferes with an \gls{implied.c} \gls{constraint}
-(\refEquation{dom-cons-kill-match-selection}) to be introduced in
-\refChapter{solving-techniques}, which may remove potentially optimal
-\glspl{solution}.
+The former is simpler but interferes with an \gls{implied.c} \gls{constraint} to
+be introduced in
+\refChapter{solving-techniques}~(\refEquation{dom-cons-kill-match-selection}),
+which may remove potentially optimal \glspl{solution}.
 %
-Consequently, we apply the latter.
+Consequently we apply the latter, as shown in \refFigure{ext-phi-pattern}.
 %
 The extended \gls{phi-pattern} assumes that no value is used more than once by
 the same \gls{phi-node}, and that no pair of values used by the same
 \gls{phi-node} have \glspl{definition edge} to the same \gls{block}.
 %
-These invariants can be achieved by transforming the \gls{function} before
-\gls{pattern matching}.
+These invariants can be achieved by transformating the \gls{function} as needed
+before \gls{pattern matching}.
 
 After having extended the \gls{match set} with \glspl{alternative value}, the
 next step is to extend the \gls{constraint model} with an another level of
@@ -985,17 +990,17 @@ indirection wherever a \gls{constraint} refers to a \gls{datum}.
 \paragraph{Variables}
 
 Assume first that each \glsshort{define.d}[ition] or \glsshort{use.d}[age] of
-\glspl{datum} within each \gls{match} incurs a unique \gls!{operand}.
+\glspl{datum} within each \gls{match} introduces a unique \gls!{operand}.
 %
-Consequently, instead of \glsshort{define.d}[ing] and \glsshort{use.d}[ing]
-\glspl{datum}, we now assume that all \glspl{match} \gls{define.d} and
-\gls{use.d} \glspl{operand}.
+Instead of \glsshort{define.d}[ing] and \glsshort{use.d}[ing] \glspl{datum}, we
+now assume that all \glspl{match} \gls{define.d} and \gls{use.d}
+\glspl{operand}.
 %
-Hence the set of \glspl{variable} \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models
-to which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
+The set of \glspl{variable} \mbox{$\mVar{alt}[p] \in \mDataSet[p]$} models to
+which \gls{datum} \gls{operand}~\mbox{$p \in \mOperandSet$} is mapped, where
 \mbox{$\mDataSet[p] \subseteq \mDataSet$} denotes the set of \glspl{alternative
-  value} for~$p$, and $\mOperandSet$ denotes the set of \glspl{operand} incurred
-by~$\mMatchSet$.
+  value} for~$p$ and $\mOperandSet$ denotes the set of \glspl{operand}
+introduced by~$\mMatchSet$.
 
 
 \paragraph{Constraints}
@@ -1008,9 +1013,9 @@ To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 (instead of \glspl{datum}) \gls{define.d}[d] respectively \gls{use.d}[d] by
 \gls{match}~$m$.
 %
-With these new definitions, \refEquationList{naive-dom, spanning,
-  compatible-locations} are adjusted accordingly (the changes are highlighted in
-gray):
+With these definitions, \refEquationList{naive-dom, spanning,
+  compatible-locations, phi-match-locations} are adjusted accordingly (the
+changes are highlighted in gray):
 %
 \begin{equation}
   \forall m \in \mPhiMatchCompSet,
@@ -1054,20 +1059,22 @@ gray):
   \labelEquation{phi-match-locations-alt}
 \end{equation}
 
-Due to these changes there may be \glspl{datum} that is not \gls{use.d}[d] by
-any \gls{match}, yet \refEquation{data-definitions} still requires that every
-\gls{datum} must be \gls{define.d}[d] by some \gls{match}.
+Due to these changes, there may be \glspl{datum} that is not \gls{use.d}[d] by
+any \gls{match}.
+%
+However, \refEquation{data-definitions} still requires that every \gls{datum}
+must be \gls{define.d}[d] by some \gls{match}.
 %
 We address this by extending the \gls{pattern set} with a \gls!{kill pattern}
-(shaped like \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, where $v$ and $v'$ are
-\glspl{value node} and $c$ is a \gls{copy node}).
+with \gls{graph} structure \mbox{$\mEdge{v}{\mEdge{c}{v'}}$}, where $v$ and $v'$
+are \glspl{value node} and $c$ is a \gls{copy node}.
 %
 \Glspl{match} derived from this \gls{pattern} are called \glspl!{kill match},
 which have zero cost and emit nothing if selected.
 %
 A \gls{datum} is said to be \gls!{killed.d} if and only if it is
 \gls{define.d}[d] by a \gls{kill match}, and non-\glspl{kill match} are only
-allowed to make use of not \gls{killed.d} \glspl{datum}.
+allowed to make \gls{use.d} of non-\gls{killed.d} \glspl{datum}.
 
 To model whether a \gls{datum} is \gls{killed.d}, we extend the \gls{location
   set} with a special \gls{location}~$\mKilledLocation$ and require that a
@@ -1083,7 +1090,8 @@ This is modeled as
   \labelEquation{killed-data}
 \end{equation}
 %
-where $\mKillMatchSet$ denotes the set of \glspl{kill match}.
+where \mbox{$\mKillMatchSet \subseteq \mMatchSet$} denotes the set of
+\glspl{kill match}.
 
 Lastly, we need to enforce the value placements appearing in the
 \glspl{phi-match}.
@@ -1108,15 +1116,15 @@ We first evaluate the two different methods for \gls{value reuse}.
 Based on the results, we then evaluate the impact of \gls{value reuse} using the
 superior method.
 
-When filtering, we remove all \glspl{function} that have less than less
-than ten~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+When filtering, we remove all \glspl{function} that have fewer than
+ten~\gls{LLVM} \gls{IR} \glspl{instruction} and more than
 \num{50}~\glspl{instruction}.
 %
 Anything smaller will most likely not be benefited by \gls{value reuse}, and
 anything larger will lead to unreasonably long solving times.
 %
-This leaves a pool of \num{453}~\glspl{function}, on which we then perform
-sampling.
+This leaves a pool of \num{453}~\glspl{function}, from which we then draw
+\num{20}~samples.
 
 
 \paragraph{Match Duplication \versus Alternative Values}
@@ -1158,7 +1166,7 @@ as \gls{baseline} and \glsshort{constraint model}~\refModel{alt-values} as
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models that supports value reuse:
+            constraint models supporting value reuse:
             %
             \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
               \item one based on match duplication (baseline)
@@ -1204,10 +1212,10 @@ The \gls{GMI} is \printGMI{%
 }.
 
 We see clearly that \glsshort{constraint model}~\refModel{alt-values} results in
-significantly shorter solving times than \glsshort{constraint
+considerably shorter solving times than \glsshort{constraint
   model}~\refModel{match-dup}.
 %
-In one case (\cCode*{reg2rsaref}), for example, the solving time is improved
+For one \gls{function} (\cCode*{reg2rsaref}), the solving time is improved
 by~\printZCNorm{%
   \AltValuesVsMatchDupPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }.
@@ -1215,16 +1223,15 @@ by~\printZCNorm{%
 This is due to a high rate of \gls{copy-related.d} values for which
 \glspl{alternative value} results in only \num{94}~\glspl{match} whereas
 \gls{match duplication} results in \num{537}~\glspl{match}.
-
-Based on the observations above, we conclude that \glspl{alternative value} is a
-better design choice over \gls{match duplication} when implementing \gls{value
-  reuse}.
+%
+Hence \glspl{alternative value} is a better design choice over \gls{match
+  duplication} when implementing \gls{value reuse}.
 
 
 \paragraph{Impact of Value Reuse}
 
 We evaluate the impact of \gls{value reuse} by comparing the cost (that is, the
-total number of cycles, as described in \refSection{cm-objective-function}) of
+total number of cycles as described in \refSection{cm-objective-function}) of
 the optimal \glspl{solution} produced by two \glsplshort{constraint model}:
 %
 \begin{modelList}
@@ -1298,22 +1305,22 @@ We see clearly that \glsshort{constraint model}~\refModel{w-value-reuse}
 produces \glspl{solution} with significantly less cost than those produced by
 \glsshort{constraint model}~\refModel{wo-value-reuse}.
 %
-In one case (\cCode*{putseqdispext}), for example, the cycle count is reduced
-from \num{256}~cycles to \num{208}~cycles (an improvement
+For one \gls{function} (\cCode*{putseqdispext}), the cycle count is reduced from
+\num{256}~cycles to \num{208}~cycles (an improvement
 of~\printZCNorm{%
   \AltValuesVsWithoutCyclesSpeedupCyclesZeroCenteredSpeedupMax%
 }).
 %
 This is because two constants are frequently used as arguments to \gls{function}
 call \glspl{instruction} and thus cannot be loaded as immediates.
-
-Hence we conclude that \gls{value reuse} is essential for reducing the number of
-copy \glspl{instruction} and, subsequently, lowering cost.
+%
+Hence \gls{value reuse} is essential for reducing the number of copy
+\glspl{instruction} and, subsequently, lowering cost.
 
 
 \paragraph{Conclusions}
 
-Based on the results from this experiment, we conclude:
+From the results for these experiments, we conclude:
 %
 \begin{enumerate*}[label=(\roman*), itemjoin={;\ }, itemjoin*={; and\ }]
   \item that \glspl{alternative value} are superior to \gls{match duplication}
@@ -1338,8 +1345,8 @@ Assume also that the conditional branching in $b$ is implemented using an
 continues the execution with the next \gls{instruction} in the \gls{assembly
   code}.
 %
-This notion of execution is called \gls!{fall-through}, and due to this, $d$
-must be placed immediately after $b$ in the sequence.
+This method of branching is called \gls!{fall-through}, and due to this $d$
+must be placed immediately after $b$ in $s$\hspace{-.8pt}.
 
 For some combinations of \glspl{function} and \glspl{target machine} with
 \gls{fall-through} \glspl{instruction}, there exist no valid \gls{block}
@@ -1389,7 +1396,7 @@ See for example \refFigure{jump-insert-example}.
 %
 \Glspl{block}~\irBlock*{A} and~\irBlock*{B} both contain control-flow
 \glspl{instruction} that branches to the beginning of \irBlock*{B} if the
-condition holds, otherwise they should branches to block~\irBlock*{C}
+condition holds, otherwise they branch to block~\irBlock*{C}
 (\refFigure{jump-insert-example-cfg}).
 %
 Because of the fall-through \gls{constraint}, \irBlock*{A} and \irBlock*{B}
@@ -1399,7 +1406,7 @@ Hence an additional jump \gls{instruction} that directly branches to
 \irBlock*{C} must be inserted after the control-flow \gls{instruction} in either
 \irBlock*{A} or~\irBlock*{B} (\refFigure{jump-insert-example-solutions}).
 
-In this dissertation, we discuss two methods for inserting jump
+In this dissertation we consider two methods for inserting jump
 \glspl{instruction} when required:
 %
 \begin{inlinelist}[itemjoin={\ }, itemjoin*={\ and}]
@@ -1417,14 +1424,14 @@ experiments showing that one is superior to the other.
 The set of \glspl{variable} \mbox{$\mVar{succ}[b] \in \mBlockSet$} models the
 successor of block~$b$\hspace{-.5pt}.
 %
-For example, if \mbox{$\mVar{succ}[b] = b'$}, then \gls{block}~$b'$ will appear
+For example, if \mbox{$\mVar{succ}[b] = b'$}, then \gls{block}~$b'$ appears
 immediately after \gls{block}~$b$ in the \gls{block ordering} sequence.
 
 
 \paragraph{Constraints}
 
 A \gls{solution} to the \gls{block ordering} problem is a sequence of
-\gls{block} successors such that they form a \gls{cycle}.
+\gls{block} successors such that they form a \gls{Hamiltonian.c} \gls{cycle}.
 %
 Using the \gls{circuit constraint} defined in
 \refChapter{constraint-programming} on \refPageOfDefinition{circuit}, this
@@ -1442,20 +1449,21 @@ If a \gls{match}~$m$ with an \gls{entry block} is derived from an
 the \gls{constraint} can naively be modeled as \mbox{$\mVar{sel}[m] \mImp
   \mVar{succ}[\mEntry(m)] = b$}.
 %
-However, this \gls{constraint} is too limiting as it disallows empty
+However, this \gls{constraint} is too limiting as it disallows \gls{empty.b}
 \glspl{block} to be placed between $\mEntry(m)$ and~$b$\hspace{-.5pt}, thus
 forcing redundant jump \glspl{instruction} to be emitted.
 %
-A \gls{block}~$b$ is considered empty if either no \glspl{match} are placed in
-$b$ or every \gls{match} in $b$ is a \gls!{null match}, which is a \gls{match}
-that emits nothing if selected.
+A \gls{block}~$b$ is considered \gls!{empty.b} if either no \glspl{match} are
+placed in $b$ or every \gls{match} in $b$ is a \gls!{null match}, which is a
+\gls{match} that emits nothing if selected.
 %
-As empty \glspl{block} are not uncommon to appear in the \gls{function} under
-compilation -- especially when having performed \gls{global code motion} -- this
-has a significant impact on code quality.
-%
-Hence we extend the naive implementation into a disjunction, where the second
-clause captures \glspl{fall-through} via single empty \glspl{block}.
+As \gls{empty.b} \glspl{block} are not uncommon to appear in the \gls{function}
+under compilation -- especially when having performed \gls{global code motion}
+-- this may have a significant impact on code quality.
+
+Hence we extend the naive implementation above into a disjunction, where the
+second clause models \glspl{fall-through} via single \gls{empty.b}
+\glspl{block}.
 %
 Let $\mFallThroughSet$ denote a set of pairs~$\mPair{m}{b}$, where $m$ is a
 \gls{match} and $b$ is a \gls{block} through which $m$ will fall if selected,
@@ -1525,19 +1533,21 @@ with additional \glsshort{block node} and \glspl{control node}.
 The idea, called \gls!{branch extension}, is as follows.
 %
 For each \gls{control-flow edge}~$\mPair{c}{b}$, where $c$ is a \gls{control
-  node} and $b$ is a \gls{block node}, we remove this \gls{edge} and insert a
-new \gls{block node}~$b'$ and \gls{control node}~$c'$, and \glspl{control-flow
-  edge} such that \mbox{$\mEdge{c}{\mEdge{b'}{\mEdge{c'}{b}}}$}.
-%
-If the new \glspl{control node} are indeed redundant, then each such \gls{node}
-can be covered by a \gls{match} derived from the \gls{null-jump pattern},
-causing the new \glspl{block} to become empty and appear immediately before the
-target \gls{block}.
-%
-Like with \gls{copy extension}, to retain matching \gls{branch extension} must
-also be performed on each \gls{UF graph} in the \gls{pattern set}.
+  node} representing a conditional branch and $b$ is a \gls{block node}, we
+remove this \gls{edge} and insert a new \gls{block node}~$b'$, a new\gls{control
+  node}~$c'$, and new \glspl{control-flow edge} such that
+\mbox{$\mEdge{c}{\mEdge{b'}{\mEdge{c'}{b}}}$}.
 %
 An example is shown in \refFigure{branch-extension-example}.
+%
+If the new \gls{control node} is indeed redundant, then it can be covered by a
+\gls{match} derived from the \gls{null-jump pattern}.
+%
+This in turn causes the new \glspl{block} to become \gls{empty.b} and appear
+immediately before the target \gls{block}.
+%
+Like with \gls{copy extension}, to retain \gls{pattern matching} we also perform
+\gls{branch extension} on each \gls{UF graph} in the \gls{pattern set}.
 
 \begin{figure}
   \mbox{}%
@@ -1581,35 +1591,36 @@ $\mBigO(nk)$, where $n$ is the number of \glspl{block} before \gls{branch
 This leads to more \glspl{operation} to be covered and more \glspl{block}
 wherein an \gls{operation} may be placed.
 %
-In addition, as the majority of the new \glspl{block} will be empty, situations
-often arise where a control-flow \gls{instruction} could successfully fall
-through more than one \gls{block}.
+In addition, as the majority of the new \glspl{block} will be \gls{empty.b},
+situations often arise where a control-flow \gls{instruction} could successfully
+fall through more than one \gls{block}.
 %
 Because of \refEquation{fall-through}, however, it can only fall through at most
-one empty \gls{block}, causing emission of redundant jump \glspl{instruction}
-that would not have been emitted had \gls{branch extension} not been performed.
+one \gls{empty.b} \gls{block}, causing emission of redundant jump
+\glspl{instruction} that would not have been emitted had \gls{branch extension}
+not been performed.
 
 
 \subsection{Dual-target Branch Patterns}
 
-\def\jmpPattern{p_{\textsc{jmp}}}%
+\def\jmpPattern{p_{\mathsc{jmp}}}%
 
 \glsreset{DTB pattern}
 
 Another method is to extend the \gls{pattern set} with so-called \glspl!{DTB
   pattern}.
 %
-Given a \gls{pattern set}~$S$, first find the \gls{pattern}~\mbox{$\jmpPattern
-  \in S$} which corresponds to a unconditional jump \gls{instruction} that
-directly branches to a given label (it is reasonable to assume such a
-\gls{pattern} always exist for any given \gls{target machine}).
+Given a \gls{pattern set}~$S$, first find a \gls{pattern}~\mbox{$\jmpPattern \in
+  S$} corresponding to an unconditional jump \gls{instruction} that directly
+branches to a given label (it is reasonable to assume such a \gls{pattern}
+always exist for any given \gls{target machine}).
 %
 Let \mbox{$\mCost(p)$} and \mbox{$\mEmits(p)$} denote the cost of pattern~$p$
 respectively the sequence of \glspl{instruction} emitted by $p$ if selected.
 %
 Then, for each \gls{pattern}~\mbox{$p \in S$} corresponding to a conditional
 jump \gls{instruction} that falls through to a given block~$b$, we add a new
-\gls{pattern} add to $S$.
+\gls{pattern} to $S$.
 %
 This new \gls{pattern} is a copy of $p$ but has no \gls{fall-through}
 \gls{constraint}, it emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and
@@ -1702,23 +1713,24 @@ Since \gls{branch extension} yields a larger number of \glspl{block} compared to
   model}~\refModel{dual-target} to outperform \glsshort{constraint
   model}~\refModel{branch-ext}.
 %
-Moreover, many of the \glspl{block} incurred by \gls{branch extension} will be
-empty and thereby causing emission of redundant jump \glspl{instruction}.
+Moreover, many of the \glspl{block} introduced by \gls{branch extension} will
+most likely be \gls{empty.b} and thereby cause emission of redundant jump
+\glspl{instruction}.
 %
 Consequently, we also expect \glsshort{constraint model}~\refModel{dual-target}
 to yield better code quality than \glsshort{constraint
   model}~\refModel{branch-ext}.
 
-When filtering, we remove all \glspl{function} that have less than less than
-\num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} and greater than
+When filtering, we remove all \glspl{function} that have fewer than
+\num{20}~\gls{LLVM} \gls{IR} \glspl{instruction} and more than
 \num{100}~\glspl{instruction}.
 %
 Anything smaller will most likely not require any additional jump
-\glspl{instruction}, anything larger will lead to needlessly long experiment
-runtimes.
+\glspl{instruction}, and anything larger will lead to unreasonably long
+experiment runtimes.
 %
-This leaves a pool of \num{413}~\glspl{function}, on which we then perform
-sampling.
+This leaves a pool of \num{413}~\glspl{function}, from which we then draw
+\num{20}~samples.
 
 When clustering, we replace the number of memory \glspl{instruction} as feature
 with the number of \glspl{block}.
@@ -1756,7 +1768,7 @@ shows the normalized solving times (including \gls{presolving} time) for the two
           ]%
           {%
             Normalized solving times (incl.\ presolving time) for two
-            constraint models that supports jump insertion:
+            constraint models supporting jump insertion:
             %
             \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
               \item one based on branch extension (baseline)
@@ -1778,7 +1790,7 @@ shows the normalized solving times (including \gls{presolving} time) for the two
 \end{figure}
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
-of number of conditional branch \glspl{instruction}.
+of number of conditional jump \glspl{instruction}.
 %
 The solving times range from
 \printMinSolvingTime[round-precision=2]{%
@@ -1804,18 +1816,23 @@ The \gls{GMI} is \printGMI{%
 }.
 
 We see clearly that \glsshort{constraint model}~\refModel{dual-target} results
-in significantly shorter solving times than \glsshort{constraint
+in considerably shorter solving times than \glsshort{constraint
   model}~\refModel{branch-ext}.
 %
-We also observe that, as expected, when the number of conditional branch
+For one \gls{function} (\cCode*{gluEndPolygon}), the solving time is improved
+by~\printZCNorm{%
+  \DualTargetPatternsVsBranchExtPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+}.
+%
+We also observe that, as expected, when the number of conditional jump
 \glspl{instruction} increases -- up to \num{13}, in the case of
 \cCode*{nextkeypacket} -- the \gls{search space} for \glsshort{constraint
   model}~\refModel{branch-ext} grows faster than for \glsshort{constraint
   model}~\refModel{dual-target}.
 %
-Hence we conclude that, in terms of solving time,
-\glspl{DTB pattern} is a better design choice over \gls{branch extension} when
-implementing insertion of jump \glspl{instruction}.
+Hence, in terms of solving time \glspl{DTB pattern} is a better design choice
+over \gls{branch extension} when implementing insertion of jump
+\glspl{instruction}.
 
 
 \paragraph{Impact on Code Quality}
@@ -1846,7 +1863,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
             %
             \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
               \item one based on branch extension (baseline)
-              \item one based on DTB patterns (subject).
+              \item one based on DTB patterns (subject)
             \end{inlinelist}.
             %
             GMI:~\printGMI{%
@@ -1862,7 +1879,7 @@ described above, with \glsshort{constraint model}~\refModel{branch-ext} as
 \end{figure}
 %
 All \glspl{function} are solved to optimality and arranged in increasing order
-of number of conditional branch \glspl{instruction}.
+of number of conditional jump \glspl{instruction}.
 %
 The costs range from
 \printMinCycles{
@@ -1884,36 +1901,39 @@ The \gls{GMI} is \printGMI{%
 
 We see clearly that \glsshort{constraint model}~\refModel{dual-target} produces
 optimal \glspl{solution} with slightly lower cost compared those produced by
-\glsshort{constraint model}~\refModel{branch-ext}.
+\glsshort{constraint model}~\refModel{branch-ext} (up to
+\printZCNorm{%
+  \DualTargetPatternsVsBranchExtCyclesSpeedupCyclesZeroCenteredSpeedupMax%
+} improvement).
 %
-Hence we conclude that, in terms of code quality,
-\glspl{DTB pattern} is a better design choice over \gls{branch extension} when
-implementing insertion of jump \glspl{instruction}.
+Hence, in terms of code quality \glspl{DTB pattern} is a better design choice
+over \gls{branch extension} when implementing insertion of jump
+\glspl{instruction}.
 
 
 \paragraph{Conclusions}
 
-Based on the results from these experiments, we conclude that \glspl{DTB
-  pattern} are superior, both in terms of solving time and code quality, to
-\gls{branch extension}.
+From the results for these experiments, we conclude that \glspl{DTB pattern} are
+superior to \gls{branch extension}, both in terms of solving time and code
+quality.
 
 
 \section{Objective Function}
 \labelSection{cm-objective-function}
 
 During \gls{instruction selection}, most \glspl{compiler} optimize for
-performance by using execution latency of \glspl{instruction} as \gls{match}
-costs.
+performance by using execution latencies of the \glspl{instruction} as
+\gls{match} costs.
 %
 In addition, they factor in the execution frequency of the \gls{block} in which
 the selected \glspl{match} are placed.
 %
 The intuition is that the \glspl{instruction} selected for ``hot'' \glspl{block}
--- that is, those which are part of a loop with many iterations -- will have
+-- for example, those belonging to a loop with many iterations -- will have
 greater impact than those selected for scarcely executed \glspl{block}.
 %
 In this chapter we introduce a straightforward but naive implementation of the
-\gls{objective function}, which will be refined in the next chapter.
+\gls{objective function}, which is refined in the next chapter.
 
 
 \paragraph{Variables}
@@ -1941,7 +1961,7 @@ where \mbox{$\mCost(m) \in \mNatNumSet$} denotes the cost of \gls{match}~$m$,
 block~$b$\!,\hspace{-1pt}%
 %
 \footnote{%
-  In order to contain the size of the \gls{domain} of the \gls{cost variable},
+  In order to curb the size of the \gls{domain} of the \gls{cost variable},
   the execution frequencies must often be scaled down.
   %
   In our experiments, limiting the execution frequencies to \num{1000} proved
@@ -1963,10 +1983,6 @@ and
   \right.
   \labelEquation{block-of-function}
 \end{equation}
-%
-However, as previously stated \refEquation{naive-objective-function} is a naive
-implementation and we therefore use a refined version, introduced in
-\refChapter{solving-techniques}, which offers much stronger \gls{propagation}.
 
 
 \section{Limitations}
@@ -1975,13 +1991,13 @@ implementation and we therefore use a refined version, introduced in
 The \gls{constraint model} described in this chapter has several limitations
 that affect code quality.
 %
-Consequently, a \gls{solution} that is considered optimal with respect to this
-\glsshort{constraint model} may still be inferior to the code produced by an
-\gls{instruction selector} without these limitations.
-%
 The first limitation concerns \gls{recomputation} of values, the second concerns
 \gls{if-conversion}, and the third concerns implicit sign and zero extensions
 and truncations.
+%
+Consequently, a \gls{solution} that is considered optimal with respect to this
+\glsshort{constraint model} may still be inferior to the code produced by an
+\gls{instruction selector} without these limitations.
 
 
 \paragraph{Recomputation}
@@ -2045,9 +2061,8 @@ In the context of \gls{instruction selection}, this means letting the
 \gls{match} (\refFigure{recomputation-example-graph}).
 %
 However, \refEquationList{operation-coverage, data-definitions} require that
-every \gls{operation} and \gls{datum} must be covered respectively
-\gls{define.d}[d] by exactly one selected \gls{match}, thus forbidding such
-\glspl{solution}.
+every \gls{operation} and \gls{datum} is covered respectively \gls{define.d}[d]
+by exactly one selected \gls{match}, thus preventing such \glspl{solution}.
 %
 Although these \glspl{constraint} can be relaxed to allow \glspl{operation} and
 \glspl{datum} to be covered respectively \gls{define.d}[d] by at least one
@@ -2057,7 +2072,8 @@ dissertation rely on exact \gls{cover}[age].
 
 \paragraph{If-Conversions}
 
-In most cases, performing a branch incurs a performance penalty.
+In most \glspl{target machine}, performing a branch incurs a performance
+penalty.
 %
 Some architectures therefore allow the \glspl{instruction} to be predicated with
 a Boolean flag for optional execution, which allows \glspl{function} with
@@ -2136,7 +2152,7 @@ entry:
   \labelFigure{if-conversions-example}
 \end{figure}
 %
-Assume a \gls{function} containing two sums, \irVar*{a} and~\irVar*{b}, which
+Assume that a \gls{function} contains two sums, \irVar*{a} and~\irVar*{b}, which
 are conditionally computed given a certain predicate~\irVar*{p}
 (\refFigure{if-conversions-example-ir}).
 %
@@ -2152,25 +2168,25 @@ However, since $m_1$ and $m_2$ both cover the same \glspl{control node}, only
 one of the \glspl{match} can be selected (due to
 \refEquationList{operation-coverage, data-definitions}).
 %
-In addition, because both \glspl{match} \gls{consume.b} the \irBlock*{body}
-\gls{block}, no other \glspl{operation} may be placed in \irBlock*{body} if
-either is selected (due to \refEquation{consumption}).
+But because both \glspl{match} \gls{consume.b} the \irBlock*{body} \gls{block},
+no other \glspl{operation} may be placed in \irBlock*{body} if either is
+selected (due to \refEquation{consumption}).
 %
-This means either both or none of the \glspl{match} must be selected.
+This means that either both or none of the \glspl{match} must be selected.
 %
 Together with the \gls{constraint} of \gls{exact.c} \gls{cover}[age], in all
 \glspl{solution} neither of $m_1$ or $m_2$ is selected.
 %
 This problem can be fixed by relaxing the \gls{constraint} of \gls{exact.c}
-\gls{cover}[age], but as in the case of \gls{recomputation} this inhibits many
-of the necessary solving techniques.
+\gls{cover}[age], but -- as in the case of \gls{recomputation} -- this inhibits
+many of the solving techniques introduced in this dissertation.
 
 
 \paragraph{Implicit Sign or Zero Extensions}
 
-In cases where the \gls{function} contains sign or zero extensions, depending on
-the hardware the \gls{constraint model} may produce code with redundant
-\glspl{instruction}.
+Depending on the hardware, the \gls{constraint model} may produce code with
+redundant \glspl{instruction} in cases where the \gls{function} contains sign or
+zero extensions.
 %
 See for example \refFigure{implicit-extensions-example}, which depicts a
 \glsshort{UF graph}~\gls{subgraph} coverable by \glspl{match}~$m_1$, $m_2$,
@@ -2188,47 +2204,49 @@ Assume that \irCode*{foo} represents a \gls{function} call and that \irVar*{a},
 \irVar*{b}, and \irVar*{c} represent \num{8}-bit values stored in \num{32}-bit
 \glspl{register}.
 %
-As is common, $m_3$ will be derived from an \gls{instruction} that checks
-whether the full contents of two \glspl{register} are equal.
+As is common, $m_3$ is derived from an \gls{instruction} that checks whether the
+full contents of two \glspl{register} are equal.
 %
 Consequently, as a precaution the upper bytes of the \glspl{register} need to be
 zero-extended (that is, those bits are all set to~\num{0}) before doing the
 comparison.
 %
-While this is certainly necessary for the \gls{register} of \irVar*{a} as
-nothing can be assumed about the value returned by \irCode*{foo}, it may be
-redundant for the register of \irVar*{b}.
+Since nothing can be assumed about the value returned by \irCode*{foo}, this is
+certainly necessary for the \gls{register} of \irVar*{a}.
+%
+However, it may be redundant for the register of \irVar*{b}.
 %
 For example, $m_2$ may be derived from a single-byte load \gls{instruction} that
 clears the entire \gls{register} before loading the value.
 %
 But since this information is lost in the \gls{constraint model}, $m_3$ must
-assume both \glspl{register} need to be zero-extended.
+assume that both \glspl{register} need to be zero-extended.
 
 One solution to this problem is to extend the \gls{pattern set} with additional
 \glspl{pattern} that capture these situations.
 %
 For example, merging the \glspl{pattern} of $m_2$ and $m_3$ results in a
 \gls{match} which, if selected, emits the \gls{instruction} of $m_2$ followed by
-the \glspl{instruction} of $m_3$ without the redundant clearing of \irVar*{b}.
+the \glspl{instruction} of $m_3$ without the redundant zero extension of
+\irVar*{b}.
 %
 Depending on the \gls{instruction set}, however, this may result in an
 exponential number of \glspl{pattern}.
 %
 If the \gls{instruction set} contains $n$~\glspl{instruction} with implicit
-extensions and $m$~\gls{instruction} each taking $k$~values that must first be
-sign- or zero-extended, then this will result in $\mBigO(n^k m)$ additional
-\glspl{pattern}.
+extensions and $m$~\glspl{instruction} that each takes $k$~values which must
+first be sign- or zero-extended, then this will result in $\mBigO(n^k m)$
+additional \glspl{pattern}.
 
 Another solution is to apply the same mechanism used in \gls{copy extension}.
 %
-In the same manner as with \glspl{copy node}, first the \gls{UF graph} is
+In the same manner as with \glspl{copy node}, the \gls{UF graph} is first
 extended with \glspl!{extension node}.
 %
 Hence, for each \gls{data-flow edge}~$\mEdge{v}{o}$, where $v$ is a \gls{value
   node} and $o$ is an \gls{operation}, we remove this \gls{edge} and insert a
-new \gls{extension node}~$e$, \gls{value node}~$v'$, and \glspl{data-flow edge}
-such that \mbox{$\mEdge{v}{\mEdge{e}{\mEdge{v'}{o}}}$}.
+new \gls{extension node}~$e$, a new\gls{value node}~$v'$, and new
+\glspl{data-flow edge} such that \mbox{$\mEdge{v}{\mEdge{e}{\mEdge{v'}{o}}}$}.
 %
 Then the \gls{constraint model} is extended with two sets of \glspl{variable},
 \mbox{$\mVar{sext}[d] \in \mSet{0, 1}$} and \mbox{$\mVar{zext}[d] \in \mSet{0,
@@ -2254,12 +2272,11 @@ In this chapter, we have introduced a \gls{constraint model} that integrates the
 problems of \gls{global.is} \gls{instruction selection}, \gls{global code
   motion}, \gls{data copying}, \gls{value reuse}, and \gls{block ordering}.
 %
-A complete implementation of this \glsshort{constraint model}, written in
-\gls{MiniZinc} (a high-level \gls{constraint} modeling language), is available
-in \refAppendix{minizinc-implementation}.
-%
 When multiple design choice exist for a given task, we have performed a thorough
 evaluation to decide which design choice is better.
 %
 We have also discussed the limitations of this \glsshort{constraint model} and
 how these affect the assembly code that can be produced.
+%
+A full implementation of the \glsshort{constraint model}, written in
+\gls{MiniZinc}, is available in \refAppendix{minizinc-implementation}.
