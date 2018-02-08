@@ -2905,7 +2905,15 @@ For \gls{dominate.m}[d] \glspl{match} and
 \refEquationList{illegal-matches-undefined-data, illegal-matches-kills}, the
 results are inconclusive.
 
-\todo{discuss why some techniques lead to degradation}
+\RefEquationList{illegal-matches-def-locs, illegal-matches-use-locs} degrade
+solving time in this experiment because they are expensive to compute and only
+identify \gls{redundant.m} \glspl{match} that appear for \glspl{target machine}
+with irregular \glspl{instruction set} (meaning the \glspl{instruction} access
+different sets of \glspl{register}).
+%
+Since \gls{Hexagon} has a regular \gls{instruction set}, these \gls{presolving}
+techniques identify too few \gls{redundant.m} \glspl{match} to offset the cost
+in finding them.
 
 
 \paragraph{Impact of Groups of Techniques}
@@ -3081,9 +3089,12 @@ most~\printZCNorm{%
   \SolvTechDisableAllPresolvingPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
 }).
 %
-Hence it is most beneficial to exclude
+Hence, in this experiment it is most beneficial to exclude
 \refEquationList{illegal-matches-def-locs, illegal-matches-use-locs} from the
 \glsshort{constraint model}.
+%
+However, for \glspl{target machine} with irregular \glspl{instruction set} it
+may be beneficial to keep them in the \glsshort{constraint model}.
 
 
 \paragraph{Conclusions}
@@ -3273,9 +3284,13 @@ We also note that the maximum improvement for \glsshort{constraint
 Hence, only picking solving techniques that have a statistically significant,
 positive effect on solving time when evaluated individually is too conservative.
 %
-Also, rejecting \gls{presolving} techniques that have an overall negative effect
-on solving time when evaluated individually yields the \gls{constraint model}
-with best performance.
+Also, rejecting the \gls{presolving} techniques that have an overall negative
+effect on solving time when evaluated individually yields, in this experiment,
+the \gls{constraint model} with best performance.
+%
+Keep in mind, however, that for \glspl{target machine} with irregular
+\glspl{instruction set} it may be beneficial to keep them in the
+\glsshort{constraint model}.
 
 
 \paragraph{Conclusions}
@@ -3290,7 +3305,7 @@ From the results for these experiments, we conclude:
     too conservative
   \item that rejecting \refEquationList{illegal-matches-def-locs,
     illegal-matches-use-locs} gives the \gls{constraint model} with best
-    performance
+    performance for \glspl{target machine} with regular \glspl{instruction set}
 \end{enumerate*}.
 
 
@@ -3301,13 +3316,20 @@ In this chapter, we have introduced a wide range of techniques for improving
 solving of the \gls{constraint model} introduced in the previous chapter.
 %
 Through experimental evaluation, the techniques were demonstrated to be crucial
-for scalability; in one case, the solving time was improved
-by~\printMaxSpeedup{%
+for scalability; for one \gls{function}, the solving time was improved
+by~\printMaxZCNorm{%
   \SolvTechEnableOnlyAllGoodPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
-  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  %  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax,
+  % This measurement is not included here as we decide to keep all presolving
+  % techniques
   \SolvTechDisableAllPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax
 }.
 %
-Some techniques (\refEquationList{illegal-matches-def-locs,
-  illegal-matches-use-locs}) were also rejected after having been shown to have
-a negative impact on solving time.
+Rejecting \gls{presolving} techniques \refEquationList{illegal-matches-def-locs,
+  illegal-matches-use-locs} increased the improvement further to \printZCNorm{%
+  \SolvTechDisableAllBadPrePlusSolvingTimeSpeedupPrePlusSolvingTimeZeroCenteredSpeedupMax%
+} since the \gls{target machine} is fairly regular (meaning its
+\glspl{instruction} can access the same set of \glspl{register}).
+%
+If the \gls{target machine} has an irregular \gls{instruction set}, however,
+then it may be worthwhile to keep these \gls{presolving} techniques.
