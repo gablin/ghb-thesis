@@ -330,6 +330,9 @@ In 2003, \textcite{EcksteinEtAl:2003} recognized that limiting \gls{instruction
 For more details, see \refAppendix{dag-covering} on
 \refPageOfSection{dc-limitations}.
 
+
+\paragraph{PBQP}
+
 To overcome this problem, \citeauthor{EcksteinEtAl:2003} developed a design that
 takes \glspl{SSA graph} as input -- making this technique the first to do so --
 and transforms the \gls{pattern selection} problem into a \gls!{PBQP}.
@@ -360,6 +363,9 @@ ensures that exactly one choice is selected.
 The cost of selecting a particular choice for decision~$i$ is represented
 through a cost vector~$\mVector{c}_i$, and the cost of combining two
 decisions~$i$ and~$j$ are represented through a cost matrix~$\mMatrix{C}_{ij}$.
+
+
+\paragraph{In Context of Instruction Selection}
 
 In this context, $\mVector{\mVar{x}}_i$ decides whether to select a particular
 \gls{match} to cover \gls{node}~$i$, $\mVector{c}_i$ contains the cost for each
@@ -721,7 +727,7 @@ Here we will look at a few techniques that rely on the same modeling scheme, but
 address the more traditional problem of \gls{instruction selection}.
 
 
-\subsubsection{\glsentrytext{Chess}}
+\paragraph{\glsentrytext{Chess}}
 
 \textcite{LanneerEtAl:1990} developed in 1990 a design that was later adopted by
 \citeauthor{VanPraetEtAl:1994}~\cite{VanPraetEtAl:1994, VanPraetEtAl:2001} in
@@ -790,7 +796,7 @@ It may be possible to also extend the technique to support \gls{inter-block.ic}
 most likely out of reach due to its heuristic nature.
 
 
-\subsubsection{Generating Assembly Code Using Simulated Annealing}
+\paragraph{Generating Assembly Code Using Simulated Annealing}
 
 Another, albeit unusual, \gls{code generation} technique was proposed by
 \textcite{Visser:1999} in~1999.

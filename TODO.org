@@ -22,7 +22,7 @@
 ** DONE Fix overflowing of bib entries
 ** TODO Fix inconsistencies between patterns and matches in tree-covering appendix
 ** DONE Fix missing notion of side effects
-** TODO Replace \subsubsection with \paragraph, where appropriate
+** DONE Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
 ** DONE Check for bad use of past tense
 ** DONE Check for missing references

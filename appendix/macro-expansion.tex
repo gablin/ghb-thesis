@@ -209,7 +209,7 @@ task of the \gls{instruction selector}.
 However, the basic \gls{principle} of \gls{macro expansion} remains the same.
 
 
-\subsubsection{Using IR Instead of ASTs}
+\subsection{Using IR Instead of ASTs}
 \labelSection{me-expression-tree}
 
 \glsreset{IR}
@@ -354,7 +354,7 @@ Due to the exponential number of possible situations, the complexity that the
 macro designer has to manage can be immense.
 
 
-\subsubsection{Automatically Inferring the Necessary Data Transfers}
+\paragraph{Automatically Inferring Necessary Data Transfers}
 
 The first attempt to address this problem was made by \textcite{Miller:1971}.
 %
@@ -506,7 +506,7 @@ Similar techniques have also been developed by \textcite{Tirrell:1973} and
 from a virtual machine called \gls!{U-Code}~\cite{PerkinsSites:1979}.
 
 
-\subsubsection{Further Improvements}
+\paragraph{Further Improvements}
 
 \glsunset{PCC}
 
@@ -587,7 +587,7 @@ allows for denser implementations that require less memory and potentially
 reduce the compilation time.
 
 
-\subsubsection{Instruction Selection Using Bit Strings}
+\paragraph{Instruction Selection Using Bit Strings}
 
 In 1969 \textcite{LowryMedlock:1969} introduced one of the first table-driven
 methods for \gls{code generation}.
@@ -641,7 +641,7 @@ making too many assumptions about the \gls{target machine}, thus hindering
 \gls{compiler} retargetability.
 
 
-\subsubsection{Expanding Macros Top-Down}
+\paragraph{Expanding Macros Top-Down}
 
 Later \textcite{KrummeAckley:1982} introduced a table-driven design which,
 unlike the earlier techniques, exhaustively enumerates all valid combinations of
@@ -740,7 +740,7 @@ that started to appear in the late~1970s.
 One of these we will discuss later in this appendix.
 
 
-\subsubsection{%
+\paragraph{%
   Rekindled Application in the First Dynamic Code Generation Systems%
 }
 
@@ -831,7 +831,7 @@ Doing this reduces code size and improves performance as using complex
 }
 
 
-\subsubsection{Modeling Instructions with Register Transfer Lists}
+\paragraph{Modeling Instructions with Register Transfer Lists}
 \labelSection{me-register-transfer-lists}
 
 Since this kind of optimization is tailored for a particular \gls{target
@@ -920,7 +920,7 @@ In addition, they extended the size of the \gls{instruction} window from pairs
 to triples.
 
 
-\subsubsection{Further Developments}
+\paragraph{Further Developments}
 
 Much research has been dedicated to improving automated approaches to
 \gls{peephole optimization}.
@@ -1003,7 +1003,7 @@ variants of it have been used in several \glspl{compiler}, such as the
 \gls!{GCC}~\cite{Stallman:1988, Khedker:2012}.
 
 
-\subsubsection{The Davidson-Fraser Approach}
+\paragraph{The Davidson-Fraser Approach}
 
 In the \gls{Davidson-Fraser approach} the \gls{instruction selector} consists of
 two parts:
@@ -1072,7 +1072,7 @@ added complexity, thus making it difficult to handle complicated
 \glspl{instruction} that require large \gls{instruction} windows.
 
 
-\subsubsection{Further Improvements}
+\paragraph{Further Improvements}
 
 \textcite{FraserWendt:1988} later expanded the work by
 \citeauthor{DavidsonFraser:1984}.
@@ -1118,7 +1118,7 @@ evolved into a compact standalone language used for implementing \glspl{code
   generator} (see \textcite{Fraser:1989}).
 
 
-\subsubsection{Enforcing the Machine Invariant with a Recognizer}
+\paragraph{Enforcing the Machine Invariant with a Recognizer}
 
 The \gls{Davidson-Fraser approach} was also extended by
 \textcite{DiasRamsey:2006}.
@@ -1196,7 +1196,7 @@ Instead, using techniques to be discussed in \refAppendix{tree-covering},
 \glspl{RTL} in the \gls{lambdaRTL} description with a single check.
 
 
-\subsubsection{``One Program to Expand Them All''}
+\paragraph{``One Program to Expand Them All''}
 
 In 2010, \citeauthor{DiasRamsey:2010}~\cite{DiasRamsey:2010, RamseyDias:2011}
 introduced a scheme where the \gls{macro expander} only needs to be implemented

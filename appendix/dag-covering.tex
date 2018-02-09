@@ -701,7 +701,7 @@ heterogeneous memory-\gls{register} architectures (this particular problem was
 studied by \textcite{AraujoEtAl:1996}).
 
 
-\subsubsection{Balancing Splitting and Duplication}
+\paragraph{Balancing Splitting and Duplication}
 
 In 1994, \citeauthor{FauthEtAl:1994}~\cite{FauthEtAl:1994, Muller:1994}
 developed a technique that tries to mitigate the deficiencies of \gls{undagging}
@@ -729,7 +729,7 @@ technique is compared to a design where the \glspl{block DAG} have been
 transformed into \glspl{expression tree} using just one method.
 
 
-\subsubsection{Register-Sensitive Instruction Selection}
+\paragraph{Register-Sensitive Instruction Selection}
 
 In 2001, \textcite{SarkarEtAl:2001} developed an \gls{instruction selection}
 technique that attempts to reduce the \gls!{register pressure} -- that is, the
@@ -820,7 +820,7 @@ guarantees are made that the \gls{pattern selection} is \gls{optimal.ps}, as
 that is an NP-complete problem.
 
 
-\subsubsection{Potentially Optimal Pattern Selection}
+\paragraph{Potentially Optimal Pattern Selection}
 
 In a paper from~1999, \textcite{Ertl:1999} introduces a design which guarantees
 \gls{optimal.ps} \gls{pattern selection} on \glspl{block DAG} for certain
@@ -897,7 +897,7 @@ To do this efficiently, \citeauthor{Ertl:1999} implemented \gls{DBurg} using the
 ideas behind \gls{Burg} (hence the name).
 
 
-\subsubsection{Combining DP and Edge Splitting}
+\paragraph{Combining DP and Edge Splitting}
 
 \def\overlapCost{overlap-cost\xspace}
 \def\cseCost{cse-cost\xspace}
@@ -949,7 +949,7 @@ limited to \glspl{pattern tree} and thus cannot support more complex
 \glspl{instruction} such as \gls{multi-output.ic} \glspl{instruction}.
 
 
-\subsubsection{Supporting Multi-output Instructions}
+\paragraph{Supporting Multi-output Instructions}
 
 In most \gls{instruction selection} techniques based on \gls{DAG covering}, it
 is assumed that the outputs of a \gls{pattern DAG} always occur at the
@@ -1123,7 +1123,7 @@ extensions to \glspl{machine grammar} to support \gls{multi-output.ic}
 \glspl{instruction}.
 
 
-\subsubsection{Machine Grammars with Multiple Left-Hand Side Nonterminals}
+\paragraph{Machine Grammars with Multiple Left-Hand Side Nonterminals}
 \labelSection{dc-rules-multiple-productions}
 
 \textcite{ScharwaechterEtAl:2007} appears to have pioneered the modeling of
@@ -1282,7 +1282,7 @@ However, the subscripts are restricted to the input \glspl{node} of the
   DAG}.
 
 
-\subsubsection{Targeting Machines with Echo Instructions}
+\paragraph{Targeting Machines with Echo Instructions}
 
 In 2004, \textcite{BriskEtAl:2004} introduced a technique to perform
 \gls{instruction selection} for \glspl{target machine} with special \glspl!{echo
@@ -1543,6 +1543,9 @@ In general, solving an \gls{IP}~model is NP-complete, but extensive research in
 this field has made many problem instances tractable.
 %
 For a comprehensive overview of IP, see in~\cite{Wolsey:1998}.
+
+
+\paragraph{Modeling Pattern Selection Using Linear Inequality}
 
 In their seminal paper, \citeauthor{WilsonEtAl:1994} describe that the
 \gls{pattern selection} problem can be expressed as the following linear
@@ -1823,6 +1826,9 @@ capabilities compared to \gls{IP}.
 %
 For a brief introduction to \gls{CP}, see \refChapter{constraint-programming}.
 
+
+\paragraph{First Application}
+
 In 1990, \textcite{BashfordLeupers:1999} pioneered the use of \gls{CP} in
 \gls{code generation} by developing a \gls{constraint model} for
 \gls{integrated.cg} \gls{code generation} that targets \glspl{DSP} with highly
@@ -1980,6 +1986,9 @@ by \citeauthor{FlochEtAl:2010} applies the more direct form of \gls{pattern
 and then selecting \glspl{instruction} that combine as many \glspl{RT} as
 possible.
 
+
+\paragraph{Modeling Pattern Selection Using Global Cardinality Constraint}
+
 As described in their 2010~paper, \citeauthor{FlochEtAl:2010} use the
 \gls{global cardinality constraint} to enforce the requirement that every
 \gls{node} in the \gls{block DAG} must be covered by exactly one
@@ -2039,8 +2048,11 @@ With these \glspl{variable}, \gls{pattern selection} can be modeled as
 which offers stronger \gls{propagation} than the corresponding linear inequality
 constraint and thus reduces solving time~\cite{FlochEtAl:2010}.
 
-This \gls{constraint model} was also further extended by
-\citeauthor{ArslanKuchcinski:2013}~\cite{ArslanKuchcinski:2013,
+
+\paragraph{Accommodating VLIW Architectures}
+
+The \gls{constraint model} by \citeauthor{FlochEtAl:2010} was also further
+extended by \citeauthor{ArslanKuchcinski:2013}~\cite{ArslanKuchcinski:2013,
   ArslanKuchcinski:2014, Arslan:2016} to accommodate \gls{VLIW} architectures
 and \gls{disjoint-output.ic} \glspl{instruction}.
 %
@@ -2064,7 +2076,10 @@ Consequently, unlike previous techniques that recombine \gls{partial.p}
 Their design is also capable of accepting multiple, disconnected \glspl{block
   DAG} as a single input.
 
-However, a limitation inherent to the \glspl{constraint model} applied by
+
+\paragraph{Limitations}
+
+An inherent limitation to the \glspl{constraint model} applied by
 \citeauthor{MartinEtAl:2009}, \citeauthor{FlochEtAl:2010}, and
 \citeauthor{ArslanKuchcinski:2013} is that they do not model the necessary data
 transfers between different \glspl{register class}.
