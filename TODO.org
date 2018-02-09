@@ -36,4 +36,4 @@
 ** DONE Check for horizontal overflow
 ** DONE Run another spell check
 ** DONE Run grammar check (ignored)
-** TODO Remove 'electronic' document class option
+** TODO Remove 'electronic' document class option for print version
