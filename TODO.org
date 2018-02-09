@@ -33,6 +33,7 @@
 ** DONE Fix bad page breaks (skipped)
 ** DONE Fix paragraphs ending with only one word on last line (skipped)
 ** DONE Check for any lingering TODOs in the document
+** TODO Check for horizontal overflow
 ** TODO Run another spell check
 ** TODO Run grammar check
 ** TODO Remove 'electronic' document class option
