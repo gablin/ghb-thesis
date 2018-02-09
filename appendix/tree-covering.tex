@@ -4923,17 +4923,15 @@ algorithm to build the \gls{trellis diagram} in a lazy fashion.
 %
 However, both schemes nonetheless require a \mbox{1-to-1} mapping between the
 \glspl{node} in a \gls{trellis diagram} and the \glspl{instruction} in order to
-be effective.\!%
+be effective.
+
+This, in combination of how \glspl{instruction} are selected, makes one wonder
+whether these techniques actually conform to the \glspl{principle} of
+\glsshort{tree covering} and \gls{DAG covering}.
 %
-\footnote{%
-  This, in combination of how \glspl{instruction} are selected, makes one wonder
-  whether these techniques actually conform to the \glspl{principle} of
-  \glsshort{tree covering} and \gls{DAG covering}.
-  %
-  The author certainly struggled with deciding how to categorize them, and
-  finally opted against creating a separate \gls{principle}, as that would
-  indeed be a very short appendix.%
-}
+The author certainly struggled with deciding how to categorize them, and finally
+opted against creating a separate \gls{principle}, as that would indeed be a
+very short appendix.
 
 
 \section{Limitations of Tree Covering}
