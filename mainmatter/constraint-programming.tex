@@ -226,11 +226,12 @@ We refer to this \gls{constraint} as $\mCircuit$, which is defined as follows.
 \begin{definition}[$\mCircuit$]
   Let \mbox{$\mVar{x}_1, \ldots, \mVar{x}_k$} be a list of \glspl{variable}, and
   let \mbox{$P = d_1, \ldots, d_k$} be a permutation of \gls{domain} values such
-  that \mbox{$d_i \in \mDomain(\mVar{x}_i)$} for all \mbox{$i = 1, \ldots, k$}.
+  that \mbox{$d_i \in \mDomain(\mVar{x}_i)$} for all \mbox{$i = 1, \ldots,
+    k$}\hspace{-.8pt}.
   %
   Given $P$, form a \gls{graph}~\mbox{$G = \mPair{N}{E}$} such that there is
   exactly one \gls{node} \mbox{$n_i \in N$} and exactly one \gls{edge}
-  \mbox{$\mEdge{n_i}{n_{d_i}}$} for all \mbox{$i = 1, \ldots, k$}.
+  \mbox{$\mEdge{n_i}{n_{d_i}}$} for all \mbox{$i = 1, \ldots, k$}\hspace{-.8pt}.
   %
   $P$ is considered \emph{cyclic} if and only if $G$ contains a
   \gls{Hamiltonian.c} \gls{cycle}.
@@ -325,7 +326,7 @@ We refer to this \gls{constraint} as $\mTable$, which is defined as follows.
       T
     )
     \equiv
-    \mTuple{\mVar{x}_1, \ldots, \mVar{x}_k} \in T.
+    \mTuple{\mVar{x}_1, \ldots, \mVar{x}_k} \in T\!.
   \end{displaymath}
   \labelDefinition{table}
 \end{definition}
@@ -585,8 +586,8 @@ An optimization problem is modeled by maximizing or minimizing a
 %
 For example, if \mbox{$\mVar{x}_m \in \mSet{0, 1}$} is \gls{variable}
 representing whether a \gls{match}~$m$ is selected and $c_m$ denotes the cost of
-selecting $m$, then a \gls{CP} idiom for modeling \gls{optimal.ps} \gls{pattern
-  selection} is
+selecting $m$\hspace{-.8pt}, then a \gls{CP} idiom for modeling \gls{optimal.ps}
+\gls{pattern selection} is
 %
 \begin{equation}
   \begin{array}{rl}
@@ -983,7 +984,7 @@ An \gls!{implied.c}[ \gls{constraint}] is a \gls{constraint} that strengthens
 For example, assume a naive \glsshort{constraint model} for solving the
 \gls!{magic sequence problem}, which is defined as finding a sequence
 \mbox{$x_0, \ldots, x_{n-1}$} of integers such that for all \mbox{$0 \leq i <
-  n$}, the number~$i$ appears exactly $x_i$ times in the sequence.
+  n$}\hspace{-.8pt}, the number~$i$ appears exactly $x_i$ times in the sequence.
 %
 Using the \gls{global cardinality constraint} and $n$~\glspl{variable}, this can
 be modeled as
@@ -1309,13 +1310,13 @@ An example is given in \refFigure{no-good-learning-example}.
             through search.
             %
             This triggers unit propagation of constraint $c_2$, which assigns
-            \mbox{$\mNot\mBoolRepVar{\mVar{z} \leq 3}$ = T}.
+            \mbox{$\mNot\mBoolRepVar{\mVar{z} \leq 3} = T$}\!.
             %
             Since no further propagation can be done, search is resumed by
-            assigning \mbox{$\mBoolRepVar{\mVar{z} = 4} = T$}.
+            assigning \mbox{$\mBoolRepVar{\mVar{z} = 4} = T$}\!.
             %
             This triggers unit propagation of constraint $c_3$, which assigns
-            \mbox{$\mNot\mBoolRepVar{\mVar{y} = 2}$ = T}.
+            \mbox{$\mNot\mBoolRepVar{\mVar{y} = 2} = T$}\!.
             %
             This in turn causes constraint $c_4$ to fail.
             %

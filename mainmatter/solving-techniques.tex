@@ -113,8 +113,9 @@ where \mbox{$\mPhiOperandCompSet \subseteq \mOperandSet$} denotes the set of
 We exclude such \glspl{operand} for the same reasons \glspl{phi-match} are
 excluded in \refEquation{naive-dom}.
 
-Next, if a \gls{match}~$m$ is selected and placed in \gls{block}~$b$, then all
-\gls{use.d}[s] of \glspl{datum} made by $m$ must also occur in~$b$.
+Next, if a \gls{match}~$m$ is selected and placed in
+\gls{block}~$b$\hspace{-1pt}, then all \gls{use.d}[s] of \glspl{datum} made by
+$m$ must also occur in~$b$\hspace{-1pt}.
 %
 This is modeled as
 %
@@ -294,8 +295,8 @@ the \glspl{operation} -- which must always be covered.
 %
 The idea is as follows.
 %
-First, for each \gls{match}~$m$, evenly divide the cost of $m$ over each
-\gls{operation}~$o$ covered by $m$.
+First, for each \gls{match}~$m$\hspace{-.8pt}, evenly divide the cost of $m$
+over each \gls{operation}~$o$ covered by $m$\hspace{-.8pt}.
 %
 If a strict partial order $<$ exists over the set of \glspl{operation}, and
 $\mCovers(m)$ returns an ordered list that can be indexed starting from~\num{1},
@@ -318,8 +319,8 @@ where \mbox{$q = \lfloor \mCost(m) / \mCard{\!\mCovers(m)} \rfloor$} and
 Consequently, for any \gls{match}~$m$, \mbox{$\mCost(m) = \sum_{o \,\in\,
     \mCovers(m)} \mCost(m \hspace{-.8pt}, o)$}.
 %
-Then, for each \gls{block}~$b$ we multiply \mbox{$\mOpCost(m, o)$} with the
-execution frequency of~$b$.
+Then, for each \gls{block}~$b$ we multiply \mbox{$\mOpCost(m\hspace{-.8pt}, o)$}
+with the execution frequency of~$b$\hspace{-1pt}.
 %
 This information can be represented as a cost matrix
 %
@@ -335,7 +336,7 @@ This information can be represented as a cost matrix
 \end{equation}
 %
 where each row denotes the cost of an \gls{operation}~$o$ if covered by a
-\gls{match}~$m$ and placed in a \gls{block}~$b$.
+\gls{match}~$m$ and placed in a \gls{block}~$b$\hspace{-1pt}.
 %
 From the cost matrix given in \refFigure{cost-example-matrix}, we can deduce
 that the cost of covering \glspl{operation}~$o_1$ and~$o_2$ is between~\num{3}
@@ -385,8 +386,8 @@ where \mbox{$q = \lfloor d / \mCard{\!\mCovers(m)} \rfloor$}, \mbox{$r =
   \mFreq(b)$}.
 %
 Consequently, for any \gls{match}~$m$ and \gls{block}~$b$\hspace{-1pt},
-\mbox{$\mCost(m, o) \times \mFreq(b) = \sum_{o \,\in\, \mCovers(m)}
-  \mCost(m \hspace{-.8pt}, o \hspace{-1pt}, b)$}.
+\mbox{$\mCost(m\hspace{-.8pt}, o) \times \mFreq(b) = \sum_{o \,\in\,
+    \mCovers(m)} \mCost(m \hspace{-.8pt}, o \hspace{-1pt}, b)$}.
 
 At first glace this design decision would appear to make no difference, but they
 unexpectedly exhibit significantly different solving time characteristics, as
@@ -396,14 +397,14 @@ will be seen later in the experimental evaluation.
 \paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{ocost}[o] \in \mNatNumSet$} models the
-cost incurred by covering \gls{operation}~$o$\hspace{-1pt}.
+cost incurred by covering \gls{operation}~$o$\hspace{-.8pt}.
 %
 It is assumed the \gls{domain} is the same as for the \gls{cost variable}.
 
 
 \paragraph{Constraints}
 
-For each \gls{operation}~$o$\hspace{-1pt}, the combination
+For each \gls{operation}~$o$\hspace{-.8pt}, the combination
 \mbox{$o\hspace{-1pt}, \mVar{omatch}[o], \mVar{oplace}[o], \mVar{ocost}[o]$}
 must appear as a row in the cost matrix.
 %
@@ -624,7 +625,7 @@ This is modeled as
 From \refEquation{def-edges}, we can infer that if a \gls{datum}~$d$ appears in
 a \gls{definition edge}~$\mEdge{d}{b}$ and is \gls{define.d}[d] by
 \glspl{phi-match} only, then the \gls{operation} covered by these \glspl{match}
-must be placed $b$.
+must be placed $b$\hspace{-1pt}.
 %
 This is modeled as
 %
@@ -791,7 +792,8 @@ where \mbox{$\mIsExt(m, p)$} denotes whether an \gls{operand}~$p$ in a
 \gls{match}~$m$ represents an \gls{exterior value}.
 
 We can always constrain the \glspl{location} of a non-\glsshort{state node}
-\gls{datum}~$d$ to those \glspl{location} where the definers can put $d$.
+\gls{datum}~$d$ to those \glspl{location} where the definers can put
+$d$\hspace{-.8pt}.
 %
 The intuition here is to take the union of all those \glspl{location}, which is
 modeled as
@@ -1107,7 +1109,7 @@ Let $\mInterchDataSet[\mCopy]$ denote the set of chains of \glspl{datum} that
 can only be defined by \glspl{copy match}, \mbox{$\mNullCopyMatchSet \subseteq
   \mMatchSet$} denote the set of \glspl{null-copy match}, and
 \mbox{$\mMatchSet[d] \subseteq \mMatchSet$} denote the set of \glspl{match} that
-can define a \gls{datum}~$d$.
+can define a \gls{datum}~$d$\hspace{-.8pt}.
 %
 Assuming there exists exactly one \gls{null-copy match} to cover each \gls{copy
   node}, this is modeled as
@@ -1221,7 +1223,7 @@ $\mVar{ocost}$~\glspl{variable}.
 When branching on these \glspl{variable}, we select the \gls{variable}~$v$ with
 largest difference between the two smallest values in its \gls{domain} -- this
 is typically called the maximum \gls!{regret}~\cite{Sen:2010} -- and the
-smallest value in the \gls{domain} of~$v$.
+smallest value in the \gls{domain} of~$v$\hspace{-1pt}.
 %
 The intuition here is that, because the \gls{objective function} strives to
 minimize the total cost, we wish to minimize the cost incurred per
@@ -1320,10 +1322,10 @@ Intuitively, if the combination of \glspl{match} can be selected, then the
 \gls{solution} can always be improved by replacing them with the single
 \gls{match}.
 %
-The idea is to combine the \glspl{match} into a single \gls{match}~$m$, and then
-check whether the above conditions for \glsshort{dominate.m}[ance] apply with
-the additional check that none of intermediate values of $m$ are used by other
-\glspl{match}.
+The idea is to combine the \glspl{match} into a single
+\gls{match}~$m$\hspace{-.8pt}, and then check whether the above conditions for
+\glsshort{dominate.m}[ance] apply with the additional check that none of
+intermediate values of $m$ are used by other \glspl{match}.
 %
 An example is shown in \refFigure{dominated-matches-example}.
 
@@ -1406,8 +1408,9 @@ With similar reasoning, this set of \gls{illegal.m} \glspl{match} is computed as
 \end{equation}
 
 If a \gls{kill match}~$m$ \gls{define.d}[s] a \gls{datum}~$d$ and every
-\gls{match} using $d$ has no \glsshort{alternative value}[s] but~$d$, then $m$
-is \gls{illegal.m} as $d$ must be \gls{define.d}[d] by a non-\gls{kill match}.
+\gls{match} using $d$ has no \glsshort{alternative value}[s]
+but~$d$\hspace{-.8pt}, then $m$ is \gls{illegal.m} as $d$ must be
+\gls{define.d}[d] by a non-\gls{kill match}.
 %
 This set of \gls{illegal.m} \glspl{match} is computed as
 %
@@ -1428,7 +1431,8 @@ This set of \gls{illegal.m} \glspl{match} is computed as
 
 If a \gls{match}~$m$ is not a \gls{kill match} and \gls{define.d}[s] a
 \gls{datum}~$d$ in a \gls{location} that cannot be accessed by any of the
-\glspl{match} \glsshort{use.d}[ing] of $d$, then $m$ is \gls{illegal.m}.
+\glspl{match} \glsshort{use.d}[ing] of $d$\hspace{-.8pt}, then $m$ is
+\gls{illegal.m}.
 %
 This set of \gls{illegal.m} \glspl{match} is computed as
 %
@@ -1476,8 +1480,8 @@ $d$ is \gls{illegal.m}.
 
 Similarly, if a \gls{match}~$m$ is not a \gls{kill match} and \gls{use.d}[s] a
 \gls{datum}~$d$ from a \gls{location} that cannot be written to by any of the
-\glspl{match} \glsshort{define.d}[ing]~$d$, then $m$ can never be selected and
-is thus \gls{illegal.m}.
+\glspl{match} \glsshort{define.d}[ing]~$d$\hspace{-.8pt}, then $m$ can never be
+selected and is thus \gls{illegal.m}.
 %
 This set of \gls{illegal.m} \glspl{match} is computed as
 %

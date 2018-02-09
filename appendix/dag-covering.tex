@@ -169,7 +169,7 @@ selected \glspl{pattern}.
 %
 For this purpose we will use $\mOr$, $\mAnd$, $\mNot$, $v$, $\mBox$, and
 $\mStop$ as \gls{node} types, and define $\mType(n)$ as the type of a
-\gls{node}~$n$.
+\gls{node}~$n$\hspace{-.8pt}.
 %
 \Glspl{node} of type~$\mBox$ and $\mStop$ will be referred to as \glspl!{box
   node} and \glspl!{stop node}, respectively.
@@ -186,8 +186,8 @@ and \mbox{$\mType(n'_2) = \mBox$}, along with an
 \gls{edge}~$\mEdge{n'_1}{n'_2}$.
 
 To model the connection between the $\mathit{op}$ operation and its two input
-operands~$x$ and $y$, we add two \glspl{edge}~$\mEdge{n_x}{n'_1}$ and
-$\mEdge{n_y}{n'_1}$ such that \mbox{$\mType(n_x) = \mType(n_y) = \mBox$}.
+operands~$x$ and $y$\hspace{-1pt}, we add two \glspl{edge}~$\mEdge{n_x}{n'_1}$
+and $\mEdge{n_y}{n'_1}$ such that \mbox{$\mType(n_x) = \mType(n_y) = \mBox$}.
 %
 For the unary operation~$\neg$ we obviously only need one such \gls{edge}, and
 since $\mOr$ and $\mAnd$ are commutative it does not matter in what order the
@@ -300,32 +300,36 @@ Every \gls{pattern} in $\mPSat$ adheres to the following invariant:
 \end{enumerate}
 %
 Another way of looking at it is that an operator in a \gls{pattern}
-\emph{consumes} a \gls{box node} if its corresponding value must be set to~$T$,
-and \emph{produces} a \gls{box node} if the result must evaluate to~$F$.
+\emph{consumes} a \gls{box node} if its corresponding value must be set
+to~$T$\!, and \emph{produces} a \gls{box node} if the result must evaluate
+to~$F$\hspace{-1pt}.
 %
 Using this scheme, we can easily deduce the truth assignments to the
 \glspl{variable} by inspecting whether the \glspl{pattern} selected to cover the
 \gls{DAG} consume the \glspl{box node} of the \glspl{variable}.
 %
 Since the only \gls{pattern} to contain a \gls{stop node} also consumes a
-\gls{box node}, the entire expression will be forced to evaluate to~$T$.
+\gls{box node}, the entire expression will be forced to evaluate to~$T$\!.
 
 In addition to the \gls{node} types that can appear in the \gls{block DAG}, the
 \glspl{pattern} can also contain \glspl{node} of an additional type, $\mAnchor$,
 which we will refer to as \glspl!{anchor node}.
 %
-Let $\mNumChildren(n)$ denote the number of \glspl{child} of~$n$, and
-$\mChild(i, n)$ the $i$th \gls{child} of~$n$.
+Let $\mNumChildren(n)$ denote the number of \glspl{child} of~$n$\hspace{-.8pt},
+and $\mChild(i\hspace{-.8pt}, n)$ the $i$th \gls{child} of~$n$\hspace{-.8pt}.
 %
-We now say that a \gls{pattern}~$p$, with \gls{root} \gls{node}~$p_r$,
-\emph{matches} the part of a \gls{block DAG}~\mbox{$\mTuple{N, E}$} which is
-rooted at a \gls{node}~\mbox{$n \in N$} if and only if:
+We now say that a \gls{pattern}~$p$\hspace{-.8pt}, with \gls{root}
+\gls{node}~$p_r$, \emph{matches} the part of a \gls{block
+  DAG}~\mbox{$\mTuple{N\hspace{-1pt}, E}$} which is rooted at a
+\gls{node}~\mbox{$n \in N$} if and only if:
 %
 \begin{enumerate}
   \item $\mType(n) = \mType(p_r)$,
   \item $\mNumChildren(n) = \mNumChildren(p_r)$, and
-  \item $\forall 1 \leq i \leq \mNumChildren(n) : \mType(\mChild(i, n)) =
-    \mAnchor \mOr \text{$\mChild(i, n)$ matches $\mChild(i, p_r)$}$.
+  \item $\forall 1 \leq i \leq \mNumChildren(n) :
+    \mType(\mChild(i\hspace{-.8pt}, n)) = \mAnchor \mOr
+    \text{$\mChild(i\hspace{-.8pt}, n)$ matches $\mChild(i\hspace{-.8pt},
+      p_r)$}$.
 \end{enumerate}
 %
 In other words, the structure of the \gls{pattern tree} -- which includes the
@@ -335,8 +339,9 @@ matched \gls{subgraph} (excluding \glspl{anchor node}, which can match any
 
 We introduce several new definitions.
 %
-Given a \gls{block DAG}~\mbox{$G = \mTuple{N, E}$}, let $\mMatchSet[n]$ be the
-set of \glspl{pattern} in $\mPSat$ that match at \gls{node}~\mbox{$n \in N$}.
+Given a \gls{block DAG}~\mbox{$G = \mTuple{N\hspace{-1pt}, E}$}, let
+$\mMatchSet[n]$ be the set of \glspl{pattern} in $\mPSat$ that match at
+\gls{node}~\mbox{$n \in N$}\hspace{-1pt}.
 %
 Also, given a \gls{pattern}~\mbox{$\mTuple{N_p, E_p}$}, let \mbox{$\mMatched(p,
   n_p)$} be the set of \glspl{node} in $N$ that are matched by a \gls{node}~$n_p
@@ -344,10 +349,10 @@ Also, given a \gls{pattern}~\mbox{$\mTuple{N_p, E_p}$}, let \mbox{$\mMatched(p,
 %
 Lastly, we say that $G$ is \emph{covered} by a function~\mbox{$f : N \rightarrow
   2^{\mPSat}$}, which maps \glspl{node} in the \gls{block DAG} to a set of
-\glspl{pattern}, if and only if, for each \mbox{$n \in N$},
+\glspl{pattern}, if and only if, for each \mbox{$n \in N$}\hspace{-1pt},
 %
 \begin{enumerate}
-  \item $\forall p \in f(n) : \text{$p$ matches $n$}$,
+  \item $\forall p \in f(n) : \text{$p$ matches $n$}$\hspace{-.8pt},
   \item $\mType(n) = \mStop \mImp f(n) \neq \emptyset$, and
   \item $\forall p = \mTuple{N_p, E_p} \in f(v), n_p \in N_p :
     \mType(n_p) = \mAnchor \mImp f(\mMatched(n, n_p)) \neq
@@ -363,7 +368,7 @@ The third \gls{constraint} enforces that \glspl{match} have been selected to
 cover the rest of the \gls{DAG}.
 %
 An \gls{optimal.ps} cover is thus a mapping~$f$ which covers the \gls{block
-  DAG}~\mbox{$\mTuple{N, E}$} and also minimize
+  DAG}~\mbox{$\mTuple{N\hspace{-1pt}, E}$} and also minimize
 %
 \begin{displaymath}
   \sum_{\mathclap{n \, \in \, N}}
@@ -372,7 +377,7 @@ An \gls{optimal.ps} cover is thus a mapping~$f$ which covers the \gls{block
   \mCost(p),
 \end{displaymath}
 %
-where $\mCost(p)$ is the cost of \gls{pattern}~$p$.
+where $\mCost(p)$ is the cost of \gls{pattern}~$p$\hspace{-.8pt}.
 
 
 \paragraph{Optimal Solution to DAG Covering $\Rightarrow$ Solution to SAT}
@@ -1361,7 +1366,7 @@ represents a \gls{match} covering one or more \glspl{node} in the \gls{block
 %
 If we denote $m_{ij}$ as row~$i$ and column~$j$ in~$\mMatrix{M}$, then
 \mbox{$m_{ij} = 1$} indicates that \gls{node}~$i$ is covered by
-\gls{pattern}~$j$.
+\gls{pattern}~$j$\hspace{-1pt}.
 %
 Hence the \gls{pattern selection} problem is equivalent to finding a set of
 columns in $\mMatrix{M}$ such that the sum for every row is exactly~\num{1}.
@@ -1547,9 +1552,9 @@ inequality:
   \forall n \in N : \sum_{\mathclap{m \,\in\, M_n}} \mVar{x}_m \leq 1.
 \end{displaymath}
 %
-This reads: for every \gls{node}~$n$ in the \gls{block DAG}~\mbox{$\mTuple{N,
-    E}$}, at most one \gls{match}~$m$ from the \gls{match set} involving~$n$
-(represented by $M_n$) may be selected.\!%
+This reads: for every \gls{node}~$n$ in the \gls{block
+  DAG}~\mbox{$\mTuple{N\hspace{-1pt}, E}$}, at most one \gls{match}~$m$ from the
+\gls{match set} involving~$n$ (represented by $M_n$) may be selected.\!%
 %
 \footnote{%
   The more common \gls{constraint} is that \emph{exactly one} \gls{match} must
@@ -1770,7 +1775,8 @@ In broad outline, the \gls{IP}~model assumes that a sufficient number of
 This is done using a \gls{pattern matching} heuristic that computes an upper
 bound.
 %
-For each match~$m$, the \gls{IP}~model contains integer \glspl{variable} that:
+For each match~$m$\hspace{-.8pt}, the \gls{IP}~model contains integer
+\glspl{variable} that:
 %
 \begin{itemize}
   \item map a \gls{pattern} \gls{node} in $m$ to a \gls{node} in $G$;
@@ -1992,9 +1998,9 @@ The \gls{constraint}, referred to as $\mGCC$, constrains the number of
 Given a set \mbox{$v_1, \ldots, v_k$} of values and two sets \mbox{$\mVar{x}_1,
   \ldots, \mVar{x}_n$} and \mbox{$\mVar{c}_1, \ldots, \mVar{c}_k$} of
 \glspl{variable}, the \gls{constraint} holds if, for each \mbox{$i = 1, \ldots,
-  k$}, exactly $\mVar{c}_i$ \glspl{variable} in the set \mbox{$\mVar{x}_1,
-  \ldots, \mVar{x}_n$} are assigned value~$v_i$ (see also \refDefinition{gcc} on
-\refPageOfDefinition{gcc}).
+  k$}\hspace{-.8pt}, exactly $\mVar{c}_i$ \glspl{variable} in the set
+\mbox{$\mVar{x}_1, \ldots, \mVar{x}_n$} are assigned value~$v_i$ (see also
+\refDefinition{gcc} on \refPageOfDefinition{gcc}).
 %
 For example, \mbox{$\mGCC(\mTuple{5, \mVar{c}_1 = 0} \hspace{-1pt}, \mTuple{3,
     \mVar{c}_2 = 1} \hspace{-1pt}, \mVar{x}_1 = 2, \mVar{x}_2 =3)$} holds
@@ -2010,12 +2016,13 @@ are needed.
 %
 Assume that $N$ denotes the set of \glspl{node} to be covered, $M$ denotes the
 \gls{match set}, and $\mCovers(m)$ denotes the set of \glspl{node} covered by
-\gls{match}~$m$.
+\gls{match}~$m$\hspace{-.8pt}.
 %
 Then, \gls{variable} \mbox{$\mVar{match}_n \in \mSetBuilder{m}{m \in M, n \in
-    \mCovers(m)}$} decides which \gls{match} covers \gls{node}~$n$, and
-\gls{variable} \mbox{$\mVar{count}_m \in \mSet{0, |\mCovers(m)|}$} decides how
-many \glspl{node} are covered by \gls{match}~$m$.
+    \mCovers(m)}$} decides which \gls{match} covers
+\gls{node}~$n$\hspace{-.8pt}, and \gls{variable} \mbox{$\mVar{count}_m \in
+  \mSet{0, |\mCovers(m)|}$} decides how many \glspl{node} are covered by
+\gls{match}~$m$\hspace{-.8pt}.
 %
 Hence each match covers either no \glspl{node} or all \glspl{node} in its
 \gls{pattern}.

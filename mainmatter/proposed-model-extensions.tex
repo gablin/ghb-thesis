@@ -63,8 +63,8 @@ To model this problem, we introduce two new \glspl{variable}.
 
 The set of \glspl{variable} \mbox{$\mVar{cycle}[m] \in \mNatNumSet$} models at
 which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
-\mbox{$\mVar{sched}[m, b] \in \mSet{0, 1}$} models whether $m$ is scheduled in
-\gls{block}~$b$\hspace{-1pt}.
+\mbox{$\mVar{sched}[m\hspace{-.8pt}, b] \in \mSet{0, 1}$} models whether $m$ is
+scheduled in \gls{block}~$b$\hspace{-1pt}.
 
 
 \paragraph{Constraints}
@@ -168,7 +168,7 @@ resources.
 
 In this context, \gls{register allocation} can be described as the problem of
 assigning a location to each \gls{datum}~$d$ such that the value in the location
-is preserved until the last use of~$d$.
+is preserved until the last use of~$d$\hspace{-.8pt}.
 %
 Like with \gls{instruction selection}, this problem can be considered either at
 \gls{local.ra} or \gls{global.ra} scope.
@@ -334,9 +334,9 @@ This can be modeled as
 Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
 determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-.8pt}.
 %
-If there is no use of $d$, then $\mVar{end}[d]$ is set to $\mVar{start}[d]$ to
-not affect \gls{register allocation} and \gls{instruction scheduling} for other
-\glspl{datum}.
+If there is no use of $d$\hspace{-.8pt}, then $\mVar{end}[d]$ is set to
+$\mVar{start}[d]$ to not affect \gls{register allocation} and \gls{instruction
+  scheduling} for other \glspl{datum}.
 %
 This can jointly be modeled as
 %
