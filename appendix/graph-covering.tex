@@ -57,9 +57,7 @@ First, with an entire \gls{function} as input, a \gls{global.is}
 \gls{pattern selection} across the \gls{block} boundaries and is thereby better
 informed when making its decisions.
 %
-In addition, it can move operations from one \gls{block} to another if that
-enables better use of the \gls{instruction set} (this is known as \gls{global
-  code motion}).
+In addition, it enables \gls{global code motion}.
 %
 Second, to support \gls{inter-block.ic} \glspl{instruction} -- which require
 modeling of both data and control-flow information -- it is imperative that the
@@ -266,7 +264,7 @@ To capture dependencies between the data and control flow -- for example, when
 the target of a jump depends on a Boolean value -- such jumps flow through
 special \emph{if}~\glspl{node}.
 %
-For lack of a better name, we will call this the \gls!{Click-Paleczny graph},
+For lack of a better name we will call this the \gls!{Click-Paleczny graph},
 and an example is shown in \refFigure{click-paleczny-graph-example-2}.
 
 \begin{figure}
@@ -891,9 +889,9 @@ available.
 If this is beneficial, a value can also be recomputed instead of copied from its
 current location.
 %
-This idea is known as \gls!{recomputation} or \gls!{rematerialization}, which is
-a method for reducing \gls{register pressure}, as it allows \glspl{register} to
-be released at an earlier point in the \gls{assembly code}.
+This idea is known as \gls!{recomputation} (or \gls!{rematerialization}), which
+is a method for reducing \gls{register pressure}, as it allows \glspl{register}
+to be released at an earlier point in the \gls{assembly code}.
 
 In \gls{mutation scheduling}, ``shorter'' mutations are preferred over longer
 ones.
