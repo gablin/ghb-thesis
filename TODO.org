@@ -20,7 +20,7 @@
 ** DONE Add list of acronyms
 ** DONE Break long sentences
 ** DONE Fix overflowing of bib entries
-** TODO Fix inconsistencies between patterns and matches in tree-covering appendix
+** DONE Fix inconsistencies between patterns and matches in tree-covering appendix
 ** DONE Fix missing notion of side effects
 ** DONE Replace \subsubsection with \paragraph, where appropriate
 ** TODO Check for long paragraphs
