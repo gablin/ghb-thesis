@@ -23,16 +23,16 @@
 ** DONE Fix inconsistencies between patterns and matches in tree-covering appendix
 ** DONE Fix missing notion of side effects
 ** DONE Replace \subsubsection with \paragraph, where appropriate
-** TODO Check for long paragraphs
+** DONE Check for long paragraphs (skipped)
 ** DONE Check for bad use of past tense
 ** DONE Check for missing references
 ** DONE Check bad kerning, especially in math
 ** DONE Check for unused glossary terms
 ** DONE Check for undefined (!) glossary terms
 ** DONE Check for horizontal overflow
-** TODO Fix bad page breaks
-** TODO Fix paragraphs ending with only one word on last line
-** TODO Check for any lingering TODOs in the document
+** DONE Fix bad page breaks (skipped)
+** DONE Fix paragraphs ending with only one word on last line (skipped)
+** DONE Check for any lingering TODOs in the document
 ** TODO Run another spell check
 ** TODO Run grammar check
 ** TODO Remove 'electronic' document class option
