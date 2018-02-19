@@ -4941,6 +4941,10 @@ While \gls{tree covering} enables use of more complex \glspl{pattern} compared
 to \gls{macro expansion}, \gls{tree covering} has several disadvantages of its
 own.
 
+% LAYOUT FIX:
+% Prevent paragrah below from being broken across two pages
+\newpage
+
 \begin{filecontents*}{tree-limitation-example.c}
 x = a + b
 y = x + x
@@ -4965,6 +4969,10 @@ modeled in a \gls{expression tree}.
 %
 For example, the inlined code cannot be modeled directly without applying one of
 the following workarounds:
+%
+% LAYOUT FIX:
+% Prevent the second item from being split across two pages
+\enlargethispage{.8ex}
 %
 \begin{enumerate}
   \item Repeating the shared operations, which in \gls{Polish notation} results
