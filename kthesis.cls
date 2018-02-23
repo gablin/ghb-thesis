@@ -305,10 +305,10 @@
     \end{tabular}%
   \end{minipage}
   \vskip 1em
-  Akademisk avhandling som med tillst{\aa}nd av Kungl Tekniska H\"ogskolan
+  Akademisk avhandling som med tillst{\aa}nd av Kungliga Tekniska H\"ogskolan
   framl\"agges till offentlig granskning f\"or avl\"aggande av
   \@getFieldLC{degreeSwe} p{\aa} \@printDefenseDateSwe{}
-  kl.\ \@getField{defenseTime} i \@getField{defenseHallSwe}, Electrum, Kungl
+  kl.\ \@getField{defenseTime} i \@getField{defenseHallSwe}, Electrum, Kungliga
   Tekniska Högskolan, Kistag{\aa}ngen~16, Kista.\par
   \vskip 1em
   \textcopyright\hspace{4pt}\@getField{author},
