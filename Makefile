@@ -80,6 +80,7 @@ clean:
 	$(LATEXMK) -c $(SRCTEX)
 	$(RM) -r $(DEPS_DIR)
 	$(RM) $(PRIN_TIMELINE_FILE)
+	$(RM) *.bbl
 	$(RM) *.c
 
 .PHONY: distclean
