@@ -37,3 +37,4 @@
 ** DONE Run another spell check
 ** DONE Run grammar check (ignored)
 ** DONE Remove 'electronic' document class option for print version
+** TODO Upload corrections to DiVA
