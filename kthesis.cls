@@ -8,7 +8,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[2001/01/01]
 \ProvidesClass{kthesis}%
-              [2017/10/10 v0.1 Document class for KTH ICT dissertations]
+              [2017/10/10 v0.1 Document class for KTH EECS dissertations]
 
 %=========
 % OPTIONS
