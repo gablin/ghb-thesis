@@ -905,6 +905,16 @@
 }
 
 % Customize index style
+\newcommand{\indexPageFont}{%
+  \scshape%
+}
+\newcommand{\undoIndexPageFont}{%
+  \normalfont%
+}
+
+\renewcommand{\glossaryentrynumbers}[1]{%
+  {\indexPageFont#1}%
+}
 \newglossarystyle{myindex}{%
   \setglossarystyle{mcolindex}
   \setlength{\columnsep}{8mm}
@@ -1041,7 +1051,7 @@
 
 % Force 'see also' to appear on a new line in the index
 \renewcommand\glsseeformat[3][\seename]{%
-  \\*\raggedleft\emph{#1} \glsseelist{#2}%
+  \\*\undoIndexPageFont\raggedleft\emph{#1} \glsseelist{#2}%
 }
 
 
