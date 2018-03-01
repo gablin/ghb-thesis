@@ -15,8 +15,6 @@
 %=========
 
 % Declare options
-\newif\if@kthesis@electronic \@kthesis@electronicfalse
-\DeclareOption{electronic}{\@kthesis@electronictrue}
 \DeclareOption{g5paper}{\def\kthesis@trimmedsize{gfive}}
 \DeclareOption{a3paper}{\ClassError{kthesis}{'a3paper' format not supported}}
 \DeclareOption{a4paper}{\def\kthesis@trimmedsize{afour}}
@@ -39,6 +37,10 @@
 \DeclareOption{landscape}{%
   \ClassError{kthesis}{'landscape' format not supported}%
 }
+\newif\if@kthesis@print \@kthesis@printfalse
+\newif\if@kthesis@electronic \@kthesis@electronicfalse
+\DeclareOption{print}{\@kthesis@printtrue}
+\DeclareOption{electronic}{\@kthesis@electronictrue}
 \newif\if@kthesis@phd \@kthesis@phdfalse
 \newif\if@kthesis@lic \@kthesis@licfalse
 \DeclareOption{phd}{\@kthesis@phdtrue}
@@ -52,7 +54,28 @@
 
 \ProcessOptions\relax
 
+% Check options
+\if@kthesis@print
+\else
+  \if@kthesis@electronic
+  \else
+    \ClassError{kthesis}{Either 'print' or 'electronic' must be provided}
+  \fi
+\fi
+\if@kthesis@phd
+\else
+  \if@kthesis@lic
+  \else
+    \ClassError{kthesis}{Either 'phd' or 'lic' must be provided}
+  \fi
+\fi
+
 \LoadClass{memoir}
+
+% Set correct color scheme for printing
+\if@kthesis@print
+  \PassOptionsToPackage{cmyk}{xcolor}
+\fi
 
 % Set margins
 \def\@kthesis@setpapersize@afour{%
@@ -231,14 +254,6 @@
 }
 
 % Set degree fields
-\if@kthesis@phd
-\else
-  \if@kthesis@lic
-  \else
-    \ClassError{kthesis}{Either 'phd' or 'lic' must be provided}
-  \fi
-\fi
-
 \if@kthesis@phd
   \degreeSwe{teknologie doktorsexamen}
   \degreeThesis{doctoral thesis}
