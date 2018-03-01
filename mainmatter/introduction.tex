@@ -493,8 +493,8 @@ control flow:%
     branches to block~$b$ if the condition \mbox{$r \neq 0$} holds, where $r$
     is a register
   \item a \mbox{{\instrFont*jmp} $b$} \gls{instruction}, which unconditionally
-    branches to block~$b$\hspace{-1pt}
-\end{inlinelist}.
+    branches to block~\mbox{$b$\hspace{-1pt}.}
+\end{inlinelist}
 %
 Assume also that these branch \glspl{instruction} take three cycles compared to
 the other \glspl{instruction} in the \gls{target machine}, which take one cycle.
@@ -1061,24 +1061,24 @@ the \gls!{speedup}, which is computed as
 %
 where $t_a$ and $t_b$ denote time measurements obtained for a given problem
 instance from \gls{subject} \glsshort{constraint model}~$a$ respectively
-\gls{baseline} \glsshort{constraint model}~$b$\hspace{-1pt}.
+\gls{baseline} \glsshort{constraint model}~\mbox{$b$\hspace{-1pt}.}
 %
-A value greater than \num{1} means $a$ is faster than $b$\hspace{-1pt}, a value
-less than \num{1} means $b$ is faster than $a$\hspace{-.8pt}, and a value of
-exactly \num{1} means $a$ and $b$ are equally fast.
+A value greater than \num{1} means $a$ is faster than~\mbox{$b$\hspace{-1pt},} a
+value less than \num{1} means $b$ is faster than~\mbox{$a$\hspace{-.8pt},} and a
+value of exactly \num{1} means $a$ and $b$ are equally fast.
 
 This method, however, creates problems when plotting the normalized values as
 bar charts.
 %
 Since the normalized values are centered around \num{1}, when $a$ is twice as
 fast as $b$ we intuitively expect the normalized value to be equally far away
-from \num{1} as when $b$ is twice as fast as $a$\hspace{-.8pt}.
+from \num{1} as when $b$ is twice as fast as~\mbox{$a$\hspace{-.8pt}.}
 %
 With \refEquation{speedup-normalization}, this is not the case.
 %
 See for example \refFigure{speedup-comparison-regular}, illustrating two
 cases: \speedupCase{i}, where $a$ is twice as fast as $b$; and \speedupCase{ii},
-where $b$ is twice as fast as $a$\hspace{-.8pt}.
+where $b$ is twice as fast as~\mbox{$a$\hspace{-.8pt}.}
 %
 \begin{figure}
   \renewcommand{\functionName}[1]{{\Large\speedupCase{#1}}}%

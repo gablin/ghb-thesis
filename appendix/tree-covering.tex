@@ -1225,7 +1225,8 @@ using an \gls{LR parser} is provided in \refFigure{glanville-graham-execution}.
               %
               {\figureFont s$i$} indicates a shift to the next state $i$,
               {\figureFont r$j$} indicates the reduction of
-              rule~$j$\hspace{-1pt}, and a blank entry indicates an error%
+              rule~\mbox{$j$\hspace{-1pt},} and a blank entry indicates an
+              error%
             }
     \labelFigure{glanville-graham-table}
   \end{minipage}
@@ -2605,9 +2606,10 @@ To our aid, we will use two \glspl{pattern tree}~\patI{} and \patII, shown in
   hoffmann-odonnell-example-pattern-2}, respectively.
 %
 The patterns in our \gls{pattern set} thus consist of \glspl{node} with
-\glspl{symbol}~$a$, $b$\hspace{-1pt}, $c$, or~$v$\hspace{-1pt}, where an
-\mbox{$a$-node} always has exactly two \glspl{child}, and $b$\hspace{-1pt}, $c$,
-and \mbox{$v$-nodes} always have no \glspl{child}.
+\glspl{symbol}~$a$, \mbox{$b$\hspace{-1pt},} $c$, or~\mbox{$v$\hspace{-1pt},}
+where an \mbox{$a$-node} always has exactly two \glspl{child},
+and~\mbox{$b$\hspace{-1pt},} $c$, and \mbox{$v$-nodes} always have no
+\glspl{child}.
 %
 The \mbox{$v$-symbol} is a special \gls!{nullary symbol}, as such \glspl{node}
 represent placeholders that can match any \gls{subtree}.
@@ -2637,11 +2639,11 @@ also introduce the notion of a \gls!{sigma term} and define it as follows:
 A \gls{pattern tree} is therefore a \gls{sigma term}, allowing us to write
 \glspl{pattern}~\patI{} and \patII{} as
 \mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v\hspace{-1pt}, v}, b}$} and
-\mbox{$\mSigmaTree{a}{b\hspace{-1pt}, v}$}, respectively.
+\mbox{$\mSigmaTree{a}{b\hspace{-1pt}, v}$,} respectively.
 %
 \Glspl{sigma term} are also \gls!{ordered.st}, meaning \mbox{$\mSigmaTree{a}{b,
     v}$} for example is different from \mbox{$\mSigmaTree{a}{v\hspace{-1pt},
-    b}$}.
+    b}$.}
 %
 Consequently, commutative operations, such as addition, must be handled through
 \gls{pattern} duplication (as in the \gls{Glanville-Graham approach}).
@@ -2772,7 +2774,7 @@ Consequently, commutative operations, such as addition, must be handled through
             %
             Nullary nodes~$v$ are indicated with a dashed border.
             %
-            The subpatterns $v$\hspace{-1pt}, $b$\hspace{-1pt},
+            The subpatterns \mbox{$v$\hspace{-1pt},} \mbox{$b$\hspace{-1pt},}
             \mbox{$\mSigmaTree{a}{v\hspace{-1pt}, v}$},
             \mbox{$\mSigmaTree{a}{b\hspace{-1pt}, v}$}, and
             \mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v\hspace{-1pt}, v}, b}$} are
@@ -2811,15 +2813,15 @@ Furthermore, $p$ \gls!{strictly subsume}[s]~$q$ (written \mbox{$p
   = q$}, and $p$ \gls!{immediately subsume}[s]~$q$ (written \mbox{$p
   \mImmSubsumes q$}) iff \mbox{$p \mStrictSubsumes q$} and there exists no other
 \gls{pattern}~$r$ such that \mbox{$p \mStrictSubsumes r$} and \mbox{$r
-  \mStrictSubsumes q$}\hspace{-1pt}.
+  \mStrictSubsumes q$\hspace{-1pt}.}
 
 We also say that two \glspl{pattern}~$p$ and $q$ are \gls!{inconsistent.pt} if
 and only if both \glspl{pattern} never appear in the same \gls{match set} (hence
 \mbox{$\mMTrees(q) \cap \mMTrees(p) = \emptyset$}).
 %
 Lastly, $p$ and $q$ are \gls!{independent.pt} iff there exist three distinct
-\glspl{tree}~$t$\hspace{-1pt}, $t'$\!\!, and $t''$ (that is, \mbox{$t \not = t'
-  \not = t''$}), such that
+\glspl{tree}~\mbox{$t$\hspace{-1pt},} \mbox{$t'$\!\!,} and $t''$ (that is,
+\mbox{$t \not = t' \not = t''$}), such that
 %
 \begin{inlinelist}[itemjoin={, }, itemjoin*={, and}]
   \item $t$ is matched by $p$ but not $q$ (hence \mbox{$\mMTrees(p) \nsubseteq
@@ -2862,11 +2864,11 @@ for a \gls{simple.ps} \gls{pattern set} can be represented using a single
 The intuition is as follows.
 %
 If a \gls{pattern}~$p$ \gls{strictly subsume}[s] another
-\gls{pattern}~$q$\hspace{-.8pt}, then by definition it means that $q$ will
-appear in every \gls{match set} where $p$ appears.
+\gls{pattern}~\mbox{$q$\hspace{-.8pt},} then by definition it means that $q$
+will appear in every \gls{match set} where $p$ appears.
 %
 Consequently, $q$ does not need to be explicitly encoded into the \gls{match
-  set} since it can be inferred from the presence of $p$\hspace{-.8pt}.
+  set} since it can be inferred from the presence of~\mbox{$p$\hspace{-.8pt}.}
 %
 Therefore, for every \gls{match set} $M$ we can select a subset of
 \glspl{pattern} in $M$ to encode the entire \gls{match set}.
@@ -2917,9 +2919,10 @@ The next problem is thus to find the \gls{base pattern} of a given \gls{match
   set}.
 %
 For \gls{simple.ps} \glspl{pattern set} it can be proven that if we have three
-distinct \glspl{pattern}~$p$\hspace{-.8pt}, $p'$\!, and~$p''$\!, and~$p$
-\gls{subsume}[s] both~$p'$ and~$p''$\!, then it must hold that either \mbox{$p'
-  \mStrictSubsumes p''$} or \mbox{$p'' \mStrictSubsumes p'$}\!.
+distinct \glspl{pattern}~\mbox{$p$\hspace{-.8pt},} \mbox{$p'$\!,}
+and~\mbox{$p''$\!,} and~$p$ \gls{subsume}[s] both~$p'$ and~$p''$\!, then it must
+hold that either \mbox{$p' \mStrictSubsumes p''$} or \mbox{$p'' \mStrictSubsumes
+  p'$}\!.
 %
 Consequently, for every \gls{match set}~$M$ we can form a \gls{subsumption
   order} among the \glspl{pattern} appearing in~$M$.
@@ -2938,10 +2941,11 @@ Hence, if we know the \gls{subsumption order}, then we can easily find the
 For this purpose we first enumerate all unique \glspl{subtree}, called the
 \glspl!{subpattern}, that appear in the \gls{pattern set}.
 %
-In the case of patterns~\patI{} and \patII, this includes $v$\hspace{-1pt},
-$b$\hspace{-1pt}, \mbox{$\mSigmaTree{a}{v\hspace{-1pt}, v}$},
-\mbox{$\mSigmaTree{a}{b\hspace{-1pt}, v}$}, and
-\mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v\hspace{-1pt}, v}, b}$}, and we denote the
+In the case of patterns~\patI{} and \patII, this includes
+\mbox{$v$\hspace{-1pt},} \mbox{$b$\hspace{-1pt},}
+\mbox{$\mSigmaTree{a}{v\hspace{-1pt}, v}$,}
+\mbox{$\mSigmaTree{a}{b\hspace{-1pt}, v}$,} and
+\mbox{$\mSigmaTree{a}{\mSigmaTree{a}{v\hspace{-1pt}, v}, b}$,} and we denote the
 set of all \glspl{subpattern} as~$S$.
 %
 We then assign each \gls{subpattern} in $S$ a sequential number, starting
@@ -2954,7 +2958,7 @@ assigned is not important).
 \def\mGS{\overline{G}_S}
 \def\mGImmS{G_S}
 
-Next we form the \gls!{subsumption graph} for~$S$\hspace{-1pt}, denoted
+Next we form the \gls!{subsumption graph} for~\mbox{$S$\hspace{-1pt},} denoted
 by~$\mGS$, where each \gls{node} $n_i$ represents a \gls{subpattern} \mbox{$s_i
   \in S$} and each \gls{edge}~\mbox{$\mEdge{n_i}{n_j}$} indicates that $s_i$
 \gls{subsume}[s]~$s_j$.
@@ -3012,18 +3016,18 @@ which we produce using the algorithm given in
 %
 The algorithm basically works as follows.
 %
-First, we add a \gls{node} for every \gls{subpattern} in~$S$\hspace{-1pt},
-together with a \gls{loop edge}, as every \gls{pattern} always \gls{subsume}[s]
-itself.
+First, we add a \gls{node} for every \gls{subpattern}
+in~\mbox{$S$\hspace{-1pt},} together with a \gls{loop edge}, as every
+\gls{pattern} always \gls{subsume}[s] itself.
 %
 Next we iterate over all pair-wise combinations of \glspl{subpattern} and check
 whether one subsumes the other, and add a corresponding edge to $\mGS$ if this
 is the case.
 %
 To test whether a \gls{subpattern}~$q$ \gls{subsume}[s] another
-\gls{pattern}~$q$\hspace{-.8pt}, we check whether the \glspl{root} of $p$ and
-$q$ are of the same \gls{symbol} and whether every \gls{subtree} of $p$
-\gls{subsume}[s] the corresponding \gls{subtree} of~$q$\hspace{-.8pt}.
+\gls{pattern}~\mbox{$q$\hspace{-.8pt},} we check whether the \glspl{root} of $p$
+and $q$ are of the same \gls{symbol} and whether every \gls{subtree} of $p$
+\gls{subsume}[s] the corresponding \gls{subtree} of~\mbox{$q$\hspace{-.8pt}.}
 %
 This last check can be done by checking whether a corresponding \gls{edge}
 exists in~$\mGS$ for each combination of \glspl{subtree}.
@@ -3460,7 +3464,7 @@ It first constructs a cost matrix~$\mMatrix{C}$, where rows represent
 %
 The cost in each element~\mbox{$\mMatrix{C}[i][j]$} is initialized to infinity,
 indicating that there exists no sequence of \glspl{rule reduction} which reduces
-\gls{node}~$i$ to \gls{nonterminal}~$j$\hspace{-1pt}.
+\gls{node}~$i$ to \gls{nonterminal}~\mbox{$j$\hspace{-1pt}.}
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
@@ -3468,9 +3472,9 @@ At each \gls{node}~$n$ and for each matching \gls{base.r} \gls{rule}~$r$\!, with
 \gls{nonterminal}~$s$ as \glsshort{rule result}, it computes the cost~$c$ of
 applying $r$ at~$n$ to produce~$s$ according to the scheme stated above.
 %
-If $c$ is less than the currently recorded cost for reducing $n$ to
-$s$\hspace{-1pt}, then the cost and \gls{rule} information for $n$ is updated
-accordingly.
+If $c$ is less than the currently recorded cost for reducing $n$
+to~\mbox{$s$\hspace{-1pt},} then the cost and \gls{rule} information for $n$ is
+updated accordingly.
 %
 The same is then done for all \gls{chain.r} \glspl{rule} until it reaches a
 fixpoint (which must eventually be reached as all \gls{rule} costs are
@@ -3808,7 +3812,7 @@ This combination is such that
 \begin{enumerate}
   \item for any \gls{expression tree} whose \gls{root} has been labeled with a
     particular \gls{state},
-  \item if the goal of the \gls{root} must be~$g$\hspace{-1pt},
+  \item if the goal of the \gls{root} must be~\mbox{$g$\hspace{-1pt},}
   \item then the entire \gls{expression tree} can be covered with minimal cost
     by selecting \gls{pattern}~$p$ at the \gls{root}.
     %
@@ -3930,14 +3934,14 @@ pioneers in applying \gls{offline cost analysis} to \gls{pattern selection}.
 by \citeauthor{HoffmannODonnell:1982}, can intuitively be described as follows.
 %
 Given a \gls{expression tree} whose \gls{root} has been assigned a
-label~$l$\hspace{-.8pt}, find the \gls{rule} to apply such that the entire
-\gls{tree} can be reduced to a given \gls{nonterminal} at lowest cost.
+label~\mbox{$l$\hspace{-.8pt},} find the \gls{rule} to apply such that the
+entire \gls{tree} can be reduced to a given \gls{nonterminal} at lowest cost.
 %
 \citeauthor{HatcherChristopher:1986} argued that for \gls{optimal.ps}
 \gls{pattern selection} we can consider each pair of a label~$l$ and
 \gls{nonterminal}~$\mNT{N}$, and then always apply the \gls{rule} that will
 reduce the largest \gls{expression tree}~$T_l$, which is representative
-of~$l$\hspace{-.8pt}, to $\mNT{N}$ at the lowest cost.
+of~\mbox{$l$\hspace{-.8pt},} to $\mNT{N}$ at the lowest cost.
 %
 In \citeauthor{HoffmannODonnell:1982}'s design, where there is only one
 \gls{nullary symbol} that may match any \gls{subtree}, $T_l$ is equal to the
@@ -3956,7 +3960,7 @@ subsuming, smaller \gls{pattern}~$q$ (hence \mbox{$p > q$}) for every pair of
 %
 This cost, which is later annotated to the \gls{subsumption graph}, is
 calculated by recursively rewriting $p$ using other \glspl{pattern} until it is
-equal to~$q$\hspace{-.8pt}.
+equal to~\mbox{$q$\hspace{-.8pt}.}
 %
 Hence the cost of this transformation is equal to the sum of all applied
 \glspl{pattern}.
@@ -3973,8 +3977,8 @@ for which
 \end{displaymath}
 %
 This will select either the largest \gls{pattern} appearing in the \gls{match
-  set} of~$l$\hspace{-.8pt}, or, if one exists, a smaller \gls{pattern} that in
-combination with others has a lower cost.
+  set} of~\mbox{$l$\hspace{-.8pt},} or, if one exists, a smaller \gls{pattern}
+that in combination with others has a lower cost.
 %
 We have of course glossed over many details, but this covers the main idea of
 \citeauthor{HatcherChristopher:1986}'s design.
@@ -4109,8 +4113,9 @@ achieved.
 
 To achieve \gls{optimal.ps} \gls{pattern selection}, the \glspl{LR graph} are
 augmented such that each \gls{node} no longer represents a \gls{pattern tree}
-but a \mbox{$(p\hspace{-.8pt}, c)$} pair, where $c$ denotes the minimal cost of
-covering the corresponding \gls{subtree} with \gls{pattern}~$p$\hspace{-.8pt}.
+but a \mbox{$(p\hspace{-.8pt}, c)$}~pair, where $c$ denotes the minimal cost of
+covering the corresponding \gls{subtree} with
+\gls{pattern}~\mbox{$p$\hspace{-.8pt}.}
 %
 This is the information embodied by the \glspl{state} as discussed earlier.
 %
@@ -4773,7 +4778,7 @@ The cost is computed similarly as in the \gls{DP}-based techniques.
 To facilitate the following discussion, let us denote by
 \mbox{$\mTL(i\hspace{-.8pt}, n)$} and \mbox{$\mRA(i\hspace{-.8pt}, n)$} the
 target location and set of available \glspl{register}, respectively, for the
-$i$th element in the \gls{OVA} of node~$n$\hspace{-.8pt}.
+$i$th element in the \gls{OVA} of \gls{node}~\mbox{$n$\hspace{-.8pt}.}
 
 We create the \gls{trellis diagram} using the following scheme.
 %
@@ -4787,24 +4792,24 @@ before being used (this is needed for example if the value resides in memory).
 Next we add the \glspl{edge}.
 %
 Let us denote by \mbox{$e(i\hspace{-.8pt}, n)$} the $i$th~element in the
-\gls{OVA} of a \gls{node}~$n$\hspace{-.8pt}.
+\gls{OVA} of a \gls{node}~\mbox{$n$\hspace{-.8pt}.}
 %
-For a unary operation \gls{node}~$n$ with a \gls{child}~$m$\hspace{-.8pt}, we
-add an \gls{edge} between \mbox{$e(i\hspace{-.8pt}, n)$} and
-\mbox{$e(j\hspace{-1pt}, m)$} if there exists a sequence of \glspl{instruction}
-that implements the operation of~$n$\hspace{-.8pt}, stores the result in
-\mbox{$\mTL(i\hspace{-.8pt}, n)$}, takes as input the value stored in
-\mbox{$\mTL(j\hspace{-1pt}, m)$}, and exclusively uses the \glspl{register} in
-\mbox{$\mRA(i\hspace{-.8pt}, n)$}.
+For a unary operation \gls{node}~$n$ with a
+\gls{child}~\mbox{$m$\hspace{-.8pt},} we add an \gls{edge} between
+\mbox{$e(i\hspace{-.8pt}, n)$} and \mbox{$e(j\hspace{-1pt}, m)$} if there exists
+a sequence of \glspl{instruction} that implements the operation
+of~\mbox{$n$\hspace{-.8pt},} stores the result in \mbox{$\mTL(i\hspace{-.8pt},
+  n)$}, takes as input the value stored in \mbox{$\mTL(j\hspace{-1pt}, m)$,} and
+exclusively uses the \glspl{register} in \mbox{$\mRA(i\hspace{-.8pt}, n)$.}
 %
 Similarly, for a binary operation \gls{node}~$o$ with two \glspl{child}~$n$
 and~$m$, we add an \gls{edge} pair from \mbox{$e(i\hspace{-.8pt}, n)$} and
 \mbox{$e(j\hspace{-1pt}, m)$} to \mbox{$e(k\hspace{-.8pt}, o)$} if there exists
 a sequence of \glspl{instruction} that implements the operation of~$o$, stores
-the result in \mbox{$\mTL(k\hspace{-.8pt}, o)$}, takes as input the two values
+the result in \mbox{$\mTL(k\hspace{-.8pt}, o)$,} takes as input the two values
 stored in \mbox{$\mTL(i\hspace{-.8pt}, n)$} and \mbox{$\mTL(j\hspace{-1pt},
-  m)$}, and exclusively uses the \glspl{register} in
-\mbox{$\mRA(k\hspace{-.8pt}, o)$}.
+  m)$,} and exclusively uses the \glspl{register} in
+\mbox{$\mRA(k\hspace{-.8pt}, o)$.}
 %
 This can be generalized to \mbox{$n$-ary} operations.
 %

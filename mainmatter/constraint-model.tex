@@ -71,16 +71,16 @@ $\mVar{sel}[m]$, and not selected if \mbox{$\mVar{sel}[m] = 0$}, abbreviated
 
 The set of \glspl{variable} \mbox{$\mVar{omatch}[o] \in \mMatchSet[o]$} models
 which selected \gls{match} covers \gls{operation}~\mbox{$o \in
-  \mOpSet$\hspace{-1pt}}, where $\mOpSet$ denotes the set of \glspl{operation}
+  \mOpSet$\hspace{-1pt},} where $\mOpSet$ denotes the set of \glspl{operation}
 in $\mUFGraph$ and \mbox{$\mMatchSet[o] \subseteq \mMatchSet$} denotes the set
-of \glspl{match} covering~$o$\hspace{-.8pt}.
+of \glspl{match} covering~\mbox{$o$\hspace{-.8pt}.}
 %
 Similarly, the set of \glspl{variable} \mbox{$\mVar{dmatch}[d] \in
   \mMatchSet[d]$} models which selected \gls{match} \gls{define.d}[s]
-\gls{datum}~\mbox{$d \in \mDataSet$\hspace{-1.5pt}}, where $\mDataSet$ denotes
+\gls{datum}~\mbox{$d \in \mDataSet$\hspace{-1.5pt},} where $\mDataSet$ denotes
 the set of \glspl{datum} in $\mUFGraph$ and \mbox{$\mMatchSet[d] \subseteq
   \mMatchSet$} denotes the set of \glspl{match}
-\glsshort{define.d}[ing]~$d$\hspace{-.8pt}.
+\glsshort{define.d}[ing]~\mbox{$d$\hspace{-.8pt}.}
 
 
 \paragraph{Constraints}
@@ -185,7 +185,7 @@ therefore be identified and prevented.
 We detect such combinations by first constructing a \gls!{dependency graph},
 where each \gls{node} represents a \gls{match} and each
 \gls{edge}~$\mEdge{n}{m}$ indicates that \gls{match}~$m$ \gls{use.d}[s]
-\glspl{datum} produced by \gls{match}~$n$\hspace{-.8pt}.
+\glspl{datum} produced by \gls{match}~\mbox{$n$\hspace{-.8pt}.}
 %
 \Glspl{phi-match} are not taken into consideration as they do not incur true
 cyclic data dependencies.
@@ -221,7 +221,7 @@ dependencies is modeled as
 
 The \gls{global code motion} problem entails that \glspl{datum} are placed in
 \glspl{block} such that each definition of a \gls{datum}~$d$ precedes all
-\gls{use.d}[s] of~$d$\hspace{-.8pt}.
+\gls{use.d}[s] of~\mbox{$d$\hspace{-.8pt}.}
 %
 This condition can be expressed in terms of \gls{block} dominance.
 %
@@ -277,9 +277,9 @@ By definition, a \gls{block} always \gls{dominate.b}[s] itself (see
 
 Hence a placement of \glspl{match} into \glspl{block} is a \gls{solution} to the
 \gls{global code motion} problem if each \gls{datum}~$d$ is \gls{define.d}[d] by
-some selected \gls{match} placed in a \gls{block}~$b$\hspace{-1pt}, and every
-non-\gls{phi-match} \glsshort{use.d}[ing] $d$ is placed in a \gls{block}
-\gls{dominate.b}[d] by~$b$\hspace{-1pt}.
+some selected \gls{match} placed in a \gls{block}~\mbox{$b$\hspace{-1pt},} and
+every non-\gls{phi-match} \glsshort{use.d}[ing] $d$ is placed in a \gls{block}
+\gls{dominate.b}[d] by~\mbox{$b$\hspace{-1pt}.}
 %
 The \glspl{phi-match} must be excluded since, due to the \glspl{definition
   edge}, at least one \gls{datum} used by such \glspl{match} must be
@@ -303,7 +303,7 @@ Intuitively, all \glspl{operation} covered by a \gls{match}~$m$ must be placed
 in the same \gls{block} wherein $m$ itself is placed.
 %
 Hence, if \mbox{$\mCovers(m) \subseteq \mOpSet$} denotes the set of
-\glspl{operation} covered by \gls{match}~$m$\hspace{-.8pt}, then this
+\glspl{operation} covered by \gls{match}~\mbox{$m$\hspace{-.8pt},} then this
 \gls{constraint} is modeled as
 %
 \begin{equation}
@@ -322,8 +322,8 @@ forcing selected \glspl{match} with control flow to be placed in the \gls{block}
 matched by the \gls{UP graph}'s \gls{entry block}.
 %
 Hence, if \mbox{$\mEntry(m) \subseteq \mBlockSet$} returns either the empty set
-or a set containing only the \gls{entry block} of match~$m$ (when the \gls{UP
-  graph} has such a \gls{node}), then this \gls{constraint} is modeled as
+or a set containing only the \gls{entry block} of \gls{match}~$m$ (when the
+\gls{UP graph} has such a \gls{node}), then this \gls{constraint} is modeled as
 %
 \begin{equation}
   \forall m \in \mMatchSet,
@@ -340,10 +340,10 @@ As stated previously, each \gls{datum}~$d$ must be \gls{define.d}[d] in some
 %
 To this end, let \mbox{$\mDefines(m) \subseteq \mDataSet$} and \mbox{$\mUses(m)
   \subseteq \mDataSet$} denote the set of \glspl{datum} \gls{define.d}[d]
-respectively \gls{use.d}[d] by \gls{match}~$m$\hspace{-.8pt}.
+respectively \gls{use.d}[d] by \gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 Let also \mbox{$\mDom(b) \subseteq \mBlockSet$} denote the set of \glspl{block}
-\gls{dominate.b}[d] by \gls{block}~$b$\hspace{-1pt}.
+\gls{dominate.b}[d] by \gls{block}~\mbox{$b$\hspace{-1pt}.}
 %
 With these definitions together with the fact that the placement of a
 \gls{match} is deduced from its $\mVar{oplace}$~\glspl{variable}, the
@@ -372,7 +372,7 @@ where a selected \gls{match} is placed.
 %
 Intuitively, every \gls{datum} \gls{define.d}[d] by a \gls{match}~$m$ should be
 placed in the same \gls{block} as $m$ together with all \glspl{operation}
-covered by~$m$\hspace{-.8pt}.
+covered by~\mbox{$m$\hspace{-.8pt}.}
 %
 This alone, however, could result in an over-constrained \glsshort{constraint
   model} that prevents selection of certain \glspl{match}.
@@ -409,8 +409,8 @@ Otherwise $d$ may be \gls{define.d}[d] in any of the \glspl{block}
 \gls{span.b}[ned] by~$m$ (one of which is equal to \mbox{$\mVar{oplace}[m]$}).
 %
 If \mbox{$\mSpans(m) \subseteq B$} denotes the set of \glspl{block}
-\gls{span.b}[ned] by \gls{match}~$m$\hspace{-.8pt}, then this constraint is
-modeled as
+\gls{span.b}[ned] by \gls{match}~\mbox{$m$\hspace{-.8pt},} then this constraint
+is modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -432,8 +432,8 @@ Consequently, no \glspl{operation} covered by other \glspl{match} can be placed
 in that \gls{block}.
 %
 Hence, if \mbox{$\mConsumes(m) \subseteq B$} denotes the set of \glspl{block}
-\gls{consume.b}[d] by \gls{match}~$m$\hspace{-.8pt}, then this constraint is
-modeled as
+\gls{consume.b}[d] by \gls{match}~\mbox{$m$\hspace{-.8pt},} then this constraint
+is modeled as
 %
 \begin{equation}
   \begin{array}{c}
@@ -513,7 +513,7 @@ Let \mbox{$\mStores(m\hspace{-.8pt}, d) \subseteq \mLocationSet \cup
   \mSet{\mIntLocation}$} denote the set of compatible \glspl{location}
 (including the special \gls{location} for intermediate values) for a
 \gls{datum}~$d$ \gls{define.d}[d] or \gls{use.d}[d] by a
-\gls{match}~$m$\hspace{-.8pt}.
+\gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 With this definition, the \gls{constraint} is modeled as
 %
@@ -562,11 +562,11 @@ Since non-overlapping \glspl{location} entail the need for copy
 \glspl{instruction}, we extend the \gls{UF graph} with \glspl!{copy node}
 through a process called \gls!{copy extension}.
 %
-For each \gls{data-flow edge}~$\mEdge{v}{o}$\hspace{-.8pt}, where $v$ is a
-\gls{value node} and $o$ is an \gls{operation}, we remove this \gls{edge} and
+For each \gls{data-flow edge}~\mbox{$\mEdge{v}{o}$\hspace{-.8pt},} where $v$ is
+a \gls{value node} and $o$ is an \gls{operation}, we remove this \gls{edge} and
 insert a new \gls{copy node}~$c$, a new \gls{value node}~$v'$\!, and new
 \glspl{data-flow edge} such that
-\mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$}\hspace{-.8pt}.
+\mbox{$\mEdge{v}{\mEdge{c}{\mEdge{v'}{o}}}$\hspace{-.8pt}.}
 %
 If $o$ is a \gls{phi-node} then the corresponding \gls{definition edge}
 connected to $v$ -- this is the \gls{edge} with the same \gls{outbound.e}
@@ -813,8 +813,8 @@ types and are therefore not interchangeable.
 %
 Then, for each \gls{match}~$m$ we create a new \gls{match} for each permutation
 of \glspl{datum} that are \gls{copy-related.d} with the \glspl{input datum} in
-$m$\hspace{-.8pt}, where an \gls!{input datum} is a \gls{datum} \gls{use.d}[d]
-but not \gls{define.d}[d] by~$m$\hspace{-.8pt}.
+\mbox{$m$\hspace{-.8pt},} where an \gls!{input datum} is a \gls{datum}
+\gls{use.d}[d] but not \gls{define.d}[d] by~\mbox{$m$\hspace{-.8pt}.}
 %
 See for example \refFigure{match-duplication-example}.
 %
@@ -855,8 +855,8 @@ The \gls{match set} contains a \gls{match}~$m$ that uses value~\irVar*{v}[1],
 which is \gls{copy-related.d} with value~\irVar*{v}[2]
 (\refFigure{match-duplication-example-before}).
 %
-Because \irVar*{v}[1] is an \gls{input datum} in~$m$\hspace{-.8pt}, we duplicate
-$m$ to instead use \irVar*{v}[2], resulting in match~$m'$
+Because \irVar*{v}[1] is an \gls{input datum} in~\mbox{$m$\hspace{-.8pt},} we
+duplicate $m$ to instead use \irVar*{v}[2], resulting in \gls{match}~$m'$
 (\refFigure{match-duplication-example-after}).
 
 The main advantage of \gls{match duplication} is that no changes need to be done
@@ -885,8 +885,9 @@ can postpone the decision of which \gls{input datum} to use for a particular
 %
 The idea is as follows.
 %
-For each \gls{match}~$m$\hspace{-.8pt}, let every \glspl{input datum}~$d$ in $m$
-be mapped to any \gls{datum} that is \gls{copy-related.d} to~$d$\hspace{-.8pt}.
+For each \gls{match}~\mbox{$m$\hspace{-.8pt},} let every \glspl{input datum}~$d$
+in $m$ be mapped to any \gls{datum} that is \gls{copy-related.d}
+to~\mbox{$d$\hspace{-.8pt}.}
 %
 In other words, unlike before when a \gls{match} was \mbox{1-to-1} mapping
 between \glspl{node} in the \gls{UP graph} and \glspl{node} in the \gls{UF
@@ -931,13 +932,13 @@ Again, the \gls{match set} contains a \gls{match}~$m$ that uses
 value~\irVar*{v}[1], which is \gls{copy-related.d} with value~\irVar*{v}[2]
 (\refFigure{alt-values-example-before}).
 %
-Because \irVar*{v}[1] is an \gls{input datum} in~$m$\hspace{-.8pt}, we extend
-the mapping from $n$ to \irVar*{v}[1] to include \irVar*{v}[2], where $n$ is the
-corresponding \gls{value node} in the \gls{UP graph} of~$m$
+Because \irVar*{v}[1] is an \gls{input datum} in~\mbox{$m$\hspace{-.8pt},} we
+extend the mapping from $n$ to \irVar*{v}[1] to include \irVar*{v}[2], where $n$
+is the corresponding \gls{value node} in the \gls{UP graph} of~$m$
 (\refFigure{alt-values-example-after}).
 %
 In this context, \irVar*{v}[1] and \irVar*{v}[2] are said to be
-\glspl!{alternative value} to~$m$\hspace{-.8pt}.
+\glspl!{alternative value} to~\mbox{$m$\hspace{-.8pt}.}
 %
 For convenience, we assume that the set of \glspl{alternative value} for each
 non-\gls{input datum}~$d$ in a \gls{match} contains only the \glsshort{state
@@ -1016,7 +1017,7 @@ As stated previously, the aim is to add another level of indirection whenever a
 To this end, let \mbox{$\mDefines(m) \subseteq \mOperandSet$} and
 \mbox{$\mUses(m) \subseteq \mOperandSet$} now denote the set of \glspl{operand}
 (instead of \glspl{datum}) \gls{define.d}[d] respectively \gls{use.d}[d] by
-\gls{match}~$m$\hspace{-.8pt}.
+\gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 With these definitions, \refEquationList{naive-dom, spanning,
   compatible-locations, phi-match-locations} are adjusted accordingly (the
@@ -1104,7 +1105,7 @@ Lastly, we need to enforce the value placements appearing in the
 Let $\mMatchDefEdgeSet$ denote this set of value placements, encoded as a
 tuple~\mbox{$\mTuple{m\hspace{-.8pt}, b\hspace{-1pt}, p}$} for each
 \gls{definition edge} between a \gls{block}~$b$ and an operand~$p$ appearing in
-\gls{match}~$m$\hspace{-.8pt}.
+\gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 These \glspl{constraint} are then modeled as
 %
@@ -1334,7 +1335,7 @@ From the results for these experiments, we conclude:
 \labelSection{modeling-block-ordering}
 
 Ordering the \glspl{block} in a \gls{function} entails finding a sequence~$s$
-such that each \gls{block} appears exactly once in~$s$\hspace{-.8pt}.
+such that each \gls{block} appears exactly once in~\mbox{$s$\hspace{-.8pt}.}
 %
 Depending on the control-flow \glspl{instruction} selected, some \glspl{block}
 may need to be adjacent.
@@ -1348,7 +1349,7 @@ continues the execution with the next \gls{instruction} in the \gls{assembly
   code}.
 %
 This method of branching is called \gls!{fall-through}, and due to this $d$
-must be placed immediately after $b$ in $s$\hspace{-.8pt}.
+must be placed immediately after $b$ in~\mbox{$s$\hspace{-.8pt}.}
 
 For some combinations of \glspl{function} and \glspl{target machine} with
 \gls{fall-through} \glspl{instruction}, there exists no valid \gls{block}
@@ -1398,7 +1399,7 @@ See for example \refFigure{jump-insert-example}.
 %
 \Glspl{block}~\irBlock*{A} and~\irBlock*{B} both contain control-flow
 \glspl{instruction} that branch to the beginning of \irBlock*{B} if the
-condition holds, otherwise they branch to block~\irBlock*{C}
+condition holds, otherwise they branch to \gls{block}~\irBlock*{C}
 (\refFigure{jump-insert-example-cfg}).
 %
 Because of the fall-through \gls{constraint}, \irBlock*{A} and \irBlock*{B}
@@ -1424,7 +1425,7 @@ experiments showing that one is superior to the other.
 \paragraph{Variables}
 
 The set of \glspl{variable} \mbox{$\mVar{succ}[b] \in \mBlockSet$} models the
-successor of block~$b$\hspace{-1pt}.
+successor of \gls{block}~\mbox{$b$\hspace{-1pt}.}
 %
 For example, if \mbox{$\mVar{succ}[b] = b'$}, then \gls{block}~$b'$ appears
 immediately after \gls{block}~$b$ in the \gls{block ordering} sequence.
@@ -1448,12 +1449,13 @@ where \mbox{$b_1, \ldots, b_n = \mBlockSet$}.
 
 If a \gls{match}~$m$ with an \gls{entry block} is derived from an
 \gls{instruction} that performs a \gls{fall-through} to
-\gls{block}~$b$\hspace{-1pt}, then the \gls{constraint} can naively be modeled
-as \mbox{$\mVar{sel}[m] \mImp \mVar{succ}[\mEntry(m)] = b$}\hspace{-1pt}.
+\gls{block}~\mbox{$b$\hspace{-1pt},} then the \gls{constraint} can naively be
+modeled as \mbox{$\mVar{sel}[m] \mImp \mVar{succ}[\mEntry(m)] =
+  b$\hspace{-1pt}.}
 %
 However, this \gls{constraint} is too limiting as it disallows \gls{empty.b}
-\glspl{block} to be placed between $\mEntry(m)$ and~$b$\hspace{-1pt}, thus
-forcing redundant jump \glspl{instruction} to be emitted.
+\glspl{block} to be placed between $\mEntry(m)$ and~\mbox{$b$\hspace{-1pt},}
+thus forcing redundant jump \glspl{instruction} to be emitted.
 %
 A \gls{block}~$b$ is considered \gls!{empty.b} if either no \glspl{match} are
 placed in $b$ or every \gls{match} in $b$ is a \gls!{null match}, which is a
@@ -1467,9 +1469,10 @@ Hence we extend the naive implementation above into a disjunction, where the
 second clause models \glspl{fall-through} via single \gls{empty.b}
 \glspl{block}.
 %
-Let $\mFallThroughSet$ denote a set of pairs~$\mPair{m\hspace{-.8pt}}{b}$, where
-$m$ is a \gls{match} and $b$ is a \gls{block} through which $m$ will fall if
-selected, and let $\mNullMatchSet$ denote the set of \glspl{null match}.
+Let $\mFallThroughSet$ denote a set of
+pairs~\mbox{$\mPair{m\hspace{-.8pt}}{b}$,} where $m$ is a \gls{match} and $b$ is
+a \gls{block} through which $m$ will fall if selected, and let $\mNullMatchSet$
+denote the set of \glspl{null match}.
 %
 With these definitions, the \gls{fall-through} \gls{constraint} is modeled as
 %
@@ -1536,8 +1539,8 @@ The idea, called \gls!{branch extension}, is as follows.
 For each \gls{control-flow edge}~$\mPair{c}{b}$, where $c$ is a \gls{control
   node} representing a conditional branch and $b$ is a \gls{block node}, we
 remove this \gls{edge} and insert a new \gls{block node}~$b'$\!, a
-new\gls{control node}~$c'$\hspace{-1pt}, and new \glspl{control-flow edge} such
-that \mbox{$\mEdge{c}{\mEdge{b'}{\mEdge{c'}{b}}}$}\hspace{-1pt}.
+new\gls{control node}~\mbox{$c'$\hspace{-1pt},} and new \glspl{control-flow
+  edge} such that \mbox{$\mEdge{c}{\mEdge{b'}{\mEdge{c'}{b}}}$\hspace{-1pt}.}
 %
 An example is shown in \refFigure{branch-extension-example}.
 %
@@ -1620,8 +1623,8 @@ Let \mbox{$\mCost(p)$} and \mbox{$\mEmits(p)$} denote the cost of pattern~$p$
 respectively the sequence of \glspl{instruction} emitted by $p$ if selected.
 %
 Then, for each \gls{pattern}~\mbox{$p \in S$} corresponding to a conditional
-jump \gls{instruction} that falls through to a given block~$b$\hspace{-1pt}, we
-add a new \gls{pattern} to $S$.
+jump \gls{instruction} that falls through to a given
+\gls{block}~\mbox{$b$\hspace{-1pt},} we add a new \gls{pattern} to~$S$.
 %
 This new \gls{pattern} is a copy of $p$ but has no \gls{fall-through}
 \gls{constraint}, it emits $\mEmits(p)$ followed by $\mEmits(\jmpPattern)$, and
@@ -1953,7 +1956,7 @@ can be modeled as
 %
 where \mbox{$\mCost(m) \in \mNatNumSet$} denotes the cost of \gls{match}~$m$,
 \mbox{$\mFreq(b) \in \mNatNumSet$} denotes the execution frequency of
-block~$b$\hspace{-1pt},\!%
+\gls{block}~\mbox{$b$\hspace{-1pt},}\!%
 %
 \footnote{%
   In order to curb the size of the \gls{domain} of the \gls{cost variable},
@@ -2238,11 +2241,11 @@ Another solution is to apply the same mechanism used in \gls{copy extension}.
 In the same manner as with \glspl{copy node}, the \gls{UF graph} is first
 extended with \glspl!{extension node}.
 %
-Hence, for each \gls{data-flow edge}~$\mEdge{v}{o}$\hspace{-.8pt}, where $v$ is
-a \gls{value node} and $o$ is an \gls{operation}, we remove this \gls{edge} and
-insert a new \gls{extension node}~$e$\hspace{-.8pt}, a new\gls{value
-  node}~$v'$\!, and new \glspl{data-flow edge} such that
-\mbox{$\mEdge{v}{\mEdge{e}{\mEdge{v'}{o}}}$}\hspace{-.8pt}.
+Hence, for each \gls{data-flow edge}~\mbox{$\mEdge{v}{o}$\hspace{-.8pt},} where
+$v$ is a \gls{value node} and $o$ is an \gls{operation}, we remove this
+\gls{edge} and insert a new \gls{extension node}~\mbox{$e$\hspace{-.8pt},} a
+new\gls{value node}~$v'$\!, and new \glspl{data-flow edge} such that
+\mbox{$\mEdge{v}{\mEdge{e}{\mEdge{v'}{o}}}$\hspace{-.8pt}.}
 %
 Then the \gls{constraint model} is extended with two sets of \glspl{variable},
 \mbox{$\mVar{sext}[d] \in \mSet{0, 1}$} and \mbox{$\mVar{zext}[d] \in \mSet{0,

@@ -45,7 +45,7 @@ In this context, the \gls{instruction scheduling} problem can be defined as
 follows.
 %
 Assume that we are given a set~$M'$ of selected \glspl{match}, all placed in a
-\gls{block}~$b$\hspace{-1pt}.
+\gls{block}~\mbox{$b$\hspace{-1pt}.}
 %
 Let $\mLat(m)$ denote the \gls{instruction} latency of a \gls{match}~\mbox{$m
   \in M'$}.
@@ -53,8 +53,8 @@ Let $\mLat(m)$ denote the \gls{instruction} latency of a \gls{match}~\mbox{$m
 Then \gls{instruction scheduling} problem is to assign to each
 \gls{match}~\mbox{$m \in M'$} an issue cycle $c_m$ such that \mbox{$c_m \!+
   \mLat(m) \leq c_{m'}$} holds for every \gls{match}~\mbox{$m' \in M'$},
-\mbox{$m \neq m'$}, that \gls{use.d}[s] \glspl{datum} \gls{define.d}[d] by
-$m$\hspace{-.8pt}.
+\mbox{$m \neq m'$}, that \gls{use.d}[s] \glspl{datum} \gls{define.d}[d]
+by~\mbox{$m$\hspace{-.8pt}.}
 %
 To model this problem, we introduce two new \glspl{variable}.
 
@@ -64,13 +64,13 @@ To model this problem, we introduce two new \glspl{variable}.
 The set of \glspl{variable} \mbox{$\mVar{cycle}[m] \in \mNatNumSet$} models at
 which cycle a \gls{match}~$m$ is scheduled, and the set of \glspl{variable}
 \mbox{$\mVar{sched}[m\hspace{-.8pt}, b] \in \mSet{0, 1}$} models whether $m$ is
-scheduled in \gls{block}~$b$\hspace{-1pt}.
+scheduled in \gls{block}~\mbox{$b$\hspace{-1pt}.}
 
 
 \paragraph{Constraints}
 
 To begin with, a \gls{match}~$m$ must be scheduled in \gls{block}~$b$ if and
-only if $m$ is selected and placed in $b$\hspace{-1pt}.
+only if $m$ is selected and placed in~\mbox{$b$\hspace{-1pt}.}
 %
 This can be modeled as
 %
@@ -121,9 +121,9 @@ for which \mbox{$\mCapOf(r) = 1$}, thus preventing the durations of the
 \glspl{instruction} from overlapping.
 %
 Let also \mbox{$\mLat(m) \in \mNatNumSet$} denote the \gls{instruction} latency
-of a \gls{match}~$m$\hspace{-.8pt}, and \mbox{$\mResourceUse(m, r) \in
+of a \gls{match}~\mbox{$m$\hspace{-.8pt},} and \mbox{$\mResourceUse(m, r) \in
   \mNatNumSet$} denote the amount of resource $r$ used by
-\gls{match}~$m$\hspace{-.8pt}.
+\gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 With these definitions, this \gls{constraint} can be modeled as
 %
@@ -168,7 +168,7 @@ resources.
 
 In this context, \gls{register allocation} can be described as the problem of
 assigning a location to each \gls{datum}~$d$ such that the value in the location
-is preserved until the last use of~$d$\hspace{-.8pt}.
+is preserved until the last use of~\mbox{$d$\hspace{-.8pt}.}
 %
 Like with \gls{instruction selection}, this problem can be considered either at
 \gls{local.ra} or \gls{global.ra} scope.
@@ -279,13 +279,13 @@ upon the \gls{constraint model} proposed in \refSection{fw-isched}.
 
 The two sets of \glspl{variable} \mbox{$\mVar{start}[d] \in \mNatNumSet$} and
 \mbox{$\mVar{end}[d] \in \mNatNumSet$} model the start respectively end of the
-\gls{live range} for a \gls{datum}~$d$\hspace{-.8pt}.
+\gls{live range} for a \gls{datum}~\mbox{$d$\hspace{-.8pt}.}
 %
 In addition, the set of \glspl{variable} \mbox{$\mVar{alive}[d] \in \mSet{0,
     1}$} models whether $d$ is alive (in other words, $d$ is not
 \gls{killed.d}), and the set of \glspl{variable}
 \mbox{$\mVar{using}[m \hspace{-.8pt}, d] \in \mSet{0, 1}$} models whether
-\gls{match}~$m$ uses \gls{datum}~$d$\hspace{-.8pt}.
+\gls{match}~$m$ uses \gls{datum}~\mbox{$d$\hspace{-.8pt}.}
 %
 The \gls{register} to which $d$ is assigned is already modeled by the
 $\mVar{loc}$~\glspl{variable}.
@@ -308,7 +308,7 @@ This can be modeled as
 
 Now, if a \gls{datum}~$d$ is not \gls{killed.d}, then the start of a \gls{live
   range} for a \gls{datum}~$d$ is determined by the \gls{match}
-\glsshort{define.d}[ing] $d$\hspace{-.8pt}.
+\glsshort{define.d}[ing]~\mbox{$d$\hspace{-.8pt}.}
 %
 Otherwise, the start is set to zero.
 %
@@ -332,9 +332,10 @@ This can be modeled as
 \end{equation}
 
 Similarly, the end of a \gls{live range} for a live \gls{datum}~$d$ is
-determined by the \gls{match} making the last \gls{use.d} of $d$\hspace{-.8pt}.
+determined by the \gls{match} making the last \gls{use.d}
+of~\mbox{$d$\hspace{-.8pt}.}
 %
-If there is no use of $d$\hspace{-.8pt}, then $\mVar{end}[d]$ is set to
+If there is no use of~\mbox{$d$\hspace{-.8pt},} then $\mVar{end}[d]$ is set to
 $\mVar{start}[d]$ to not affect \gls{register allocation} and \gls{instruction
   scheduling} for other \glspl{datum}.
 %
@@ -370,7 +371,8 @@ where
 \end{equation}
 
 A \gls{match}~$m$ \gls{use.d}[s] a \gls{datum}~$d$ if and only if $m$ is
-selected and one of its \glspl{operand} is connected to $d$\hspace{-.8pt}.
+selected and one of its \glspl{operand} is connected
+to~\mbox{$d$\hspace{-.8pt}.}
 %
 This can be modeled as
 %
@@ -405,7 +407,7 @@ Thus the rectangle packing problem can be modeled as
 \end{equation}
 %
 where \mbox{$\mWidthOf(d) \in \mNatNumSet$} denotes the number of
-\glspl{register} required for \gls{datum}~$d$\hspace{-.8pt}.
+\glspl{register} required for \gls{datum}~\mbox{$d$\hspace{-.8pt}.}
 
 
 \subsection{Global Register Allocation}
@@ -483,7 +485,7 @@ together with an additional set of \glspl{variable}, and then extending the
 The two sets of \glspl{variable} \mbox{$\mVar{start}[d \hspace{-.8pt}, b] \in
   \mNatNumSet$} and \mbox{$\mVar{end}[d \hspace{-.8pt}, b] \in \mNatNumSet$}
 model the start respectively end of the \gls{live range} for a \gls{datum}~$d$
-in \gls{block}~$b$\hspace{-.8pt}.
+in \gls{block}~\mbox{$b$\hspace{-.8pt}.}
 %
 In addition, given a \gls{datum}~$d$ and a \gls{block}~$b$ the set of
 \glspl{variable} \mbox{$\mVar{useafter}[d \hspace{-.8pt}, b] \in \mSet{0, 1}$}
@@ -582,10 +584,10 @@ This can be modeled as
 where \mbox{$\mBranches(b) \subseteq \mBlockSet$} gives the set of \glspl{block}
 that can be reached from \gls{block}~$b$ through a single branch.
 
-Intuitively, given a \gls{datum}~$d$ and a \gls{block}~$b$\hspace{-1pt}, if $d$
-is used in some \gls{block} that can be reached from $b$\hspace{-1pt}, then the
-\gls{live range} of $d$ must extend until the end of the schedule for
-$b$\hspace{-1pt}.
+Intuitively, given a \gls{datum}~$d$ and a \gls{block}~\mbox{$b$\hspace{-1pt},}
+if $d$ is used in some \gls{block} that can be reached
+from~\mbox{$b$\hspace{-1pt},} then the \gls{live range} of $d$ must extend until
+the end of the schedule for~\mbox{$b$\hspace{-1pt}.}
 %
 This can be modeled as
 %
@@ -606,8 +608,8 @@ This can be modeled as
   \labelEquation{global-live-range-end-def-and-int-blocks}
 \end{equation}
 
-Moreover, for every \gls{block}~$b$\hspace{-1pt}, either $d$ is not used in $b$
-or the last use of $d$ occurs in $b$\hspace{-1pt}.
+Moreover, for every \gls{block}~\mbox{$b$\hspace{-1pt},} either $d$ is not used
+in $b$ or the last use of $d$ occurs in~\mbox{$b$\hspace{-1pt}.}
 %
 This can jointly be modeled as
 %

@@ -354,7 +354,7 @@ Assume a problem consists of $n$~decisions, each with $k$~choices.
 %
 Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
 where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
-selected for decision~$i$\hspace{-.8pt}.
+selected for decision~\mbox{$i$\hspace{-.8pt}.}
 %
 For each \gls{variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1$}
@@ -373,8 +373,8 @@ such \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 \glspl{instruction} that may need to be selected due to certain combinations of
 \glspl{match}.
 %
-For example, assume two nodes~$i$ and~$j$ where $j$ depends on
-$i$\hspace{-.8pt}.
+For example, assume two nodes~$i$ and~$j$ where $j$ depends
+on~\mbox{$i$\hspace{-.8pt}.}
 %
 Assume further that the \glspl{instruction} are represented as a
 \glshyphened{normal form.g} \gls{machine grammar}, and that~$i$ and~$j$ can be
@@ -631,14 +631,14 @@ dependencies -- are represented through the cost vectors and matrices.
 In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
 \glspl{rule} must also be selected.
 %
-This is achieved by first extending, for each node~$i$\hspace{-.8pt}, the domain
-of its \gls{variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived from
-\gls{proxy.r} \glspl{rule}.
+This is achieved by first extending, for each node~\mbox{$i$\hspace{-.8pt},} the
+domain of its \gls{variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived
+from \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
 and \gls{complex.m} \gls{match}~$j$, the costs are \num{0} if
 \mbox{$\mVector{\mVar{x}}_j = \text{\emph{off}}$} or $\mVector{\mVar{x}}_i$ is
-set to a \gls{proxy.r} \gls{rule} associated with $j$\hspace{-1pt}.
+set to a \gls{proxy.r} \gls{rule} associated with~\mbox{$j$\hspace{-1pt}.}
 %
 Otherwise the costs are $\infty$.
 %

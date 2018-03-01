@@ -924,7 +924,7 @@ It first constructs a cost matrix~$\mMatrix{C}$, where rows represent
 %
 The cost in each element~\mbox{$\mMatrix{C}[i][j]$} is initialized to infinity,
 indicating that there exists no sequence of \glspl{rule reduction} that reduces
-\gls{node}~$i$ to \gls{nonterminal}~$j$\hspace{-1pt}.
+\gls{node}~$i$ to \gls{nonterminal}~\mbox{$j$\hspace{-1pt}.}
 %
 It then computes the costs by traversing the \gls{expression tree} bottom up.
 %
@@ -932,9 +932,9 @@ At each \gls{node}~$n$ and for each matching \gls{base.r} \gls{rule}~$r$\!, with
 \gls{nonterminal}~$s$ as \glsshort{rule result}, it computes the cost~$c$ of
 applying $r$ at~$n$ to produce~$s$ according to the scheme stated above.
 %
-If $c$ is less than the currently recorded cost for reducing $n$ to
-$s$\hspace{-.8pt}, then the cost and \gls{rule} information for $n$ is updated
-accordingly.
+If $c$ is less than the currently recorded cost for reducing $n$
+to~\mbox{$s$\hspace{-.8pt},} then the cost and \gls{rule} information for $n$ is
+updated accordingly.
 %
 The same is then done for all \gls{chain.r} \glspl{rule} until it reaches a
 fixpoint (which must eventually be reached as all \gls{rule} costs are
@@ -1012,9 +1012,9 @@ The idea is as follows.
 The \gls{expression tree} is traversed bottom up and labeled with a
 \gls!{state}.
 %
-For a given labeled \gls{node}~$n$\hspace{-.8pt}, the \gls{state} essentially
-holds enough information to optimally reduce the \gls{expression tree} rooted
-at~$n$ to any \gls{nonterminal}.
+For a given labeled \gls{node}~\mbox{$n$\hspace{-.8pt},} the \gls{state}
+essentially holds enough information to optimally reduce the \gls{expression
+  tree} rooted at~$n$ to any \gls{nonterminal}.
 %
 At first glance it would seem that this requires an infinite number of
 \glspl{state} as \glspl{expression tree} can be of arbitrary size, but this only
@@ -1316,9 +1316,9 @@ The idea is to first compute the costs for each \gls{node} as if the \gls{block
   duplication}.
 %
 Then, if several \glspl{rule} reduce the same \gls{node} to the same
-\gls{nonterminal}~$\mNT{N}$\hspace{-1pt}, then $\mNT{N}$ can be shared between
-the \glspl{rule} whose \glsplshort{rule pattern} all contain
-$\mNT{N}$\hspace{-1pt}.
+\gls{nonterminal}~\mbox{$\mNT{N}$\hspace{-1pt},} then $\mNT{N}$ can be shared
+between the \glspl{rule} whose \glsplshort{rule pattern} all
+contain~\mbox{$\mNT{N}$\hspace{-1pt}.}
 %
 \citeauthor{Ertl:1999} also introduced an algorithm for checking whether
 \gls{optimal.ps} \gls{pattern selection} is guaranteed for a given
@@ -1349,7 +1349,7 @@ recompute the costs, this time forbidding overlap at \gls{fixed.n} \glspl{node}.
 Another approach to modeling \gls{instruction selection} is to model it as a
 problem of finding \glspl{independent set}.
 %
-Given a \gls{graph}~\mbox{$G = \mPair{N\hspace{-1pt}}{E}$}, a set \mbox{$S
+Given a \gls{graph}~\mbox{$G = \mPair{N\hspace{-1pt}}{E}$,} a set \mbox{$S
   \subseteq N$} is an \gls!{independent set} if no pairs of
 nodes~\mbox{$m\hspace{-.8pt}, n \in S$} are adjacent in~$G$.
 %
@@ -1572,9 +1572,9 @@ In most \gls{IP}-based approaches, \gls{pattern selection} is modeled as
 %
 where $N$ denotes the set of nodes in a \gls{block DAG}, $M$ denotes the
 \gls{match set}, $\mCovers(m)$ denotes the set of \glspl{node} covered by
-match~$m$\hspace{-.8pt}, and $\mVector{\mVar{x}}[m]$ is a Boolean
-(\mbox{$\mSet{0, 1}$}) \gls!{decision variable} indicating whether match~$m$ is
-selected.
+\gls{match}~\mbox{$m$\hspace{-.8pt},} and $\mVector{\mVar{x}}[m]$ is a Boolean
+(\mbox{$\mSet{0, 1}$}) \gls!{decision variable} indicating whether
+\gls{match}~$m$ is selected.
 %
 For \gls{exact.c} \gls{cover}[age], the inequality is replaced with equality.
 %
@@ -1740,12 +1740,12 @@ To model \gls{exact.c} \gls{pattern selection} using $\mGCC$, two new sets of
 %
 Assume that $N$ denotes the set of \glspl{node} to be covered, $M$ denotes the
 \gls{match set}, and $\mCovers(m)$ denotes the set of \glspl{node} covered by
-\gls{match}~$m$\hspace{-.8pt}.
+\gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 Then, \gls{variable} \mbox{$\mVar{match}_n \in \mSetBuilder{m}{m \in M, n \in
     \mCovers(m)}$} decides which \gls{match} covers \gls{node}~$n$, and
 \gls{variable} \mbox{$\mVar{count}_m \in \mSet{0, |\mCovers(m)|}$} decides how
-many \glspl{node} are covered by \gls{match}~$m$\hspace{-.8pt}.
+many \glspl{node} are covered by \gls{match}~\mbox{$m$\hspace{-.8pt}.}
 %
 Hence each match covers either no \glspl{node} or all \glspl{node} in its
 \gls{pattern}.
@@ -2220,7 +2220,7 @@ Assume that a problem consists of $n$~decisions, each with $k$~choices.
 %
 Then $\mVector{\mVar{x}}_i$ is a \gls{decision variable} with $k$~elements,
 where \mbox{$\mVector{\mVar{x}}_i[j] = 1$} means that choice~$j$ has been
-selected for decision~$i$\hspace{-.8pt}.
+selected for decision~\mbox{$i$\hspace{-.8pt}.}
 %
 For each \gls{variable}, the condition
 \raisebox{0pt}[\height-2pt]{$\mVector{1}^{\mTransp} \mVector{\mVar{x}}_i = 1$}
@@ -2236,8 +2236,8 @@ such \gls{match}, and $\mMatrix{C}_{ij}$ contains the cost of additional
 \glspl{instruction} that may need to be selected due to certain combinations of
 \glspl{match}.
 %
-For example, assume two nodes~$i$ and~$j$ where $j$ depends on
-$i$\hspace{-.8pt}.
+For example, assume two nodes~$i$ and~$j$ where $j$ depends
+on~\mbox{$i$\hspace{-.8pt}.}
 %
 Assume further that the \glspl{instruction} are represented as a
 \glshyphened{normal form.g} \gls{machine grammar}, and that~$i$ and~$j$ can be
@@ -2461,14 +2461,14 @@ dependencies -- are represented through the cost vectors and matrices.
 In order to select a \gls{complex.r} \gls{rule}, all of its \gls{proxy.r}
 \glspl{rule} must also be selected.
 %
-This is achieved by first extending, for each node~$i$\hspace{-.8pt}, the domain
-of its \gls{variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived from
-\gls{proxy.r} \glspl{rule}.
+This is achieved by first extending, for each node~\mbox{$i$\hspace{-.8pt},} the
+domain of its \gls{variable}~$\mVector{\mVar{x}}_i$ with \glspl{match} derived
+from \gls{proxy.r} \glspl{rule}.
 %
 Then a new set of cost matrices~$D_{ij}$ is created such that, for a node~$i$
 and \gls{complex.m} \gls{match}~$j$, the costs are \num{0} if
 \mbox{$\mVector{\mVar{x}}_j = \text{\emph{off}}$} or $\mVector{\mVar{x}}_i$ is
-set to a \gls{proxy.r} \gls{rule} associated with $j$\hspace{-1pt}.
+set to a \gls{proxy.r} \gls{rule} associated with~\mbox{$j$\hspace{-1pt}.}
 %
 Otherwise the costs are $\infty$.
 %
@@ -2585,15 +2585,15 @@ The set is computed as follows.
   mappings from \glspl{node} in $\fG$ to \glspl{node} in $\pG$.
   %
   Let $\fN(s)$ and $\pN(s)$ denote the sets of \glspl{node} in $\fG$ and $\pG$,
-  respectively, that appear in $s$\hspace{-.8pt}.
+  respectively, that appear in~\mbox{$s$\hspace{-.8pt}.}
   %
   Also let $\fTout$ and $\pTout$ denote the set of \glspl{node} in $\fG$ and
   $\pG$, respectively, that are targets of \glspl{edge} from \glspl{node}
-  appearing in~$s$\hspace{-.8pt}.
+  appearing in~\mbox{$s$\hspace{-.8pt}.}
   %
   Likewise, let $\fTin$ and $\pTin$ denote the set of \glspl{node} in $\fG$ and
   $\pG$, respectively, that are sources of \glspl{edge} to \glspl{node}
-  appearing in~$s$\hspace{-.8pt}.
+  appearing in~\mbox{$s$\hspace{-.8pt}.}
   %
   Then
   %
@@ -2640,7 +2640,7 @@ The syntactic rules check five properties:
 %
 The first two rules, $\mSynPredRule$ and $\mSynSuccRule$, check the consistency
 of the partial \gls{match} obtained when the candidate~\mbox{$\mPair{n}{m}$} is
-added to~$s$\hspace{-.8pt}.
+added to~\mbox{$s$\hspace{-.8pt}.}
 %
 Intuitively, if there exists an \gls{edge} between two mapped \glspl{node} in
 the \gls{pattern graph}, then a corresponding \gls{edge} must also exist in the
@@ -2676,9 +2676,9 @@ Formally, the rules are defined as follows.
   \def\fNegN{\mkern2mu\overline{\mkern-2mu N}_{\mathsc{f}}}%
   \def\pNegN{\mkern2mu\overline{\mkern-2mu N}_{\mathsc{p}}}%
 
-  Let $\mPred(G\hspace{-.8pt}, n)$ and $\mSucc(G\hspace{-.8pt}, n)$ denote the
-  sets of predecessor and successor \glspl{node}, respectively, to
-  \gls{node}~$n$ in \gls{graph}~$G$.
+  Let \mbox{$\mPred(G\hspace{-.8pt}, n)$} and \mbox{$\mSucc(G\hspace{-.8pt},
+    n)$} denote the sets of predecessor and successor \glspl{node},
+  respectively, to \gls{node}~$n$ in \gls{graph}~$G$.
   %
   Also let \mbox{$\fT = \fTin \cup \fTout$} and \mbox{$\fNegN = \fN \setminus
     \fN(s) \setminus \fT$}, with similar definitions for $\pT$ and $\pNegN$.
@@ -2742,8 +2742,8 @@ Formally, the rules are defined as follows.
   compatibility between \glspl{node} and \glspl{edge}.
   %
   Also let $\fE(s)$ and $\pE(s)$ denote the sets of \glspl{edge} in $\fG$ and
-  $\pG$, respectively, for all pairs of \glspl{node} appearing in
-  $s$\hspace{-.8pt}.
+  $\pG$, respectively, for all pairs of \glspl{node} appearing
+  in~\mbox{$s$\hspace{-.8pt}.}
   %
   Then
   %

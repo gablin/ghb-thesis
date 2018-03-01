@@ -472,8 +472,9 @@ Consequently, for each value-\gls{block} pair \mbox{$\mPair{v\hspace{-1pt}}{b}$}
 appearing as argument to a \gls{phi-function}, we add a \gls!{definition edge}
 between the corresponding \glsshort{value node} and \gls{block node}.
 %
-This forces $v$ to be produced in $b$\hspace{-1pt}, which in turn prevents the
-\gls{operation} producing $v$ from being moved out of $b$\hspace{-1pt}.
+This forces $v$ to be produced in~\mbox{$b$\hspace{-1pt},} which in turn
+prevents the \gls{operation} producing $v$ from being moved out
+of~\mbox{$b$\hspace{-1pt}.}
 %
 Hence \refRequirement{uni-rep-preserve-semantics} is achieved.
 
@@ -692,15 +693,16 @@ During \gls{graph} construction, every \gls{edge} is given two \glspl!{edge
 This is needed for \gls{pattern matching}, which will be described in
 \refSection{uni-rep-pattern-matching}.
 %
-For a given \gls{edge}~\mbox{$e = \mEdge{n_1}{n_2}$} of type~$t$\hspace{-1pt},
-where $t$ represents either \glslong{control-flow edge}, \glslong{data-flow
-  edge}, or \glslong{state-flow edge}, the \gls!{inbound.en}[ \gls{edge
-    number}], denoted \mbox{$\mInEdgeNr(e) = i$}\hspace{-.8pt}, indicates that
-$e$ is the $i$th \gls{ingoing.e} \gls{edge} of type~$t$ connected to $n_2$.
+For a given \gls{edge}~\mbox{$e = \mEdge{n_1}{n_2}$} of
+type~\mbox{$t$\hspace{-1pt},} where $t$ represents either \glslong{control-flow
+  edge}, \glslong{data-flow edge}, or \glslong{state-flow edge}, the
+\gls!{inbound.en}[ \gls{edge number}], denoted \mbox{$\mInEdgeNr(e) =
+  i$\hspace{-.8pt},} indicates that $e$ is the $i$th \gls{ingoing.e} \gls{edge}
+of type~$t$ connected to~$n_2$.
 %
 Similarly, the \gls!{outbound.en}[ \gls{edge number}], denoted
-\mbox{$\mOutEdgeNr(e) = i$}\hspace{-.8pt}, indicates that $e$ is the $i$th
-\gls{outgoing.e} \gls{edge} of type~$t$ connected to $n_1$.
+\mbox{$\mOutEdgeNr(e) = i$\hspace{-.8pt},} indicates that $e$ is the $i$th
+\gls{outgoing.e} \gls{edge} of type~$t$ connected to~$n_1$.
 %
 Consequently, all \glspl{edge} which are of the same type and have the same
 \gls{source} \gls{node} must be given distinct \gls{outbound.en} \glspl{edge
@@ -899,8 +901,8 @@ To adapt it for the \gls{universal representation}, we need to customize the
 semantic rules (see \refDefinition{pm-semantic-rules} on
 \refPageOfDefinition{pm-semantic-rules}).
 %
-For two \glspl{node}~$n$ and~$m$\hspace{-.8pt}, \mbox{$n \mVFTwoAttrCmp m$}
-holds if $n$ and $m$ are of the same type.
+For two \glspl{node}~$n$ and~\mbox{$m$\hspace{-.8pt},} \mbox{$n \mVFTwoAttrCmp
+  m$} holds if $n$ and $m$ are of the same type.
 %
 That is, the \glspl{node} must either be two \glspl{block node}, two
 \glspl{computation node}, two \glspl{value node}, \etc*.
@@ -908,7 +910,7 @@ That is, the \glspl{node} must either be two \glspl{block node}, two
 For \glspl{value node}, their data types must also be compatible (as described
 in \refSection{uni-rep-data-types-of-values}).
 
-The same applies for two \glspl{edge}~$e$ and~$d$\hspace{-.8pt}, with the
+The same applies for two \glspl{edge}~$e$ and~\mbox{$d$\hspace{-.8pt},} with the
 additional condition that, for certain \glspl{node}, the order of compatible
 \glspl{edge} must also match.
 %
