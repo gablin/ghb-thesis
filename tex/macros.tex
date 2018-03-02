@@ -1074,6 +1074,14 @@
 % Reduce space between leading dots
 \renewcommand{\cftsectiondotsep}{4}
 
+% Edit font of page numbers
+\renewcommand{\cftchapterformatpnum}[1]{%
+  \textsc{#1}%
+}
+\renewcommand{\cftsectionformatpnum}[1]{%
+  \textsc{#1}%
+}
+
 % Increase width for page numbers (to prevent titles to run into them)
 \setpnumwidth{2.55em}
 
