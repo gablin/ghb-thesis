@@ -478,7 +478,7 @@ constraint
 % For selected matches that require two or more of its operands to have the
 % same location, enforce them to be the same.
 %
-% Eq 1.16 in dissertation
+% Similar to $\eqFormat{\refEquation{phi-match-locations-alt}}$ in dissertation
 constraint
   forall (i in index_set_1of2(sameDataLocsInMatch)) (
     let { int: m = sameDataLocsInMatch[i, 1]
