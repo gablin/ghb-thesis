@@ -982,14 +982,15 @@ auxiliary edges.
 However, the \gls{Click-Paleczny graph} does not completely fulfill
 \refRequirement{uni-rep-explicit-ops} as unconditional branches are not
 represented as \glspl{node}, nor does it fulfill
+\refRequirement{uni-rep-explicit-values} or
 \refRequirement{uni-rep-exactly-one-inbound-edge-for-values}.
 
 \textcite{BraunEtAl:2011} introduced another graph-based \gls{IR}, called
-\gls!{Firm}, but because it is based on the \gls{Click-Paleczny graph}
-\gls{Firm} also does not fulfill \refRequirement{uni-rep-explicit-ops}.
+\gls!{Firm}, that is based on the \gls{Click-Paleczny graph} and fulfills
+\refRequirement{uni-rep-explicit-ops}.
 %
-Moreover, it fulfills neither \refRequirement{uni-rep-explicit-values} nor
-\refRequirement{uni-rep-ssa}.
+However, it does not fulfill \refRequirement{uni-rep-explicit-values} nor
+\refRequirement{uni-rep-exactly-one-inbound-edge-for-values}.
 
 
 \section{Summary}
