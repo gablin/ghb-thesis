@@ -918,7 +918,7 @@
 \newglossarystyle{myindex}{%
   \setglossarystyle{mcolindex}
   \setlength{\columnsep}{8mm}
-  \renewcommand*{\glstreenamefmt}[1]{{\sffamily\bfseries##1}}
+  \renewcommand*{\glstreenamefmt}[1]{{\bfseries##1}}
   \renewcommand*{\glossentry}[2]{%
      \item\glsentryitem{##1}%
        \glstreenamefmt{%
@@ -958,8 +958,7 @@
 \newglossarystyle{myloa}{%
   \setglossarystyle{list}
   \setlist[description]{%
-    font=\sffamily,
-    labelwidth=4em,
+    labelwidth=4.6em,
   }
   \renewcommand*{\glossentry}[2]{%
     \glsIsAcronym{##1}{%
