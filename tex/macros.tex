@@ -1169,6 +1169,12 @@
 % Activate changes
 \pagestyle{headings}
 
+% Make new pagestyle where chapter (and no section) appears on both pages
+\copypagestyle{headings-chap-only}{headings}
+\addtopsmarks{headings-chap-only}{}{
+  \createmark{chapter}{both}{shownumber}{}{ \ }
+}
+
 
 %==================
 % FOR WRITING CODE
