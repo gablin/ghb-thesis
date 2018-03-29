@@ -350,11 +350,15 @@ With these definitions together with the fact that the placement of a
 \gls{constraint} can naively be modeled as
 %
 \begin{equation}
-  \forall m \in \mPhiMatchCompSet,
-  \forall d \in \mUses(m),
-  \forall o \in \mCovers(m) :
-  \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]),
-  \labelEquation{naive-dom}
+  \begin{array}{@{}c@{}}
+    \forall m \in \mPhiMatchCompSet,
+    \forall d \in \mUses(m),
+    \forall o \in \mCovers(m) :\\
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]),
+    \labelEquation{naive-dom}
+  \end{array}
 \end{equation}
 %
 where $\mPhiMatchCompSet \subseteq \mMatchSet$ denotes the \gls{match set}
