@@ -1028,10 +1028,14 @@ With these definitions, \refEquationList{naive-dom, spanning,
 changes are highlighted in gray):
 %
 \begin{equation}
-  \forall m \in \mPhiMatchCompSet,
-  \forall \hlDiff{p} \in \mUses(m),
-  \forall o \in \mCovers(m) :
-  \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]),
+  \begin{array}{c}
+    \forall m \in \mPhiMatchCompSet,
+    \forall \hlDiff{p} \in \mUses(m),
+    \forall o \in \mCovers(m) : \\
+    \mVar{sel}[m]
+    \mImp
+    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]),
+  \end{array}
   \labelEquation{naive-dom-alt}
 \end{equation}
 %
