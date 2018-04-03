@@ -356,7 +356,7 @@ With these definitions together with the fact that the placement of a
     \forall o \in \mCovers(m) :\\
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[d] \in \mDom(\mVar{oplace}[o]),
+    \mVar{oplace}[o] \in \mDom(\mVar{dplace}[d]),
     \labelEquation{naive-dom}
   \end{array}
 \end{equation}
@@ -1034,7 +1034,7 @@ changes are highlighted in gray):
     \forall o \in \mCovers(m) : \\
     \mVar{sel}[m]
     \mImp
-    \mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]] \in \mDom(\mVar{oplace}[o]),
+    \mVar{oplace}[o] \in \mDom(\mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]]),
   \end{array}
   \labelEquation{naive-dom-alt}
 \end{equation}
