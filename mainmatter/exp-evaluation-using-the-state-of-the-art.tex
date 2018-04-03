@@ -128,8 +128,8 @@ In three cases (\cCode*{alloc\_save\_spac}, \cCode*{gp\_enumerate\_fi}, and
 computations, in particular constant loads, out of \glspl{block} with high
 execution frequency into \glspl{block} with lower frequency.
 %
-In \cCode*{alloc\_save\_spac}, the approach is also able to move an addition and
-memory \gls{operation} into the same \gls{block} and implement both using a
+In another case (\cCode*{checksum}), the approach is able to move an addition
+and memory \gls{operation} into the same \gls{block} and implement both using a
 single auto-increment memory \gls{instruction}, whereas \gls{LLVM} must
 implement these computations using two \glspl{instruction}.
 %
