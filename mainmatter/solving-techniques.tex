@@ -326,10 +326,12 @@ This information can be represented as a cost matrix
 %
 \begin{equation}
   \begin{aMatrix}{@{\:}c|c@{\:}}
-      o \hspace{-1pt},
-      m \hspace{-.8pt},
-      b \hspace{-1pt},
-      \big( \! \mOpCost(m, o) \times \mFreq(b) \big)
+      \mTuple*{
+        o \hspace{-1pt},
+        m \hspace{-.8pt},
+        b \hspace{-1pt},
+        \big( \! \mOpCost(m, o) \times \mFreq(b) \big)
+      }
     & m \in \mMatchSet, o \in \mCovers(m), b \in \mBlockSet
   \end{aMatrix}
   \labelEquation{div-mul-cost-matrix}
