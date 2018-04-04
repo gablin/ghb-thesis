@@ -1084,7 +1084,7 @@ To this end, we use the \gls{value-precede-chain constraint} introduced in
 \refChapter{constraint-programming} on \refPageOfSection{cp-vpc}.
 %
 Let $\mInterchDataSet$ denote the set of chains of \gls{interchangeable.d}
-\glspl{datum} and \mbox{$\mOperandCompSet[\mPhi] \subseteq \mOperandSet$} denote
+\glspl{datum} and \mbox{$\mOperandCompSet{\mPhi} \subseteq \mOperandSet$} denote
 the set of \glspl{operand} not used by \glspl{phi-match}.
 %
 With these definitions, this \gls{constraint} is modeled as
@@ -1092,7 +1092,7 @@ With these definitions, this \gls{constraint} is modeled as
 \begin{equation}
   \begin{array}{@{}c@{}}
     \forall c \in \mInterchDataSet,
-    \forall p_1, \ldots, p_k \in \mOperandCompSet[\mPhi]
+    \forall p_1, \ldots, p_k \in \mOperandCompSet{\mPhi}
     \text{ \st }
     p_1 \neq \cdots \neq p_k
     \mAnd
