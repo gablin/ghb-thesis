@@ -1,0 +1,53 @@
+% Copyright (c) 2017-2018, Gabriel Hjort Blindell <ghb@kth.se>
+%
+% This work is licensed under a Creative Commons Attribution-NoDerivatives 4.0
+% International License (see LICENSE file or visit
+% <http://creativecommons.org/licenses/by-nc-nd/4.0/> for details).
+
+% Needed to avoid option clashes
+\PassOptionsToPackage{table}{xcolor}
+
+\documentclass[a4paper,oneside,phd,electronic]{kthesis}
+
+\input{tex/packages}
+\input{tex/macros}
+
+\newlist{errata}{description}{1}
+\setlist[errata]{%
+  font=\bfseries,
+  itemsep=.5\baselineskip,
+}
+\newcommand{\pageitem}[2]{\item[p.\thinspace#1, #2]\mbox{}\\}
+
+\pagestyle{plain}
+
+\begin{document}
+
+\section*{Errata}
+
+\begin{errata}
+  \pageitem{69}{``\ldots \textsc{Firm} also does not fulfill R3. Moreover, it
+    fulfills neither R4 nor R8''}
+    This is wrong as Firm does indeed fulfill these two requirements. However,
+    it does not fulfill R4, R5, nor R6.
+
+  \pageitem{74}{{Eq.\thinspace5.6: ``\ldots $\mVar{dplace}[d] \in
+      \mDom(\mVar{oplace}[o])$''}}
+    Should read: $\mVar{sel}[m] \mImp \mVar{oplace}[o] \in
+    \mDom(\mVar{dplace}[d])$.
+
+  \pageitem{81}{{Eq.\thinspace5.13: ``\ldots
+      $\mVar{dplace}[\hlDiff{\mVar{alt}[p]}] \in \mDom(\mVar{oplace}[o])$''}}
+    Should read: $\mVar{sel}[m] \mImp \mVar{oplace}[o] \in
+    \mDom(\mVar{dplace}[\hlDiff{\mVar{alt}[p]}[1pt]])$.
+
+  \pageitem{124}{``In \cCode*{alloc\_save\_spac}, the approach is also able to
+    \ldots''}
+    Should refer to the \cCode*{checksum} function, not
+    \cCode*{alloc\_save\_spac}.
+\end{errata}
+
+\noindent
+Last update: 2018-04-09
+
+\end{document}

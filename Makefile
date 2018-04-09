@@ -30,6 +30,11 @@ $(SRCPDF): check-environment $(DEPS_DIR) $(PRIN_TIMELINE_FILE)
                -deps-out=$(DEPS_DIR)/$(SRCTEX).d \
                $(SRCTEX)
 
+errata.pdf: check-environment
+	$(LATEXMK) -pdflatex=lualatex \
+               -pdf \
+               errata.tex
+
 $(DEPS_DIR):
 	mkdir $@
 
